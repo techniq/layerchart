@@ -11,6 +11,7 @@
 
 <script lang="ts">
   import { createId } from '$lib/utils/createId.js';
+  import { createMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
   const uid = $props.id();
 
@@ -19,14 +20,37 @@
     id = createId('clipPath-', uid),
     x = 0,
     y = 0,
+    initialX,
+    initialY,
     width,
     height,
+    initialWidth,
+    initialHeight,
     disabled = false,
     invert = false,
+    motion,
     children: childrenProp,
   }: RectClipPathBaseProps = $props();
 
-  const path = $derived(`M${x},${y} h${width} v${height} h${-width} Z`);
+  // When `motion` is undefined `createMotion` returns a passthrough that just
+  // reads the getter, so we can call it unconditionally and let the fast path
+  // handle the no-motion case.
+  const motionX = createMotion(initialX ?? x, () => x, motion && parseMotionProp(motion, 'x'));
+  const motionY = createMotion(initialY ?? y, () => y, motion && parseMotionProp(motion, 'y'));
+  const motionWidth = createMotion(
+    initialWidth ?? width,
+    () => width,
+    motion && parseMotionProp(motion, 'width')
+  );
+  const motionHeight = createMotion(
+    initialHeight ?? height,
+    () => height,
+    motion && parseMotionProp(motion, 'height')
+  );
+
+  const path = $derived(
+    `M${motionX.current},${motionY.current} h${motionWidth.current} v${motionHeight.current} h${-motionWidth.current} Z`
+  );
 </script>
 
 <ClipPath {id} {disabled} {invert} {path}>
