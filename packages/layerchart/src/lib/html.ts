@@ -165,8 +165,8 @@ export type {
 // so the per-layer sub-path has a complete API.
 
 // Helpers / context providers
-export { default as Blur } from './components/Blur.svelte';
-export * from './components/Blur.svelte';
+export { default as Blur } from './components/Blur/Blur.svelte';
+export * from './components/Blur/Blur.svelte';
 export { default as Bounds } from './components/Bounds.svelte';
 export * from './components/Bounds.svelte';
 export { default as BrushContext } from './components/BrushContext.svelte';
