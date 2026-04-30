@@ -179,6 +179,9 @@ function generateComment(changes, hasBaseline = true) {
 				if (!byGroup.has(g)) byGroup.set(g, []);
 				byGroup.get(g).push(s);
 			}
+			for (const rows of byGroup.values()) {
+				rows.sort((a, b) => b.currentSize - a.currentSize);
+			}
 
 			const expandedGroups = new Set(["Base (agnostic)", "Base (layer-specific)", "Core"]);
 
@@ -196,10 +199,13 @@ function generateComment(changes, hasBaseline = true) {
 		}
 
 		if (components.length > 0) {
+			const sortedComponents = [...components].sort(
+				(a, b) => b.currentSize - a.currentSize
+			);
 			comment += "<details>\n<summary>Individual Components</summary>\n\n";
 			comment += "| Component | Size | Gzipped |\n";
 			comment += "|-----------|-----:|--------:|\n";
-			for (const c of components) {
+			for (const c of sortedComponents) {
 				const name = c.scenario.replace("component:", "");
 				comment += `| \`${name}\` | ${formatKB(c.currentSize)} KB | ${formatKB(c.currentGzipSize)} KB |\n`;
 			}
@@ -227,7 +233,9 @@ function generateComment(changes, hasBaseline = true) {
 	// Warnings — significant size increases shown at the top, uncollapsed, so
 	// regressions are visible without expanding any sections. Items still appear
 	// in their normal group/components section below.
-	const warnings = changedItems.filter(isWarning);
+	const warnings = changedItems
+		.filter(isWarning)
+		.sort((a, b) => b.currentSize - a.currentSize);
 	if (warnings.length > 0) {
 		comment += `### ⚠️ Warnings (${warnings.length} significant size increase${warnings.length === 1 ? "" : "s"})\n\n`;
 		comment += "| Item | Current | New | Change |\n";
@@ -249,13 +257,17 @@ function generateComment(changes, hasBaseline = true) {
 		comment += "### Use-Case Scenarios\n\n";
 
 		// Group rows by `group` field, preserving insertion order. Scenarios
-		// without a `group` end up under "Other".
+		// without a `group` end up under "Other". Rows within each group are
+		// sorted by current size desc.
 		/** @type {Map<string, ScenarioDiff[]>} */
 		const byGroup = new Map();
 		for (const s of changedScenarios) {
 			const g = s.group || "Other";
 			if (!byGroup.has(g)) byGroup.set(g, []);
 			byGroup.get(g).push(s);
+		}
+		for (const rows of byGroup.values()) {
+			rows.sort((a, b) => b.currentSize - a.currentSize);
 		}
 
 		const renderRow = (s) => {
@@ -279,6 +291,7 @@ function generateComment(changes, hasBaseline = true) {
 	}
 
 	if (changedComponents.length > 0) {
+		changedComponents.sort((a, b) => b.currentSize - a.currentSize);
 		comment += "<details>\n<summary>Individual Components";
 		comment += ` (${changedComponents.length} changed)</summary>\n\n`;
 		comment += "| Component | Current | New | Change |\n";
