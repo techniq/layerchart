@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
-import ChartCoreTestHarness from './tests/ChartCoreTestHarness.svelte';
+import ChartCoreTestHarness from '../tests/ChartCoreTestHarness.svelte';
 
 const data = [
   { x: 0, y: 10 },

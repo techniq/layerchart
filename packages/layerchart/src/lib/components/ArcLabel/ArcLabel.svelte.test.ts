@@ -3,9 +3,9 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import type { ComponentProps } from 'svelte';
 
-import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
-import Arc from './Arc/Arc.svelte';
-import ArcLabel from './ArcLabel/ArcLabel.svelte';
+import TestHarness, { componentTestId } from '../tests/TestHarness.svelte';
+import Arc from '../Arc/Arc.svelte';
+import ArcLabel from './ArcLabel.svelte';
 
 const defaultArcProps: Partial<ComponentProps<typeof Arc>> = {
   fill: 'currentColor',
