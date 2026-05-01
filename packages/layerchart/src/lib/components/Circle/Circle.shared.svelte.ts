@@ -186,12 +186,11 @@ export class CircleState {
     });
   });
 
-  // Pixel-mode motion sources. Only allocated when the user opts into
-  // animation via the `motion` prop; otherwise the getters read directly
-  // from props.
-  #motionCx: ReturnType<typeof createMotion<number>> | null = null;
-  #motionCy: ReturnType<typeof createMotion<number>> | null = null;
-  #motionR: ReturnType<typeof createMotion<number>> | null = null;
+  // Pixel-mode motion sources. Initial values are captured at construction;
+  // subsequent updates come from the prop getters.
+  #motionCx!: ReturnType<typeof createMotion<number>>;
+  #motionCy!: ReturnType<typeof createMotion<number>>;
+  #motionR!: ReturnType<typeof createMotion<number>>;
 
   // Static (non-data-driven) values used by SVG/HTML branches in pixel mode.
   staticFill = $derived(
@@ -223,31 +222,28 @@ export class CircleState {
     this.#getProps = getProps;
 
     const initial = getProps();
+    const initialCx =
+      initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
+    const initialCy =
+      initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
+    const initialR =
+      initial.initialR ?? (typeof initial.r === 'number' ? initial.r : 1);
 
-    if (initial.motion !== undefined) {
-      const initialCx =
-        initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
-      const initialCy =
-        initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
-      const initialR =
-        initial.initialR ?? (typeof initial.r === 'number' ? initial.r : 1);
-
-      this.#motionCx = createMotion(
-        initialCx,
-        () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
-        initial.motion
-      );
-      this.#motionCy = createMotion(
-        initialCy,
-        () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
-        initial.motion
-      );
-      this.#motionR = createMotion(
-        initialR,
-        () => (typeof getProps().r === 'number' ? (getProps().r as number) : 1),
-        initial.motion
-      );
-    }
+    this.#motionCx = createMotion(
+      initialCx,
+      () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
+      initial.motion
+    );
+    this.#motionCy = createMotion(
+      initialCy,
+      () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
+      initial.motion
+    );
+    this.#motionR = createMotion(
+      initialR,
+      () => (typeof getProps().r === 'number' ? (getProps().r as number) : 1),
+      initial.motion
+    );
 
     this.#dataMotionMap = createDataMotionMap(initial.motion);
     if (this.#dataMotionMap) {
@@ -270,19 +266,13 @@ export class CircleState {
   }
 
   get motionCx() {
-    if (this.#motionCx) return this.#motionCx.current;
-    const cx = this.#getProps().cx;
-    return typeof cx === 'number' ? cx : 0;
+    return this.#motionCx.current;
   }
   get motionCy() {
-    if (this.#motionCy) return this.#motionCy.current;
-    const cy = this.#getProps().cy;
-    return typeof cy === 'number' ? cy : 0;
+    return this.#motionCy.current;
   }
   get motionR() {
-    if (this.#motionR) return this.#motionR.current;
-    const r = this.#getProps().r;
-    return typeof r === 'number' ? r : 1;
+    return this.#motionR.current;
   }
 }
 

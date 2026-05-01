@@ -108,25 +108,20 @@ export class ArcState {
 
   trackRef = $state<SVGPathElement>();
 
-  // Only allocated when the user opts into animation via the `motion` prop;
-  // otherwise the getter reads `value` directly from props.
-  #motionEndAngle: ReturnType<typeof createMotion<number>> | null = null;
+  #motionEndAngle!: ReturnType<typeof createMotion<number>>;
 
   constructor(getProps: () => ArcProps) {
     this.#getProps = getProps;
     const initial = getProps();
-    if (initial.motion !== undefined) {
-      this.#motionEndAngle = createMotion(
-        initial.initialValue ?? 0,
-        () => getProps().value ?? 0,
-        initial.motion
-      );
-    }
+    this.#motionEndAngle = createMotion(
+      initial.initialValue ?? 0,
+      () => getProps().value ?? 0,
+      initial.motion
+    );
   }
 
   get motionEndAngleValue() {
-    if (this.#motionEndAngle) return this.#motionEndAngle.current;
-    return this.#getProps().value ?? 0;
+    return this.#motionEndAngle.current;
   }
 
   range = $derived(this.#getProps().range ?? ([0, 360] as [number, number]));

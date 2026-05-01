@@ -364,22 +364,16 @@ export class TextState {
 
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
 
-  // Pixel-mode motion sources. Only allocated when the user opts into
-  // animation via the `motion` prop; otherwise the getters read directly
-  // from props.
-  #motionX: ReturnType<typeof createMotion<number | string>> | null = null;
-  #motionY: ReturnType<typeof createMotion<number | string>> | null = null;
-  #motionValue: ReturnType<typeof createMotion<number>> | null = null;
+  // Pixel-mode motion sources
+  #motionX!: ReturnType<typeof createMotion<number | string>>;
+  #motionY!: ReturnType<typeof createMotion<number | string>>;
+  #motionValue!: ReturnType<typeof createMotion<number>>;
 
   get motionX() {
-    if (this.#motionX) return this.#motionX.current;
-    const x = this.#getProps().x;
-    return typeof x === 'number' || typeof x === 'string' ? x : 0;
+    return this.#motionX.current;
   }
   get motionY() {
-    if (this.#motionY) return this.#motionY.current;
-    const y = this.#getProps().y;
-    return typeof y === 'number' || typeof y === 'string' ? y : 0;
+    return this.#motionY.current;
   }
 
   // Resolved width: for path text, defer to the (SVG-bound) pathRef length
@@ -406,7 +400,7 @@ export class TextState {
     const motion = this.#getProps().motion;
     const format = this.#getProps().format;
     if (typeof value === 'function' || value == null) return '';
-    if (typeof value === 'number' && motion && this.#motionValue) {
+    if (typeof value === 'number' && motion) {
       const v = this.#motionValue.current;
       // @ts-expect-error - improve format types
       return format ? formatValue(v, format) : String(v);
@@ -547,41 +541,38 @@ export class TextState {
     this.#getProps = getProps;
 
     const initial = getProps();
+    const _initialX: string | number =
+      initial.initialX ?? (typeof initial.x === 'function' ? 0 : (initial.x ?? 0));
+    const _initialY: string | number =
+      initial.initialY ?? (typeof initial.y === 'function' ? 0 : (initial.y ?? 0));
 
-    if (initial.motion !== undefined) {
-      const _initialX: string | number =
-        initial.initialX ?? (typeof initial.x === 'function' ? 0 : (initial.x ?? 0));
-      const _initialY: string | number =
-        initial.initialY ?? (typeof initial.y === 'function' ? 0 : (initial.y ?? 0));
+    this.#motionX = createMotion(
+      _initialX,
+      () => {
+        const x = getProps().x;
+        return typeof x === 'number' || typeof x === 'string' ? x : 0;
+      },
+      initial.motion
+    );
+    this.#motionY = createMotion(
+      _initialY,
+      () => {
+        const y = getProps().y;
+        return typeof y === 'number' || typeof y === 'string' ? y : 0;
+      },
+      initial.motion
+    );
 
-      this.#motionX = createMotion(
-        _initialX,
-        () => {
-          const x = getProps().x;
-          return typeof x === 'number' || typeof x === 'string' ? x : 0;
-        },
-        initial.motion
-      );
-      this.#motionY = createMotion(
-        _initialY,
-        () => {
-          const y = getProps().y;
-          return typeof y === 'number' || typeof y === 'string' ? y : 0;
-        },
-        initial.motion
-      );
-
-      // Tween numeric values when motion is configured
-      this.#motionValue = createMotion(
-        typeof initial.value === 'number' ? initial.value : 0,
-        () => (typeof getProps().value === 'number' ? (getProps().value as number) : 0),
-        typeof initial.value === 'number' &&
-          typeof initial.motion === 'object' &&
-          'type' in initial.motion
+    // Tween numeric values when motion is configured
+    this.#motionValue = createMotion(
+      typeof initial.value === 'number' ? initial.value : 0,
+      () => (typeof getProps().value === 'number' ? (getProps().value as number) : 0),
+      typeof initial.value === 'number' && initial.motion
+        ? typeof initial.motion === 'object' && 'type' in initial.motion
           ? initial.motion
           : undefined
-      );
-    }
+        : undefined
+    );
 
     this.#dataMotionMap = createDataMotionMap(initial.motion);
     if (this.#dataMotionMap) {

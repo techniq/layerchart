@@ -56,9 +56,7 @@ export class AreaState {
   #getProps: () => AreaProps = () => ({}) as AreaProps;
   ctx: ChartState = getChartContext();
 
-  // Only allocated when the user opts into a tween via the `motion` prop;
-  // otherwise the getter reads `d` directly.
-  #tweenState: ReturnType<typeof createMotion<string | undefined>> | null = null;
+  #tweenState!: ReturnType<typeof createMotion<string | undefined>>;
 
   constructor(getProps: () => AreaProps) {
     this.#getProps = getProps;
@@ -80,18 +78,14 @@ export class AreaState {
     });
 
     const extractedTween = extractTweenConfig(initial.motion);
-    if (extractedTween) {
-      const tweenOptions: ResolvedMotion = {
-        type: extractedTween.type,
-        options: { interpolate: interpolatePath, ...extractedTween.options },
-      };
+    const tweenOptions: ResolvedMotion | undefined = extractedTween
+      ? {
+          type: extractedTween.type,
+          options: { interpolate: interpolatePath, ...extractedTween.options },
+        }
+      : undefined;
 
-      this.#tweenState = createMotion(
-        this.#defaultPathData(tweenOptions),
-        () => this.d,
-        tweenOptions
-      );
-    }
+    this.#tweenState = createMotion(this.#defaultPathData(tweenOptions), () => this.d, tweenOptions);
   }
 
   series = $derived(
@@ -191,8 +185,7 @@ export class AreaState {
   });
 
   get tweenedPath() {
-    if (this.#tweenState) return this.#tweenState.current;
-    return this.d;
+    return this.#tweenState.current;
   }
 
   lineYAccessor = $derived.by(() => {
