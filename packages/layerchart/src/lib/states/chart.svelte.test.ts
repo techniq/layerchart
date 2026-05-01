@@ -19,7 +19,7 @@ function createChartState<T = TestData>(props: Partial<ChartPropsWithoutHTML<T>>
   let state: ChartState<T>;
 
   cleanup = $effect.root(() => {
-    state = new ChartState<T>(() => props as ChartPropsWithoutHTML<T>);
+    state = new ChartState<T>(props as ChartPropsWithoutHTML<T>);
   });
 
   // Access derived values after reactive graph is set up
