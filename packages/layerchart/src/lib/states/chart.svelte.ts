@@ -829,11 +829,15 @@ export class ChartState<
           }
         }
 
-        const allValues = [...seriesValues, ...extraMarkValues];
-        if (baseline != null) {
-          return [min([baseline, ...allValues]), max([baseline, ...allValues])];
+        const allValues = [...seriesValues, ...extraMarkValues].filter((v) => v != null);
+        if (allValues.length > 0) {
+          if (baseline != null) {
+            return [min([baseline, ...allValues]), max([baseline, ...allValues])];
+          }
+          return extent(allValues);
         }
-        return extent(allValues);
+        // Series are metadata-only (e.g. categorical legend with no per-series
+        // values on the axis) — fall through to other resolution paths.
       }
     }
 

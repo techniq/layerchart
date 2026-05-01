@@ -1023,6 +1023,67 @@ describe('ChartState implicit series domain update on visibility toggle', () => 
   });
 });
 
+describe('ChartState metadata-only series', () => {
+  type CategoryEvent = { date: string; category: string };
+
+  it('should not produce [undefined, undefined] domain when items lack series-key properties', () => {
+    const data: CategoryEvent[] = [
+      { date: '2024-01', category: 'svelte' },
+      { date: '2024-02', category: 'sveltekit' },
+      { date: '2024-03', category: 'ecosystem' },
+    ];
+
+    const { state, cleanup } = createChartState<CategoryEvent>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      series: [
+        { key: 'svelte', color: 'red' },
+        { key: 'sveltekit', color: 'orange' },
+        { key: 'ecosystem', color: 'blue' },
+      ],
+    });
+
+    try {
+      expect(state._yDomain).toBeUndefined();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should remain stable across visibility toggles instead of throwing', () => {
+    const data: CategoryEvent[] = [
+      { date: '2024-01', category: 'svelte' },
+      { date: '2024-02', category: 'sveltekit' },
+    ];
+
+    const { state, cleanup } = createChartState<CategoryEvent>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      series: [
+        { key: 'svelte', color: 'red' },
+        { key: 'sveltekit', color: 'orange' },
+      ],
+      motion: { type: 'spring' },
+    });
+
+    try {
+      expect(state._yDomain).toBeUndefined();
+
+      expect(() => {
+        state.seriesState.selectedKeys.toggle('svelte');
+        flushSync();
+      }).not.toThrow();
+
+      expect(state._yDomain).toBeUndefined();
+      expect(state.seriesState.visibleSeries).toHaveLength(1);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
 describe('ChartState degenerate domain', () => {
   it('should expand degenerate y domain [0, 0] to [0, 1]', () => {
     const data: TestData[] = [
