@@ -29,6 +29,7 @@
   import { getSettings } from '$lib/contexts/settings.js';
   import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
+  import type { ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
   import {
@@ -71,13 +72,18 @@
   let brushXDomain = $state<BrushDomainType>();
   let brushYDomain = $state<BrushDomainType>();
 
-  const chartState = new ChartState<TData, XScale, YScale>(() => ({
-    ref: refProp,
-    context: contextProp,
-    ...props,
-    xDomain: brushXDomain ?? props.xDomain,
-    yDomain: brushYDomain ?? props.yDomain,
-  }));
+  // Pass the `$props()` proxy directly — `props.X` reads stay reactive and
+  // don't pay the cost of an `{...props}` spread (recursive `ownKeys` across
+  // nested rest/spread proxies). Brush selections are supplied as getters so
+  // the chart's domain calculation can layer them on top of `props.xDomain`
+  // / `props.yDomain` at the read sites.
+  const chartState = new ChartState<TData, XScale, YScale>(
+    props as ChartPropsWithoutHTML<TData, XScale, YScale>,
+    {
+      brushXDomain: () => brushXDomain,
+      brushYDomain: () => brushYDomain,
+    }
+  );
 
   let ref = $state<HTMLElement>();
   $effect.pre(() => {

@@ -99,11 +99,16 @@ export class ChartState<
   XScale extends AnyScale = AnyScale,
   YScale extends AnyScale = AnyScale,
 > {
-  // Props getter function - set in constructor
-  private _propsGetter!: () => ChartPropsWithoutHTML<TData, XScale, YScale>;
+  // The `$props()` proxy from the host component. Reads on `this.props.X` go
+  // straight through to the underlying reactive prop — no spread / no derived
+  // wrapper needed.
+  props!: ChartPropsWithoutHTML<TData, XScale, YScale>;
 
-  // Props - accessed via getter function for fine-grained reactivity
-  props = $derived(this._propsGetter());
+  // Brush-domain overrides. The host component owns the brush state as local
+  // `$state` and supplies these getters so brush selections take precedence
+  // over `props.xDomain` / `props.yDomain` when reading the effective domain.
+  #brushXDomain!: () => BrushDomainType | undefined;
+  #brushYDomain!: () => BrushDomainType | undefined;
 
   // State / contexts
   geoState: GeoState;
@@ -272,8 +277,16 @@ export class ChartState<
   // Meta data - reactive to props.meta changes
   meta = $derived(this.props.meta ?? {});
 
-  constructor(propsGetter: () => ChartPropsWithoutHTML<TData, XScale, YScale>) {
-    this._propsGetter = propsGetter;
+  constructor(
+    props: ChartPropsWithoutHTML<TData, XScale, YScale>,
+    overrides?: {
+      brushXDomain?: () => BrushDomainType | undefined;
+      brushYDomain?: () => BrushDomainType | undefined;
+    }
+  ) {
+    this.props = props;
+    this.#brushXDomain = overrides?.brushXDomain ?? (() => undefined);
+    this.#brushYDomain = overrides?.brushYDomain ?? (() => undefined);
 
     // Create GeoState instance — pass a dimensions getter so projection
     // is available during SSR (where $effect doesn't run)
@@ -402,7 +415,7 @@ export class ChartState<
     });
 
     // Set up domain motion if motion prop is configured
-    const motionProp = propsGetter().motion;
+    const motionProp = props.motion;
     if (motionProp) {
       const resolved = parseMotionProp(motionProp);
       this._xDomainMotion = createControlledMotion<number[]>([], resolved);
@@ -506,7 +519,7 @@ export class ChartState<
     if (this.props.bandPadding != null && this.valueAxis === 'y') {
       return scaleBand().padding(this.props.bandPadding);
     }
-    return autoScale(this.props.xDomain, this.flatData, this.x);
+    return autoScale(this.#brushXDomain() ?? this.props.xDomain, this.flatData, this.x);
   });
 
   _yScaleProp = $derived.by(() => {
@@ -517,7 +530,7 @@ export class ChartState<
     if (this.props.bandPadding != null && this.valueAxis === 'x') {
       return scaleBand().padding(this.props.bandPadding);
     }
-    return autoScale(this.props.yDomain, this.flatData, this.y);
+    return autoScale(this.#brushYDomain() ?? this.props.yDomain, this.flatData, this.y);
   });
 
   _zScaleProp = $derived.by(() => {
@@ -756,7 +769,10 @@ export class ChartState<
   }
 
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
-    const domain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
+    const domain =
+      axis === 'x'
+        ? (this.#brushXDomain() ?? this.props.xDomain)
+        : (this.#brushYDomain() ?? this.props.yDomain);
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
     const explicitBaseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
     // Use explicit baseline if provided (null means "no baseline"), otherwise auto-derive
