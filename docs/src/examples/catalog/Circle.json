@@ -437,6 +437,48 @@
       "line": "<Circle"
     },
     {
+      "example": "force",
+      "component": "Elk",
+      "path": "/docs/components/Elk/force",
+      "lineNumber": 73,
+      "line": "<Circle r={node.width / 2} class=\"fill-primary stroke-surface-100 stroke-2\" />"
+    },
+    {
+      "example": "radial",
+      "component": "Elk",
+      "path": "/docs/components/Elk/radial",
+      "lineNumber": 89,
+      "line": "<Circle r={node.width / 2} class=\"fill-secondary stroke-surface-100 stroke-2\" />"
+    },
+    {
+      "example": "state-composite",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-composite",
+      "lineNumber": 108,
+      "line": "<Circle r={8} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "state-composite",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-composite",
+      "lineNumber": 110,
+      "line": "<Circle r={9} class=\"fill-surface-100 stroke-2 stroke-surface-content\" />"
+    },
+    {
+      "example": "state-composite",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-composite",
+      "lineNumber": 111,
+      "line": "<Circle r={4} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "stress",
+      "component": "Elk",
+      "path": "/docs/components/Elk/stress",
+      "lineNumber": 73,
+      "line": "<Circle r={node.width / 2} class=\"fill-info stroke-surface-100 stroke-2\" />"
+    },
+    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
@@ -1004,5 +1046,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:23.837Z"
+  "updatedAt": "2026-05-01T03:14:13.633Z"
 }
