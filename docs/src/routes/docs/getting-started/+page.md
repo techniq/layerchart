@@ -115,7 +115,7 @@ If you wish to apply darkmode defaults, see the [dark mode](/docs/guides/styles#
 
 or with a single `.css` import, Layerchart [provides](https://github.com/techniq/layerchart/tree/next/packages/layerchart/src/lib/styles) theming conventions for many popular UI frameworks.
 
-:::tabs{key="framework"}
+:::tabs{key="framework" height="185px"}
 
     ::tab{label="shadcn-svelte" icon="custom-brands:shadcnsvelte"}
     ```css title="app.css"
@@ -198,7 +198,7 @@ All set! Now just fire up the dev server and start iterating. Have fun!
 
 Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples) are available for popular UI frameworks.
 
-:::tabs{key="framework"}
+:::tabs{key="framework" height="140px"}
 
     ::tab{label="shadcn-svelte" icon="custom-brands:shadcnsvelte"}
     [shadcn-svelte](https://www.shadcn-svelte.com/)

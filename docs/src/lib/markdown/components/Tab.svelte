@@ -14,6 +14,7 @@
 
 	const tabsContext = getContext<{
 		activeTab: number;
+		hasHeight: boolean;
 		setActiveTab: (index: number) => void;
 		registerTab: (label: string | undefined, icon: Component | undefined) => number;
 	}>('tabs');

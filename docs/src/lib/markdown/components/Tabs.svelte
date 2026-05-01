@@ -23,9 +23,10 @@
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		children: Snippet;
 		key?: string;
+		height?: string;
 	}
 
-	const { children, key, class: className, ...restProps }: Props = $props();
+	const { children, key, class: className, height, ...restProps }: Props = $props();
 
 	// Use synced state if key is provided, otherwise use local state
 	let localActiveIndex = $state(0);
@@ -55,6 +56,9 @@
 	setContext('tabs', {
 		get activeTab() {
 			return activeTab;
+		},
+		get hasHeight() {
+			return !!height;
 		},
 		setActiveTab: (index: number) => {
 			if (syncedState) {
@@ -103,7 +107,38 @@
 	</div>
 
 	<!-- Tab content -->
-	<div class="border rounded-lg rounded-tl-none px-3 py-1 bg-surface-100">
+	<div
+		class={cls('border rounded-lg rounded-tl-none px-3 py-1 bg-surface-100', height && 'tabs-has-height overflow-y-scroll')}
+		style:height={height}
+	>
 		{@render children?.()}
 	</div>
 </div>
+
+<style>
+	.tabs-has-height {
+		display: flex;
+		flex-direction: column;
+	}
+	:global(.tabs-has-height .tab:not(.hidden)) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+	}
+	/* rehype-pretty-code wraps code blocks in <figure> */
+	:global(.tabs-has-height .tab:not(.hidden) > figure) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+	}
+	:global(.tabs-has-height .tab:not(.hidden) .pre-block) {
+		flex: 1;
+		min-height: 0;
+	}
+	:global(.tabs-has-height .tab:not(.hidden) .pre-block > pre) {
+		flex: 1;
+		min-height: 0;
+	}
+</style>

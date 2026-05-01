@@ -49,7 +49,7 @@
 </script>
 
 <div
-	class="relative group rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden my-2"
+	class="pre-block relative group rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden my-2 flex flex-col"
 >
 	{#if dataTitle}
 		<div
