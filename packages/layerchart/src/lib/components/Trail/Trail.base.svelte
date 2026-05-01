@@ -122,12 +122,15 @@
     return '';
   }
 
-  const tweenState = createMotion(defaultPathData(), () => trailPath, {
-    type: 'tween',
-    interpolate: interpolatePath,
-  });
-
-  const isTweened = $derived(extractTweenConfig(motion) != null);
+  // Only allocate the tween container when the user opts into a tween via
+  // `motion`; otherwise the template reads `trailPath` directly.
+  const tweenState =
+    extractTweenConfig(motion) != null
+      ? createMotion(defaultPathData(), () => trailPath, {
+          type: 'tween',
+          interpolate: interpolatePath,
+        })
+      : null;
 
   ctx.registerComponent({
     name: 'Trail',
@@ -137,7 +140,7 @@
 </script>
 
 <Path
-  pathData={isTweened ? tweenState.current : trailPath}
+  pathData={tweenState ? tweenState.current : trailPath}
   {fill}
   {fillOpacity}
   {opacity}

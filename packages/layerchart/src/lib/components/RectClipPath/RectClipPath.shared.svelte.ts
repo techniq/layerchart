@@ -9,12 +9,20 @@ export type BaseRectClipPathPropsWithoutHTML = {
   id?: string;
   /** The x position of the clipPath. @default 0 */
   x?: number;
+  /** The initial x position (used as the animation start when `motion` is set). @default x */
+  initialX?: number;
   /** The y position of the clipPath. @default 0 */
   y?: number;
+  /** The initial y position (used as the animation start when `motion` is set). @default y */
+  initialY?: number;
   /** The width of the clipPath. @required */
   width: number;
+  /** The initial width (used as the animation start when `motion` is set). @default width */
+  initialWidth?: number;
   /** The height of the clipPath. @required */
   height: number;
+  /** The initial height (used as the animation start when `motion` is set). @default height */
+  initialHeight?: number;
   /** Whether to disable clipping (show all). @default false */
   disabled?: boolean;
   /** Invert the clip — content renders *outside* the rect. @default false */

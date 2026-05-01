@@ -17,10 +17,14 @@ const series = [
 ];
 
 function createSeriesState(seriesData = series as any[], stackConfig: any = null) {
-  return new SeriesState<TestData, Component>(
-    () => seriesData,
-    () => stackConfig
-  );
+  let state: SeriesState<TestData, Component>;
+  $effect.root(() => {
+    state = new SeriesState<TestData, Component>(
+      () => seriesData,
+      () => stackConfig
+    );
+  });
+  return state!;
 }
 
 describe('SeriesState', () => {

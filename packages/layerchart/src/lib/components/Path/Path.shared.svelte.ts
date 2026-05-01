@@ -18,10 +18,15 @@ import type { draw as _drawTransition } from 'svelte/transition';
 
 export type PathPropsWithoutHTML = {
   /**
-   * Pass `<path d={...} />` explicitly instead of calculating
-   * from data / context
+   * The `d` attribute of the rendered `<path>`.
+   *
+   * Accepts either a value (resolved at call site) or a function that
+   * returns the current value. Passing a function lets the parent avoid
+   * re-rendering its own template on every change to the path data —
+   * useful when a parent like `Link` / `Spline` / `Area` updates the
+   * path on every animation tick across hundreds of instances.
    */
-  pathData?: string | undefined | null;
+  pathData?: string | undefined | null | (() => string | undefined | null);
 
   /**
    * Whether to animate the drawing of the path over time.
@@ -69,11 +74,21 @@ export type PathPropsWithoutHTML = {
 export type PathProps = PathPropsWithoutHTML &
   Without<SVGAttributes<SVGPathElement>, PathPropsWithoutHTML>;
 
+/** Resolve `pathData` whether it was passed as a value or a getter function. */
+function resolvePathData(v: PathProps['pathData']): string | null | undefined {
+  return typeof v === 'function' ? v() : v;
+}
+
 /**
  * Reactive state shared by every per-layer Path variant.
  */
 export class PathState {
-  #getProps: () => PathProps = () => ({}) as PathProps;
+  // Hot-path getter: reads only `pathData` (or invokes the function-getter form).
+  // Kept separate from the full-props getter so that the `<path d=...>` template
+  // updater does not subscribe to every Path prop on every read — critical for
+  // mark-heavy scenes (force-simulation graphs with hundreds of links updating
+  // per tick) where pre-fix each tween read re-evaluated all 15+ props.
+  #getPathData: () => string | null | undefined;
 
   // Contexts
   chartCtx: ChartState = getChartContext();
@@ -88,8 +103,19 @@ export class PathState {
   // Re-key trigger for draw transitions
   drawKey = $state(Symbol());
 
-  constructor(getProps: () => PathProps) {
-    this.#getProps = getProps;
+  /**
+   * @param getPathData  Hot-path getter — reads only `pathData`. Kept separate from
+   *                     `getProps` so the `<path d=...>` updater (and the canvas
+   *                     `tweenedPathData` consumer) does not subscribe to every
+   *                     Path prop on every tick.
+   * @param getProps     Full-props getter — used for one-time / cold-path config
+   *                     (motion, draw).
+   */
+  constructor(
+    getPathData: () => PathProps['pathData'],
+    getProps: () => PathProps = () => ({}) as PathProps
+  ) {
+    this.#getPathData = () => resolvePathData(getPathData());
 
     const initial = getProps();
     const extractedTween = extractTweenConfig(initial.motion);
@@ -105,22 +131,24 @@ export class PathState {
       if (!tweenedOptions) {
         // Fast initial render when not tweened
         return '';
-      } else if (initial.pathData) {
+      }
+      const resolved = resolvePathData(getPathData());
+      if (resolved) {
         return flattenPathData(
-          initial.pathData,
+          resolved,
           Math.min(this.chartCtx.yScale(0) ?? this.chartCtx.yRange[0], this.chartCtx.yRange[0])
         );
       }
       return '';
     })();
 
-    this.#tweenedState = createMotion(defaultPathData, () => getProps().pathData, tweenedOptions);
+    this.#tweenedState = createMotion(defaultPathData, this.#getPathData, tweenedOptions);
 
     // Re-trigger draw transition when path data changes
     $effect(() => {
       if (!getProps().draw) return;
-      // Touch dependency
-      void getProps().pathData;
+      // Touch dependency (resolves getter form too)
+      void this.#getPathData();
       this.drawKey = Symbol();
     });
   }

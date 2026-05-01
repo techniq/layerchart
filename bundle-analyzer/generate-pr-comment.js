@@ -50,11 +50,28 @@ function formatPercent(percent) {
 	return `${sign}${percent.toFixed(1)}%`;
 }
 
-function getStatusIcon(status, sizeDiff) {
+// Percent threshold above which a change is considered "large" (red/green).
+// Smaller changes still count as significant (per the size/percent gates in
+// analyzeChanges) but render as yellow to signal they're within tolerance.
+const LARGE_CHANGE_THRESHOLD_PERCENT = 1;
+
+function getStatusIcon(status, sizeDiff, sizePercent) {
 	if (status === "changed") {
-		return sizeDiff > 0 ? "\u{1F534}" : sizeDiff < 0 ? "\u{1F7E2}" : "\u27A1\uFE0F";
+		if (sizeDiff === 0) return "\u27A1\uFE0F";
+		if (Math.abs(sizePercent) < LARGE_CHANGE_THRESHOLD_PERCENT) {
+			return "\u{1F7E1}";
+		}
+		return sizeDiff > 0 ? "\u{1F534}" : "\u{1F7E2}";
 	}
 	return "\u27A1\uFE0F";
+}
+
+function isWarning(c) {
+	return (
+		c.status === "changed" &&
+		c.sizeDiff > 0 &&
+		Math.abs(c.sizePercent) >= LARGE_CHANGE_THRESHOLD_PERCENT
+	);
 }
 
 function analyzeChanges(prReport, targetReport) {
@@ -162,6 +179,9 @@ function generateComment(changes, hasBaseline = true) {
 				if (!byGroup.has(g)) byGroup.set(g, []);
 				byGroup.get(g).push(s);
 			}
+			for (const rows of byGroup.values()) {
+				rows.sort((a, b) => b.currentSize - a.currentSize);
+			}
 
 			const expandedGroups = new Set(["Base (agnostic)", "Base (layer-specific)", "Core"]);
 
@@ -179,10 +199,13 @@ function generateComment(changes, hasBaseline = true) {
 		}
 
 		if (components.length > 0) {
+			const sortedComponents = [...components].sort(
+				(a, b) => b.currentSize - a.currentSize
+			);
 			comment += "<details>\n<summary>Individual Components</summary>\n\n";
 			comment += "| Component | Size | Gzipped |\n";
 			comment += "|-----------|-----:|--------:|\n";
-			for (const c of components) {
+			for (const c of sortedComponents) {
 				const name = c.scenario.replace("component:", "");
 				comment += `| \`${name}\` | ${formatKB(c.currentSize)} KB | ${formatKB(c.currentGzipSize)} KB |\n`;
 			}
@@ -207,11 +230,35 @@ function generateComment(changes, hasBaseline = true) {
 		c.scenario.startsWith("component:")
 	);
 
+	// Warnings — significant size increases shown at the top, uncollapsed, so
+	// regressions are visible without expanding any sections. Items still appear
+	// in their normal group/components section below.
+	const warnings = changedItems
+		.filter(isWarning)
+		.sort((a, b) => b.sizeDiff - a.sizeDiff);
+	if (warnings.length > 0) {
+		comment += `### ⚠️ Warnings (${warnings.length} significant size increase${warnings.length === 1 ? "" : "s"})\n\n`;
+		comment += "| Item | Current | New | Change |\n";
+		comment += "|------|--------:|----:|-------:|\n";
+		for (const w of warnings) {
+			const icon = getStatusIcon(w.status, w.sizeDiff, w.sizePercent);
+			const name = w.scenario.startsWith("component:")
+				? w.scenario.replace("component:", "")
+				: w.scenario;
+			const current = `${formatKB(w.targetSize)} KB<br><sub>${formatKB(w.targetGzipSize)} gz</sub>`;
+			const newSize = `${formatKB(w.currentSize)} KB<br><sub>${formatKB(w.currentGzipSize)} gz</sub>`;
+			const change = `${formatDiff(w.sizeDiff)} KB (${formatPercent(w.sizePercent)})<br><sub>${formatDiff(w.gzipSizeDiff)} gz (${formatPercent(w.gzipSizePercent)})</sub>`;
+			comment += `| ${icon} \`${name}\` | ${current} | ${newSize} | ${change} |\n`;
+		}
+		comment += "\n";
+	}
+
 	if (changedScenarios.length > 0) {
 		comment += "### Use-Case Scenarios\n\n";
 
 		// Group rows by `group` field, preserving insertion order. Scenarios
-		// without a `group` end up under "Other".
+		// without a `group` end up under "Other". Rows within each group are
+		// sorted by current size desc.
 		/** @type {Map<string, ScenarioDiff[]>} */
 		const byGroup = new Map();
 		for (const s of changedScenarios) {
@@ -219,22 +266,22 @@ function generateComment(changes, hasBaseline = true) {
 			if (!byGroup.has(g)) byGroup.set(g, []);
 			byGroup.get(g).push(s);
 		}
+		for (const rows of byGroup.values()) {
+			rows.sort((a, b) => b.currentSize - a.currentSize);
+		}
 
 		const renderRow = (s) => {
-			const icon = getStatusIcon(s.status, s.sizeDiff);
+			const icon = getStatusIcon(s.status, s.sizeDiff, s.sizePercent);
 			const current = `${formatKB(s.targetSize)} KB<br><sub>${formatKB(s.targetGzipSize)} gz</sub>`;
 			const newSize = `${formatKB(s.currentSize)} KB<br><sub>${formatKB(s.currentGzipSize)} gz</sub>`;
 			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)})<br><sub>${formatDiff(s.gzipSizeDiff)} gz (${formatPercent(s.gzipSizePercent)})</sub>`;
 			return `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
 		};
 
-		// Base + Core groups expanded by default; other groups collapsed to keep
-		// the comment scannable. Each group shows the count of changed scenarios.
-		const expandedGroups = new Set(["Base (agnostic)", "Base (layer-specific)", "Core"]);
-
+		// All groups collapsed by default — Warnings section above surfaces any
+		// notable regressions, so the detail tables don't need to be open.
 		for (const [groupName, rows] of byGroup) {
-			const open = expandedGroups.has(groupName) ? " open" : "";
-			comment += `<details${open}>\n`;
+			comment += `<details>\n`;
 			comment += `<summary><strong>${groupName}</strong> (${rows.length} changed)</summary>\n\n`;
 			comment += "| Scenario | Current | New | Change |\n";
 			comment += "|----------|--------:|----:|-------:|\n";
@@ -244,6 +291,7 @@ function generateComment(changes, hasBaseline = true) {
 	}
 
 	if (changedComponents.length > 0) {
+		changedComponents.sort((a, b) => b.currentSize - a.currentSize);
 		comment += "<details>\n<summary>Individual Components";
 		comment += ` (${changedComponents.length} changed)</summary>\n\n`;
 		comment += "| Component | Current | New | Change |\n";
@@ -251,7 +299,7 @@ function generateComment(changes, hasBaseline = true) {
 
 		for (const c of changedComponents) {
 			const name = c.scenario.replace("component:", "");
-			const icon = getStatusIcon(c.status, c.sizeDiff);
+			const icon = getStatusIcon(c.status, c.sizeDiff, c.sizePercent);
 			const current = `${formatKB(c.targetSize)} KB`;
 			const newSize = `${formatKB(c.currentSize)} KB`;
 			const change = `${formatDiff(c.sizeDiff)} KB (${formatPercent(c.sizePercent)})`;

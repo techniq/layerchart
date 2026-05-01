@@ -87,6 +87,13 @@ export interface RegisterComponentOptions<T extends Element = Element> {
 /** Svelte context key for tracking the nearest parent ComponentNode. */
 const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParent');
 
+/** Mark info is "empty" when none of the fields the chart uses for series /
+ * domain inference are populated. Pixel-mode primitives produce empty info
+ * since they have no string/function accessors and no own data. */
+function isEmptyMarkInfo(info: MarkInfo): boolean {
+  return !info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label;
+}
+
 export class ChartState<
   TData = any,
   XScale extends AnyScale = AnyScale,
@@ -222,14 +229,25 @@ export class ChartState<
     });
 
     if (markInfo && !insideCompositeMark) {
-      $effect(() => {
-        const info = markInfo();
-        // Skip registration for empty mark info (e.g. pixel-mode marks)
-        // to avoid unnecessary array push/splice and version bumps
-        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label)
-          return;
-        return untrack(() => this.registerMark(info));
-      });
+      // Probe once at construction: if mark info is initially empty
+      // (pixel-mode primitives where cx/cy/r are numbers), skip the
+      // tracking $effect entirely. This is the common case for
+      // mark-heavy scenes (force simulations, scatter plots with
+      // pixel coordinates) and avoids one effect frame per primitive.
+      //
+      // Trade-off: a primitive that starts in pixel mode and later
+      // flips to data mode (e.g. cx changes from number to string at
+      // runtime) won't register a mark. This is uncommon — modes are
+      // typically static — but if needed, use explicit `series` on the
+      // chart instead of relying on implicit mark-derived series.
+      const initial = untrack(markInfo);
+      if (!isEmptyMarkInfo(initial)) {
+        $effect(() => {
+          const info = markInfo();
+          if (isEmptyMarkInfo(info)) return;
+          return untrack(() => this.registerMark(info));
+        });
+      }
     }
 
     return node;

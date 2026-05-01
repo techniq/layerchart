@@ -9,9 +9,12 @@
   import { createKey } from '$lib/utils/key.svelte.js';
   import { PathState, type PathProps } from './Path.shared.svelte.js';
 
-  let { ...rest }: PathProps = $props();
+  let { pathData, ...rest }: PathProps = $props();
 
-  const c = new PathState(() => rest as PathProps);
+  const c = new PathState(
+    () => pathData,
+    () => rest as PathProps
+  );
 
   function render(
     ctx: CanvasRenderingContext2D,
