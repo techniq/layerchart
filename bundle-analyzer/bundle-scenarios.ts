@@ -410,6 +410,12 @@ export const scenarios: Scenario[] = [
     imports: ['Chart', 'Svg', 'Dagre', 'Link', 'Circle', 'Text'],
   },
   {
+    name: 'elk',
+    group: 'Graph / network',
+    description: 'Elk directed graph layout',
+    imports: ['Chart', 'Svg', 'Elk', 'Spline', 'Rect', 'Group', 'Text'],
+  },
+  {
     name: 'sankey',
     group: 'Graph / network',
     description: 'Sankey flow diagram',
@@ -1776,6 +1782,7 @@ const INDIVIDUAL_COMPONENTS: string[] = [
   'Contour',
   'Dagre',
   'Density',
+  'Elk',
   'Ellipse',
   'ForceSimulation',
   'Frame',
