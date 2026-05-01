@@ -235,7 +235,7 @@ function generateComment(changes, hasBaseline = true) {
 	// in their normal group/components section below.
 	const warnings = changedItems
 		.filter(isWarning)
-		.sort((a, b) => b.currentSize - a.currentSize);
+		.sort((a, b) => b.sizeDiff - a.sizeDiff);
 	if (warnings.length > 0) {
 		comment += `### ⚠️ Warnings (${warnings.length} significant size increase${warnings.length === 1 ? "" : "s"})\n\n`;
 		comment += "| Item | Current | New | Change |\n";
