@@ -1924,6 +1924,118 @@
       "line": "<Chart"
     },
     {
+      "example": "architecture",
+      "component": "Elk",
+      "path": "/docs/components/Elk/architecture",
+      "lineNumber": 74,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Elk",
+      "path": "/docs/components/Elk/basic",
+      "lineNumber": 38,
+      "line": "<Chart"
+    },
+    {
+      "example": "cluster",
+      "component": "Elk",
+      "path": "/docs/components/Elk/cluster",
+      "lineNumber": 38,
+      "line": "<Chart"
+    },
+    {
+      "example": "erd",
+      "component": "Elk",
+      "path": "/docs/components/Elk/erd",
+      "lineNumber": 81,
+      "line": "<Chart"
+    },
+    {
+      "example": "flowchart",
+      "component": "Elk",
+      "path": "/docs/components/Elk/flowchart",
+      "lineNumber": 66,
+      "line": "<Chart"
+    },
+    {
+      "example": "force",
+      "component": "Elk",
+      "path": "/docs/components/Elk/force",
+      "lineNumber": 37,
+      "line": "<Chart"
+    },
+    {
+      "example": "layered",
+      "component": "Elk",
+      "path": "/docs/components/Elk/layered",
+      "lineNumber": 38,
+      "line": "<Chart"
+    },
+    {
+      "example": "mrtree",
+      "component": "Elk",
+      "path": "/docs/components/Elk/mrtree",
+      "lineNumber": 37,
+      "line": "<Chart"
+    },
+    {
+      "example": "oauth-flow",
+      "component": "Elk",
+      "path": "/docs/components/Elk/oauth-flow",
+      "lineNumber": 70,
+      "line": "<Chart"
+    },
+    {
+      "example": "playground",
+      "component": "Elk",
+      "path": "/docs/components/Elk/playground",
+      "lineNumber": 40,
+      "line": "<Chart"
+    },
+    {
+      "example": "radial",
+      "component": "Elk",
+      "path": "/docs/components/Elk/radial",
+      "lineNumber": 53,
+      "line": "<Chart"
+    },
+    {
+      "example": "sequence-diagram",
+      "component": "Elk",
+      "path": "/docs/components/Elk/sequence-diagram",
+      "lineNumber": 59,
+      "line": "<Chart"
+    },
+    {
+      "example": "state-composite",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-composite",
+      "lineNumber": 62,
+      "line": "<Chart"
+    },
+    {
+      "example": "state-machine",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-machine",
+      "lineNumber": 60,
+      "line": "<Chart"
+    },
+    {
+      "example": "stress",
+      "component": "Elk",
+      "path": "/docs/components/Elk/stress",
+      "lineNumber": 37,
+      "line": "<Chart"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Elk",
+      "path": "/docs/components/Elk/tcp-state-diagram",
+      "lineNumber": 38,
+      "line": "<Chart"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/color-via-ordinal-scale",
@@ -4234,5 +4346,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:23.412Z"
+  "updatedAt": "2026-05-01T03:17:47.509Z"
 }

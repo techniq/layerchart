@@ -578,6 +578,181 @@
       "line": "<Text"
     },
     {
+      "example": "architecture",
+      "component": "Elk",
+      "path": "/docs/components/Elk/architecture",
+      "lineNumber": 117,
+      "line": "<Text"
+    },
+    {
+      "example": "basic",
+      "component": "Elk",
+      "path": "/docs/components/Elk/basic",
+      "lineNumber": 76,
+      "line": "<Text"
+    },
+    {
+      "example": "cluster",
+      "component": "Elk",
+      "path": "/docs/components/Elk/cluster",
+      "lineNumber": 81,
+      "line": "<Text"
+    },
+    {
+      "example": "erd",
+      "component": "Elk",
+      "path": "/docs/components/Elk/erd",
+      "lineNumber": 108,
+      "line": "<Text"
+    },
+    {
+      "example": "erd",
+      "component": "Elk",
+      "path": "/docs/components/Elk/erd",
+      "lineNumber": 139,
+      "line": "<Text"
+    },
+    {
+      "example": "erd",
+      "component": "Elk",
+      "path": "/docs/components/Elk/erd",
+      "lineNumber": 150,
+      "line": "<Text"
+    },
+    {
+      "example": "flowchart",
+      "component": "Elk",
+      "path": "/docs/components/Elk/flowchart",
+      "lineNumber": 93,
+      "line": "<Text"
+    },
+    {
+      "example": "flowchart",
+      "component": "Elk",
+      "path": "/docs/components/Elk/flowchart",
+      "lineNumber": 128,
+      "line": "<Text"
+    },
+    {
+      "example": "force",
+      "component": "Elk",
+      "path": "/docs/components/Elk/force",
+      "lineNumber": 74,
+      "line": "<Text"
+    },
+    {
+      "example": "layered",
+      "component": "Elk",
+      "path": "/docs/components/Elk/layered",
+      "lineNumber": 66,
+      "line": "<Text"
+    },
+    {
+      "example": "layered",
+      "component": "Elk",
+      "path": "/docs/components/Elk/layered",
+      "lineNumber": 89,
+      "line": "<Text"
+    },
+    {
+      "example": "mrtree",
+      "component": "Elk",
+      "path": "/docs/components/Elk/mrtree",
+      "lineNumber": 75,
+      "line": "<Text"
+    },
+    {
+      "example": "oauth-flow",
+      "component": "Elk",
+      "path": "/docs/components/Elk/oauth-flow",
+      "lineNumber": 124,
+      "line": "<Text"
+    },
+    {
+      "example": "oauth-flow",
+      "component": "Elk",
+      "path": "/docs/components/Elk/oauth-flow",
+      "lineNumber": 145,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Elk",
+      "path": "/docs/components/Elk/playground",
+      "lineNumber": 97,
+      "line": "<Text"
+    },
+    {
+      "example": "radial",
+      "component": "Elk",
+      "path": "/docs/components/Elk/radial",
+      "lineNumber": 90,
+      "line": "<Text"
+    },
+    {
+      "example": "sequence-diagram",
+      "component": "Elk",
+      "path": "/docs/components/Elk/sequence-diagram",
+      "lineNumber": 86,
+      "line": "<Text"
+    },
+    {
+      "example": "sequence-diagram",
+      "component": "Elk",
+      "path": "/docs/components/Elk/sequence-diagram",
+      "lineNumber": 109,
+      "line": "<Text"
+    },
+    {
+      "example": "state-composite",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-composite",
+      "lineNumber": 89,
+      "line": "<Text"
+    },
+    {
+      "example": "state-composite",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-composite",
+      "lineNumber": 128,
+      "line": "<Text"
+    },
+    {
+      "example": "state-machine",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-machine",
+      "lineNumber": 87,
+      "line": "<Text"
+    },
+    {
+      "example": "state-machine",
+      "component": "Elk",
+      "path": "/docs/components/Elk/state-machine",
+      "lineNumber": 116,
+      "line": "<Text"
+    },
+    {
+      "example": "stress",
+      "component": "Elk",
+      "path": "/docs/components/Elk/stress",
+      "lineNumber": 74,
+      "line": "<Text"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Elk",
+      "path": "/docs/components/Elk/tcp-state-diagram",
+      "lineNumber": 66,
+      "line": "<Text"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Elk",
+      "path": "/docs/components/Elk/tcp-state-diagram",
+      "lineNumber": 93,
+      "line": "<Text"
+    },
+    {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
@@ -1033,5 +1208,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.373Z"
+  "updatedAt": "2026-05-01T03:17:51.314Z"
 }
