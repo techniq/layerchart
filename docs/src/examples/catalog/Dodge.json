@@ -1,0 +1,183 @@
+{
+  "component": "Dodge",
+  "examples": [
+    {
+      "name": "anchor",
+      "title": "anchor",
+      "path": "/docs/components/Dodge/anchor",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 34,
+          "line": "<Text"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 45,
+          "line": "<Dodge axis=\"y\" {anchor} {r} padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 48,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "beeswarm",
+      "title": "beeswarm",
+      "path": "/docs/components/Dodge/beeswarm",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 27,
+          "line": "<Dodge axis=\"y\" anchor=\"middle\" {r} padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 30,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 45,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "penguins",
+      "title": "penguins",
+      "path": "/docs/components/Dodge/penguins",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 41,
+          "line": "<Dodge data={visibleItems} axis=\"y\" anchor=\"bottom\" {r} padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 46,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 62,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "title": "timeline",
+      "path": "/docs/components/Dodge/timeline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 60,
+          "line": "<Line x1={0} x2={context.width} y1={baselineY} y2={baselineY} class=\"opacity-40\" />"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 62,
+          "line": "<Dodge"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 83,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 91,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "variable-radius",
+      "title": "variable radius",
+      "path": "/docs/components/Dodge/variable-radius",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 42,
+          "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 45,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 60,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 45,
+      "line": "<Dodge axis=\"y\" {anchor} {r} padding={1}>"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 27,
+      "line": "<Dodge axis=\"y\" anchor=\"middle\" {r} padding={1}>"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 41,
+      "line": "<Dodge data={visibleItems} axis=\"y\" anchor=\"bottom\" {r} padding={1}>"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 62,
+      "line": "<Dodge"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 42,
+      "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={1}>"
+    }
+  ],
+  "updatedAt": "2026-05-01T16:26:40.766Z"
+}

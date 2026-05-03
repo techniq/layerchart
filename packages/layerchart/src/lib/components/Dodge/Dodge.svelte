@@ -1,0 +1,64 @@
+<script lang="ts" module>
+  export type {
+    DodgeAnchor,
+    DodgeItem,
+    DodgeProps,
+    DodgePropsWithoutHTML,
+  } from './Dodge.shared.svelte.js';
+  export { dodge } from './Dodge.shared.svelte.js';
+</script>
+
+<script lang="ts" generics="T = any">
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { dodge, type DodgeProps } from './Dodge.shared.svelte.js';
+
+  let {
+    data: dataProp,
+    axis = 'y',
+    anchor,
+    padding = 1,
+    r,
+    rowHeight,
+    position,
+    children,
+  }: DodgeProps<T> = $props();
+
+  const ctx = getChartContext<T>();
+
+  ctx.registerComponent({ name: 'Dodge', kind: 'composite-mark' });
+
+  const resolvedAnchor = $derived(anchor ?? (axis === 'y' ? 'bottom' : 'left'));
+
+  const data = $derived((dataProp ?? (ctx.data as T[] | undefined) ?? []) as T[]);
+
+  const positionFn = $derived(
+    position ?? ((axis === 'y' ? ctx.xGet : ctx.yGet) as (d: T) => number)
+  );
+
+  const rFn = $derived.by(() => {
+    if (typeof r === 'function') return r as (d: T) => number;
+    if (r != null) return () => r as number;
+    if (ctx.config.r) return (d: T) => Number(ctx.rGet(d)) || 0;
+    return () => 5;
+  });
+
+  const size = $derived(axis === 'y' ? ctx.height : ctx.width);
+
+  const items = $derived.by(() => {
+    const input = data.map((d, index) => ({
+      x: Number(positionFn(d)) || 0,
+      r: Number(rFn(d)) || 0,
+      data: d,
+      index,
+    }));
+    return dodge(input, {
+      axis,
+      anchor: resolvedAnchor,
+      padding,
+      size,
+      rowHeight,
+    });
+  });
+</script>
+
+{@render children?.({ items })}

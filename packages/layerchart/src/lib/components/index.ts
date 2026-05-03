@@ -50,6 +50,8 @@ export { default as Contour } from './Contour/Contour.svelte';
 export * from './Contour/Contour.svelte';
 export { default as Density } from './Density/Density.svelte';
 export * from './Density/Density.svelte';
+export { default as Dodge } from './Dodge/Dodge.svelte';
+export * from './Dodge/Dodge.svelte';
 export { default as Ellipse } from './Ellipse/Ellipse.svelte';
 export * from './Ellipse/Ellipse.svelte';
 export { default as Frame } from './Frame/Frame.svelte';

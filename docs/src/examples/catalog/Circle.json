@@ -437,6 +437,41 @@
       "line": "<Circle"
     },
     {
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 48,
+      "line": "<Circle"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 30,
+      "line": "<Circle"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 46,
+      "line": "<Circle"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 83,
+      "line": "<Circle"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 45,
+      "line": "<Circle"
+    },
+    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
@@ -1004,5 +1039,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:23.837Z"
+  "updatedAt": "2026-05-01T16:26:40.468Z"
 }

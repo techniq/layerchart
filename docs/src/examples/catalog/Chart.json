@@ -1924,6 +1924,41 @@
       "line": "<Chart"
     },
     {
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 34,
+      "line": "<Chart"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/color-via-ordinal-scale",
@@ -4234,5 +4269,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:23.412Z"
+  "updatedAt": "2026-05-01T15:54:49.419Z"
 }

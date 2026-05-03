@@ -118,18 +118,40 @@ export function resolveCircle(
   chartCtx: ChartState,
   geo: GeoState
 ): { cx: number; cy: number; r: number } {
+  // When cx/cy/r are omitted, fall back to the chart's accessors
+  // (xGet/yGet/rGet) — same pattern as `Points`. Hardcoded defaults
+  // (0/0/1) only apply when neither prop nor chart-level config is set.
+  const cxDefault =
+    typeof props.cx === 'number'
+      ? props.cx
+      : props.cx == null && chartCtx.config.x != null
+        ? Number(chartCtx.xGet(d)) || 0
+        : 0;
+  const cyDefault =
+    typeof props.cy === 'number'
+      ? props.cy
+      : props.cy == null && chartCtx.config.y != null
+        ? Number(chartCtx.yGet(d)) || 0
+        : 0;
+  const rDefault =
+    typeof props.r === 'number'
+      ? props.r
+      : props.r == null && chartCtx.config.r != null
+        ? Number(chartCtx.rGet(d)) || 1
+        : 1;
+
   if (geo.projection) {
     const [projX, projY] = resolveGeoDataPair(props.cx, props.cy, d, geo.projection);
     return {
       cx: projX,
       cy: projY,
-      r: resolveDataProp(props.r, d, chartCtx.rScale, typeof props.r === 'number' ? props.r : 1),
+      r: resolveDataProp(props.r, d, chartCtx.rScale, rDefault),
     };
   }
   return {
-    cx: resolveDataProp(props.cx, d, chartCtx.xScale, 0),
-    cy: resolveDataProp(props.cy, d, chartCtx.yScale, 0),
-    r: resolveDataProp(props.r, d, chartCtx.rScale, typeof props.r === 'number' ? props.r : 1),
+    cx: resolveDataProp(props.cx, d, chartCtx.xScale, cxDefault),
+    cy: resolveDataProp(props.cy, d, chartCtx.yScale, cyDefault),
+    r: resolveDataProp(props.r, d, chartCtx.rScale, rDefault),
   };
 }
 
@@ -159,7 +181,8 @@ export class CircleState {
     this.dashArrayResolved ? this.dashArrayResolved.join(' ') : undefined
   );
   dataMode = $derived(
-    hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r)
+    this.#getProps().data != null ||
+      hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r)
   );
   #resolvedData: any[] = $derived(
     this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []

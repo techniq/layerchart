@@ -308,7 +308,11 @@ export class TextState {
   pathRef = $state<SVGPathElement>();
 
   // Data mode detection
-  dataMode = $derived(isTextDataProp(this.#getProps().x) || isTextDataProp(this.#getProps().y));
+  dataMode = $derived(
+    this.#getProps().data != null ||
+      isTextDataProp(this.#getProps().x) ||
+      isTextDataProp(this.#getProps().y)
+  );
 
   // Data resolution
   #resolvedData: any[] = $derived(
@@ -343,9 +347,23 @@ export class TextState {
       );
       return { x: projX, y: projY };
     }
+    // When x/y are omitted, fall back to the chart's accessors (xGet/yGet) —
+    // mirroring the Circle / Points / Dodge pattern.
+    const xDefault =
+      typeof props.x === 'number'
+        ? props.x
+        : props.x == null && this.chartCtx.config.x != null
+          ? Number(this.chartCtx.xGet(d)) || 0
+          : 0;
+    const yDefault =
+      typeof props.y === 'number'
+        ? props.y
+        : props.y == null && this.chartCtx.config.y != null
+          ? Number(this.chartCtx.yGet(d)) || 0
+          : 0;
     return {
-      x: resolveDataProp(props.x as any, d, this.chartCtx.xScale, 0),
-      y: resolveDataProp(props.y as any, d, this.chartCtx.yScale, 0),
+      x: resolveDataProp(props.x as any, d, this.chartCtx.xScale, xDefault),
+      y: resolveDataProp(props.y as any, d, this.chartCtx.yScale, yDefault),
     };
   }
 
