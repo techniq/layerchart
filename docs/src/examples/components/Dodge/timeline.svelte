@@ -12,29 +12,28 @@
 		label: string;
 	};
 
-	const items: Item[] = milestones.map((m) => ({
+	const data: Item[] = milestones.map((m) => ({
 		date: m.date,
 		category: m.category,
 		label: m.label.replace(/\n/g, ' ')
 	}));
 
-	const series = [
-		{ key: 'svelte', label: 'Svelte', color: 'var(--color-danger)' },
-		{ key: 'sveltekit', label: 'SvelteKit', color: 'var(--color-surface-content)' },
-		{ key: 'ecosystem', label: 'Ecosystem', color: 'var(--color-info)' }
-	];
-
+	/** Estimate the half width of a label based on its character length */
 	function labelHalfWidth(label: string) {
 		return (label.length * 6.5) / 2;
 	}
 
-	export const data = items;
+	export { data };
 </script>
 
 <Chart
-	data={items}
+	{data}
 	x="date"
-	{series}
+	series={[
+		{ key: 'svelte', label: 'Svelte', color: 'var(--color-danger)' },
+		{ key: 'sveltekit', label: 'SvelteKit', color: 'var(--color-surface-content)' },
+		{ key: 'ecosystem', label: 'Ecosystem', color: 'var(--color-info)' }
+	]}
 	padding={{ top: 24, bottom: 24 }}
 	xPadding={[50, 50]}
 	height={360}
@@ -47,13 +46,12 @@
 	motion={{ type: 'spring' }}
 	clip
 	axis="x"
-	grid={false}
 	legend={{ placement: 'top', variant: 'swatches' }}
 >
 	{#snippet aboveContext({ context })}
 		{@const visibleSeries = context.series.visibleSeries}
 		{@const visibleKeys = new Set(visibleSeries.map((s) => s.key))}
-		{@const visibleItems = items.filter((d) => visibleKeys.has(d.category))}
+		{@const visibleItems = data.filter((d) => visibleKeys.has(d.category))}
 		{@const baselineY = context.height}
 
 		<Layer>

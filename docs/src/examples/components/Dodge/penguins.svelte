@@ -6,28 +6,20 @@
 <script lang="ts">
 	import { Chart, Circle, Dodge, Tooltip } from 'layerchart';
 
-	type Penguin = (typeof penguins)[number];
+	const data = penguins.filter((d) => d.body_mass_g != null);
 
-	const items = penguins.filter(
-		(d): d is Penguin & { body_mass_g: number } => d.body_mass_g != null
-	);
-
-	const series = [
-		{ key: 'Adelie', label: 'Adelie', color: 'var(--color-info)' },
-		{ key: 'Chinstrap', label: 'Chinstrap', color: 'var(--color-success)' },
-		{ key: 'Gentoo', label: 'Gentoo', color: 'var(--color-warning)' }
-	];
-
-	const r = 4;
-
-	export const data = items;
+	export { data };
 </script>
 
 <Chart
-	data={items}
+	{data}
 	x="body_mass_g"
 	xNice
-	{series}
+	series={[
+		{ key: 'Adelie', label: 'Adelie', color: 'var(--color-info)' },
+		{ key: 'Chinstrap', label: 'Chinstrap', color: 'var(--color-success)' },
+		{ key: 'Gentoo', label: 'Gentoo', color: 'var(--color-warning)' }
+	]}
 	padding={{ top: 20, bottom: 32, left: 12, right: 12 }}
 	height={320}
 	axis="x"
@@ -37,11 +29,11 @@
 	{#snippet marks({ context })}
 		{@const visibleSeries = context.series.visibleSeries}
 		{@const visibleKeys = new Set(visibleSeries.map((s) => s.key))}
-		{@const visibleItems = items.filter((d) => visibleKeys.has(d.species))}
+		{@const visibleItems = data.filter((d) => visibleKeys.has(d.species))}
 
-		<Dodge data={visibleItems} axis="y" anchor="bottom" {r} padding={1}>
+		<Dodge data={visibleItems} axis="y" anchor="bottom" r={4} padding={1}>
 			{#snippet children({ items: dodged })}
-				{#each dodged as { data: p, x, y, index } (index)}
+				{#each dodged as { data: p, x, y, r, index } (index)}
 					{@const series = visibleSeries.find((s) => s.key === p.species)}
 					{@const opacity = context.series.isHighlighted(p.species, true) ? 1 : 0.2}
 					<Circle
