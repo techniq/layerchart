@@ -90,6 +90,16 @@ export type DodgePropsWithoutHTML<T = any> = {
    * scale to the chart's `x`/`y` accessor).
    */
   position?: (d: T) => number;
+  /**
+   * Override the chart dimension along the dodge axis used for anchor
+   * placement and bounds (the centerline for `'middle'`, edge for
+   * `'top'`/`'bottom'`/`'left'`/`'right'`).
+   *
+   * Defaults to `ctx.height` (axis=`'y'`) or `ctx.width` (axis=`'x'`). Pass
+   * a smaller value to dodge within a sub-region — e.g. `bandwidth()` of a
+   * band scale, to dodge per-band.
+   */
+  size?: number;
   /** Snippet receives computed positions in original data order. */
   children?: Snippet<[{ items: DodgeItem<T>[] }]>;
 };

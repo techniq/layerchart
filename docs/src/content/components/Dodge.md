@@ -33,6 +33,22 @@ Use `anchor` to control where the stack grows from along the dodge axis: `'top'`
 
 :example{ name="anchor" }
 
+## Grouped (band scale)
+
+Use a band scale on the category axis and render one `<Dodge>` per band, passing the band's `bandwidth()` as `size` so each group dodges within its own column. Items are then translated to the band's pixel offset.
+
+:example{ name="grouped-vertical" }
+
+For a horizontal layout, swap the axes (band scale on `y`, dodge on `y` per band).
+
+:example{ name="grouped-horizontal" }
+
+## Image beeswarm
+
+Render `<Image>` instead of `<Circle>` inside the snippet — Dodge yields pixel positions and a resolved radius for each item, which double as the image's bounding box.
+
+:example{ name="image-beeswarm" }
+
 ## Row-based packing for text labels
 
 Circular dodge produces large vertical gaps when collision radius is meaningfully wider than item height (e.g. text labels where `r ≈ labelWidth/2`). Set `rowHeight` to switch to rectangular row-based packing — items are placed in fixed-height rows, with collision checked horizontally only.

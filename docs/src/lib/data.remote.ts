@@ -161,6 +161,33 @@ export const getUsSenators = prerender(async () => {
 	return data;
 });
 
+export type UsPresident = {
+	name: string;
+	inaugurationDate: Date;
+	portraitUrl: string;
+	veryFavorable: number;
+	veryUnfavorable: number;
+};
+
+export const getUsPresidents = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/us-presidents.csv').then(async (r) => {
+		// @ts-expect-error - autoType
+		const rows = csvParse(await r.text(), autoType) as Array<Record<string, any>>;
+		return rows.map(
+			(d) =>
+				({
+					name: d['Name'],
+					inaugurationDate: d['First Inauguration Date'],
+					portraitUrl: d['Portrait URL'],
+					veryFavorable: d['Very Favorable %'],
+					veryUnfavorable: d['Very Unfavorable %']
+				}) satisfies UsPresident
+		);
+	});
+	return data;
+});
+
 export const getAlphabet = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/alphabet.csv').then(async (r) =>

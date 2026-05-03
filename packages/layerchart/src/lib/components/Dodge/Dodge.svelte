@@ -20,6 +20,7 @@
     r,
     rowHeight,
     position,
+    size: sizeProp,
     children,
   }: DodgeProps<T> = $props();
 
@@ -42,7 +43,7 @@
     return () => 5;
   });
 
-  const size = $derived(axis === 'y' ? ctx.height : ctx.width);
+  const size = $derived(sizeProp ?? (axis === 'y' ? ctx.height : ctx.width));
 
   const items = $derived.by(() => {
     const input = data.map((d, index) => ({

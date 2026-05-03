@@ -104,11 +104,3 @@
     {...rest as any}
   />
 {/if}
-
-<style>
-  @layer base {
-    :global(:where(.lc-image)) {
-      pointer-events: none;
-    }
-  }
-</style>
