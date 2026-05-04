@@ -67,11 +67,8 @@
 					m.category === 'ecosystem'
 						? undefined
 						: cumsumAt(m.category === 'svelte' ? svelteSeries : sveltekitSeries, m.date)}
-				{@const dotPxY = dotDomainY == null ? context.height : context.yScale(dotDomainY)}
-				{@const dx = context.xScale(m.x) - context.xScale(m.date)}
-				{@const dy = context.yScale(m.y) - dotPxY}
-				{@const h = dx >= 0 ? 'right' : 'left'}
-				{@const v = dy >= 0 ? 'bottom' : 'top'}
+				{@const h = m.dx >= 0 ? 'right' : 'left'}
+				{@const v = m.dy >= 0 ? 'bottom' : 'top'}
 
 				<AnnotationPoint
 					x={m.date}
@@ -79,9 +76,9 @@
 					r={3}
 					label={m.label}
 					labelPlacement="{v}-{h}"
-					labelXOffset={Math.abs(dx)}
-					labelYOffset={Math.abs(dy)}
-					link={{ type: 'swoop', bend: dx >= 0 ? 22.5 : -22.5, class: 'opacity-30' }}
+					labelXOffset={Math.abs(m.dx)}
+					labelYOffset={Math.abs(m.dy)}
+					link={{ type: 'swoop', bend: m.dx >= 0 ? 22.5 : -22.5, class: 'opacity-30' }}
 					props={{
 						circle: {
 							fill:

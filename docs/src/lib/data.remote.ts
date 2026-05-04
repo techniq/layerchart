@@ -253,8 +253,10 @@ export type SvelteMilestone = {
 	date: Date;
 	category: 'svelte' | 'sveltekit' | 'ecosystem';
 	label: string;
-	x: Date;
-	y: number;
+	/** Pixel x-offset of the label from the dot (calibrated for an 860px-wide chart). */
+	dx: number;
+	/** Pixel y-offset of the label from the dot (calibrated for an 860px-wide chart). */
+	dy: number;
 };
 
 export const getSvelteMilestones = prerender(async () => {
