@@ -1,12 +1,12 @@
 date,category,label,dx,dy
 2026-03-11,sveltekit,"server-side
-error boundaries",-9,-9
+error boundaries",-9,-32
 2026-02-20,sveltekit,"Vite 8
-support",26,14
+support",26,24
 2026-02-18,svelte,"comments
-in tags",-16,-12
-2026-02-15,sveltekit,match,-13,32
-2026-02-13,svelte,TrustedHTML,-20,15
+in tags",-16,-24
+2026-02-15,sveltekit,match,-13,44
+2026-02-13,svelte,TrustedHTML,0,20
 2026-02-12,sveltekit,scroll,-39,13
 2025-12-03,ecosystem,Vite 8 Beta,26,-18
 2025-11-26,svelte,print(),5,-20
@@ -15,7 +15,7 @@ in tags",-16,-12
 file uploads",-27,-29
 2025-10-26,sveltekit,forking,25,22
 2025-10-25,svelte,forking,12,9
-2025-10-23,svelte,$state.eager(),-20,34
+2025-10-23,svelte,$state.eager(),-20,44
 2025-10-13,svelte,createContext(),-12,-23
 2025-10-05,sveltekit,form API,-18,26
 2025-10-01,ecosystem,MCP,0,-11
@@ -42,5 +42,5 @@ file uploads",-27,-29
 2024-10-19,svelte,Svelte 5.0.0,0,-70
 2024-09-15,ecosystem,Svelte CLI,0,-8
 2024-04-30,svelte,Svelte 5 Release Candidate,-29,-53
-2024-01-19,sveltekit,read(),71,-14
+2024-01-19,sveltekit,read(),41,-16
 2023-11-10,svelte,Svelte 5 alpha,48,-63
