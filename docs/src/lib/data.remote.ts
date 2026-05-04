@@ -301,21 +301,31 @@ export const getHydro = prerender(async () => {
 	return data;
 });
 
-export type CountryGdpLifeExpectancy = {
-	title: string;
-	id: string;
+export type Country2020 = {
+	name: string;
+	code: string;
+	code2: string;
+	lifeExpectancy: number;
+	gdpPerCapita: number;
+	population: number;
 	continent: string;
-	x: number;
-	y: number;
-	value: number;
 };
 
-export const getCountryGdpLifeExpectancy = prerender(async () => {
+export const getCountries2020 = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = (await fetch('/data/examples/country-gdp-life-expectancy.json').then((r) =>
-		r.json()
-	)) as CountryGdpLifeExpectancy[];
-	return data;
+	const text = await fetch('/data/examples/countries_2020.csv').then((r) => r.text());
+	const rows = csvParse(text, autoType) as Array<Record<string, any>>;
+	return rows.map(
+		(d): Country2020 => ({
+			name: d.Entity,
+			code: d.Code,
+			code2: d.Code2,
+			lifeExpectancy: d['Life expectancy'],
+			gdpPerCapita: d['GDP per capita'],
+			population: d.Population,
+			continent: d.Continent
+		})
+	);
 });
 
 export const getForceGroupDots = prerender(async () => {

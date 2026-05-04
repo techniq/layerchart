@@ -36,6 +36,10 @@ A classic 1-D beeswarm is `axis="y"` + `anchor="middle"` — items spread symmet
 
 :example{ name="variable-radius" }
 
+Any mark works inside the snippet — drive a `<Text>` font size from the resolved `r` to scale labels alongside the dodge radius.
+
+:example{ name="text-beeswarm" }
+
 ## Row mode (`rowHeight`)
 
 Circular packing produces unnecessarily large vertical gaps when collision radius is much wider than item height — typical for text labels where `r ≈ labelWidth/2`. Set `rowHeight` to switch to rectangular row-based packing: items are placed in fixed-height rows, with collision checked horizontally only.

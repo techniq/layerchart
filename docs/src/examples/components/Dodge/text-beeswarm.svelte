@@ -1,10 +1,15 @@
 <script module lang="ts">
 	import { getCountries2020 } from '$lib/data.remote';
-	const data = await getCountries2020();
+	import { scaleLog } from 'd3-scale';
+	import { sortFunc } from '@layerstack/utils';
+
+	const countries = await getCountries2020();
+	// Place the largest items first so smaller ones nestle around them.
+	const data = [...countries].sort(sortFunc('population', 'desc'));
 </script>
 
 <script lang="ts">
-	import { Chart, Circle, Dodge, Tooltip } from 'layerchart';
+	import { Chart, Dodge, Text, Tooltip } from 'layerchart';
 
 	export { data };
 </script>
@@ -12,9 +17,10 @@
 <Chart
 	{data}
 	x="lifeExpectancy"
-	xNice
+	xScale={scaleLog()}
+	xDomain={[50, 90]}
 	r="population"
-	rRange={[2, 20]}
+	rRange={[2, 40]}
 	c="continent"
 	cDomain={['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America']}
 	cRange={[
@@ -26,21 +32,25 @@
 		'var(--color-primary)'
 	]}
 	padding={{ top: 12, bottom: 32, left: 12, right: 12 }}
-	height={300}
+	height={420}
 	axis={{ placement: 'bottom', rule: true }}
-	props={{ xAxis: { label: 'Life expectancy (years)' } }}
+	props={{ xAxis: { label: 'Life expectancy (log)' } }}
 >
 	{#snippet marks({ context })}
-		<Dodge axis="y" anchor="bottom" padding={0}>
-			{#snippet children({ items: dodged })}
-				{#each dodged as { data: country, x, y, r, index } (index)}
-					<Circle
-						data={[country]}
-						cx={x}
-						cy={y}
-						{r}
-						fill="continent"
-						class="stroke-surface-100 opacity-80"
+		<Dodge axis="y" anchor="middle" padding={1}>
+			{#snippet children({ items })}
+				{#each items as { data: country, x, y, r, index } (index)}
+					{@const fontSize = r * 1.2}
+					<Text
+						{x}
+						{y}
+						value={country.code2}
+						textAnchor="middle"
+						verticalAnchor="middle"
+						capHeight="{fontSize * 0.71}px"
+						fill={context.cScale?.(country.continent)}
+						font-size={fontSize}
+						class="font-semibold"
 						onpointermove={(e) => context.tooltip.show(e, country)}
 						onpointerleave={context.tooltip.hide}
 					/>
