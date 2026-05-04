@@ -16,7 +16,7 @@
 	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 	import ScrollToTop from '~icons/lucide/arrow-up-to-line';
-	import Hidybar from '$lib/components/Hidybar.svelte';
+	import { hideybar } from '$lib/attachments/hideybar';
 	import { examples } from '$lib/context.js';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { page } from '$app/state';
@@ -113,11 +113,12 @@
 	]);
 </script>
 
-<Hidybar
-	{loaded}
-	hidybarHeight="50px"
+<div
+	use:hideybar={{ offsetTop: '57px', mx: '20px' }}
 	class={cls(
-		'flex flex-col w-full rounded-xl rounded-t-none border-x border-b border-primary/10 shadow-lg px-2 py-1 overflow-hidden'
+		loaded ? 'visible' : 'invisible',
+		'flex flex-col z-29 w-full rounded-xl rounded-t-none border-x border-b border-primary/10 shadow-lg px-2 py-1 overflow-hidden',
+		'bg-radial from-black/0 from-[1px] to-surface-100 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}
 >
 	<div class="flex items-center gap-4 px-3 overflow-hidden h-full">
@@ -173,7 +174,7 @@
 			</Tooltip>
 		</span>
 	</div>
-</Hidybar>
+</div>
 
 <h1
 	class="text-4xl font-bold select-none pb-4"
