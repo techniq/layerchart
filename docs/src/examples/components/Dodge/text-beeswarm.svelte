@@ -40,16 +40,14 @@
 		<Dodge axis="y" anchor="middle" padding={1}>
 			{#snippet children({ items })}
 				{#each items as { data: country, x, y, r, index } (index)}
-					{@const fontSize = r * 1.2}
 					<Text
 						{x}
 						{y}
 						value={country.code2}
+						fontSize={r * 1.1}
 						textAnchor="middle"
 						verticalAnchor="middle"
-						capHeight="{fontSize * 0.71}px"
 						fill={context.cScale?.(country.continent)}
-						font-size={fontSize}
 						class="font-semibold"
 						onpointermove={(e) => context.tooltip.show(e, country)}
 						onpointerleave={context.tooltip.hide}

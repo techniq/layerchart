@@ -30,10 +30,13 @@
     rotate,
     dx,
     dy,
+    // `fontSize` is a typed prop (drives `capHeight` defaults), but on the
+    // DOM it must be rendered as the kebab-case `font-size` attribute.
+    fontSize,
     ...rest
   }: TextProps = $props();
 
-  const c = new TextState(() => ({ rotate, dx, dy, ...rest } as TextProps));
+  const c = new TextState(() => ({ rotate, dx, dy, fontSize, ...rest } as TextProps));
 
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
@@ -78,6 +81,7 @@
         transform={(rest.transform as string | undefined) ?? dataRotateTransform}
         text-anchor={rest.textAnchor ?? 'start'}
         dominant-baseline={rest.dominantBaseline ?? 'auto'}
+        font-size={fontSize}
         fill={resolvedFill}
         fill-opacity={resolvedFillOpacity}
         stroke={resolvedStroke}
@@ -109,6 +113,7 @@
         {...rest as any}
         bind:this={ref}
         dy={dy ?? 0}
+        font-size={fontSize}
         fill={c.staticFill}
         fill-opacity={c.staticFillOpacity}
         stroke={c.staticStroke}
@@ -140,6 +145,7 @@
         transform={c.transform}
         text-anchor={rest.textAnchor ?? 'start'}
         dominant-baseline={rest.dominantBaseline ?? 'auto'}
+        font-size={fontSize}
         fill={c.staticFill}
         fill-opacity={c.staticFillOpacity}
         stroke={c.staticStroke}

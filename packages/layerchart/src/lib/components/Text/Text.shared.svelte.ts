@@ -123,8 +123,21 @@ export type TextPropsWithoutHTML = {
   lineHeight?: string;
 
   /**
-   * Cap height of the text
-   * @default '0.71em'
+   * Font size of the text. A number is treated as pixels; a string passes
+   * through (e.g. `'12px'`, `'1.25em'`). When set, vertical centering math
+   * derives `capHeight` from this value automatically (as `fontSize * 0.71`),
+   * so per-item scaled labels with `verticalAnchor="middle"` align correctly
+   * without an explicit `capHeight` override.
+   */
+  fontSize?: number | string;
+
+  /**
+   * Cap height of the text — used by vertical anchor math to align the text
+   * to its visual center (as opposed to the font box). Defaults to `0.71em`,
+   * but if `fontSize` is set, defaults to `fontSize * 0.71` so centering
+   * stays correct as text scales.
+   *
+   * @default '0.71em' (or `fontSize * 0.71` when `fontSize` is set)
    */
   capHeight?: string;
 
@@ -269,6 +282,25 @@ export function getPixelValue(cssValue: number | string) {
     default:
       return 0;
   }
+}
+
+/**
+ * Resolve the cap-height used by vertical-anchor math.
+ *
+ * Priority:
+ *   1. Explicit `capHeight` prop
+ *   2. `fontSize * 0.71` when `fontSize` is set (keeps centering correct as
+ *      labels scale per-item)
+ *   3. `'0.71em'` (legacy default — only correct for ~16px text since
+ *      `getPixelValue` resolves `em` against 16, not the actual font-size)
+ */
+export function resolveCapHeight(
+  capHeight: string | undefined,
+  fontSize: number | string | undefined
+): number | string {
+  if (capHeight != null) return capHeight;
+  if (fontSize != null) return getPixelValue(fontSize) * 0.71;
+  return '0.71em';
 }
 
 export function isValidXOrY(xOrY: string | number | undefined) {
@@ -479,7 +511,7 @@ export class TextState {
     const props = this.#getProps();
     const verticalAnchor = props.verticalAnchor ?? 'end';
     const lineHeight = props.lineHeight ?? '1em';
-    const capHeight = props.capHeight ?? '0.71em';
+    const capHeight = resolveCapHeight(props.capHeight, props.fontSize);
     if (verticalAnchor === 'start') {
       return getPixelValue(lineHeight);
     } else if (verticalAnchor === 'middle') {
@@ -492,7 +524,7 @@ export class TextState {
     const props = this.#getProps();
     const verticalAnchor = props.verticalAnchor ?? 'end';
     const lineHeight = props.lineHeight ?? '1em';
-    const capHeight = props.capHeight ?? '0.71em';
+    const capHeight = resolveCapHeight(props.capHeight, props.fontSize);
     if (verticalAnchor === 'start') return getPixelValue(lineHeight);
     if (verticalAnchor === 'middle') return getPixelValue(capHeight) / 2;
     return -getPixelValue(capHeight) / 2;

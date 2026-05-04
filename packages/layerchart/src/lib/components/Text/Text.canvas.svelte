@@ -50,6 +50,14 @@
             strokeWidth: itemStrokeWidth ?? c.staticStrokeWidth,
             opacity: itemOpacity ?? c.staticOpacity,
             paintOrder: 'stroke',
+            ...(rest.fontSize != null
+              ? {
+                  fontSize:
+                    typeof rest.fontSize === 'number'
+                      ? `${rest.fontSize}px`
+                      : rest.fontSize,
+                }
+              : {}),
             ...((rest.textAnchor ?? 'start') !== 'start'
               ? { textAnchor: rest.textAnchor }
               : {}),
@@ -195,6 +203,7 @@
         rest.class,
         c.truncateConfig,
         rest.rotate,
+        rest.fontSize,
         rest.lineHeight,
         rest.textAnchor,
         rest.verticalAnchor,
