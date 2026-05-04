@@ -62,3 +62,9 @@ This timeline pans/zooms via `<TransformContext>`; labels re-pack on every zoom 
 Render two `<Dodge>` instances split by a per-item `side` field — one with `anchor="bottom"` and `size={baselineY}` for labels above the baseline, the other with `anchor="top"` and `size={chart.height - baselineY}` (offset by `baselineY`) for labels below. Mirrors the [d3-milestones](https://walterra.github.io/d3-milestones) layout.
 
 :example{ name="timeline-bidirectional" }
+
+## Dense lanes (Gantt-style)
+
+For events with start/end ranges, pass each item's pixel midpoint as `position` and half its pixel width as `r`. With `rowHeight` set, Dodge packs each event into the lowest non-overlapping lane — equivalent to the `applyLanes()` helper used by the [`BarChart` dense-lanes example](/docs/components/BarChart/duration-bars-dense-lanes), but without precomputing lane indices on the data.
+
+:example{ name="duration-bars-dense-lanes" }
