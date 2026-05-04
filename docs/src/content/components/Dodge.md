@@ -56,3 +56,9 @@ Circular dodge produces large vertical gaps when collision radius is meaningfull
 This timeline pans/zooms via `<TransformContext>`; labels re-pack on every zoom step.
 
 :example{ name="timeline" }
+
+## Bidirectional timeline
+
+Render two `<Dodge>` instances split by a per-item `side` field — one with `anchor="bottom"` and `size={baselineY}` for labels above the baseline, the other with `anchor="top"` and `size={chart.height - baselineY}` (offset by `baselineY`) for labels below. Mirrors the [d3-milestones](https://walterra.github.io/d3-milestones) layout.
+
+:example{ name="timeline-bidirectional" }
