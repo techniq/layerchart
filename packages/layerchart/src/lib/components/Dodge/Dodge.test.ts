@@ -13,11 +13,11 @@ describe('dodge() — circular packing', () => {
       axis: 'y',
       anchor: 'bottom',
       padding: 0,
-      size: 100,
+      baseline: 100,
     });
     expect(out).toHaveLength(1);
     expect(out[0].x).toBe(50);
-    expect(out[0].y).toBe(90); // size - r
+    expect(out[0].y).toBe(90); // baseline - r
   });
 
   it('places non-overlapping items both at the anchor', () => {
@@ -27,7 +27,7 @@ describe('dodge() — circular packing', () => {
         { id: 'a', x: 0, r: 10 },
         { id: 'b', x: 100, r: 10 },
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, size: 100 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 100 }
     );
     expect(out[0].y).toBe(90);
     expect(out[1].y).toBe(90);
@@ -42,7 +42,7 @@ describe('dodge() — circular packing', () => {
         { id: 'a', x: 50, r: 10 },
         { id: 'b', x: 50, r: 10 },
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 1, size: 100 }
+      { axis: 'y', anchor: 'bottom', padding: 1, baseline: 100 }
     );
     expect(out[0].y).toBe(89);
     expect(out[1].y).toBeCloseTo(89 - 21, 5); // gap of sumR+padding
@@ -54,7 +54,7 @@ describe('dodge() — circular packing', () => {
         { id: 'small', x: 50, r: 5 },
         { id: 'large', x: 50, r: 20 },
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, size: 100 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 100 }
     );
     expect(out[0].data.id).toBe('small');
     expect(out[1].data.id).toBe('large');
@@ -70,7 +70,7 @@ describe('dodge() — circular packing', () => {
         { id: 'a', x: 50, r: 10 },
         { id: 'b', x: 50, r: 10 },
       ]),
-      { axis: 'y', anchor: 'top', padding: 0, size: 100 }
+      { axis: 'y', anchor: 'top', padding: 0, baseline: 0 }
     );
     expect(out[0].y).toBe(10); // first at top
     expect(out[1].y).toBeCloseTo(30, 5); // second below, gap = r1+r2 = 20
@@ -81,7 +81,7 @@ describe('dodge() — circular packing', () => {
       axis: 'x',
       anchor: 'left',
       padding: 0,
-      size: 200,
+      baseline: 0,
     });
     expect(out[0].x).toBe(5); // dodged: at left edge
     expect(out[0].y).toBe(30); // anchor y preserved
@@ -95,9 +95,9 @@ describe('dodge() — row-based packing (rowHeight)', () => {
         { id: 'a', x: 0, r: 20 }, // spans -20 to 20
         { id: 'b', x: 100, r: 20 }, // spans 80 to 120
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, size: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rowHeight: 16 }
     );
-    // Row 0 center from bottom = size - rowHeight/2 = 192
+    // Row 0 center from bottom = baseline - rowHeight/2 = 192
     expect(out[0].y).toBe(192);
     expect(out[1].y).toBe(192);
   });
@@ -109,7 +109,7 @@ describe('dodge() — row-based packing (rowHeight)', () => {
         { id: 'b', x: 60, r: 30 },
         { id: 'c', x: 70, r: 30 },
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, size: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rowHeight: 16 }
     );
     // Input order: a → row 0, b overlaps a → row 1, c overlaps both → row 2
     // Row centers from bottom: 192, 176, 160.
@@ -125,7 +125,7 @@ describe('dodge() — row-based packing (rowHeight)', () => {
         { id: 'b', x: 5, r: 10 }, // overlaps a → row 1
         { id: 'c', x: 100, r: 10 }, // far from both → row 0
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, size: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rowHeight: 16 }
     );
     expect(out[0].y).toBe(192);
     expect(out[1].y).toBe(176);
@@ -138,7 +138,7 @@ describe('dodge() — row-based packing (rowHeight)', () => {
         { id: 'a', x: 50, r: 30 },
         { id: 'b', x: 60, r: 30 },
       ]),
-      { axis: 'y', anchor: 'top', padding: 0, size: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'top', padding: 0, baseline: 0, rowHeight: 16 }
     );
     // Row 0 from top: 0 + 16/2 = 8. Row 1: 24.
     expect(out[0].y).toBe(8);

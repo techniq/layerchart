@@ -23,7 +23,7 @@
 				x="weight"
 				xNice
 				padding={{ top: 24, bottom: 24, left: 12, right: 12 }}
-				height={140}
+				height={160}
 				axis="x"
 			>
 				{#snippet marks({ context })}

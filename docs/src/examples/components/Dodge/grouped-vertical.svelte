@@ -37,7 +37,7 @@
 				data={items}
 				axis="x"
 				anchor="middle"
-				size={bandwidth}
+				baseline={bandLeft + bandwidth / 2}
 				r={3}
 				padding={1}
 				position={(d) => Number(context.yGet(d)) || 0}
@@ -47,7 +47,7 @@
 						{@const series = visibleSeries.find((vs) => vs.key === p.sex)}
 						{@const opacity = context.series.isHighlighted(p.sex, true) ? 1 : 0.2}
 						<Circle
-							cx={x + bandLeft}
+							cx={x}
 							cy={y}
 							{r}
 							fill={series?.color}

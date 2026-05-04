@@ -38,7 +38,7 @@
 				data={items}
 				axis="y"
 				anchor="middle"
-				size={bandwidth}
+				baseline={bandTop + bandwidth / 2}
 				r={3}
 				padding={1}
 				position={(d) => Number(context.xGet(d)) || 0}
@@ -49,7 +49,7 @@
 						{@const opacity = context.series.isHighlighted(p.sex, true) ? 1 : 0.2}
 						<Circle
 							cx={x}
-							cy={y + bandTop}
+							cy={y}
 							{r}
 							fill={series?.color}
 							{opacity}

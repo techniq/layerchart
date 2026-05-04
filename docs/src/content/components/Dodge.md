@@ -5,66 +5,53 @@ layers: [svg, canvas, html]
 related: [ForceSimulation, Points, Circle]
 ---
 
-The **Dodge** transform repositions items along one axis so they don't overlap, given their positions on the other axis. Unlike [`ForceSimulation`](/docs/components/ForceSimulation), it's deterministic — the same input always produces the same layout — and faster to compute. Modeled after [Observable Plot's `dodge` transform](https://observablehq.com/plot/transforms/dodge).
+The **Dodge** component repositions items along one axis so they don't overlap, given their positions on the other axis. Unlike [`ForceSimulation`](/docs/components/ForceSimulation), it's deterministic — the same input always produces the same layout — and faster to compute. Modeled after [Observable Plot's `dodge` transform](https://observablehq.com/plot/transforms/dodge).
 
-It's a non-rendering composition component: pass it your data, an `axis`, an `anchor`, and a per-item `r` (collision radius), and it yields each item's computed pixel `x`/`y` via the children snippet for you to render however you want.
+It's a non-rendering composition component: pass it your data and a few layout props, and it yields each item's computed pixel `x`/`y` (and resolved `r`) via the children snippet for you to render however you want — typically with `<Circle>`, but `<Image>`, `<Rect>`, or `<Text>` work too.
 
-## Beeswarm
+## Algorithm
 
-A 1-D distribution stacked vertically with `axis="y"` and `anchor="middle"`. Pass a constant `r` for uniform circles.
+The packing uses a greedy O(n log n) interval-tree-based algorithm: for each item in input order, the candidate positions along the dodge axis are computed from the tangency equation against any horizontally-overlapping placed items, and the candidate closest to the anchor is chosen. Layout is **stable for a given input** — there's no animation or jitter.
 
-:example{ name="beeswarm" }
+## Axis & anchor
 
-## With series
+`axis` selects which dimension Dodge computes. Items are anchored on the _other_ axis (their natural data position) and stacked along the dodge axis to avoid overlaps.
 
-Combine with the `series` prop on `<Chart>` and `<Legend>` for a categorical beeswarm. Filter `data` by `context.series.visibleSeries` so the dodge re-packs when categories are toggled.
+`anchor` selects which edge items grow away from along the dodge axis:
 
-:example{ name="penguins" }
-
-## Variable radius
-
-Omit Dodge's `r` prop and configure `r="someProperty"` (with `rRange`) on `<Chart>` — Dodge picks up the chart's `rGet` automatically, the same way `Points` does. Larger items are placed first (closest to the anchor).
-
-:example{ name="variable-radius" }
-
-## Anchor
-
-Use `anchor` to control where the stack grows from along the dodge axis: `'top'`/`'middle'`/`'bottom'` for `axis="y"`, `'left'`/`'middle'`/`'right'` for `axis="x"`. Items always grow _away_ from the anchor.
+| `axis` | Valid `anchor` values           | Default    |
+| ------ | ------------------------------- | ---------- |
+| `'x'`  | `'left'`, `'middle'`, `'right'` | `'left'`   |
+| `'y'`  | `'top'`, `'middle'`, `'bottom'` | `'bottom'` |
 
 :example{ name="anchor" }
 
-## Grouped (band scale)
+A classic 1-D beeswarm is `axis="y"` + `anchor="middle"` — items spread symmetrically around the chart's vertical center.
 
-Use a band scale on the category axis and render one `<Dodge>` per band, passing the band's `bandwidth()` as `size` so each group dodges within its own column. Items are then translated to the band's pixel offset.
+:example{ name="beeswarm" }
 
-:example{ name="grouped-vertical" }
+## Sizing (`r`)
 
-For a horizontal layout, swap the axes (band scale on `y`, dodge on `y` per band).
+`r` is the per-item collision radius (constant or accessor). When omitted, Dodge falls back to the chart's `r` accessor / `rScale`. This lets the `<Chart>` declare `r="propertyName"` once and have Dodge pick it up automatically.
 
-:example{ name="grouped-horizontal" }
+:example{ name="variable-radius" }
 
-## Image beeswarm
+## Row mode (`rowHeight`)
 
-Render `<Image>` instead of `<Circle>` inside the snippet — Dodge yields pixel positions and a resolved radius for each item, which double as the image's bounding box.
-
-:example{ name="image-beeswarm" }
-
-## Row-based packing for text labels
-
-Circular dodge produces large vertical gaps when collision radius is meaningfully wider than item height (e.g. text labels where `r ≈ labelWidth/2`). Set `rowHeight` to switch to rectangular row-based packing — items are placed in fixed-height rows, with collision checked horizontally only.
-
-This timeline pans/zooms via `<TransformContext>`; labels re-pack on every zoom step.
+Circular packing produces unnecessarily large vertical gaps when collision radius is much wider than item height — typical for text labels where `r ≈ labelWidth/2`. Set `rowHeight` to switch to rectangular row-based packing: items are placed in fixed-height rows, with collision checked horizontally only.
 
 :example{ name="timeline" }
 
-## Bidirectional timeline
+## Sub-region dodging (`baseline`)
 
-Render two `<Dodge>` instances split by a per-item `side` field — one with `anchor="bottom"` and `size={baselineY}` for labels above the baseline, the other with `anchor="top"` and `size={chart.height - baselineY}` (offset by `baselineY`) for labels below. Mirrors the [d3-milestones](https://walterra.github.io/d3-milestones) layout.
+By default, Dodge anchors items to a chart edge (or center). Pass `baseline` to anchor against an arbitrary pixel coordinate along the dodge axis — for example, a band scale's `bandLeft + bandwidth/2` so each group dodges around its own column center, or a horizontal divider so labels stack above (`anchor="bottom"`) and below (`anchor="top"`) a shared baseline.
 
-:example{ name="timeline-bidirectional" }
+This works by combining multiple `<Dodge>` instances, each with its own `baseline` and `position` accessor. Output positions are already in chart coordinates, so the snippet doesn't need to translate them.
 
-## Dense lanes (Gantt-style)
+:example{ name="grouped-vertical" }
 
-For events with start/end ranges, pass each item's pixel midpoint as `position` and half its pixel width as `r`. With `rowHeight` set, Dodge packs each event into the lowest non-overlapping lane — equivalent to the `applyLanes()` helper used by the [`BarChart` dense-lanes example](/docs/components/BarChart/duration-bars-dense-lanes), but without precomputing lane indices on the data.
+## Time-range lanes (Gantt-style)
+
+For events with start/end ranges, pass each item's pixel midpoint as `position` and half its pixel width as `r`. With `rowHeight` set, Dodge packs each event into the lowest non-overlapping lane.
 
 :example{ name="duration-bars-dense-lanes" }

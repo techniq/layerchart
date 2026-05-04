@@ -20,7 +20,7 @@
     r,
     rowHeight,
     position,
-    size: sizeProp,
+    baseline: baselineProp,
     children,
   }: DodgeProps<T> = $props();
 
@@ -43,7 +43,14 @@
     return () => 5;
   });
 
-  const size = $derived(sizeProp ?? (axis === 'y' ? ctx.height : ctx.width));
+  // Default baseline: the chart-coord position of the anchor edge / centerline.
+  const baseline = $derived.by(() => {
+    if (baselineProp != null) return baselineProp;
+    const dim = axis === 'y' ? ctx.height : ctx.width;
+    if (resolvedAnchor === 'middle') return dim / 2;
+    if (axis === 'y') return resolvedAnchor === 'top' ? 0 : dim; // bottom
+    return resolvedAnchor === 'right' ? dim : 0; // left
+  });
 
   const items = $derived.by(() => {
     const input = data.map((d, index) => ({
@@ -56,7 +63,7 @@
       axis,
       anchor: resolvedAnchor,
       padding,
-      size,
+      baseline,
       rowHeight,
     });
   });

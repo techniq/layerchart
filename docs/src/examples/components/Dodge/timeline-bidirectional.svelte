@@ -78,7 +78,7 @@
 			data={above}
 			axis="y"
 			anchor="bottom"
-			size={baselineY}
+			baseline={baselineY}
 			padding={4}
 			rowHeight={16}
 			r={(d) => labelHalfWidth(d.label)}
@@ -112,12 +112,12 @@
 			{/snippet}
 		</Dodge>
 
-		<!-- Below: stack downward from the baseline (translate result by +baselineY) -->
+		<!-- Below: stack downward from the baseline -->
 		<Dodge
 			data={below}
 			axis="y"
 			anchor="top"
-			size={context.height - baselineY}
+			baseline={baselineY}
 			padding={4}
 			rowHeight={16}
 			r={(d) => labelHalfWidth(d.label)}
@@ -126,7 +126,7 @@
 				{#each dodged as { data: item, x, y, index } (index)}
 					{@const series = visibleSeries.find((s) => s.key === item.category)}
 					{@const opacity = context.series.isHighlighted(item.category, true) ? 1 : 0.2}
-					{@const labelY = y + baselineY + 6}
+					{@const labelY = y + 6}
 
 					<Line x1={x} x2={x} y1={baselineY + 4} y2={labelY - 6} opacity={0.25 * opacity} />
 					<Circle

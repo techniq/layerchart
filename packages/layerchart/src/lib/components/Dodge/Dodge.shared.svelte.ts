@@ -91,15 +91,19 @@ export type DodgePropsWithoutHTML<T = any> = {
    */
   position?: (d: T) => number;
   /**
-   * Override the chart dimension along the dodge axis used for anchor
-   * placement and bounds (the centerline for `'middle'`, edge for
-   * `'top'`/`'bottom'`/`'left'`/`'right'`).
+   * Pixel coordinate (along the dodge axis) of the line items grow away from:
+   * the centerline for `anchor='middle'`, the edge for the others.
    *
-   * Defaults to `ctx.height` (axis=`'y'`) or `ctx.width` (axis=`'x'`). Pass
-   * a smaller value to dodge within a sub-region — e.g. `bandwidth()` of a
-   * band scale, to dodge per-band.
+   * Default depends on `axis` + `anchor`:
+   * - `axis='y'`: `0` (top), `ctx.height / 2` (middle), `ctx.height` (bottom)
+   * - `axis='x'`: `0` (left), `ctx.width / 2` (middle), `ctx.width` (right)
+   *
+   * Pass a custom value to dodge within a sub-region — e.g. a band scale's
+   * `bandLeft + bandwidth/2` for per-band beeswarms, or a horizontal
+   * baseline pixel for split top/bottom timeline labels. Output positions
+   * are in chart coordinates (no snippet translation needed).
    */
-  size?: number;
+  baseline?: number;
   /** Snippet receives computed positions in original data order. */
   children?: Snippet<[{ items: DodgeItem<T>[] }]>;
 };
@@ -112,31 +116,28 @@ type DodgeOpts = {
   axis: 'x' | 'y';
   anchor: DodgeAnchor;
   padding: number;
-  /** Chart dimension along the dodge axis (height for `axis='y'`, width for `axis='x'`). */
-  size: number;
+  /** Pixel coordinate (along the dodge axis) of the line items grow away from. */
+  baseline: number;
   /** When set, switch to row-based rectangular packing. */
   rowHeight?: number;
 };
 
 /**
- * Anchor descriptor: `[ky, ty]` where `ky` is the direction multiplier
- * (-1, 0, or 1) and `ty` is the baseline pixel coordinate. The dodge
- * algorithm packs items in a normalized space starting at `0`, then maps
- * back to chart space via `final = ky * packed + ty` (ky=0 treated as 1).
+ * Direction multiplier for an anchor along its dodge axis.
  *
- *  - axis='y', anchor='bottom':  [-1, size]    items stack upward from bottom
- *  - axis='y', anchor='top':     [ 1, 0]       items stack downward from top
- *  - axis='y', anchor='middle':  [ 0, size/2]  items stack symmetrically from center
- *  - axis='x', anchor='left':    [ 1, 0]
- *  - axis='x', anchor='right':   [-1, size]
- *  - axis='x', anchor='middle':  [ 0, size/2]
+ *  - `'top'` / `'left'`:    `+1` — items grow at increasing chart coord
+ *  - `'bottom'` / `'right'`: `-1` — items grow at decreasing chart coord
+ *  - `'middle'`:              `0` — items spread symmetrically (algorithm
+ *    treats this specially, not multiplied)
+ *
+ * Combined with `baseline` (the anchor's pixel coordinate), the algorithm
+ * maps a packed local position `p` to chart coords via `baseline + dir * p`
+ * (or `baseline ± p` for middle).
  */
-function resolveAnchor(axis: 'x' | 'y', anchor: DodgeAnchor, size: number): [number, number] {
-  if (anchor === 'middle') return [0, size / 2];
-  if (axis === 'y') {
-    return anchor === 'top' ? [1, 0] : [-1, size]; // bottom
-  }
-  return anchor === 'right' ? [-1, size] : [1, 0]; // left
+function anchorDirection(axis: 'x' | 'y', anchor: DodgeAnchor): number {
+  if (anchor === 'middle') return 0;
+  if (axis === 'y') return anchor === 'top' ? 1 : -1; // bottom
+  return anchor === 'right' ? -1 : 1; // left
 }
 
 function compareSymmetric(a: number, b: number): number {
@@ -177,14 +178,14 @@ function buildResult<T>(
   input: DodgeInput<T>[],
   packed: Float64Array,
   axis: 'x' | 'y',
-  ky: number,
-  ty: number
+  dir: number,
+  baseline: number
 ): DodgeItem<T>[] {
-  const factor = ky === 0 ? 1 : ky;
+  const factor = dir === 0 ? 1 : dir;
   const result: DodgeItem<T>[] = new Array(input.length);
   for (let i = 0; i < input.length; i++) {
     const item = input[i];
-    const dodgePos = packed[i] * factor + ty;
+    const dodgePos = packed[i] * factor + baseline;
     result[i] =
       axis === 'y'
         ? { data: item.data, x: item.x, y: dodgePos, r: item.r, index: item.index }
@@ -194,9 +195,9 @@ function buildResult<T>(
 }
 
 function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>[] {
-  const { axis, anchor, padding, size } = opts;
-  const [ky, ty] = resolveAnchor(axis, anchor, size);
-  const compare = ky === 0 ? compareSymmetric : compareAscending;
+  const { axis, anchor, padding, baseline } = opts;
+  const dir = anchorDirection(axis, anchor);
+  const compare = dir === 0 ? compareSymmetric : compareAscending;
 
   // `intervals[0..k]` is a flat array of [lo0, hi0, lo1, hi1, ...] forbidden
   // zones along the dodge axis for the current item. Slot 0/1 is reserved
@@ -210,9 +211,9 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
   for (let i = 0; i < input.length; i++) {
     const item = input[i];
     const ri = item.r;
-    // y0 shifts the natural anchor down by ri+padding so the item sits flush
-    // against the anchor edge. middle anchor (ky=0) needs no shift.
-    const y0 = ky !== 0 ? ri + padding : 0;
+    // y0 shifts the natural anchor by ri+padding so the item sits flush
+    // against the baseline. middle anchor (dir=0) needs no shift.
+    const y0 = dir !== 0 ? ri + padding : 0;
     const l = item.x - ri;
     const h = item.x + ri;
 
@@ -231,7 +232,7 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
     });
 
     let candidates = Array.from(intervals.slice(0, k));
-    if (ky !== 0) candidates = candidates.filter((y) => y >= 0);
+    if (dir !== 0) candidates = candidates.filter((y) => y >= 0);
     candidates.sort(compare);
 
     let chosen = y0; // fallback: natural anchor when nothing fits
@@ -249,7 +250,7 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
     tree.insert([l, h, i]);
   }
 
-  return buildResult(input, packed, axis, ky, ty);
+  return buildResult(input, packed, axis, dir, baseline);
 }
 
 /**
@@ -264,8 +265,8 @@ function dodgeRows<T>(
   input: DodgeInput<T>[],
   opts: DodgeOpts & { rowHeight: number }
 ): DodgeItem<T>[] {
-  const { axis, anchor, padding, size, rowHeight } = opts;
-  const [ky, ty] = resolveAnchor(axis, anchor, size);
+  const { axis, anchor, padding, baseline, rowHeight } = opts;
+  const dir = anchorDirection(axis, anchor);
 
   const rows = new Int32Array(input.length);
   const packed = new Float64Array(input.length);
@@ -285,7 +286,7 @@ function dodgeRows<T>(
     while (used.has(row)) row++;
     rows[i] = row;
 
-    if (ky === 0) {
+    if (dir === 0) {
       // middle: alternate above/below (even rows above, odd rows below)
       const sign = row % 2 === 0 ? -1 : 1;
       const step = Math.floor(row / 2) + (row === 0 ? 0 : 1);
@@ -298,5 +299,5 @@ function dodgeRows<T>(
     tree.insert([l, h, i]);
   }
 
-  return buildResult(input, packed, axis, ky, ty);
+  return buildResult(input, packed, axis, dir, baseline);
 }
