@@ -1927,35 +1927,91 @@
       "example": "anchor",
       "component": "Dodge",
       "path": "/docs/components/Dodge/anchor",
-      "lineNumber": 23,
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 30,
       "line": "<Chart"
     },
     {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
-      "lineNumber": 16,
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 12,
       "line": "<Chart"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 24,
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
       "example": "timeline",
       "component": "Dodge",
       "path": "/docs/components/Dodge/timeline",
-      "lineNumber": 34,
+      "lineNumber": 29,
+      "line": "<Chart"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 40,
       "line": "<Chart"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 28,
+      "lineNumber": 38,
       "line": "<Chart"
     },
     {
@@ -2022,6 +2078,13 @@
       "line": "<Chart height={680}>"
     },
     {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 41,
+      "line": "<Chart {data} x=\"date\" xNice padding={{ top: 12, bottom: 28, left: 12, right: 12 }} height={420}>"
+    },
+    {
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-drag",
@@ -2048,6 +2111,13 @@
       "path": "/docs/components/ForceSimulation/lattice",
       "lineNumber": 27,
       "line": "<Chart height={800}>"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 69,
+      "line": "<Chart"
     },
     {
       "example": "text",
@@ -2697,7 +2767,7 @@
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
-      "lineNumber": 64,
+      "lineNumber": 12,
       "line": "<Chart"
     },
     {
@@ -4269,5 +4339,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-05-01T15:54:49.419Z"
+  "updatedAt": "2026-05-05T17:35:58.896Z"
 }

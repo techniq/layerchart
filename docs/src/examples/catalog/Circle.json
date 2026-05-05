@@ -440,35 +440,77 @@
       "example": "anchor",
       "component": "Dodge",
       "path": "/docs/components/Dodge/anchor",
-      "lineNumber": 48,
+      "lineNumber": 42,
+      "line": "<Circle"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 44,
       "line": "<Circle"
     },
     {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
-      "lineNumber": 30,
+      "lineNumber": 27,
+      "line": "<Circle"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 50,
+      "line": "<Circle"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 49,
       "line": "<Circle"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 46,
+      "lineNumber": 39,
+      "line": "<Circle"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 36,
       "line": "<Circle"
     },
     {
       "example": "timeline",
       "component": "Dodge",
       "path": "/docs/components/Dodge/timeline",
-      "lineNumber": 83,
+      "lineNumber": 73,
+      "line": "<Circle"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 93,
+      "line": "<Circle"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 132,
       "line": "<Circle"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 45,
+      "lineNumber": 63,
       "line": "<Circle"
     },
     {
@@ -491,6 +533,13 @@
       "path": "/docs/components/ForceSimulation/disjoint-graph",
       "lineNumber": 78,
       "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 58,
+      "line": "<Circle"
     },
     {
       "example": "graph-drag",
@@ -519,6 +568,13 @@
       "path": "/docs/components/ForceSimulation/lattice",
       "lineNumber": 47,
       "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 117,
+      "line": "<Circle"
     },
     {
       "example": "tree",
@@ -1039,5 +1095,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-05-01T16:26:40.468Z"
+  "updatedAt": "2026-05-05T17:35:59.127Z"
 }

@@ -287,15 +287,29 @@
       "example": "timeline",
       "component": "Dodge",
       "path": "/docs/components/Dodge/timeline",
-      "lineNumber": 60,
-      "line": "<Line x1={0} x2={context.width} y1={baselineY} y2={baselineY} class=\"opacity-40\" />"
+      "lineNumber": 72,
+      "line": "<Line x1={x} x2={x} y1={baselineY - 4} y2={labelY + 6} opacity={0.25 * opacity} />"
     },
     {
-      "example": "timeline",
+      "example": "timeline-bidirectional",
       "component": "Dodge",
-      "path": "/docs/components/Dodge/timeline",
-      "lineNumber": 76,
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 68,
       "line": "<Line"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 92,
+      "line": "<Line x1={x} x2={x} y1={baselineY - 4} y2={labelY + 6} opacity={0.25 * opacity} />"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 131,
+      "line": "<Line x1={x} x2={x} y1={baselineY + 4} y2={labelY - 6} opacity={0.25 * opacity} />"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -459,5 +473,5 @@
       "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-05-01T16:26:41.508Z"
+  "updatedAt": "2026-05-05T17:36:02.034Z"
 }

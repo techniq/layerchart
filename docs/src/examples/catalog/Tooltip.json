@@ -3948,144 +3948,466 @@
       "line": "<Tooltip.Item label=\"Opened\" value={data.date} format=\"day\" />"
     },
     {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 69,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 71,
+      "line": "<Tooltip.Header>{titleCase(data.name)}</Tooltip.Header>"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 72,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 73,
+      "line": "<Tooltip.Item label=\"Failed\" value={data.failDate} format=\"day\" />"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 74,
+      "line": "<Tooltip.Item label=\"Assets\" value=\"${dollars(data.assets)}\" />"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 75,
+      "line": "<Tooltip.Item label=\"Deposits\" value=\"${dollars(data.deposits)}\" />"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 76,
+      "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 43,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
       "lineNumber": 45,
-      "line": "<Tooltip.Root {context}>"
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 46,
+      "line": "<Tooltip.List>"
     },
     {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
       "lineNumber": 47,
-      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+      "line": "<Tooltip.Item label=\"Birth date\" value={data.date_of_birth} format=\"day\" />"
     },
     {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
       "lineNumber": 48,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "beeswarm",
-      "component": "Dodge",
-      "path": "/docs/components/Dodge/beeswarm",
-      "lineNumber": 49,
-      "line": "<Tooltip.Item label=\"Birth date\" value={data.date_of_birth} format=\"day\" />"
-    },
-    {
-      "example": "beeswarm",
-      "component": "Dodge",
-      "path": "/docs/components/Dodge/beeswarm",
-      "lineNumber": 50,
       "line": "<Tooltip.Item label=\"State\" value={data.state_name} />"
     },
     {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
-      "lineNumber": 51,
+      "lineNumber": 49,
       "line": "<Tooltip.Item label=\"Party\" value={data.party} />"
     },
     {
       "example": "beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/beeswarm",
-      "lineNumber": 52,
+      "lineNumber": 50,
       "line": "<Tooltip.Item label=\"Gender\" value={data.gender} />"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 57,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 59,
+      "line": "<Tooltip.Header>{data.event}</Tooltip.Header>"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 60,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 61,
+      "line": "<Tooltip.Item label=\"start\" value={data.startDate} valueAlign=\"right\" format=\"day\" />"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 62,
+      "line": "<Tooltip.Item label=\"end\" value={data.endDate} valueAlign=\"right\" format=\"day\" />"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 63,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 67,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 69,
+      "line": "<Tooltip.Header>{data.species}</Tooltip.Header>"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 70,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 71,
+      "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 72,
+      "line": "<Tooltip.Item label=\"Sex\" value={data.sex} />"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 73,
+      "line": "<Tooltip.Item label=\"Island\" value={data.island} />"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 66,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 68,
+      "line": "<Tooltip.Header>{data.species}</Tooltip.Header>"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 69,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 70,
+      "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 71,
+      "line": "<Tooltip.Item label=\"Sex\" value={data.sex} />"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 72,
+      "line": "<Tooltip.Item label=\"Island\" value={data.island} />"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 39,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 41,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 42,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 43,
+      "line": "<Tooltip.Item label=\"Inaugurated\" value={data.inaugurationDate} format=\"day\" />"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 44,
+      "line": "<Tooltip.Item label=\"Very favorable\" value=\"{data.veryFavorable}%\" />"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 45,
+      "line": "<Tooltip.Item label=\"Very unfavorable\" value=\"{data.veryUnfavorable}%\" />"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 62,
+      "lineNumber": 55,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 64,
+      "lineNumber": 57,
       "line": "<Tooltip.Header>{data.species}</Tooltip.Header>"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 65,
+      "lineNumber": 58,
       "line": "<Tooltip.List>"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 66,
+      "lineNumber": 59,
       "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 67,
+      "lineNumber": 60,
       "line": "<Tooltip.Item label=\"Flipper length\" value=\"{data.flipper_length_mm} mm\" />"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 68,
+      "lineNumber": 61,
       "line": "<Tooltip.Item label=\"Sex\" value={data.sex ?? 'unknown'} />"
     },
     {
       "example": "penguins",
       "component": "Dodge",
       "path": "/docs/components/Dodge/penguins",
-      "lineNumber": 69,
+      "lineNumber": 62,
       "line": "<Tooltip.Item label=\"Island\" value={data.island} />"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 63,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 65,
+      "line": "<Tooltip.Header>{data.company}</Tooltip.Header>"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 66,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Date\" value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 68,
+      "line": "<Tooltip.Item label=\"Laid off\" value={data.totalLaidOff} format=\"integer\" />"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 70,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 76,
+      "line": "<Tooltip.Item label=\"Industry\" value={data.industry} />"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 77,
+      "line": "<Tooltip.Item label=\"Location\" value={data.location} />"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 60,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 62,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 63,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"Continent\" value={data.continent} />"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Life expectancy\" value=\"{data.lifeExpectancy.toFixed(1)} years\" />"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Population\" value={data.population} format=\"metric\" />"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 60,
+      "lineNumber": 79,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 62,
-      "line": "<Tooltip.Header>{data.title}</Tooltip.Header>"
+      "lineNumber": 81,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 63,
+      "lineNumber": 82,
       "line": "<Tooltip.List>"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 64,
+      "lineNumber": 83,
       "line": "<Tooltip.Item label=\"Continent\" value={data.continent} />"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 65,
-      "line": "<Tooltip.Item label=\"Life expectancy\" value=\"{data.y.toFixed(1)} years\" />"
+      "lineNumber": 84,
+      "line": "<Tooltip.Item label=\"Life expectancy\" value=\"{data.lifeExpectancy.toFixed(1)} years\" />"
     },
     {
       "example": "variable-radius",
       "component": "Dodge",
       "path": "/docs/components/Dodge/variable-radius",
-      "lineNumber": 66,
-      "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"metric\" />"
+      "lineNumber": 85,
+      "line": "<Tooltip.Item label=\"Population\" value={data.population} format=\"metric\" />"
     },
     {
       "example": "beeswarm",
@@ -4135,6 +4457,62 @@
       "path": "/docs/components/ForceSimulation/beeswarm",
       "lineNumber": 67,
       "line": "<Tooltip.Item label=\"Gender\" value={data.gender} />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 86,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 88,
+      "line": "<Tooltip.Header>{data.studio}</Tooltip.Header>"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 89,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 90,
+      "line": "<Tooltip.Item label=\"Date\" value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 92,
+      "line": "<Tooltip.Item label=\"Headcount\" value={data.headcount} format=\"integer\" />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 94,
+      "line": "<Tooltip.Item label=\"Headcount\" value=\"Unknown\" />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 97,
+      "line": "<Tooltip.Item label=\"Parent\" value={data.parent} />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 100,
+      "line": "<Tooltip.Item label=\"Type\" value={data.type} />"
     },
     {
       "example": "graph-drag",
@@ -4149,6 +4527,55 @@
       "path": "/docs/components/ForceSimulation/graph-playground",
       "lineNumber": 196,
       "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 132,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 134,
+      "line": "<Tooltip.Header>{data.company}</Tooltip.Header>"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 135,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 136,
+      "line": "<Tooltip.Item label=\"Date\" value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 137,
+      "line": "<Tooltip.Item label=\"Laid off\" value={data.totalLaidOff} format=\"integer\" />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 138,
+      "line": "<Tooltip.Item label=\"Industry\" value={data.industry} />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 139,
+      "line": "<Tooltip.Item label=\"Location\" value={data.location} />"
     },
     {
       "example": "tree",
@@ -5869,43 +6296,43 @@
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 69,
+      "lineNumber": 60,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 71,
-      "line": "<Tooltip.Header>{data.title}</Tooltip.Header>"
+      "lineNumber": 62,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 72,
+      "lineNumber": 63,
       "line": "<Tooltip.List>"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 73,
-      "line": "<Tooltip.Item label=\"GDP per capita\" value={data.x} format=\"currency\" />"
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"GDP per capita\" value={data.gdpPerCapita} format=\"currency\" />"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 74,
-      "line": "<Tooltip.Item label=\"Life expectancy\" value={data.y} format=\"decimal\" />"
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Life expectancy\" value={data.lifeExpectancy} format=\"decimal\" />"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 75,
-      "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"integer\" />"
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Population\" value={data.population} format=\"integer\" />"
     },
     {
       "example": "math-formula",
@@ -6937,5 +7364,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-05-01T16:26:42.334Z"
+  "updatedAt": "2026-05-05T17:36:03.468Z"
 }

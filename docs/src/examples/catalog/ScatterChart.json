@@ -353,22 +353,22 @@
       "components": [
         {
           "component": "ScatterChart",
-          "lineNumber": 28,
+          "lineNumber": 19,
           "line": "<ScatterChart"
         },
         {
           "component": "Legend",
-          "lineNumber": 59,
+          "lineNumber": 50,
           "line": "<Legend placement=\"bottom\" />"
         },
         {
           "component": "CircleLegend",
-          "lineNumber": 60,
+          "lineNumber": 51,
           "line": "<CircleLegend"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 69,
+          "lineNumber": 60,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -561,9 +561,9 @@
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 28,
+      "lineNumber": 19,
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:33.384Z"
+  "updatedAt": "2026-05-05T17:36:03.092Z"
 }

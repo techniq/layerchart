@@ -3419,6 +3419,27 @@
       "line": "<Axis placement=\"bottom\" format=\"none\" rule grid />"
     },
     {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"bottom\" rule grid format={(d: Date) => d.getUTCFullYear().toString()} />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 97,
+      "line": "<Axis placement=\"top\" />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 99,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
       "example": "basic",
       "component": "Frame",
       "path": "/docs/components/Frame/basic",
@@ -3604,15 +3625,15 @@
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
-      "lineNumber": 73,
+      "lineNumber": 21,
       "line": "<Axis placement=\"bottom\" label=\"Inauguration\" rule />"
     },
     {
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
-      "lineNumber": 74,
-      "line": "<Axis placement=\"left\" label=\"Historical rating\" rule />"
+      "lineNumber": 22,
+      "line": "<Axis placement=\"left\" label=\"Very favorable %\" rule />"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -5120,5 +5141,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-05-01T16:26:39.743Z"
+  "updatedAt": "2026-05-05T17:35:58.404Z"
 }

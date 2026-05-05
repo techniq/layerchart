@@ -274,14 +274,14 @@
       "component": "Arc",
       "path": "/docs/components/Arc/label-direction",
       "lineNumber": 83,
-      "line": "<Text {...getArcTextProps('inner')} value={innerText} font-size=\"12px\" truncate />"
+      "line": "<Text {...getArcTextProps('inner')} value={innerText} fontSize={12} truncate />"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/docs/components/Arc/label-direction",
       "lineNumber": 84,
-      "line": "<Text {...getArcTextProps('outer')} value={outerText} font-size=\"12px\" truncate />"
+      "line": "<Text {...getArcTextProps('outer')} value={outerText} fontSize={12} truncate />"
     },
     {
       "example": "label-direction",
@@ -581,14 +581,56 @@
       "example": "anchor",
       "component": "Dodge",
       "path": "/docs/components/Dodge/anchor",
-      "lineNumber": 34,
+      "lineNumber": 30,
+      "line": "<Text"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 53,
+      "line": "<Text"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 46,
+      "line": "<Text"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 42,
       "line": "<Text"
     },
     {
       "example": "timeline",
       "component": "Dodge",
       "path": "/docs/components/Dodge/timeline",
-      "lineNumber": 91,
+      "lineNumber": 81,
+      "line": "<Text"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 101,
+      "line": "<Text"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 140,
+      "line": "<Text"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 70,
       "line": "<Text"
     },
     {
@@ -1047,5 +1089,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-05-01T16:26:42.259Z"
+  "updatedAt": "2026-05-05T17:36:03.350Z"
 }

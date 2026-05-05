@@ -111,9 +111,9 @@
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 60,
+      "lineNumber": 51,
       "line": "<CircleLegend"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:24.028Z"
+  "updatedAt": "2026-05-05T17:35:59.235Z"
 }
