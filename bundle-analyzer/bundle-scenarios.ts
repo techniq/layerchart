@@ -1737,6 +1737,210 @@ export const scenarios: Scenario[] = [
     layers: { GeoEdgeFade: 'canvas' },
   },
 
+  // Layer-agnostic primitive (Blur — has all three layer variants).
+  {
+    name: 'Blur',
+    group: 'Components',
+    description: 'Standalone Blur (agnostic) — baseline',
+    imports: ['Blur'],
+  },
+  {
+    name: 'Blur.svg',
+    group: 'Components',
+    description: 'Standalone Blur from `layerchart/svg`',
+    imports: ['Blur'],
+    layers: { Blur: 'svg' },
+  },
+  {
+    name: 'Blur.canvas',
+    group: 'Components',
+    description: 'Standalone Blur from `layerchart/canvas`',
+    imports: ['Blur'],
+    layers: { Blur: 'canvas' },
+  },
+  {
+    name: 'Blur.html',
+    group: 'Components',
+    description: 'Standalone Blur from `layerchart/html`',
+    imports: ['Blur'],
+    layers: { Blur: 'html' },
+  },
+
+  // Ribbon (svg + canvas only).
+  {
+    name: 'Ribbon',
+    group: 'Components',
+    description: 'Standalone Ribbon (agnostic) — baseline',
+    imports: ['Ribbon'],
+  },
+  {
+    name: 'Ribbon.svg',
+    group: 'Components',
+    description: 'Standalone Ribbon from `layerchart/svg`',
+    imports: ['Ribbon'],
+    layers: { Ribbon: 'svg' },
+  },
+  {
+    name: 'Ribbon.canvas',
+    group: 'Components',
+    description: 'Standalone Ribbon from `layerchart/canvas`',
+    imports: ['Ribbon'],
+    layers: { Ribbon: 'canvas' },
+  },
+
+  // Layout components (single agnostic file each — they don't render their
+  // own marks; consumers compose primitives in the children snippet).
+  {
+    name: 'Dodge',
+    group: 'Components',
+    description: 'Standalone Dodge — baseline',
+    imports: ['Dodge'],
+  },
+  {
+    name: 'ForceSimulation',
+    group: 'Components',
+    description: 'Standalone ForceSimulation — baseline',
+    imports: ['ForceSimulation'],
+  },
+  {
+    name: 'Pack',
+    group: 'Components',
+    description: 'Standalone Pack — baseline',
+    imports: ['Pack'],
+  },
+  {
+    name: 'Tree',
+    group: 'Components',
+    description: 'Standalone Tree — baseline',
+    imports: ['Tree'],
+  },
+  {
+    name: 'Treemap',
+    group: 'Components',
+    description: 'Standalone Treemap — baseline',
+    imports: ['Treemap'],
+  },
+  {
+    name: 'Partition',
+    group: 'Components',
+    description: 'Standalone Partition — baseline',
+    imports: ['Partition'],
+  },
+  {
+    name: 'Chord',
+    group: 'Components',
+    description: 'Standalone Chord — baseline',
+    imports: ['Chord'],
+  },
+  {
+    name: 'Dagre',
+    group: 'Components',
+    description: 'Standalone Dagre — baseline',
+    imports: ['Dagre'],
+  },
+  {
+    name: 'Sankey',
+    group: 'Components',
+    description: 'Standalone Sankey — baseline',
+    imports: ['Sankey'],
+  },
+
+  // Geo helpers (no per-layer rendering).
+  {
+    name: 'GeoLegend',
+    group: 'Components',
+    description: 'Standalone GeoLegend — baseline',
+    imports: ['GeoLegend'],
+  },
+  {
+    name: 'GeoProjection',
+    group: 'Components',
+    description: 'Standalone GeoProjection — baseline',
+    imports: ['GeoProjection'],
+  },
+  {
+    name: 'GeoRaster',
+    group: 'Components',
+    description: 'Standalone GeoRaster — baseline',
+    imports: ['GeoRaster'],
+  },
+  {
+    name: 'GeoVisible',
+    group: 'Components',
+    description: 'Standalone GeoVisible — baseline',
+    imports: ['GeoVisible'],
+  },
+
+  // Interaction / context wrappers.
+  {
+    name: 'Tooltip',
+    group: 'Components',
+    description: 'Standalone Tooltip — baseline',
+    imports: ['Tooltip'],
+  },
+  {
+    name: 'BrushContext',
+    group: 'Components',
+    description: 'Standalone BrushContext — baseline',
+    imports: ['BrushContext'],
+  },
+  {
+    name: 'TransformContext',
+    group: 'Components',
+    description: 'Standalone TransformContext — baseline',
+    imports: ['TransformContext'],
+  },
+  {
+    name: 'MotionPath',
+    group: 'Components',
+    description: 'Standalone MotionPath — baseline',
+    imports: ['MotionPath'],
+  },
+
+  // Utility / decoration components.
+  {
+    name: 'Layer',
+    group: 'Components',
+    description: 'Standalone Layer — baseline',
+    imports: ['Layer'],
+  },
+  {
+    name: 'Legend',
+    group: 'Components',
+    description: 'Standalone Legend — baseline',
+    imports: ['Legend'],
+  },
+  {
+    name: 'CircleLegend',
+    group: 'Components',
+    description: 'Standalone CircleLegend — baseline',
+    imports: ['CircleLegend'],
+  },
+  {
+    name: 'ColorRamp',
+    group: 'Components',
+    description: 'Standalone ColorRamp — baseline',
+    imports: ['ColorRamp'],
+  },
+  {
+    name: 'Bounds',
+    group: 'Components',
+    description: 'Standalone Bounds — baseline',
+    imports: ['Bounds'],
+  },
+  {
+    name: 'Point',
+    group: 'Components',
+    description: 'Standalone Point — baseline',
+    imports: ['Point'],
+  },
+  {
+    name: 'WebGL',
+    group: 'Components',
+    description: 'Standalone WebGL — baseline',
+    imports: ['WebGL'],
+  },
+
   // --- Worst case ---
   {
     name: 'all',
