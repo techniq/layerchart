@@ -578,6 +578,20 @@
       "line": "<Text"
     },
     {
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 34,
+      "line": "<Text"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 91,
+      "line": "<Text"
+    },
+    {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
@@ -1033,5 +1047,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.373Z"
+  "updatedAt": "2026-05-01T16:26:42.259Z"
 }

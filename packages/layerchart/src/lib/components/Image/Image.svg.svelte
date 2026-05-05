@@ -128,11 +128,3 @@
     class={cls('lc-image', className)}
   />
 {/if}
-
-<style>
-  @layer base {
-    :global(:where(.lc-image)) {
-      pointer-events: none;
-    }
-  }
-</style>

@@ -37,6 +37,16 @@ Use the `segments` prop to render inline text with mixed styles (different font 
 
 :example{ name="segments" showCode }
 
+### Font size
+
+Pass `fontSize` (number = pixels, or any CSS length string) to size text. When set, `verticalAnchor="middle"` centers correctly at any size — `capHeight` defaults to `fontSize * 0.71`, so per-item scaled labels share a common visual baseline. An explicit `capHeight` still wins.
+
+```svelte
+<Text fontSize={24} verticalAnchor="middle" textAnchor="middle" value="Hello" />
+```
+
+For a per-datum scaled use case (text size driven by another value), see the [Dodge text-beeswarm example](/docs/components/Dodge/text-beeswarm).
+
 ## Use cases
 
 ### Truncate text of axis labels

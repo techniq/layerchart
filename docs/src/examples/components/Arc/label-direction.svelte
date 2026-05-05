@@ -80,12 +80,12 @@
 									/>
 
 									<!-- Arc Text -->
-									<Text {...getArcTextProps('inner')} value={innerText} font-size="12px" truncate />
-									<Text {...getArcTextProps('outer')} value={outerText} font-size="12px" truncate />
+									<Text {...getArcTextProps('inner')} value={innerText} fontSize={12} truncate />
+									<Text {...getArcTextProps('outer')} value={outerText} fontSize={12} truncate />
 									<Text
 										{...getArcTextProps('middle')}
 										value={centroidText}
-										font-size="12px"
+										fontSize={12}
 										class="fill-black"
 										truncate
 									/>

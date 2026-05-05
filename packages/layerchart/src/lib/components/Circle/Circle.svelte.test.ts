@@ -155,5 +155,83 @@ describe('Circle', () => {
       const circles = page.getByTestId(componentTestId).elements();
       await expect.poll(() => circles.length).toBe(1);
     });
+
+    it('should enter data mode when only `data` prop is set, using chart accessors', async () => {
+      render(TestHarness, {
+        component: Circle,
+        chartProps: {
+          data,
+          x: 'date',
+          y: 'value',
+          yDomain: [0, 100],
+          r: 'value',
+          rRange: [2, 10],
+        },
+        componentProps: {
+          data,
+        },
+      });
+
+      const circles = page.getByTestId(componentTestId).elements();
+      await expect.poll(() => circles.length).toBe(3);
+
+      const radii = circles.map((c) => Number(c.getAttribute('r')));
+      for (const r of radii) {
+        expect(r).toBeGreaterThanOrEqual(2);
+        expect(r).toBeLessThanOrEqual(10);
+      }
+      expect(radii[2]).toBeGreaterThan(radii[0]);
+    });
+
+    it('should mix explicit and chart-inherited position props', async () => {
+      render(TestHarness, {
+        component: Circle,
+        chartProps: {
+          data,
+          x: 'date',
+          y: 'value',
+          yDomain: [0, 100],
+        },
+        componentProps: {
+          data,
+          cx: 'date',
+          r: 4,
+        },
+      });
+
+      const circles = page.getByTestId(componentTestId).elements();
+      await expect.poll(() => circles.length).toBe(3);
+
+      const cys = circles.map((c) => Number(c.getAttribute('cy')));
+      expect(cys[0]).toBeGreaterThan(cys[1]);
+      expect(cys[1]).toBeGreaterThan(cys[2]);
+      for (const c of circles) {
+        expect(c.getAttribute('r')).toBe('4');
+      }
+    });
+
+    it('explicit r should win over chart rGet', async () => {
+      render(TestHarness, {
+        component: Circle,
+        chartProps: {
+          data,
+          x: 'date',
+          y: 'value',
+          yDomain: [0, 100],
+          r: 'value',
+          rRange: [2, 10],
+        },
+        componentProps: {
+          data,
+          r: 7,
+        },
+      });
+
+      const circles = page.getByTestId(componentTestId).elements();
+      await expect.poll(() => circles.length).toBe(3);
+      for (const c of circles) {
+        expect(c.getAttribute('r')).toBe('7');
+      }
+    });
   });
 });

@@ -284,6 +284,20 @@
       "line": "<line x2=\"6\" stroke=\"currentColor\" />"
     },
     {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 60,
+      "line": "<Line x1={0} x2={context.width} y1={baselineY} y2={baselineY} class=\"opacity-40\" />"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 76,
+      "line": "<Line"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Line",
       "path": "/docs/components/Line/color-via-ordinal-scale",
@@ -445,5 +459,5 @@
       "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:26.239Z"
+  "updatedAt": "2026-05-01T16:26:41.508Z"
 }

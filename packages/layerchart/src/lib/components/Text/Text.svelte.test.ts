@@ -169,5 +169,51 @@ describe('Text', () => {
       const texts = page.getByTestId(componentTestId).elements();
       await expect.poll(() => texts.length).toBe(1);
     });
+
+    it('should enter data mode when only `data` prop is set, using chart accessors', async () => {
+      render(TestHarness, {
+        component: Text,
+        chartProps: {
+          data,
+          x: 'date',
+          y: 'value',
+          yDomain: [0, 100],
+        },
+        componentProps: {
+          data,
+          value: 'label',
+        },
+      });
+
+      const texts = page.getByTestId(componentTestId).elements();
+      await expect.poll(() => texts.length).toBe(3);
+
+      const ys = texts.map((t) => Number(t.getAttribute('y')));
+      expect(ys[0]).toBeGreaterThan(ys[1]);
+      expect(ys[1]).toBeGreaterThan(ys[2]);
+    });
+
+    it('should fall back to chart x accessor when only y is omitted', async () => {
+      render(TestHarness, {
+        component: Text,
+        chartProps: {
+          data,
+          x: 'date',
+          y: 'value',
+          yDomain: [0, 100],
+        },
+        componentProps: {
+          data,
+          x: 'date',
+          value: 'label',
+        },
+      });
+
+      const texts = page.getByTestId(componentTestId).elements();
+      await expect.poll(() => texts.length).toBe(3);
+
+      const ys = texts.map((t) => Number(t.getAttribute('y')));
+      expect(ys[0]).toBeGreaterThan(ys[2]);
+    });
   });
 });

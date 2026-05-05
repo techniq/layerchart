@@ -3949,6 +3949,146 @@
     },
     {
       "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 45,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 47,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 48,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"Birth date\" value={data.date_of_birth} format=\"day\" />"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 50,
+      "line": "<Tooltip.Item label=\"State\" value={data.state_name} />"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 51,
+      "line": "<Tooltip.Item label=\"Party\" value={data.party} />"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 52,
+      "line": "<Tooltip.Item label=\"Gender\" value={data.gender} />"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 62,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 64,
+      "line": "<Tooltip.Header>{data.species}</Tooltip.Header>"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 65,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Flipper length\" value=\"{data.flipper_length_mm} mm\" />"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 68,
+      "line": "<Tooltip.Item label=\"Sex\" value={data.sex ?? 'unknown'} />"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 69,
+      "line": "<Tooltip.Item label=\"Island\" value={data.island} />"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 60,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 62,
+      "line": "<Tooltip.Header>{data.title}</Tooltip.Header>"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 63,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"Continent\" value={data.continent} />"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Life expectancy\" value=\"{data.y.toFixed(1)} years\" />"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"metric\" />"
+    },
+    {
+      "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
       "lineNumber": 60,
@@ -6797,5 +6937,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.642Z"
+  "updatedAt": "2026-05-01T16:26:42.334Z"
 }
