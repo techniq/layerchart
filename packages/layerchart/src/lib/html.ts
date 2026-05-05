@@ -211,3 +211,5 @@ export { default as Sankey } from './components/graph/Sankey.svelte';
 export * from './components/graph/Sankey.svelte';
 export { default as ForceSimulation } from './components/force/ForceSimulation.svelte';
 export * from './components/force/ForceSimulation.svelte';
+export { default as Dodge } from './components/Dodge/Dodge.svelte';
+export * from './components/Dodge/Dodge.svelte';

@@ -395,6 +395,12 @@ export const scenarios: Scenario[] = [
     description: 'Circle packing layout',
     imports: ['Chart', 'Svg', 'Pack', 'Circle', 'Text'],
   },
+  {
+    name: 'dodge',
+    group: 'Hierarchy',
+    description: 'Dodge non-overlapping packing (deterministic alternative to ForceSimulation)',
+    imports: ['Chart', 'Svg', 'Dodge', 'Circle'],
+  },
 
   // --- Graph / network ---
   {
@@ -1776,6 +1782,7 @@ const INDIVIDUAL_COMPONENTS: string[] = [
   'Contour',
   'Dagre',
   'Density',
+  'Dodge',
   'Ellipse',
   'ForceSimulation',
   'Frame',
