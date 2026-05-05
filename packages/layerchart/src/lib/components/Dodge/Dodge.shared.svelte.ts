@@ -1,30 +1,62 @@
 import type { Snippet } from 'svelte';
 
 /**
- * Minimal interval tracker matching the subset of `interval-tree-1d`'s API
- * used by the dodge algorithm (the same package Observable Plot and SveltePlot
- * use). Inlined as a linear scan instead of a real tree because:
+ * Centered-interval-tree variant: an augmented BST keyed by `lo`, with each
+ * node carrying `maxHi` across its subtree. Queries skip whole subtrees whose
+ * `maxHi < lo` (no possible overlap), giving `O(log n + k)` per query in the
+ * average case.
  *
- *  - For typical dodge use cases (n < ~1000) linear scan beats a real tree
- *    on wall time due to lower constants — the tree only wins for very large
- *    datasets.
- *  - Avoids a CJS-only dep that requires `ssr.external` config in some Vite
- *    setups (e.g. `noExternal: true` deploys).
- *
- * The API mirrors `interval-tree-1d` (`insert` + `queryInterval`), so swap
- * to a real tree if profiling ever shows it matters.
+ * Same `insert` + `queryInterval` API as `interval-tree-1d` (used by Observable
+ * Plot and SveltePlot). For ~4k+ items this is dramatically faster than a
+ * linear scan; for tiny inputs the tree overhead is negligible. Tree is not
+ * self-balancing, but dodge inputs distribute `lo` ≈ uniformly along the
+ * anchor axis, so depth stays close to `O(log n)` in practice.
  */
+type Interval = [lo: number, hi: number, id: number];
+
+type IntervalNode = {
+  interval: Interval;
+  maxHi: number;
+  left: IntervalNode | null;
+  right: IntervalNode | null;
+};
+
 function createIntervalTree() {
-  const items: Array<[number, number, number]> = [];
+  let root: IntervalNode | null = null;
+
+  function insertInto(node: IntervalNode | null, interval: Interval): IntervalNode {
+    if (!node) {
+      return { interval, maxHi: interval[1], left: null, right: null };
+    }
+    if (interval[0] < node.interval[0]) {
+      node.left = insertInto(node.left, interval);
+    } else {
+      node.right = insertInto(node.right, interval);
+    }
+    if (interval[1] > node.maxHi) node.maxHi = interval[1];
+    return node;
+  }
+
+  function queryNode(
+    node: IntervalNode | null,
+    lo: number,
+    hi: number,
+    visit: (interval: Interval) => void
+  ) {
+    if (!node || node.maxHi < lo) return;
+    queryNode(node.left, lo, hi, visit);
+    const it = node.interval;
+    if (it[0] <= hi && it[1] >= lo) visit(it);
+    // Once `it[0] > hi` the right subtree (all `lo >= it[0]`) cannot overlap.
+    if (it[0] <= hi) queryNode(node.right, lo, hi, visit);
+  }
+
   return {
-    insert(interval: [number, number, number]) {
-      items.push(interval);
+    insert(interval: Interval) {
+      root = insertInto(root, interval);
     },
-    queryInterval(lo: number, hi: number, visit: (interval: [number, number, number]) => void) {
-      for (let i = 0; i < items.length; i++) {
-        const it = items[i];
-        if (it[0] <= hi && it[1] >= lo) visit(it);
-      }
+    queryInterval(lo: number, hi: number, visit: (interval: Interval) => void) {
+      queryNode(root, lo, hi, visit);
     },
   };
 }
@@ -144,10 +176,6 @@ function compareSymmetric(a: number, b: number): number {
   return Math.abs(a) - Math.abs(b);
 }
 
-function compareAscending(a: number, b: number): number {
-  return a - b;
-}
-
 /**
  * Pack items along one axis so they don't overlap, given their positions on
  * the other axis. Modeled after Observable Plot's `dodge` transform — uses an
@@ -197,14 +225,17 @@ function buildResult<T>(
 function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>[] {
   const { axis, anchor, padding, baseline } = opts;
   const dir = anchorDirection(axis, anchor);
-  const compare = dir === 0 ? compareSymmetric : compareAscending;
+  const isMiddle = dir === 0;
 
   // `intervals[0..k]` is a flat array of [lo0, hi0, lo1, hi1, ...] forbidden
   // zones along the dodge axis for the current item. Slot 0/1 is reserved
   // for the natural anchor zone ([0, 0], a no-op zone keeping y=0 in the
   // candidate set). Tangent positions from each colliding placed item add
-  // two more candidate y values each.
-  const intervals = new Float64Array(2 * input.length + 2);
+  // two more candidate y values each. `candidates` is a parallel buffer for
+  // the sortable copy — pre-allocated once to avoid per-iteration allocation.
+  const cap = 2 * input.length + 2;
+  const intervals = new Float64Array(cap);
+  const candidates = new Float64Array(cap);
   const packed = new Float64Array(input.length);
   const tree = createIntervalTree();
 
@@ -213,12 +244,12 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
     const ri = item.r;
     // y0 shifts the natural anchor by ri+padding so the item sits flush
     // against the baseline. middle anchor (dir=0) needs no shift.
-    const y0 = dir !== 0 ? ri + padding : 0;
+    const y0 = isMiddle ? 0 : ri + padding;
     const l = item.x - ri;
     const h = item.x + ri;
 
     let k = 2;
-    tree.queryInterval(l - padding, h + padding, (interval: [number, number, number]) => {
+    tree.queryInterval(l - padding, h + padding, (interval: Interval) => {
       const j = interval[2];
       const yj = packed[j] - y0;
       const dx = item.x - input[j].x;
@@ -231,15 +262,28 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
       }
     });
 
-    let candidates = Array.from(intervals.slice(0, k));
-    if (dir !== 0) candidates = candidates.filter((y) => y >= 0);
-    candidates.sort(compare);
+    // Sort the candidate y-values in-place into our reusable buffer. Native
+    // typed-array sort is materially faster than Array.sort with a JS
+    // comparator. For non-middle anchors we want ascending order (default);
+    // for middle we want symmetric (closest to 0 first), which still goes
+    // through the typed-array sort and avoids the prior allocation.
+    const view = candidates.subarray(0, k);
+    view.set(intervals.subarray(0, k));
+    if (isMiddle) {
+      view.sort(compareSymmetric);
+    } else {
+      view.sort();
+    }
 
     let chosen = y0; // fallback: natural anchor when nothing fits
-    out: for (const y of candidates) {
+    outer: for (let c = 0; c < k; c++) {
+      const y = view[c];
+      // For non-middle anchors, items grow only in the +y direction relative
+      // to y0 — negative candidates are below the baseline and inadmissible.
+      if (!isMiddle && y < 0) continue;
       for (let j = 0; j < k; j += 2) {
         if (intervals[j] + 1e-6 < y && y < intervals[j + 1] - 1e-6) {
-          continue out;
+          continue outer;
         }
       }
       chosen = y + y0;
@@ -278,7 +322,7 @@ function dodgeRows<T>(
     const h = item.x + item.r;
 
     const used = new Set<number>();
-    tree.queryInterval(l - padding, h + padding, (interval: [number, number, number]) => {
+    tree.queryInterval(l - padding, h + padding, (interval: Interval) => {
       used.add(rows[interval[2]]);
     });
 
