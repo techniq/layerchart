@@ -60,8 +60,8 @@
 				axis="y"
 				anchor="bottom"
 				padding={4}
-				rowHeight={16}
-				r={(d) => labelHalfWidth(d.label)}
+				rx={(d) => labelHalfWidth(d.label)}
+				ry={8}
 			>
 				{#snippet children({ items: dodged })}
 					{#each dodged as { data: item, x, y, index } (index)}

@@ -3,8 +3,26 @@ import { dodge } from './Dodge.shared.svelte.js';
 
 type T = { id: string };
 
+/** Build inputs for the circular case (`rx === ry === r`). */
 function input(arr: { id: string; x: number; r: number }[]) {
-  return arr.map((d, index) => ({ x: d.x, r: d.r, data: { id: d.id }, index }));
+  return arr.map((d, index) => ({
+    x: d.x,
+    rx: d.r,
+    ry: d.r,
+    data: { id: d.id },
+    index,
+  }));
+}
+
+/** Build inputs for rectangular cases (per-axis half-extents). */
+function rectInput(arr: { id: string; x: number; rx: number; ry: number }[]) {
+  return arr.map((d, index) => ({
+    x: d.x,
+    rx: d.rx,
+    ry: d.ry,
+    data: { id: d.id },
+    index,
+  }));
 }
 
 describe('dodge() — circular packing', () => {
@@ -88,28 +106,29 @@ describe('dodge() — circular packing', () => {
   });
 });
 
-describe('dodge() — row-based packing (rowHeight)', () => {
+describe('dodge() — rectangular packing (rx + ry)', () => {
+  // ry = 8 ⇒ row spacing = 2 * ry = 16 (matches the old `rowHeight: 16` cases).
   it('places non-overlapping items in row 0', () => {
     const out = dodge<T>(
-      input([
-        { id: 'a', x: 0, r: 20 }, // spans -20 to 20
-        { id: 'b', x: 100, r: 20 }, // spans 80 to 120
+      rectInput([
+        { id: 'a', x: 0, rx: 20, ry: 8 }, // spans -20 to 20
+        { id: 'b', x: 100, rx: 20, ry: 8 }, // spans 80 to 120
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rectangular: true }
     );
-    // Row 0 center from bottom = baseline - rowHeight/2 = 192
+    // Row 0 center from bottom = baseline - ry = 192
     expect(out[0].y).toBe(192);
     expect(out[1].y).toBe(192);
   });
 
   it('stacks horizontally-overlapping items into separate rows', () => {
     const out = dodge<T>(
-      input([
-        { id: 'a', x: 50, r: 30 },
-        { id: 'b', x: 60, r: 30 },
-        { id: 'c', x: 70, r: 30 },
+      rectInput([
+        { id: 'a', x: 50, rx: 30, ry: 8 },
+        { id: 'b', x: 60, rx: 30, ry: 8 },
+        { id: 'c', x: 70, rx: 30, ry: 8 },
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rectangular: true }
     );
     // Input order: a → row 0, b overlaps a → row 1, c overlaps both → row 2
     // Row centers from bottom: 192, 176, 160.
@@ -120,27 +139,27 @@ describe('dodge() — row-based packing (rowHeight)', () => {
 
   it("reuses row 0 when later items don't overlap earlier ones in that row", () => {
     const out = dodge<T>(
-      input([
-        { id: 'a', x: 0, r: 10 },
-        { id: 'b', x: 5, r: 10 }, // overlaps a → row 1
-        { id: 'c', x: 100, r: 10 }, // far from both → row 0
+      rectInput([
+        { id: 'a', x: 0, rx: 10, ry: 8 },
+        { id: 'b', x: 5, rx: 10, ry: 8 }, // overlaps a → row 1
+        { id: 'c', x: 100, rx: 10, ry: 8 }, // far from both → row 0
       ]),
-      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rowHeight: 16 }
+      { axis: 'y', anchor: 'bottom', padding: 0, baseline: 200, rectangular: true }
     );
     expect(out[0].y).toBe(192);
     expect(out[1].y).toBe(176);
     expect(out[2].y).toBe(192);
   });
 
-  it('respects anchor=top for row mode', () => {
+  it('respects anchor=top for rectangular mode', () => {
     const out = dodge<T>(
-      input([
-        { id: 'a', x: 50, r: 30 },
-        { id: 'b', x: 60, r: 30 },
+      rectInput([
+        { id: 'a', x: 50, rx: 30, ry: 8 },
+        { id: 'b', x: 60, rx: 30, ry: 8 },
       ]),
-      { axis: 'y', anchor: 'top', padding: 0, baseline: 0, rowHeight: 16 }
+      { axis: 'y', anchor: 'top', padding: 0, baseline: 0, rectangular: true }
     );
-    // Row 0 from top: 0 + 16/2 = 8. Row 1: 24.
+    // Row 0 from top: 0 + ry = 8. Row 1: 24.
     expect(out[0].y).toBe(8);
     expect(out[1].y).toBe(24);
   });

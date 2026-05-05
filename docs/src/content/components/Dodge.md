@@ -48,9 +48,18 @@ Any mark works inside the snippet — drive a `<Text>` font size from the resolv
 
 :example{ name="text-beeswarm" }
 
-## Row mode (`rowHeight`)
+## Rectangular packing (`rx` / `ry`)
 
-Circular packing produces unnecessarily large vertical gaps when collision radius is much wider than item height — typical for text labels where `r ≈ labelWidth/2`. Set `rowHeight` to switch to rectangular row-based packing: items are placed in fixed-height rows, with collision checked horizontally only.
+Circular packing produces unnecessarily large vertical gaps when an item is much wider than tall — typical for text labels and Gantt-style time bars. Provide `rx` and `ry` (per-axis half-extents) instead of `r` to switch to axis-aligned rectangular collision: items snap to fixed-height rows along the dodge axis, with collision checked along the anchor axis.
+
+| `axis` | Anchor-axis half-extent | Dodge-axis half-extent (row size) |
+| ------ | ----------------------- | --------------------------------- |
+| `'y'`  | `rx` (typically per-item, e.g. `labelWidth/2`) | `ry` (typically a constant) — row spacing is `2 * ry` |
+| `'x'`  | `ry` (per-item)         | `rx` (constant) — column spacing is `2 * rx` |
+
+```svelte
+<Dodge axis="y" rx={(d) => labelWidth(d) / 2} ry={8} />
+```
 
 :example{ name="timeline" }
 
@@ -64,6 +73,6 @@ This works by combining multiple `<Dodge>` instances, each with its own `baselin
 
 ## Time-range lanes (Gantt-style)
 
-For events with start/end ranges, pass each item's pixel midpoint as `position` and half its pixel width as `r`. With `rowHeight` set, Dodge packs each event into the lowest non-overlapping lane.
+For events with start/end ranges, pass each item's pixel midpoint as `position` and half its pixel width as `rx` (the anchor-axis half-extent). With `ry` set to half the desired lane height, Dodge packs each event into the lowest non-overlapping lane.
 
 :example{ name="duration-bars-dense-lanes" }

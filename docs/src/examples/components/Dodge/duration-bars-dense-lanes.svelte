@@ -32,9 +32,9 @@
 			axis="y"
 			anchor="top"
 			padding={2}
-			{rowHeight}
+			rx={(d) => (endX(d) - startX(d)) / 2}
+			ry={rowHeight / 2}
 			position={(d) => (startX(d) + endX(d)) / 2}
-			r={(d) => (endX(d) - startX(d)) / 2}
 		>
 			{#snippet children({ items })}
 				{#each items as { data: ev, y, index } (index)}

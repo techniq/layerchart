@@ -69,8 +69,12 @@ export type DodgeItem<T> = {
   x: number;
   /** Pixel position along the y-axis. */
   y: number;
-  /** Resolved radius used for collision detection. */
+  /** Resolved circular radius (circular mode) or anchor-axis half-extent (rectangular mode). */
   r: number;
+  /** Resolved x-axis half-extent. Equal to `r` in circular mode. */
+  rx: number;
+  /** Resolved y-axis half-extent. Equal to `r` in circular mode. */
+  ry: number;
   /** Original index of the datum in the input `data` array. */
   index: number;
 };
@@ -95,10 +99,8 @@ export type DodgePropsWithoutHTML<T = any> = {
    */
   padding?: number;
   /**
-   * Radius (or accessor) used for collision detection.
-   * - In circular mode (default), this is the literal collision radius.
-   * - In row mode (`rowHeight` set), this is the half-extent along the
-   *   anchor axis (e.g. half the label width for text labels).
+   * Circular collision radius (or accessor). Used unless both `rx` and `ry`
+   * are provided.
    *
    * Resolution priority:
    * 1. This prop, if set.
@@ -107,14 +109,24 @@ export type DodgePropsWithoutHTML<T = any> = {
    */
   r?: number | ((d: T) => number);
   /**
-   * If set, switches to row-based rectangular packing instead of circular dodge.
-   * Items are placed in fixed-height rows along the dodge axis; collision
-   * is checked horizontally (anchor axis) using `r` as half-extent.
+   * X-axis half-extent (or accessor). When set together with `ry`, switches
+   * to axis-aligned **rectangular** packing instead of circular collision.
    *
-   * Useful for text labels where circular collision would produce
-   * unnecessarily large vertical gaps.
+   * For `axis='y'` (vertical dodge), `rx` controls the horizontal collision
+   * extent (typically the per-item value, e.g. half the label width). For
+   * `axis='x'` (horizontal dodge), `rx` becomes the dodge-axis (column)
+   * half-extent and is typically a constant.
    */
-  rowHeight?: number;
+  rx?: number | ((d: T) => number);
+  /**
+   * Y-axis half-extent (or accessor). When set together with `rx`, switches
+   * to axis-aligned **rectangular** packing instead of circular collision.
+   *
+   * For `axis='y'` (vertical dodge), `ry` becomes the dodge-axis (row)
+   * half-extent and is typically a constant. For `axis='x'`, `ry` controls
+   * the vertical collision extent.
+   */
+  ry?: number | ((d: T) => number);
   /**
    * Override the anchor-axis pixel accessor.
    * For `axis='y'`, this is x; for `axis='x'`, this is y.
@@ -142,7 +154,16 @@ export type DodgePropsWithoutHTML<T = any> = {
 
 export type DodgeProps<T = any> = DodgePropsWithoutHTML<T>;
 
-type DodgeInput<T> = { x: number; r: number; data: T; index: number };
+type DodgeInput<T> = {
+  /** Anchor-axis pixel position (always — the algorithm packs the other axis). */
+  x: number;
+  /** X-axis half-extent. */
+  rx: number;
+  /** Y-axis half-extent. */
+  ry: number;
+  data: T;
+  index: number;
+};
 
 type DodgeOpts = {
   axis: 'x' | 'y';
@@ -150,8 +171,12 @@ type DodgeOpts = {
   padding: number;
   /** Pixel coordinate (along the dodge axis) of the line items grow away from. */
   baseline: number;
-  /** When set, switch to row-based rectangular packing. */
-  rowHeight?: number;
+  /**
+   * When `true`, switch from circular to axis-aligned rectangular packing.
+   * Inputs' `rx` / `ry` are then treated as independent half-extents per axis
+   * (the dodge-axis half-extent should be uniform for sensible row alignment).
+   */
+  rectangular?: boolean;
 };
 
 /**
@@ -185,14 +210,15 @@ function compareSymmetric(a: number, b: number): number {
  * algorithm packs along the dodge axis and the wrapper swaps `x`/`y` in the
  * result for `axis='x'`.
  *
- * For text labels (where collision is more naturally rectangular), set
- * `rowHeight` to switch to row-based packing.
+ * Set `opts.rectangular` to true to switch from circular to axis-aligned
+ * rectangular packing — useful for text labels where the bounding box is much
+ * wider than tall (so a circular `r` would produce excessive vertical gaps).
  *
  * @see https://observablehq.com/plot/transforms/dodge
  */
 export function dodge<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>[] {
-  if (opts.rowHeight != null) {
-    return dodgeRows(input, opts as DodgeOpts & { rowHeight: number });
+  if (opts.rectangular) {
+    return dodgeRows(input, opts);
   }
   return dodgeCircular(input, opts);
 }
@@ -214,10 +240,30 @@ function buildResult<T>(
   for (let i = 0; i < input.length; i++) {
     const item = input[i];
     const dodgePos = packed[i] * factor + baseline;
+    // `r` carries the anchor-axis half-extent for back-compat with circular
+    // callers (`<Circle r={r}>`). In rectangular mode that's `rx` for axis='y'
+    // and `ry` for axis='x' — i.e. whichever axis the layout collides on.
+    const rAnchor = axis === 'y' ? item.rx : item.ry;
     result[i] =
       axis === 'y'
-        ? { data: item.data, x: item.x, y: dodgePos, r: item.r, index: item.index }
-        : { data: item.data, x: dodgePos, y: item.x, r: item.r, index: item.index };
+        ? {
+            data: item.data,
+            x: item.x,
+            y: dodgePos,
+            r: rAnchor,
+            rx: item.rx,
+            ry: item.ry,
+            index: item.index,
+          }
+        : {
+            data: item.data,
+            x: dodgePos,
+            y: item.x,
+            r: rAnchor,
+            rx: item.rx,
+            ry: item.ry,
+            index: item.index,
+          };
   }
   return result;
 }
@@ -241,7 +287,9 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
 
   for (let i = 0; i < input.length; i++) {
     const item = input[i];
-    const ri = item.r;
+    // Circular mode: `rx === ry` (Dodge.svelte ensures this), so either one
+    // is the circular radius. Using `rx` keeps the field reference uniform.
+    const ri = item.rx;
     // y0 shifts the natural anchor by ri+padding so the item sits flush
     // against the baseline. middle anchor (dir=0) needs no shift.
     const y0 = isMiddle ? 0 : ri + padding;
@@ -253,7 +301,7 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
       const j = interval[2];
       const yj = packed[j] - y0;
       const dx = item.x - input[j].x;
-      const dr = ri + input[j].r + padding;
+      const dr = ri + input[j].rx + padding;
       const sq = dr * dr - dx * dx;
       if (sq >= 0) {
         const dy = Math.sqrt(sq);
@@ -298,19 +346,25 @@ function dodgeCircular<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>
 }
 
 /**
- * Row-based rectangular packing — same interval-tree query as circular dodge,
- * but we only care which rows are already occupied in the overlap range.
- * Items are placed in the lowest free row at fixed `rowHeight` increments.
+ * Axis-aligned rectangular packing — same interval-tree query as circular
+ * dodge, but we only care which rows/columns are already occupied in the
+ * overlap range. Items snap to the lowest free row at fixed increments along
+ * the dodge axis.
  *
- * Useful for text labels where treating each label as a circle of radius
- * `labelWidth/2` would produce unnecessarily large vertical gaps.
+ * Half-extent semantics:
+ *  - For `axis='y'`: `rx` is the anchor-axis (horizontal) collision extent;
+ *    `ry` is the dodge-axis (row) half-extent. Row spacing = `2 * ry`.
+ *  - For `axis='x'`: `ry` is the anchor-axis (vertical) collision extent;
+ *    `rx` is the dodge-axis (column) half-extent. Column spacing = `2 * rx`.
+ *
+ * The anchor-axis half-extent typically varies per item (e.g. half a label's
+ * width); the dodge-axis half-extent should be uniform for sensible
+ * row alignment.
  */
-function dodgeRows<T>(
-  input: DodgeInput<T>[],
-  opts: DodgeOpts & { rowHeight: number }
-): DodgeItem<T>[] {
-  const { axis, anchor, padding, baseline, rowHeight } = opts;
+function dodgeRows<T>(input: DodgeInput<T>[], opts: DodgeOpts): DodgeItem<T>[] {
+  const { axis, anchor, padding, baseline } = opts;
   const dir = anchorDirection(axis, anchor);
+  const isVertical = axis === 'y';
 
   const rows = new Int32Array(input.length);
   const packed = new Float64Array(input.length);
@@ -318,8 +372,10 @@ function dodgeRows<T>(
 
   for (let i = 0; i < input.length; i++) {
     const item = input[i];
-    const l = item.x - item.r;
-    const h = item.x + item.r;
+    const rAnchor = isVertical ? item.rx : item.ry;
+    const rDodge = isVertical ? item.ry : item.rx;
+    const l = item.x - rAnchor;
+    const h = item.x + rAnchor;
 
     const used = new Set<number>();
     tree.queryInterval(l - padding, h + padding, (interval: Interval) => {
@@ -330,14 +386,15 @@ function dodgeRows<T>(
     while (used.has(row)) row++;
     rows[i] = row;
 
+    // Row spacing is `2 * rDodge`; centers fall at half-row offsets.
     if (dir === 0) {
       // middle: alternate above/below (even rows above, odd rows below)
       const sign = row % 2 === 0 ? -1 : 1;
       const step = Math.floor(row / 2) + (row === 0 ? 0 : 1);
-      packed[i] = sign * step * rowHeight;
+      packed[i] = sign * step * 2 * rDodge;
     } else {
       // start/end: stack outward from the anchor edge
-      packed[i] = row * rowHeight + rowHeight / 2;
+      packed[i] = row * 2 * rDodge + rDodge;
     }
 
     tree.insert([l, h, i]);
