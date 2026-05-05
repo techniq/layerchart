@@ -16,7 +16,7 @@
 	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 	import ScrollToTop from '~icons/lucide/arrow-up-to-line';
-	import { hideybar } from '$lib/attachments/hideybar';
+	import { hideybar } from '$lib/attachments/hideybar.js';
 	import { examples } from '$lib/context.js';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { page } from '$app/state';
@@ -114,7 +114,7 @@
 </script>
 
 <div
-	use:hideybar={{ offsetTop: '57px', mx: '20px' }}
+	{@attach hideybar({ offsetTop: '57px', mx: '20px' })}
 	class={cls(
 		loaded ? 'visible' : 'invisible',
 		'flex flex-col z-29 w-full rounded-xl rounded-t-none border-x border-b border-primary/10 shadow-lg px-2 py-1 overflow-hidden',
