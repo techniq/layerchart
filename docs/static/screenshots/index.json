@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-05T17:37:23.647Z",
+  "generatedAt": "2026-05-05T17:50:23.565Z",
   "totalComponents": 77,
   "totalExamples": 908,
   "components": [
@@ -2389,7 +2389,7 @@
         {
           "name": "layoffs-by-industry",
           "path": "/example/ForceSimulation/layoffs-by-industry",
-          "checksum": "9d5486370758907bec4a0802dabfd227"
+          "checksum": "f8cd90a59945ab3ae501096221423c39"
         },
         {
           "name": "text",
