@@ -4,17 +4,43 @@
 </script>
 
 <script lang="ts">
+	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import { sortFunc } from '@layerstack/utils';
+
 	import { Chart, Circle, Dodge, Tooltip } from 'layerchart';
 
 	export { data };
+
+	type SortOrder = 'unsorted' | 'desc' | 'asc';
+	let sortOrder = $state<SortOrder>('unsorted');
+	let minRadius = $state(2);
+	let maxRadius = $state(20);
+
+	const sortedData = $derived.by(() => {
+		if (sortOrder === 'unsorted') return data;
+		// `sortFunc` is ascending by default; pass 'desc' for largest first.
+		return [...data].sort(sortFunc('population', sortOrder));
+	});
 </script>
 
+<div class="grid grid-cols-[auto_1fr_1fr] gap-4 mb-4 screenshot-hidden">
+	<Field label="Sort" dense>
+		<ToggleGroup bind:value={sortOrder} variant="outline" size="sm">
+			<ToggleOption value="unsorted">Unsorted</ToggleOption>
+			<ToggleOption value="desc">Largest first</ToggleOption>
+			<ToggleOption value="asc">Smallest first</ToggleOption>
+		</ToggleGroup>
+	</Field>
+	<RangeField label="Min radius" bind:value={minRadius} min={1} max={maxRadius - 1} />
+	<RangeField label="Max radius" bind:value={maxRadius} min={minRadius + 1} max={50} />
+</div>
+
 <Chart
-	{data}
+	data={sortedData}
 	x="lifeExpectancy"
 	xNice
 	r="population"
-	rRange={[2, 20]}
+	rRange={[minRadius, maxRadius]}
 	c="continent"
 	cDomain={['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America']}
 	cRange={[
@@ -26,7 +52,7 @@
 		'var(--color-primary)'
 	]}
 	padding={{ top: 12, bottom: 32, left: 12, right: 12 }}
-	height={300}
+	height={400}
 	axis={{ placement: 'bottom', rule: true }}
 	props={{ xAxis: { label: 'Life expectancy (years)' } }}
 >

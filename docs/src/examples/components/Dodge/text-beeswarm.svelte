@@ -17,8 +17,7 @@
 <Chart
 	{data}
 	x="lifeExpectancy"
-	xScale={scaleLog()}
-	xDomain={[50, 90]}
+	xNice
 	r="population"
 	rRange={[2, 40]}
 	c="continent"

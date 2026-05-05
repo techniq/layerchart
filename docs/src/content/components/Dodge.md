@@ -34,6 +34,14 @@ A classic 1-D beeswarm is `axis="y"` + `anchor="middle"` — items spread symmet
 
 `r` is the per-item collision radius (constant or accessor). When omitted, Dodge falls back to the chart's `r` accessor / `rScale`. This lets the `<Chart>` declare `r="propertyName"` once and have Dodge pick it up automatically.
 
+Because the algorithm processes items in **input order** and greedily picks the candidate closest to the anchor, the order you pass `data` directly shapes the result:
+
+- **Unsorted** — placement reflects whatever order the data arrived in (e.g. by date), often producing a noisier-looking stack.
+- **Largest first** — big items anchor at the baseline; smaller items nestle into the gaps. Produces the cleanest "skyline" silhouette and is the common choice for variable-radius beeswarms.
+- **Smallest first** — small items get the prime baseline real estate; later items get pushed outward by every prior placement, so large items end up far from the anchor.
+
+The example below lets you toggle the sort order to see this directly:
+
 :example{ name="variable-radius" }
 
 Any mark works inside the snippet — drive a `<Text>` font size from the resolved `r` to scale labels alongside the dodge radius.
