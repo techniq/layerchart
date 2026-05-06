@@ -27,7 +27,7 @@
 	grid={false}
 	props={{
 		bars: { radius: 4, strokeWidth: 0, rounded: 'all' },
-		highlight: { bar: { radius: 4, class: 'stroke-current stroke-2 fill-none' } },
+		highlight: { bar: { radius: 4, fill: 'none', stroke: 'currentColor', strokeWidth: 2 } },
 		xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
 		rule: { y: false }
 	}}
