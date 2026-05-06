@@ -17,6 +17,16 @@ function isTransparentFill(fill: string): boolean {
   return /rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*0\s*\)/.test(fill);
 }
 
+/**
+ * Returns true if a style value cannot be assigned directly to a canvas
+ * context and must first be resolved through the hidden `<svg>` helper —
+ * specifically `var(...)` references and the `currentColor` keyword.
+ */
+function needsCSSResolution(value: unknown): value is string {
+  if (typeof value !== 'string') return false;
+  return value.includes('var(') || value.toLowerCase() === 'currentcolor';
+}
+
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
 /**
@@ -181,10 +191,9 @@ function render(
   let resolvedStyles: StyleOptions;
   if (
     typeof document === 'undefined' ||
-    (styleOptions.classes == null &&
-      !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var(')))
+    (styleOptions.classes == null && !Object.values(mergedStyles).some(needsCSSResolution))
   ) {
-    // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles are using CSS variables
+    // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles need CSS resolution (`var(...)` / `currentColor`)
     resolvedStyles = mergedStyles;
 
     // On server, provide sensible defaults for styles that would normally come from CSS
@@ -200,10 +209,10 @@ function render(
       variableStyles: StyleOptions;
     }>(
       (acc, [key, value]) => {
-        if (typeof value === 'number' || (typeof value === 'string' && !value.includes('var('))) {
-          (acc.constantStyles as any)[key] = value;
-        } else if (typeof value === 'string' && value.includes('var(')) {
+        if (needsCSSResolution(value)) {
           (acc.variableStyles as any)[key] = value;
+        } else if (typeof value === 'number' || typeof value === 'string') {
+          (acc.constantStyles as any)[key] = value;
         }
         return acc;
       },
@@ -272,7 +281,7 @@ function render(
           (styleOptions.styles?.fill as any) instanceof CanvasGradient) ||
           (typeof CanvasPattern !== 'undefined' &&
             (styleOptions.styles?.fill as any) instanceof CanvasPattern) ||
-          !styleOptions.styles?.fill?.includes('var'))
+          !needsCSSResolution(styleOptions.styles?.fill))
           ? styleOptions.styles.fill
           : resolvedStyles?.fill;
 
@@ -293,7 +302,7 @@ function render(
         styleOptions.styles?.stroke &&
         ((typeof CanvasGradient !== 'undefined' &&
           (styleOptions.styles?.stroke as any) instanceof CanvasGradient) ||
-          !styleOptions.styles?.stroke?.includes('var'))
+          !needsCSSResolution(styleOptions.styles?.stroke))
           ? styleOptions.styles?.stroke
           : resolvedStyles?.stroke;
 
