@@ -584,6 +584,15 @@ export function _createPattern(
       renderPathData(patternCtx, shape.path, {
         styles: { stroke: shape.stroke, strokeWidth: shape.strokeWidth, opacity: shape.opacity },
       });
+    } else if (shape.type === 'rect') {
+      const rx = typeof shape.rx === 'string' ? toRectCornerPx(shape.rx, shape.width) : shape.rx;
+      const ry =
+        typeof shape.ry === 'string' ? toRectCornerPx(shape.ry, shape.height) : (shape.ry ?? rx);
+      renderRect(
+        patternCtx,
+        { x: shape.x, y: shape.y, width: shape.width, height: shape.height, rx, ry },
+        { styles: { fill: shape.fill, opacity: shape.opacity } }
+      );
     }
     patternCtx.restore();
   }
@@ -600,3 +609,13 @@ export function _createPattern(
 export const createPattern = memoize(_createPattern, {
   cacheKey: (args) => JSON.stringify(args.slice(1)), // Ignore `ctx` argument
 });
+
+function toRectCornerPx(value: string, max: number): number {
+  if (value.endsWith('%')) {
+    const pct = parseFloat(value);
+    if (!Number.isFinite(pct)) return 0;
+    return (max / 2) * (pct / 100);
+  }
+  const n = parseFloat(value);
+  return Number.isFinite(n) ? n : 0;
+}

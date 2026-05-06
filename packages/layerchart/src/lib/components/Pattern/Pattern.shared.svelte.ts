@@ -24,6 +24,23 @@ export type PatternCircleDef = {
   opacity?: number;
 };
 
+export type PatternRectDef = {
+  /**
+   * Inset from each edge of the pattern tile, in pixels. Useful for cell
+   * grids — set to half the desired gap between cells.
+   * @default 0
+   */
+  inset?: number;
+  /** Horizontal corner radius, or `"100%"` for a full ellipse / circle. */
+  rx?: number | string;
+  /** Vertical corner radius. Defaults to `rx` if not provided. */
+  ry?: number | string;
+  /** Fill color @default 'var(--color-surface-content)' */
+  color?: string;
+  /** Opacity @default 1 */
+  opacity?: number;
+};
+
 export type PatternPropsWithoutHTML = {
   /** The id of the pattern */
   id?: string;
@@ -42,6 +59,9 @@ export type PatternPropsWithoutHTML = {
 
   /** The number of circles to render */
   circles?: boolean | PatternCircleDef | PatternCircleDef[];
+
+  /** Rect(s) to render in each pattern tile */
+  rects?: boolean | PatternRectDef | PatternRectDef[];
 
   /** The background color of the pattern */
   background?: string;
@@ -70,7 +90,18 @@ export type LineShape = {
   strokeWidth: string | number;
   opacity: number;
 };
-export type PatternShape = CircleShape | LineShape;
+export type RectShape = {
+  type: 'rect';
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rx?: number | string;
+  ry?: number | string;
+  fill: string;
+  opacity: number;
+};
+export type PatternShape = CircleShape | LineShape | RectShape;
 
 /**
  * Build the SVG/canvas shape descriptors for a pattern's lines/circles.
@@ -81,7 +112,8 @@ export function buildPatternShapes(
   circlesProp: PatternPropsWithoutHTML['circles'],
   size: number,
   width: number,
-  height: number
+  height: number,
+  rectsProp?: PatternPropsWithoutHTML['rects']
 ): PatternShape[] {
   const shapes: PatternShape[] = [];
 
@@ -145,6 +177,26 @@ export function buildPatternShapes(
       } else {
         shapes.push({ type: 'circle', cx: size / 2, cy: size / 2, r, fill, opacity });
       }
+    }
+  }
+
+  if (rectsProp) {
+    const rectDefs = Array.isArray(rectsProp) ? rectsProp : rectsProp === true ? [{}] : [rectsProp];
+    for (const rect of rectDefs) {
+      const inset = rect.inset ?? 0;
+      const fill = rect.color ?? 'var(--color-surface-content, currentColor)';
+      const opacity = rect.opacity ?? 1;
+      shapes.push({
+        type: 'rect',
+        x: inset,
+        y: inset,
+        width: Math.max(0, width - 2 * inset),
+        height: Math.max(0, height - 2 * inset),
+        rx: rect.rx,
+        ry: rect.ry,
+        fill,
+        opacity,
+      });
     }
   }
 

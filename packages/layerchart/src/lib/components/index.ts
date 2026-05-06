@@ -130,5 +130,7 @@ export { default as Violin } from './Violin/Violin.svelte';
 export * from './Violin/Violin.svelte';
 export { default as Voronoi } from './Voronoi/Voronoi.svelte';
 export * from './Voronoi/Voronoi.svelte';
+export { default as Waffle } from './Waffle/Waffle.svelte';
+export * from './Waffle/Waffle.svelte';
 export { default as WebGL } from './layers/WebGL.svelte';
 export * from './layers/WebGL.svelte';
