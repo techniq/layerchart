@@ -276,6 +276,13 @@
       "line": "<Rect"
     },
     {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 41,
+      "line": "<Rect"
+    },
+    {
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
@@ -920,5 +927,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.698Z"
+  "updatedAt": "2026-05-05T17:36:02.883Z"
 }

@@ -546,7 +546,7 @@
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 59,
+      "lineNumber": 50,
       "line": "<Legend placement=\"bottom\" />"
     },
     {
@@ -557,5 +557,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-05-01T16:26:41.484Z"
+  "updatedAt": "2026-05-05T17:36:01.971Z"
 }

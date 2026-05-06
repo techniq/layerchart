@@ -39,7 +39,7 @@
       pathData={seg.d}
       stroke={seg.stroke}
       fill={seg.fill}
-      opacity={seg.opacity ?? c.seriesOpacity}
+      opacity={seg.opacity ?? (c.seriesOpacity === 1 ? undefined : c.seriesOpacity)}
       {...c.series?.props}
       {...restProps}
     />
@@ -49,7 +49,8 @@
     pathData={c.isTweened ? c.tweenedPath : c.d}
     stroke={(typeof stroke === 'string' ? stroke : undefined) ?? c.series?.color}
     fill={typeof fill === 'string' ? fill : undefined}
-    opacity={(typeof opacity === 'number' ? opacity : undefined) ?? c.seriesOpacity}
+    opacity={(typeof opacity === 'number' ? opacity : undefined) ??
+      (c.seriesOpacity === 1 ? undefined : c.seriesOpacity)}
     {...c.series?.props}
     {...restProps}
   />

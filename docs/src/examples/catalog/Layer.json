@@ -1683,6 +1683,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 57,
+      "line": "<Layer>"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/color-via-ordinal-scale",
@@ -1746,6 +1753,13 @@
       "line": "<Layer center>"
     },
     {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-drag",
@@ -1772,6 +1786,13 @@
       "path": "/docs/components/ForceSimulation/lattice",
       "lineNumber": 36,
       "line": "<Layer center>"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 96,
+      "line": "<Layer>"
     },
     {
       "example": "text",
@@ -2610,7 +2631,7 @@
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
-      "lineNumber": 72,
+      "lineNumber": 20,
       "line": "<Layer>"
     },
     {
@@ -2736,7 +2757,7 @@
       "example": "svelte-milestones",
       "component": "LineChart",
       "path": "/docs/components/LineChart/svelte-milestones",
-      "lineNumber": 64,
+      "lineNumber": 91,
       "line": "<Layer>"
     },
     {
@@ -4217,5 +4238,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-05-01T16:26:41.452Z"
+  "updatedAt": "2026-05-05T17:36:01.922Z"
 }

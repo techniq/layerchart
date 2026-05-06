@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-30T16:37:03.334Z",
-  "totalComponents": 76,
-  "totalExamples": 893,
+  "generatedAt": "2026-05-05T17:50:23.565Z",
+  "totalComponents": 77,
+  "totalExamples": 908,
   "components": [
     {
       "component": "AnnotationLine",
@@ -219,7 +219,7 @@
         {
           "name": "label-direction",
           "path": "/example/Arc/label-direction",
-          "checksum": "7b9f857fa1abbf88b621488899336fac"
+          "checksum": "ec8ae3538af3600f19e4fd9891611a35"
         },
         {
           "name": "partial-arc",
@@ -229,7 +229,7 @@
         {
           "name": "playground",
           "path": "/example/Arc/playground",
-          "checksum": "0a93d82370f7a1fb96b00e93aacbff43"
+          "checksum": "0a904739b45e599e1a0547099ec516f9"
         },
         {
           "name": "segmented-arc",
@@ -2239,6 +2239,76 @@
       ]
     },
     {
+      "component": "Dodge",
+      "examples": [
+        {
+          "name": "anchor",
+          "path": "/example/Dodge/anchor",
+          "checksum": "f50f58be6995d473aea04c2f39bb32de"
+        },
+        {
+          "name": "bank-failures",
+          "path": "/example/Dodge/bank-failures",
+          "checksum": "ff44849c291f965286670e3520033799"
+        },
+        {
+          "name": "beeswarm",
+          "path": "/example/Dodge/beeswarm",
+          "checksum": "d93bcdf5867a76fcc46ef77e8c9db9cd"
+        },
+        {
+          "name": "duration-bars-dense-lanes",
+          "path": "/example/Dodge/duration-bars-dense-lanes",
+          "checksum": "ca46dbfd53a522f3b302ef89685176c8"
+        },
+        {
+          "name": "grouped-horizontal",
+          "path": "/example/Dodge/grouped-horizontal",
+          "checksum": "f1b9a814453e1312edeff09ada82914e"
+        },
+        {
+          "name": "grouped-vertical",
+          "path": "/example/Dodge/grouped-vertical",
+          "checksum": "508e467b3cbf22b9389ea3f21809546f"
+        },
+        {
+          "name": "image-beeswarm",
+          "path": "/example/Dodge/image-beeswarm",
+          "checksum": "6a3490b4460294a2f236d35b6e9da17b"
+        },
+        {
+          "name": "penguins",
+          "path": "/example/Dodge/penguins",
+          "checksum": "1756a61ba1509be4d6ce81b01980a309"
+        },
+        {
+          "name": "tech-layoffs",
+          "path": "/example/Dodge/tech-layoffs",
+          "checksum": "b7c5f399a86af8e7224616072bd4a006"
+        },
+        {
+          "name": "text-beeswarm",
+          "path": "/example/Dodge/text-beeswarm",
+          "checksum": "20e689c1e1a33a21a83856a68fc8337b"
+        },
+        {
+          "name": "timeline",
+          "path": "/example/Dodge/timeline",
+          "checksum": "62fd916bf39a98c23bf60385727bd8a0"
+        },
+        {
+          "name": "timeline-bidirectional",
+          "path": "/example/Dodge/timeline-bidirectional",
+          "checksum": "0fbc817c8c6caff6650dc99f300f6e85"
+        },
+        {
+          "name": "variable-radius",
+          "path": "/example/Dodge/variable-radius",
+          "checksum": "8800b47ec03470d994b627e9360194c3"
+        }
+      ]
+    },
+    {
       "component": "Ellipse",
       "examples": [
         {
@@ -2292,6 +2362,11 @@
           "checksum": "eba37240524ba65b4252507e2de88156"
         },
         {
+          "name": "games-industry-layoffs",
+          "path": "/example/ForceSimulation/games-industry-layoffs",
+          "checksum": "09ddee1be11f5a1390e09d17c6668b3a"
+        },
+        {
           "name": "graph-drag",
           "path": "/example/ForceSimulation/graph-drag",
           "checksum": "3ca78657c1f545a8f9c44e2eec1fc6d0"
@@ -2299,7 +2374,7 @@
         {
           "name": "graph-playground",
           "path": "/example/ForceSimulation/graph-playground",
-          "checksum": "a6048e9f21fb6888e323056d98382c85"
+          "checksum": "393450b99f185d8419452381cc3d8766"
         },
         {
           "name": "group",
@@ -2309,7 +2384,12 @@
         {
           "name": "lattice",
           "path": "/example/ForceSimulation/lattice",
-          "checksum": "b68f83e76c197496c847407d14ecc511"
+          "checksum": "8f41934d67b66dddd9d7df0a2deefd12"
+        },
+        {
+          "name": "layoffs-by-industry",
+          "path": "/example/ForceSimulation/layoffs-by-industry",
+          "checksum": "f8cd90a59945ab3ae501096221423c39"
         },
         {
           "name": "text",
@@ -2834,7 +2914,7 @@
         {
           "name": "planets",
           "path": "/example/Image/planets",
-          "checksum": "a98c833cc5221db2816f1d16a20b4949"
+          "checksum": "d7ff51976f5f0a3dd909963464140526"
         },
         {
           "name": "sports-logos",
@@ -2844,7 +2924,7 @@
         {
           "name": "us-presidents",
           "path": "/example/Image/us-presidents",
-          "checksum": "fe67a4cfe2fa04cb00dee92819c8cb5d"
+          "checksum": "2bc4913aa3c56edfe0469897a979510c"
         }
       ]
     },
@@ -3344,7 +3424,7 @@
         {
           "name": "svelte-milestones",
           "path": "/example/LineChart/svelte-milestones",
-          "checksum": "200663d638fe5c27da52ed994decbd4a"
+          "checksum": "105e8e340fb846f0bc1dfc43438d06eb"
         },
         {
           "name": "threshold",
@@ -4354,7 +4434,7 @@
         {
           "name": "zoomable-bubble",
           "path": "/example/ScatterChart/zoomable-bubble",
-          "checksum": "bc70d5c7302546a0390ea95316a58dc8"
+          "checksum": "6a3072d771a94aef79edf199d9fbe75b"
         }
       ]
     },
@@ -4709,7 +4789,7 @@
         {
           "name": "planet-distances",
           "path": "/example/TransformContext/planet-distances",
-          "checksum": "0b74a5edb63bea832249fda121f81b37"
+          "checksum": "0f1fd4d31c484d4f8fa06043d5c93ca4"
         },
         {
           "name": "playground",

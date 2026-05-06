@@ -961,17 +961,17 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 35,
+          "lineNumber": 57,
           "line": "<LineChart"
         },
         {
           "component": "Layer",
-          "lineNumber": 64,
+          "lineNumber": 91,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 76,
+          "lineNumber": 100,
           "line": "<AnnotationPoint"
         }
       ]
@@ -1689,7 +1689,7 @@
       "example": "svelte-milestones",
       "component": "LineChart",
       "path": "/docs/components/LineChart/svelte-milestones",
-      "lineNumber": 35,
+      "lineNumber": 57,
       "line": "<LineChart"
     },
     {
@@ -1721,5 +1721,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:26.377Z"
+  "updatedAt": "2026-05-05T17:36:02.120Z"
 }

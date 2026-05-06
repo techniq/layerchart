@@ -15,7 +15,7 @@
 
 	type Node = Layoff & SimulationNodeDatum & { totalLaidOff: number; year: number };
 
-	let splitByYear = $state(false);
+	let splitByYear = $state(true);
 	let alpha = $state(1);
 
 	// Reheat the simulation when the layout toggles so it animates to the new targets.
@@ -60,8 +60,8 @@
 <div class="flex justify-end mb-4 screenshot-hidden">
 	<Field labelPlacement="left" class="mb-1" dense>
 		<ToggleGroup bind:value={splitByYear} size="sm">
-			<ToggleOption value={false}>All years</ToggleOption>
 			<ToggleOption value={true}>Split by year</ToggleOption>
+			<ToggleOption value={false}>All years</ToggleOption>
 		</ToggleGroup>
 	</Field>
 </div>

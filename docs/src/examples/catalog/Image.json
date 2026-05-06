@@ -148,22 +148,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 64,
+          "lineNumber": 12,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 72,
+          "lineNumber": 20,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 73,
+          "lineNumber": 21,
           "line": "<Axis placement=\"bottom\" label=\"Inauguration\" rule />"
         },
         {
           "component": "Image",
-          "lineNumber": 75,
+          "lineNumber": 23,
           "line": "<Image"
         }
       ]
@@ -182,6 +182,13 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
       "lineNumber": 214,
+      "line": "<Image"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 23,
       "line": "<Image"
     },
     {
@@ -223,7 +230,7 @@
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
-      "lineNumber": 75,
+      "lineNumber": 23,
       "line": "<Image"
     },
     {
@@ -248,5 +255,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:25.977Z"
+  "updatedAt": "2026-05-05T17:36:01.813Z"
 }
