@@ -4,39 +4,34 @@
 </script>
 
 <script lang="ts">
-	import { Chart, Tooltip, Waffle, groupStackData, Legend } from 'layerchart';
+	import { Chart, Tooltip, Waffle, Legend } from 'layerchart';
 	import { rollup, sum } from 'd3-array';
 
-	// Bin athletes by 10kg weight intervals × sex, then count per bin.
-	const counted = Array.from(
+	// Bin athletes by 10kg weight intervals × sex, one row per bin with a
+	// column per sex — wide format feeds the chart's series-based stacking.
+	const data = Array.from(
 		rollup(
 			olympians.filter((d) => d.weight && d.sex),
 			(v) => v.length,
 			(d) => Math.floor(d.weight / 10) * 10,
 			(d) => d.sex
 		),
-		([weight, bySex]) => Array.from(bySex, ([sex, value]) => ({ weight, sex, value }))
-	)
-		.flat()
-		.sort((a, b) => a.weight - b.weight);
-
-	const data = groupStackData(counted, { xKey: 'weight', stackBy: 'sex' });
+		([weight, bySex]) => ({ weight, ...Object.fromEntries(bySex) })
+	).sort((a, b) => a.weight - b.weight);
 	export { data };
-
-	const sexOrder = ['female', 'male'] as const;
-	const sexColors = ['var(--color-warning)', 'var(--color-info)'];
 </script>
 
 <Chart
 	{data}
 	x="weight"
 	bandPadding={0.2}
-	y="values"
-	yDomain={[0, null]}
 	yNice
-	c="sex"
-	cDomain={sexOrder}
-	cRange={sexColors}
+	yBaseline={0}
+	series={[
+		{ key: 'female', color: 'var(--color-warning)' },
+		{ key: 'male', color: 'var(--color-info)' }
+	]}
+	seriesLayout="stack"
 	padding={{ left: 36, bottom: 24, top: 8, right: 8 }}
 	tooltipContext={{ mode: 'band' }}
 	height={400}
@@ -47,8 +42,10 @@
 		<Legend variant="swatches" placement="top-right" orientation="horizontal" />
 	{/snippet}
 
-	{#snippet marks()}
-		<Waffle unit={10} tooltip />
+	{#snippet marks({ context })}
+		{#each context.series.visibleSeries as s (s.key)}
+			<Waffle seriesKey={s.key} unit={10} tooltip />
+		{/each}
 	{/snippet}
 
 	{#snippet tooltip({ context })}
@@ -56,11 +53,11 @@
 			{#snippet children({ data })}
 				<Tooltip.Header>{data.weight}–{data.weight + 9} kg</Tooltip.Header>
 				<Tooltip.List>
-					{#each data.data as d (d.sex)}
+					{#each context.series.visibleSeries as s (s.key)}
 						<Tooltip.Item
-							label={d.sex}
-							value={d.value}
-							color={context.cScale?.(d.sex)}
+							label={s.key}
+							value={data[s.key]}
+							color={s.color}
 							format="integer"
 							valueAlign="right"
 						/>
@@ -68,7 +65,7 @@
 					<Tooltip.Separator />
 					<Tooltip.Item
 						label="total"
-						value={sum([...data.data], (d) => d.value)}
+						value={sum(context.series.visibleSeries, (s) => Number(data[s.key]) || 0)}
 						format="integer"
 						valueAlign="right"
 					/>

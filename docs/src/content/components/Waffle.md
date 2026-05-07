@@ -82,7 +82,9 @@ For full control over the cell's appearance — icons, glyphs, or any SVG — pa
 
 ## Stacking
 
-Stacked waffles share a cell grid across the stack so cells line up across series — the cleanest way to compare composition. Use [`groupStackData`](/docs/utils/stack) to prepare the data and color via the chart's `c` accessor:
+Stacked waffles share a cell grid across the stack so cells line up across series — the cleanest way to compare composition. Configure `series` + `seriesLayout="stack"` and render one `<Waffle seriesKey={...}>` per visible series. Toggling the legend hides a series and restacks the remaining segments to the baseline.
+
+For long-format input (one row per category × stack key), pivot to wide format with [`pivotWider`](/docs/utils/pivot) so each row has one column per series key:
 
 :example{ name="penguins" }
 
@@ -90,6 +92,6 @@ A wider stack with finer bins — athletes by 10kg weight cohort, split by sex:
 
 :example{ name="olympians-weight-by-sex" }
 
-For per-series rendering with explicit `seriesKey`, see the basic stacked example:
+The same pattern with already-wide data:
 
 :example{ name="stacked" }
