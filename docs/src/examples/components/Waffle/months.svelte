@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { Chart, Tooltip, Waffle, Legend } from 'layerchart';
+	import { Chart, Tooltip, Waffle } from 'layerchart';
+	import { interpolateRainbow } from 'd3-scale-chromatic';
 
 	const months = [
 		{ month: 'Jan', days: 31 },
@@ -17,8 +17,8 @@
 		{ month: 'Dec', days: 31 }
 	];
 
-	// Stack months end-to-end on a single horizontal track so each contributes a
-	// segment of cells with its own color — like Plot's `<WaffleX fill="month" x="days" />`.
+	// Stack months end-to-end as cumulative day ranges so each datum is a
+	// segment along the x axis colored by month.
 	const data: { month: string; values: [number, number] }[] = [];
 	let acc = 0;
 	for (const m of months) {
@@ -27,39 +27,22 @@
 	}
 	export { data };
 
-	const colors = [
-		'var(--color-info)',
-		'var(--color-success)',
-		'var(--color-warning)',
-		'var(--color-danger)',
-		'var(--color-secondary)',
-		'var(--color-primary)',
-		'#a5b4fc',
-		'#fca5a5',
-		'#fcd34d',
-		'#86efac',
-		'#67e8f9',
-		'#c4b5fd'
-	];
+	// Sample the cyclical rainbow interpolator at 12 evenly-spaced points so
+	// adjacent months get adjacent hues and Dec wraps back toward Jan.
+	const colors = months.map((_, i) => interpolateRainbow(i / months.length));
 </script>
 
 <Chart
 	{data}
 	x="values"
 	xDomain={[0, 365]}
-	y="month"
-	yScale={scaleBand().domain([''])}
+	y={(d) => ''}
 	c="month"
-	cDomain={months.map((d) => d.month)}
 	cRange={colors}
-	padding={{ left: 8, bottom: 24, top: 8, right: 8 }}
-	height={150}
-	rule
+	padding={{ left: 8, bottom: 32, top: 8, right: 8 }}
+	height={140}
+	axis={{ placement: 'bottom', label: 'days →', labelPlacement: 'end' }}
 >
-	{#snippet legend()}
-		<Legend variant="swatches" placement="top" orientation="horizontal" />
-	{/snippet}
-
 	{#snippet marks()}
 		<Waffle axis="x" unit={1} tooltip />
 	{/snippet}
