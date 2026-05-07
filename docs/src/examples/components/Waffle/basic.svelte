@@ -4,19 +4,17 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { Axis, Chart, Tooltip, Waffle } from 'layerchart';
-
-	export { data };
+	import { Chart, Tooltip, Waffle } from 'layerchart';
 
 	// Letter frequencies are < 0.13. Multiply by 1000 to get countable cells.
 	const scaled = data.map((d) => ({ letter: d.letter, count: Math.round(d.frequency * 1000) }));
+	export { data };
 </script>
 
 <Chart
 	data={scaled}
 	x="letter"
-	xScale={scaleBand().paddingInner(0.1)}
+	bandPadding={0.1}
 	y="count"
 	yDomain={[0, null]}
 	yNice

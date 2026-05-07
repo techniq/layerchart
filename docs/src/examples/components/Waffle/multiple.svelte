@@ -4,11 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
 	import { Field, RangeField } from 'svelte-ux';
 	import { Chart, Tooltip, Waffle } from 'layerchart';
-
-	export { data };
 
 	let multiple = $state(10);
 	let unit = $state(2);
@@ -16,6 +13,7 @@
 	const scaled = data
 		.slice(0, 12)
 		.map((d) => ({ letter: d.letter, count: Math.round(d.frequency * 1000) }));
+	export { data };
 </script>
 
 <div class="grid grid-cols-2 gap-4 mb-4 screenshot-hidden">
@@ -30,7 +28,7 @@
 <Chart
 	data={scaled}
 	x="letter"
-	xScale={scaleBand().paddingInner(0.15)}
+	bandPadding={0.2}
 	y="count"
 	yDomain={[0, null]}
 	yNice

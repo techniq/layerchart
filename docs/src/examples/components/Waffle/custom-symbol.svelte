@@ -4,11 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { rollup } from 'd3-array';
 	import { Chart, Tooltip, Waffle, Legend, groupStackData } from 'layerchart';
-
-	export { penguins };
+	import { rollup } from 'd3-array';
 
 	// Count penguins per (island, species), stacked by species.
 	const counted = Array.from(
@@ -23,6 +20,7 @@
 	).flat();
 
 	const data = groupStackData(counted, { xKey: 'island', stackBy: 'species' });
+	export { data };
 
 	const speciesOrder = ['Adelie', 'Chinstrap', 'Gentoo'];
 	const speciesColors = ['var(--color-info)', 'var(--color-warning)', 'var(--color-success)'];
@@ -35,7 +33,7 @@
 <Chart
 	{data}
 	x="island"
-	xScale={scaleBand().paddingInner(0.2)}
+	bandPadding={0.2}
 	y="values"
 	yDomain={[0, null]}
 	yNice

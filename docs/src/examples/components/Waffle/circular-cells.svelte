@@ -4,20 +4,18 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
 	import { Chart, Tooltip, Waffle } from 'layerchart';
-
-	export { data };
 
 	const scaled = data
 		.slice(0, 18)
 		.map((d) => ({ letter: d.letter, count: Math.round(d.frequency * 500) }));
+	export { data };
 </script>
 
 <Chart
 	data={scaled}
 	x="letter"
-	xScale={scaleBand().paddingInner(0.2)}
+	bandPadding={0.2}
 	y="count"
 	yDomain={[0, null]}
 	yNice

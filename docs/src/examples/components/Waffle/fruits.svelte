@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
 	import { Chart, Tooltip, Waffle } from 'layerchart';
 
 	const data = [
@@ -14,7 +13,7 @@
 <Chart
 	{data}
 	x="fruit"
-	xScale={scaleBand().paddingInner(0.15)}
+	bandPadding={0.2}
 	y="count"
 	yDomain={[0, null]}
 	yNice

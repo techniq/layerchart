@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { sum } from 'd3-array';
 	import { Chart, Tooltip, Waffle } from 'layerchart';
+	import { sum } from 'd3-array';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -18,7 +17,7 @@
 <Chart
 	{data}
 	x="period"
-	xScale={scaleBand().paddingInner(0.15)}
+	bandPadding={0.2}
 	yNice
 	yBaseline={0}
 	series={[

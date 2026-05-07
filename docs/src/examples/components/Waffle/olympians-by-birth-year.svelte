@@ -4,12 +4,9 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
+	import { Chart, Tooltip, Waffle } from 'layerchart';
 	import { rollup } from 'd3-array';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { Chart, Tooltip, Waffle } from 'layerchart';
-
-	export { olympians };
 
 	let unit = $state(10);
 	let round = $state(false);
@@ -27,6 +24,7 @@
 		),
 		([year, count]) => ({ year, count })
 	).sort((a, b) => a.year - b.year);
+	export { data };
 </script>
 
 <div class="grid grid-cols-[auto_auto_1fr] gap-4 mb-4 screenshot-hidden">
@@ -48,7 +46,7 @@
 <Chart
 	{data}
 	x="year"
-	xScale={scaleBand().paddingInner(0.15)}
+	bandPadding={0.2}
 	y="count"
 	yDomain={[0, null]}
 	yNice

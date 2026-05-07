@@ -4,11 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { rollup, sum } from 'd3-array';
 	import { Chart, Tooltip, Waffle, groupStackData, Legend } from 'layerchart';
-
-	export { olympians };
+	import { rollup, sum } from 'd3-array';
 
 	// Bin athletes by 10kg weight intervals × sex, then count per bin.
 	const counted = Array.from(
@@ -18,13 +15,13 @@
 			(d) => Math.floor(d.weight / 10) * 10,
 			(d) => d.sex
 		),
-		([weight, bySex]) =>
-			Array.from(bySex, ([sex, value]) => ({ weight, sex, value }))
+		([weight, bySex]) => Array.from(bySex, ([sex, value]) => ({ weight, sex, value }))
 	)
 		.flat()
 		.sort((a, b) => a.weight - b.weight);
 
 	const data = groupStackData(counted, { xKey: 'weight', stackBy: 'sex' });
+	export { data };
 
 	const sexOrder = ['female', 'male'] as const;
 	const sexColors = ['var(--color-warning)', 'var(--color-info)'];
@@ -33,7 +30,7 @@
 <Chart
 	{data}
 	x="weight"
-	xScale={scaleBand().paddingInner(0.15)}
+	bandPadding={0.2}
 	y="values"
 	yDomain={[0, null]}
 	yNice

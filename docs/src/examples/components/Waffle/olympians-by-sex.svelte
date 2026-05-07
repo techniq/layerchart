@@ -4,11 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { rollup } from 'd3-array';
 	import { Chart, Tooltip, Waffle } from 'layerchart';
-
-	export { olympians };
+	import { rollup } from 'd3-array';
 
 	const data = Array.from(
 		rollup(
@@ -18,12 +15,13 @@
 		),
 		([sex, count]) => ({ sex, count })
 	).sort((a, b) => b.count - a.count);
+	export { data };
 </script>
 
 <Chart
 	{data}
 	x="sex"
-	xScale={scaleBand().paddingInner(0.2)}
+	bandPadding={0.2}
 	y="count"
 	yDomain={[0, null]}
 	yNice

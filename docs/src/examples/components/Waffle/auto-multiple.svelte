@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Field, RangeField } from 'svelte-ux';
 	import { Chart, Waffle } from 'layerchart';
+	import { Field, RangeField } from 'svelte-ux';
 
 	let apples = $state(500);
 	const data = $derived([{ label: 'apples', count: apples }]);
