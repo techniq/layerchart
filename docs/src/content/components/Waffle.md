@@ -60,6 +60,12 @@ Tweak `unit` and `multiple` interactively to see how they affect cell count and 
 
 :example{ name="circular-cells" }
 
+## Proportion of a whole
+
+Two waffle marks layered together — a faded one sized to the total and an opaque one sized to the value — turn each band into a "X out of N" graphic. After ["Teens in Syria"](https://www.economist.com/graphic-detail/2015/08/19/teens-in-syria) (_The Economist_, August 2015):
+
+:example{ name="survey" }
+
 ## Custom symbol
 
 For full control over the cell's appearance — icons, glyphs, or any SVG — pass a `symbol` snippet. It renders in cell-local coordinates inside a `<g>` whose `fill` is pre-set to the resolved cell color (from the chart's `c` scale, the series, or the `fill` prop), so a `<path>` without an explicit fill inherits it. The snippet receives the cell `width`/`height` (after `gap` inset), the `datum`, and the resolved `fill`:
