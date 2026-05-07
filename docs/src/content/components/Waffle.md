@@ -13,7 +13,7 @@ Waffles are rendered as a single `<Path>` per datum filled with a tiled `<Patter
 
 ## Axis
 
-The waffle mark comes in two orientations. `axis="y"` extends vertically (Plot's `waffleY`); `axis="x"` extends horizontally (Plot's `waffleX`). The other axis is the **anchor axis** — typically a band scale of categories. When `axis` is omitted, it falls back to the chart's `valueAxis`.
+The waffle mark comes in two orientations. `axis="y"` extends vertically; `axis="x"` extends horizontally. The other axis is the **anchor axis** — typically a band scale of categories. When `axis` is omitted, it falls back to the chart's `valueAxis`.
 
 :example{ name="horizontal" }
 
@@ -59,6 +59,26 @@ Tweak `unit` and `multiple` interactively to see how they affect cell count and 
 `rx` and `ry` round each cell's corners (in pixels, or `"100%"` for circles — a stacked-dots look).
 
 :example{ name="circular-cells" }
+
+## Custom symbol
+
+For full control over the cell's appearance — icons, glyphs, or any SVG — pass a `symbol` snippet. It renders in cell-local coordinates inside a `<g>` whose `fill` is pre-set to the resolved cell color (from the chart's `c` scale, the series, or the `fill` prop), so a `<path>` without an explicit fill inherits it. The snippet receives the cell `width`/`height` (after `gap` inset), the `datum`, and the resolved `fill`:
+
+```svelte
+<Waffle>
+	{#snippet symbol({ width, height })}
+		<g transform={`scale(${width / 800},${height / 800})`}>
+			<path d={iconPath} />
+		</g>
+	{/snippet}
+</Waffle>
+```
+
+:example{ name="custom-symbol" }
+
+:::note
+`symbol` is supported on the SVG layer only — canvas falls back to the default rect.
+:::
 
 ## Stacking
 

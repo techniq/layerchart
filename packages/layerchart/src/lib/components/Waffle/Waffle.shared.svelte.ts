@@ -1,3 +1,4 @@
+import type { Snippet } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -71,6 +72,25 @@ export type WafflePropsWithoutHTML = {
   tooltip?: boolean;
   /** Click handler invoked with `(event, { data })` for the hovered waffle. */
   onWaffleClick?: (e: MouseEvent, detail: { data: any }) => void;
+  /**
+   * Render a custom symbol per cell instead of the default rect. The snippet
+   * renders in cell-local coordinates (origin at the inner cell, after `gap`
+   * inset) inside a `<g>` whose `fill` is pre-set to the resolved cell color,
+   * so a `<path>` without an explicit `fill` inherits it.
+   *
+   * SVG layer only — canvas falls back to the default rect.
+   */
+  symbol?: Snippet<
+    [
+      {
+        width: number;
+        height: number;
+        datum: any;
+        /** Resolved cell color (also pre-applied to the wrapping `<g>`). */
+        fill: string;
+      },
+    ]
+  >;
 } & CommonStyleProps;
 
 export type WaffleProps = WafflePropsWithoutHTML &

@@ -38,9 +38,11 @@ export function groupStackData<TData>(
         ...new Set(groupData.map((d: any) => d[options.stackBy ?? ''])),
       ];
       // @ts-expect-error
-      const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
-        pivotData
-      );
+      const stackData = stack()
+        .keys(stackKeys)
+        .value((d: any, key: any) => d[key] ?? 0)
+        .order(options.order)
+        .offset(options.offset)(pivotData);
 
       return stackData.flatMap((series) => {
         return series.flatMap((s) => {
@@ -73,9 +75,11 @@ export function groupStackData<TData>(
     // @ts-expect-error
     const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy ?? '']))];
     // @ts-expect-error
-    const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
-      pivotData
-    );
+    const stackData = stack()
+      .keys(stackKeys)
+      .value((d: any, key: any) => d[key] ?? 0)
+      .order(options.order)
+      .offset(options.offset)(pivotData);
 
     const result = stackData.flatMap((series) => {
       return series.flatMap((s) => {

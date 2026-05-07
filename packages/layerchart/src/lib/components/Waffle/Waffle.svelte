@@ -41,6 +41,7 @@
     onpointermove,
     onpointerleave,
     onclick,
+    symbol,
     ...rest
   }: WaffleProps = $props();
 
@@ -85,19 +86,34 @@
     onclick?.(e as any);
     onWaffleClick?.(e, { data: item.data });
   }}
+  {@const cellInset = c.gap / 2}
+  {@const innerWidth = Math.max(0, item.cx - 2 * cellInset)}
+  {@const innerHeight = Math.max(0, item.cy - 2 * cellInset)}
+  {@const symbolFill = item.fill ?? (typeof fill === 'string' ? fill : undefined) ?? 'currentColor'}
+  {#snippet symbolPatternContent()}
+    <g transform={`translate(${cellInset},${cellInset})`} fill={symbolFill}>
+      {@render symbol?.({
+        width: innerWidth,
+        height: innerHeight,
+        datum: item.data,
+        fill: symbolFill,
+      })}
+    </g>
+  {/snippet}
   <Group x={item.tx} y={item.ty} class={cls('lc-waffle', className)} {opacity}>
     <Pattern
       width={item.cx}
       height={item.cy}
       rects={[
         {
-          inset: c.gap / 2,
+          inset: cellInset,
           color: item.fill ?? (typeof fill === 'string' ? fill : undefined),
           opacity: fillOpacity,
           rx,
           ry,
         },
       ]}
+      patternContent={symbol ? symbolPatternContent : undefined}
     >
       {#snippet children({ pattern })}
         <Path
