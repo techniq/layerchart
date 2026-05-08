@@ -152,6 +152,33 @@
       ]
     },
     {
+      "name": "rects",
+      "title": "rects",
+      "path": "/docs/components/Pattern/rects",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 8,
+          "line": "<Pattern size={8} rects>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 10,
+          "line": "<Rect"
+        }
+      ]
+    },
+    {
       "name": "with-fill-color",
       "title": "with fill color",
       "path": "/docs/components/Pattern/with-fill-color",
@@ -458,6 +485,48 @@
       "line": "<Pattern width={8} height={8}>"
     },
     {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 8,
+      "line": "<Pattern size={8} rects>"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 23,
+      "line": "<Pattern size={12} rects={{ inset: 1 }}>"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 38,
+      "line": "<Pattern size={14} rects={{ inset: 2, rx: 2, ry: 2 }}>"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 53,
+      "line": "<Pattern size={14} rects={{ inset: 2, rx: '100%', ry: '100%' }}>"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 68,
+      "line": "<Pattern size={14} rects={{ inset: 2, rx: 2, color: 'var(--color-primary)', opacity: 0.6 }}>"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 83,
+      "line": "<Pattern"
+    },
+    {
       "example": "with-fill-color",
       "component": "Pattern",
       "path": "/docs/components/Pattern/with-fill-color",
@@ -542,5 +611,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2026-04-16T17:47:00.268Z"
+  "updatedAt": "2026-05-08T16:24:15.543Z"
 }

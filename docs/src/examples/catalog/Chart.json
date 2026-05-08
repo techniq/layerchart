@@ -3100,6 +3100,13 @@
       "line": "<Chart height={300}>"
     },
     {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 5,
+      "line": "<Chart height={300}>"
+    },
+    {
       "example": "with-fill-color",
       "component": "Pattern",
       "path": "/docs/components/Pattern/with-fill-color",
@@ -4337,7 +4344,105 @@
       "path": "/docs/components/Voronoi/radius",
       "lineNumber": 22,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
+    },
+    {
+      "example": "auto-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/auto-multiple",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "band-padding",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/band-padding",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/basic",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "circular-cells",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/circular-cells",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "horizontal",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/horizontal",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "months",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/months",
+      "lineNumber": 35,
+      "line": "<Chart"
+    },
+    {
+      "example": "olympians-by-birth-year",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "lineNumber": 46,
+      "line": "<Chart"
+    },
+    {
+      "example": "olympians-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "survey",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/survey",
+      "lineNumber": 20,
+      "line": "<Chart"
+    },
+    {
+      "example": "unit-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "lineNumber": 44,
+      "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-05-05T17:35:58.896Z"
+  "updatedAt": "2026-05-08T16:24:14.195Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-05T17:50:23.565Z",
-  "totalComponents": 77,
-  "totalExamples": 908,
+  "generatedAt": "2026-05-08T16:26:34.913Z",
+  "totalComponents": 78,
+  "totalExamples": 923,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1309,7 +1309,7 @@
         {
           "name": "single-dimension",
           "path": "/example/BarChart/single-dimension",
-          "checksum": "6a5875d3c504ebbccf226a58692740da"
+          "checksum": "14171b31fa5469972461fd3d5a7ed80f"
         },
         {
           "name": "single-stack-with-indicator",
@@ -2389,7 +2389,7 @@
         {
           "name": "layoffs-by-industry",
           "path": "/example/ForceSimulation/layoffs-by-industry",
-          "checksum": "f8cd90a59945ab3ae501096221423c39"
+          "checksum": "e63aec0431d5bda4af689e5ce7980c1b"
         },
         {
           "name": "text",
@@ -3625,6 +3625,11 @@
           "name": "lines-custom-pattern-svg-only",
           "path": "/example/Pattern/lines-custom-pattern-svg-only",
           "checksum": "aacd12af57a7486508ad0ff9b75a28a7"
+        },
+        {
+          "name": "rects",
+          "path": "/example/Pattern/rects",
+          "checksum": "530e01c9bbe5dde6d919a5b70c918396"
         },
         {
           "name": "with-fill-color",
@@ -4925,6 +4930,81 @@
           "name": "radius",
           "path": "/example/Voronoi/radius",
           "checksum": "e5baf4045686443c75179995720f135c"
+        }
+      ]
+    },
+    {
+      "component": "Waffle",
+      "examples": [
+        {
+          "name": "auto-multiple",
+          "path": "/example/Waffle/auto-multiple",
+          "checksum": "873fb8f9d4b56505a8f462da74a6016b"
+        },
+        {
+          "name": "band-padding",
+          "path": "/example/Waffle/band-padding",
+          "checksum": "2aa756fb67c4d9f31399e92f0dfc2f07"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Waffle/basic",
+          "checksum": "9e8fad7fdb70851268ddce0b527ee5e8"
+        },
+        {
+          "name": "circular-cells",
+          "path": "/example/Waffle/circular-cells",
+          "checksum": "3c4ea5992d33169c306e684bc2da9ac0"
+        },
+        {
+          "name": "custom-symbol",
+          "path": "/example/Waffle/custom-symbol",
+          "checksum": "a05e90ca49f70df6c6488dee159a0028"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Waffle/horizontal",
+          "checksum": "9d1efc311d4fa8ba1fac0a24583890a6"
+        },
+        {
+          "name": "months",
+          "path": "/example/Waffle/months",
+          "checksum": "c820209ec1dd4145f4831afe5888f908"
+        },
+        {
+          "name": "olympians-by-birth-year",
+          "path": "/example/Waffle/olympians-by-birth-year",
+          "checksum": "7fa7c2c8eb7c4b78c2742591e546b9ae"
+        },
+        {
+          "name": "olympians-by-sex",
+          "path": "/example/Waffle/olympians-by-sex",
+          "checksum": "186a1a25d22d711fe823b02df4cb32c1"
+        },
+        {
+          "name": "olympians-weight-by-sex",
+          "path": "/example/Waffle/olympians-weight-by-sex",
+          "checksum": "2d69fc0af9f15ae2f614718b5f215f71"
+        },
+        {
+          "name": "penguins",
+          "path": "/example/Waffle/penguins",
+          "checksum": "ef065e62cb62c09276f78791e5bd099b"
+        },
+        {
+          "name": "stacked",
+          "path": "/example/Waffle/stacked",
+          "checksum": "43378685d77bfc9eab6ef225b7483fe1"
+        },
+        {
+          "name": "survey",
+          "path": "/example/Waffle/survey",
+          "checksum": "11695d0b77decee7e15434ed2a274a64"
+        },
+        {
+          "name": "unit-multiple",
+          "path": "/example/Waffle/unit-multiple",
+          "checksum": "4d00cb2d5ec1d77df1921eb49c7395ef"
         }
       ]
     }

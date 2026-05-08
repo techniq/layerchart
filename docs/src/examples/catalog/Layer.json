@@ -2978,6 +2978,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 6,
+      "line": "<Layer>"
+    },
+    {
       "example": "with-fill-color",
       "component": "Pattern",
       "path": "/docs/components/Pattern/with-fill-color",
@@ -4238,5 +4245,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:01.922Z"
+  "updatedAt": "2026-05-08T16:24:15.172Z"
 }

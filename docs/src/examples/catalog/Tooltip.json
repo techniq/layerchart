@@ -7362,7 +7362,399 @@
       "path": "/docs/components/Vector/wind-map",
       "lineNumber": 57,
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
+    },
+    {
+      "example": "band-padding",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/band-padding",
+      "lineNumber": 54,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "band-padding",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/band-padding",
+      "lineNumber": 56,
+      "line": "<Tooltip.Header>{data.fruit}</Tooltip.Header>"
+    },
+    {
+      "example": "band-padding",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/band-padding",
+      "lineNumber": 57,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "band-padding",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/band-padding",
+      "lineNumber": 58,
+      "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/basic",
+      "lineNumber": 30,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "basic",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/basic",
+      "lineNumber": 32,
+      "line": "<Tooltip.Header>{data.fruit}</Tooltip.Header>"
+    },
+    {
+      "example": "basic",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/basic",
+      "lineNumber": 33,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "basic",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/basic",
+      "lineNumber": 34,
+      "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
+    },
+    {
+      "example": "circular-cells",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/circular-cells",
+      "lineNumber": 32,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "circular-cells",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/circular-cells",
+      "lineNumber": 34,
+      "line": "<Tooltip.Header>{data.letter}</Tooltip.Header>"
+    },
+    {
+      "example": "circular-cells",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/circular-cells",
+      "lineNumber": 35,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "circular-cells",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/circular-cells",
+      "lineNumber": 36,
+      "line": "<Tooltip.Item label=\"Frequency\" value={data.count / 500} format=\"percent\" />"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 64,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 66,
+      "line": "<Tooltip.Header>{data.island}</Tooltip.Header>"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 67,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 69,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 77,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 78,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "horizontal",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/horizontal",
+      "lineNumber": 31,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/horizontal",
+      "lineNumber": 33,
+      "line": "<Tooltip.Header>{data.fruit}</Tooltip.Header>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/horizontal",
+      "lineNumber": 34,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/horizontal",
+      "lineNumber": 35,
+      "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
+    },
+    {
+      "example": "months",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/months",
+      "lineNumber": 51,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "months",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/months",
+      "lineNumber": 53,
+      "line": "<Tooltip.Header>{data.month}</Tooltip.Header>"
+    },
+    {
+      "example": "months",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/months",
+      "lineNumber": 54,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "months",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/months",
+      "lineNumber": 55,
+      "line": "<Tooltip.Item label=\"Days\" value={data.values[1] - data.values[0]} format=\"integer\" />"
+    },
+    {
+      "example": "olympians-by-birth-year",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "lineNumber": 63,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "olympians-by-birth-year",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "lineNumber": 65,
+      "line": "<Tooltip.Header>{data.year}–{data.year + 4}</Tooltip.Header>"
+    },
+    {
+      "example": "olympians-by-birth-year",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "lineNumber": 66,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "olympians-by-birth-year",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Athletes\" value={data.count} format=\"integer\" />"
+    },
+    {
+      "example": "olympians-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "lineNumber": 38,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "olympians-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "lineNumber": 40,
+      "line": "<Tooltip.Header>{data.sex}</Tooltip.Header>"
+    },
+    {
+      "example": "olympians-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "lineNumber": 41,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "olympians-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "lineNumber": 42,
+      "line": "<Tooltip.Item label=\"Athletes\" value={data.count} format=\"integer\" />"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 52,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 54,
+      "line": "<Tooltip.Header>{data.weight}–{data.weight + 9} kg</Tooltip.Header>"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 55,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 57,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 65,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 51,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 53,
+      "line": "<Tooltip.Header>{data.island}</Tooltip.Header>"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 54,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 56,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 64,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 44,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 46,
+      "line": "<Tooltip.Header>{data.period}</Tooltip.Header>"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 47,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 57,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 58,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "unit-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "lineNumber": 62,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "unit-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "lineNumber": 64,
+      "line": "<Tooltip.Header>{data.fruit}</Tooltip.Header>"
+    },
+    {
+      "example": "unit-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "lineNumber": 65,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "unit-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:03.468Z"
+  "updatedAt": "2026-05-08T16:24:16.098Z"
 }

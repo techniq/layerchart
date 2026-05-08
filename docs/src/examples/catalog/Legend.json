@@ -555,7 +555,28 @@
       "path": "/docs/components/Spline/gradient-encoding",
       "lineNumber": 30,
       "line": "<Legend"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 40,
+      "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 42,
+      "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 41,
+      "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:01.971Z"
+  "updatedAt": "2026-05-08T16:24:15.193Z"
 }

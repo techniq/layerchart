@@ -274,7 +274,14 @@
       "path": "/docs/components/Ellipse/styling-using-css-variables",
       "lineNumber": 29,
       "line": "<Ellipse"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 53,
+      "line": "<ellipse cx=\"39\" cy=\"16.969\" fill=\"currentColor\" rx=\"2\" ry=\"3\" /><path"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:24.441Z"
+  "updatedAt": "2026-05-08T16:24:14.655Z"
 }

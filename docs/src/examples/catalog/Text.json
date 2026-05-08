@@ -1087,7 +1087,14 @@
       "path": "/docs/components/Vector/shapes",
       "lineNumber": 98,
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "survey",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/survey",
+      "lineNumber": 47,
+      "line": "<Text"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:03.350Z"
+  "updatedAt": "2026-05-08T16:24:15.950Z"
 }

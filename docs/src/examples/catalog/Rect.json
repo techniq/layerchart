@@ -619,6 +619,48 @@
       "line": "<rect"
     },
     {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 10,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 25,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 40,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 55,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 70,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 89,
+      "line": "<Rect"
+    },
+    {
       "example": "with-fill-color",
       "component": "Pattern",
       "path": "/docs/components/Pattern/with-fill-color",
@@ -927,5 +969,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:02.883Z"
+  "updatedAt": "2026-05-08T16:24:15.746Z"
 }
