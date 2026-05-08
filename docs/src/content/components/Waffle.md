@@ -9,17 +9,13 @@ The **Waffle** mark visualizes quantities as a grid of small, countable square c
 
 Waffles are rendered as a single `<Path>` per datum filled with a tiled `<Pattern>` (one cell per tile), so even a 1,000-cell waffle costs a single path node. Cells aren't individually addressable for hover/click — for that, use a [Cell](/docs/components/Cell) grid instead.
 
-:example{ name="fruits" }
+:example{ name="basic" }
 
 ## Axis
 
 The waffle mark comes in two orientations. `axis="y"` extends vertically; `axis="x"` extends horizontally. The other axis is the **anchor axis** — typically a band scale of categories. When `axis` is omitted, it falls back to the chart's `valueAxis`.
 
 :example{ name="horizontal" }
-
-A horizontal waffle works equally well for showing a single composition broken into named segments — here, the days of each month across a year:
-
-:example{ name="months" }
 
 ## Cells (`unit`, `multiple`, `gap`)
 
@@ -66,14 +62,14 @@ Two waffle marks layered together — a faded one sized to the total and an opaq
 
 ## Custom symbol
 
-For full control over the cell's appearance — icons, glyphs, or any SVG — pass a `symbol` snippet. It renders in cell-local coordinates inside a `<g>` whose `fill` is pre-set to the resolved cell color (from the chart's `c` scale, the series, or the `fill` prop), so a `<path>` without an explicit fill inherits it. The snippet receives the cell `width`/`height` (after `gap` inset), the `datum`, and the resolved `fill`:
+Pass a `symbol` snippet to render an icon, glyph, or arbitrary SVG in each cell instead of the default rect. The snippet receives the cell's `width` and `height` — pass them straight to an inner `<svg>` with the icon's native `viewBox` to scale the shape to fit. The cell's resolved color (from the chart's `c` scale, the series, or `fill`) is set via CSS `color` on the wrapping element, so any `fill="currentColor"` (or stroke) inside the snippet inherits it.
 
 ```svelte
 <Waffle>
 	{#snippet symbol({ width, height })}
-		<g transform={`scale(${width / 800},${height / 800})`}>
-			<path d={iconPath} />
-		</g>
+		<svg {width} {height} viewBox="0 0 64 64">
+			<path fill="currentColor" d={iconPath} />
+		</svg>
 	{/snippet}
 </Waffle>
 ```
@@ -99,3 +95,7 @@ A wider stack with finer bins — athletes by 10kg weight cohort, split by sex:
 The same pattern with already-wide data:
 
 :example{ name="stacked" }
+
+A stacked horizontal waffle works equally well for showing a single composition broken into named segments — here, the days of each month across a year:
+
+:example{ name="months" }

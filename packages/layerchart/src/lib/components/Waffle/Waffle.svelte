@@ -89,14 +89,14 @@
   {@const cellInset = c.gap / 2}
   {@const innerWidth = Math.max(0, item.cx - 2 * cellInset)}
   {@const innerHeight = Math.max(0, item.cy - 2 * cellInset)}
-  {@const symbolFill = item.fill ?? (typeof fill === 'string' ? fill : undefined) ?? 'currentColor'}
+  {@const color = item.fill ?? (typeof fill === 'string' ? fill : undefined) ?? 'currentColor'}
   {#snippet symbolPatternContent()}
-    <g transform={`translate(${cellInset},${cellInset})`} fill={symbolFill}>
+    <g transform={`translate(${cellInset},${cellInset})`} {color}>
       {@render symbol?.({
         width: innerWidth,
         height: innerHeight,
         datum: item.data,
-        fill: symbolFill,
+        color,
       })}
     </g>
   {/snippet}

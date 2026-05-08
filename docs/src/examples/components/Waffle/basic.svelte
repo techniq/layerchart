@@ -1,24 +1,23 @@
-<script module lang="ts">
-	import { getAlphabet } from '$lib/data.remote';
-	const data = await getAlphabet();
-</script>
-
 <script lang="ts">
 	import { Chart, Tooltip, Waffle } from 'layerchart';
 
-	// Letter frequencies are < 0.13. Multiply by 1000 to get countable cells.
-	const scaled = data.map((d) => ({ letter: d.letter, count: Math.round(d.frequency * 1000) }));
+	const data = [
+		{ fruit: 'Apple', count: 212 },
+		{ fruit: 'Banana', count: 207 },
+		{ fruit: 'Cherry', count: 315 },
+		{ fruit: 'Date', count: 11 }
+	];
 	export { data };
 </script>
 
 <Chart
-	data={scaled}
-	x="letter"
-	bandPadding={0.1}
+	{data}
+	x="fruit"
+	bandPadding={0.2}
 	y="count"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 32, bottom: 24, top: 8, right: 8 }}
+	padding={{ left: 36, bottom: 24, top: 8, right: 8 }}
 	height={400}
 	rule
 	grid
@@ -30,9 +29,9 @@
 	{#snippet tooltip()}
 		<Tooltip.Root>
 			{#snippet children({ data })}
-				<Tooltip.Header>{data.letter}</Tooltip.Header>
+				<Tooltip.Header>{data.fruit}</Tooltip.Header>
 				<Tooltip.List>
-					<Tooltip.Item label="Frequency" value={data.count / 1000} format="percent" />
+					<Tooltip.Item label="Count" value={data.count} format="integer" />
 				</Tooltip.List>
 			{/snippet}
 		</Tooltip.Root>

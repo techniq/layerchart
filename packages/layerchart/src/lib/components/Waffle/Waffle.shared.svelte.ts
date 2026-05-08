@@ -74,9 +74,9 @@ export type WafflePropsWithoutHTML = {
   onWaffleClick?: (e: MouseEvent, detail: { data: any }) => void;
   /**
    * Render a custom symbol per cell instead of the default rect. The snippet
-   * renders in cell-local coordinates (origin at the inner cell, after `gap`
-   * inset) inside a `<g>` whose `fill` is pre-set to the resolved cell color,
-   * so a `<path>` without an explicit `fill` inherits it.
+   * receives the cell's `width`/`height` and the resolved `color` for the
+   * cell. The CSS `color` is applied to the wrapping element, so any nested
+   * SVG using `fill="currentColor"` (or stroke) inherits it automatically.
    *
    * SVG layer only — canvas falls back to the default rect.
    */
@@ -86,18 +86,14 @@ export type WafflePropsWithoutHTML = {
         width: number;
         height: number;
         datum: any;
-        /** Resolved cell color (also pre-applied to the wrapping `<g>`). */
-        fill: string;
+        color: string;
       },
     ]
   >;
 } & CommonStyleProps;
 
 export type WaffleProps = WafflePropsWithoutHTML &
-  Without<
-    Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y'>,
-    WafflePropsWithoutHTML
-  >;
+  Without<Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y'>, WafflePropsWithoutHTML>;
 
 /** Per-datum, fully-resolved waffle layout — pixel coords ready to render. */
 export type WaffleItem = {
@@ -185,7 +181,9 @@ export class WaffleState {
   });
 
   seriesAccessor = $derived(
-    this.series ? (this.series.value ?? (this.series.data ? undefined : this.series.key)) : undefined
+    this.series
+      ? (this.series.value ?? (this.series.data ? undefined : this.series.key))
+      : undefined
   );
 
   stackAccessors = $derived.by(() => {
@@ -270,14 +268,8 @@ export class WaffleState {
     // produced by the chart's stack series; otherwise treats value as [0, v].
     const valueAccessorFn = accessor(
       axis === 'y'
-        ? this.stackAccessors?.value ??
-            this.seriesAccessor ??
-            this.#getProps().y ??
-            this.ctx.y
-        : this.stackAccessors?.value ??
-            this.seriesAccessor ??
-            this.#getProps().x ??
-            this.ctx.x
+        ? (this.stackAccessors?.value ?? this.seriesAccessor ?? this.#getProps().y ?? this.ctx.y)
+        : (this.stackAccessors?.value ?? this.seriesAccessor ?? this.#getProps().x ?? this.ctx.x)
     );
 
     for (let i = 0; i < data.length; i++) {
@@ -315,9 +307,7 @@ export class WaffleState {
       if (i1 === i2) continue;
 
       // Default `multiple` from Plot: keep cells approximately square.
-      const multiple =
-        multipleProp ??
-        Math.max(1, Math.floor(Math.sqrt(barSize / cellPixels)));
+      const multiple = multipleProp ?? Math.max(1, Math.floor(Math.sqrt(barSize / cellPixels)));
 
       // Outer cell tile size (along anchor and dodge axes).
       const cx = Math.min(barSize / multiple, cellPixels * multiple);
@@ -342,11 +332,7 @@ export class WaffleState {
 
       const pts = polyPoints.map(transformPoint);
       const pathData =
-        pts.length === 0
-          ? ''
-          : 'M' +
-            pts.map((p) => `${p[0]},${p[1]}`).join('L') +
-            'Z';
+        pts.length === 0 ? '' : 'M' + pts.map((p) => `${p[0]},${p[1]}`).join('L') + 'Z';
 
       const cPx = transformPoint(centroid);
 
@@ -453,10 +439,7 @@ function waffleCentroid(i1: number, i2: number, columns: number): [number, numbe
   if (r === 0) return waffleRowCentroid(i1, i2, columns);
   if (r === 1) {
     if (Math.floor(i2 % columns) > Math.ceil(i1 % columns)) {
-      return [
-        (Math.floor(i2 % columns) + Math.ceil(i1 % columns)) / 2,
-        Math.floor(i2 / columns),
-      ];
+      return [(Math.floor(i2 % columns) + Math.ceil(i1 % columns)) / 2, Math.floor(i2 / columns)];
     }
     if (i2 % columns > columns - (i1 % columns)) {
       return waffleRowCentroid(i2 - (i2 % columns), i2, columns);
@@ -469,10 +452,7 @@ function waffleCentroid(i1: number, i2: number, columns: number): [number, numbe
 function waffleRowCentroid(i1: number, i2: number, columns: number): [number, number] {
   const c = Math.floor(i2) - Math.floor(i1);
   if (c === 0) {
-    return [
-      Math.floor(i1 % columns) + 0.5,
-      Math.floor(i1 / columns) + (((i1 + i2) / 2) % 1),
-    ];
+    return [Math.floor(i1 % columns) + 0.5, Math.floor(i1 / columns) + (((i1 + i2) / 2) % 1)];
   }
   if (c === 1) {
     if ((i2 % 1) - (i1 % 1) > 0.5) {
