@@ -2,6 +2,7 @@
 	import { fly } from 'svelte/transition';
 	import { Button, Dialog, Toggle, ButtonGroup, Icon, MenuItem, Menu } from 'svelte-ux';
 	import { page } from '$app/state';
+	import { getSettings } from 'layerchart';
 
 	import ChevronDownIcon from '~icons/lucide/chevron-down';
 	import SimpleIconsOpenai from '~icons/simple-icons/openai';
@@ -13,6 +14,13 @@
 	import Code from './Code.svelte';
 
 	let { metadata = {}, example = false } = $props();
+	const settings = getSettings();
+
+	// For layer-split components without a `.base.svelte`, prefer the variant
+	// matching the active layer (e.g. `Foo.svg.svelte` when SVG is selected).
+	// Falls back to the canonical source (`Foo.base.svelte` or `Foo.svelte`).
+	const source = $derived(metadata?.sources?.[settings?.layer] ?? metadata?.source);
+	const sourceUrl = $derived(metadata?.sourceUrls?.[settings?.layer] ?? metadata?.sourceUrl);
 	// svelte-ignore state_referenced_locally
 	let isOpen = $state(example);
 	let openSourceModal = $state(false);
@@ -34,10 +42,10 @@
 
 	const llms = $derived([
 		// Add source button if component page
-		...(metadata?.source || example
+		...(source || example
 			? [
 					{
-						label: 'View Component Source',
+						label: 'View Component source',
 						icon: LucideCodeIcon,
 						fn: () => {
 							// show menu item, but do not open source modal when it's an example page
@@ -47,7 +55,7 @@
 				]
 			: []),
 		{
-			label: 'View Page Markdown',
+			label: 'View Page source',
 			icon: SimpleIconsMarkdown,
 			fn: async () => {
 				markdownContent = await fetch(`${pageUrl}/llms.txt`).then((res) => res.text());
@@ -138,15 +146,15 @@
 	<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
 		<div class="overflow-auto">
 			<div class="text-lg font-semibold">Source</div>
-			<div class="text-xs text-surface-content/50 truncate">{metadata?.sourceUrl}</div>
+			<div class="text-xs text-surface-content/50 truncate">{sourceUrl}</div>
 		</div>
 
-		{#if metadata?.sourceUrl}
+		{#if sourceUrl}
 			<Button
 				icon={LucideGithub}
 				variant="fill-light"
 				color="primary"
-				href={metadata.sourceUrl}
+				href={sourceUrl}
 				target="_blank"
 			>
 				View on Github
@@ -155,10 +163,7 @@
 	</div>
 
 	<div class="overflow-auto border-t">
-		<Code
-			source={metadata?.source}
-			language={metadata?.source?.startsWith('<script') ? 'svelte' : 'js'}
-		/>
+		<Code {source} language={source?.startsWith('<script') ? 'svelte' : 'js'} />
 	</div>
 
 	<div slot="actions">
