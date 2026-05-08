@@ -22,11 +22,14 @@
     height = size,
     lines: linesProp,
     circles: circlesProp,
+    rects: rectsProp,
     background,
     children,
   }: PatternProps = $props();
 
-  const shapes = $derived(buildPatternShapes(linesProp, circlesProp, size, width, height));
+  const shapes = $derived(
+    buildPatternShapes(linesProp, circlesProp, size, width, height, rectsProp)
+  );
 
   let canvasPattern = $state<CanvasPattern | null>(null);
 

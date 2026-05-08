@@ -237,11 +237,10 @@ A stacked bar chart comparison:
 	x="category"
 	xScale={scaleBand()}
 	xDomain={data.map((d) => d.category)}
-	y={['q1', 'q2']}
 	yBaseline={0}
 	series={[
-		{ key: 'q1', color: 'steelblue' },
-		{ key: 'q2', color: 'coral' }
+		{ key: 'q1', value: 'q1', color: 'steelblue' },
+		{ key: 'q2', value: 'q2', color: 'coral' }
 	]}
 	seriesLayout="stack"
 	tooltipContext={{ mode: 'band' }}
@@ -255,6 +254,8 @@ A stacked bar chart comparison:
 	{/snippet}
 </Chart>
 ```
+
+> **Note:** when stacking against shared chart data (no per-series `data`), each series needs an explicit `value` accessor so the stack layout knows which field to read for that series. With `seriesLayout="stack"`, `<Chart>`'s internal stack value function falls through `s.value` → chart-level `y` → `s.key`; setting `y={['q1', 'q2']}` (an array) on `<Chart>` here would shadow the `s.key` fallback and feed the stack the whole `[d.q1, d.q2]` tuple per series, producing zero-height bars. `<BarChart>` doesn't hit this because it doesn't forward an array `y` to `<Chart>` when you pass `series=[…]`.
 
 ### Escape hatches
 

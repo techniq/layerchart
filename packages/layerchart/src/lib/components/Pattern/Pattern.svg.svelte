@@ -19,13 +19,16 @@
     height = size,
     lines: linesProp,
     circles: circlesProp,
+    rects: rectsProp,
     background,
     patternContent,
     children,
     ...rest
   }: PatternProps = $props();
 
-  const shapes = $derived(buildPatternShapes(linesProp, circlesProp, size, width, height));
+  const shapes = $derived(
+    buildPatternShapes(linesProp, circlesProp, size, width, height, rectsProp)
+  );
 </script>
 
 <defs>
@@ -60,6 +63,19 @@
           r={circle.r}
           fill={circle.fill}
           opacity={circle.opacity}
+        />
+      {/each}
+
+      {#each shapes.filter((s) => s.type === 'rect') as rect}
+        <rect
+          x={rect.x}
+          y={rect.y}
+          width={rect.width}
+          height={rect.height}
+          rx={rect.rx as number | string | undefined}
+          ry={rect.ry as number | string | undefined}
+          fill={rect.fill}
+          opacity={rect.opacity}
         />
       {/each}
     {/if}

@@ -342,6 +342,8 @@ export { default as ForceSimulation } from './components/force/ForceSimulation.s
 export * from './components/force/ForceSimulation.svelte';
 export { default as Dodge } from './components/Dodge/Dodge.svelte';
 export * from './components/Dodge/Dodge.svelte';
+export { default as Waffle } from './components/Waffle/Waffle.svelte';
+export * from './components/Waffle/Waffle.svelte';
 
 // Geo helpers (no per-layer rendering)
 export { default as GeoLegend } from './components/geo/GeoLegend/GeoLegend.svelte';

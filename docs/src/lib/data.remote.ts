@@ -199,8 +199,15 @@ export const getOlympians = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/olympians.json').then((r) => r.json())) as {
 		name: string;
+		nationality: string;
+		sex: 'male' | 'female';
+		date_of_birth: string;
 		weight: number;
 		height: number;
+		sport: string;
+		gold: number;
+		silver: number;
+		bronze: number;
 	}[];
 	return data;
 });
