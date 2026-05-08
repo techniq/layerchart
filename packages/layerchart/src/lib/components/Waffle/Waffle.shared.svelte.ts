@@ -172,6 +172,18 @@ export class WaffleState {
     return seriesKey ? this.ctx.series.series.find((s) => s.key === seriesKey) : undefined;
   });
 
+  /** Opacity multiplier — fades to 0.1 when another series is highlighted. */
+  seriesOpacity = $derived.by(() => {
+    if (
+      this.series?.key == null ||
+      this.ctx.series.visibleSeries.length <= 1 ||
+      this.ctx.series.isHighlighted(this.series.key, true)
+    ) {
+      return 1;
+    }
+    return 0.1;
+  });
+
   seriesAccessor = $derived(
     this.series ? (this.series.value ?? (this.series.data ? undefined : this.series.key)) : undefined
   );

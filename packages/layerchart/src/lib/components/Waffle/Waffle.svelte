@@ -100,7 +100,12 @@
       })}
     </g>
   {/snippet}
-  <Group x={item.tx} y={item.ty} class={cls('lc-waffle', className)} {opacity}>
+  <Group
+    x={item.tx}
+    y={item.ty}
+    class={cls('lc-waffle', className)}
+    opacity={(opacity ?? 1) * c.seriesOpacity}
+  >
     <Pattern
       width={item.cx}
       height={item.cy}
