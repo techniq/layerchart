@@ -31,7 +31,7 @@
 		{ key: 'Gentoo', color: 'var(--color-success)' }
 	]}
 	seriesLayout="stack"
-	padding={{ left: 36, bottom: 24, top: 8, right: 8 }}
+	padding={{ left: 36, bottom: 24, top: 32, right: 8 }}
 	tooltipContext={{ mode: 'band' }}
 	height={400}
 	rule
