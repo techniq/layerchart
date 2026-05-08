@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { Chart, Waffle } from 'layerchart';
-	import { Field, RangeField } from 'svelte-ux';
+	import { RangeField } from 'svelte-ux';
 
 	let apples = $state(500);
 	const data = $derived([{ label: 'apples', count: apples }]);
 </script>
 
-<div class="grid grid-cols-1 gap-4 mb-4 screenshot-hidden">
-	<Field label="Apples" dense>
-		<RangeField bind:value={apples} min={10} max={1000} />
-	</Field>
+<div class="mb-4 screenshot-hidden">
+	<RangeField label="Apples" bind:value={apples} min={10} max={1000} dense />
 </div>
 
 <Chart
