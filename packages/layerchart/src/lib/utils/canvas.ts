@@ -571,10 +571,18 @@ export function _createPattern(
   // Add pattern canvas to DOM to allow computed styles to be read (`getComputedStyles()`)
   ctx.canvas.after(patternCanvas);
 
-  // TODO: Fix blurry pattern
-  // const newScale = scaleCanvas(patternCtx, width, height);
-  patternCanvas.width = width;
-  patternCanvas.height = height;
+  // Render the pattern at the device pixel ratio so the bitmap tile is
+  // sharp on high-DPI screens. Chrome samples patterns in the canvas's
+  // user (post-transform) coordinate space, so 1 source pixel = 1 user px
+  // by default — without DPR-scaling the bitmap, a 12 logical-px tile is
+  // sampled from 12 source pixels, leaving each device pixel of fill to
+  // be interpolated from a 1/dpr-th of a source pixel (blurry). Drawing
+  // at DPR resolution and scaling the pattern back down to user space at
+  // fill time keeps tiles sharp.
+  const dpr = (typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1;
+  patternCanvas.width = Math.max(1, Math.round(width * dpr));
+  patternCanvas.height = Math.max(1, Math.round(height * dpr));
+  patternCtx.scale(dpr, dpr);
 
   if (background) {
     patternCtx.fillStyle = background;
@@ -607,6 +615,16 @@ export function _createPattern(
   }
 
   const pattern = ctx.createPattern(patternCanvas, 'repeat');
+
+  // Scale-only matrix; no translate so the pattern anchors to the path's
+  // local origin at fill time (matches SVG `patternUnits="userSpaceOnUse"`).
+  // Use the *actual* bitmap pixel dimensions for the scale so rounding
+  // `width * dpr` to an integer doesn't accumulate drift across tiles.
+  if (pattern) {
+    const sx = width / patternCanvas.width;
+    const sy = height / patternCanvas.height;
+    pattern.setTransform(new DOMMatrix([sx, 0, 0, sy, 0, 0]));
+  }
 
   // Cleanup
   ctx.canvas.parentElement?.removeChild(patternCanvas);
