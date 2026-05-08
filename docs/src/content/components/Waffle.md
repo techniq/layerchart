@@ -84,15 +84,13 @@ Pass a `symbol` snippet to render an icon, glyph, or arbitrary SVG in each cell 
 
 Stacked waffles share a cell grid across the stack so cells line up across series — the cleanest way to compare composition. Configure `series` + `seriesLayout="stack"` and render one `<Waffle seriesKey={...}>` per visible series. Toggling the legend hides a series and restacks the remaining segments to the baseline.
 
-For long-format input (one row per category × stack key), pivot to wide format with [`pivotWider`](/docs/utils/pivot) so each row has one column per series key:
-
 :example{ name="penguins" }
 
-A wider stack with finer bins — athletes by 10kg weight cohort, split by sex:
+For continuous variables, bin into discrete intervals before stacking — here athletes are grouped into 10-kg weight cohorts and stacked by sex. Setting `unit={10}` (one cell per ten athletes) keeps the cell count readable when each bin holds hundreds of values:
 
 :example{ name="olympians-weight-by-sex" }
 
-The same pattern with already-wide data:
+If your data is already in wide format (one row per category with one column per series), pass it straight to `<Chart>` — no `pivotWider` step needed:
 
 :example{ name="stacked" }
 
