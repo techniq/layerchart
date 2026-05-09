@@ -1,5 +1,82 @@
 # LayerChart
 
+## 2.0.0-next.63
+
+### Minor Changes
+
+- feat(Dodge): Add Dodge component for deterministic non-overlapping layout ([#862](https://github.com/techniq/layerchart/pull/862))
+
+  A new composition component (similar to `ForceSimulation`) that packs items along one axis to avoid overlaps. Modeled after [Observable Plot's `dodge` transform](https://observablehq.com/plot/transforms/dodge):
+  - `axis`: `'x'` or `'y'` — which axis to dodge along (default `'y'`)
+  - `anchor`: `'top'`/`'middle'`/`'bottom'` (for `axis='y'`) or `'left'`/`'middle'`/`'right'` (for `axis='x'`) — controls which edge items grow away from
+  - `padding`: minimum px gap between items
+  - `r`: collision radius per item (constant or accessor). When omitted, falls back to the chart's `r` accessor / `rScale` (matching `Points`), then to a default of `5`.
+  - `position`: override the anchor-axis pixel accessor (defaults to chart's `xGet`/`yGet`)
+
+  Yields each item's computed pixel `x`/`y` (and original `index`) via the children snippet, so you can render with any primitive (`Circle`, `Text`, etc.).
+
+  Also includes a `rowHeight` mode that switches from circular to row-based rectangular packing — useful for text labels where circular collision would produce unnecessarily large vertical gaps. The pure `dodge()` algorithm is exported from `Dodge.shared.svelte.ts` for direct use.
+
+  Algorithm modeled after Observable Plot / SveltePlot: maintains an interval tree of placed items keyed by anchor-axis extent, queries it for items in the new item's collision zone, and builds candidate dodge-axis positions from circle-tangency math. Currently implemented as a linear-scan tracker with the same API; can be swapped for a real interval tree without API changes if profiling demands it.
+
+- feat(Pattern): Add `rects` shape definition for tile patterns for rendering one or more rectangles per pattern tile ([#864](https://github.com/techniq/layerchart/pull/864))
+
+- feat(Waffle): Add Waffle component for countable-cell visualizations ([#864](https://github.com/techniq/layerchart/pull/864))
+
+- feat(Circle, Text): Inherit chart accessors by default in data mode ([#862](https://github.com/techniq/layerchart/pull/862))
+
+  `<Circle>` and `<Text>` now fall back to the chart's `x`/`y`/`r` accessors (via `xGet`/`yGet`/`rGet`) when the corresponding position prop is omitted — matching how `<Points>` and the new `<Dodge>` work. This lets the chart be the single source of truth for `x`/`y`/`r` and removes the boilerplate of repeating those props on every primitive:
+
+  ```svelte
+  <!-- Before -->
+  <Chart {data} x="date" y="value" r="size" rRange={[2, 10]}>
+    <Circle {data} cx="date" cy="value" r="size" />
+  </Chart>
+
+  <!-- After -->
+  <Chart {data} x="date" y="value" r="size" rRange={[2, 10]}>
+    <Circle {data} />
+  </Chart>
+  ```
+
+  `Circle` and `Text` also now enter data mode when `data` is explicitly passed (in addition to the existing trigger when `cx`/`cy`/`x`/`y` are data-driven), so the implicit-accessor pattern works without needing to pass redundant string accessors just to trigger iteration.
+
+  Behavior is unchanged whenever any position prop is set explicitly — the hardcoded defaults (0/0/1) only apply when neither prop nor chart-level config is present. All existing usages in the docs pass explicit position props, so this is purely additive.
+
+- feat(Text): Add `fontSize` prop with auto-derived `capHeight` ([#862](https://github.com/techniq/layerchart/pull/862))
+
+  Adds a typed `fontSize?: number | string` prop on `<Text>` (number = pixels, string passes through). When set, `capHeight` defaults to `fontSize * 0.71` instead of the legacy `'0.71em'` — so per-item scaled labels with `verticalAnchor="middle"` align to a common visual baseline without an explicit `capHeight` override.
+
+  Previously, `getPixelValue` resolved `'0.71em'` against a hard-coded 16px, so vertical centering was only correct for ~16px text. Larger labels sat too low, smaller ones too high — visible on text-driven beeswarms or any caller scaling labels per-element.
+
+  ```svelte
+  <!-- Before: needed both font-size and capHeight to center correctly -->
+  <Text font-size={r * 1.4} capHeight="{r * 1.4 * 0.71}px" verticalAnchor="middle" ... />
+
+  <!-- After: one prop, centering handled automatically -->
+  <Text fontSize={r * 1.4} verticalAnchor="middle" ... />
+  ```
+
+### Patch Changes
+
+- fix(Chart): Don't compute `[undefined, undefined]` domain when `series` is metadata-only ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  When `series` is configured for legend/color metadata only (no per-series `data`, and items lack the series-key properties on the value axis), the value-axis domain calculation collected all-undefined values and returned `[undefined, undefined]`. Combined with `motion`, this threw `Cannot spring undefined values` whenever the series visibility changed (e.g. toggling a legend swatch).
+
+  The series-aware branch now filters out null/undefined values and falls through to the other domain-resolution paths when nothing remains, instead of returning a poisoned extent.
+
+- fix(canvas): Resolve `currentColor` for `fill`/`stroke` (and other style props) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Pattern): fix alignment and sharply render on high-DPI displays when using Canvas layers ([#864](https://github.com/techniq/layerchart/pull/864))
+
+- fix(downloadImage / getChartImageBlob): Fix image download (container sizing and text clipping) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Spline): Allow CSS class `opacity` to fade lines on the Canvas layer. `Spline` was always passing `opacity={1}` to the underlying `Path` when no series fade was active, which became `constantStyles.opacity = 1` in the canvas renderer and shadowed the value resolved from a user's `class` (e.g. `class="opacity-20"`). Now skip passing `opacity` when the computed series fade is the no-fade default, so the class can take effect — matching SVG behavior where CSS class rules override the presentation attribute. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Image): Stop disabling pointer events by default ([#862](https://github.com/techniq/layerchart/pull/862))
+
+- fix(Rect): Support non-uniform `corners` in data/edge mode ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.62
 
 ### Minor Changes
