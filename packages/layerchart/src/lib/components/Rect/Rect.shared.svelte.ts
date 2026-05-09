@@ -4,11 +4,7 @@ import type { SVGAttributes } from 'svelte/elements';
 
 import type { CommonEvents, Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import {
   resolveCorners,
@@ -70,7 +66,7 @@ export type RectPropsWithoutHTML = {
    *
    * @default 0
    */
-  width?: number;
+  width?: DataProp;
   initialWidth?: number;
 
   /**
@@ -78,7 +74,7 @@ export type RectPropsWithoutHTML = {
    *
    * @default 0
    */
-  height?: number;
+  height?: DataProp;
   initialHeight?: number;
 
   /**
@@ -202,7 +198,12 @@ export class RectState {
     )
   );
   dataMode = $derived(
-    hasAnyDataProp(this.#getProps().x, this.#getProps().y) || this.hasEdgeProps
+    hasAnyDataProp(
+      this.#getProps().x,
+      this.#getProps().y,
+      this.#getProps().width,
+      this.#getProps().height
+    ) || this.hasEdgeProps
   );
 
   // Data resolution
@@ -267,8 +268,16 @@ export class RectState {
       return {
         x: resolvedX + resolvedInsets.left,
         y: resolvedY + resolvedInsets.top,
-        width: Math.max(0, (props.width ?? 0) - resolvedInsets.left - resolvedInsets.right),
-        height: Math.max(0, (props.height ?? 0) - resolvedInsets.top - resolvedInsets.bottom),
+        width: Math.max(
+          0,
+          resolveDataProp(props.width, d, undefined, 0) - resolvedInsets.left - resolvedInsets.right
+        ),
+        height: Math.max(
+          0,
+          resolveDataProp(props.height, d, undefined, 0) -
+            resolvedInsets.top -
+            resolvedInsets.bottom
+        ),
       };
     }
   }
@@ -322,10 +331,25 @@ export class RectState {
   }
 
   // Resolved per-corner radii (clamped to current bounds)
-  resolvedCorners = $derived.by(() => {
+  resolveCorners(width: number, height: number) {
     const corners = this.#getProps().corners;
     if (corners === undefined) return undefined;
-    return resolveCorners(corners, this.motionWidth, this.motionHeight);
+    return resolveCorners(corners, width, height);
+  }
+
+  roundedRectPath(x: number, y: number, width: number, height: number) {
+    const corners = this.resolveCorners(width, height);
+    if (!corners || !this.cornersNonUniform) return undefined;
+    return roundedRectPath(x, y, width, height, corners);
+  }
+
+  borderRadius(width: number, height: number) {
+    const corners = this.resolveCorners(width, height);
+    return corners ? corners.map((c) => `${c}px`).join(' ') : undefined;
+  }
+
+  resolvedCorners = $derived.by(() => {
+    return this.resolveCorners(this.motionWidth, this.motionHeight);
   });
 
   borderRadiusStyle = $derived(
@@ -368,9 +392,7 @@ export class RectState {
       : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number'
-      ? (this.#getProps().opacity as number)
-      : undefined
+    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
   );
   staticClassName = $derived(
     typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
@@ -389,8 +411,10 @@ export class RectState {
     const initial = getProps();
     const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
     const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : 0);
-    const initialWidth = initial.initialWidth ?? initial.width ?? 0;
-    const initialHeight = initial.initialHeight ?? initial.height ?? 0;
+    const initialWidth =
+      initial.initialWidth ?? (typeof initial.width === 'number' ? initial.width : 0);
+    const initialHeight =
+      initial.initialHeight ?? (typeof initial.height === 'number' ? initial.height : 0);
     const motion = initial.motion;
 
     this.#motionX = createMotion(
@@ -405,12 +429,12 @@ export class RectState {
     );
     this.#motionWidth = createMotion(
       initialWidth,
-      () => getProps().width ?? 0,
+      () => (typeof getProps().width === 'number' ? (getProps().width as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'width')
     );
     this.#motionHeight = createMotion(
       initialHeight,
-      () => getProps().height ?? 0,
+      () => (typeof getProps().height === 'number' ? (getProps().height as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'height')
     );
 

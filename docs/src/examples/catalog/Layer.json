@@ -3496,6 +3496,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 147,
+      "line": "<Layer>"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Rect",
       "path": "/docs/components/Rect/styling-using-attributes",
@@ -4245,5 +4252,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:15.172Z"
+  "updatedAt": "2026-05-09T14:31:14.460Z"
 }

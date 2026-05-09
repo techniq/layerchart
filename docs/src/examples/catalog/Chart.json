@@ -3618,6 +3618,13 @@
       "line": "<Chart"
     },
     {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 137,
+      "line": "<Chart"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Rect",
       "path": "/docs/components/Rect/styling-using-attributes",
@@ -4444,5 +4451,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:14.195Z"
+  "updatedAt": "2026-05-09T14:31:12.665Z"
 }

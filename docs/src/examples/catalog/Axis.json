@@ -4070,6 +4070,20 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 148,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 149,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Rect",
       "path": "/docs/components/Rect/styling-using-attributes",
@@ -5148,5 +5162,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:13.816Z"
+  "updatedAt": "2026-05-09T14:31:11.978Z"
 }

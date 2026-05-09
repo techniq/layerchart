@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    RectProps,
-    RectPropsWithoutHTML,
-  } from './Rect.shared.svelte.js';
+  export type { RectProps, RectPropsWithoutHTML } from './Rect.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -64,23 +61,41 @@
     {@const resolvedStrokeWidth = resolveStyleProp(rest.strokeWidth, item.d)}
     {@const resolvedOpacity = resolveStyleProp(rest.opacity, item.d)}
     {@const resolvedClass = resolveStyleProp(rest.class, item.d)}
-    <rect
-      {...rest as any}
-      x={item.x}
-      y={item.y}
-      width={item.width}
-      height={item.height}
-      fill={resolvedFill}
-      fill-opacity={resolvedFillOpacity}
-      stroke={resolvedStroke}
-      stroke-opacity={resolvedStrokeOpacity}
-      stroke-width={resolvedStrokeWidth}
-      opacity={resolvedOpacity}
-      rx={c.rx}
-      ry={c.ry}
-      stroke-dasharray={c.dashArrayAttr}
-      class={cls('lc-rect', resolvedClass)}
-    />
+    {@const pathData = c.roundedRectPath(item.x, item.y, item.width, item.height)}
+    {#if pathData}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <path
+        {...rest as unknown as SVGAttributes<SVGPathElement>}
+        d={pathData}
+        fill={resolvedFill}
+        fill-opacity={resolvedFillOpacity}
+        stroke={resolvedStroke}
+        stroke-opacity={resolvedStrokeOpacity}
+        stroke-width={resolvedStrokeWidth}
+        opacity={resolvedOpacity}
+        stroke-dasharray={c.dashArrayAttr}
+        class={cls('lc-rect', resolvedClass)}
+      />
+    {:else}
+      <rect
+        {...rest as any}
+        x={item.x}
+        y={item.y}
+        width={item.width}
+        height={item.height}
+        fill={resolvedFill}
+        fill-opacity={resolvedFillOpacity}
+        stroke={resolvedStroke}
+        stroke-opacity={resolvedStrokeOpacity}
+        stroke-width={resolvedStrokeWidth}
+        opacity={resolvedOpacity}
+        rx={c.rx}
+        ry={c.ry}
+        stroke-dasharray={c.dashArrayAttr}
+        class={cls('lc-rect', resolvedClass)}
+      />
+    {/if}
   {/each}
 {:else if c.pixelPathData}
   <!-- svelte-ignore a11y_click_events_have_key_events -->

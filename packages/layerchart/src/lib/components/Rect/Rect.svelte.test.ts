@@ -53,6 +53,30 @@ describe('Rect', () => {
       const rects = page.getByTestId(componentTestId).elements();
       await expect.poll(() => rects.length).toBe(3);
     });
+
+    it('should resolve width and height from data', async () => {
+      render(TestHarness, {
+        component: Rect,
+        chartProps: {
+          data: [{ x: 20, y: 30, width: 80, height: 40 }],
+          x: 'x',
+          y: 'y',
+          xDomain: [0, 100],
+          yDomain: [0, 100],
+        },
+        componentProps: {
+          x: 'x',
+          y: 'y',
+          width: 'width',
+          height: 'height',
+        },
+      });
+
+      const rect = page.getByTestId(componentTestId);
+      await expect.element(rect).toBeInTheDocument();
+      expect(rect.element()?.getAttribute('width')).toBe('80');
+      expect(rect.element()?.getAttribute('height')).toBe('40');
+    });
   });
 
   describe('data mode - colors', () => {
@@ -171,6 +195,31 @@ describe('Rect', () => {
       const firstRect = rects[0] as SVGRectElement;
       const width = Number(firstRect?.getAttribute('width'));
       expect(width).toBeGreaterThan(0);
+    });
+
+    it('should render non-uniform corners from edge props', async () => {
+      render(TestHarness, {
+        component: Rect,
+        chartProps: {
+          data: [data[0]],
+          x: ['x0', 'x1'],
+          y: 'count',
+          xDomain: [0, 100],
+          yDomain: [0, 15],
+        },
+        componentProps: {
+          x0: 'x0',
+          x1: 'x1',
+          y0: (d: any) => 0,
+          y1: 'count',
+          corners: [12, 4, 10, 2],
+        },
+      });
+
+      const rect = page.getByTestId(componentTestId);
+      await expect.element(rect).toBeInTheDocument();
+      expect(rect.element()?.tagName.toLowerCase()).toBe('path');
+      expect(rect.element()?.getAttribute('d')).toContain('a');
     });
 
     it('should use explicit data prop over chart context data', async () => {

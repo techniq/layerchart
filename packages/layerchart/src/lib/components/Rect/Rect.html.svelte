@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    RectProps,
-    RectPropsWithoutHTML,
-  } from './Rect.shared.svelte.js';
+  export type { RectProps, RectPropsWithoutHTML } from './Rect.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -11,10 +8,7 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
-  let {
-    children,
-    ...rest
-  }: RectProps = $props();
+  let { children, ...rest }: RectProps = $props();
 
   const c = new RectState(() => rest as RectProps);
 
@@ -55,7 +49,7 @@
       style:border-width={resolvedBorderWidth}
       style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
       style:border-color={resolvedStroke}
-      style:border-radius="{c.rx}px"
+      style:border-radius={c.borderRadius(item.width, item.height) ?? `${c.rx}px`}
       class={cls('lc-rect', resolvedClass)}
     ></div>
   {/each}

@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    RectProps,
-    RectPropsWithoutHTML,
-  } from './Rect.shared.svelte.js';
+  export type { RectProps, RectPropsWithoutHTML } from './Rect.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -90,6 +87,7 @@
             height: item.height,
             rx: c.rx,
             ry: c.ry,
+            corners: c.resolveCorners(item.width, item.height),
           },
           styleOpts
         );
