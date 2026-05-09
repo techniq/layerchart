@@ -38,6 +38,7 @@
 		getChartSvgString,
 		getSettings
 	} from 'layerchart';
+	import AutoNotes from './AutoNotes.svelte';
 
 	const settings = getSettings();
 	import { movable } from '$lib/actions/movable';
@@ -439,6 +440,7 @@
 		/>
 	</div>
 {/if}
+<AutoNotes source={example?.source ?? ''} />
 
 <Dialog bind:open={pngDialogOpen} on:close={() => (pngDialogOpen = false)} class="max-w-md">
 	<div slot="title">{pngAction === 'copy' ? 'Copy as PNG' : 'Export as PNG'}</div>
