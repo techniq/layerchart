@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { RangeField, MenuField } from 'svelte-ux';
+	import { Field, RangeField, MenuField, Switch } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
 
@@ -11,6 +11,7 @@
 		orientation?: 'horizontal' | 'vertical';
 		radius?: number;
 		bend?: number;
+		showMiddle?: boolean;
 	}
 
 	let {
@@ -19,7 +20,8 @@
 		sweep = $bindable('horizontal-vertical' as LinkSweep),
 		orientation = $bindable('horizontal' as 'horizontal' | 'vertical'),
 		radius = $bindable(60),
-		bend = $bindable(22.5)
+		bend = $bindable(22.5),
+		showMiddle = $bindable(false)
 	}: Props = $props();
 
 	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded', 'swoop'].map((type) => ({
@@ -57,7 +59,7 @@
 	{/if}
 </div>
 
-<div class="grid grid-cols-2 gap-2 mb-2 screenshot-hidden">
+<div class="grid grid-cols-[1fr_1fr_auto] gap-2 mb-2 screenshot-hidden">
 	{#if type === 'd3'}
 		<MenuField
 			label="Orientation"
@@ -74,4 +76,7 @@
 		stepper
 		classes={{ menuIcon: 'hidden' }}
 	/>
+	<Field label="Middle" let:id>
+		<Switch bind:checked={showMiddle} {id} size="md" />
+	</Field>
 </div>
