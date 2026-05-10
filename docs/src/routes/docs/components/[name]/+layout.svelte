@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import { getSettings } from 'layerchart';
 	import {
 		Button,
@@ -31,8 +32,19 @@
 	let { data, children } = $props();
 
 	let loaded = $state(false);
+	let showScrollToTop = $state(false);
 	onMount(() => {
 		loaded = true;
+		const updateScrollToTop = () => {
+			showScrollToTop = window.scrollY > 240;
+		};
+
+		updateScrollToTop();
+		window.addEventListener('scroll', updateScrollToTop, { passive: true });
+
+		return () => {
+			window.removeEventListener('scroll', updateScrollToTop);
+		};
 	});
 
 	const { metadata } = $derived(data);
@@ -164,17 +176,25 @@
 					</Button>
 				</Tooltip>
 			</Toggle>
-			<Tooltip title="Scroll to top">
-				<Button
-					iconOnly
-					icon={ScrollToTop}
-					class="text-surface-content"
-					onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-				></Button>
-			</Tooltip>
 		</span>
 	</div>
 </div>
+
+{#if showScrollToTop}
+	<div
+		class="fixed bottom-4 right-4 z-40 md:bottom-6 md:right-6"
+		transition:fly={{ y: 12, duration: 180 }}
+	>
+		<Tooltip title="Scroll to top" placement="top" offset={4}>
+			<Button
+				iconOnly
+				icon={ScrollToTop}
+				class="size-10 text-surface-content bg-surface-100/90 hover:bg-surface-content/10 border border-primary/10 shadow-lg backdrop-blur-lg"
+				onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+			></Button>
+		</Tooltip>
+	</div>
+{/if}
 
 <h1
 	class="text-4xl font-bold select-none pb-4"
