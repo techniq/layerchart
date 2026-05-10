@@ -7,7 +7,8 @@
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Layer, Tooltip } from 'layerchart';
+	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import GeopathControls from '$lib/components/controls/GeoPathStatesControls.svelte';
 	import { sort } from '@layerstack/utils';
 

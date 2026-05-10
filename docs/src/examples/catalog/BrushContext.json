@@ -8,17 +8,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<Chart {data} x=\"date\" y=\"value\" brush height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -57,22 +57,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 15,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 23,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 25,
+          "lineNumber": 24,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         },
         {
           "component": "Rect",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<rect"
         }
       ]
@@ -84,22 +84,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Chart {data} x=\"date\" y=\"value\" brush height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 16,
+          "lineNumber": 15,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 17,
+          "lineNumber": 16,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 19,
+          "lineNumber": 18,
           "line": "<Text"
         }
       ]
@@ -424,17 +424,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 20,
+          "lineNumber": 19,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -446,17 +446,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<Chart {data} x=\"date\" y=\"value\" brush={{ classes: { range: 'striped-background' } }} height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -552,5 +552,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-04-12T22:48:24.963Z"
+  "updatedAt": "2026-04-30T15:36:23.111Z"
 }

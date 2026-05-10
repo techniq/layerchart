@@ -42,7 +42,8 @@
 	} from 'd3-geo-projection';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import { Button, ButtonGroup, Field, RangeField, SelectField, Switch } from 'svelte-ux';
 	const land = feature(topology, topology.objects.land);
 

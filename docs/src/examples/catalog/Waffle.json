@@ -1,0 +1,451 @@
+{
+  "component": "Waffle",
+  "examples": [
+    {
+      "name": "auto-multiple",
+      "title": "auto multiple",
+      "path": "/docs/components/Waffle/auto-multiple",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 23,
+          "line": "<Waffle axis=\"x\" fill=\"var(--color-primary)\" />"
+        }
+      ]
+    },
+    {
+      "name": "band-padding",
+      "title": "band padding",
+      "path": "/docs/components/Waffle/band-padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 50,
+          "line": "<Waffle fill=\"var(--color-info)\" {unit} round tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 54,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Waffle/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 26,
+          "line": "<Waffle fill=\"var(--color-primary)\" tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 30,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "circular-cells",
+      "title": "circular cells",
+      "path": "/docs/components/Waffle/circular-cells",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 28,
+          "line": "<Waffle fill=\"var(--color-secondary)\" rx=\"100%\" ry=\"100%\" gap={2} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 32,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "custom-symbol",
+      "title": "custom symbol",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 40,
+          "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 45,
+          "line": "<Waffle seriesKey={s.key} unit={1} round tooltip>"
+        },
+        {
+          "component": "Svg",
+          "lineNumber": 48,
+          "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
+        },
+        {
+          "component": "Path",
+          "lineNumber": 49,
+          "line": "<path"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 53,
+          "line": "<ellipse cx=\"39\" cy=\"16.969\" fill=\"currentColor\" rx=\"2\" ry=\"3\" /><path"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 64,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "horizontal",
+      "title": "horizontal",
+      "path": "/docs/components/Waffle/horizontal",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 27,
+          "line": "<Waffle fill=\"var(--color-primary)\" tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 31,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "months",
+      "title": "months",
+      "path": "/docs/components/Waffle/months",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 47,
+          "line": "<Waffle axis=\"x\" unit={1} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 51,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "olympians-by-birth-year",
+      "title": "olympians by birth year",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 46,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 59,
+          "line": "<Waffle fill=\"var(--color-info)\" {unit} {round} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 63,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "olympians-by-sex",
+      "title": "olympians by sex",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 34,
+          "line": "<Waffle fill=\"var(--color-primary)\" unit={10} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 38,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "olympians-weight-by-sex",
+      "title": "olympians weight by sex",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 42,
+          "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 47,
+          "line": "<Waffle seriesKey={s.key} unit={10} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 52,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "penguins",
+      "title": "penguins",
+      "path": "/docs/components/Waffle/penguins",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 41,
+          "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 46,
+          "line": "<Waffle seriesKey={s.key} unit={1} round tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 51,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "stacked",
+      "title": "stacked",
+      "path": "/docs/components/Waffle/stacked",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 39,
+          "line": "<Waffle seriesKey={s.key} unit={50} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 44,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "survey",
+      "title": "survey",
+      "path": "/docs/components/Waffle/survey",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 45,
+          "line": "<Waffle y={() => TOTAL} fill=\"currentColor\" fillOpacity={0.2} rx=\"100%\" gap={2} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 47,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "unit-multiple",
+      "title": "unit multiple",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Waffle",
+          "lineNumber": 58,
+          "line": "<Waffle fill=\"var(--color-info)\" {unit} {multiple} {round} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 62,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "auto-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/auto-multiple",
+      "lineNumber": 23,
+      "line": "<Waffle axis=\"x\" fill=\"var(--color-primary)\" />"
+    },
+    {
+      "example": "band-padding",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/band-padding",
+      "lineNumber": 50,
+      "line": "<Waffle fill=\"var(--color-info)\" {unit} round tooltip />"
+    },
+    {
+      "example": "basic",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/basic",
+      "lineNumber": 26,
+      "line": "<Waffle fill=\"var(--color-primary)\" tooltip />"
+    },
+    {
+      "example": "circular-cells",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/circular-cells",
+      "lineNumber": 28,
+      "line": "<Waffle fill=\"var(--color-secondary)\" rx=\"100%\" ry=\"100%\" gap={2} tooltip />"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 45,
+      "line": "<Waffle seriesKey={s.key} unit={1} round tooltip>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/horizontal",
+      "lineNumber": 27,
+      "line": "<Waffle fill=\"var(--color-primary)\" tooltip />"
+    },
+    {
+      "example": "months",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/months",
+      "lineNumber": 47,
+      "line": "<Waffle axis=\"x\" unit={1} tooltip />"
+    },
+    {
+      "example": "olympians-by-birth-year",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-birth-year",
+      "lineNumber": 59,
+      "line": "<Waffle fill=\"var(--color-info)\" {unit} {round} tooltip />"
+    },
+    {
+      "example": "olympians-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-by-sex",
+      "lineNumber": 34,
+      "line": "<Waffle fill=\"var(--color-primary)\" unit={10} tooltip />"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 47,
+      "line": "<Waffle seriesKey={s.key} unit={10} tooltip />"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 46,
+      "line": "<Waffle seriesKey={s.key} unit={1} round tooltip />"
+    },
+    {
+      "example": "stacked",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/stacked",
+      "lineNumber": 39,
+      "line": "<Waffle seriesKey={s.key} unit={50} tooltip />"
+    },
+    {
+      "example": "survey",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/survey",
+      "lineNumber": 45,
+      "line": "<Waffle y={() => TOTAL} fill=\"currentColor\" fillOpacity={0.2} rx=\"100%\" gap={2} />"
+    },
+    {
+      "example": "survey",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/survey",
+      "lineNumber": 46,
+      "line": "<Waffle fill=\"orange\" rx=\"100%\" gap={2} />"
+    },
+    {
+      "example": "unit-multiple",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/unit-multiple",
+      "lineNumber": 58,
+      "line": "<Waffle fill=\"var(--color-info)\" {unit} {multiple} {round} tooltip />"
+    }
+  ],
+  "updatedAt": "2026-05-08T16:24:16.409Z"
+}

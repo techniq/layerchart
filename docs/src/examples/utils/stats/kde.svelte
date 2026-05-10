@@ -8,11 +8,7 @@
 	const result = kde(values, { thresholds: 10 });
 </script>
 
-<Code
-	source="kde([10, 15, 18, 20, 22, ...], {{ thresholds: 10 }})"
-	language="js"
-	class="mb-4"
-/>
+<Code source="kde([10, 15, 18, 20, 22, ...], {{ thresholds: 10 }})" language="js" class="mb-4" />
 
 <div class="text-sm mb-2">Returns [value, density] pairs:</div>
 

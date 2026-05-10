@@ -10,16 +10,8 @@
 	import { extent } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
-	import {
-		Chart,
-		Group,
-		Link,
-		Rect,
-		Sankey,
-		Layer,
-		Text,
-		sankeyGraphFromHierarchy
-	} from 'layerchart';
+	import { Chart, Group, Link, Rect, Layer, Text, sankeyGraphFromHierarchy } from 'layerchart';
+	import { Sankey } from 'layerchart/graph';
 	import SankeyControls, {
 		type SankeyConfig
 	} from '$lib/components/controls/SankeyControls.svelte';
@@ -45,7 +37,6 @@
 					inactive: 0.01
 				}
 	);
-
 
 	const hierarchy = $derived(
 		d3Hierarchy(data)

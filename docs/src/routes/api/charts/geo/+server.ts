@@ -11,9 +11,9 @@ let cachedStates: ReturnType<typeof feature> | null = null;
 
 async function getStates(fetchFn: typeof fetch) {
 	if (cachedStates) return cachedStates;
-	const topology = (await fetchFn(
-		'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
-	).then((r) => r.json())) as Topology<{
+	const topology = (await fetchFn('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(
+		(r) => r.json()
+	)) as Topology<{
 		states: GeometryCollection<{ name: string }>;
 	}>;
 	cachedStates = feature(topology, topology.objects.states);

@@ -3,7 +3,8 @@
 	import { feature } from 'topojson-client';
 	import GeoPointControls from '$lib/components/controls/GeoPointControls.svelte';
 
-	import { Chart, Circle, GeoPath, getSettings, Layer, Tooltip } from 'layerchart';
+	import { Chart, Circle, getSettings, Layer, Tooltip } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import { getUsStatesTopology, getUsAirports } from '$lib/geo.remote';
 
 	const [usData, airportsData] = $derived(

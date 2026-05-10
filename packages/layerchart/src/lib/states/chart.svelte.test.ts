@@ -6,7 +6,7 @@ import { geoAlbersUsa } from 'd3-geo';
 import { timeDay } from 'd3-time';
 
 import { ChartState } from './chart.svelte.js';
-import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
+import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 
 type TestData = { date: string; value: number };
@@ -19,7 +19,7 @@ function createChartState<T = TestData>(props: Partial<ChartPropsWithoutHTML<T>>
   let state: ChartState<T>;
 
   cleanup = $effect.root(() => {
-    state = new ChartState<T>(() => props as ChartPropsWithoutHTML<T>);
+    state = new ChartState<T>(props as ChartPropsWithoutHTML<T>);
   });
 
   // Access derived values after reactive graph is set up
@@ -1017,6 +1017,67 @@ describe('ChartState implicit series domain update on visibility toggle', () => 
       expect(state.seriesState.visibleSeries[0].key).toBe('apples');
       expect(state._yDomain).toEqual([10, 20]);
       expect(state._baseYDomain).toEqual([10, 20]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState metadata-only series', () => {
+  type CategoryEvent = { date: string; category: string };
+
+  it('should not produce [undefined, undefined] domain when items lack series-key properties', () => {
+    const data: CategoryEvent[] = [
+      { date: '2024-01', category: 'svelte' },
+      { date: '2024-02', category: 'sveltekit' },
+      { date: '2024-03', category: 'ecosystem' },
+    ];
+
+    const { state, cleanup } = createChartState<CategoryEvent>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      series: [
+        { key: 'svelte', color: 'red' },
+        { key: 'sveltekit', color: 'orange' },
+        { key: 'ecosystem', color: 'blue' },
+      ],
+    });
+
+    try {
+      expect(state._yDomain).toBeUndefined();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should remain stable across visibility toggles instead of throwing', () => {
+    const data: CategoryEvent[] = [
+      { date: '2024-01', category: 'svelte' },
+      { date: '2024-02', category: 'sveltekit' },
+    ];
+
+    const { state, cleanup } = createChartState<CategoryEvent>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      series: [
+        { key: 'svelte', color: 'red' },
+        { key: 'sveltekit', color: 'orange' },
+      ],
+      motion: { type: 'spring' },
+    });
+
+    try {
+      expect(state._yDomain).toBeUndefined();
+
+      expect(() => {
+        state.seriesState.selectedKeys.toggle('svelte');
+        flushSync();
+      }).not.toThrow();
+
+      expect(state._yDomain).toBeUndefined();
+      expect(state.seriesState.visibleSeries).toHaveLength(1);
     } finally {
       cleanup();
     }

@@ -9,17 +9,8 @@
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import {
-		Arc,
-		ArcLabel,
-		Bounds,
-		Chart,
-		ClipPath,
-		Layer,
-		Partition,
-		Tooltip,
-		findAncestor
-	} from 'layerchart';
+	import { Arc, ArcLabel, Bounds, Chart, ClipPath, Layer, Tooltip, findAncestor } from 'layerchart';
+	import { Partition } from 'layerchart/hierarchy';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
 	import SunburstControls from '$lib/components/controls/SunburstControls.svelte';

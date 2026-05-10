@@ -8,7 +8,6 @@
 	import { curveCatmullRom, curveCatmullRomClosed } from 'd3-shape';
 	import { Area, Axis, Chart, Layer, Spline } from 'layerchart';
 
-
 	export { data };
 </script>
 

@@ -11,7 +11,10 @@ export const GET: RequestHandler = async ({ params, url }) => {
 		error(404, `Component "${name}" not found`);
 	}
 
-	const markdown = generateComponentMarkdown(component, { baseUrl: url.origin, inlineExamples: true });
+	const markdown = generateComponentMarkdown(component, {
+		baseUrl: url.origin,
+		inlineExamples: true
+	});
 
 	return markdownResponse(markdown, `${name}.md`);
 };

@@ -11,9 +11,9 @@
 	import { geoIdentity, type GeoProjection } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Legend, Layer, Tooltip, getSettings } from 'layerchart';
+	import { Chart, Legend, Layer, Tooltip, getSettings } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-
 
 	const states = feature(geojson, geojson.objects.states);
 	const counties = feature(geojson, geojson.objects.counties);

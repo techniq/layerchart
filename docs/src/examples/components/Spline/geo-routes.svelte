@@ -2,7 +2,8 @@
 	import { geoNaturalEarth1 } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Layer, Spline } from 'layerchart';
+	import { Chart, Layer, Spline } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import { getCountriesTopology, getBeagleVoyage } from '$lib/geo.remote';
 
 	const [topology, voyageData] = $derived(

@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import AreaChart from './AreaChart.svelte';
-import LineChart from './LineChart.svelte';
-import ScatterChart from './ScatterChart.svelte';
+import AreaChart from './AreaChart/AreaChart.svelte';
+import LineChart from './LineChart/LineChart.svelte';
+import ScatterChart from './ScatterChart/ScatterChart.svelte';
 
 // Shared test data
 const timeSeriesData = [
@@ -39,6 +39,18 @@ function triggerTooltip(el: Element) {
   el.dispatchEvent(new PointerEvent('pointermove', eventInit));
 }
 
+/**
+ * Trigger the tooltip and wait for it to render. Retries the dispatch until
+ * the lazy DefaultTooltip + (when in quadtree mode) d3-quadtree chunks have
+ * resolved — both happen in the background after mount.
+ */
+async function dispatchAndWaitForTooltip(el: Element) {
+  await vi.waitFor(() => {
+    triggerTooltip(el);
+    expect(document.querySelector('.lc-tooltip-item-root')).not.toBeNull();
+  });
+}
+
 function triggerPointerEvent(el: Element, type: 'pointerenter' | 'pointerleave') {
   el.dispatchEvent(new PointerEvent(type, { bubbles: true }));
 }
@@ -56,7 +68,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         // Should have a header (portaled to body)
@@ -86,7 +98,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         const colorDots = document.querySelectorAll('.lc-tooltip-item-color');
@@ -109,7 +121,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         const items = document.querySelectorAll('.lc-tooltip-item-root');
@@ -159,7 +171,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         const items = document.querySelectorAll('.lc-tooltip-item-root');
@@ -181,7 +193,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         const header = document.querySelector('.lc-tooltip-header');
@@ -210,7 +222,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         const items = document.querySelectorAll('.lc-tooltip-item-root');
@@ -236,7 +248,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         const items = document.querySelectorAll('.lc-tooltip-item-root');
@@ -264,7 +276,7 @@ describe('DefaultTooltip', () => {
 
       const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
       await expect.element(tooltipCtx).toBeInTheDocument();
-      triggerTooltip(tooltipCtx);
+      await dispatchAndWaitForTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
         // Should show a header with the series name

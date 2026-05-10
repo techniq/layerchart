@@ -128,6 +128,7 @@ Access the brush state via the chart context to control it from code. For exampl
 :example{ component="BrushContext" name="programmatic-control" }
 
 ### Methods
+
 | Method             | Description                        |
 | ------------------ | ---------------------------------- |
 | `move({ x?, y? })` | Set the selection programmatically |

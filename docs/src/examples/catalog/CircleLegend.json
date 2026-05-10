@@ -104,16 +104,16 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 148,
+      "lineNumber": 138,
       "line": "<CircleLegend title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 60,
+      "lineNumber": 51,
       "line": "<CircleLegend"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.252Z"
+  "updatedAt": "2026-05-05T17:35:59.235Z"
 }

@@ -7,7 +7,8 @@
 
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { Group, Rect, RectClipPath, Text, Treemap } from 'layerchart';
+	import { Group, Rect, RectClipPath, Text } from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
 
 	let {
 		data,

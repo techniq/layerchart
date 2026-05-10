@@ -9,7 +9,6 @@
 	import { interpolateSpectral } from 'd3-scale-chromatic';
 	import { Axis, Chart, Layer, Spline } from 'layerchart';
 
-
 	const yearColor = scaleOrdinal<number, string>(quantize(interpolateSpectral, 6));
 
 	export { data };

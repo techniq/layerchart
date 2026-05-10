@@ -27,6 +27,12 @@ const SVG_STYLE_PROPERTIES = [
   'alignment-baseline',
   'visibility',
   'display',
+  // `<Text>` wraps each label in a nested `<svg class="lc-text-svg">` that
+  // relies on `overflow: visible` so labels can render outside the wrapper
+  // (axis ticks positioned at negative x). Without this inlined, the
+  // rasteriser falls back to the spec default `overflow: hidden` and clips
+  // the labels.
+  'overflow',
   'paint-order',
   'shape-rendering',
   'text-rendering',
@@ -62,14 +68,23 @@ function inlineSvgStyles(svg: SVGSVGElement): SVGSVGElement {
 
 /**
  * Draw an SVG element onto a canvas context at the given pixel dimensions.
+ * Sets `viewBox` (if not authored) so the SVG content scales to fill the
+ * destination size — without it, increasing the `width`/`height` attributes
+ * leaves content at its original pixel coordinates and the result lands in
+ * the top-left.
  */
 function drawSvgToCanvas(
   svg: SVGSVGElement,
   ctx: CanvasRenderingContext2D,
   pixelWidth: number,
-  pixelHeight: number
+  pixelHeight: number,
+  cssWidth: number,
+  cssHeight: number
 ): Promise<void> {
   const inlined = inlineSvgStyles(svg);
+  if (!inlined.getAttribute('viewBox')) {
+    inlined.setAttribute('viewBox', `0 0 ${cssWidth} ${cssHeight}`);
+  }
   inlined.setAttribute('width', String(pixelWidth));
   inlined.setAttribute('height', String(pixelHeight));
 
@@ -80,7 +95,7 @@ function drawSvgToCanvas(
   return new Promise<void>((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
-      ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, 0, 0, pixelWidth, pixelHeight);
       URL.revokeObjectURL(url);
       resolve();
     };
@@ -114,9 +129,11 @@ export type ChartImageOptions = {
   quality?: number;
 
   /**
-   * Device pixel ratio to use when rasterising SVG layers.
-   * Higher values produce crisper images on retina displays.
-   * Defaults to `window.devicePixelRatio` (usually 1 or 2).
+   * Device pixel ratio to use when rasterising the image. Defaults to `1`
+   * so the output matches the chart's CSS dimensions (looks the same as
+   * what's on the page when viewed 1:1). Set to `window.devicePixelRatio`
+   * (or higher) to produce crisper images on retina displays at the cost
+   * of larger files.
    */
   pixelRatio?: number;
 };
@@ -134,10 +151,28 @@ export async function getChartImageBlob(
   options: ChartImageOptions = {}
 ): Promise<Blob> {
   const { background, format = 'png', quality = 0.92 } = options;
-  const dpr = options.pixelRatio ?? window.devicePixelRatio ?? 1;
+  // Default to 1 so PNGs match the chart's on-page size; pass
+  // `pixelRatio: window.devicePixelRatio` (or higher) for retina-sharp output.
+  const dpr = options.pixelRatio ?? 1;
 
-  const cssWidth = container.clientWidth;
-  const cssHeight = container.clientHeight;
+  // Find all SVG and Canvas layers within the container, sorted by z-index.
+  // The class-name selector implicitly excludes `.lc-hit-canvas`.
+  const layers = Array.from(
+    container.querySelectorAll<SVGSVGElement | HTMLCanvasElement>(
+      '.lc-layout-svg, .lc-layout-canvas'
+    )
+  ).sort((a, b) => {
+    const aZ = parseFloat(window.getComputedStyle(a).zIndex) || 0;
+    const bZ = parseFloat(window.getComputedStyle(b).zIndex) || 0;
+    return aZ - bZ;
+  });
+
+  // Size the output to the chart layers (all share the same bounds) rather
+  // than the wrapping container, so padding/margin doesn't leave blank
+  // space on the right/bottom of the image.
+  const layerRect = layers[0]?.getBoundingClientRect();
+  const cssWidth = layerRect?.width || container.clientWidth;
+  const cssHeight = layerRect?.height || container.clientHeight;
   const pixelWidth = Math.round(cssWidth * dpr);
   const pixelHeight = Math.round(cssHeight * dpr);
 
@@ -153,25 +188,21 @@ export async function getChartImageBlob(
     ctx.fillRect(0, 0, pixelWidth, pixelHeight);
   }
 
-  // Find all SVG and Canvas layers within the container, sorted by z-index.
-  // `.lc-hit-canvas` is excluded via the class selector (it uses `.lc-layout-canvas`).
-  const layers = Array.from(
-    container.querySelectorAll<SVGSVGElement | HTMLCanvasElement>(
-      '.lc-layout-svg, .lc-layout-canvas'
-    )
-  ).sort((a, b) => {
-    const aZ = parseFloat(window.getComputedStyle(a).zIndex) || 0;
-    const bZ = parseFloat(window.getComputedStyle(b).zIndex) || 0;
-    return aZ - bZ;
-  });
-
   for (const layer of layers) {
     if (layer instanceof SVGElement) {
-      await drawSvgToCanvas(layer as SVGSVGElement, ctx, pixelWidth, pixelHeight);
+      await drawSvgToCanvas(
+        layer as SVGSVGElement,
+        ctx,
+        pixelWidth,
+        pixelHeight,
+        cssWidth,
+        cssHeight
+      );
     } else if (layer instanceof HTMLCanvasElement) {
-      // Canvas layers are already rendered at physical pixel resolution via scaleCanvas().
-      // Draw them at full natural size to preserve sharpness.
-      ctx.drawImage(layer, 0, 0);
+      // Canvas bitmaps are sized to `cssSize × window.devicePixelRatio`
+      // (set by `scaleCanvas`). Map them to the requested output size so
+      // the result matches `pixelRatio`.
+      ctx.drawImage(layer, 0, 0, pixelWidth, pixelHeight);
     }
   }
 

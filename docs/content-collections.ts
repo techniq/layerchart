@@ -2,7 +2,7 @@ import { defineCollection, defineConfig } from '@content-collections/core';
 import { compileMarkdown } from '@content-collections/markdown';
 import { toPascalCase } from '@layerstack/utils';
 import { z } from 'zod';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join } from 'path';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -37,29 +37,66 @@ const components = defineCollection({
 
 		const name = doc.name ?? toPascalCase(fileName.replace('.md', ''));
 
-		// Read the source file from the layerchart package
-		// Determine the subfolder based on category and component name
-		let subfolder = '';
-		if (doc.category === 'charts' && name !== 'Chart') {
-			subfolder = 'charts/';
-		} else if (doc.category === 'layers' || name === 'Layer') {
-			subfolder = 'layers/';
-		}
-		const sourcePath = join(
-			process.cwd(),
-			`../packages/layerchart/src/lib/components/${subfolder}${path}.svelte`
-		);
+		// Source resolution for layer-split (`Foo/Foo.svelte`) and flat
+		// (`Foo.svelte`) layouts, in either the root `components/` or any
+		// nested category folder (`components/geo/`, `components/graph/`, …):
+		// - Layer-split with `Foo.base.svelte` → that's the canonical impl.
+		// - Layer-split without `.base` → use the dispatcher and surface each
+		//   `.svg|.canvas|.html.svelte` variant for the layer toggle.
+		// - Flat → single dispatcher.
+		const componentsRoot = join(process.cwd(), `../packages/layerchart/src/lib/components`);
+		const githubBase = `https://github.com/techniq/layerchart/blob/next/packages/layerchart/src/lib/components`;
 
-		let source = '';
-		let sourceUrl = '';
-		try {
-			source = readFileSync(sourcePath, 'utf-8');
-			sourceUrl = `https://github.com/techniq/layerchart/blob/next/packages/layerchart/src/lib/components/${subfolder}${path}.svelte`;
-		} catch (error) {
-			// console.warn(
-			// 	`Could not read source file for ${filePath}: ${error instanceof Error ? error.message : String(error)}`
-			// );
+		const tryRead = (rel: string): { source: string; url: string } | null => {
+			const full = join(componentsRoot, rel);
+			if (!existsSync(full)) return null;
+			try {
+				return { source: readFileSync(full, 'utf-8'), url: `${githubBase}/${rel}` };
+			} catch {
+				return null;
+			}
+		};
+
+		// Probe the root `components/` and every nested category subfolder
+		// (`charts/`, `geo/`, `graph/`, `hierarchy/`, `force/`, …) so the
+		// resolver works regardless of where the component lives.
+		const subdirs = readdirSync(componentsRoot).filter(
+			(entry) => !entry.startsWith('.') && statSync(join(componentsRoot, entry)).isDirectory()
+		);
+		const searchDirs = ['', ...subdirs.map((d) => `${d}/`)];
+
+		const sources: Record<string, string> = {};
+		const sourceUrls: Record<string, string> = {};
+		let primary: { source: string; url: string } | null = null;
+		let splitDir = '';
+
+		for (const dir of searchDirs) {
+			const hit =
+				tryRead(`${dir}${path}/${path}.base.svelte`) ??
+				tryRead(`${dir}${path}/${path}.svelte`) ??
+				tryRead(`${dir}${path}.svelte`);
+			if (hit) {
+				primary = hit;
+				splitDir = `${dir}${path}/`;
+				break;
+			}
 		}
+
+		// Surface layer variants only when there's no `.base.svelte` —
+		// otherwise the layer-specific files are thin wrappers and switching
+		// to them would just hide the implementation.
+		if (primary && !primary.url.endsWith('.base.svelte')) {
+			for (const layer of ['svg', 'canvas', 'html']) {
+				const variant = tryRead(`${splitDir}${path}.${layer}.svelte`);
+				if (variant) {
+					sources[layer] = variant.source;
+					sourceUrls[layer] = variant.url;
+				}
+			}
+		}
+
+		const source = primary?.source ?? '';
+		const sourceUrl = primary?.url ?? '';
 
 		// Extract the first Example component's name from the markdown content
 		// Support both <Example name="..."> and :example{name="..."} syntax
@@ -95,11 +132,9 @@ const components = defineCollection({
 				api = JSON.parse(readFileSync(apiPath, 'utf-8'));
 
 				const renderInline = async (text: string) => {
-					const html = await compileMarkdown(
-						context,
-						{ ...doc, content: text } as any,
-						{ remarkPlugins: [remarkGfm] }
-					);
+					const html = await compileMarkdown(context, { ...doc, content: text } as any, {
+						remarkPlugins: [remarkGfm]
+					});
 					return html
 						.replace(/^<p>/, '')
 						.replace(/<\/p>\s*$/, '')
@@ -132,6 +167,8 @@ const components = defineCollection({
 			slug: path,
 			source,
 			sourceUrl,
+			sources,
+			sourceUrls,
 			defaultExample,
 			toc,
 			api

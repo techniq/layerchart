@@ -1,7 +1,7 @@
 import type { ClassValue } from 'svelte/elements';
 import memoize from 'memoize';
 import { cls } from '@layerstack/tailwind';
-import type { PatternShape } from '$lib/components/Pattern.svelte';
+import type { PatternShape } from '$lib/components/Pattern/Pattern.svelte';
 import { roundedRectPath } from './path.js';
 
 /** @deprecated - use `isTransparentFill` instead */
@@ -15,6 +15,16 @@ function isTransparentFill(fill: string): boolean {
   if (!fill || fill === 'none' || fill === 'transparent') return true;
   // Match rgba(..., 0) - alpha channel is 0 (fully transparent)
   return /rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*0\s*\)/.test(fill);
+}
+
+/**
+ * Returns true if a style value cannot be assigned directly to a canvas
+ * context and must first be resolved through the hidden `<svg>` helper —
+ * specifically `var(...)` references and the `currentColor` keyword.
+ */
+function needsCSSResolution(value: unknown): value is string {
+  if (typeof value !== 'string') return false;
+  return value.includes('var(') || value.toLowerCase() === 'currentcolor';
 }
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
@@ -181,10 +191,9 @@ function render(
   let resolvedStyles: StyleOptions;
   if (
     typeof document === 'undefined' ||
-    (styleOptions.classes == null &&
-      !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var(')))
+    (styleOptions.classes == null && !Object.values(mergedStyles).some(needsCSSResolution))
   ) {
-    // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles are using CSS variables
+    // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles need CSS resolution (`var(...)` / `currentColor`)
     resolvedStyles = mergedStyles;
 
     // On server, provide sensible defaults for styles that would normally come from CSS
@@ -200,10 +209,10 @@ function render(
       variableStyles: StyleOptions;
     }>(
       (acc, [key, value]) => {
-        if (typeof value === 'number' || (typeof value === 'string' && !value.includes('var('))) {
-          (acc.constantStyles as any)[key] = value;
-        } else if (typeof value === 'string' && value.includes('var(')) {
+        if (needsCSSResolution(value)) {
           (acc.variableStyles as any)[key] = value;
+        } else if (typeof value === 'number' || typeof value === 'string') {
+          (acc.constantStyles as any)[key] = value;
         }
         return acc;
       },
@@ -272,7 +281,7 @@ function render(
           (styleOptions.styles?.fill as any) instanceof CanvasGradient) ||
           (typeof CanvasPattern !== 'undefined' &&
             (styleOptions.styles?.fill as any) instanceof CanvasPattern) ||
-          !styleOptions.styles?.fill?.includes('var'))
+          !needsCSSResolution(styleOptions.styles?.fill))
           ? styleOptions.styles.fill
           : resolvedStyles?.fill;
 
@@ -293,7 +302,7 @@ function render(
         styleOptions.styles?.stroke &&
         ((typeof CanvasGradient !== 'undefined' &&
           (styleOptions.styles?.stroke as any) instanceof CanvasGradient) ||
-          !styleOptions.styles?.stroke?.includes('var'))
+          !needsCSSResolution(styleOptions.styles?.stroke))
           ? styleOptions.styles?.stroke
           : resolvedStyles?.stroke;
 
@@ -562,10 +571,18 @@ export function _createPattern(
   // Add pattern canvas to DOM to allow computed styles to be read (`getComputedStyles()`)
   ctx.canvas.after(patternCanvas);
 
-  // TODO: Fix blurry pattern
-  // const newScale = scaleCanvas(patternCtx, width, height);
-  patternCanvas.width = width;
-  patternCanvas.height = height;
+  // Render the pattern at the device pixel ratio so the bitmap tile is
+  // sharp on high-DPI screens. Chrome samples patterns in the canvas's
+  // user (post-transform) coordinate space, so 1 source pixel = 1 user px
+  // by default — without DPR-scaling the bitmap, a 12 logical-px tile is
+  // sampled from 12 source pixels, leaving each device pixel of fill to
+  // be interpolated from a 1/dpr-th of a source pixel (blurry). Drawing
+  // at DPR resolution and scaling the pattern back down to user space at
+  // fill time keeps tiles sharp.
+  const dpr = (typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1;
+  patternCanvas.width = Math.max(1, Math.round(width * dpr));
+  patternCanvas.height = Math.max(1, Math.round(height * dpr));
+  patternCtx.scale(dpr, dpr);
 
   if (background) {
     patternCtx.fillStyle = background;
@@ -584,11 +601,30 @@ export function _createPattern(
       renderPathData(patternCtx, shape.path, {
         styles: { stroke: shape.stroke, strokeWidth: shape.strokeWidth, opacity: shape.opacity },
       });
+    } else if (shape.type === 'rect') {
+      const rx = typeof shape.rx === 'string' ? toRectCornerPx(shape.rx, shape.width) : shape.rx;
+      const ry =
+        typeof shape.ry === 'string' ? toRectCornerPx(shape.ry, shape.height) : (shape.ry ?? rx);
+      renderRect(
+        patternCtx,
+        { x: shape.x, y: shape.y, width: shape.width, height: shape.height, rx, ry },
+        { styles: { fill: shape.fill, opacity: shape.opacity } }
+      );
     }
     patternCtx.restore();
   }
 
   const pattern = ctx.createPattern(patternCanvas, 'repeat');
+
+  // Scale-only matrix; no translate so the pattern anchors to the path's
+  // local origin at fill time (matches SVG `patternUnits="userSpaceOnUse"`).
+  // Use the *actual* bitmap pixel dimensions for the scale so rounding
+  // `width * dpr` to an integer doesn't accumulate drift across tiles.
+  if (pattern) {
+    const sx = width / patternCanvas.width;
+    const sy = height / patternCanvas.height;
+    pattern.setTransform(new DOMMatrix([sx, 0, 0, sy, 0, 0]));
+  }
 
   // Cleanup
   ctx.canvas.parentElement?.removeChild(patternCanvas);
@@ -600,3 +636,13 @@ export function _createPattern(
 export const createPattern = memoize(_createPattern, {
   cacheKey: (args) => JSON.stringify(args.slice(1)), // Ignore `ctx` argument
 });
+
+function toRectCornerPx(value: string, max: number): number {
+  if (value.endsWith('%')) {
+    const pct = parseFloat(value);
+    if (!Number.isFinite(pct)) return 0;
+    return (max / 2) * (pct / 100);
+  }
+  const n = parseFloat(value);
+  return Number.isFinite(n) ? n : 0;
+}

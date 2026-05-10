@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { Group, Link, Rect, Sankey, Text } from 'layerchart';
+	import { Group, Link, Rect, Text } from 'layerchart';
+	import { Sankey } from 'layerchart/graph';
 
 	let {
 		data,

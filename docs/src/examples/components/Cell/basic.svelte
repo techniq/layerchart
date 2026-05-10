@@ -16,7 +16,7 @@
 		hours.map((hour) => ({
 			day,
 			hour,
-			value: Math.floor(seededRandom() * 100),
+			value: Math.floor(seededRandom() * 100)
 		}))
 	);
 </script>
@@ -33,7 +33,7 @@
 		'var(--color-primary-100)',
 		'var(--color-primary-300)',
 		'var(--color-primary-500)',
-		'var(--color-primary-700)',
+		'var(--color-primary-700)'
 	]}
 	padding={{ top: 4, bottom: 20, left: 36, right: 4 }}
 	height={300}

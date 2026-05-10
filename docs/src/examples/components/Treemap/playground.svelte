@@ -8,17 +8,8 @@
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 
-	import {
-		Chart,
-		Group,
-		Layer,
-		Rect,
-		RectClipPath,
-		Text,
-		Tooltip,
-		Treemap,
-		findAncestor
-	} from 'layerchart';
+	import { Chart, Group, Layer, Rect, RectClipPath, Text, Tooltip, findAncestor } from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
 	import { type ComponentProps } from 'svelte';
 
 	const data = {
@@ -157,10 +148,8 @@
 												value: node.data.name,
 												class: cls(
 													'text-[10px] font-medium',
-													config.colorBy === 'children'
-														? 'fill-primary-content'
-														: 'fill-black'
-												),
+													config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+												)
 											},
 											...(node.children
 												? [
@@ -171,10 +160,10 @@
 																config.colorBy === 'children'
 																	? 'fill-primary-content'
 																	: 'fill-black'
-															),
-														},
+															)
+														}
 													]
-												: []),
+												: [])
 										]}
 										verticalAnchor="start"
 										lineHeight="10px"

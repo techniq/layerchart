@@ -7,7 +7,8 @@
 	import { geoMercator, geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, GeoRaster, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, GeoRaster, Graticule } from 'layerchart/geo';
 	import { RangeField } from 'svelte-ux';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 	const countries = feature(topology, topology.objects.countries);

@@ -54,7 +54,11 @@ const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/li
 const OUTPUT_DIR = path.resolve(__dirname, '../generated/api');
 
 /**
- * Get all .svelte files in a directory (recursively)
+ * Get all canonical .svelte files in a directory (recursively).
+ *
+ * Skips per-layer variants (`*.svg.svelte`, `*.canvas.svelte`, `*.html.svelte`)
+ * and the shared base impl (`*.base.svelte`) — the canonical `<Name>.svelte`
+ * delegator re-exports the public Props type, which is what docs reference.
  */
 export function getSvelteFiles(dir: string): string[] {
 	const files: string[] = [];
@@ -66,6 +70,7 @@ export function getSvelteFiles(dir: string): string[] {
 			// Recursively scan subdirectories (charts, layers, tooltip)
 			files.push(...getSvelteFiles(fullPath));
 		} else if (entry.isFile() && entry.name.endsWith('.svelte')) {
+			if (/\.(svg|canvas|html|base)\.svelte$/.test(entry.name)) continue;
 			files.push(fullPath);
 		}
 	}
@@ -324,6 +329,28 @@ function findPropsTypeName(componentName: string, moduleScript: string): string 
 }
 
 /**
+ * Inline `export type { Foo } from './X.shared.svelte.js'` re-exports by
+ * appending the source `.ts` file's contents. The canonical layer-delegator
+ * components only re-export their public Props type from a sibling
+ * `*.shared.svelte.ts`, so without this the TS parser sees no type definition.
+ */
+function resolveSharedReExports(filePath: string, moduleScript: string): string {
+	const reExportRegex =
+		/export\s+type\s*\{[^}]+\}\s*from\s+['"](\.\/[^'"]+\.shared\.svelte)\.js['"]\s*;?/g;
+	const dir = path.dirname(filePath);
+	let combined = moduleScript;
+
+	for (const match of moduleScript.matchAll(reExportRegex)) {
+		const sharedPath = path.join(dir, `${match[1].slice(2)}.ts`);
+		if (fs.existsSync(sharedPath)) {
+			combined += '\n' + fs.readFileSync(sharedPath, 'utf-8');
+		}
+	}
+
+	return combined;
+}
+
+/**
  * Extract component API from a Svelte file
  */
 export function extractComponentAPI(filePath: string): ComponentAPI | null {
@@ -337,7 +364,7 @@ export function extractComponentAPI(filePath: string): ComponentAPI | null {
 		return null;
 	}
 
-	const moduleScript = moduleScriptMatch[1];
+	const moduleScript = resolveSharedReExports(filePath, moduleScriptMatch[1]);
 
 	// Look for the main Props type
 	const componentName = path.basename(filePath, '.svelte');

@@ -245,7 +245,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 142,
+      "lineNumber": 132,
       "line": "<Legend"
     },
     {
@@ -539,23 +539,44 @@
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Legend"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 59,
+      "lineNumber": 50,
       "line": "<Legend placement=\"bottom\" />"
     },
     {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Legend"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 40,
+      "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+    },
+    {
+      "example": "olympians-weight-by-sex",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/olympians-weight-by-sex",
+      "lineNumber": 42,
+      "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 41,
+      "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:54.440Z"
+  "updatedAt": "2026-05-08T16:24:15.193Z"
 }

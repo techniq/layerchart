@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TreemapProps } from 'layerchart';
+	import type { TreemapProps } from 'layerchart/hierarchy';
 	import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	type TreemapTileMethod = TreemapProps<any>['tile'];

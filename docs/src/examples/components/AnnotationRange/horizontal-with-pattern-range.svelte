@@ -6,7 +6,6 @@
 <script lang="ts">
 	import { AnnotationRange, LineChart, defaultChartPadding } from 'layerchart';
 
-
 	export { data };
 </script>
 

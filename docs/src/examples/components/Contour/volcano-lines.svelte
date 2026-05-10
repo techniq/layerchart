@@ -5,7 +5,6 @@
 
 <script lang="ts">
 	import { Axis, Chart, Contour, Layer } from 'layerchart';
-
 </script>
 
 <Chart padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>

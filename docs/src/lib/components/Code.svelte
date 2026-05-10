@@ -6,14 +6,16 @@
 	let highlighter = $state<Highlighter | null>(null);
 
 	if (browser) {
-		import('shiki/bundle/web').then(({ createHighlighter }) =>
-			createHighlighter({
-				themes: ['github-light-default', 'github-dark-default'],
-				langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh', 'md']
-			})
-		).then((h) => {
-			highlighter = h;
-		});
+		import('shiki/bundle/web')
+			.then(({ createHighlighter }) =>
+				createHighlighter({
+					themes: ['github-light-default', 'github-dark-default'],
+					langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh', 'md']
+				})
+			)
+			.then((h) => {
+				highlighter = h;
+			});
 	}
 </script>
 

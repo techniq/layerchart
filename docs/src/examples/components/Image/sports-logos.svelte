@@ -6,62 +6,62 @@
 			team: 'Kansas City Chiefs',
 			wins: 15,
 			pointsScored: 496,
-			abbrev: 'kc',
+			abbrev: 'kc'
 		},
 		{
 			team: 'San Francisco 49ers',
 			wins: 12,
 			pointsScored: 457,
-			abbrev: 'sf',
+			abbrev: 'sf'
 		},
 		{
 			team: 'Dallas Cowboys',
 			wins: 12,
 			pointsScored: 509,
-			abbrev: 'dal',
+			abbrev: 'dal'
 		},
 		{
 			team: 'Baltimore Ravens',
 			wins: 13,
 			pointsScored: 483,
-			abbrev: 'bal',
+			abbrev: 'bal'
 		},
 		{
 			team: 'Detroit Lions',
 			wins: 12,
 			pointsScored: 461,
-			abbrev: 'det',
+			abbrev: 'det'
 		},
 		{
 			team: 'Buffalo Bills',
 			wins: 11,
 			pointsScored: 451,
-			abbrev: 'buf',
+			abbrev: 'buf'
 		},
 		{
 			team: 'Miami Dolphins',
 			wins: 11,
 			pointsScored: 496,
-			abbrev: 'mia',
+			abbrev: 'mia'
 		},
 		{
 			team: 'Green Bay Packers',
 			wins: 9,
 			pointsScored: 383,
-			abbrev: 'gb',
+			abbrev: 'gb'
 		},
 		{
 			team: 'Philadelphia Eagles',
 			wins: 11,
 			pointsScored: 433,
-			abbrev: 'phi',
+			abbrev: 'phi'
 		},
 		{
 			team: 'Cleveland Browns',
 			wins: 11,
 			pointsScored: 396,
-			abbrev: 'cle',
-		},
+			abbrev: 'cle'
+		}
 	];
 </script>
 

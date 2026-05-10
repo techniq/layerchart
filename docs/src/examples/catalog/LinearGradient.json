@@ -185,14 +185,14 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 23,
+      "lineNumber": 31,
       "line": "<LinearGradient"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 23,
+      "lineNumber": 31,
       "line": "<LinearGradient"
     },
     {
@@ -311,7 +311,7 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 66,
+      "lineNumber": 67,
       "line": "<LinearGradient"
     },
     {
@@ -458,14 +458,14 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
     },
     {
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<LinearGradient"
     },
     {
@@ -556,14 +556,14 @@
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<LinearGradient"
     },
     {
@@ -574,5 +574,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-19T13:23:58.401Z"
+  "updatedAt": "2026-04-30T15:36:26.473Z"
 }

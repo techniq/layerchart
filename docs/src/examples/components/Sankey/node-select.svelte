@@ -5,8 +5,8 @@
 
 <script lang="ts">
 	import type { SankeyNode } from 'd3-sankey';
-	import { Chart, Group, Link, Rect, Sankey, Layer, Text, sankeyGraphFromNode } from 'layerchart';
-
+	import { Chart, Group, Link, Rect, Layer, Text, sankeyGraphFromNode } from 'layerchart';
+	import { Sankey } from 'layerchart/graph';
 
 	let selectedNode: SankeyNode<any, any> | null = $state.raw(null);
 

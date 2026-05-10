@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
-import Chart from './Chart.svelte';
+import Chart from "./Chart/Chart.svelte";
 import BrushTestHarness from './tests/BrushTestHarness.svelte';
 
 const data = [
@@ -35,6 +35,14 @@ function getBrushElements(container: HTMLElement) {
   };
 }
 
+// BrushContext is lazy-loaded inside Chart, so tests that enable brush must
+// wait for the dynamic import to resolve before querying brush DOM.
+async function awaitBrushReady(container: HTMLElement) {
+  await vi.waitFor(() => {
+    expect(container.querySelector('.lc-brush-context')).not.toBeNull();
+  });
+}
+
 describe('BrushContext', () => {
   describe('rendering', () => {
     it('should not render brush UI when brush is disabled', async () => {
@@ -55,7 +63,7 @@ describe('BrushContext', () => {
         brush: true,
       });
 
-      await tick();
+      await awaitBrushReady(container);
 
       const { context } = getBrushElements(container);
       expect(context).not.toBeNull();
@@ -67,7 +75,7 @@ describe('BrushContext', () => {
         brush: true,
       });
 
-      await tick();
+      await awaitBrushReady(container);
 
       const { range, handles } = getBrushElements(container);
       expect(range).toBeNull();
@@ -89,7 +97,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       let { range } = getBrushElements(container);
       expect(range).toBeNull();
@@ -115,7 +123,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       chartContext.brush.move({ x: [2, 5] });
       await tick();
@@ -145,7 +153,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       chartContext.brush.move({ x: [2, 5] });
       await tick();
@@ -175,7 +183,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       chartContext.brush.move({ x: [2, 8] });
       await tick();
@@ -203,7 +211,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       chartContext.brush.selectAll();
       await tick();
@@ -231,7 +239,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       chartContext.brush.move({ y: [20, 80] });
       await tick();
@@ -263,7 +271,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
 
       const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
       const rect = brushEl.getBoundingClientRect();
@@ -305,7 +313,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await tick();
+      await awaitBrushReady(container);
 
       const { range } = getBrushElements(container);
       expect(range).not.toBeNull();
@@ -319,7 +327,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await tick();
+      await awaitBrushReady(container);
 
       const { range } = getBrushElements(container);
       expect(range).toBeNull();
@@ -333,7 +341,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await tick();
+      await awaitBrushReady(container);
 
       const { range } = getBrushElements(container);
       expect(range).toBeNull();
@@ -349,7 +357,7 @@ describe('BrushContext', () => {
 
       const { container } = render(Chart, props);
 
-      await tick();
+      await awaitBrushReady(container);
 
       let { range } = getBrushElements(container);
       expect(range).not.toBeNull();
@@ -375,7 +383,7 @@ describe('BrushContext', () => {
 
       const { container } = render(Chart, props);
 
-      await tick();
+      await awaitBrushReady(container);
 
       let { range } = getBrushElements(container);
       expect(range).not.toBeNull();

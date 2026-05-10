@@ -6,7 +6,7 @@
   "type": "module",
   "homepage": "https://layerchart.com",
   "scripts": {
-    "dev": "pnpm package && pnpm --filter docs dev",
+    "dev": "pnpm --parallel --filter layerchart --filter docs dev",
     "test:unit": "pnpm -r test:unit",
     "build:packages": "rimraf packages/*/dist && pnpm --filter './packages/*' build",
     "build:examples": "rimraf packages/*/dist && pnpm --filter './packages/*' package &&  pnpm --filter './examples/*' build",
@@ -19,7 +19,11 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "changeset publish",
-    "up-deps": "pnpm update -r -i --latest"
+    "up-deps": "pnpm update -r -i --latest",
+    "bundle:analyze": "pnpm --filter @layerchart/bundle-analyzer bundle:analyze",
+    "bundle:visualize": "pnpm --filter @layerchart/bundle-analyzer bundle:visualize",
+    "bundle:compare": "pnpm --filter @layerchart/bundle-analyzer bundle:compare",
+    "bundle:generate-comment": "pnpm --filter @layerchart/bundle-analyzer generate-comment"
   },
   "devDependencies": {
     "@changesets/cli": "2.30.0",

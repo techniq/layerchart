@@ -133,7 +133,7 @@
       "components": [
         {
           "component": "PieChart",
-          "lineNumber": 31,
+          "lineNumber": 21,
           "line": "<PieChart"
         }
       ]
@@ -452,7 +452,7 @@
       "example": "labels-callout",
       "component": "PieChart",
       "path": "/docs/components/PieChart/labels-callout",
-      "lineNumber": 31,
+      "lineNumber": 21,
       "line": "<PieChart"
     },
     {
@@ -589,5 +589,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:06.099Z"
+  "updatedAt": "2026-04-30T15:36:27.202Z"
 }

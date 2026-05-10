@@ -25,20 +25,6 @@ export class SeriesState<TData, TComponent extends Component> {
   selectedKeys: SelectionState<string>;
 
   /**
-   * Reactively syncs selectedKeys when series `selected` props change.
-   * When any series explicitly sets `selected: false`, the remaining series
-   * (with `selected` undefined or true) are pre-selected.
-   */
-  #_syncSelectedFromProps = $effect.root(() => {
-    $effect(() => {
-      const keys = SeriesState.#selectedKeysFromSeries(this.#series);
-      if (keys) {
-        this.selectedKeys.current = keys;
-      }
-    });
-  });
-
-  /**
    * The current highlight series key for the chart.
    */
   highlightKey = $state<SeriesData<TData, TComponent>['key'] | null>(null);
@@ -53,6 +39,16 @@ export class SeriesState<TData, TComponent extends Component> {
     // Compute initial selectedKeys synchronously from series `selected` props
     const initialKeys = SeriesState.#selectedKeysFromSeries(getSeries());
     this.selectedKeys = new SelectionState<string>({ initial: initialKeys ?? undefined });
+
+    // Reactively sync selectedKeys when series `selected` props change.
+    // When any series explicitly sets `selected: false`, the remaining series
+    // (with `selected` undefined or true) are pre-selected.
+    $effect(() => {
+      const keys = SeriesState.#selectedKeysFromSeries(this.#series);
+      if (keys) {
+        this.selectedKeys.current = keys;
+      }
+    });
   }
 
   /**

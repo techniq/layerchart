@@ -9,7 +9,6 @@
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { Axis, Chart, Layer, Legend, LinearGradient, Spline } from 'layerchart';
 
-
 	const temperatureColor = scaleSequential(
 		extent(data, (d) => d.value) as [number, number],
 		interpolateTurbo

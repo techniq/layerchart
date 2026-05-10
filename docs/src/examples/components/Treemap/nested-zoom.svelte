@@ -25,10 +25,10 @@
 		Layer,
 		Text,
 		Tooltip,
-		Treemap,
 		asAny,
 		findAncestor
 	} from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
 
 	let config = $state({
 		tile: 'squarify' as ComponentProps<typeof Treemap>['tile'],
@@ -135,7 +135,7 @@
 																config.colorBy === 'children'
 																	? 'fill-primary-content'
 																	: 'fill-black'
-															),
+															)
 														},
 														...(node.children
 															? [
@@ -146,10 +146,10 @@
 																			config.colorBy === 'children'
 																				? 'fill-primary-content'
 																				: 'fill-black'
-																		),
-																	},
+																		)
+																	}
 																]
-															: []),
+															: [])
 													]}
 													verticalAnchor="start"
 													lineHeight="10px"

@@ -2,7 +2,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, Circle, GeoPath, GeoPoint, getSettings, Layer, Text } from 'layerchart';
+	import { Chart, Circle, getSettings, Layer, Text } from 'layerchart';
+	import { GeoPath, GeoPoint } from 'layerchart/geo';
 	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
 
 	const [usData, capitalsData] = await Promise.all([getUsStatesTopology(), getUsCapitals()]);

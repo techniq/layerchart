@@ -33,7 +33,6 @@
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
 	let showSidebar = $state(true);
-
 </script>
 
 <div class="absolute top-0 w-screen h-screen background-gradient pointer-events-none"></div>

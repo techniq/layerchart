@@ -3,7 +3,8 @@
 	import { randomUniform } from 'd3-random';
 	import { forceX, forceY, forceManyBody, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
-	import { Chart, Circle, Group, ForceSimulation, Layer } from 'layerchart';
+	import { Chart, Circle, Group, Layer } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import type { Prettify } from '@layerstack/utils';
 
 	type NodeDatum = { r: number; group: number };

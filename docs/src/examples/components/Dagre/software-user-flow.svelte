@@ -9,7 +9,8 @@
 	import { cubicOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
 	import { cls } from '@layerstack/tailwind';
-	import { Chart, Dagre, Group, Layer, Rect, Spline, Text } from 'layerchart';
+	import { Chart, Group, Layer, Rect, Spline, Text } from 'layerchart';
+	import { Dagre } from 'layerchart/graph';
 	import DagreControls from '$lib/components/controls/DagreControls.svelte';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import ShowControls from '$lib/components/controls/fields/ShowField.svelte';

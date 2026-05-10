@@ -25,7 +25,15 @@
 
 		<!-- anchor="middle": center at position (default for arrow) -->
 		<Circle cx={200} cy={150} r={3} class="fill-secondary" />
-		<Vector x={200} y={150} length={40} width={5} {rotate} anchor="middle" class="stroke-secondary" />
+		<Vector
+			x={200}
+			y={150}
+			length={40}
+			width={5}
+			{rotate}
+			anchor="middle"
+			class="stroke-secondary"
+		/>
 
 		<!-- anchor="end": tip at position -->
 		<Circle cx={300} cy={150} r={3} class="fill-danger" />

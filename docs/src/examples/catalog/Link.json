@@ -73,22 +73,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 23,
           "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 24,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 32,
+          "lineNumber": 25,
           "line": "<Link"
         },
         {
           "component": "Circle",
-          "lineNumber": 45,
+          "lineNumber": 38,
           "line": "<Circle"
         }
       ]
@@ -134,28 +134,28 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-drag",
-      "lineNumber": 81,
+      "lineNumber": 82,
       "line": "<Link"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-playground",
-      "lineNumber": 171,
+      "lineNumber": 170,
       "line": "<Link"
     },
     {
       "example": "lattice",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/lattice",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Link"
     },
     {
       "example": "tree",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/tree",
-      "lineNumber": 50,
+      "lineNumber": 49,
       "line": "<Link data={link} {...linkPositions[i]} class=\"stroke-surface-content/20\" />"
     },
     {
@@ -176,7 +176,7 @@
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 32,
+      "lineNumber": 25,
       "line": "<Link"
     },
     {
@@ -197,7 +197,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 79,
+      "lineNumber": 70,
       "line": "<Link"
     },
     {
@@ -211,21 +211,21 @@
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 17,
+      "lineNumber": 16,
       "line": "<Link sankey data={link} strokeWidth={link.width} class=\"stroke-surface-content/10\" />"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<Link"
     },
     {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Link data={link} orientation=\"horizontal\" class=\"stroke-surface-content opacity-20\" />"
     },
     {
@@ -239,9 +239,9 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 101,
+      "lineNumber": 102,
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:32.884Z"
+  "updatedAt": "2026-04-30T15:36:26.570Z"
 }

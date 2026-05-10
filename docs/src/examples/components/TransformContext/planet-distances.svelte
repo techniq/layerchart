@@ -259,8 +259,8 @@
 					y={labelY}
 					textAnchor="middle"
 					verticalAnchor="end"
+					fontSize={10}
 					class="fill-surface-content/70"
-					style="font-size: 10px"
 				/>
 			{/each}
 			<Axis placement="bottom" format={formatDistance} />

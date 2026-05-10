@@ -10,7 +10,6 @@
 	import { cls } from '@layerstack/tailwind';
 	import { Axis, Chart, Layer, Spline } from 'layerchart';
 
-
 	export { data };
 </script>
 

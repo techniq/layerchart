@@ -536,6 +536,41 @@ describe('renderPathData', () => {
     expect(strokeSpy).toHaveBeenCalled();
     expect(ctx.strokeStyle).toBe('#008000');
   });
+
+  it('resolves currentColor stroke through the SVG helper', () => {
+    const parent = canvas.parentElement!;
+    const previousColor = parent.style.color;
+    parent.style.color = 'rgb(255, 165, 0)';
+
+    renderPathData(ctx, 'M0,0 L100,0', {
+      styles: {
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeOpacity: '1',
+        opacity: '1',
+        strokeWidth: '2',
+      },
+    });
+
+    // Canvas normalizes rgb(255, 165, 0) → '#ffa500'
+    expect(ctx.strokeStyle).toBe('#ffa500');
+
+    parent.style.color = previousColor;
+  });
+
+  it('resolves currentColor fill through the SVG helper', () => {
+    const parent = canvas.parentElement!;
+    const previousColor = parent.style.color;
+    parent.style.color = 'rgb(128, 0, 128)';
+
+    renderPathData(ctx, 'M0,0 L100,0 L100,100 Z', {
+      styles: { fill: 'currentColor', fillOpacity: '1', opacity: '1', stroke: 'none' },
+    });
+
+    expect(ctx.fillStyle).toBe('#800080');
+
+    parent.style.color = previousColor;
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -982,6 +1017,29 @@ describe('_getComputedStyles', () => {
     const result = _getComputedStyles(canvas, { styles: { fill: 'red' } });
     // 'red' resolves to 'rgb(255, 0, 0)' in the browser
     expect(result.fill).toMatch(/rgb\(255,\s*0,\s*0\)/);
+  });
+
+  it('resolves currentColor for fill via inherited color', () => {
+    // Set color on the canvas's parent so the helper SVG (sibling of canvas) inherits it
+    const parent = canvas.parentElement!;
+    const previousColor = parent.style.color;
+    parent.style.color = 'rgb(0, 128, 0)';
+
+    const result = _getComputedStyles(canvas, { styles: { fill: 'currentColor' } });
+    expect(result.fill).toMatch(/rgb\(0,\s*128,\s*0\)/);
+
+    parent.style.color = previousColor;
+  });
+
+  it('resolves currentColor for stroke via inherited color', () => {
+    const parent = canvas.parentElement!;
+    const previousColor = parent.style.color;
+    parent.style.color = 'rgb(0, 0, 255)';
+
+    const result = _getComputedStyles(canvas, { styles: { stroke: 'currentColor' } });
+    expect(result.stroke).toMatch(/rgb\(0,\s*0,\s*255\)/);
+
+    parent.style.color = previousColor;
   });
 
   it('returns empty object when DOM throws (graceful error handling)', () => {

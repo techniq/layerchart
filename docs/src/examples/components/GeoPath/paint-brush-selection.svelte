@@ -9,7 +9,8 @@
 	import { SvelteMap } from 'svelte/reactivity';
 	import { localPoint } from '@layerstack/utils';
 
-	import { Chart, Circle, GeoPath, Layer, Path, Rect, type ChartState } from 'layerchart';
+	import { Chart, Circle, Layer, Path, Rect, type ChartState } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import { Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 

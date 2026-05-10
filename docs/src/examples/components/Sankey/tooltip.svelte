@@ -6,7 +6,8 @@
 <script lang="ts">
 	import { Icon } from 'svelte-ux';
 	import LucideArrowRight from '~icons/lucide/arrow-right';
-	import { Chart, Group, Link, Rect, Sankey, Layer, Text, Tooltip } from 'layerchart';
+	import { Chart, Group, Link, Rect, Layer, Text, Tooltip } from 'layerchart';
+	import { Sankey } from 'layerchart/graph';
 
 	export { data };
 </script>

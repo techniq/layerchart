@@ -2790,7 +2790,7 @@
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-with-brushing",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Bars insets={{ x: 0.5 }} />"
     },
     {
@@ -2822,5 +2822,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:23.003Z"
+  "updatedAt": "2026-04-30T15:36:22.832Z"
 }

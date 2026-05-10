@@ -9,11 +9,18 @@
 		{ date: new Date('2024-05-01'), value: 30 },
 		{ date: new Date('2024-06-01'), value: 55 },
 		{ date: new Date('2024-07-01'), value: 42 },
-		{ date: new Date('2024-08-01'), value: 68 },
+		{ date: new Date('2024-08-01'), value: 68 }
 	];
 </script>
 
-<Chart {data} x="date" y="value" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>
+<Chart
+	{data}
+	x="date"
+	y="value"
+	yNice
+	padding={{ top: 20, bottom: 20, left: 24, right: 10 }}
+	height={300}
+>
 	<Layer>
 		<Axis placement="bottom" rule />
 		<Axis placement="left" rule />

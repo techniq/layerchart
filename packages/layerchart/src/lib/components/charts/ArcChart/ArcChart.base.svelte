@@ -1,0 +1,317 @@
+<script lang="ts" module>
+  import type { Component } from 'svelte';
+  import type { ArcChartProps } from './ArcChart.shared.svelte.js';
+
+  export type ArcChartBaseLayerComponents = {
+    Chart: Component<any>;
+    Arc: Component<any>;
+    ArcLabel: Component<any>;
+    Group: Component<any>;
+  };
+
+  export type ArcChartBaseProps<TData> = ArcChartProps<TData> & ArcChartBaseLayerComponents;
+</script>
+
+<script lang="ts" generics="TData">
+  import { onMount } from 'svelte';
+  import { sum } from 'd3-array';
+  import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+
+  import * as Tooltip from '../../tooltip/index.js';
+
+  import type { ArcLabelConfig } from '../../ArcLabel/ArcLabel.shared.svelte.js';
+  import type { ArcProps } from '../../Arc/Arc.shared.svelte.js';
+  import type { GroupProps } from '../../Group/Group.shared.svelte.js';
+  import type { SeriesData } from '../types.js';
+  import { accessor, chartDataArray, getObjectOrNull, type Accessor } from '$lib/utils/common.js';
+  import { getColorIfDefined } from '$lib/utils/color.js';
+
+  let {
+    Chart,
+    Arc,
+    ArcLabel,
+    Group,
+    data = [],
+    key = 'key',
+    label = 'label',
+    value = 'value',
+    range = [0, 360],
+    c: cProp,
+    innerRadius = 0,
+    outerRadius = 0,
+    cornerRadius = 0,
+    padAngle = 0,
+    placement = 'center',
+    maxValue,
+    center: centerProp,
+    series: seriesProp,
+    legend = false,
+    onArcClick = () => {},
+    // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
+    /** Event dispatched with current tooltip data */
+    onTooltipClick = () => {},
+    props = {},
+    profile = false,
+    tooltipContext = true,
+    marks,
+    tooltip: tooltipProp,
+    arc,
+    labels = false,
+    context = $bindable(),
+    trackCornerRadius,
+    trackPadAngle,
+    trackStartAngle,
+    trackEndAngle,
+    trackInnerRadius,
+    trackOuterRadius,
+    ...restProps
+  }: ArcChartBaseProps<TData> = $props();
+
+  const center = $derived(centerProp ?? placement === 'center');
+
+  const labelsConfig = $derived(
+    labels === true ? ({} as ArcLabelConfig & { value?: Accessor }) : labels || null
+  );
+
+  const c = $derived(cProp ?? key);
+
+  const keyAccessor = $derived(accessor(key));
+  const labelAccessor = $derived(accessor(label));
+  const valueAccessor = $derived(accessor(value));
+  const cAccessor = $derived(accessor(c));
+
+  const _series = $derived(
+    seriesProp === undefined
+      ? [
+          {
+            key: 'default',
+            value: value,
+          },
+        ]
+      : seriesProp
+  );
+  const isDefaultSeries = $derived(_series.length === 1 && _series[0].key === 'default');
+
+  const series: SeriesData<TData, any>[] = $derived.by(() => {
+    if (!isDefaultSeries) return _series;
+    // build series from data
+    return chartDataArray(data).map((d) => {
+      return {
+        key: keyAccessor(d),
+        value: valueAccessor(d),
+        label: labelAccessor(d),
+        color: getColorIfDefined(d),
+        maxValue: maxValue,
+        data: [d],
+      };
+    });
+  });
+
+  // ArcChart needs local chartData for visibleData filtering and cDomain calculation.
+  // IMPORTANT: Compute locally from `series` and `data` — NOT from `context.series.allSeriesData`.
+  // Reading context.series.allSeriesData here would create a derived_references_self cycle:
+  //   SeriesState.#series → ChartState.props → data={visibleData} → chartData → context.series.allSeriesData → #series
+  const chartData = $derived.by(() => {
+    const seriesData = series.flatMap((s) => s.data ?? []);
+    return (seriesData.length > 0 ? seriesData : chartDataArray(data)) as Array<TData>;
+  });
+
+  const visibleData = $derived(
+    chartData.filter((d) => {
+      const dataKey = keyAccessor(d);
+      const selectedKeys = context?.series.selectedKeys;
+      return !selectedKeys || selectedKeys.isEmpty() || selectedKeys.isSelected(dataKey);
+    })
+  );
+
+  // Compute series colors locally to avoid derived_references_self cycle through context.series.allSeriesColors
+  const allSeriesColors = $derived(series.map((s) => s.color).filter((c) => c != null) as string[]);
+
+  // Custom tickFormat for ArcChart legends - uses data labels instead of series labels
+  const legendTickFormat = (tick: any) => {
+    const item = chartData.find((d) => keyAccessor(d) === tick);
+    return item ? (labelAccessor(item) ?? tick) : tick;
+  };
+
+  function getGroupProps(): GroupProps {
+    if (!context) return {};
+    return {
+      x:
+        placement === 'left'
+          ? context.height / 2
+          : placement === 'right'
+            ? context.width - context.height / 2
+            : undefined,
+      center: ['left', 'right'].includes(placement) ? 'y' : undefined,
+      ...props.group,
+    };
+  }
+
+  function getArcProps(s: SeriesData<TData, any>, i: number): ArcProps {
+    if (!context) return {};
+    const d = s.data?.[0] || chartData[0];
+    const multiSeries = chartDataArray(data).length > 1 || series.length > 1;
+    return {
+      value: valueAccessor(d),
+      domain: [0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)],
+      range,
+      innerRadius,
+      outerRadius: multiSeries && (outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius,
+      cornerRadius,
+      padAngle,
+      trackCornerRadius,
+      trackPadAngle,
+      trackStartAngle,
+      trackEndAngle,
+      trackInnerRadius,
+      trackOuterRadius:
+        multiSeries && (trackOuterRadius ?? 0) < 0 ? i * (trackOuterRadius ?? 0) : trackOuterRadius,
+      fill: s.color ?? context.cScale?.(context.c(d)),
+      track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
+      opacity: (context?.series.isHighlighted(keyAccessor(d), true) ?? true) ? 1 : 0.1,
+      tooltip: true,
+      data: d,
+      onclick: (e: MouseEvent) => {
+        onArcClick(e, { data: d, series: s });
+        // Workaround for `tooltip={{ mode: 'manual' }}
+        onTooltipClick(e, { data: d });
+      },
+      ...props.arc,
+      ...s.props,
+      class: cls(props.arc?.class, s.props?.class),
+    };
+  }
+
+  if (profile) {
+    console.time('ArcChart render');
+    onMount(() => {
+      console.timeEnd('ArcChart render');
+    });
+  }
+</script>
+
+<Chart
+  bind:context
+  data={visibleData}
+  x={value}
+  {c}
+  cDomain={chartData.map(keyAccessor)}
+  cRange={allSeriesColors.length > 0
+    ? allSeriesColors
+    : c !== key
+      ? chartData.map((d) => cAccessor(d))
+      : [
+          'var(--color-primary, currentColor)',
+          'var(--color-secondary, currentColor)',
+          'var(--color-info, currentColor)',
+          'var(--color-success, currentColor)',
+          'var(--color-warning, currentColor)',
+          'var(--color-danger, currentColor)',
+        ]}
+  padding={{
+    bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
+  }}
+  axis={false}
+  {...restProps}
+  tooltipContext={tooltipContext === false
+    ? false
+    : {
+        onclick: onTooltipClick,
+        ...props.tooltip?.context,
+        ...(typeof tooltipContext === 'object' ? tooltipContext : null),
+      }}
+  {series}
+  legend={typeof legend === 'function'
+    ? (legend as any)
+    : legend
+      ? {
+          variant: 'swatches',
+          placement: 'bottom',
+          tickFormat: legendTickFormat,
+          ...(typeof legend === 'object' ? legend : null),
+        }
+      : false}
+  props={{
+    ...props,
+    svg: { center, ...props.svg },
+    canvas: { center, ...props.canvas },
+  }}
+>
+  {#snippet marks(snippetProps: any)}
+    {#if typeof marks === 'function'}
+      {@render marks(snippetProps)}
+    {:else}
+      <Group {...getGroupProps()}>
+        {#each series as s, i (s.key)}
+          {#if typeof arc === 'function'}
+            {@render arc({
+              ...snippetProps,
+              label: labelAccessor,
+              key: keyAccessor,
+              value: valueAccessor,
+              visibleData,
+              getGroupProps,
+              getArcProps,
+              seriesIndex: i,
+              props: getArcProps(s, i),
+            })}
+          {:else if labelsConfig}
+            {@const arcProps = getArcProps(s, i)}
+            <Arc {...arcProps}>
+              {#snippet children({
+                centroid,
+                startAngle,
+                endAngle,
+                innerRadius: arcInnerRadius,
+                outerRadius: arcOuterRadius,
+                getArcTextProps,
+              }: any)}
+                {@const { value: labelValue, ...labelRest } = labelsConfig}
+                <ArcLabel
+                  {centroid}
+                  {startAngle}
+                  {endAngle}
+                  innerRadius={arcInnerRadius}
+                  outerRadius={arcOuterRadius}
+                  {getArcTextProps}
+                  value={accessor(labelValue ?? value)(s.data?.[0] || chartData[0])}
+                  {...labelRest}
+                />
+              {/snippet}
+            </Arc>
+          {:else}
+            <Arc {...getArcProps(s, i)} />
+          {/if}
+        {/each}
+      </Group>
+    {/if}
+  {/snippet}
+
+  {#snippet tooltip(snippetProps: any)}
+    {#if typeof tooltipProp === 'function'}
+      {@render tooltipProp(snippetProps as any)}
+    {:else if tooltipContext}
+      <Tooltip.Root context={snippetProps.context} {...props.tooltip?.root}>
+        {#snippet children({ data }: { data: any })}
+          <Tooltip.List {...props.tooltip?.list}>
+            <Tooltip.Item
+              label={labelAccessor(data) || keyAccessor(data)}
+              value={valueAccessor(data)}
+              color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
+              {format}
+              onpointerenter={() => {
+                if (snippetProps.context)
+                  snippetProps.context.series.highlightKey = keyAccessor(data);
+              }}
+              onpointerleave={() => {
+                if (snippetProps.context) snippetProps.context.series.highlightKey = null;
+              }}
+              {...props.tooltip?.item}
+            />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
+    {/if}
+  {/snippet}
+</Chart>

@@ -7,7 +7,6 @@
 	import { AnnotationLine, AnnotationPoint, Layer, LineChart, Tooltip } from 'layerchart';
 	import { format, sortFunc } from '@layerstack/utils';
 
-
 	// Get a few random points to use for annotations
 	const annotations = $derived(
 		[...data]

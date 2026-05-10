@@ -18,7 +18,7 @@
 		hours.map((hour) => ({
 			day,
 			hour,
-			value: Math.floor(seededRandom() * 100),
+			value: Math.floor(seededRandom() * 100)
 		}))
 	);
 </script>

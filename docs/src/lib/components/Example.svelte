@@ -5,10 +5,13 @@
 		Button,
 		CopyButton,
 		Dialog,
+		Field,
 		Menu,
 		MenuItem,
 		Notification,
 		Toggle,
+		ToggleGroup,
+		ToggleOption,
 		Tooltip
 	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
@@ -24,10 +27,17 @@
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
 	import LucideImageDown from '~icons/lucide/image-down';
+	import LucideCopy from '~icons/lucide/copy';
 
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
-	import { downloadImage, downloadSvg, getSettings } from 'layerchart';
+	import {
+		downloadImage,
+		downloadSvg,
+		getChartImageBlob,
+		getChartSvgString,
+		getSettings
+	} from 'layerchart';
 
 	const settings = getSettings();
 	import { movable } from '$lib/actions/movable';
@@ -202,6 +212,54 @@
 			svgUnavailableTimer = setTimeout(() => (svgUnavailable = false), 3000);
 		}
 	}
+
+	async function handleSvgCopy() {
+		const svg = getChartSvgString(containerEl!);
+		if (!svg) {
+			clearTimeout(svgUnavailableTimer);
+			svgUnavailable = true;
+			svgUnavailableTimer = setTimeout(() => (svgUnavailable = false), 3000);
+			return;
+		}
+		await navigator.clipboard.writeText(svg);
+	}
+
+	// PNG capture options dialog — used by both Copy as PNG and Export as PNG.
+	let pngDialogOpen = $state(false);
+	let pngAction = $state<'copy' | 'export'>('copy');
+	let pngPixelRatio = $state(1);
+	let pngBackground = $state<'transparent' | 'white' | 'black' | 'surface'>('transparent');
+
+	function openPngDialog(action: 'copy' | 'export') {
+		pngAction = action;
+		pngDialogOpen = true;
+	}
+
+	function resolveBackground(): string | undefined {
+		if (pngBackground === 'transparent') return undefined;
+		// Resolve `surface` to the actual rendered background color so the PNG
+		// matches the on-page chrome (and follows the active light/dark theme).
+		if (pngBackground === 'surface') {
+			return containerEl
+				? window.getComputedStyle(containerEl).backgroundColor || undefined
+				: undefined;
+		}
+		return pngBackground;
+	}
+
+	async function runPngCapture() {
+		const options = {
+			pixelRatio: pngPixelRatio,
+			background: resolveBackground()
+		};
+		if (pngAction === 'copy') {
+			const blob = await getChartImageBlob(containerEl!, options);
+			await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+		} else {
+			await downloadImage(containerEl!, { ...options, filename: name ?? component });
+		}
+		pngDialogOpen = false;
+	}
 </script>
 
 <div class={cls('example relative', clip && 'overflow-clip', className)}>
@@ -229,8 +287,11 @@
 								<div class="font-semibold text-danger mb-2">
 									Example error{#if component && name}: {component}/{name}{/if}
 								</div>
-								<pre class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
-								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}>Retry</Button>
+								<pre
+									class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
+								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}
+									>Retry</Button
+								>
 							</div>
 						{/snippet}
 						{#snippet pending()}
@@ -340,13 +401,14 @@
 					<Button icon={LucideImageDown} class="text-surface-content/70 py-1" on:click={toggle}>
 						Export
 						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-1' }}>
-							<MenuItem
-								icon={LucideImageDown}
-								on:click={() => downloadImage(containerEl!, { filename: name ?? component })}
-							>
+							<MenuItem icon={LucideCopy} on:click={() => openPngDialog('copy')}>
+								Copy as PNG
+							</MenuItem>
+							<MenuItem icon={LucideImageDown} on:click={() => openPngDialog('export')}>
 								Export as PNG
 							</MenuItem>
 							{#if settings.layer !== 'canvas'}
+								<MenuItem icon={LucideCopy} on:click={handleSvgCopy}>Copy as SVG</MenuItem>
 								<MenuItem icon={LucideImageDown} on:click={handleSvgDownload}>
 									Export as SVG
 								</MenuItem>
@@ -370,10 +432,40 @@
 {#if svgUnavailable}
 	<div class="fixed bottom-4 right-4 z-50">
 		<Notification
-			description="SVG download is not available for Canvas-only charts"
+			description="SVG is not available for Canvas-only charts"
 			color="warning"
 			closeIcon
 			on:close={() => (svgUnavailable = false)}
 		/>
 	</div>
 {/if}
+
+<Dialog bind:open={pngDialogOpen} on:close={() => (pngDialogOpen = false)} class="max-w-md">
+	<div slot="title">{pngAction === 'copy' ? 'Copy as PNG' : 'Export as PNG'}</div>
+
+	<div class="grid gap-4 p-4">
+		<Field label="Resolution" dense>
+			<ToggleGroup bind:value={pngPixelRatio} variant="outline" size="sm">
+				<ToggleOption value={1}>1×</ToggleOption>
+				<ToggleOption value={2}>2×</ToggleOption>
+				<ToggleOption value={3}>3×</ToggleOption>
+			</ToggleGroup>
+		</Field>
+
+		<Field label="Background" dense>
+			<ToggleGroup bind:value={pngBackground} variant="outline" size="sm">
+				<ToggleOption value="transparent">Transparent</ToggleOption>
+				<ToggleOption value="surface">Surface</ToggleOption>
+				<ToggleOption value="white">White</ToggleOption>
+				<ToggleOption value="black">Black</ToggleOption>
+			</ToggleGroup>
+		</Field>
+	</div>
+
+	<div slot="actions">
+		<Button variant="fill" color="primary" on:click={runPngCapture}>
+			{pngAction === 'copy' ? 'Copy' : 'Export'}
+		</Button>
+		<Button on:click={() => (pngDialogOpen = false)}>Cancel</Button>
+	</div>
+</Dialog>

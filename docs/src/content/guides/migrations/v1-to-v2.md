@@ -364,10 +364,8 @@ The `selected` prop has been removed from Treemap.
 
 ### GeoContext → GeoProjection
 
-```svelte diff
-- import { GeoContext } from 'layerchart'
-+ import { GeoProjection } from 'layerchart'
-```
+````svelte diff
+- import { GeoContext } from 'layerchart';+ import { GeoProjection } from 'layerchart/geo';```
 
 ### Tooltip prop on Arc, Pie, Calendar, GeoPath
 
@@ -376,7 +374,7 @@ Simplified from config object to boolean:
 ```svelte diff
 - <Arc tooltipContext={{ mode: 'item' }} />
 + <Arc tooltip />
-```
+````
 
 ### Brush API redesign
 
@@ -397,24 +395,20 @@ See the [brush guide](/docs/guides/brush) for the new `BrushState` API. Removed 
 Standalone context getters removed — use `getChartContext()` instead:
 
 ```svelte diff
-- import { getTooltipContext } from 'layerchart'
-+ import { getChartContext } from 'layerchart'
-+ const chart = getChartContext()
+- import { getTooltipContext } from 'layerchart';+ import { getChartContext } from 'layerchart';+ const chart = getChartContext()
 + // chart.tooltip, chart.brushState, chart.transformState
 ```
 
 Bind and property renames:
 
-```svelte diff
+````svelte diff
 - <BrushContext bind:brushContext>
 + <BrushContext bind:state>
 
 - <TransformContext bind:transformContext>
 + <TransformContext bind:state>
 
-- import { getRenderContext } from 'layerchart'
-+ import { getLayerContext } from 'layerchart'
-```
+- import { getRenderContext } from 'layerchart';+ import { getLayerContext } from 'layerchart';```
 
 See the [state guide](/docs/guides/state) for the new architecture.
 
@@ -458,3 +452,4 @@ These new defaults work with categorical data and don't require sorted data. See
 | `supportedContexts`         | `layers`                           | Component prop           |
 | `resetOnEnd`                | `e.brush.reset()` in onBrushEnd    | Brush                    |
 | `ignoreResetClick`          | `clickToReset`                     | Brush                    |
+````

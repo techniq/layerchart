@@ -3,7 +3,8 @@
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { cls } from '@layerstack/tailwind';
 	import type { Chord as ChordType, ChordGroup } from 'd3-chord';
-	import { Chart, Layer, Chord, Ribbon, Arc, ArcLabel, LinearGradient, Tooltip } from 'layerchart';
+	import { Chart, Layer, Arc, ArcLabel, LinearGradient, Tooltip } from 'layerchart';
+	import { Chord, Ribbon } from 'layerchart/graph';
 
 	const names = ['Asia', 'Europe', 'Africa', 'Americas', 'Oceania'];
 

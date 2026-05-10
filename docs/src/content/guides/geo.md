@@ -11,7 +11,8 @@ Add `geo` to any `Chart` to enable geographic rendering:
 
 ```svelte
 <script lang="ts">
-	import { Chart, GeoPath, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 </script>
@@ -375,27 +376,27 @@ The `geo` prop on `Chart` provides the primary projection context. Use the `GeoP
 
 ## Quick reference
 
-| Use case              | Configuration                                             | Example                                                                       |
-| --------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| US map                | `geo={{ projection: geoAlbersUsa, fitGeojson }}`          | [us-country-map](/docs/components/GeoPath/us-country-map)                     |
-| Choropleth            | `GeoPath` + color scale                                   | [choropleth](/docs/components/GeoPath/choropleth)                             |
-| World globe           | `geo={{ projection: geoOrthographic, fitGeojson }}`       | [translucent-globe](/docs/components/GeoPath/translucent-globe)               |
-| Animated globe        | `rotate` + animation                                      | [animated-globe](/docs/components/GeoPath/animated-globe)                     |
-| Map with points       | `GeoPoint` with `lat`/`long`                              | [us-state-capitals](/docs/components/GeoPoint/us-state-capitals)              |
-| Map with tiles        | `GeoTile` with tile URL                                   | [basic](/docs/components/GeoTile/basic)                                       |
-| Zoomable tile map     | `GeoTile` + `transform={{ mode: 'projection' }}`          | [zoomable-seamless-layers](/docs/components/GeoTile/zoomable-seamless-layers) |
-| Curved connections    | `GeoSpline` with `link`                                   | [world-map](/docs/components/GeoSpline/world-map)                             |
-| Map tooltips          | `tooltipContext` + `GeoPath tooltip`                      | [tooltip](/docs/components/GeoPath/tooltip)                                   |
-| Pan/zoom (projection) | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
-| Pan/zoom (canvas)     | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
-| World map (projection)| Projection mode + world countries                          | [transform-world-projection](/docs/components/GeoPath/transform-world-projection)       |
-| World map (canvas)    | Canvas mode + world countries                              | [transform-world-canvas](/docs/components/GeoPath/transform-world-canvas)               |
-| Globe rotation        | `transform={{ mode: 'projection' }}` + `geoOrthographic`  | [translucent-globe](/docs/components/GeoPath/translucent-globe)               |
-| Globe with inertia    | `transform={{ mode: 'projection', inertia: true }}`       | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)   |
-| Bubble map            | `GeoPath` + scaled circles                                | [bubble-map](/docs/components/GeoPath/bubble-map)                             |
-| Spike map             | `GeoPath` + spike marks                                   | [spike-map](/docs/components/GeoPath/spike-map)                               |
-| Secondary projection  | `<GeoProjection>` component                               | [translucent-globe](/docs/components/GeoPath/translucent-globe)               |
-| State with counties   | Nested GeoJSON features                                   | [us-state-with-counties](/docs/components/GeoPath/us-state-with-counties)     |
+| Use case               | Configuration                                             | Example                                                                           |
+| ---------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| US map                 | `geo={{ projection: geoAlbersUsa, fitGeojson }}`          | [us-country-map](/docs/components/GeoPath/us-country-map)                         |
+| Choropleth             | `GeoPath` + color scale                                   | [choropleth](/docs/components/GeoPath/choropleth)                                 |
+| World globe            | `geo={{ projection: geoOrthographic, fitGeojson }}`       | [translucent-globe](/docs/components/GeoPath/translucent-globe)                   |
+| Animated globe         | `rotate` + animation                                      | [animated-globe](/docs/components/GeoPath/animated-globe)                         |
+| Map with points        | `GeoPoint` with `lat`/`long`                              | [us-state-capitals](/docs/components/GeoPoint/us-state-capitals)                  |
+| Map with tiles         | `GeoTile` with tile URL                                   | [basic](/docs/components/GeoTile/basic)                                           |
+| Zoomable tile map      | `GeoTile` + `transform={{ mode: 'projection' }}`          | [zoomable-seamless-layers](/docs/components/GeoTile/zoomable-seamless-layers)     |
+| Curved connections     | `GeoSpline` with `link`                                   | [world-map](/docs/components/GeoSpline/world-map)                                 |
+| Map tooltips           | `tooltipContext` + `GeoPath tooltip`                      | [tooltip](/docs/components/GeoPath/tooltip)                                       |
+| Pan/zoom (projection)  | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)             |
+| Pan/zoom (canvas)      | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                     |
+| World map (projection) | Projection mode + world countries                         | [transform-world-projection](/docs/components/GeoPath/transform-world-projection) |
+| World map (canvas)     | Canvas mode + world countries                             | [transform-world-canvas](/docs/components/GeoPath/transform-world-canvas)         |
+| Globe rotation         | `transform={{ mode: 'projection' }}` + `geoOrthographic`  | [translucent-globe](/docs/components/GeoPath/translucent-globe)                   |
+| Globe with inertia     | `transform={{ mode: 'projection', inertia: true }}`       | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)       |
+| Bubble map             | `GeoPath` + scaled circles                                | [bubble-map](/docs/components/GeoPath/bubble-map)                                 |
+| Spike map              | `GeoPath` + spike marks                                   | [spike-map](/docs/components/GeoPath/spike-map)                                   |
+| Secondary projection   | `<GeoProjection>` component                               | [translucent-globe](/docs/components/GeoPath/translucent-globe)                   |
+| State with counties    | Nested GeoJSON features                                   | [us-state-with-counties](/docs/components/GeoPath/us-state-with-counties)         |
 
 ## API reference
 

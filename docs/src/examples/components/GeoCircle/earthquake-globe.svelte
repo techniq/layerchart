@@ -8,20 +8,12 @@
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { scaleSqrt } from 'd3-scale';
-	import {
-		Chart,
-		GeoCircle,
-		GeoPath,
-		Graticule,
-		Layer,
-		Tooltip,
-		type ChartState
-	} from 'layerchart';
+	import { Chart, Layer, Tooltip, type ChartState } from 'layerchart';
+	import { GeoCircle, GeoPath, Graticule } from 'layerchart/geo';
 	import { feature } from 'topojson-client';
 
 	import EarthquakeControls from '$lib/components/controls/GeoCircleEarthquakeControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
-
 
 	const countries = feature(topology, topology.objects.countries);
 

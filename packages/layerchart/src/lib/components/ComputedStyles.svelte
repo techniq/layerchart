@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-  import { computedStyles } from '@layerstack/svelte-actions';
+  import { computedStyles } from '@layerstack/svelte-actions/styles';
   import { cls } from '@layerstack/tailwind';
 
   let { class: className, children }: ComputedStylesProps = $props();

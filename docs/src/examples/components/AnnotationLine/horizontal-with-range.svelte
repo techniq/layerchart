@@ -6,7 +6,6 @@
 <script lang="ts">
 	import { AnnotationLine, AnnotationRange, LineChart } from 'layerchart';
 
-
 	export { data };
 </script>
 

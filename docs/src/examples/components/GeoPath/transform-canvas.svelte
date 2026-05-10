@@ -9,7 +9,8 @@
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Layer, Tooltip, getSettings } from 'layerchart';
+	import { Chart, Layer, Tooltip, getSettings } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import GeoPathProjectionControls from '$lib/components/controls/GeoPathProjectionControls.svelte';
 

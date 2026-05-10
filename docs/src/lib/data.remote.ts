@@ -146,7 +146,10 @@ export type MetroData = {
 
 export const getMetros = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = csvParse(await (await fetch('/data/examples/metros.csv')).text(), autoType) as unknown as MetroData[];
+	const data = csvParse(
+		await (await fetch('/data/examples/metros.csv')).text(),
+		autoType
+	) as unknown as MetroData[];
 	return data;
 });
 
@@ -155,6 +158,32 @@ export const getUsSenators = prerender(async () => {
 	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>
 		csvParse(await r.text(), autoType)
 	)) as USSenatorsData;
+	return data;
+});
+
+export type UsPresident = {
+	name: string;
+	inaugurationDate: Date;
+	portraitUrl: string;
+	veryFavorable: number;
+	veryUnfavorable: number;
+};
+
+export const getUsPresidents = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/us-presidents.csv').then(async (r) => {
+		const rows = csvParse(await r.text(), autoType) as Array<Record<string, any>>;
+		return rows.map(
+			(d) =>
+				({
+					name: d['Name'],
+					inaugurationDate: d['First Inauguration Date'],
+					portraitUrl: d['Portrait URL'],
+					veryFavorable: d['Very Favorable %'],
+					veryUnfavorable: d['Very Unfavorable %']
+				}) satisfies UsPresident
+		);
+	});
 	return data;
 });
 
@@ -170,8 +199,15 @@ export const getOlympians = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/olympians.json').then((r) => r.json())) as {
 		name: string;
+		nationality: string;
+		sex: 'male' | 'female';
+		date_of_birth: string;
 		weight: number;
 		height: number;
+		sport: string;
+		gold: number;
+		silver: number;
+		bronze: number;
 	}[];
 	return data;
 });
@@ -200,6 +236,41 @@ export const getCivilizationEvents = prerender(async () => {
 		).sort(sortFunc('start'));
 	});
 
+	return data;
+});
+
+export type SvelteCount = {
+	date: Date;
+	n: number;
+	cumsum: number;
+	category: 'svelte' | 'sveltekit';
+};
+
+export const getSvelteCounts = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/svelte-counts.csv').then(async (r) =>
+		// @ts-expect-error - autoType
+		csvParse<SvelteCount>(await r.text(), autoType)
+	);
+	return data;
+});
+
+export type SvelteMilestone = {
+	date: Date;
+	category: 'svelte' | 'sveltekit' | 'ecosystem';
+	label: string;
+	/** Pixel x-offset of the label from the dot (calibrated for an 860px-wide chart). */
+	dx: number;
+	/** Pixel y-offset of the label from the dot (calibrated for an 860px-wide chart). */
+	dy: number;
+};
+
+export const getSvelteMilestones = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/svelte-milestones.csv').then(async (r) =>
+		// @ts-expect-error - autoType
+		csvParse<SvelteMilestone>(await r.text(), autoType)
+	);
 	return data;
 });
 
@@ -237,21 +308,129 @@ export const getHydro = prerender(async () => {
 	return data;
 });
 
-export type CountryGdpLifeExpectancy = {
-	title: string;
-	id: string;
+export type Country2020 = {
+	name: string;
+	code: string;
+	code2: string;
+	lifeExpectancy: number;
+	gdpPerCapita: number;
+	population: number;
 	continent: string;
-	x: number;
-	y: number;
-	value: number;
 };
 
-export const getCountryGdpLifeExpectancy = prerender(async () => {
+export const getCountries2020 = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = (await fetch('/data/examples/country-gdp-life-expectancy.json').then((r) =>
-		r.json()
-	)) as CountryGdpLifeExpectancy[];
-	return data;
+	const text = await fetch('/data/examples/countries_2020.csv').then((r) => r.text());
+	const rows = csvParse(text, autoType) as Array<Record<string, any>>;
+	return rows.map(
+		(d): Country2020 => ({
+			name: d.Entity,
+			code: d.Code,
+			code2: d.Code2,
+			lifeExpectancy: d['Life expectancy'],
+			gdpPerCapita: d['GDP per capita'],
+			population: d.Population,
+			continent: d.Continent
+		})
+	);
+});
+
+export type BankFailure = {
+	name: string;
+	failDate: Date;
+	assets: number; // in $thousands (FDIC reporting unit)
+	deposits: number;
+	city: string;
+	state: string;
+	cost: number | null;
+	type: string;
+};
+
+export const getBankFailures = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const text = await fetch('/data/examples/bank-failures.csv').then((r) => r.text());
+	const rows = csvParse(text) as Array<Record<string, string>>;
+	return rows
+		.map((d): BankFailure => {
+			const [m, day, y] = d.FAILDATE.split('/').map((s) => Number(s));
+			return {
+				name: d.NAME,
+				failDate: new Date(Date.UTC(y, m - 1, day)),
+				assets: Number(d.QBFASSET) || 0,
+				deposits: Number(d.QBFDEP) || 0,
+				city: d.CITY,
+				state: d.PSTALP,
+				cost: d.COST ? Number(d.COST) : null,
+				type: d.RESTYPE
+			};
+		})
+		.filter((d) => Number.isFinite(d.failDate.getTime()) && d.assets > 0);
+});
+
+export type Layoff = {
+	company: string;
+	location: string;
+	totalLaidOff: number | null;
+	date: Date;
+	percentageLaidOff: number | null;
+	industry: string;
+	stage: string;
+	fundsRaised: number | null;
+	country: string;
+};
+
+export const getLayoffs = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const text = await fetch('/data/examples/layoffs.csv').then((r) => r.text());
+	const rows = csvParse(text) as Array<Record<string, string>>;
+	return rows
+		.map((d): Layoff | null => {
+			if (!d.date) return null;
+			const [m, day, y] = d.date.split('/').map((s) => Number(s));
+			if (!y) return null;
+			return {
+				company: d.company,
+				location: d.location,
+				totalLaidOff: d.total_laid_off ? Number(d.total_laid_off) : null,
+				date: new Date(Date.UTC(y, m - 1, day)),
+				percentageLaidOff: d.percentage_laid_off ? Number(d.percentage_laid_off) : null,
+				industry: d.industry,
+				stage: d.stage,
+				fundsRaised: d.funds_raised ? Number(d.funds_raised) : null,
+				country: d.country
+			};
+		})
+		.filter((d): d is Layoff => d !== null);
+});
+
+export type GamesLayoff = {
+	studio: string;
+	date: Date;
+	headcount: number | null;
+	parent: string;
+	type: string;
+	studioLocation: string;
+	parentLocation: string;
+};
+
+export const getGamesLayoffs = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const text = await fetch('/data/examples/games-layoffs.csv').then((r) => r.text());
+	const rows = csvParse(text) as Array<Record<string, string>>;
+	return rows
+		.map((d): GamesLayoff | null => {
+			if (!d.Date) return null;
+			return {
+				studio: d.Studio,
+				date: new Date(d.Date),
+				headcount: d.Headcount ? Number(d.Headcount) : null,
+				parent: d.Parent,
+				type: d.Type,
+				studioLocation: d['Studio Location'],
+				parentLocation: d['Parent Location']
+			};
+		})
+		.filter((d): d is GamesLayoff => d !== null && Number.isFinite(d.date.getTime()));
 });
 
 export const getForceGroupDots = prerender(async () => {

@@ -65,9 +65,7 @@
 						style:padding-left="{item.level * 12}px"
 						class={cls(
 							'hover:text-surface-content block w-full overflow-hidden text-ellipsis whitespace-nowrap border-l py-1 text-sm',
-							item.level <= 2
-								? 'text-surface-content/70 font-medium'
-								: 'text-surface-content/50',
+							item.level <= 2 ? 'text-surface-content/70 font-medium' : 'text-surface-content/50',
 							item.id === activeId && 'border-surface-content text-surface-content'
 						)}
 					>

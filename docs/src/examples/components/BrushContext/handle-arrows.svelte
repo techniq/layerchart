@@ -9,7 +9,6 @@
 	import LucideChevronLeft from '~icons/lucide/chevron-left';
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 
-
 	export { data };
 </script>
 

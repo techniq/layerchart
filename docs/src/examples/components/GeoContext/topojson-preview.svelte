@@ -17,7 +17,8 @@
 	import { feature } from 'topojson-client';
 	import type { GeometryCollection, Topology } from 'topojson-specification';
 
-	import { Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
+	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { GeoPath, GeoTile } from 'layerchart/geo';
 	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 	import {
 		CopyButton,

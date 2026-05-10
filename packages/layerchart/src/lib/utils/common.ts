@@ -1,8 +1,8 @@
 import type { Component, ComponentProps } from 'svelte';
 import { get } from '@layerstack/utils';
 
-import type Chart from '../components/Chart.svelte';
-import type { ChartProps } from '$lib/components/Chart.svelte';
+import type Chart from '../components/Chart/Chart.svelte';
+import type { ChartProps } from '$lib/components/Chart/Chart.svelte';
 
 export type Accessor<TData = any> =
   | number

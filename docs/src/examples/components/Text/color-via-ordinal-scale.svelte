@@ -7,7 +7,7 @@
 		{ date: new Date('2024-05-01'), value: 22, label: 'May', category: 'A' },
 		{ date: new Date('2024-07-01'), value: 48, label: 'Jul', category: 'B' },
 		{ date: new Date('2024-09-01'), value: 30, label: 'Sep', category: 'A' },
-		{ date: new Date('2024-11-01'), value: 55, label: 'Nov', category: 'B' },
+		{ date: new Date('2024-11-01'), value: 55, label: 'Nov', category: 'B' }
 	];
 </script>
 

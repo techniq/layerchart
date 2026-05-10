@@ -1,0 +1,482 @@
+{
+  "component": "Dodge",
+  "examples": [
+    {
+      "name": "anchor",
+      "title": "anchor",
+      "path": "/docs/components/Dodge/anchor",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 30,
+          "line": "<Text"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 39,
+          "line": "<Dodge axis=\"y\" {anchor} r={3} padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 42,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "bank-failures",
+      "title": "bank failures",
+      "path": "/docs/components/Dodge/bank-failures",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 41,
+          "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 44,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 53,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 69,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "beeswarm",
+      "title": "beeswarm",
+      "path": "/docs/components/Dodge/beeswarm",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 24,
+          "line": "<Dodge axis=\"y\" anchor=\"middle\" r={6} padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 27,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 43,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "duration-bars-dense-lanes",
+      "title": "duration bars dense lanes",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 30,
+          "line": "<Dodge"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 41,
+          "line": "<Rect"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 57,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "grouped-horizontal",
+      "title": "grouped horizontal",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 37,
+          "line": "<Dodge"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 50,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 67,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "grouped-vertical",
+      "title": "grouped vertical",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 36,
+          "line": "<Dodge"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 49,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 66,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "image-beeswarm",
+      "title": "image beeswarm",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 20,
+          "line": "<Dodge axis=\"y\" anchor=\"bottom\" r={18} padding={1}>"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 23,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 39,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "penguins",
+      "title": "penguins",
+      "path": "/docs/components/Dodge/penguins",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 34,
+          "line": "<Dodge data={visibleItems} axis=\"y\" anchor=\"bottom\" r={4} padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 39,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 55,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "tech-layoffs",
+      "title": "tech layoffs",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 33,
+          "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={1}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 36,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 46,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 63,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "text-beeswarm",
+      "title": "text beeswarm",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 39,
+          "line": "<Dodge axis=\"y\" anchor=\"middle\" padding={1}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 42,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 60,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "title": "timeline",
+      "path": "/docs/components/Dodge/timeline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 29,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 57,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 58,
+          "line": "<Dodge"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 72,
+          "line": "<Line x1={x} x2={x} y1={baselineY - 4} y2={labelY + 6} opacity={0.25 * opacity} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 73,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 81,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "timeline-bidirectional",
+      "title": "timeline bidirectional",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 68,
+          "line": "<Line"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 77,
+          "line": "<Dodge"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 93,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 101,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "variable-radius",
+      "title": "variable radius",
+      "path": "/docs/components/Dodge/variable-radius",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 38,
+          "line": "<Chart"
+        },
+        {
+          "component": "Dodge",
+          "lineNumber": 60,
+          "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={0}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 63,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 79,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 39,
+      "line": "<Dodge axis=\"y\" {anchor} r={3} padding={1}>"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 41,
+      "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={1}>"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 24,
+      "line": "<Dodge axis=\"y\" anchor=\"middle\" r={6} padding={1}>"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 30,
+      "line": "<Dodge"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 37,
+      "line": "<Dodge"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 36,
+      "line": "<Dodge"
+    },
+    {
+      "example": "image-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/image-beeswarm",
+      "lineNumber": 20,
+      "line": "<Dodge axis=\"y\" anchor=\"bottom\" r={18} padding={1}>"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 34,
+      "line": "<Dodge data={visibleItems} axis=\"y\" anchor=\"bottom\" r={4} padding={1}>"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 33,
+      "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={1}>"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 39,
+      "line": "<Dodge axis=\"y\" anchor=\"middle\" padding={1}>"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 58,
+      "line": "<Dodge"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 77,
+      "line": "<Dodge"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 116,
+      "line": "<Dodge"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 60,
+      "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={0}>"
+    }
+  ],
+  "updatedAt": "2026-05-05T17:35:59.733Z"
+}

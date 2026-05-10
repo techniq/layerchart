@@ -7,7 +7,8 @@
 	import { geoSatellite } from 'd3-geo-projection';
 	import { merge } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import { RangeField } from 'svelte-ux';
 	const land = merge(topology, topology.objects.states.geometries as any);
 

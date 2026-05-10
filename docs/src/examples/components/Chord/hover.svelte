@@ -3,7 +3,8 @@
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { cls } from '@layerstack/tailwind';
 	import type { Chord as ChordType } from 'd3-chord';
-	import { Chart, Layer, Chord, Ribbon, Arc, ArcLabel, Tooltip } from 'layerchart';
+	import { Chart, Layer, Arc, ArcLabel, Tooltip } from 'layerchart';
+	import { Chord, Ribbon } from 'layerchart/graph';
 
 	const names = ['Asia', 'Europe', 'Africa', 'Americas', 'Oceania'];
 
@@ -147,11 +148,7 @@
 					<Tooltip.Header>{data.name}</Tooltip.Header>
 					<Tooltip.List>
 						{#each data.breakdown as item}
-							<Tooltip.Item
-								label="{data.name} → {item.name}"
-								value={item.value}
-								format="integer"
-							/>
+							<Tooltip.Item label="{data.name} → {item.name}" value={item.value} format="integer" />
 						{/each}
 						<Tooltip.Separator />
 						<Tooltip.Item label="Total" value={data.total} format="integer" />

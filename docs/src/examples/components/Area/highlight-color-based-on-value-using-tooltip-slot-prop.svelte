@@ -12,7 +12,15 @@
 	export { data };
 </script>
 
-<Chart {data} x="date" y="value" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>
+<Chart
+	{data}
+	x="date"
+	y="value"
+	yNice
+	padding={20}
+	tooltipContext={{ mode: 'quadtree-x' }}
+	height={300}
+>
 	{#snippet children({ context })}
 		<Layer>
 			<Axis placement="left" grid rule />

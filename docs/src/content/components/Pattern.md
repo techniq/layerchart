@@ -1,5 +1,5 @@
 ---
-description: Fill component which provides a line or circle-based fill pattern for chart elements.
+description: Fill component which provides a line, circle, or rect-based fill pattern for chart elements.
 category: fill
 layers: [svg, canvas, html]
 related: [LinearGradient, RadialGradient]
@@ -14,6 +14,10 @@ related: [LinearGradient, RadialGradient]
 ### Circles
 
 :example{ name="circles" noResize clip}
+
+### Rects
+
+:example{ name="rects" noResize clip}
 
 ### With Fill color
 

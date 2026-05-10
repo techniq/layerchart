@@ -16,7 +16,8 @@
 		type GeoProjection
 	} from 'd3-geo';
 
-	import { Chart, GeoPath, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import {
 		Button,
 		ButtonGroup,

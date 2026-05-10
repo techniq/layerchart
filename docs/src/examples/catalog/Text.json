@@ -203,7 +203,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
-      "lineNumber": 61,
+      "lineNumber": 60,
       "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
     },
     {
@@ -274,14 +274,14 @@
       "component": "Arc",
       "path": "/docs/components/Arc/label-direction",
       "lineNumber": 83,
-      "line": "<Text {...getArcTextProps('inner')} value={innerText} font-size=\"12px\" truncate />"
+      "line": "<Text {...getArcTextProps('inner')} value={innerText} fontSize={12} truncate />"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/docs/components/Arc/label-direction",
       "lineNumber": 84,
-      "line": "<Text {...getArcTextProps('outer')} value={outerText} font-size=\"12px\" truncate />"
+      "line": "<Text {...getArcTextProps('outer')} value={outerText} fontSize={12} truncate />"
     },
     {
       "example": "label-direction",
@@ -420,42 +420,42 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 222,
+      "line": "<Text"
+    },
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 231,
+      "line": "<Text"
+    },
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 252,
+      "line": "<Text"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
       "lineNumber": 224,
       "line": "<Text"
     },
     {
-      "example": "company-race",
+      "example": "language-race",
       "component": "BarChart",
-      "path": "/docs/components/BarChart/company-race",
+      "path": "/docs/components/BarChart/language-race",
       "lineNumber": 233,
       "line": "<Text"
     },
     {
-      "example": "company-race",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 254,
-      "line": "<Text"
-    },
-    {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 226,
-      "line": "<Text"
-    },
-    {
-      "example": "language-race",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 235,
-      "line": "<Text"
-    },
-    {
-      "example": "language-race",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 257,
+      "lineNumber": 255,
       "line": "<Text"
     },
     {
@@ -469,7 +469,7 @@
       "example": "waterfall",
       "component": "BarChart",
       "path": "/docs/components/BarChart/waterfall",
-      "lineNumber": 100,
+      "lineNumber": 110,
       "line": "<Text"
     },
     {
@@ -504,14 +504,14 @@
       "example": "handle-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-labels",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Text"
     },
     {
       "example": "handle-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-labels",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Text"
     },
     {
@@ -525,69 +525,132 @@
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
-      "lineNumber": 68,
+      "lineNumber": 69,
       "line": "<text"
     },
     {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
-      "lineNumber": 78,
+      "lineNumber": 79,
       "line": "<text"
     },
     {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 75,
+      "lineNumber": 76,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/docs/components/Dagre/playground",
-      "lineNumber": 74,
+      "lineNumber": 75,
       "line": "<Text"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
+      "lineNumber": 66,
+      "line": "<Text"
+    },
+    {
+      "example": "software-user-flow",
+      "component": "Dagre",
+      "path": "/docs/components/Dagre/software-user-flow",
+      "lineNumber": 92,
+      "line": "<Text"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Dagre",
+      "path": "/docs/components/Dagre/tcp-state-diagram",
       "lineNumber": 65,
       "line": "<Text"
     },
     {
-      "example": "software-user-flow",
+      "example": "tcp-state-diagram",
       "component": "Dagre",
-      "path": "/docs/components/Dagre/software-user-flow",
+      "path": "/docs/components/Dagre/tcp-state-diagram",
       "lineNumber": 91,
       "line": "<Text"
     },
     {
-      "example": "tcp-state-diagram",
-      "component": "Dagre",
-      "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 64,
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 30,
       "line": "<Text"
     },
     {
-      "example": "tcp-state-diagram",
-      "component": "Dagre",
-      "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 90,
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 53,
+      "line": "<Text"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 46,
+      "line": "<Text"
+    },
+    {
+      "example": "text-beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/text-beeswarm",
+      "lineNumber": 42,
+      "line": "<Text"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 81,
+      "line": "<Text"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 101,
+      "line": "<Text"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 140,
+      "line": "<Text"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 70,
       "line": "<Text"
     },
     {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<!-- <Text"
     },
     {
       "example": "icons",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/icons",
+      "lineNumber": 41,
+      "line": "<Text"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-state-capitals",
       "lineNumber": 40,
       "line": "<Text"
     },
@@ -595,28 +658,21 @@
       "example": "us-state-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-state-capitals",
-      "lineNumber": 39,
-      "line": "<Text"
-    },
-    {
-      "example": "us-state-capitals",
-      "component": "GeoPoint",
-      "path": "/docs/components/GeoPoint/us-state-capitals",
-      "lineNumber": 50,
+      "lineNumber": 51,
       "line": "<Text"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-capitals",
-      "lineNumber": 67,
+      "lineNumber": 68,
       "line": "<Text"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-capitals",
-      "lineNumber": 82,
+      "lineNumber": 83,
       "line": "<Text"
     },
     {
@@ -630,14 +686,14 @@
       "example": "data-mode",
       "component": "Group",
       "path": "/docs/components/Group/data-mode",
-      "lineNumber": 20,
+      "lineNumber": 27,
       "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-2} class=\"text-xs fill-surface-content\" />"
     },
     {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
-      "lineNumber": 48,
+      "lineNumber": 49,
       "line": "<Text"
     },
     {
@@ -658,7 +714,7 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 142,
+      "lineNumber": 134,
       "line": "<Text"
     },
     {
@@ -777,7 +833,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 117,
+      "lineNumber": 108,
       "line": "<Text"
     },
     {
@@ -791,14 +847,14 @@
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Text"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Text"
     },
     {
@@ -896,35 +952,35 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 165,
+      "lineNumber": 166,
       "line": "<Text"
     },
     {
       "example": "basic",
       "component": "Treemap",
       "path": "/docs/components/Treemap/basic",
-      "lineNumber": 48,
+      "lineNumber": 49,
       "line": "<Text"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 112,
+      "lineNumber": 101,
       "line": "<Text"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 144,
+      "lineNumber": 129,
       "line": "<Text"
     },
     {
@@ -938,7 +994,7 @@
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
-      "lineNumber": 195,
+      "lineNumber": 191,
       "line": "<Text"
     },
     {
@@ -959,14 +1015,14 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 154,
+      "lineNumber": 145,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 186,
+      "lineNumber": 175,
       "line": "<Text"
     },
     {
@@ -1031,7 +1087,14 @@
       "path": "/docs/components/Vector/shapes",
       "lineNumber": 98,
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "survey",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/survey",
+      "lineNumber": 47,
+      "line": "<Text"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:33.466Z"
+  "updatedAt": "2026-05-08T16:24:15.950Z"
 }

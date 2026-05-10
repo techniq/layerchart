@@ -42,12 +42,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 20,
+          "lineNumber": 19,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 22,
+          "lineNumber": 21,
           "line": "<AnnotationLine"
         }
       ]
@@ -59,17 +59,17 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<AnnotationRange"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 26,
+          "lineNumber": 25,
           "line": "<AnnotationLine"
         }
       ]
@@ -97,9 +97,9 @@
       ]
     },
     {
-      "name": "slopped",
-      "title": "slopped",
-      "path": "/docs/components/AnnotationLine/slopped",
+      "name": "sloped",
+      "title": "sloped",
+      "path": "/docs/components/AnnotationLine/sloped",
       "components": [
         {
           "component": "LineChart",
@@ -120,12 +120,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<AnnotationLine"
         }
       ]
@@ -137,12 +137,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 20,
+          "lineNumber": 19,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 22,
+          "lineNumber": 21,
           "line": "<AnnotationLine"
         }
       ]
@@ -154,12 +154,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<AnnotationLine"
         }
       ]
@@ -184,14 +184,14 @@
       "example": "horizontal-placement",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-placement",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<AnnotationLine"
     },
     {
       "example": "horizontal-with-range",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-with-range",
-      "lineNumber": 26,
+      "lineNumber": 25,
       "line": "<AnnotationLine"
     },
     {
@@ -202,9 +202,9 @@
       "line": "<AnnotationLine"
     },
     {
-      "example": "slopped",
+      "example": "sloped",
       "component": "AnnotationLine",
-      "path": "/docs/components/AnnotationLine/slopped",
+      "path": "/docs/components/AnnotationLine/sloped",
       "lineNumber": 21,
       "line": "<AnnotationLine"
     },
@@ -212,42 +212,42 @@
       "example": "vertical",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical-placement",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical-placement",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical-with-rotation",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical-with-rotation",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<AnnotationLine"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
-      "lineNumber": 63,
+      "lineNumber": 62,
       "line": "<AnnotationLine"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<AnnotationLine"
     },
     {
@@ -324,14 +324,14 @@
       "example": "color-via-threshold-scale",
       "component": "Rect",
       "path": "/docs/components/Rect/color-via-threshold-scale",
-      "lineNumber": 32,
+      "lineNumber": 35,
       "line": "<AnnotationLine"
     },
     {
       "example": "color-via-threshold-scale",
       "component": "Rect",
       "path": "/docs/components/Rect/color-via-threshold-scale",
-      "lineNumber": 38,
+      "lineNumber": 41,
       "line": "<AnnotationLine"
     },
     {
@@ -349,5 +349,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-04-21T13:52:38.972Z"
+  "updatedAt": "2026-04-30T15:36:21.362Z"
 }

@@ -8,7 +8,66 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 19,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 30,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 33,
+          "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} fill=\"group\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 35,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 47,
+          "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} fill=\"count\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-mode-edge",
+      "title": "data mode edge",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
           "line": "<Chart"
         },
         {
@@ -24,65 +83,33 @@
         {
           "component": "Rect",
           "lineNumber": 30,
-          "line": "<Rect"
+          "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} class=\"fill-primary\" />"
         }
       ]
     },
     {
-      "name": "color-via-threshold-scale",
-      "title": "color via threshold scale",
-      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/Rect/playground",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 137,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 29,
+          "lineNumber": 147,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 30,
-          "line": "<Axis placement=\"bottom\" rule />"
-        },
-        {
-          "component": "AnnotationLine",
-          "lineNumber": 32,
-          "line": "<AnnotationLine"
-        },
-        {
-          "component": "Rect",
-          "lineNumber": 44,
-          "line": "<Rect"
-        }
-      ]
-    },
-    {
-      "name": "data-mode-edge",
-      "title": "data mode edge",
-      "path": "/docs/components/Rect/data-mode-edge",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 15,
-          "line": "<Chart {data} x={['x0', 'x1']} y=\"count\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 16,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 17,
+          "lineNumber": 148,
           "line": "<Axis placement=\"bottom\" rule />"
         },
         {
           "component": "Rect",
-          "lineNumber": 19,
+          "lineNumber": 151,
           "line": "<Rect"
         }
       ]
@@ -174,7 +201,7 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 204,
+      "lineNumber": 202,
       "line": "<Rect"
     },
     {
@@ -216,21 +243,21 @@
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 206,
+      "lineNumber": 204,
       "line": "<Rect"
     },
     {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<rect"
     },
     {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<rect"
     },
     {
@@ -251,49 +278,56 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 68,
+      "lineNumber": 69,
       "line": "<Rect"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/docs/components/Dagre/playground",
-      "lineNumber": 67,
+      "lineNumber": 68,
       "line": "<Rect"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 80,
+      "lineNumber": 81,
       "line": "<Rect"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 79,
+      "lineNumber": 80,
+      "line": "<Rect"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/duration-bars-dense-lanes",
+      "lineNumber": 41,
       "line": "<Rect"
     },
     {
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 423,
+      "lineNumber": 424,
       "line": "<Rect"
     },
     {
       "example": "true-size-globe",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size-globe",
-      "lineNumber": 331,
+      "lineNumber": 324,
       "line": "<Rect"
     },
     {
       "example": "true-size-globe",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size-globe",
-      "lineNumber": 374,
+      "lineNumber": 367,
       "line": "<Rect"
     },
     {
@@ -612,6 +646,48 @@
       "line": "<rect"
     },
     {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 10,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 25,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 40,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 55,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 70,
+      "line": "<Rect"
+    },
+    {
+      "example": "rects",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/rects",
+      "lineNumber": 89,
+      "line": "<Rect"
+    },
+    {
       "example": "with-fill-color",
       "component": "Pattern",
       "path": "/docs/components/Pattern/with-fill-color",
@@ -741,21 +817,49 @@
       "example": "color-via-ordinal-scale",
       "component": "Rect",
       "path": "/docs/components/Rect/color-via-ordinal-scale",
-      "lineNumber": 30,
-      "line": "<Rect"
+      "lineNumber": 33,
+      "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} fill=\"group\" />"
     },
     {
       "example": "color-via-threshold-scale",
       "component": "Rect",
       "path": "/docs/components/Rect/color-via-threshold-scale",
-      "lineNumber": 44,
-      "line": "<Rect"
+      "lineNumber": 47,
+      "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} fill=\"count\" />"
     },
     {
       "example": "data-mode-edge",
       "component": "Rect",
       "path": "/docs/components/Rect/data-mode-edge",
-      "lineNumber": 19,
+      "lineNumber": 30,
+      "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} class=\"fill-primary\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 151,
+      "line": "<Rect"
+    },
+    {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 159,
+      "line": "<Rect"
+    },
+    {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 170,
+      "line": "<Rect"
+    },
+    {
+      "example": "playground",
+      "component": "Rect",
+      "path": "/docs/components/Rect/playground",
+      "lineNumber": 178,
       "line": "<Rect"
     },
     {
@@ -832,7 +936,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 103,
+      "lineNumber": 94,
       "line": "<Rect"
     },
     {
@@ -846,14 +950,14 @@
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Rect width={nodeWidth} height={nodeHeight} class=\"fill-primary\" />"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Rect"
     },
     {
@@ -867,28 +971,28 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Rect"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 149,
+      "lineNumber": 150,
       "line": "<Rect"
     },
     {
       "example": "basic",
       "component": "Treemap",
       "path": "/docs/components/Treemap/basic",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Rect"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 100,
+      "lineNumber": 89,
       "line": "<Rect"
     },
     {
@@ -909,7 +1013,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 142,
+      "lineNumber": 133,
       "line": "<Rect"
     },
     {
@@ -920,5 +1024,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:33.273Z"
+  "updatedAt": "2026-05-09T14:31:15.516Z"
 }

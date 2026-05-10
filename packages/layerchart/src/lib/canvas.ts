@@ -1,0 +1,357 @@
+/**
+ * Canvas-only variants of layer-agnostic components.
+ *
+ * Each export here is a Canvas-specific implementation. Use these when you
+ * know your chart only renders to Canvas and want a smaller bundle.
+ *
+ * The agnostic versions (e.g. `import { Circle } from 'layerchart'`) still
+ * work and dispatch to these per-layer variants under the hood.
+ */
+// `Layer` is an alias for the layer wrapper of this sub-path. Importing
+// `Layer` from `layerchart/canvas` is equivalent to importing `Canvas`.
+export { default as Canvas, default as Layer } from './components/layers/Canvas.svelte';
+export type { CanvasProps } from './components/layers/Canvas.svelte';
+export { default as Chart } from './components/Chart/Chart.canvas.svelte';
+export { default as ChartCore } from './components/Chart/ChartCore.svelte';
+export type {
+  ChartProps,
+  ChartPropsWithoutHTML,
+  ChartResizeDetail,
+  PreservedChartConfig,
+  LayerChartInternalMeta,
+} from './components/Chart/Chart.shared.svelte.js';
+export { default as ChartChildren } from './components/ChartChildren/ChartChildren.canvas.svelte';
+export type { ChartChildrenProps } from './components/ChartChildren/ChartChildren.shared.svelte.js';
+export { default as Circle } from './components/Circle/Circle.canvas.svelte';
+export type { CircleProps, CirclePropsWithoutHTML } from './components/Circle/Circle.shared.svelte.js';
+export { default as Text } from './components/Text/Text.canvas.svelte';
+export type {
+  TextProps,
+  TextPropsWithoutHTML,
+  TextSegment,
+} from './components/Text/Text.shared.svelte.js';
+export { default as Rect } from './components/Rect/Rect.canvas.svelte';
+export type {
+  RectProps,
+  RectPropsWithoutHTML,
+} from './components/Rect/Rect.shared.svelte.js';
+export { default as Line } from './components/Line/Line.canvas.svelte';
+export type {
+  LineProps,
+  LinePropsWithoutHTML,
+} from './components/Line/Line.shared.svelte.js';
+export { default as Path } from './components/Path/Path.canvas.svelte';
+export type {
+  PathProps,
+  PathPropsWithoutHTML,
+} from './components/Path/Path.shared.svelte.js';
+export { default as ClipPath } from './components/ClipPath/ClipPath.canvas.svelte';
+export type {
+  ClipPathProps,
+  ClipPathPropsWithoutHTML,
+} from './components/ClipPath/ClipPath.shared.svelte.js';
+export { default as RadialGradient } from './components/RadialGradient/RadialGradient.canvas.svelte';
+export type {
+  RadialGradientProps,
+  RadialGradientPropsWithoutHTML,
+} from './components/RadialGradient/RadialGradient.shared.svelte.js';
+export { default as LinearGradient } from './components/LinearGradient/LinearGradient.canvas.svelte';
+export type {
+  LinearGradientProps,
+  LinearGradientPropsWithoutHTML,
+} from './components/LinearGradient/LinearGradient.shared.svelte.js';
+export { default as Group } from './components/Group/Group.canvas.svelte';
+export type {
+  GroupProps,
+  GroupPropsWithoutHTML,
+} from './components/Group/Group.shared.svelte.js';
+export { default as Pattern } from './components/Pattern/Pattern.canvas.svelte';
+export type {
+  PatternProps,
+  PatternPropsWithoutHTML,
+} from './components/Pattern/Pattern.shared.svelte.js';
+export { default as Ellipse } from './components/Ellipse/Ellipse.canvas.svelte';
+export type {
+  EllipseProps,
+  EllipsePropsWithoutHTML,
+} from './components/Ellipse/Ellipse.shared.svelte.js';
+export { default as Polygon } from './components/Polygon/Polygon.canvas.svelte';
+export type {
+  PolygonProps,
+  PolygonPropsWithoutHTML,
+} from './components/Polygon/Polygon.shared.svelte.js';
+export { default as Image } from './components/Image/Image.canvas.svelte';
+export type {
+  ImageProps,
+  ImagePropsWithoutHTML,
+} from './components/Image/Image.shared.svelte.js';
+export { default as Axis } from './components/Axis/Axis.canvas.svelte';
+export type {
+  AxisProps,
+  AxisPropsWithoutHTML,
+} from './components/Axis/Axis.shared.svelte.js';
+export { default as Rule } from './components/Rule/Rule.canvas.svelte';
+export type {
+  RuleProps,
+  RulePropsWithoutHTML,
+} from './components/Rule/Rule.shared.svelte.js';
+export { default as Grid } from './components/Grid/Grid.canvas.svelte';
+export type {
+  GridProps,
+  GridPropsWithoutHTML,
+} from './components/Grid/Grid.shared.svelte.js';
+export { default as Highlight } from './components/Highlight/Highlight.canvas.svelte';
+export type {
+  HighlightProps,
+  HighlightPropsWithoutHTML,
+  HighlightPoint,
+  HighlightPointData,
+} from './components/Highlight/Highlight.shared.svelte.js';
+export { default as Arc } from './components/Arc/Arc.canvas.svelte';
+export type { ArcProps, ArcPropsWithoutHTML } from './components/Arc/Arc.shared.svelte.js';
+export { default as Spline } from './components/Spline/Spline.canvas.svelte';
+export type {
+  SplineProps,
+  SplinePropsWithoutHTML,
+} from './components/Spline/Spline.shared.svelte.js';
+export { default as Area } from './components/Area/Area.canvas.svelte';
+export type {
+  AreaProps,
+  AreaPropsWithoutHTML,
+} from './components/Area/Area.shared.svelte.js';
+export { default as Pie } from './components/Pie/Pie.canvas.svelte';
+export type { PieProps, PiePropsWithoutHTML } from './components/Pie/Pie.shared.svelte.js';
+export { default as ArcLabel } from './components/ArcLabel/ArcLabel.canvas.svelte';
+export type {
+  ArcLabelProps,
+  ArcLabelConfig,
+  ArcLabelPlacement,
+} from './components/ArcLabel/ArcLabel.shared.svelte.js';
+export { default as Bar } from './components/Bar/Bar.canvas.svelte';
+export type { BarProps, BarPropsWithoutHTML } from './components/Bar/Bar.shared.svelte.js';
+export { default as Bars } from './components/Bars/Bars.canvas.svelte';
+export type {
+  BarsProps,
+  BarsPropsWithoutHTML,
+} from './components/Bars/Bars.shared.svelte.js';
+export { default as Points } from './components/Points/Points.canvas.svelte';
+export type {
+  PointsProps,
+  PointsPropsWithoutHTML,
+  Point as PointDatum,
+} from './components/Points/Points.shared.svelte.js';
+export { default as Labels } from './components/Labels/Labels.canvas.svelte';
+export type {
+  LabelsProps,
+  LabelsPropsWithoutHTML,
+} from './components/Labels/Labels.shared.svelte.js';
+export { default as Frame } from './components/Frame/Frame.canvas.svelte';
+export type {
+  FrameProps,
+  FramePropsWithoutHTML,
+} from './components/Frame/Frame.shared.svelte.js';
+export { default as Cell } from './components/Cell/Cell.canvas.svelte';
+export type { CellProps } from './components/Cell/Cell.shared.svelte.js';
+export { default as Threshold } from './components/Threshold/Threshold.canvas.svelte';
+export type {
+  ThresholdProps,
+  ThresholdSnippetProps,
+} from './components/Threshold/Threshold.shared.svelte.js';
+export { default as AnnotationLine } from './components/AnnotationLine/AnnotationLine.canvas.svelte';
+export type {
+  AnnotationLineProps,
+  AnnotationLinePropsWithoutHTML,
+} from './components/AnnotationLine/AnnotationLine.shared.svelte.js';
+export { default as AnnotationPoint } from './components/AnnotationPoint/AnnotationPoint.canvas.svelte';
+export type {
+  AnnotationPointProps,
+  AnnotationPointPropsWithoutHTML,
+} from './components/AnnotationPoint/AnnotationPoint.shared.svelte.js';
+export { default as Trail } from './components/Trail/Trail.canvas.svelte';
+export type {
+  TrailProps,
+  TrailPropsWithoutHTML,
+} from './components/Trail/Trail.shared.svelte.js';
+export { default as Vector } from './components/Vector/Vector.canvas.svelte';
+export type {
+  VectorProps,
+  VectorPropsWithoutHTML,
+  VectorShape,
+} from './components/Vector/Vector.shared.svelte.js';
+export { default as Link } from './components/Link/Link.canvas.svelte';
+export type { LinkProps, LinkPropsWithoutHTML } from './components/Link/Link.shared.svelte.js';
+export { default as AnnotationRange } from './components/AnnotationRange/AnnotationRange.canvas.svelte';
+export type {
+  AnnotationRangeProps,
+  AnnotationRangePropsWithoutHTML,
+} from './components/AnnotationRange/AnnotationRange.shared.svelte.js';
+export { default as Hull } from './components/Hull/Hull.canvas.svelte';
+export type { HullProps, HullPropsWithoutHTML } from './components/Hull/Hull.shared.svelte.js';
+export { default as Density } from './components/Density/Density.canvas.svelte';
+export type {
+  DensityProps,
+  DensityPropsWithoutHTML,
+} from './components/Density/Density.shared.svelte.js';
+export { default as Calendar } from './components/Calendar/Calendar.canvas.svelte';
+export type {
+  CalendarProps,
+  CalendarPropsWithoutHTML,
+  CalendarCell,
+} from './components/Calendar/Calendar.shared.svelte.js';
+export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.canvas.svelte';
+export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.shared.svelte.js';
+export { default as Voronoi } from './components/Voronoi/Voronoi.canvas.svelte';
+export type {
+  VoronoiProps,
+  VoronoiPropsWithoutHTML,
+} from './components/Voronoi/Voronoi.shared.svelte.js';
+export { default as Contour } from './components/Contour/Contour.canvas.svelte';
+export type {
+  ContourProps,
+  ContourPropsWithoutHTML,
+} from './components/Contour/Contour.shared.svelte.js';
+export { default as Month } from './components/Month/Month.canvas.svelte';
+export type {
+  MonthProps,
+  MonthPropsWithoutHTML,
+  MonthCell,
+} from './components/Month/Month.shared.svelte.js';
+export { default as Raster } from './components/Raster/Raster.canvas.svelte';
+export type {
+  RasterProps,
+  RasterPropsWithoutHTML,
+} from './components/Raster/Raster.shared.svelte.js';
+export { default as Violin } from './components/Violin/Violin.canvas.svelte';
+export type {
+  ViolinProps,
+  ViolinPropsWithoutHTML,
+} from './components/Violin/Violin.shared.svelte.js';
+export { default as BoxPlot } from './components/BoxPlot/BoxPlot.canvas.svelte';
+export type {
+  BoxPlotProps,
+  BoxPlotPropsWithoutHTML,
+} from './components/BoxPlot/BoxPlot.shared.svelte.js';
+
+// Geo components
+export { default as GeoPath } from './components/geo/GeoPath/GeoPath.canvas.svelte';
+export type {
+  GeoPathProps,
+  GeoPathPropsWithoutHTML,
+} from './components/geo/GeoPath/GeoPath.shared.svelte.js';
+export { default as GeoSpline } from './components/geo/GeoSpline/GeoSpline.canvas.svelte';
+export type {
+  GeoSplineProps,
+  GeoSplinePropsWithoutHTML,
+} from './components/geo/GeoSpline/GeoSpline.shared.svelte.js';
+export { default as GeoPoint } from './components/geo/GeoPoint/GeoPoint.canvas.svelte';
+export type {
+  GeoPointProps,
+  GeoPointPropsWithoutHTML,
+} from './components/geo/GeoPoint/GeoPoint.shared.svelte.js';
+export { default as GeoCircle } from './components/geo/GeoCircle/GeoCircle.canvas.svelte';
+export type {
+  GeoCircleProps,
+  GeoCirclePropsWithoutHTML,
+} from './components/geo/GeoCircle/GeoCircle.shared.svelte.js';
+export { default as GeoClipPath } from './components/geo/GeoClipPath/GeoClipPath.canvas.svelte';
+export type {
+  GeoClipPathProps,
+  GeoClipPathPropsWithoutHTML,
+} from './components/geo/GeoClipPath/GeoClipPath.shared.svelte.js';
+export { default as GeoEdgeFade } from './components/geo/GeoEdgeFade/GeoEdgeFade.canvas.svelte';
+export type {
+  GeoEdgeFadeProps,
+  GeoEdgeFadePropsWithoutHTML,
+} from './components/geo/GeoEdgeFade/GeoEdgeFade.shared.svelte.js';
+export { default as GeoTile } from './components/geo/GeoTile/GeoTile.canvas.svelte';
+export type { GeoTilePropsWithoutHTML } from './components/geo/GeoTile/GeoTile.shared.svelte.js';
+export { default as TileImage } from './components/geo/TileImage/TileImage.canvas.svelte';
+export type {
+  TileImageProps,
+  TileImagePropsWithoutHTML,
+} from './components/geo/TileImage/TileImage.shared.svelte.js';
+export { default as Graticule } from './components/geo/Graticule/Graticule.canvas.svelte';
+export type {
+  GraticuleProps,
+  GraticulePropsWithoutHTML,
+} from './components/geo/Graticule/Graticule.shared.svelte.js';
+
+// Ribbon (graph) — uses Path
+export { default as Ribbon } from './components/graph/Ribbon/Ribbon.canvas.svelte';
+export type {
+  RibbonProps,
+  RibbonPropsWithoutHTML,
+} from './components/graph/Ribbon/Ribbon.shared.svelte.js';
+
+// --- Layer-agnostic re-exports ---
+// These components don't render layer-specific elements (pure logic, layout
+// helpers, context providers, or composite chart wrappers). Re-exported here
+// so the per-layer sub-path has a complete API.
+
+// Helpers / context providers
+export { default as Blur } from './components/Blur/Blur.svelte';
+export * from './components/Blur/Blur.svelte';
+export { default as Bounds } from './components/Bounds.svelte';
+export * from './components/Bounds.svelte';
+export { default as BrushContext } from './components/BrushContext.svelte';
+export * from './components/BrushContext.svelte';
+export { default as CircleLegend } from './components/CircleLegend.svelte';
+export * from './components/CircleLegend.svelte';
+export { default as ColorRamp } from './components/ColorRamp.svelte';
+export * from './components/ColorRamp.svelte';
+export { default as Legend } from './components/Legend.svelte';
+export * from './components/Legend.svelte';
+export { default as MotionPath } from './components/MotionPath.svelte';
+export * from './components/MotionPath.svelte';
+export { default as Point } from './components/Point.svelte';
+export * from './components/Point.svelte';
+export { default as TransformContext } from './components/TransformContext.svelte';
+export * from './components/TransformContext.svelte';
+export * as Tooltip from './components/tooltip/index.js';
+export * from './components/tooltip/TooltipContext.svelte';
+
+// High-level chart wrappers
+export { default as LineChart } from './components/charts/LineChart/LineChart.canvas.svelte';
+export { default as AreaChart } from './components/charts/AreaChart/AreaChart.canvas.svelte';
+export { default as BarChart } from './components/charts/BarChart/BarChart.canvas.svelte';
+export { default as PieChart } from './components/charts/PieChart/PieChart.canvas.svelte';
+export { default as ScatterChart } from './components/charts/ScatterChart/ScatterChart.canvas.svelte';
+export { default as ArcChart } from './components/charts/ArcChart/ArcChart.canvas.svelte';
+
+// Layout components
+export { default as Tree } from './components/hierarchy/Tree.svelte';
+export * from './components/hierarchy/Tree.svelte';
+export { default as Treemap } from './components/hierarchy/Treemap.svelte';
+export * from './components/hierarchy/Treemap.svelte';
+export { default as Pack } from './components/hierarchy/Pack.svelte';
+export * from './components/hierarchy/Pack.svelte';
+export { default as Partition } from './components/hierarchy/Partition.svelte';
+export * from './components/hierarchy/Partition.svelte';
+export { default as Chord } from './components/graph/Chord.svelte';
+export * from './components/graph/Chord.svelte';
+export { default as Dagre } from './components/graph/Dagre.svelte';
+export * from './components/graph/Dagre.svelte';
+export { default as Sankey } from './components/graph/Sankey.svelte';
+export * from './components/graph/Sankey.svelte';
+export { default as ForceSimulation } from './components/force/ForceSimulation.svelte';
+export * from './components/force/ForceSimulation.svelte';
+export { default as Dodge } from './components/Dodge/Dodge.svelte';
+export * from './components/Dodge/Dodge.svelte';
+export { default as Waffle } from './components/Waffle/Waffle.svelte';
+export * from './components/Waffle/Waffle.svelte';
+
+// Geo helpers (no per-layer rendering)
+export { default as GeoLegend } from './components/geo/GeoLegend/GeoLegend.svelte';
+export { default as GeoProjection } from './components/geo/GeoProjection/GeoProjection.svelte';
+export { default as GeoRaster } from './components/geo/GeoRaster/GeoRaster.svelte';
+export { default as GeoVisible } from './components/geo/GeoVisible/GeoVisible.svelte';
+export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
+export type {
+  RectClipPathProps,
+  RectClipPathPropsWithoutHTML,
+} from './components/RectClipPath/RectClipPath.shared.svelte.js';
+export { default as ChartClipPath } from './components/ChartClipPath/ChartClipPath.canvas.svelte';
+export type {
+  ChartClipPathProps,
+  ChartClipPathPropsWithoutHTML,
+} from './components/ChartClipPath/ChartClipPath.shared.svelte.js';

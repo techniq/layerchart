@@ -367,11 +367,7 @@ type GetLinkRadialD3PathProps = {
   curve?: CurveFactory;
 };
 
-export function getLinkRadialD3Path({
-  source,
-  target,
-  curve,
-}: GetLinkRadialD3PathProps): string {
+export function getLinkRadialD3Path({ source, target, curve }: GetLinkRadialD3PathProps): string {
   const g = radialGeometry(source, target);
   const { sr, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
 
@@ -413,10 +409,7 @@ export function getLinkRadialD3Path({
   }
 
   // Default: smooth radial curve via d3.linkRadial (visx LinkRadial)
-  const linkGen = linkRadial<
-    { source: LinkCoords; target: LinkCoords },
-    LinkCoords
-  >()
+  const linkGen = linkRadial<{ source: LinkCoords; target: LinkCoords }, LinkCoords>()
     .angle((d) => d.x)
     .radius((d) => d.y);
   return linkGen({ source, target }) ?? FALLBACK_PATH;

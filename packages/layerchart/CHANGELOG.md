@@ -1,5 +1,268 @@
 # LayerChart
 
+## 2.0.0-next.63
+
+### Minor Changes
+
+- feat(Dodge): Add Dodge component for deterministic non-overlapping layout ([#862](https://github.com/techniq/layerchart/pull/862))
+
+  A new composition component (similar to `ForceSimulation`) that packs items along one axis to avoid overlaps. Modeled after [Observable Plot's `dodge` transform](https://observablehq.com/plot/transforms/dodge):
+  - `axis`: `'x'` or `'y'` — which axis to dodge along (default `'y'`)
+  - `anchor`: `'top'`/`'middle'`/`'bottom'` (for `axis='y'`) or `'left'`/`'middle'`/`'right'` (for `axis='x'`) — controls which edge items grow away from
+  - `padding`: minimum px gap between items
+  - `r`: collision radius per item (constant or accessor). When omitted, falls back to the chart's `r` accessor / `rScale` (matching `Points`), then to a default of `5`.
+  - `position`: override the anchor-axis pixel accessor (defaults to chart's `xGet`/`yGet`)
+
+  Yields each item's computed pixel `x`/`y` (and original `index`) via the children snippet, so you can render with any primitive (`Circle`, `Text`, etc.).
+
+  Also includes a `rowHeight` mode that switches from circular to row-based rectangular packing — useful for text labels where circular collision would produce unnecessarily large vertical gaps. The pure `dodge()` algorithm is exported from `Dodge.shared.svelte.ts` for direct use.
+
+  Algorithm modeled after Observable Plot / SveltePlot: maintains an interval tree of placed items keyed by anchor-axis extent, queries it for items in the new item's collision zone, and builds candidate dodge-axis positions from circle-tangency math. Currently implemented as a linear-scan tracker with the same API; can be swapped for a real interval tree without API changes if profiling demands it.
+
+- feat(Pattern): Add `rects` shape definition for tile patterns for rendering one or more rectangles per pattern tile ([#864](https://github.com/techniq/layerchart/pull/864))
+
+- feat(Waffle): Add Waffle component for countable-cell visualizations ([#864](https://github.com/techniq/layerchart/pull/864))
+
+- feat(Circle, Text): Inherit chart accessors by default in data mode ([#862](https://github.com/techniq/layerchart/pull/862))
+
+  `<Circle>` and `<Text>` now fall back to the chart's `x`/`y`/`r` accessors (via `xGet`/`yGet`/`rGet`) when the corresponding position prop is omitted — matching how `<Points>` and the new `<Dodge>` work. This lets the chart be the single source of truth for `x`/`y`/`r` and removes the boilerplate of repeating those props on every primitive:
+
+  ```svelte
+  <!-- Before -->
+  <Chart {data} x="date" y="value" r="size" rRange={[2, 10]}>
+    <Circle {data} cx="date" cy="value" r="size" />
+  </Chart>
+
+  <!-- After -->
+  <Chart {data} x="date" y="value" r="size" rRange={[2, 10]}>
+    <Circle {data} />
+  </Chart>
+  ```
+
+  `Circle` and `Text` also now enter data mode when `data` is explicitly passed (in addition to the existing trigger when `cx`/`cy`/`x`/`y` are data-driven), so the implicit-accessor pattern works without needing to pass redundant string accessors just to trigger iteration.
+
+  Behavior is unchanged whenever any position prop is set explicitly — the hardcoded defaults (0/0/1) only apply when neither prop nor chart-level config is present. All existing usages in the docs pass explicit position props, so this is purely additive.
+
+- feat(Text): Add `fontSize` prop with auto-derived `capHeight` ([#862](https://github.com/techniq/layerchart/pull/862))
+
+  Adds a typed `fontSize?: number | string` prop on `<Text>` (number = pixels, string passes through). When set, `capHeight` defaults to `fontSize * 0.71` instead of the legacy `'0.71em'` — so per-item scaled labels with `verticalAnchor="middle"` align to a common visual baseline without an explicit `capHeight` override.
+
+  Previously, `getPixelValue` resolved `'0.71em'` against a hard-coded 16px, so vertical centering was only correct for ~16px text. Larger labels sat too low, smaller ones too high — visible on text-driven beeswarms or any caller scaling labels per-element.
+
+  ```svelte
+  <!-- Before: needed both font-size and capHeight to center correctly -->
+  <Text font-size={r * 1.4} capHeight="{r * 1.4 * 0.71}px" verticalAnchor="middle" ... />
+
+  <!-- After: one prop, centering handled automatically -->
+  <Text fontSize={r * 1.4} verticalAnchor="middle" ... />
+  ```
+
+### Patch Changes
+
+- fix(Chart): Don't compute `[undefined, undefined]` domain when `series` is metadata-only ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  When `series` is configured for legend/color metadata only (no per-series `data`, and items lack the series-key properties on the value axis), the value-axis domain calculation collected all-undefined values and returned `[undefined, undefined]`. Combined with `motion`, this threw `Cannot spring undefined values` whenever the series visibility changed (e.g. toggling a legend swatch).
+
+  The series-aware branch now filters out null/undefined values and falls through to the other domain-resolution paths when nothing remains, instead of returning a poisoned extent.
+
+- fix(canvas): Resolve `currentColor` for `fill`/`stroke` (and other style props) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Pattern): fix alignment and sharply render on high-DPI displays when using Canvas layers ([#864](https://github.com/techniq/layerchart/pull/864))
+
+- fix(downloadImage / getChartImageBlob): Fix image download (container sizing and text clipping) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Spline): Allow CSS class `opacity` to fade lines on the Canvas layer. `Spline` was always passing `opacity={1}` to the underlying `Path` when no series fade was active, which became `constantStyles.opacity = 1` in the canvas renderer and shadowed the value resolved from a user's `class` (e.g. `class="opacity-20"`). Now skip passing `opacity` when the computed series fade is the no-fade default, so the class can take effect — matching SVG behavior where CSS class rules override the presentation attribute. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Image): Stop disabling pointer events by default ([#862](https://github.com/techniq/layerchart/pull/862))
+
+- fix(Rect): Support non-uniform `corners` in data/edge mode ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.62
+
+### Minor Changes
+
+- feat(Blur): Add Canvas support ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- perf(Chart): Eliminate per-instance props spread in `ChartState` ([#857](https://github.com/techniq/layerchart/pull/857))
+
+- fix(SeriesState): Avoid `derived_inert` crash when chart unmounts under a `<svelte:boundary>` ([#855](https://github.com/techniq/layerchart/pull/855))
+
+  The `selectedKeys` sync effect was wrapped in `$effect.root`, creating an isolated scope that survived chart unmount. When the parent chart was destroyed (e.g. an example reloading inside the docs `<svelte:boundary>` after an async `$derived` re-evaluated), the `#series` derived became inert while the orphaned effect kept reading it — producing `Reading a derived belonging to a now-destroyed effect may result in stale values` warnings followed by `TypeError: e.some is not a function`. The effect now lives in the constructor, scoped to the component that instantiated `SeriesState`, so it is torn down with the chart.
+
+- fix(Arc, RectClipPath, ChartClipPath): Restore on-mount tween animations ([#855](https://github.com/techniq/layerchart/pull/855))
+
+  Two related regressions introduced in the layer-component split (#848) prevented `motion` + `initial*` props from animating on mount.
+
+  **`Arc`** — `motion`, `value`, `initialValue` and the rest of Arc's geometry props (`domain`, `range`, `startAngle`, `endAngle`, `innerRadius`, `outerRadius`, `cornerRadius`, `padAngle`, `track*`, `offset`) were not destructured in `Arc.base.svelte`, so they leaked through `{...restProps}` onto the inner `<Path>`. The forwarded `motion` made `Path` _also_ tween the path-string on top of the end-angle tween that `ArcState` already drives, producing visibly wrong arcs (NaN coordinates, runaway radii). They are now extracted and passed explicitly to `ArcState`.
+
+  **`RectClipPath` / `ChartClipPath`** — `motion`, `initialX`, `initialY`, `initialWidth`, `initialHeight` were declared on the type but never consumed: the path was a plain `$derived` of the static `x`/`y`/`width`/`height` props, so passing `<ChartClipPath initialWidth={0} motion={{ width: { type: 'tween', … } }}>` rendered the final width on mount with no animation. Each dimension now flows through its own `createMotion` (using the corresponding `initial*` value as the animation start), and the path is built from the animated values.
+
+- perf: Reduce per-tick reactive overhead in `Path` / `Link` (force-simulation graphs) ([#855](https://github.com/techniq/layerchart/pull/855))
+
+  In mark-heavy scenes (force simulations with hundreds of links flowing through `Link → Path`) several reactive structures unconditionally subscribed every `<path>` template updater to props that don't change on a tick, causing per-frame work to scale with the number of props × the number of marks. Each fix below is independent; together they take the lattice (n=20, 760 links) example from ~5–6 fps to ~9 fps during simulation.
+
+  **`PathState.tweenedPathData` now reads only `pathData`, not all Path props.**
+  Pre-fix, the getter resolved `pathData` via `getProps()`, a function that constructs an object literal of every reactive Path prop. Each read of `tweenedPathData` (i.e. each per-tick `<path d=...>` update) therefore subscribed the updater to every Path prop and re-read all of them. `PathState` now takes a dedicated `getPathData` getter alongside `getProps`, and the hot-path tween / DOM read only touches `pathData`. `Path.svg.svelte` and `Path.canvas.svelte` pass them as separate getters.
+
+  **`Link.base.svelte` passes a stable `getPathData` function rather than `motionPath.current` directly.**
+  Reading `motionPath.current` from `Link.base.svelte`'s template subscribed the entire `<Path>` block to every tick, forcing the parent's prop spread (`{...restProps}`) and `cls(...)` evaluation to re-run on every change. Passing a stable function reference moves the per-tick read inside `<Path>`'s own template, keeping `Link.base.svelte` stable. Requires the new `pathData?: string | (() => string)` form on `Path`.
+
+  **`Path.svg.svelte` allocates `draw`-related state lazily.**
+  - `endPoint = createControlledMotion(..., { type: 'none' })` was created for every `Path`, even when no `draw` transition was configured. Now only created when `draw` is set.
+  - The `$effect` that tracked `tweenedPathData` for `startContent` / `endContent` positioning ran on every `Path`, even when neither prop was provided. Now only registered when at least one is set.
+  - `drawKey` is only ever set when `draw` is configured, so the `{#key c.drawKey}` block is a no-op for paths without a draw transition. The block stays unconditional — splitting it behind `{#if draw}` showed no measurable benefit over leaving the inert subscription in place.
+
+  **`Path.svg.svelte` extracts styling props out of `...rest`.**
+  `pathData`, `class`, `fill` / `fillOpacity` / `stroke` / `strokeOpacity` / `strokeWidth` / `opacity` and `motion` are now destructured out of `$props()` rather than left in `...rest`, so the `<path>` element's `{...rest}` spread doesn't re-evaluate every frame when those props change (`pathData` changes on every force-sim tick; `class` is typically a fresh `cls(...)` string per parent render).
+
+  **`Link.base.svelte` drops a redundant prop spread.**
+  Removed `{...extractLayerProps(restProps, 'lc-link')}` before `{...restProps}` — the call's only contribution (`class`) was being immediately overridden by the explicit `class={cls('lc-link', …)}` that follows, making the spread pure overhead.
+
+- perf: Skip mark-info `$effect` for pixel-mode primitives ([#855](https://github.com/techniq/layerchart/pull/855))
+
+  `registerComponent` now probes `markInfo()` once at construction; if the result is initially empty (pixel-mode primitives where `cx`/`cy`/`r`/etc. are numbers rather than string/function accessors), it skips creating the tracking `$effect` entirely. Saves one effect frame per primitive — adds up in mark-heavy scenes (force simulations, scatter plots with hundreds of nodes).
+
+  Trade-off: a primitive that starts in pixel mode and later flips to data mode at runtime (e.g. `cx` mutates from a number to a string) will not register a mark. Mark mode is typically static; if a chart needs runtime data-mode marks, define an explicit `series` on the chart instead.
+
+## 2.0.0-next.61
+
+### Minor Changes
+
+- feat: Per-layer variants for primitives, compound marks, and high-level charts (`layerchart/svg`, `layerchart/canvas`, `layerchart/html`) ([#848](https://github.com/techniq/layerchart/pull/848))
+
+  Layer-agnostic components auto-detect the surrounding `<Svg>`, `<Canvas>`, or `<Html>` layer and bundle every render path. The new sub-path exports expose layer-specific variants so consumers committed to a single rendering layer can opt into a smaller bundle.
+
+  ```ts
+  // Default: agnostic, dispatches at runtime — works in any layer
+  import { Rect, Circle, Text, Path, LineChart } from 'layerchart';
+
+  // SVG-only — skips canvas + html branches
+  import { Rect, Circle, Text, Path, LineChart } from 'layerchart/svg';
+
+  // Canvas-only
+  import { Rect, Circle, Text, LineChart } from 'layerchart/canvas';
+
+  // HTML-only — drops canvas + svg overhead (some primitives are ~95% smaller)
+  import { Rect, Circle, Text, Pattern, LinearGradient } from 'layerchart/html';
+  ```
+
+  Each agnostic component (e.g. `Rect.svelte`) now dispatches to the corresponding per-layer variant under the hood (`Rect.svg.svelte`, `Rect.canvas.svelte`, `Rect.html.svelte`) — no breaking change for existing consumers.
+
+  ### What's split
+
+  **Primitives (13)** — the basic graphics building blocks
+  `Circle`, `Text`, `Rect`, `Line`, `Path`, `Ellipse`, `Polygon`, `Group`, `Image`, `ClipPath`, `Pattern`, `LinearGradient`, `RadialGradient`
+
+  **Compound marks (~30)** — chart axes, marks, annotations, and chart-relative shapes
+  `Axis`, `Grid`, `Rule`, `Highlight`, `Layer`, `ChartChildren`, `ChartClipPath`, `CircleClipPath`, `Bars`, `Bar`, `Spline`, `Area`, `Pie`, `Arc`, `ArcLabel`, `Points`, `Cell`, `Frame`, `Threshold`, `Trail`, `Vector`, `Link`, `Labels`, `AnnotationLine`, `AnnotationPoint`, `AnnotationRange`, `Hull`, `Density`, `Voronoi`, `Contour`, `Raster`, `Violin`, `BoxPlot`, `Calendar`, `Month`
+
+  **Geo components (`layerchart/geo`)**
+  `GeoPath`, `GeoSpline`, `GeoPoint`, `GeoCircle`, `GeoTile`, `TileImage`, `Graticule`, `GeoClipPath`, `GeoEdgeFade`
+
+  **Graph components (`layerchart/graph`)**
+  `Ribbon`
+
+  **High-level chart wrappers** — pre-composed charts with built-in tooltips, highlights, and series handling
+  `LineChart`, `AreaChart`, `BarChart`, `ScatterChart`, `PieChart`, `ArcChart`
+
+  The geo, graph, hierarchy, and force sub-paths also re-export every layer-agnostic helper they previously included, so a single `from 'layerchart/svg'` import covers a typical SVG chart end-to-end without falling back to `'layerchart'`.
+
+  ### Standout per-layer wins (gz, vs agnostic baseline)
+
+  **Primitives where the per-layer rendering is dramatically simpler:**
+  - `Pattern` html: 14.81 → 0.92 KB (-94%) — HTML implementation is just CSS-string generation
+  - `LinearGradient` html: 14.38 → 0.53 KB (-96%)
+  - `Image` canvas: 14.95 → 3.73 KB (-75%)
+  - `Text` svg/html: 29.13 → ~16 KB (-45%)
+  - `Circle` / `Rect` / `Ellipse` / `Line` / `Path`: ~22–27% smaller per-layer
+
+  **Compound marks:** typically 8–15% gz savings per-layer; outliers like `Highlight` (-30% canvas) and `Cell` (-22% svg) are larger because their HTML/canvas vs. SVG paths diverge significantly.
+
+  **High-level charts:** ~5–12% gz savings (~5–11 KB) when imported from `layerchart/svg` or `layerchart/canvas`. A single-layer LineChart drops from 89.6 KB → 79.0 KB gz on the SVG path.
+
+  For a consumer who migrates all imports to a single layer, cumulative savings across primitives and compound marks are 60–80 KB gz.
+
+  ### Bundle reductions on the default `<Chart>` path
+
+  In addition to opt-in per-layer variants, this release also makes a few previously-eager features lazy:
+  - **`<TransformContext>`** is now dynamically imported when `<Chart transform={...}>` is set — saves ~2.8 KB gz on every chart that doesn't pan/zoom.
+  - **`<BrushContext>`** was already lazy; nothing changes there.
+
+  ### `<ChartCore>` for non-cartesian charts (new)
+
+  A new `<ChartCore>` component is exported alongside `<Chart>` from each layer sub-path (`layerchart`, `layerchart/svg`, `layerchart/canvas`, `layerchart/html`). It provides the chart context, sizing, brush, transform, and tooltip plumbing — but skips `<ChartChildren>` and the `Layer` / `Axis` / `Grid` / `Rule` / `Highlight` / `ChartClipPath` import chain it pulls in.
+
+  Use it for geo maps, custom layouts, or any chart that renders its own primitives directly via the `children` snippet:
+
+  ```svelte
+  <script>
+    import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
+  </script>
+
+  <ChartCore data={countries}>
+    {#snippet children({ context })}
+      <Svg>
+        <GeoProjection projection={geoMercator} fitGeojson={countries}>
+          <GeoPath geojson={countries} fill="steelblue" />
+        </GeoProjection>
+      </Svg>
+    {/snippet}
+  </ChartCore>
+  ```
+
+  Measured savings (bundle scenarios):
+  - `base` (`<Chart>`) → `core` (`<ChartCore>`): 83.42 → 50.93 KB gz (**−39%**)
+  - `geo` (`<Chart>` + `GeoPath`/`GeoPoint`) → `core-geo` (`<ChartCore>` + `GeoProjection` + `GeoPath`): 87.23 → 54.67 KB gz (**−37%**)
+  - `base-svg` (per-layer) → `core-svg` (per-layer): 77.37 → 50.88 KB gz (**−34%**)
+
+  ### Behavior
+
+  Identical to the agnostic versions: visual output, props, types, and bindable refs all match. The dispatcher pattern adds ~0.2 KB per primitive to `core` for users on the agnostic API (transitive cost from `Highlight` / `Axis` / `Chart`) — a worthwhile tradeoff for the opt-in per-layer savings.
+
+  See the updated ["Bundle Size" guide](https://layerchart.com/docs/guides/bundle-size) for the full table, tradeoffs, and when to opt into per-layer imports.
+
+## 2.0.0-next.60
+
+### Minor Changes
+
+- breaking: Move heavy-dep components into sub-path exports ([#845](https://github.com/techniq/layerchart/pull/845))
+
+  The following components are no longer re-exported from `'layerchart'` and must be imported from new sub-paths:
+  - `'layerchart/geo'` — `GeoCircle`, `GeoClipPath`, `GeoEdgeFade`, `GeoLegend`, `GeoPath`, `GeoPoint`, `GeoProjection`, `GeoRaster`, `GeoSpline`, `GeoTile`, `GeoVisible`, `Graticule`, `TileImage`
+  - `'layerchart/hierarchy'` — `Tree`, `Treemap`, `Pack`, `Partition`
+  - `'layerchart/force'` — `ForceSimulation`
+  - `'layerchart/graph'` — `Dagre`, `Sankey`, `Chord`, `Ribbon`
+
+  This isolates each group's external d3 dependency (`@dagrejs/dagre` ~22 KB, `d3-geo` ~15 KB, `d3-force` ~7 KB, `d3-hierarchy` ~6 KB, `d3-sankey` ~6 KB, `d3-chord` ~2 KB) behind an opt-in import — defending against bundlers that don't tree-shake the root barrel cleanly.
+
+  `Voronoi`/`Hull` stay at root (already lazy-loaded via `TooltipContext`). `Contour`/`Density`/`Raster`/`BoxPlot`/`Violin`/`Threshold` and high-level charts (`LineChart`, `BarChart`, etc.) remain at root.
+
+  **Migration:** update affected imports, e.g.
+
+  ```diff
+  -import { Tree, GeoPath, ForceSimulation } from 'layerchart';
+  +import { Tree } from 'layerchart/hierarchy';
+  +import { GeoPath } from 'layerchart/geo';
+  +import { ForceSimulation } from 'layerchart/force';
+  ```
+
+### Patch Changes
+
+- perf: Lazy-load opt-in features in `core` path ([#845](https://github.com/techniq/layerchart/pull/845))
+
+  5 components/dependencies that previously sat in every `<Chart>` user's sync graph are now dynamically imported only when the corresponding feature is used:
+  - `BrushContext` in `Chart` — only loads when `<Chart brush={...}>` is set (default `undefined`)
+  - `DefaultTooltip` in `ChartChildren` — only loads when `tooltipContext` is set and no custom `tooltip` snippet is provided
+  - `d3-quadtree` in `TooltipContext` — only loads when `mode` is `'quadtree'`, `'quadtree-x'`, or `'quadtree-y'`
+  - `Spline` in `Grid` — only loads when rendering radial linear grid lines (`<Chart radial>` with `radialY="linear"`)
+  - `Bar` in `Highlight` — only loads when `<Chart highlight={{ bar: ... }}>` is set (default `false`)
+
+  Result: **~10 KB gz off `core`** (115.6 → 105.25 KB) and comparable savings on every cartesian/geo/graph/hierarchy scenario, with no impact on rendered output for users who already opt into these features.
+
+  Also switches internal `@layerstack/svelte-actions` imports from the barrel (`@layerstack/svelte-actions`) to sub-paths (`@layerstack/svelte-actions/styles`, `@layerstack/svelte-actions/portal`). No production bundle effect — bundlers already tree-shake the unused `popover.js` — but it stops the Svelte REPL/CDN from eagerly fetching `@floating-ui/dom` (popover's transitive dep) when consumers load `layerchart` from a CDN.
+
 ## 2.0.0-next.59
 
 ### Patch Changes

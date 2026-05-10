@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 
-	import { Chart, GeoPath, GeoRaster, Graticule, Layer, type ChartState } from 'layerchart';
+	import { Chart, Layer, type ChartState } from 'layerchart';
+	import { GeoPath, GeoRaster, Graticule } from 'layerchart/geo';
 	import { Button, ButtonGroup, Field, RangeField, SelectField } from 'svelte-ux';
 	import { TimerState } from '@layerstack/svelte-state';
 

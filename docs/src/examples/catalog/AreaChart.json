@@ -713,7 +713,7 @@
       "example": "brush-sync",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/brush-sync",
-      "lineNumber": 41,
+      "lineNumber": 46,
       "line": "<AreaChart"
     },
     {
@@ -1004,5 +1004,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:22.815Z"
+  "updatedAt": "2026-04-30T15:36:22.186Z"
 }

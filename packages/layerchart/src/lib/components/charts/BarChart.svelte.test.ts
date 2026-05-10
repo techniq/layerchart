@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import BarChart from './BarChart.svelte';
+import BarChart from './BarChart/BarChart.svelte';
 import BarChartFixedWidthTest from './BarChartFixedWidthTest.svelte';
 
 const wideData = [
@@ -371,9 +371,16 @@ describe('BarChart', () => {
       const initialWidths = getBarWidths();
       const initialBarWidth = initialWidths[0];
 
-      // Click a legend button to select only that series (exclusive select)
-      const legendButtons = container.querySelectorAll('.lc-legend-swatch-button');
-      expect(legendButtons.length).toBe(4);
+      // Click a legend button to select only that series (exclusive select).
+      // `Legend` is lazy-loaded inside `ChartChildren`, so wait for the buttons
+      // to mount before interacting.
+      let legendButtons: NodeListOf<Element> = container.querySelectorAll(
+        '.lc-legend-swatch-button'
+      );
+      await vi.waitFor(() => {
+        legendButtons = container.querySelectorAll('.lc-legend-swatch-button');
+        expect(legendButtons.length).toBe(4);
+      });
       (legendButtons[1] as HTMLElement).click();
 
       // After selecting one series, only that series' bars should remain and be wider

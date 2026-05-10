@@ -6,7 +6,6 @@
 <script lang="ts">
 	import { Axis, Chart, Layer, LinearGradient, Spline } from 'layerchart';
 
-
 	export { data };
 </script>
 

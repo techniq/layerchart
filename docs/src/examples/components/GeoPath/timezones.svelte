@@ -25,17 +25,8 @@
 	// @ts-expect-error
 	import { century, equationOfTime, declination } from 'solar-calculator';
 
-	import {
-		Blur,
-		Chart,
-		ClipPath,
-		GeoCircle,
-		GeoClipPath,
-		GeoPath,
-		Layer,
-		Tooltip,
-		antipode
-	} from 'layerchart';
+	import { Blur, Chart, ClipPath, Layer, Tooltip, antipode } from 'layerchart';
+	import { GeoCircle, GeoClipPath, GeoPath } from 'layerchart/geo';
 	import TimezonesControls from '$lib/components/controls/GeoPathTimezonesControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 

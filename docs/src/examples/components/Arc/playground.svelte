@@ -51,19 +51,19 @@
 								<Text
 									{...getArcTextProps('inner')}
 									value={config.innerText}
-									font-size="{config.textSize}px"
+									fontSize={config.textSize}
 									truncate
 								/>
 								<Text
 									{...getArcTextProps('outer')}
 									value={config.outerText}
-									font-size="{config.textSize}px"
+									fontSize={config.textSize}
 									truncate
 								/>
 								<Text
 									{...getArcTextProps('middle')}
 									value={config.centroidText}
-									font-size="{config.textSize}px"
+									fontSize={config.textSize}
 									class="fill-black"
 									truncate
 								/>

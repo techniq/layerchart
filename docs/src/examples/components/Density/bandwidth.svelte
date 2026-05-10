@@ -7,7 +7,6 @@
 	import { Axis, Chart, Density, Layer, Points } from 'layerchart';
 	import { RangeField } from 'svelte-ux';
 
-
 	let bandwidth = $state(20);
 </script>
 

@@ -78,26 +78,26 @@
         {
           "component": "Chart",
           "lineNumber": 16,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 18,
+          "lineNumber": 26,
           "line": "<Axis placement=\"bottom\" rule />"
         },
         {
           "component": "Line",
-          "lineNumber": 20,
-          "line": "<Line x1=\"date\" y1={d => 0} x2=\"date\" y2=\"value\" class=\"stroke-primary\" />"
+          "lineNumber": 28,
+          "line": "<Line x1=\"date\" y1={(d) => 0} x2=\"date\" y2=\"value\" class=\"stroke-primary\" />"
         },
         {
           "component": "Circle",
-          "lineNumber": 21,
+          "lineNumber": 29,
           "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
         }
       ]
@@ -273,15 +273,43 @@
       "example": "waterfall",
       "component": "BarChart",
       "path": "/docs/components/BarChart/waterfall",
-      "lineNumber": 87,
+      "lineNumber": 97,
       "line": "<Line"
     },
     {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
-      "lineNumber": 66,
+      "lineNumber": 67,
       "line": "<line x2=\"6\" stroke=\"currentColor\" />"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 72,
+      "line": "<Line x1={x} x2={x} y1={baselineY - 4} y2={labelY + 6} opacity={0.25 * opacity} />"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 68,
+      "line": "<Line"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 92,
+      "line": "<Line x1={x} x2={x} y1={baselineY - 4} y2={labelY + 6} opacity={0.25 * opacity} />"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 131,
+      "line": "<Line x1={x} x2={x} y1={baselineY + 4} y2={labelY - 6} opacity={0.25 * opacity} />"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -301,8 +329,8 @@
       "example": "data-mode",
       "component": "Line",
       "path": "/docs/components/Line/data-mode",
-      "lineNumber": 20,
-      "line": "<Line x1=\"date\" y1={d => 0} x2=\"date\" y2=\"value\" class=\"stroke-primary\" />"
+      "lineNumber": 28,
+      "line": "<Line x1=\"date\" y1={(d) => 0} x2=\"date\" y2=\"value\" class=\"stroke-primary\" />"
     },
     {
       "example": "styling-using-attributes",
@@ -371,7 +399,7 @@
       "example": "line",
       "component": "Marker",
       "path": "/docs/components/Marker/line",
-      "lineNumber": 32,
+      "lineNumber": 41,
       "line": "<Line"
     },
     {
@@ -445,5 +473,5 @@
       "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.498Z"
+  "updatedAt": "2026-05-05T17:36:02.034Z"
 }

@@ -4,7 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { Chart, GeoCircle, GeoPath, Graticule, Layer, defaultChartPadding } from 'layerchart';
+	import { Chart, Layer, defaultChartPadding } from 'layerchart';
+	import { GeoCircle, GeoPath, Graticule } from 'layerchart/geo';
 	import {
 		geoAlbersUsa,
 		geoAlbers,

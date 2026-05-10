@@ -1,41 +1,32 @@
 <script lang="ts">
 	import { CircleLegend, defaultChartPadding, Legend, ScatterChart, Tooltip } from 'layerchart';
-	import { getCountryGdpLifeExpectancy } from '$lib/data.remote';
+	import { getCountries2020 } from '$lib/data.remote';
 	import { flatGroup } from 'd3-array';
 
 	const continentColors: Record<string, string> = {
-		asia: '#eea638',
-		europe: '#d8854f',
-		africa: '#de4c4f',
-		south_america: '#86a965',
-		north_america: '#a7a737',
-		oceania: '#8aabb0'
+		Asia: '#eea638',
+		Europe: '#d8854f',
+		Africa: '#de4c4f',
+		'South America': '#86a965',
+		'North America': '#a7a737',
+		Oceania: '#8aabb0'
 	};
 
-	const continentLabels: Record<string, string> = {
-		asia: 'Asia',
-		europe: 'Europe',
-		africa: 'Africa',
-		south_america: 'South America',
-		north_america: 'North America',
-		oceania: 'Oceania'
-	};
-
-	const data = $derived(flatGroup(await getCountryGdpLifeExpectancy(), (d) => d.continent));
+	const data = $derived(flatGroup(await getCountries2020(), (d) => d.continent));
 	export { data };
 </script>
 
 <ScatterChart
-	x="x"
-	y="y"
-	r="value"
+	x="gdpPerCapita"
+	y="lifeExpectancy"
+	r="population"
 	rRange={[3, 50]}
 	xPadding={[15, 5]}
 	yPadding={[5, 20]}
 	series={data.map(([continent, items]) => {
 		const color = continentColors[continent] ?? 'var(--color-primary)';
 		return {
-			key: continentLabels[continent] ?? continent,
+			key: continent,
 			data: items,
 			color,
 			props: {
@@ -68,11 +59,11 @@
 	{#snippet tooltip()}
 		<Tooltip.Root>
 			{#snippet children({ data })}
-				<Tooltip.Header>{data.title}</Tooltip.Header>
+				<Tooltip.Header>{data.name}</Tooltip.Header>
 				<Tooltip.List>
-					<Tooltip.Item label="GDP per capita" value={data.x} format="currency" />
-					<Tooltip.Item label="Life expectancy" value={data.y} format="decimal" />
-					<Tooltip.Item label="Population" value={data.value} format="integer" />
+					<Tooltip.Item label="GDP per capita" value={data.gdpPerCapita} format="currency" />
+					<Tooltip.Item label="Life expectancy" value={data.lifeExpectancy} format="decimal" />
+					<Tooltip.Item label="Population" value={data.population} format="integer" />
 				</Tooltip.List>
 			{/snippet}
 		</Tooltip.Root>

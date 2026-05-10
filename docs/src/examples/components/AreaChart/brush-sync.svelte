@@ -25,7 +25,12 @@
 			x="date"
 			y="value"
 			{xDomain}
-			brush={{ onBrushEnd: (e) => { xDomain = e.brush.x; e.brush.reset(); } }}
+			brush={{
+				onBrushEnd: (e) => {
+					xDomain = e.brush.x;
+					e.brush.reset();
+				}
+			}}
 			motion={{ type: 'spring' }}
 			props={{
 				xAxis: {
@@ -43,7 +48,12 @@
 			x="date"
 			y="value"
 			{xDomain}
-			brush={{ onBrushEnd: (e) => { xDomain = e.brush.x; e.brush.reset(); } }}
+			brush={{
+				onBrushEnd: (e) => {
+					xDomain = e.brush.x;
+					e.brush.reset();
+				}
+			}}
 			motion={{ type: 'spring' }}
 			props={{
 				xAxis: {

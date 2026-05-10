@@ -5,9 +5,10 @@
   "license": "MIT",
   "repository": "techniq/layerchart",
   "homepage": "https://layerchart.com",
-  "version": "2.0.0-next.59",
+  "version": "2.0.0-next.63",
   "scripts": {
     "dev": "pnpm package:watch",
+    "build": "svelte-package",
     "package": "svelte-package",
     "package:watch": "svelte-package --watch",
     "prepublishOnly": "svelte-package",
@@ -69,6 +70,9 @@
     "vitest-browser-svelte": "^2.1.0"
   },
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
     "@dagrejs/dagre": "^2.0.4",
     "@layerstack/svelte-actions": "1.0.1-next.18",
@@ -114,6 +118,41 @@
       "types": "./dist/server/index.d.ts",
       "svelte": "./dist/server/index.js",
       "default": "./dist/server/index.js"
+    },
+    "./geo": {
+      "types": "./dist/geo.d.ts",
+      "svelte": "./dist/geo.js",
+      "default": "./dist/geo.js"
+    },
+    "./hierarchy": {
+      "types": "./dist/hierarchy.d.ts",
+      "svelte": "./dist/hierarchy.js",
+      "default": "./dist/hierarchy.js"
+    },
+    "./force": {
+      "types": "./dist/force.d.ts",
+      "svelte": "./dist/force.js",
+      "default": "./dist/force.js"
+    },
+    "./graph": {
+      "types": "./dist/graph.d.ts",
+      "svelte": "./dist/graph.js",
+      "default": "./dist/graph.js"
+    },
+    "./svg": {
+      "types": "./dist/svg.d.ts",
+      "svelte": "./dist/svg.js",
+      "default": "./dist/svg.js"
+    },
+    "./canvas": {
+      "types": "./dist/canvas.d.ts",
+      "svelte": "./dist/canvas.js",
+      "default": "./dist/canvas.js"
+    },
+    "./html": {
+      "types": "./dist/html.d.ts",
+      "svelte": "./dist/html.js",
+      "default": "./dist/html.js"
     },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",

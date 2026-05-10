@@ -36,7 +36,9 @@ export async function api<Data = any>(
 	const text = await response.text();
 
 	if (!response.ok) {
-		console.error(`API ${method} ${url} failed: ${response.status} ${response.statusText} - ${text}`);
+		console.error(
+			`API ${method} ${url} failed: ${response.status} ${response.statusText} - ${text}`
+		);
 		return null;
 	}
 
@@ -72,7 +74,9 @@ export async function graphql<Data = any>(
 	const text = await response.text();
 
 	if (!response.ok) {
-		console.error(`GraphQL ${endpoint} failed: ${response.status} ${response.statusText} - ${text}`);
+		console.error(
+			`GraphQL ${endpoint} failed: ${response.status} ${response.statusText} - ${text}`
+		);
 		return null;
 	}
 

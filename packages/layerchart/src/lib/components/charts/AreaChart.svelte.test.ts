@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import AreaChart from './AreaChart.svelte';
+import AreaChart from './AreaChart/AreaChart.svelte';
 
 const seriesData = [
   { date: new Date('2024-01-01'), one: 10, two: 20, three: 15 },

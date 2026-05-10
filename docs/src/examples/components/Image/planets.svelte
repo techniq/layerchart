@@ -7,50 +7,50 @@
 			name: 'Mercury',
 			distance: 57.9,
 			diameter: 4879,
-			image: 'https://space-facts.com/wp-content/uploads/mercury-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/mercury-transparent.png'
 		},
 		{
 			name: 'Venus',
 			distance: 108.2,
 			diameter: 12104,
-			image: 'https://space-facts.com/wp-content/uploads/venus-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/venus-transparent.png'
 		},
 		{
 			name: 'Earth',
 			distance: 149.6,
 			diameter: 12756,
-			image: 'https://space-facts.com/wp-content/uploads/earth-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/earth-transparent.png'
 		},
 		{
 			name: 'Mars',
 			distance: 228.0,
 			diameter: 6792,
-			image: 'https://space-facts.com/wp-content/uploads/mars-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/mars-transparent.png'
 		},
 		{
 			name: 'Jupiter',
 			distance: 778.5,
 			diameter: 142984,
-			image: 'https://space-facts.com/wp-content/uploads/jupiter-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/jupiter-transparent.png'
 		},
 		{
 			name: 'Saturn',
 			distance: 1432.0,
 			diameter: 120536,
-			image: 'https://space-facts.com/wp-content/uploads/saturn-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/saturn-transparent.png'
 		},
 		{
 			name: 'Uranus',
 			distance: 2867.0,
 			diameter: 51118,
-			image: 'https://space-facts.com/wp-content/uploads/uranus-transparent.png',
+			image: 'https://space-facts.com/wp-content/uploads/uranus-transparent.png'
 		},
 		{
 			name: 'Neptune',
 			distance: 4515.0,
 			diameter: 49528,
-			image: 'https://space-facts.com/wp-content/uploads/neptune-transparent.png',
-		},
+			image: 'https://space-facts.com/wp-content/uploads/neptune-transparent.png'
+		}
 	];
 </script>
 

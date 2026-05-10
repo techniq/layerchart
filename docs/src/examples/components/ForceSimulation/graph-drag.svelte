@@ -9,7 +9,8 @@
 	import { curveLinear } from 'd3-shape';
 
 	import StickyControl from '$lib/components/controls/ForceSimluationControls2.svelte';
-	import { Chart, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
+	import { Chart, Link, Layer, Tooltip } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import { cls } from '@layerstack/tailwind';
 	import { clamp, type Prettify } from '@layerstack/utils';
 

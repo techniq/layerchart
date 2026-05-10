@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import Chart from '$lib/components/Chart.svelte';
-  import type { ChartProps } from '$lib/components/Chart.svelte';
+  import Chart from '$lib/components/Chart/Chart.svelte';
+  import type { ChartProps } from '$lib/components/Chart/Chart.svelte';
   import Canvas from '$lib/components/layers/Canvas.svelte';
   import type { CaptureTarget } from './captureStore.js';
 

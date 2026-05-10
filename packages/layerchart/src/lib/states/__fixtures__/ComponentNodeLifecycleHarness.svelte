@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Chart from '$lib/components/Chart.svelte';
+  import Chart from '$lib/components/Chart/Chart.svelte';
   import Layer from '$lib/components/layers/Layer.svelte';
   import type { ChartState, ComponentNode } from '$lib/states/chart.svelte.js';
 

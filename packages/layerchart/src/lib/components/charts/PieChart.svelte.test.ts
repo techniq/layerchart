@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import PieChart from './PieChart.svelte';
+import PieChart from './PieChart/PieChart.svelte';
 
 const data = [
   { browser: 'chrome', visitors: 275, color: 'red' },

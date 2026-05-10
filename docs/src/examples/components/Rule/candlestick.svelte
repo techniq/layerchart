@@ -7,7 +7,6 @@
 	import { scaleUtc } from 'd3-scale';
 	import { Axis, Chart, Highlight, Layer, Rule, Tooltip } from 'layerchart';
 
-
 	export { data };
 </script>
 
