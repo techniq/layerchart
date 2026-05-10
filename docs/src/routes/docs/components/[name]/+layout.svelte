@@ -199,7 +199,7 @@
 <h1
 	class="text-4xl font-bold select-none pb-4"
 	ondblclick={() => {
-		navigator.clipboard.writeText(`[${title}](${url}`);
+		navigator.clipboard.writeText(`[${title}](${url})`);
 	}}
 >
 	{title}
