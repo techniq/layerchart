@@ -1,5 +1,5 @@
 import { allComponents } from 'content-collections';
-import type { ComponentUsageInExample } from '$examples/catalog/types.js';
+import type { ComponentUsageInExample } from '@layerstack/docs/catalog';
 
 /**
  * Map of component name -> supported layers, derived from markdown frontmatter.

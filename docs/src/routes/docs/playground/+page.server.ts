@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { buildWebContainerFiles } from '../../../../scripts/stackblitz-utils.js';
+import { buildWebContainerFiles } from '@layerstack/docs/node/stackblitz';
 
 // Import source files for the playground examples
 import dataTs from '../../../lib/utils/data.ts?raw';

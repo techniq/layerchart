@@ -32,34 +32,31 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { chromium } from 'playwright';
 import crypto from 'crypto';
 import sharp from 'sharp';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples/components');
-const SCREENSHOTS_DIR = path.resolve(__dirname, '../static/screenshots');
-const INDEX_FILE = path.resolve(__dirname, '../static/screenshots/index.json');
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3002';
+let EXAMPLES_DIR = '';
+let SCREENSHOTS_DIR = '';
+let INDEX_FILE = '';
+let BASE_URL = process.env.BASE_URL || 'http://localhost:3002';
+let SCREENSHOT_ROUTE_BASE = '/docs/screenshot';
 
 // Viewport size for screenshots
-const VIEWPORT = {
+let VIEWPORT = {
 	width: 800,
 	height: 1000
 };
 
 // Image sizes to generate (width in pixels)
 // Full size (800), half (400), 30% (240)
-const IMAGE_SIZES = [800, 400, 240] as const;
+let IMAGE_SIZES: readonly number[] = [800, 400, 240] as const;
 
 // Limit for testing (set to undefined to process all)
-const TEST_LIMIT: number | undefined = undefined;
+let TEST_LIMIT: number | undefined = undefined;
 
 // Parse command line arguments
-const FORCE_ALL = process.argv.includes('--all');
+let FORCE_ALL = false;
 
 interface ExampleInfo {
 	component: string;
@@ -204,7 +201,7 @@ async function captureScreenshots(
 	exampleName: string,
 	modes: ('light' | 'dark')[]
 ): Promise<void> {
-	const url = `${BASE_URL}/docs/screenshot/${componentName}/${exampleName}`;
+	const url = `${BASE_URL}${SCREENSHOT_ROUTE_BASE}/${componentName}/${exampleName}`;
 	const screenshotDir = path.join(SCREENSHOTS_DIR, componentName);
 
 	// Ensure directory exists
@@ -362,7 +359,28 @@ function cleanupOrphanedScreenshots(validExamples: ExampleInfo[]): void {
 /**
  * Main function
  */
-async function main() {
+export interface GenerateScreenshotsOptions {
+	examplesDir: string;
+	screenshotsDir: string;
+	baseUrl?: string;
+	routeBase?: string;
+	forceAll?: boolean;
+	testLimit?: number;
+	viewport?: { width: number; height: number };
+	imageSizes?: readonly number[];
+}
+
+export async function generateScreenshots(options: GenerateScreenshotsOptions) {
+	EXAMPLES_DIR = options.examplesDir;
+	SCREENSHOTS_DIR = options.screenshotsDir;
+	INDEX_FILE = path.join(options.screenshotsDir, 'index.json');
+	BASE_URL = options.baseUrl ?? process.env.BASE_URL ?? BASE_URL;
+	SCREENSHOT_ROUTE_BASE = options.routeBase ?? '/docs/screenshot';
+	FORCE_ALL = options.forceAll ?? false;
+	TEST_LIMIT = options.testLimit;
+	VIEWPORT = options.viewport ?? VIEWPORT;
+	IMAGE_SIZES = options.imageSizes ?? IMAGE_SIZES;
+
 	console.log('LayerChart Screenshot Extractor');
 	console.log('================================\n');
 
@@ -526,8 +544,3 @@ async function main() {
 	}
 	console.log(`\n✅ Screenshots saved to ${SCREENSHOTS_DIR}`);
 }
-
-main().catch((error) => {
-	console.error('Fatal error:', error);
-	process.exit(1);
-});

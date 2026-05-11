@@ -1,4 +1,4 @@
-import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
+import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/content.js';
 
 export const load = async ({ params, parent, url }) => {
 	const parentData = await parent();

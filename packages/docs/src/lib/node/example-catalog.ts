@@ -22,20 +22,15 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import type {
 	ComponentCatalog,
 	ComponentUsageInExample,
 	ExampleInfo,
 	UsageInfo
-} from '../src/examples/catalog/types.js';
+} from '../catalog.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/lib/components');
-const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples/components');
-const CATALOG_DIR = path.resolve(__dirname, '../src/examples/catalog');
+let COMPONENTS_DIR = '';
+let EXAMPLES_DIR = '';
 
 /**
  * Get all canonical component files from the components directory (recursively).
@@ -243,7 +238,7 @@ function ensureDir(dirPath: string): void {
 /**
  * Generate catalog for a single component
  */
-function generateComponentCatalog(
+export function generateComponentCatalog(
 	componentName: string,
 	catalogPath: string,
 	allComponents: string[]
@@ -282,19 +277,33 @@ function generateComponentCatalog(
 	};
 }
 
-/**
- * Main function
- */
-async function main() {
-	console.log('LayerChart Example Index Generator');
-	console.log('===================================\n');
+export interface GenerateExampleCatalogOptions {
+	componentsDir: string;
+	examplesDir: string;
+	catalogDir: string;
+	title?: string;
+	logger?: Pick<Console, 'log'>;
+}
+
+export async function writeExampleCatalogs({
+	componentsDir,
+	examplesDir,
+	catalogDir,
+	title = 'Example Catalog Generator',
+	logger = console
+}: GenerateExampleCatalogOptions) {
+	COMPONENTS_DIR = componentsDir;
+	EXAMPLES_DIR = examplesDir;
+
+	logger.log(title);
+	logger.log('===================================\n');
 
 	// Ensure catalog directory exists
-	ensureDir(CATALOG_DIR);
+	ensureDir(catalogDir);
 
 	// Get all components
-	const components = getComponents(COMPONENTS_DIR);
-	console.log(`Found ${components.length} components\n`);
+	const components = getComponents(componentsDir);
+	logger.log(`Found ${components.length} components\n`);
 
 	let processedCount = 0;
 	let totalExamples = 0;
@@ -303,14 +312,14 @@ async function main() {
 	// Process each component
 	for (const componentName of components) {
 		// Write catalog file
-		const catalogPath = path.join(CATALOG_DIR, `${componentName}.json`);
+		const catalogPath = path.join(catalogDir, `${componentName}.json`);
 		const catalog = generateComponentCatalog(componentName, catalogPath, components);
 
 		fs.writeFileSync(catalogPath, JSON.stringify(catalog, null, 2));
 
-		console.log(`  ✓ Examples: ${catalog.examples.length}`);
-		console.log(`  ✓ Usages: ${catalog.usage.length}`);
-		console.log(`  ✓ Saved to ${catalogPath}\n`);
+		logger.log(`  ✓ Examples: ${catalog.examples.length}`);
+		logger.log(`  ✓ Usages: ${catalog.usage.length}`);
+		logger.log(`  ✓ Saved to ${catalogPath}\n`);
 
 		processedCount++;
 		totalExamples += catalog.examples.length;
@@ -318,15 +327,11 @@ async function main() {
 	}
 
 	// Print summary
-	console.log('===================================');
-	console.log('Summary:');
-	console.log(`  Components processed: ${processedCount}`);
-	console.log(`  Total examples: ${totalExamples}`);
-	console.log(`  Total usages: ${totalUsages}`);
-	console.log(`\n✅ Catalog files saved to ${CATALOG_DIR}`);
+	logger.log('===================================');
+	logger.log('Summary:');
+	logger.log(`  Components processed: ${processedCount}`);
+	logger.log(`  Total examples: ${totalExamples}`);
+	logger.log(`  Total usages: ${totalUsages}`);
+	logger.log(`\n✅ Catalog files saved to ${catalogDir}`);
+	return { processedCount, totalExamples, totalUsages };
 }
-
-main().catch((error) => {
-	console.error('Fatal error:', error);
-	process.exit(1);
-});

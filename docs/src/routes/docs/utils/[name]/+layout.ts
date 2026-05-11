@@ -1,6 +1,6 @@
-import type { ComponentAPI } from '$lib/api-types.js';
-import type { ComponentCatalog } from '$examples/catalog/types.js';
-import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
+import type { ComponentAPI } from '@layerstack/docs/api';
+import type { ComponentCatalog } from '@layerstack/docs/catalog';
+import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/content.js';
 
 export const load = async ({ params, parent }) => {
 	// Get examples from parent layout

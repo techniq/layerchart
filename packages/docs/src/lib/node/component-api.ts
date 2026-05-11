@@ -44,14 +44,7 @@
 import fs from 'fs';
 import path from 'path';
 import ts from 'typescript';
-import { fileURLToPath } from 'url';
-import type { PropertyInfo, ComponentAPI, ExtendedType } from '../src/lib/api-types.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/lib/components');
-const OUTPUT_DIR = path.resolve(__dirname, '../generated/api');
+import type { PropertyInfo, ComponentAPI, ExtendedType } from '../api-types.js';
 
 /**
  * Get all canonical .svelte files in a directory (recursively).
@@ -536,27 +529,34 @@ export function extractAPIs(dir: string): ComponentAPI[] {
 	return apis.sort((a, b) => a.component.localeCompare(b.component));
 }
 
-/**
- * Main function
- */
-function main() {
-	console.log('Extracting component APIs...');
+export interface GenerateComponentApiOptions {
+	componentsDir: string;
+	outputDir: string;
+	logger?: Pick<Console, 'log'>;
+}
 
-	const svelteFiles = getSvelteFiles(COMPONENTS_DIR);
-	console.log(`Found ${svelteFiles.length} Svelte files`);
+export function writeComponentAPIs({
+	componentsDir,
+	outputDir,
+	logger = console
+}: GenerateComponentApiOptions) {
+	logger.log('Extracting component APIs...');
+
+	const svelteFiles = getSvelteFiles(componentsDir);
+	logger.log(`Found ${svelteFiles.length} Svelte files`);
 
 	const apis: ComponentAPI[] = [];
 
 	for (const filePath of svelteFiles) {
 		const componentName = path.basename(filePath, '.svelte');
-		console.log(`Processing ${componentName}...`);
+		logger.log(`Processing ${componentName}...`);
 
 		const api = extractComponentAPI(filePath);
 		if (api) {
 			apis.push(api);
-			console.log(`  ✓ Extracted ${api.properties.length} properties`);
+			logger.log(`  ✓ Extracted ${api.properties.length} properties`);
 		} else {
-			console.log(`  ⚠ No Props type found`);
+			logger.log(`  ⚠ No Props type found`);
 		}
 	}
 
@@ -564,19 +564,19 @@ function main() {
 	apis.sort((a, b) => a.component.localeCompare(b.component));
 
 	// Create output directory if it doesn't exist
-	if (!fs.existsSync(OUTPUT_DIR)) {
-		fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
 	}
 
 	// Write individual component files
-	console.log(`\nWriting individual component files...`);
+	logger.log(`\nWriting individual component files...`);
 	for (const api of apis) {
-		const componentFile = path.join(OUTPUT_DIR, `${api.component}.json`);
+		const componentFile = path.join(outputDir, `${api.component}.json`);
 		fs.writeFileSync(componentFile, JSON.stringify(api, null, 2));
 	}
 
 	// Write index file with list of all components
-	const indexFile = path.join(OUTPUT_DIR, 'index.json');
+	const indexFile = path.join(outputDir, 'index.json');
 	const indexOutput = {
 		generatedAt: new Date().toISOString(),
 		components: apis.map((api) => ({
@@ -588,9 +588,8 @@ function main() {
 	};
 	fs.writeFileSync(indexFile, JSON.stringify(indexOutput, null, 2));
 
-	console.log(`\n✅ Generated ${apis.length} component API files in ${OUTPUT_DIR}`);
-	console.log(`✅ Generated index file: ${indexFile}`);
-	console.log(`   Extracted ${apis.length} component APIs`);
+	logger.log(`\n✅ Generated ${apis.length} component API files in ${outputDir}`);
+	logger.log(`✅ Generated index file: ${indexFile}`);
+	logger.log(`   Extracted ${apis.length} component APIs`);
+	return apis;
 }
-
-main();

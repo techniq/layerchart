@@ -2,7 +2,7 @@
 	import { AreaChart, Circle, defaultChartPadding, Layer, Line } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { Button } from 'svelte-ux';
-	import Blockquote from '$lib/markdown/components/blockquote.svelte';
+	import Blockquote from '@layerstack/docs/markdown/components/blockquote.svelte';
 
 	const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 	export { data };

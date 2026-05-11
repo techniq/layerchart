@@ -10,7 +10,7 @@
  * - Preserves release metadata in frontmatter
  *
  * @usage
- * pnpm tsx scripts/fetch-releases.ts
+ * layerstack-docs generate-releases techniq/layerchart generated/releases
  *
  * @example
  * // Generates files like:
@@ -20,14 +20,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const RELEASES_DIR = path.resolve(__dirname, '../generated/releases');
-const GITHUB_API = 'https://api.github.com/repos/techniq/layerchart/releases';
-
 interface GitHubRelease {
 	id: number;
 	tag_name: string;
@@ -47,13 +39,13 @@ interface GitHubRelease {
 /**
  * Fetch all releases from GitHub API
  */
-async function fetchReleases(): Promise<GitHubRelease[]> {
+async function fetchReleases(githubApi: string): Promise<GitHubRelease[]> {
 	const releases: GitHubRelease[] = [];
 	let page = 1;
 	const perPage = 100;
 
 	while (true) {
-		const url = `${GITHUB_API}?per_page=${perPage}&page=${page}`;
+		const url = `${githubApi}?per_page=${perPage}&page=${page}`;
 		console.log(`Fetching page ${page}...`);
 
 		const token = process.env.GITHUB_API_TOKEN || process.env.GITHUB_TOKEN;
@@ -123,11 +115,16 @@ function getReleaseFilename(release: GitHubRelease): string {
 /**
  * Main execution
  */
-async function main() {
+export interface GenerateReleasesOptions {
+	repo: string;
+	outputDir: string;
+}
+
+export async function generateReleases({ repo, outputDir }: GenerateReleasesOptions) {
 	console.log('Fetching releases from GitHub...');
 
 	// Fetch all releases
-	const releases = await fetchReleases();
+	const releases = await fetchReleases(`https://api.github.com/repos/${repo}/releases`);
 	console.log(`Found ${releases.length} releases`);
 
 	// Filter out drafts (optional - you can remove this if you want drafts too)
@@ -135,9 +132,9 @@ async function main() {
 	console.log(`Processing ${publishedReleases.length} published releases`);
 
 	// Ensure releases directory exists
-	if (!fs.existsSync(RELEASES_DIR)) {
-		fs.mkdirSync(RELEASES_DIR, { recursive: true });
-		console.log(`Created directory: ${RELEASES_DIR}`);
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
+		console.log(`Created directory: ${outputDir}`);
 	}
 
 	// Write each release to a file (skip if already exists to preserve local edits)
@@ -146,7 +143,7 @@ async function main() {
 
 	for (const release of publishedReleases) {
 		const filename = getReleaseFilename(release);
-		const filepath = path.join(RELEASES_DIR, filename);
+		const filepath = path.join(outputDir, filename);
 
 		// Skip if file already exists (preserves local edits)
 		if (fs.existsSync(filepath)) {
@@ -162,15 +159,9 @@ async function main() {
 	}
 
 	console.log(
-		`\nSuccessfully wrote ${newCount} new release file${newCount === 1 ? '' : 's'} to ${RELEASES_DIR}`
+		`\nSuccessfully wrote ${newCount} new release file${newCount === 1 ? '' : 's'} to ${outputDir}`
 	);
 	if (skippedCount > 0) {
 		console.log(`Skipped ${skippedCount} existing file${skippedCount === 1 ? '' : 's'}`);
 	}
 }
-
-// Run the script
-main().catch((error) => {
-	console.error('Error:', error);
-	process.exit(1);
-});

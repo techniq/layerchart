@@ -2,13 +2,13 @@
 	import { Table } from 'svelte-ux';
 	import type { Component } from 'content-collections';
 
-	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
+	import { h2 as H2 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
 	import ExampleListing from '$lib/components/ExampleListing.svelte';
 	import { page } from '$app/state';
 
 	import RelatedLink from '$lib/components/RelatedLink.svelte';
-	import type { PropertyInfo } from '$lib/api-types.js';
+	import type { PropertyInfo } from '@layerstack/docs/api';
 
 	let { data } = $props();
 	const { PageComponent, catalog } = $derived(data);

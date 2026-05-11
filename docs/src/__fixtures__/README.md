@@ -127,10 +127,10 @@ These fixtures enable testing of:
 
 ## 🚀 Usage
 
-The fixtures are used directly by the main extraction script in `../../scripts/generate-component-api.ts`:
+The fixtures are used directly by the shared extraction utility in `@layerstack/docs/node/component-api`:
 
 ```typescript
-import { extractAPIs } from '../scripts/generate-component-api.js';
+import { extractAPIs } from '@layerstack/docs/node/component-api';
 
 // Extract all APIs from the fixtures directory
 const apis = extractAPIs(fixturesDir);

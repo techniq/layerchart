@@ -6,8 +6,8 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join } from 'path';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
-import { prettyCodeOptions } from './src/lib/markdown/config/index.js';
-import { extractTocFromMarkdown } from './src/lib/markdown/toc.js';
+import { prettyCodeOptions } from '@layerstack/docs/markdown/config';
+import { extractTocFromMarkdown } from '@layerstack/docs/markdown';
 
 const components = defineCollection({
 	name: 'components',

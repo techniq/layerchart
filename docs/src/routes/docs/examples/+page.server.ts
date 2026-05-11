@@ -1,5 +1,5 @@
 import { allComponents } from 'content-collections';
-import type { ComponentCatalog } from '$examples/catalog/types.js';
+import type { ComponentCatalog } from '@layerstack/docs/catalog';
 
 interface ExampleInfo {
 	component: string;

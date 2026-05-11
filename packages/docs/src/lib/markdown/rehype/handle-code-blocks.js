@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { visit } from 'unist-util-visit';
 
 /**

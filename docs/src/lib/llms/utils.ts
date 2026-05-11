@@ -1,4 +1,4 @@
-import type { ComponentAPI } from '$lib/api-types.js';
+import type { ComponentAPI } from '@layerstack/docs/api';
 import { allComponents, allUtils, allGuides } from 'content-collections';
 import { sortCollection } from '$lib/collections.js';
 

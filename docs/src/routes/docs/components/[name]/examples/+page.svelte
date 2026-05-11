@@ -6,7 +6,7 @@
 	import LucideSearch from '~icons/lucide/search';
 
 	import Example from '$lib/components/Example.svelte';
-	import H2 from '$lib/markdown/components/h2.svelte';
+	import H2 from '@layerstack/docs/markdown/components/h2.svelte';
 
 	let { data } = $props();
 	let { catalog } = $derived(data);

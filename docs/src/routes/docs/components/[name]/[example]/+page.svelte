@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Example from '$lib/components/Example.svelte';
 	import { page } from '$app/state';
-	import H2 from '$lib/markdown/components/h2.svelte';
+	import H2 from '@layerstack/docs/markdown/components/h2.svelte';
 
 	import ComponentLink from '$lib/components/ComponentLink.svelte';
 	import ExampleListing from '$lib/components/ExampleListing.svelte';

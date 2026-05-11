@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { cls } from '@layerstack/tailwind';
 import { toCamelCase } from '@layerstack/utils';
 import { visit, EXIT } from 'unist-util-visit';
@@ -75,7 +76,13 @@ function convertIconName(name) {
 	return { importPath, componentName };
 }
 
-export function remarkComponents() {
+/**
+ * @param {{ markdownComponentsPath?: string; exampleComponentPath?: string }} [options]
+ */
+export function remarkComponents(options = {}) {
+	const markdownComponentsPath = options.markdownComponentsPath ?? '@layerstack/docs/markdown/components';
+	const exampleComponentPath = options.exampleComponentPath ?? '$lib/components';
+
 	return (tree) => {
 		const componentsToImport = new Set();
 		const iconImports = new Map(); // Map of componentName -> importPath
@@ -212,8 +219,7 @@ export function remarkComponents() {
 			const componentArray = Array.from(componentsToImport);
 			const componentImportStatements = componentArray
 				.map((comp) => {
-					// Example component lives in $lib/components, not $lib/markdown/components
-					const path = comp === 'Example' ? '$lib/components' : '$lib/markdown/components';
+					const path = comp === 'Example' ? exampleComponentPath : markdownComponentsPath;
 					return `import ${comp} from '${path}/${comp}.svelte';`;
 				})
 				.join('\n');

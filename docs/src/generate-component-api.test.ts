@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { extractAPIs } from '../scripts/generate-component-api.js';
-import type { ComponentAPI } from '$lib/api-types.js';
+import { extractAPIs } from '@layerstack/docs/node/component-api';
+import type { ComponentAPI } from '@layerstack/docs/api';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

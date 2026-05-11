@@ -1,5 +1,5 @@
 <script lang="ts">
-	import H1 from '$lib/markdown/components/h1.svelte';
+	import H1 from '@layerstack/docs/markdown/components/h1.svelte';
 	import { format } from '@layerstack/utils';
 	import { Button } from 'svelte-ux';
 	import ReleaseContent from './ReleaseContent.svelte';

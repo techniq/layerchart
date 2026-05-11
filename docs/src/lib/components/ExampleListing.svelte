@@ -2,8 +2,8 @@
 	import { slide } from 'svelte/transition';
 	import { Button, TextField, ToggleButton } from 'svelte-ux';
 
-	import type { ComponentCatalog } from '$examples/catalog/types.js';
-	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
+	import type { ComponentCatalog } from '@layerstack/docs/catalog';
+	import { h2 as H2 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
 	import ExampleLink from './ExampleLink.svelte';
 
 	import LucideSearch from '~icons/lucide/search';

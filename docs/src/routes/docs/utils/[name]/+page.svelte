@@ -2,7 +2,7 @@
 	import { slide } from 'svelte/transition';
 	import { Button, Table, TextField, ToggleButton } from 'svelte-ux';
 
-	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
+	import { h2 as H2 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
 

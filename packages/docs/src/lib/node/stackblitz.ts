@@ -85,3 +85,60 @@ export function buildWebContainerFiles(files: Record<string, string>): FileSyste
 
 	return result;
 }
+
+export interface GenerateStackBlitzFilesOptions {
+	templateDir: string;
+	sourceDir: string;
+	outputFile: string;
+	remoteSourcesFile?: string;
+	sources?: Record<string, string>;
+	remoteSources?: Record<string, string>;
+}
+
+function readSource(sourceDir: string, sourcePath: string): string {
+	return fs.readFileSync(path.join(sourceDir, sourcePath), 'utf-8');
+}
+
+export function generateStackBlitzFiles({
+	templateDir,
+	sourceDir,
+	outputFile,
+	remoteSourcesFile,
+	sources = {},
+	remoteSources = {}
+}: GenerateStackBlitzFilesOptions) {
+	const files = {
+		...readAllFilesFromDirectory(templateDir),
+		...Object.fromEntries(
+			Object.entries(sources).map(([outputPath, sourcePath]) => [
+				outputPath,
+				readSource(sourceDir, sourcePath)
+			])
+		)
+	};
+
+	const remoteSourceFiles = Object.fromEntries(
+		Object.entries(remoteSources).map(([outputPath, sourcePath]) => [
+			outputPath,
+			readSource(sourceDir, sourcePath)
+		])
+	);
+
+	const outputDir = path.dirname(outputFile);
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
+	}
+
+	fs.writeFileSync(outputFile, JSON.stringify(files, null, 2));
+	console.log(`✅ StackBlitz files saved to ${outputFile}`);
+	console.log(`   Total files: ${Object.keys(files).length}`);
+
+	if (remoteSourcesFile) {
+		fs.writeFileSync(remoteSourcesFile, JSON.stringify(remoteSourceFiles, null, 2));
+		console.log(`\n✅ Remote source files saved to ${remoteSourcesFile}`);
+		console.log(`   Total remote files: ${Object.keys(remoteSourceFiles).length}`);
+	}
+
+	console.log(`\nTemplate files read from: ${templateDir}`);
+	return { files, remoteSourceFiles };
+}

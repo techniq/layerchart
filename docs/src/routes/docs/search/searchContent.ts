@@ -6,8 +6,8 @@ import {
 	type Guide,
 	type Util
 } from 'content-collections';
-import type { ComponentCatalog } from '$lib/../examples/catalog/types';
-import { stripMarkdown } from '$lib/markdown/utils.js';
+import type { ComponentCatalog } from '@layerstack/docs/catalog';
+import { stripMarkdown } from '@layerstack/docs/markdown';
 
 type TocEntry = { id: string; text: string; level: number };
 
