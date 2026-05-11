@@ -6,8 +6,7 @@
 	import { z } from 'zod';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
-	import H1 from '@layerstack/docs/markdown/components/h1.svelte';
-	import H2 from '@layerstack/docs/markdown/components/h2.svelte';
+	import { H1, H2 } from '@layerstack/docs/markdown/components';
 
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';

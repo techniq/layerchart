@@ -1,6 +1,6 @@
 import type { ComponentAPI } from '@layerstack/docs/api';
 import { allComponents, allUtils, allGuides } from 'content-collections';
-import { sortCollection } from '$lib/collections.js';
+import { sortCollection } from '@layerstack/docs/collections';
 
 const exampleSources = import.meta.glob<string>('/src/examples/**/*.svelte', {
 	eager: true,

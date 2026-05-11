@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import type { SearchEntry } from './searchContent';
 	import { Button, Dialog, Kbd, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
-	import ExampleScreenshot from '$lib/components/ExampleScreenshot.svelte';
+	import { ExampleScreenshot } from '@layerstack/docs/components';
 
 	import LucideSearch from '~icons/lucide/search';
 	import LucideGlobe from '~icons/lucide/globe';

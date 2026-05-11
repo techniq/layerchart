@@ -1,5 +1,5 @@
 import type { Component } from 'svelte';
-import type { Examples } from '$lib/types.js';
+import type { Examples } from '@layerstack/docs/examples';
 // Use glob-based imports for screenshot generation (needs to iterate all examples)
 import { componentExamples, componentSources } from '$lib/examples-glob.js';
 

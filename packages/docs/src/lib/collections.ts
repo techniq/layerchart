@@ -1,6 +1,5 @@
 /**
- * Sort a collection by optional `order` field first (items with order come before those without),
- * then alphabetically by `name`.
+ * Sort a docs collection by optional `order` first, then alphabetically by name.
  */
 export function sortCollection<T extends { order?: number; name: string }>(items: T[]): T[] {
 	return items.slice().sort((a, b) => {

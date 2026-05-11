@@ -4,7 +4,7 @@ category: examples
 ---
 
 <script lang="ts">
-	import Code from '$lib/components/Code.svelte';
+	import { Code } from '@layerstack/docs/components';
 
 	import Basic from '$examples/components/AreaChart/basic.svelte';
 	import BasicSource from '$examples/components/AreaChart/basic.svelte?raw';
@@ -12,7 +12,7 @@ category: examples
 
 ```svelte
 <script lang="ts">
-	import Code from '$lib/components/Code.svelte';
+	import { Code } from '@layerstack/docs/components';
 
 	// repeat for each example
 	import Basic from '$examplescomponents/AreaChart/basic.svelte';

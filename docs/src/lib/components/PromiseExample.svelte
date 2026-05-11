@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Code from './Code.svelte';
+	import { Code } from '@layerstack/docs/components';
 
 	let { component, name }: { component: string; name: string } = $props();
 

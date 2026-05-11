@@ -9,7 +9,7 @@
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { zip } from 'd3-array';
-	import Blockquote from '@layerstack/docs/markdown/components/blockquote.svelte';
+	import { Blockquote } from '@layerstack/docs/markdown/components';
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

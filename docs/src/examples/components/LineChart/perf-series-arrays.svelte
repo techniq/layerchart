@@ -8,7 +8,7 @@
 	import { LineChart } from 'layerchart';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
-	import Blockquote from '@layerstack/docs/markdown/components/blockquote.svelte';
+	import { Blockquote } from '@layerstack/docs/markdown/components';
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

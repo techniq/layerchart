@@ -1,7 +1,7 @@
 <script lang="ts">
-	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
+	import { LoadingPlaceholder } from '@layerstack/docs/components';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
-	import { examples } from '$lib/context.js';
+	import { examples } from '@layerstack/docs/context';
 
 	let { data, children } = $props();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
+	import { LoadingPlaceholder } from '@layerstack/docs/components';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data, children } = $props();

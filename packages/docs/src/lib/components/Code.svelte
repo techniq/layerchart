@@ -31,7 +31,7 @@
 	import SimpleIconsTerminal from '~icons/simple-icons/windowsterminal';
 	import SimpleIconsSvelte from '~icons/simple-icons/svelte';
 	import SimpleIconsHTML5 from '~icons/simple-icons/html5';
-	import { stripIndent } from '$lib/utils/string';
+	import { stripIndent } from '../utils/string.js';
 
 	interface Props {
 		source?: string | null;

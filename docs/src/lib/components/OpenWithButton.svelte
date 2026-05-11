@@ -11,7 +11,7 @@
 	import LucideCodeIcon from '~icons/lucide/code';
 	import SimpleIconsMarkdown from '~icons/simple-icons/markdown';
 	import LucideGithub from '~icons/lucide/github';
-	import Code from './Code.svelte';
+	import { Code } from '@layerstack/docs/components';
 
 	let { metadata = {}, example = false } = $props();
 	const settings = getSettings();

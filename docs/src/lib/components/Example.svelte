@@ -16,10 +16,9 @@
 	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 
-	import { examples } from '$lib/context';
+	import { examples } from '@layerstack/docs/context';
 	import { untrack } from 'svelte';
-	import Code from './Code.svelte';
-	import Json from './Json.svelte';
+	import { Code, Json } from '@layerstack/docs/components';
 
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';

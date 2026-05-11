@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from 'svelte-ux';
 
-	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
+	import { LoadingPlaceholder } from '@layerstack/docs/components';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
-	import { examples } from '$lib/context.js';
+	import { examples } from '@layerstack/docs/context';
 	import { page } from '$app/state';
 
 	import LucideChevronLeft from '~icons/lucide/chevron-left';

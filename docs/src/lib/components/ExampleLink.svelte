@@ -4,8 +4,7 @@
 
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideFileCode2 from '~icons/lucide/file-code-2';
-	import ExampleScreenshot from './ExampleScreenshot.svelte';
-	import ImageLink from './ImageLink.svelte';
+	import { ExampleScreenshot, ImageLink } from '@layerstack/docs/components';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { navigating } from '$app/state';
 
