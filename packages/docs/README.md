@@ -72,15 +72,27 @@ export const mdsxConfig = createMdsxConfig({
 
 Markdown components are provided by `@layerstack/docs/markdown/components`.
 
+## Tailwind
+
+Import the package Tailwind source hints after Tailwind and theme imports:
+
+```css
+@import 'tailwindcss';
+@import '@layerstack/tailwind/core.css';
+@import '@layerstack/tailwind/utils.css';
+@import '@layerstack/tailwind/themes/all.css';
+@import '@layerstack/docs/styles.css';
+```
+
+This keeps docs apps from hard-coding monorepo paths to `@layerstack/docs` source files.
+
 ## Components
 
-Reusable docs UI components are exported from `@layerstack/docs/components` and can also be imported by file path:
+Reusable docs UI components are exported from `@layerstack/docs/components`:
 
 ```svelte
 <script>
-	import Code from '@layerstack/docs/components/Code.svelte';
-	import Json from '@layerstack/docs/components/Json.svelte';
-	import LoadingPlaceholder from '@layerstack/docs/components/LoadingPlaceholder.svelte';
+	import { Code, Json, LoadingPlaceholder } from '@layerstack/docs/components';
 </script>
 ```
 

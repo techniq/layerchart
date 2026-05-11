@@ -42,6 +42,9 @@
 			"svelte": "./src/lib/components/*",
 			"default": "./src/lib/components/*"
 		},
+		"./styles.css": {
+			"default": "./src/styles.css"
+		},
 		"./content": {
 			"types": "./src/lib/content.ts",
 			"default": "./src/lib/content.js"
