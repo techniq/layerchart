@@ -18,7 +18,7 @@
 		"generate:api": "layerstack-docs generate-api ../packages/layerchart/src/lib/components generated/api",
 		"generate:screenshots": "layerstack-docs generate-screenshots src/examples/components static/screenshots",
 		"generate:catalog": "layerstack-docs generate-catalog ../packages/layerchart/src/lib/components src/examples/components src/examples/catalog",
-		"generate:stackblitz": "layerstack-docs generate-stackblitz scripts/stackblitz-template src static/stackblitz-files.json static/remote-sources.json --source src/lib/utils/data.ts=lib/utils/data.ts --remote data.remote.ts=lib/data.remote.ts --remote geo.remote.ts=lib/geo.remote.ts --remote graph.remote.ts=lib/graph.remote.ts",
+		"generate:stackblitz": "layerstack-docs generate-stackblitz ../packages/docs/templates/stackblitz-template src static/stackblitz-files.json static/remote-sources.json --source src/lib/utils/data.ts=lib/utils/data.ts --remote data.remote.ts=lib/data.remote.ts --remote geo.remote.ts=lib/geo.remote.ts --remote graph.remote.ts=lib/graph.remote.ts",
 		"generate:releases": "layerstack-docs generate-releases techniq/layerchart generated/releases",
 		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz && pnpm generate:releases"
 	},
