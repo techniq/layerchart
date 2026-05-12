@@ -4,16 +4,17 @@
 
 	import { h2 as H2 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
-	import ExampleLink from '$lib/components/ExampleLink.svelte';
+	import { ExampleLink, RelatedLink } from '@layerstack/docs/components';
+	import { allComponents } from 'content-collections';
 
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 
-	import RelatedLink from '$lib/components/RelatedLink.svelte';
-
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
+	const resolveComponentExample = (component: string) =>
+		allComponents.find((c) => c.name === component)?.defaultExample;
 
 	let columnCount = $state(3);
 	let filterQuery = $state<string | null>(null);
@@ -144,7 +145,7 @@
 	<H2>Related</H2>
 	<div class="flex flex-wrap gap-2 mt-1">
 		{#each metadata.related as related}
-			<RelatedLink value={related} />
+			<RelatedLink value={related} {resolveComponentExample} />
 		{/each}
 	</div>
 {/if}

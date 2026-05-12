@@ -1,52 +1,41 @@
 <script lang="ts">
-	import { tick, type ComponentProps } from 'svelte';
+	import type { ComponentProps } from 'svelte';
 	import { cls } from '@layerstack/tailwind';
-	import { allComponents } from 'content-collections';
 
 	import LucideBlocks from '~icons/lucide/blocks';
 
-	import { ExampleScreenshot, ImageLink } from '@layerstack/docs/components';
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { navigating } from '$app/state';
+	import ExampleScreenshot from './ExampleScreenshot.svelte';
+	import ImageLink from './ImageLink.svelte';
 
 	let {
 		component,
 		example: exampleProp,
+		resolveExample,
+		href,
+		routeBase = '/docs/components',
 		variant = 'default',
 		aspect = undefined,
 		supportedLayers,
+		viewTransitionName = null,
 		...restProps
 	}: {
 		component: string;
 		example?: string;
+		resolveExample?: (component: string) => string | undefined;
+		href?: string;
+		routeBase?: string;
 		showComponent?: boolean;
 		variant?: ComponentProps<typeof ImageLink>['variant'];
 		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
 		supportedLayers?: string[];
+		viewTransitionName?: string | null;
 	} & Partial<ComponentProps<typeof ImageLink>> = $props();
 
-	const componentData = $derived(allComponents.find((c) => c.name === component));
-	const example = $derived(exampleProp ?? componentData?.defaultExample ?? 'basic');
-
-	let href = $derived(`/docs/components/${component}`);
-
-	// Only enable view transition when navigating to or from this link and remove after navigation to fix stacking order
-	let enableViewTransition = $state(navigating.from?.url.pathname === href);
-	beforeNavigate((navigation) => {
-		if (navigation.to?.url.pathname === href) {
-			enableViewTransition = true;
-		}
-	});
-	afterNavigate(() => {
-		tick().then(() => {
-			enableViewTransition = false;
-		});
-	});
-
-	const viewTransitionName = $derived(enableViewTransition ? `lc-${component}-${example}` : null);
+	const example = $derived(exampleProp ?? resolveExample?.(component) ?? 'basic');
+	const resolvedHref = $derived(href ?? `${routeBase}/${component}`);
 </script>
 
-<ImageLink {href} {variant} {...restProps}>
+<ImageLink href={resolvedHref} {variant} {...restProps}>
 	{#snippet image()}
 		<ExampleScreenshot
 			{component}

@@ -3,7 +3,7 @@
 	import Stats from '$lib/components/Stats.svelte';
 	import { cls } from '@layerstack/tailwind';
 
-	import ExampleLink from '$lib/components/ExampleLink.svelte';
+	import { ExampleLink } from '@layerstack/docs/components';
 	import Search from './docs/search/Search.svelte';
 
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';

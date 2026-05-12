@@ -2,46 +2,55 @@
 	import { Button } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 
-	import LucideLink from '~icons/lucide/link';
-	import LucideGithub from '~icons/lucide/github';
 	import LucideCode from '~icons/lucide/code';
+	import LucideGithub from '~icons/lucide/github';
 	import LucideGlobe from '~icons/lucide/globe';
+	import LucideLink from '~icons/lucide/link';
 
 	import ComponentLink from './ComponentLink.svelte';
 
-	let { value }: { value: string } = $props();
+	let {
+		value,
+		resolveComponentExample
+	}: {
+		value: string;
+		resolveComponentExample?: (component: string) => string | undefined;
+	} = $props();
 
 	let { type, name, url, icon } = $derived.by(() => {
 		if (value.startsWith('http')) {
-			var url = new URL(value);
+			const url = new URL(value);
 			if (url.hostname.includes('github.com')) {
-				return { type: 'github', name: url.pathname.slice(1), url, icon: LucideGithub };
-			} else {
-				return { type: 'website', name: url, url, icon: LucideGlobe };
+				return { type: 'github', name: url.pathname.slice(1), url: url.toString(), icon: LucideGithub };
 			}
-		} else if (value.startsWith('/')) {
+			return { type: 'website', name: url.toString(), url: url.toString(), icon: LucideGlobe };
+		}
+
+		if (value.startsWith('/')) {
 			return { type: 'docs', name: toTitleCase(value.slice(1)), url: value, icon: LucideLink };
-		} else if (!value.includes('/')) {
+		}
+
+		if (!value.includes('/')) {
 			return {
 				type: 'component',
 				name: value,
 				url: `/docs/components/${value}`,
 				icon: undefined
 			};
-		} else {
-			const [type, name] = value.split('/');
-			return { type, name, url: `/docs/${type}/${name}`, icon: LucideCode };
 		}
+
+		const [type, name] = value.split('/');
+		return { type, name, url: `/docs/${type}/${name}`, icon: LucideCode };
 	});
 </script>
 
 {#if type === 'component'}
-	<ComponentLink component={name as string} />
+	<ComponentLink component={name} resolveExample={resolveComponentExample} />
 {:else}
 	<Button
 		{icon}
 		variant="fill-light"
-		href={url.toString()}
+		href={url}
 		target={value.startsWith('http') ? '_blank' : undefined}
 		size="sm"
 	>

@@ -2,8 +2,8 @@
 	import { slide } from 'svelte/transition';
 	import { Button, TextField, ToggleButton } from 'svelte-ux';
 
-	import type { ComponentCatalog } from '@layerstack/docs/catalog';
-	import { h2 as H2 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
+	import type { ComponentCatalog } from '../catalog.js';
+	import { H2 } from '../markdown/components/index.js';
 	import ExampleLink from './ExampleLink.svelte';
 
 	import LucideSearch from '~icons/lucide/search';
@@ -15,19 +15,20 @@
 		title = 'Examples',
 		viewAllHref,
 		exclude,
-		initialColumnCount = 3
+		initialColumnCount = 3,
+		routeBase = '/docs/components'
 	}: {
 		catalog: ComponentCatalog;
 		title?: string;
 		viewAllHref?: string;
 		exclude?: string;
 		initialColumnCount?: number;
+		routeBase?: string;
 	} = $props();
 
 	let columnCount = $state(3);
 	let filterQuery = $state<string | null>(null);
 
-	// Sync columnCount when initialColumnCount prop changes
 	$effect(() => {
 		columnCount = initialColumnCount;
 	});
@@ -35,7 +36,6 @@
 	const examples = $derived.by(() => {
 		let exampleList = catalog?.examples ?? [];
 
-		// Exclude a specific example if provided
 		if (exclude) {
 			exampleList = exampleList.filter((e) => e.name !== exclude);
 		}
@@ -54,10 +54,8 @@
 		const seen = new Set<string>();
 		const query = filterQuery?.toLowerCase().trim();
 
-		// Filter out if additional usage in same example or already shown in examples
 		return catalog.usage.filter((item) => {
 			const key = `${item.component}::${item.example}`;
-			// Check if already shown in main examples
 			if (
 				catalog.examples.find(
 					(ex) => ex.name === item.example && catalog.component === item.component
@@ -65,11 +63,9 @@
 			) {
 				return false;
 			}
-			// Check if already seen as additional usage in same example
 			if (seen.has(key)) return false;
 			seen.add(key);
 
-			// Filter by query if provided
 			if (query) {
 				return (
 					item.example.toLowerCase().includes(query) || item.component.toLowerCase().includes(query)
@@ -122,7 +118,12 @@
 			class="grid grid-cols-(--column-count) gap-4"
 		>
 			{#each examples as example (example.name)}
-				<ExampleLink component={catalog.component} example={example.name} title={example.title} />
+				<ExampleLink
+					{routeBase}
+					component={catalog.component}
+					example={example.name}
+					title={example.title}
+				/>
 			{/each}
 		</div>
 	{:else if catalog.examples?.length}
@@ -139,19 +140,28 @@
 						class="grid grid-cols-(--column-count) gap-4 border-t pt-4 mt-4"
 					>
 						{#each uniqueUsage as usage (`${usage.component}::${usage.example}`)}
-							<ExampleLink component={usage.component} example={usage.example} showComponent />
+							<ExampleLink
+								{routeBase}
+								component={usage.component}
+								example={usage.example}
+								showComponent
+							/>
 						{/each}
 					</div>
 				</div>
 			</ToggleButton>
 		{:else if catalog.examples?.length === 0}
-			<!-- No direct examples, show immediately -->
 			<div
 				style:--column-count="repeat({columnCount}, 1fr)"
 				class="grid grid-cols-(--column-count) gap-4"
 			>
 				{#each uniqueUsage as usage (`${usage.component}::${usage.example}`)}
-					<ExampleLink component={usage.component} example={usage.example} showComponent />
+					<ExampleLink
+						{routeBase}
+						component={usage.component}
+						example={usage.example}
+						showComponent
+					/>
 				{/each}
 			</div>
 		{:else if catalog.usage?.length}

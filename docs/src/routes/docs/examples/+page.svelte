@@ -5,7 +5,7 @@
 	import { useSearchParams } from 'runed/kit';
 	import { z } from 'zod';
 
-	import ExampleLink from '$lib/components/ExampleLink.svelte';
+	import { ExampleLink } from '@layerstack/docs/components';
 	import { H1, H2 } from '@layerstack/docs/markdown/components';
 
 	import LucideSearch from '~icons/lucide/search';

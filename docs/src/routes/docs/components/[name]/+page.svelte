@@ -1,19 +1,20 @@
 <script lang="ts">
 	import { Table } from 'svelte-ux';
-	import type { Component } from 'content-collections';
+	import { allComponents, type Component } from 'content-collections';
 
 	import { h2 as H2 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
-	import ExampleListing from '$lib/components/ExampleListing.svelte';
+	import { ExampleListing, RelatedLink } from '@layerstack/docs/components';
 	import { page } from '$app/state';
 
-	import RelatedLink from '$lib/components/RelatedLink.svelte';
 	import type { PropertyInfo } from '@layerstack/docs/api';
 
 	let { data } = $props();
 	const { PageComponent, catalog } = $derived(data);
 	const metadata = $derived(data.metadata as Component);
 	const api = $derived(metadata.api);
+	const resolveComponentExample = (component: string) =>
+		allComponents.find((c) => c.name === component)?.defaultExample;
 </script>
 
 <!-- Markdown page -->
@@ -107,7 +108,7 @@
 	<H2 id="related">Related</H2>
 	<div class="grid grid-cols-xs gap-2 mt-2">
 		{#each metadata.related as related}
-			<RelatedLink value={related} />
+			<RelatedLink value={related} {resolveComponentExample} />
 		{/each}
 	</div>
 {/if}

@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { cls } from '@layerstack/tailwind';
-	import { tick, type ComponentProps } from 'svelte';
+	import type { ComponentProps } from 'svelte';
 
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideFileCode2 from '~icons/lucide/file-code-2';
-	import { ExampleScreenshot, ImageLink } from '@layerstack/docs/components';
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { navigating } from '$app/state';
+	import ExampleScreenshot from './ExampleScreenshot.svelte';
+	import ImageLink from './ImageLink.svelte';
 
 	let {
 		component,
@@ -15,6 +14,9 @@
 		showComponent,
 		variant = 'default',
 		aspect = undefined,
+		href,
+		routeBase = '/docs/components',
+		viewTransitionName = null,
 		...restProps
 	}: {
 		component: string;
@@ -23,27 +25,15 @@
 		showComponent?: boolean;
 		variant?: ComponentProps<typeof ImageLink>['variant'];
 		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
+		href?: string;
+		routeBase?: string;
+		viewTransitionName?: string | null;
 	} & Partial<ComponentProps<typeof ImageLink>> = $props();
 
-	let href = $derived(`/docs/components/${component}/${example}`);
-
-	// Only enable view transition when navigating to or from this link and remove after navigation to fix stacking order
-	let enableViewTransition = $state(navigating.from?.url.pathname === href);
-	beforeNavigate((navigation) => {
-		if (navigation.to?.url.pathname === href) {
-			enableViewTransition = true;
-		}
-	});
-	afterNavigate(() => {
-		tick().then(() => {
-			enableViewTransition = false;
-		});
-	});
-
-	const viewTransitionName = $derived(enableViewTransition ? `lc-${component}-${example}` : null);
+	const resolvedHref = $derived(href ?? `${routeBase}/${component}/${example}`);
 </script>
 
-<ImageLink {href} {variant} {...restProps}>
+<ImageLink href={resolvedHref} {variant} {...restProps}>
 	{#snippet image()}
 		<ExampleScreenshot
 			{component}
