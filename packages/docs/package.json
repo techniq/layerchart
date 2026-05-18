@@ -61,6 +61,18 @@
 			"types": "./src/lib/examples.ts",
 			"default": "./src/lib/examples.ts"
 		},
+		"./examples-glob": {
+			"types": "./src/lib/examples-glob.ts",
+			"default": "./src/lib/examples-glob.ts"
+		},
+		"./page-transitions": {
+			"types": "./src/lib/page-transitions.ts",
+			"default": "./src/lib/page-transitions.ts"
+		},
+		"./project-stats": {
+			"types": "./src/lib/project-stats.ts",
+			"default": "./src/lib/project-stats.ts"
+		},
 		"./markdown": {
 			"types": "./src/lib/markdown/index.ts",
 			"default": "./src/lib/markdown/index.js"
@@ -113,6 +125,7 @@
 		"dist"
 	],
 	"peerDependencies": {
+		"@sveltejs/kit": "^2.0.0",
 		"svelte": "^5.0.0"
 	},
 	"dependencies": {

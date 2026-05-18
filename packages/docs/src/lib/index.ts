@@ -6,3 +6,5 @@ export * from './content.js';
 export * from './context.js';
 export * from './examples.js';
 export * from './markdown/index.js';
+export * from './page-transitions.js';
+export * from './project-stats.js';

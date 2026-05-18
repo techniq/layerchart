@@ -1,8 +1,9 @@
 /**
- * Glob-based example loaders
+ * Glob-based example loaders.
  *
  * ONLY import this module when you need to iterate over ALL examples
- * (e.g., screenshot generation). For normal page loading, use $lib/examples.ts instead.
+ * (for example, screenshot generation). For normal page loading, keep a
+ * docs-local lazy dynamic import adapter.
  *
  * Using import.meta.glob causes Vite to pre-transform all matched files during development.
  */
