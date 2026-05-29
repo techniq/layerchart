@@ -6,6 +6,7 @@
 @import '@layerstack/docs/styles.css';
 
 @source '../node_modules/svelte-ux/dist';
+@source '../node_modules/@layerstack/docs/dist';
 
 @theme {
 	--breakpoint-xs: 30rem; /* 480px */
