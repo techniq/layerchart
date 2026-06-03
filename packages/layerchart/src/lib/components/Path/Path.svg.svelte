@@ -64,6 +64,12 @@
   const drawTransition = $derived(draw ? _drawTransition : () => ({}));
   let startPoint = $state<DOMPoint | undefined>();
 
+  // Compute the class string here rather than inline in the `class={...}`
+  // attribute: a TS cast in markup survives into `dist` and breaks tooling that
+  // parses class expressions independently of Svelte (e.g. @unocss/svelte-scoped,
+  // whose acorn pass chokes on the `as` keyword).
+  const pathClass = $derived(cls('lc-path', classProp as string | undefined));
+
   const endPointDuration = $derived.by(() => {
     if (
       typeof draw === 'object' &&
@@ -123,7 +129,7 @@
     stroke-opacity={strokeOpacityProp}
     stroke-width={strokeWidthProp}
     opacity={opacityProp}
-    class={cls('lc-path', classProp as string | undefined)}
+    class={pathClass}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
