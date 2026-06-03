@@ -10,13 +10,13 @@
 		"generate-comment": "node generate-pr-comment.js"
 	},
 	"devDependencies": {
-		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"layerchart": "workspace:*",
-		"rollup-plugin-visualizer": "^5.14.0",
-		"svelte": "5.54.1",
-		"tsx": "^4.19.2",
-		"typescript": "^5.9.3",
-		"vite": "^8.0.1"
+		"rollup-plugin-visualizer": "^7.0.1",
+		"svelte": "5.56.1",
+		"tsx": "^4.22.4",
+		"typescript": "^6.0.3",
+		"vite": "^8.0.16"
 	},
 	"type": "module",
 	"sideEffects": false
