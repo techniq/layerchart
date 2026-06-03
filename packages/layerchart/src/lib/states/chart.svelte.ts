@@ -552,7 +552,7 @@ export class ChartState<
   private _xScaleRange = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      (this.transformState?.axis === 'x' || this.transformState?.axis === 'both') &&
       isScaleBand(this._xScaleProp) &&
       this.width > 0
     ) {
@@ -565,7 +565,7 @@ export class ChartState<
   private _yScaleRange = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      (this.transformState?.axis === 'y' || this.transformState?.axis === 'both') &&
       isScaleBand(this._yScaleProp) &&
       this.height > 0
     ) {
@@ -865,7 +865,7 @@ export class ChartState<
   _rawXDomain = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      (this.transformState?.axis === 'x' || this.transformState?.axis === 'both') &&
       this.width > 0
     ) {
       return this._computeTransformDomain(
@@ -881,7 +881,7 @@ export class ChartState<
   _rawYDomain = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      (this.transformState?.axis === 'y' || this.transformState?.axis === 'both') &&
       this.height > 0
     ) {
       return this._computeTransformDomain(
@@ -1142,7 +1142,7 @@ export class ChartState<
   xRange = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      (this.transformState?.axis === 'x' || this.transformState?.axis === 'both') &&
       isScaleBand(this._xScaleProp)
     ) {
       return getRange(this.baseXScale);
@@ -1152,7 +1152,7 @@ export class ChartState<
   yRange = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      (this.transformState?.axis === 'y' || this.transformState?.axis === 'both') &&
       isScaleBand(this._yScaleProp)
     ) {
       return getRange(this.baseYScale);
