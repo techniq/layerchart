@@ -48,8 +48,8 @@
     <Group
       {x}
       {y}
-      opacity={opacity as number}
-      class={className as string}
+      {opacity}
+      class={className}
       {...extractLayerProps(restProps, 'lc-geo-point-group')}
     >
       {@render children({ x, y })}
