@@ -1,5 +1,5 @@
 import { flatGroup, group, max, rollup, sum } from 'd3-array';
-import { stack } from 'd3-shape';
+import { stack, stackOffsetNone, stackOrderNone } from 'd3-shape';
 import { pivotWider } from './pivot.js';
 
 type OrderType = typeof import('d3-shape').stackOrderNone; // all orders share the same API
@@ -37,12 +37,11 @@ export function groupStackData<TData>(
       const stackKeys: Array<any> = [
         ...new Set(groupData.map((d: any) => d[options.stackBy ?? ''])),
       ];
-      // @ts-expect-error
       const stackData = stack()
         .keys(stackKeys)
         .value((d: any, key: any) => d[key] ?? 0)
-        .order(options.order)
-        .offset(options.offset)(pivotData);
+        .order(options.order ?? stackOrderNone)
+        .offset(options.offset ?? stackOffsetNone)(pivotData);
 
       return stackData.flatMap((series) => {
         return series.flatMap((s) => {
@@ -74,12 +73,11 @@ export function groupStackData<TData>(
 
     // @ts-expect-error
     const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy ?? '']))];
-    // @ts-expect-error
     const stackData = stack()
       .keys(stackKeys)
       .value((d: any, key: any) => d[key] ?? 0)
-      .order(options.order)
-      .offset(options.offset)(pivotData);
+      .order(options.order ?? stackOrderNone)
+      .offset(options.offset ?? stackOffsetNone)(pivotData);
 
     const result = stackData.flatMap((series) => {
       return series.flatMap((s) => {
