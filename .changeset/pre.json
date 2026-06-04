@@ -118,6 +118,8 @@
     "fix-canvas-currentcolor",
     "fix-canvas-pattern-rendering",
     "fix-chart-image-export-sizing",
+    "fix-class-attribute-ts-cast",
+    "fix-debug-printscale",
     "fix-geo-mark-domain",
     "fix-geopath-canvas-tooltip",
     "fix-geopath-undefined-handlers",
