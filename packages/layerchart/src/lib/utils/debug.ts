@@ -69,7 +69,7 @@ function colorizeArray(arr: RGBInput[]) {
 function printScale(s: string, scale: any, acc: any) {
   const scaleName = findScaleName(scale);
   console.log(`${indent}${s}:`);
-  console.log(`${indent}${indent}Accessor: "${acc.toString()}"`);
+  if (acc != null) console.log(`${indent}${indent}Accessor: "${acc.toString()}"`);
   console.log(`${indent}${indent}Type: ${scaleName}`);
   printValues(scale, 'domain');
   printValues(scale, 'range', ' ');
