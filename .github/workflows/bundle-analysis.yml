@@ -16,9 +16,12 @@ jobs:
     name: Bundle Size Analysis
     runs-on: ubuntu-latest
 
+    # No write permissions needed here: this job runs untrusted PR code (build +
+    # analyze) and only produces an artifact. The comment is posted by the
+    # separate `bundle-analysis-comment.yml` workflow, which runs in the base-repo
+    # context and gets a write token. This is what makes fork PRs work securely.
     permissions:
       contents: read
-      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -76,18 +79,18 @@ jobs:
             /tmp/bundle-analysis/pr-current.json \
             /tmp/bundle-analysis/target-baseline.json
 
-      - name: Find existing comment
-        uses: peter-evans/find-comment@v3
-        id: existing-comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: "## Bundle Size Analysis"
+      - name: Save PR number
+        run: echo "${{ github.event.pull_request.number }}" > /tmp/bundle-analysis/pr-number.txt
 
-      - name: Update or create comment
-        uses: peter-evans/create-or-update-comment@v4
+      # The comment markdown + PR number are handed off to the
+      # `bundle-analysis-comment.yml` workflow, which posts the comment with a
+      # write token. We can't post here because fork PRs only get a read-only token.
+      - name: Upload comment artifact
+        uses: actions/upload-artifact@v4
         with:
-          comment-id: ${{ steps.existing-comment.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body-path: /tmp/bundle-analysis/comment.md
-          edit-mode: replace
+          name: bundle-analysis-comment
+          path: |
+            /tmp/bundle-analysis/comment.md
+            /tmp/bundle-analysis/pr-number.txt
+          if-no-files-found: error
+          retention-days: 1
