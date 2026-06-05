@@ -1,0 +1,57 @@
+name: Bundle Analysis Comment
+
+# Runs after "Bundle Analysis" completes. Because `workflow_run` always executes
+# in the context of the base repository's default branch, it receives a token
+# with the permissions declared below — even when the triggering run came from a
+# fork PR (which only gets a read-only token). This job never checks out or runs
+# PR code; it only downloads the already-rendered comment artifact and posts it,
+# so handing it a write token is safe.
+on:
+  workflow_run:
+    workflows: ["Bundle Analysis"]
+    types: [completed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    name: Post Bundle Size Comment
+    runs-on: ubuntu-latest
+    # Only act on successful PR runs (the artifact won't exist otherwise).
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Download comment artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: bundle-analysis-comment
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./comment-data
+
+      - name: Read PR number
+        id: pr
+        run: echo "number=$(cat ./comment-data/pr-number.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Find existing comment
+        uses: peter-evans/find-comment@v3
+        id: existing-comment
+        with:
+          issue-number: ${{ steps.pr.outputs.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: "## Bundle Size Analysis"
+
+      - name: Update or create comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.existing-comment.outputs.comment-id }}
+          issue-number: ${{ steps.pr.outputs.number }}
+          body-path: ./comment-data/comment.md
+          edit-mode: replace
