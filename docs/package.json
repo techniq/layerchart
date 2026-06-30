@@ -33,7 +33,7 @@
 		"@iconify-json/lucide": "^1.2.111",
 		"@iconify-json/simple-icons": "^1.2.85",
 		"@iconify-json/vscode-icons": "^1.2.53",
-		"@layerstack/docs": "link:../../layerstack/packages/docs",
+		"@layerstack/docs": "1.0.0-next.1",
 		"@layerstack/svelte-actions": "1.0.1-next.18",
 		"@layerstack/svelte-state": "0.1.0-next.23",
 		"@layerstack/svelte-table": "1.0.1-next.18",
