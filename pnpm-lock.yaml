@@ -127,8 +127,8 @@ importers:
         specifier: ^1.2.53
         version: 1.2.53
       '@layerstack/docs':
-        specifier: 1.0.0-next.1
-        version: 1.0.0-next.1(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+        specifier: 1.0.0-next.2
+        version: 1.0.0-next.2(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-actions':
         specifier: 1.0.1-next.18
         version: 1.0.1-next.18
@@ -1881,8 +1881,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@layerstack/docs@1.0.0-next.1':
-    resolution: {integrity: sha512-izcq7kDltCIsN7u0lqWjqlbpLR6nksueXLvtXEDZm4hv06kwLXb3qE8jS+EBofjCgAb0UKqido6D9EXCm9h8Rg==}
+  '@layerstack/docs@1.0.0-next.2':
+    resolution: {integrity: sha512-KY0nEBhHeXYeaBXzBOmDjjMcBjtBG1/6nlOx4bwfbkMIKaOBEMIg6O6Yz6aJo3ylSYIdAF1ScllSwuweLSJKmA==}
     hasBin: true
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
@@ -6828,7 +6828,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@layerstack/docs@1.0.0-next.1(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
+  '@layerstack/docs@1.0.0-next.2(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       '@content-collections/core': 0.14.3(typescript@5.9.3)
       '@content-collections/markdown': 0.1.4(@content-collections/core@0.14.3(typescript@6.0.3))
