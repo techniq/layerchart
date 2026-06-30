@@ -86,9 +86,6 @@ importers:
       d3-geo-projection:
         specifier: ^4.0.0
         version: 4.0.0
-      flexsearch:
-        specifier: ^0.8.212
-        version: 0.8.212
       satori:
         specifier: ^0.26.0
         version: 0.26.0
@@ -96,12 +93,6 @@ importers:
         specifier: ^0.3.2
         version: 0.3.2
     devDependencies:
-      '@content-collections/core':
-        specifier: ^0.14.3
-        version: 0.14.3(typescript@6.0.3)
-      '@content-collections/markdown':
-        specifier: ^0.1.4
-        version: 0.1.4(@content-collections/core@0.14.3(typescript@6.0.3))
       '@content-collections/vite':
         specifier: ^0.2.9
         version: 0.2.9(@content-collections/core@0.14.3(typescript@6.0.3))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
@@ -297,12 +288,6 @@ importers:
       prettier-plugin-svelte:
         specifier: ^4.1.0
         version: 4.1.0(prettier@3.8.3)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
-      rehype-pretty-code:
-        specifier: ^0.14.3
-        version: 0.14.3(shiki@4.2.0)
-      remark-gfm:
-        specifier: ^4.0.1
-        version: 4.0.1
       runed:
         specifier: ^0.37.1
         version: 0.37.1(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(zod@4.4.3)

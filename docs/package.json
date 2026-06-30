@@ -23,8 +23,6 @@
 		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz && pnpm generate:releases"
 	},
 	"devDependencies": {
-		"@content-collections/core": "^0.14.3",
-		"@content-collections/markdown": "^0.1.4",
 		"@content-collections/vite": "^0.2.9",
 		"@eslint/compat": "^2.1.0",
 		"@eslint/js": "^10.0.1",
@@ -90,8 +88,6 @@
 		"posthog-js": "^1.379.0",
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.1.0",
-		"rehype-pretty-code": "^0.14.3",
-		"remark-gfm": "^4.0.1",
 		"runed": "^0.37.1",
 		"solar-calculator": "^0.3.0",
 		"svelte": "5.56.1",
@@ -122,7 +118,6 @@
 		"ansi_up": "^6.0.6",
 		"codemirror": "^6.0.2",
 		"d3-geo-projection": "^4.0.0",
-		"flexsearch": "^0.8.212",
 		"satori": "^0.26.0",
 		"satori-html": "^0.3.2"
 	}
