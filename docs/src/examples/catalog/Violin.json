@@ -1,0 +1,151 @@
+{
+  "component": "Violin",
+  "examples": [
+    {
+      "name": "bandwidth",
+      "title": "bandwidth",
+      "path": "/docs/components/Violin/bandwidth",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 46,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 56,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Violin",
+          "lineNumber": 59,
+          "line": "<Violin"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Violin/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 48,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 49,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Violin",
+          "lineNumber": 52,
+          "line": "<Violin data={item} values=\"values\" class=\"fill-primary/20 stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "horizontal",
+      "title": "horizontal",
+      "path": "/docs/components/Violin/horizontal",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 49,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 50,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "Violin",
+          "lineNumber": 53,
+          "line": "<Violin data={item} values=\"values\" box median class=\"fill-primary/20 stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "with-box-median",
+      "title": "with box median",
+      "path": "/docs/components/Violin/with-box-median",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 48,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 49,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Violin",
+          "lineNumber": 52,
+          "line": "<Violin"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 66,
+      "line": "<Violin"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 59,
+      "line": "<Violin"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 52,
+      "line": "<Violin data={item} values=\"values\" class=\"fill-primary/20 stroke-primary\" />"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 53,
+      "line": "<Violin data={item} values=\"values\" box median class=\"fill-primary/20 stroke-primary\" />"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 52,
+      "line": "<Violin"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:29.085Z"
+}

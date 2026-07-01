@@ -1,0 +1,212 @@
+{
+  "component": "Month",
+  "examples": [
+    {
+      "name": "90-days",
+      "title": "90 days",
+      "path": "/docs/components/Month/90-days",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Month",
+          "lineNumber": 38,
+          "line": "<Month start={ninetyDaysAgo} end={now} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 41,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Month/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Month",
+          "lineNumber": 40,
+          "line": "<Month start={firstDayOfYear} end={lastDayOfYear} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 43,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "custom-cell-size",
+      "title": "custom cell size",
+      "path": "/docs/components/Month/custom-cell-size",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Month",
+          "lineNumber": 40,
+          "line": "<Month start={firstDayOfYear} end={lastDayOfYear} cellSize={20} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 43,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-years",
+      "title": "multiple years",
+      "path": "/docs/components/Month/multiple-years",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Month",
+          "lineNumber": 38,
+          "line": "<Month start={threeYearsAgo} end={now} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 41,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "without-day-numbers",
+      "title": "without day numbers",
+      "path": "/docs/components/Month/without-day-numbers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Month",
+          "lineNumber": 39,
+          "line": "<Month start={firstDayOfYear} end={now} showDayNumber={false} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 42,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "without-month-labels",
+      "title": "without month labels",
+      "path": "/docs/components/Month/without-month-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Month",
+          "lineNumber": 39,
+          "line": "<Month start={firstDayOfYear} end={now} showDayNumber={false} monthLabel={false} tooltip />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 42,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 38,
+      "line": "<Month start={ninetyDaysAgo} end={now} tooltip />"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 40,
+      "line": "<Month start={firstDayOfYear} end={lastDayOfYear} tooltip />"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 40,
+      "line": "<Month start={firstDayOfYear} end={lastDayOfYear} cellSize={20} tooltip />"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 38,
+      "line": "<Month start={threeYearsAgo} end={now} tooltip />"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 39,
+      "line": "<Month start={firstDayOfYear} end={now} showDayNumber={false} tooltip />"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 39,
+      "line": "<Month start={firstDayOfYear} end={now} showDayNumber={false} monthLabel={false} tooltip />"
+    }
+  ],
+  "updatedAt": "2026-04-01T16:49:31.660Z"
+}

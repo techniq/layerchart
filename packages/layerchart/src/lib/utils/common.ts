@@ -1,8 +1,8 @@
-import type { ComponentProps } from 'svelte';
-import { get } from 'lodash-es';
+import type { Component, ComponentProps } from 'svelte';
+import { get } from '@layerstack/utils';
 
-import type Chart from '../components/Chart.svelte';
-import type LineChart from '../components/charts/LineChart.svelte';
+import type Chart from '../components/Chart/Chart.svelte';
+import type { ChartProps } from '$lib/components/Chart/Chart.svelte';
 
 export type Accessor<TData = any> =
   | number
@@ -35,28 +35,36 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
     return data;
   } else if ('nodes' in data) {
     return data.nodes;
-  } else {
+  } else if ('descendants' in data) {
     return data.descendants();
   }
+  return [];
 }
 
-// Using LineChart but could any simplified chart
-type SimplifiedChartProps = ComponentProps<LineChart<any>>;
-
-export function defaultChartPadding(
-  axis: SimplifiedChartProps['axis'],
-  legend: SimplifiedChartProps['legend']
+export function defaultChartPadding<TData>(
+  options:
+    | {
+        axis?: ChartProps<TData>['axis'];
+        legend?: ChartProps<TData>['legend'];
+        top?: number;
+        left?: number;
+        bottom?: number;
+        right?: number;
+      }
+    | undefined = {}
 ) {
+  const { axis = true, legend = false, top, left, bottom, right } = options;
+
   if (axis === false) {
     return undefined;
-  } else {
-    return {
-      top: axis === true || axis === 'y' ? 4 : 0,
-      left: axis === true || axis === 'y' ? 20 : 0,
-      bottom: (axis === true || axis === 'x' ? 20 : 0) + (legend === true ? 32 : 0),
-      right: axis === true || axis === 'x' ? 4 : 0,
-    };
   }
+
+  return {
+    top: top ?? (axis === true || axis === 'y' ? 4 : 0),
+    left: left ?? (axis === true || axis === 'y' ? 20 : 0),
+    bottom: (bottom ?? (axis === true || axis === 'x' ? 20 : 0)) + (legend ? 32 : 0),
+    right: right ?? (axis === true || axis === 'x' ? 4 : 0),
+  };
 }
 
 /**
@@ -64,7 +72,38 @@ export function defaultChartPadding(
  * Handles complex objects such as `Date` by invoking `.valueOf()`
  */
 export function findRelatedData(data: any[], original: any, accessor: Function) {
+  if (data.includes(original)) {
+    return original;
+  }
+
   return data.find((d) => {
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });
+}
+
+/**
+ * Return the object if the value is an object, otherwise return null.
+ * Functions (including Snippet types) are treated as non-objects and return null.
+ */
+export function getObjectOrNull<T>(
+  value: T
+): T extends object
+  ? T extends Function
+    ? null
+    : T
+  : T extends null
+    ? null
+    : T extends undefined
+      ? undefined
+      : null {
+  if (typeof value === 'object') return value as any;
+  if (value === undefined) return undefined as any;
+  return null as any;
+}
+
+/**
+ * Call with args if function, otherwise return the value.
+ */
+export function resolveMaybeFn<T>(value: T | ((...args: any[]) => T), ...args: any[]) {
+  return typeof value === 'function' ? (value as Function)(...args) : value;
 }

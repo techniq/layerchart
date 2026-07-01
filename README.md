@@ -1,7 +1,7 @@
 # **LayerChart**
 
 ![](https://img.shields.io/github/license/techniq/layerchart?style=flat&logo=license)
-![](https://img.shields.io/npm/v/layerchart?style=flat&logo=npm&logoColor=red&color=red) ![](https://img.shields.io/npm/dy/layerchart?style=flat&color=red&label=%20) [![](https://img.shields.io/npm/dm/layerchart?style=flat&color=red&label=%20) ![](https://img.shields.io/npm/dw/layerchart?style=flat&color=red&label=%20)](https://www.npmjs.com/package/layerchart)
+![](https://img.shields.io/npm/v/layerchart?style=flat&logo=npm&logoColor=red&color=red) ![](https://img.shields.io/npm/dy/layerchart?style=flat&color=red&label=%20) [![](https://img.shields.io/npm/dm/layerchart?style=flat&color=red&label=%20)](https://www.npmjs.com/package/layerchart) [![](https://img.shields.io/npm/dw/layerchart?style=flat&color=red&label=%20)](https://www.npmjs.com/package/layerchart)
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/techniq/layerchart?style=flat&logo=github&color=gray&label=Stars)](https://github.com/techniq/layerchart)
 [![Discord](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2F697JhMPD3t%3Fwith_counts%3Dtrue&query=approximate_member_count&label=Discord&suffix=%20members&color=5865F2&logo=discord)](https://discord.gg/697JhMPD3t) [![Discord](https://img.shields.io/discord/920755200552226868?&label=%20&style=flat&color=5865F2)](https://discord.gg/697JhMPD3t)
@@ -9,26 +9,12 @@
 
 A large collection of composable Svelte chart components to build a wide range of visualizations
 
-- Cartesian (Bar, Area, Stack, Scatter)
-- Radial (Pie, Arc, Sunburst)
-- Hierarchy (Pack, Tree, Treemap, Sunburst)
-- Graph (Sankey)
+- Cartesian (Area, Bar, Line, Scatter)
+- Radial/polar charts (Arc, Area, Bar, Line, Radar, Pie)
+- Hierarchical (Pack, Partition, Tree, Treemap)
+- Graph (Dagre, Force, Sankey)
 - Geo (Choropleth, Spike, Bubble, Point, Globe)
-
-Interactions
-
-- Tooltip, Highlights, Pan/Zoom
-
-SVG
-
-- Basic (Arc, Circle, Group, Line, Spline, Text)
-- Gradients and Patterns
-- ClipPath
-- Multi-line text
-
-Others
-
-- Legends including ColorRamps
+- Calendar
 
 See also the companion library [Svelte UX](http://svelte-ux.techniq.dev) for a large collection of components, actions, stores, and utilities to build highly interactive applications.
 

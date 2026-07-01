@@ -17,18 +17,23 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 24.x
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm package
+
       - name: Build site
-        run: pnpm build
+        run: pnpm --filter docs build
+        env:
+          GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: preview-build
-          path: packages/layerchart/.svelte-kit
+          path: docs/.svelte-kit
           include-hidden-files: true

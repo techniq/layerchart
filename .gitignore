@@ -7,5 +7,20 @@ coverage/
 .svelte-kit/
 .env
 .DS_Store
+.vscode
 
 test-*
+.vitest-attachments/
+bench-results/
+
+# Content Collections
+.content-collections
+
+# mdsx live code
+.live-code/
+
+# Generated API documentation
+**/generated/api/*.json
+
+# Generated StackBlitz files
+**/static/stackblitz-files.json

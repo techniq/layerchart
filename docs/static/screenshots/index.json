@@ -1,0 +1,5012 @@
+{
+  "generatedAt": "2026-05-08T16:26:34.913Z",
+  "totalComponents": 78,
+  "totalExamples": 923,
+  "components": [
+    {
+      "component": "AnnotationLine",
+      "examples": [
+        {
+          "name": "bar-chart",
+          "path": "/example/AnnotationLine/bar-chart",
+          "checksum": "b08237abe0d6ca9833cf95441d942a48"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/AnnotationLine/horizontal",
+          "checksum": "63095ddd62c9b8ec59e7c327e9e283e1"
+        },
+        {
+          "name": "horizontal-placement",
+          "path": "/example/AnnotationLine/horizontal-placement",
+          "checksum": "ce15ffc3df7895943c20d49732e47bfa"
+        },
+        {
+          "name": "horizontal-with-range",
+          "path": "/example/AnnotationLine/horizontal-with-range",
+          "checksum": "3fb545ef6b34c4006c5374711fe0fd21"
+        },
+        {
+          "name": "playground",
+          "path": "/example/AnnotationLine/playground",
+          "checksum": "de3d447ad6d2db0d096b638e29448f3f"
+        },
+        {
+          "name": "sloped",
+          "path": "/example/AnnotationLine/sloped",
+          "checksum": "e87a9cb6891d1bde1dd8f6f1c7e79bbc"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/AnnotationLine/vertical",
+          "checksum": "fd2210fba45f82657d20c504b5084ea2"
+        },
+        {
+          "name": "vertical-placement",
+          "path": "/example/AnnotationLine/vertical-placement",
+          "checksum": "b3f9fadd30e8f4f6119abc0f8a5b16c8"
+        },
+        {
+          "name": "vertical-with-rotation",
+          "path": "/example/AnnotationLine/vertical-with-rotation",
+          "checksum": "ca4c34bdafdb304b18ff785b5ea028c0"
+        }
+      ]
+    },
+    {
+      "component": "AnnotationPoint",
+      "examples": [
+        {
+          "name": "band-scale-on-axis",
+          "path": "/example/AnnotationPoint/band-scale-on-axis",
+          "checksum": "6496cc4bdbc0e8a0910b5fe09a244b2b"
+        },
+        {
+          "name": "band-scale-on-value",
+          "path": "/example/AnnotationPoint/band-scale-on-value",
+          "checksum": "33a0d2b715cf2ca654d8baa54849bbb8"
+        },
+        {
+          "name": "line-to-point",
+          "path": "/example/AnnotationPoint/line-to-point",
+          "checksum": "0960f8d77e7b5792fb627b4a22590ddd"
+        },
+        {
+          "name": "link-callouts",
+          "path": "/example/AnnotationPoint/link-callouts",
+          "checksum": "17460fa2213d9d4377821c395d350ca3"
+        },
+        {
+          "name": "on-axis-with-tooltip",
+          "path": "/example/AnnotationPoint/on-axis-with-tooltip",
+          "checksum": "70fdb13c05d27808786eaa291a0ca9dd"
+        },
+        {
+          "name": "on-series-with-line-and-tooltip",
+          "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+          "checksum": "88f5559232651f573bb1ad869d4ab0ec"
+        },
+        {
+          "name": "on-series-with-tooltip",
+          "path": "/example/AnnotationPoint/on-series-with-tooltip",
+          "checksum": "55187ac75c7b4b698744cf0b73f2488b"
+        },
+        {
+          "name": "playground",
+          "path": "/example/AnnotationPoint/playground",
+          "checksum": "cbfc7eb8663dff3a54b29c44a05c932d"
+        },
+        {
+          "name": "series-annotation",
+          "path": "/example/AnnotationPoint/series-annotation",
+          "checksum": "c713d49abc369ffa268524d5f03498ac"
+        },
+        {
+          "name": "us-cities",
+          "path": "/example/AnnotationPoint/us-cities",
+          "checksum": "cbc8017f292d18c7adf5600a2d0444a1"
+        },
+        {
+          "name": "world-landmarks",
+          "path": "/example/AnnotationPoint/world-landmarks",
+          "checksum": "d6b0efb4681228625a28d5d55ba6ebb7"
+        }
+      ]
+    },
+    {
+      "component": "AnnotationRange",
+      "examples": [
+        {
+          "name": "bar-chart-(multiple)",
+          "path": "/example/AnnotationRange/bar-chart-(multiple)",
+          "checksum": "f4dc0cd92517eda646632843b8f664e4"
+        },
+        {
+          "name": "bar-chart-(single)",
+          "path": "/example/AnnotationRange/bar-chart-(single)",
+          "checksum": "2340487fc894141163879708f3aac538"
+        },
+        {
+          "name": "bar-chart-(value)",
+          "path": "/example/AnnotationRange/bar-chart-(value)",
+          "checksum": "283526e34b111e6601ff2697f20bd5c0"
+        },
+        {
+          "name": "hide-tooltip",
+          "path": "/example/AnnotationRange/hide-tooltip",
+          "checksum": "18d5b94c39fa7280592cdce94397cd00"
+        },
+        {
+          "name": "horizontal-with-fill-multiple",
+          "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+          "checksum": "650f2d9f186954441a3d9dd271b932a1"
+        },
+        {
+          "name": "horizontal-with-pattern-lower-bound",
+          "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
+          "checksum": "8613e9d9c5b7bd9b304f170d0aa38719"
+        },
+        {
+          "name": "horizontal-with-pattern-range",
+          "path": "/example/AnnotationRange/horizontal-with-pattern-range",
+          "checksum": "764869035b0a05ae89ba19c6e7e2aee7"
+        },
+        {
+          "name": "horizontal-with-pattern-upper-bound",
+          "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
+          "checksum": "59e0530d47bdadefb4a8da937452dfd5"
+        },
+        {
+          "name": "label-placement",
+          "path": "/example/AnnotationRange/label-placement",
+          "checksum": "b2e5847731fe57e99e9f6b584b419571"
+        },
+        {
+          "name": "vertical-with-gradient-range",
+          "path": "/example/AnnotationRange/vertical-with-gradient-range",
+          "checksum": "6659694b73f3c8add1e7022aa64748a4"
+        },
+        {
+          "name": "vertical-with-pattern-lower-bound",
+          "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
+          "checksum": "79c217ca78c379fae6e77c004b4c7cd0"
+        },
+        {
+          "name": "vertical-with-pattern-range",
+          "path": "/example/AnnotationRange/vertical-with-pattern-range",
+          "checksum": "2fa2cb1bfbce90a2f9a7a0812050efbb"
+        },
+        {
+          "name": "vertical-with-pattern-upper-bound",
+          "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
+          "checksum": "8e2f51a212791f90c25c5a7ad3a93f7b"
+        }
+      ]
+    },
+    {
+      "component": "Arc",
+      "examples": [
+        {
+          "name": "clock",
+          "path": "/example/Arc/clock",
+          "checksum": "789ec253610c9a958c6d5e5fe5c3ba10"
+        },
+        {
+          "name": "color-wheel",
+          "path": "/example/Arc/color-wheel",
+          "checksum": "edaae71497469e043baf500b71c547d4"
+        },
+        {
+          "name": "concentric",
+          "path": "/example/Arc/concentric",
+          "checksum": "23d1db6344877a328a72020cff4426f9"
+        },
+        {
+          "name": "draggable-arc",
+          "path": "/example/Arc/draggable-arc",
+          "checksum": "5344a0bbb361a96b333a8e46ce094e33"
+        },
+        {
+          "name": "gauge",
+          "path": "/example/Arc/gauge",
+          "checksum": "2d36750f741dee6bdf4be9ff4ef90fc3"
+        },
+        {
+          "name": "gauge-gradient",
+          "path": "/example/Arc/gauge-gradient",
+          "checksum": "10d59f5e11a95ce5fa59afb0910ca6bd"
+        },
+        {
+          "name": "label-direction",
+          "path": "/example/Arc/label-direction",
+          "checksum": "ec8ae3538af3600f19e4fd9891611a35"
+        },
+        {
+          "name": "partial-arc",
+          "path": "/example/Arc/partial-arc",
+          "checksum": "8d358168225f09457412732fa8b00984"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Arc/playground",
+          "checksum": "0a904739b45e599e1a0547099ec516f9"
+        },
+        {
+          "name": "segmented-arc",
+          "path": "/example/Arc/segmented-arc",
+          "checksum": "c267e08520df91a0d562181b791bd30c"
+        },
+        {
+          "name": "segmented-arc-clip-mask",
+          "path": "/example/Arc/segmented-arc-clip-mask",
+          "checksum": "4ec3c48596b9dc7b56af6a3bef6f3aba"
+        },
+        {
+          "name": "speedometer",
+          "path": "/example/Arc/speedometer",
+          "checksum": "9730efb5e3636369c9a4b912b1906057"
+        },
+        {
+          "name": "tween-value-on-mount",
+          "path": "/example/Arc/tween-value-on-mount",
+          "checksum": "f6c460e06268adbb8d066f9978c8b95d"
+        }
+      ]
+    },
+    {
+      "component": "ArcChart",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ArcChart/basic",
+          "checksum": "434f27aca05597dbbab8d3819f04b62b"
+        },
+        {
+          "name": "color",
+          "path": "/example/ArcChart/color",
+          "checksum": "8de174055ace07179079afefbfb32d42"
+        },
+        {
+          "name": "gradient-with-text",
+          "path": "/example/ArcChart/gradient-with-text",
+          "checksum": "f757e8e323b3c567818968cb0191bbb3"
+        },
+        {
+          "name": "radius-fixed",
+          "path": "/example/ArcChart/radius-fixed",
+          "checksum": "883fb7e41793f0a7d28814e93cd75921"
+        },
+        {
+          "name": "radius-offset",
+          "path": "/example/ArcChart/radius-offset",
+          "checksum": "ca453a96ad571f0546d08fb4f853b454"
+        },
+        {
+          "name": "radius-percent",
+          "path": "/example/ArcChart/radius-percent",
+          "checksum": "267e8eeeced878fdca8ec7fb76942858"
+        },
+        {
+          "name": "series",
+          "path": "/example/ArcChart/series",
+          "checksum": "4fe87d135d44cee05ea938a3c2261796"
+        },
+        {
+          "name": "series-arc",
+          "path": "/example/ArcChart/series-arc",
+          "checksum": "2bd729da2471df6c43761c723b19f934"
+        },
+        {
+          "name": "series-individual",
+          "path": "/example/ArcChart/series-individual",
+          "checksum": "b4f461d74dd48e083bee7c250c4e5d1e"
+        },
+        {
+          "name": "series-labels",
+          "path": "/example/ArcChart/series-labels",
+          "checksum": "095c9ae85eab6725a0e781c07a8c3869"
+        },
+        {
+          "name": "series-motion-spring",
+          "path": "/example/ArcChart/series-motion-spring",
+          "checksum": "4c3e898e8e0c248bad21680845c44e7c"
+        },
+        {
+          "name": "series-motion-tween",
+          "path": "/example/ArcChart/series-motion-tween",
+          "checksum": "253505efb3cbdb06d7a3228cd2e6696c"
+        },
+        {
+          "name": "series-start-180",
+          "path": "/example/ArcChart/series-start-180",
+          "checksum": "f3b422f0ecd17d3dd5f693d5acba3c0e"
+        },
+        {
+          "name": "series-start-90",
+          "path": "/example/ArcChart/series-start-90",
+          "checksum": "43d46e2194024b65806289438f7438cc"
+        },
+        {
+          "name": "series-track-color",
+          "path": "/example/ArcChart/series-track-color",
+          "checksum": "df510274d5f20e97f39f08258581933c"
+        },
+        {
+          "name": "track-size",
+          "path": "/example/ArcChart/track-size",
+          "checksum": "ca453a96ad571f0546d08fb4f853b454"
+        }
+      ]
+    },
+    {
+      "component": "Area",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Area/basic",
+          "checksum": "bb83009a2fd19cef7826a43e1331d944"
+        },
+        {
+          "name": "clip-tween-on-mount",
+          "path": "/example/Area/clip-tween-on-mount",
+          "checksum": "de07817b9b5820ef60445177cc648a2a"
+        },
+        {
+          "name": "clipped-area-on-tooltip",
+          "path": "/example/Area/clipped-area-on-tooltip",
+          "checksum": "0d11d28c6f457d03a8eaf523bdd9ff83"
+        },
+        {
+          "name": "explicit-axis-ticks-min-max",
+          "path": "/example/Area/explicit-axis-ticks-min-max",
+          "checksum": "fd7137092a61faa36d965a8f62307987"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Area/gradient",
+          "checksum": "063c0ea169422aeffaa01033d97d4c32"
+        },
+        {
+          "name": "gradient-separate-stroke",
+          "path": "/example/Area/gradient-separate-stroke",
+          "checksum": "edc11845c7666d08fe3e9f7d981f2eca"
+        },
+        {
+          "name": "highlight-color-based-on-value-using-color-scale",
+          "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+          "checksum": "c24bd706c2e8e40275e1fd82d9adfa3f"
+        },
+        {
+          "name": "highlight-color-based-on-value-using-tooltip-slot-prop",
+          "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+          "checksum": "ffebc20979144246fc2429203a8e6a1d"
+        },
+        {
+          "name": "multiple-series",
+          "path": "/example/Area/multiple-series",
+          "checksum": "db1dd7e598a2fb1c69b80e343df4289c"
+        },
+        {
+          "name": "multiple-series-highlight-on-hover",
+          "path": "/example/Area/multiple-series-highlight-on-hover",
+          "checksum": "7803a5a1ed70d70cdba18309491ae727"
+        },
+        {
+          "name": "multiple-series-using-overrides",
+          "path": "/example/Area/multiple-series-using-overrides",
+          "checksum": "3bd8110e0a43b4cea9a0b23fc5fe968f"
+        },
+        {
+          "name": "multiple-series-with-labels",
+          "path": "/example/Area/multiple-series-with-labels",
+          "checksum": "e4e4292f9ef256830909fbda0dc24b90"
+        },
+        {
+          "name": "oscilloscope-ridgeline",
+          "path": "/example/Area/oscilloscope-ridgeline",
+          "checksum": "df9688f2ca25fa1070f54d55024024d5"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Area/playground",
+          "checksum": "a0db0cb6375420c152d1580367b0d333"
+        },
+        {
+          "name": "ridgeline",
+          "path": "/example/Area/ridgeline",
+          "checksum": "1c468205a2c0c93aac1ebd136e35186f"
+        },
+        {
+          "name": "ridgeline-kde",
+          "path": "/example/Area/ridgeline-kde",
+          "checksum": "3c73d2eb03ce8444a1774aba013cd5e9"
+        },
+        {
+          "name": "stack",
+          "path": "/example/Area/stack",
+          "checksum": "695109807f225e33050a12fac3c4e5cf"
+        },
+        {
+          "name": "stack-with-gradient",
+          "path": "/example/Area/stack-with-gradient",
+          "checksum": "c281336d9626b6d65c490554659b374f"
+        },
+        {
+          "name": "threshold-with-lineargradient",
+          "path": "/example/Area/threshold-with-lineargradient",
+          "checksum": "4f583d0da584d5359a327d3eab31a429"
+        },
+        {
+          "name": "threshold-with-lineargradient-over-under",
+          "path": "/example/Area/threshold-with-lineargradient-over-under",
+          "checksum": "e91ee635d1cc88d373c92a1ceee817fc"
+        },
+        {
+          "name": "threshold-with-rectclippath",
+          "path": "/example/Area/threshold-with-rectclippath",
+          "checksum": "dd3da5c0feb67958e53ea9a56c9620af"
+        },
+        {
+          "name": "threshold-with-rectclippath-over-under",
+          "path": "/example/Area/threshold-with-rectclippath-over-under",
+          "checksum": "171f9d2eb9de0fd7fd228a201577fa0b"
+        },
+        {
+          "name": "tween-on-mount",
+          "path": "/example/Area/tween-on-mount",
+          "checksum": "d6b4f6eea0e14688f0f862b2e70643bb"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Area/with-labels",
+          "checksum": "c76168d2d54cb7986e790d65300c0c39"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Area/with-tooltip-and-highlight",
+          "checksum": "8a3fbd31936d5e61f5b16da40ef3a204"
+        }
+      ]
+    },
+    {
+      "component": "AreaChart",
+      "examples": [
+        {
+          "name": "all-zero",
+          "path": "/example/AreaChart/all-zero",
+          "checksum": "6ef4fd975ef41a382b32c1602d335cae"
+        },
+        {
+          "name": "band-scale",
+          "path": "/example/AreaChart/band-scale",
+          "checksum": "0bc1feb70b6c90049335582e786d4b6f"
+        },
+        {
+          "name": "basic",
+          "path": "/example/AreaChart/basic",
+          "checksum": "42fd71f7f9c3fdf42b29f4dfc16d2f21"
+        },
+        {
+          "name": "brush",
+          "path": "/example/AreaChart/brush",
+          "checksum": "7602e9c4f824294b1bccf8c68b62b574"
+        },
+        {
+          "name": "brush-sync",
+          "path": "/example/AreaChart/brush-sync",
+          "checksum": "3c42ab058063d2117f68f21bc3b63107"
+        },
+        {
+          "name": "curve",
+          "path": "/example/AreaChart/curve",
+          "checksum": "d5620ef9aa9a1c06527ecffc6354cad5"
+        },
+        {
+          "name": "custom",
+          "path": "/example/AreaChart/custom",
+          "checksum": "3e6780d74ee91df7fb5a2b0ae363e329"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/AreaChart/custom-tooltip",
+          "checksum": "a9bc1fc97a75a2dbd3f42705f06ec614"
+        },
+        {
+          "name": "default-series-label",
+          "path": "/example/AreaChart/default-series-label",
+          "checksum": "8b7c1a5f0c67350d15c5e14a68f25089"
+        },
+        {
+          "name": "funnel",
+          "path": "/example/AreaChart/funnel",
+          "checksum": "8873b7a236e62a2a72c26c5ccd3a26cf"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/AreaChart/gradient",
+          "checksum": "c0e876344138737f22191a19692f5b70"
+        },
+        {
+          "name": "labels",
+          "path": "/example/AreaChart/labels",
+          "checksum": "d013c49c4ecd7461b63980413ae89e3c"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/AreaChart/line-annotation",
+          "checksum": "4053b77ba008b6d7a1163e125c1960d0"
+        },
+        {
+          "name": "markers",
+          "path": "/example/AreaChart/markers",
+          "checksum": "1cf879f77ca5ab7457fc2875d4082096"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/AreaChart/motion-tween",
+          "checksum": "37b44ae6a12cf9b32a0d55c9b42b1f55"
+        },
+        {
+          "name": "null-gaps",
+          "path": "/example/AreaChart/null-gaps",
+          "checksum": "8fecf9196a2d5ed241c099d6b6d4d6fc"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/AreaChart/point-annotations",
+          "checksum": "6db97e413658220e5541925f9f422fc6"
+        },
+        {
+          "name": "point-scale",
+          "path": "/example/AreaChart/point-scale",
+          "checksum": "772d022a91c7921446e1dbda04110cc0"
+        },
+        {
+          "name": "points",
+          "path": "/example/AreaChart/points",
+          "checksum": "c7c8fb29c97784b81a0dbf3cce6b49f0"
+        },
+        {
+          "name": "radial",
+          "path": "/example/AreaChart/radial",
+          "checksum": "8f6a208f420d820ad1ff86446c539e6d"
+        },
+        {
+          "name": "range-annotation",
+          "path": "/example/AreaChart/range-annotation",
+          "checksum": "6d62ec49efd4ec8fd2c14686d7b634ad"
+        },
+        {
+          "name": "series",
+          "path": "/example/AreaChart/series",
+          "checksum": "221e68dc27f3b1997504bface72156e8"
+        },
+        {
+          "name": "series-individual-tooltip",
+          "path": "/example/AreaChart/series-individual-tooltip",
+          "checksum": "a84b2bd70f44988a3651b45d0fa64e55"
+        },
+        {
+          "name": "series-point-annotations",
+          "path": "/example/AreaChart/series-point-annotations",
+          "checksum": "691cbbb010285ebc1ea46f4e9dd55676"
+        },
+        {
+          "name": "series-point-click",
+          "path": "/example/AreaChart/series-point-click",
+          "checksum": "562b518a9f9275a6642d1b0342d670ce"
+        },
+        {
+          "name": "series-separate-data",
+          "path": "/example/AreaChart/series-separate-data",
+          "checksum": "2f2aafa3ce4d11d03acd4ec66a6a9144"
+        },
+        {
+          "name": "series-stack",
+          "path": "/example/AreaChart/series-stack",
+          "checksum": "95d53f113a9bfce730d9cd9f98334032"
+        },
+        {
+          "name": "series-stack-diverging",
+          "path": "/example/AreaChart/series-stack-diverging",
+          "checksum": "b23bee9a689286c633d27f95317a9321"
+        },
+        {
+          "name": "series-stack-expand",
+          "path": "/example/AreaChart/series-stack-expand",
+          "checksum": "4233979f61bb828924ddba7535ee555b"
+        },
+        {
+          "name": "series-stack-gradient",
+          "path": "/example/AreaChart/series-stack-gradient",
+          "checksum": "028eeb209a7b3f66864eaec106fa0a50"
+        },
+        {
+          "name": "series-stack-legend",
+          "path": "/example/AreaChart/series-stack-legend",
+          "checksum": "3e68a1afbb1707cd5bbd28c21aaacbb3"
+        },
+        {
+          "name": "series-stack-legend-labels",
+          "path": "/example/AreaChart/series-stack-legend-labels",
+          "checksum": "c1edfc3ccdfe97c85dbfb5d852937a97"
+        },
+        {
+          "name": "series-stack-legend-placement",
+          "path": "/example/AreaChart/series-stack-legend-placement",
+          "checksum": "1650aed1fe67226d8ce0f253988e82d0"
+        },
+        {
+          "name": "series-stack-separate-data",
+          "path": "/example/AreaChart/series-stack-separate-data",
+          "checksum": "c5ada7b9ce07ab00c101f2f62c99d006"
+        },
+        {
+          "name": "series-tooltip-click",
+          "path": "/example/AreaChart/series-tooltip-click",
+          "checksum": "d34596a25f99e5a9a0244970b35e2787"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/AreaChart/single-axis-x",
+          "checksum": "6c17f6a2b2e8c829ac8f4d2de3c110aa"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/AreaChart/single-axis-y",
+          "checksum": "88f43e60874bef3b352196a28d936152"
+        },
+        {
+          "name": "sparkline",
+          "path": "/example/AreaChart/sparkline",
+          "checksum": "0565b2fabf6705b91f02f037caf29653"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/AreaChart/threshold",
+          "checksum": "24550668d0018307934d31b8dde78e01"
+        },
+        {
+          "name": "threshold-gradient",
+          "path": "/example/AreaChart/threshold-gradient",
+          "checksum": "899f04ce0aa4700ec9ab8b9710dd36af"
+        },
+        {
+          "name": "tooltip-external",
+          "path": "/example/AreaChart/tooltip-external",
+          "checksum": "eb2afbc7a0dbebc1f7ccfe77547851fc"
+        },
+        {
+          "name": "tooltip-fixed-with-hide-delay",
+          "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
+          "checksum": "6eb0bfff9bffb6f7c21cd0b2c8808102"
+        },
+        {
+          "name": "tooltip-locking",
+          "path": "/example/AreaChart/tooltip-locking",
+          "checksum": "f5e240f2e05b96a8986f7647ed05d307"
+        }
+      ]
+    },
+    {
+      "component": "Axis",
+      "examples": [
+        {
+          "name": "arrow-markers",
+          "path": "/example/Axis/arrow-markers",
+          "checksum": "3d0a212bb7a2a22397fe9753bb2e92f4"
+        },
+        {
+          "name": "axis-label-placement-left-right",
+          "path": "/example/Axis/axis-label-placement-left-right",
+          "checksum": "e97d2877de18aed2304e3de179073cc6"
+        },
+        {
+          "name": "axis-label-placement-top-bottom",
+          "path": "/example/Axis/axis-label-placement-top-bottom",
+          "checksum": "21ab207c64e335d90f31ff9939bc12b2"
+        },
+        {
+          "name": "barchart-tickspacing",
+          "path": "/example/Axis/barchart-tickspacing",
+          "checksum": "9a654f6fda830f6a8a2bb35621b64a93"
+        },
+        {
+          "name": "barchart-xinterval-xinset",
+          "path": "/example/Axis/barchart-xinterval-xinset",
+          "checksum": "b27288c0a347cece85007f81740ab1dd"
+        },
+        {
+          "name": "explicit-ticks",
+          "path": "/example/Axis/explicit-ticks",
+          "checksum": "4d6ffd57366c086f5051d307166cad41"
+        },
+        {
+          "name": "extent-ticks-only",
+          "path": "/example/Axis/extent-ticks-only",
+          "checksum": "3cb794d18e842d5c7fd24bff5ccf84e5"
+        },
+        {
+          "name": "grid",
+          "path": "/example/Axis/grid",
+          "checksum": "08a27b46ddf8ba5ec4907c20d47d6099"
+        },
+        {
+          "name": "grid-dashed",
+          "path": "/example/Axis/grid-dashed",
+          "checksum": "3970be10af86a75163111edf94140d0d"
+        },
+        {
+          "name": "hide-zero-filter",
+          "path": "/example/Axis/hide-zero-filter",
+          "checksum": "514405af420664df69c26a146ab169c6"
+        },
+        {
+          "name": "hide-zero-format",
+          "path": "/example/Axis/hide-zero-format",
+          "checksum": "a2ab185afaf6cd216c7665dbfbebe9d2"
+        },
+        {
+          "name": "inject-ticks",
+          "path": "/example/Axis/inject-ticks",
+          "checksum": "cd1817137228e96c7d7de6cb4f4eba89"
+        },
+        {
+          "name": "integer-only-filter",
+          "path": "/example/Axis/integer-only-filter",
+          "checksum": "badf9533b776fe4e9f9d623911189e04"
+        },
+        {
+          "name": "integer-only-format",
+          "path": "/example/Axis/integer-only-format",
+          "checksum": "a28d1eb7454e4a4c7f6ccf6622ededb8"
+        },
+        {
+          "name": "labels-next-hash",
+          "path": "/example/Axis/labels-next-hash",
+          "checksum": "8954583323c7bb23eddee95da407aecb"
+        },
+        {
+          "name": "linechart-tickspacing",
+          "path": "/example/Axis/linechart-tickspacing",
+          "checksum": "b6942a3a773b12fa00d4ff20f15d9ed2"
+        },
+        {
+          "name": "log-scale",
+          "path": "/example/Axis/log-scale",
+          "checksum": "0f06cec11ca7cb26676856fb6ebc67a7"
+        },
+        {
+          "name": "multiline-tick-labels",
+          "path": "/example/Axis/multiline-tick-labels",
+          "checksum": "16484d1c4fba7bcbd220c8cb41f51a9d"
+        },
+        {
+          "name": "multiple-axis-grid-and-rules",
+          "path": "/example/Axis/multiple-axis-grid-and-rules",
+          "checksum": "99bbc807aae14ebaa82b9ee1719edc59"
+        },
+        {
+          "name": "multiple-axis-grid-and-rules-separate-grid",
+          "path": "/example/Axis/multiple-axis-grid-and-rules-separate-grid",
+          "checksum": "943ac5efd478ceeedc0e8d8d1e91af63"
+        },
+        {
+          "name": "multiple-axis-grid-with-single-rule",
+          "path": "/example/Axis/multiple-axis-grid-with-single-rule",
+          "checksum": "b4fbfabebc426daa79cb7cddaf1a94ff"
+        },
+        {
+          "name": "multiple-axis-same-placement-bottom",
+          "path": "/example/Axis/multiple-axis-same-placement-bottom",
+          "checksum": "cccf63c0f2f4d7f8ad814d8e18261ebc"
+        },
+        {
+          "name": "multiple-axis-same-placement-right",
+          "path": "/example/Axis/multiple-axis-same-placement-right",
+          "checksum": "e2f9d61193404363955864300caa384c"
+        },
+        {
+          "name": "override-axis-ticks-scale",
+          "path": "/example/Axis/override-axis-ticks-scale",
+          "checksum": "c3d2ec1f9be3bcc09362af96feddccab"
+        },
+        {
+          "name": "placement-bottom-left",
+          "path": "/example/Axis/placement-bottom-left",
+          "checksum": "869b14536a8528fc011e5a3be484d515"
+        },
+        {
+          "name": "placement-bottom-left-rule",
+          "path": "/example/Axis/placement-bottom-left-rule",
+          "checksum": "d3a4bcf17b0b43c5f8210c99a36d9178"
+        },
+        {
+          "name": "placement-top-right",
+          "path": "/example/Axis/placement-top-right",
+          "checksum": "9df4fed9a24749bae430f1b93b0f066a"
+        },
+        {
+          "name": "placement-top-right-rule",
+          "path": "/example/Axis/placement-top-right-rule",
+          "checksum": "2322c52549c110b20fb5fb48e6e9c9b7"
+        },
+        {
+          "name": "radial-grid",
+          "path": "/example/Axis/radial-grid",
+          "checksum": "b4f6a1f387f0437783713f5f1eb171fc"
+        },
+        {
+          "name": "radial-rule",
+          "path": "/example/Axis/radial-rule",
+          "checksum": "695c865a4059680b11fefe62785962ac"
+        },
+        {
+          "name": "remove-tick-marks",
+          "path": "/example/Axis/remove-tick-marks",
+          "checksum": "d7df1019652a1054faf3faa3926e1275"
+        },
+        {
+          "name": "rotate-labels",
+          "path": "/example/Axis/rotate-labels",
+          "checksum": "b05fa27b5787abae465b86da8d2399c4"
+        },
+        {
+          "name": "tick-count",
+          "path": "/example/Axis/tick-count",
+          "checksum": "6a805d4f69fa4b9f3c6bf5ee4472c6c5"
+        },
+        {
+          "name": "tick-label-styling",
+          "path": "/example/Axis/tick-label-styling",
+          "checksum": "0792f03cca1d6671235eab0da9770be5"
+        },
+        {
+          "name": "tick-spacing",
+          "path": "/example/Axis/tick-spacing",
+          "checksum": "23bc6b0fa9bbe971e7ac2471a7f8906c"
+        },
+        {
+          "name": "time-scale-auto",
+          "path": "/example/Axis/time-scale-auto",
+          "checksum": "89fd782776b647641b78702e488446ca"
+        },
+        {
+          "name": "time-scale-auto-format-filtering",
+          "path": "/example/Axis/time-scale-auto-format-filtering",
+          "checksum": "224506d56d62bb2826573c277222f6b5"
+        },
+        {
+          "name": "time-scale-auto-multiline",
+          "path": "/example/Axis/time-scale-auto-multiline",
+          "checksum": "6298d56b020cf24821482a780191bde3"
+        },
+        {
+          "name": "time-scale-brush",
+          "path": "/example/Axis/time-scale-brush",
+          "checksum": "2df83b07578ccee97c281c1a2a1de58a"
+        },
+        {
+          "name": "time-scale-brush-multiline",
+          "path": "/example/Axis/time-scale-brush-multiline",
+          "checksum": "6ddcb90afea8bea94d1de34fce8d7c5b"
+        },
+        {
+          "name": "time-scale-explicit",
+          "path": "/example/Axis/time-scale-explicit",
+          "checksum": "ded9679e16f989a3eebc3c27b4f00713"
+        },
+        {
+          "name": "time-scale-explicit-multiline",
+          "path": "/example/Axis/time-scale-explicit-multiline",
+          "checksum": "f6d4edd0194a3733793dfdea2f54bb79"
+        }
+      ]
+    },
+    {
+      "component": "BarChart",
+      "examples": [
+        {
+          "name": "axis-labels-inside-bars",
+          "path": "/example/BarChart/axis-labels-inside-bars",
+          "checksum": "8c035ba2c321aa11da889262e85e12c9"
+        },
+        {
+          "name": "axis-labels-inside-bars-using-labels",
+          "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
+          "checksum": "6e804c78d9038c68ef7e0ccd5565dc53"
+        },
+        {
+          "name": "both-axis-grid",
+          "path": "/example/BarChart/both-axis-grid",
+          "checksum": "e817b450b0dc574cc8d5565283c16a43"
+        },
+        {
+          "name": "both-axis-grid-align-between",
+          "path": "/example/BarChart/both-axis-grid-align-between",
+          "checksum": "6ec5fe2dfecbae311aa4df46344c5729"
+        },
+        {
+          "name": "brush",
+          "path": "/example/BarChart/brush",
+          "checksum": "4b39996c958561578c7d85b6d6fb9682"
+        },
+        {
+          "name": "brush-band",
+          "path": "/example/BarChart/brush-band",
+          "checksum": "2ef08d588b0618e3424f8719e6c6737e"
+        },
+        {
+          "name": "brush-pan-zoom",
+          "path": "/example/BarChart/brush-pan-zoom",
+          "checksum": "9296a53f9fc964f5e39f5e6513f0640e"
+        },
+        {
+          "name": "brush-pan-zoom-band",
+          "path": "/example/BarChart/brush-pan-zoom-band",
+          "checksum": "48c54f3baf7cd75f0483b802d73ed178"
+        },
+        {
+          "name": "color-bars-class",
+          "path": "/example/BarChart/color-bars-class",
+          "checksum": "4ec9a4f2f6ae3cdfd6d2a2f6a8040fdb"
+        },
+        {
+          "name": "color-per-value",
+          "path": "/example/BarChart/color-per-value",
+          "checksum": "e065a475eb911814727179eb8236d082"
+        },
+        {
+          "name": "color-threshold",
+          "path": "/example/BarChart/color-threshold",
+          "checksum": "eb3c4c49330f9eaf1b326acf7a0b5408"
+        },
+        {
+          "name": "color-using-scale",
+          "path": "/example/BarChart/color-using-scale",
+          "checksum": "0df6a9556a3ee916dd104fff879b23c8"
+        },
+        {
+          "name": "company-race",
+          "path": "/example/BarChart/company-race",
+          "checksum": "a73d84295ce45c13b79ec0b41a1917f6"
+        },
+        {
+          "name": "custom-chart",
+          "path": "/example/BarChart/custom-chart",
+          "checksum": "92752845212701f133a526ac2e979663"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/BarChart/custom-tooltip",
+          "checksum": "2cbb9789e4ad9acdaf15238c74544ed2"
+        },
+        {
+          "name": "duration",
+          "path": "/example/BarChart/duration",
+          "checksum": "c9ee9d9e9a3e41d44dfdef1812aae1c3"
+        },
+        {
+          "name": "duration-bars",
+          "path": "/example/BarChart/duration-bars",
+          "checksum": "7094f0fbcf58799b8d5b43f70a7091f6"
+        },
+        {
+          "name": "duration-bars-color",
+          "path": "/example/BarChart/duration-bars-color",
+          "checksum": "877b92eb5788d19f1713e1e73598f20a"
+        },
+        {
+          "name": "duration-bars-dense",
+          "path": "/example/BarChart/duration-bars-dense",
+          "checksum": "3f57e36835922018d4f7d16cd52febcf"
+        },
+        {
+          "name": "duration-bars-dense-lanes",
+          "path": "/example/BarChart/duration-bars-dense-lanes",
+          "checksum": "6a90824f26e0cd89e00e7511cabbcfed"
+        },
+        {
+          "name": "duration-bars-lanes",
+          "path": "/example/BarChart/duration-bars-lanes",
+          "checksum": "2fe544a5801d29c14a8035a94c482462"
+        },
+        {
+          "name": "duration-civilization-timeline",
+          "path": "/example/BarChart/duration-civilization-timeline",
+          "checksum": "ca017a1f8d057f3f1c1475f8aba855ce"
+        },
+        {
+          "name": "duration-civilization-timeline-dense",
+          "path": "/example/BarChart/duration-civilization-timeline-dense",
+          "checksum": "df2cf7296850b070c855e65c3abb37fc"
+        },
+        {
+          "name": "duration-labels",
+          "path": "/example/BarChart/duration-labels",
+          "checksum": "e0addc4369e66959968dfd8eaaa231fb"
+        },
+        {
+          "name": "duration-points",
+          "path": "/example/BarChart/duration-points",
+          "checksum": "ab28c2120617002ebe7e0a44ab3a3497"
+        },
+        {
+          "name": "duration-points-color",
+          "path": "/example/BarChart/duration-points-color",
+          "checksum": "53f9afa90c4ce10b6cb39b35a770bece"
+        },
+        {
+          "name": "dynamic-height",
+          "path": "/example/BarChart/dynamic-height",
+          "checksum": "736d91a57431ef084f3fad6cc2cb45e7"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/BarChart/gradient",
+          "checksum": "4ffa0f07e3ba14490969c3be8c822ac6"
+        },
+        {
+          "name": "group-series",
+          "path": "/example/BarChart/group-series",
+          "checksum": "18c05235343ff887e16d2460b3c03ca2"
+        },
+        {
+          "name": "group-series-bar-click",
+          "path": "/example/BarChart/group-series-bar-click",
+          "checksum": "e94e7254fa0f2b5f9e4c7c05144df457"
+        },
+        {
+          "name": "group-series-horizontal",
+          "path": "/example/BarChart/group-series-horizontal",
+          "checksum": "0d9276dca37fbb67399c8c1253082a8a"
+        },
+        {
+          "name": "group-series-labels",
+          "path": "/example/BarChart/group-series-labels",
+          "checksum": "bef16c9f16597bfcc77f9d41174c4175"
+        },
+        {
+          "name": "group-series-series-long-data",
+          "path": "/example/BarChart/group-series-series-long-data",
+          "checksum": "e73f65c1ecbb15566bf4758c142bdeb4"
+        },
+        {
+          "name": "highlight-below-marks",
+          "path": "/example/BarChart/highlight-below-marks",
+          "checksum": "6b68a0c0357ecaa8c064e5ea64b9e0cb"
+        },
+        {
+          "name": "histogram-date-time-count",
+          "path": "/example/BarChart/histogram-date-time-count",
+          "checksum": "43df8ac6d94df728e85ee39713758ee4"
+        },
+        {
+          "name": "histogram-date-time-interval",
+          "path": "/example/BarChart/histogram-date-time-interval",
+          "checksum": "825d5b3ab5c44714f963d86f0a2f77e5"
+        },
+        {
+          "name": "histogram-horizontal",
+          "path": "/example/BarChart/histogram-horizontal",
+          "checksum": "7669edcce23cd2bef74e789218696626"
+        },
+        {
+          "name": "histogram-random-distribution",
+          "path": "/example/BarChart/histogram-random-distribution",
+          "checksum": "5facd6821d027e02465bd2359f84b5ac"
+        },
+        {
+          "name": "histogram-vertical",
+          "path": "/example/BarChart/histogram-vertical",
+          "checksum": "cef6c29d0cdd069126359e700918728f"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/BarChart/horizontal",
+          "checksum": "cfd4f6e4203912383e72d3b598a16707"
+        },
+        {
+          "name": "labels",
+          "path": "/example/BarChart/labels",
+          "checksum": "2a56585648b8154d7db699de03e72fd7"
+        },
+        {
+          "name": "labels-inside-placement",
+          "path": "/example/BarChart/labels-inside-placement",
+          "checksum": "ccf493026818850c9815fb2c743ce6c1"
+        },
+        {
+          "name": "labels-placement",
+          "path": "/example/BarChart/labels-placement",
+          "checksum": "4d364526a3214078358aebacd5027724"
+        },
+        {
+          "name": "language-race",
+          "path": "/example/BarChart/language-race",
+          "checksum": "bcaaec59ee23095811c0470038d09ff3"
+        },
+        {
+          "name": "legend-custom-labels",
+          "path": "/example/BarChart/legend-custom-labels",
+          "checksum": "6722592ba96dc7f6f71f350201ec632f"
+        },
+        {
+          "name": "legend-group-series",
+          "path": "/example/BarChart/legend-group-series",
+          "checksum": "2877956b51b0b89fe58ddb033ae85eb6"
+        },
+        {
+          "name": "legend-placement",
+          "path": "/example/BarChart/legend-placement",
+          "checksum": "101b0f2bf70031bfd19639e4ad05eb30"
+        },
+        {
+          "name": "legend-stack-series",
+          "path": "/example/BarChart/legend-stack-series",
+          "checksum": "9dc378ac34027aa55883967d4d7d13a9"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/BarChart/line-annotation",
+          "checksum": "9a93f60fbf296ae0aaf2fa0f7d561b39"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/BarChart/motion-tween",
+          "checksum": "f5adeddb1d3e18a81716c8bb604d6b87"
+        },
+        {
+          "name": "oscilloscope-frequency",
+          "path": "/example/BarChart/oscilloscope-frequency",
+          "checksum": "6129f43de5d789b96af96078217a0112"
+        },
+        {
+          "name": "override-axis-ticks-with-custom-scale",
+          "path": "/example/BarChart/override-axis-ticks-with-custom-scale",
+          "checksum": "026168606f6ad4a127e27e3a5eb3b36c"
+        },
+        {
+          "name": "pan-zoom",
+          "path": "/example/BarChart/pan-zoom",
+          "checksum": "1471b5b3042e9c7b45a7a8f540abd32b"
+        },
+        {
+          "name": "pan-zoom-band",
+          "path": "/example/BarChart/pan-zoom-band",
+          "checksum": "0dc013ca70bf8642e588bbd59b6dbb9a"
+        },
+        {
+          "name": "pan-zoom-domain-extent",
+          "path": "/example/BarChart/pan-zoom-domain-extent",
+          "checksum": "8a76dfd3385254f49ee0d41b10ef79a0"
+        },
+        {
+          "name": "pan-zoom-scale-extent",
+          "path": "/example/BarChart/pan-zoom-scale-extent",
+          "checksum": "39d02259a2b205cb17e2128a721aca1b"
+        },
+        {
+          "name": "point-annotation",
+          "path": "/example/BarChart/point-annotation",
+          "checksum": "8679e2a97a44687c14cb1283f3c6d923"
+        },
+        {
+          "name": "radial-horizontal",
+          "path": "/example/BarChart/radial-horizontal",
+          "checksum": "e2300011b688b850d8bdd45fb343e56f"
+        },
+        {
+          "name": "radial-horizontal-color-per-value",
+          "path": "/example/BarChart/radial-horizontal-color-per-value",
+          "checksum": "209e24200cf08a9c7785be2da4dab4d0"
+        },
+        {
+          "name": "radial-horizontal-duration",
+          "path": "/example/BarChart/radial-horizontal-duration",
+          "checksum": "3111f583f813dd9c463cac6b2c780aa9"
+        },
+        {
+          "name": "radial-horizontal-grid-between",
+          "path": "/example/BarChart/radial-horizontal-grid-between",
+          "checksum": "e0e44d4654b4efcb9fb62bcd659a7abf"
+        },
+        {
+          "name": "radial-vertical",
+          "path": "/example/BarChart/radial-vertical",
+          "checksum": "c66caa7d35bf3b64f9eb20c47aa64c99"
+        },
+        {
+          "name": "radial-vertical-arcpadding",
+          "path": "/example/BarChart/radial-vertical-arcpadding",
+          "checksum": "a6a87987a236e2d8d43c8532f9fa7b7d"
+        },
+        {
+          "name": "radial-vertical-yrange",
+          "path": "/example/BarChart/radial-vertical-yrange",
+          "checksum": "8e38f346c91572bd39530d8448972b14"
+        },
+        {
+          "name": "radial-weather",
+          "path": "/example/BarChart/radial-weather",
+          "checksum": "2248c447feac100a6170ef3ca25b217b"
+        },
+        {
+          "name": "range-annotation-multiple",
+          "path": "/example/BarChart/range-annotation-multiple",
+          "checksum": "ce791997448744554e9efca1b391023a"
+        },
+        {
+          "name": "range-annotation-single",
+          "path": "/example/BarChart/range-annotation-single",
+          "checksum": "a1bfa6b05fc47c90db837c9e3298bffb"
+        },
+        {
+          "name": "range-annotation-value",
+          "path": "/example/BarChart/range-annotation-value",
+          "checksum": "cbadd29dfecae5651fc96a8b5f3e912a"
+        },
+        {
+          "name": "remove-rounding",
+          "path": "/example/BarChart/remove-rounding",
+          "checksum": "5bc954ffd51237063ff59da849d05c90"
+        },
+        {
+          "name": "scale-override",
+          "path": "/example/BarChart/scale-override",
+          "checksum": "ac9b8b6bf6f7548198e09f5ffa151985"
+        },
+        {
+          "name": "series",
+          "path": "/example/BarChart/series",
+          "checksum": "f44592bacb35d9b131fa40d9abbeed21"
+        },
+        {
+          "name": "series-data",
+          "path": "/example/BarChart/series-data",
+          "checksum": "75aa00f31978c818689b616910b9b11a"
+        },
+        {
+          "name": "series-diverging",
+          "path": "/example/BarChart/series-diverging",
+          "checksum": "1ad3d332876566e21f929baf20ddbba6"
+        },
+        {
+          "name": "series-horizontal",
+          "path": "/example/BarChart/series-horizontal",
+          "checksum": "d63f4afe97db1f5e3c0f0215e3d71f40"
+        },
+        {
+          "name": "series-horizontal-diverging",
+          "path": "/example/BarChart/series-horizontal-diverging",
+          "checksum": "25a296da40c0e694ebb6a19b25a48b10"
+        },
+        {
+          "name": "series-horizontal-diverging-as-percent",
+          "path": "/example/BarChart/series-horizontal-diverging-as-percent",
+          "checksum": "a45af53ba921d1867507ff7ba433b9b8"
+        },
+        {
+          "name": "series-horizontal-labels",
+          "path": "/example/BarChart/series-horizontal-labels",
+          "checksum": "550834cdd6fa0238e0f8a01314074a31"
+        },
+        {
+          "name": "series-stack-separate-data",
+          "path": "/example/BarChart/series-stack-separate-data",
+          "checksum": "8928effba8167e9912b3659e86754b99"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/BarChart/single-axis-x",
+          "checksum": "728fcdb1b07f1c7eb5c782c0ca26c14a"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/BarChart/single-axis-y",
+          "checksum": "d3bcd6fd605d1034f11c49205fc3ae43"
+        },
+        {
+          "name": "single-dimension",
+          "path": "/example/BarChart/single-dimension",
+          "checksum": "14171b31fa5469972461fd3d5a7ed80f"
+        },
+        {
+          "name": "single-stack-with-indicator",
+          "path": "/example/BarChart/single-stack-with-indicator",
+          "checksum": "7fc32a900dccacd1e3f4c22caec3a834"
+        },
+        {
+          "name": "sparkbar",
+          "path": "/example/BarChart/sparkbar",
+          "checksum": "ebd32437b3ed84c269bbfa313383f61c"
+        },
+        {
+          "name": "sparkbar-fixed-position-tooltip",
+          "path": "/example/BarChart/sparkbar-fixed-position-tooltip",
+          "checksum": "ef55a8fd59f1fae465823857d7ec472e"
+        },
+        {
+          "name": "sparkbar-negative-data",
+          "path": "/example/BarChart/sparkbar-negative-data",
+          "checksum": "c87ff10ae10e2ddc70afcd41f9a39b19"
+        },
+        {
+          "name": "sparkbar-within-a-paragraph",
+          "path": "/example/BarChart/sparkbar-within-a-paragraph",
+          "checksum": "25e0b68fef6d9b72dc2938f099a6886f"
+        },
+        {
+          "name": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+          "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+          "checksum": "0cd97f195418c30be66871343834df55"
+        },
+        {
+          "name": "stack-series",
+          "path": "/example/BarChart/stack-series",
+          "checksum": "5eb4e194cdce83ba4e9f41bce3524857"
+        },
+        {
+          "name": "stack-series-diverging",
+          "path": "/example/BarChart/stack-series-diverging",
+          "checksum": "179ef6038054a289edfebe6641be0d1f"
+        },
+        {
+          "name": "stack-series-expand",
+          "path": "/example/BarChart/stack-series-expand",
+          "checksum": "6bd3a9f617bd2d10f4548aa38c0e0d2c"
+        },
+        {
+          "name": "stack-series-horizontal",
+          "path": "/example/BarChart/stack-series-horizontal",
+          "checksum": "89abc14f2d87780a87d4c31a21526361"
+        },
+        {
+          "name": "stack-series-padded",
+          "path": "/example/BarChart/stack-series-padded",
+          "checksum": "46764537a395369722fa547c86e8e152"
+        },
+        {
+          "name": "time-scale-interval",
+          "path": "/example/BarChart/time-scale-interval",
+          "checksum": "4a271388bbe97e78d3a11ff0570bd02c"
+        },
+        {
+          "name": "time-scale-interval-horizontal",
+          "path": "/example/BarChart/time-scale-interval-horizontal",
+          "checksum": "58e500e52257a5be20969bb4ad872e78"
+        },
+        {
+          "name": "time-scale-interval-with-inset",
+          "path": "/example/BarChart/time-scale-interval-with-inset",
+          "checksum": "e56aa2d7f3bccc64a25b4799c6cfd1ba"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/BarChart/tooltip-click",
+          "checksum": "661ae9dc8009fc1653158150c1a06e64"
+        },
+        {
+          "name": "vertical-default",
+          "path": "/example/BarChart/vertical-default",
+          "checksum": "fbc64ff1e4a255e2cb8f79400bb22d0e"
+        },
+        {
+          "name": "vertical-fixed-width",
+          "path": "/example/BarChart/vertical-fixed-width",
+          "checksum": "429b1ed7d40034eb54f5753e9260deaa"
+        },
+        {
+          "name": "waterfall",
+          "path": "/example/BarChart/waterfall",
+          "checksum": "57f4946c78dbf1d37d4e162e0c714bfd"
+        }
+      ]
+    },
+    {
+      "component": "Bars",
+      "examples": [
+        {
+          "name": "horizontal-average-annotation-rule",
+          "path": "/example/Bars/horizontal-average-annotation-rule",
+          "checksum": "9eea001d39b0fccc6b3fcd28efe3dbb7"
+        },
+        {
+          "name": "horizontal-basic",
+          "path": "/example/Bars/horizontal-basic",
+          "checksum": "a37797c22b1ee2496086b54a76caa15a"
+        },
+        {
+          "name": "horizontal-calculated-value-domain-negative",
+          "path": "/example/Bars/horizontal-calculated-value-domain-negative",
+          "checksum": "846a90c324e8a6296fce7fc2f8433d74"
+        },
+        {
+          "name": "horizontal-calculated-value-domain-positive",
+          "path": "/example/Bars/horizontal-calculated-value-domain-positive",
+          "checksum": "818a135bb9867f1eeb82e400b0650538"
+        },
+        {
+          "name": "horizontal-candlestick-bars",
+          "path": "/example/Bars/horizontal-candlestick-bars",
+          "checksum": "def6c08f609ea4fe4f650f151abb90c7"
+        },
+        {
+          "name": "horizontal-click-handler",
+          "path": "/example/Bars/horizontal-click-handler",
+          "checksum": "e4e293582d1ba54739fcda6c59f7f54e"
+        },
+        {
+          "name": "horizontal-customize-individual-styles",
+          "path": "/example/Bars/horizontal-customize-individual-styles",
+          "checksum": "5afedfeadeb1a428b498696412dc5255"
+        },
+        {
+          "name": "horizontal-gradient",
+          "path": "/example/Bars/horizontal-gradient",
+          "checksum": "b2702b71d7965beb26677b394e54ca7b"
+        },
+        {
+          "name": "horizontal-grouped",
+          "path": "/example/Bars/horizontal-grouped",
+          "checksum": "0e2cb872ae26bb2a7ca0749836c1aadc"
+        },
+        {
+          "name": "horizontal-grouped-and-stacked",
+          "path": "/example/Bars/horizontal-grouped-and-stacked",
+          "checksum": "d4af9b37e348249330a60096a8574dae"
+        },
+        {
+          "name": "horizontal-grouped-stacked-or-both-transition",
+          "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
+          "checksum": "8502d05abfd2020bac6a75e94bbff000"
+        },
+        {
+          "name": "horizontal-highlight-individual-bar",
+          "path": "/example/Bars/horizontal-highlight-individual-bar",
+          "checksum": "7bba10d825d8eb8862801f4da5418d3e"
+        },
+        {
+          "name": "horizontal-highlight-individual-bar-line",
+          "path": "/example/Bars/horizontal-highlight-individual-bar-line",
+          "checksum": "72760bbecf06e5a1ceea725a2ee7e389"
+        },
+        {
+          "name": "horizontal-inside-labels",
+          "path": "/example/Bars/horizontal-inside-labels",
+          "checksum": "5679a16ea30fd2471f4ef2fe23607428"
+        },
+        {
+          "name": "horizontal-limit-ticks-count",
+          "path": "/example/Bars/horizontal-limit-ticks-count",
+          "checksum": "7582ff87454dbce38174f35050a5c319"
+        },
+        {
+          "name": "horizontal-limit-ticks-second-scale",
+          "path": "/example/Bars/horizontal-limit-ticks-second-scale",
+          "checksum": "6f3f56ac1125a098b460c8443153b827"
+        },
+        {
+          "name": "horizontal-multiple-diverging",
+          "path": "/example/Bars/horizontal-multiple-diverging",
+          "checksum": "0503db10eb82ea16087b9c156200e6dd"
+        },
+        {
+          "name": "horizontal-multiple-overlapping",
+          "path": "/example/Bars/horizontal-multiple-overlapping",
+          "checksum": "dfbcd5475d47f91f44ca45b43c366927"
+        },
+        {
+          "name": "horizontal-outside-labels-default",
+          "path": "/example/Bars/horizontal-outside-labels-default",
+          "checksum": "65f6dd8281327c40bd47eb15a0630e4c"
+        },
+        {
+          "name": "horizontal-rounded-right-only",
+          "path": "/example/Bars/horizontal-rounded-right-only",
+          "checksum": "48bb22034438eec58605e84d576d1e92"
+        },
+        {
+          "name": "horizontal-stacked",
+          "path": "/example/Bars/horizontal-stacked",
+          "checksum": "4060456ab6a985b75976e415c2a5d6d9"
+        },
+        {
+          "name": "horizontal-stacked-percent",
+          "path": "/example/Bars/horizontal-stacked-percent",
+          "checksum": "ecf9505d44539ddaaf1e3b6133cea934"
+        },
+        {
+          "name": "horizontal-stagger-tween-on-mount",
+          "path": "/example/Bars/horizontal-stagger-tween-on-mount",
+          "checksum": "49487ada9ac802323afef1ea6ea87876"
+        },
+        {
+          "name": "horizontal-time-scale-with-inset",
+          "path": "/example/Bars/horizontal-time-scale-with-inset",
+          "checksum": "014946708fa7f5501326be7021a4a0cc"
+        },
+        {
+          "name": "horizontal-time-scale-with-interval",
+          "path": "/example/Bars/horizontal-time-scale-with-interval",
+          "checksum": "364d452641c8b5961dcd3465f696033d"
+        },
+        {
+          "name": "horizontal-time-scale-with-missing-data",
+          "path": "/example/Bars/horizontal-time-scale-with-missing-data",
+          "checksum": "d87cfbef7b3de94d090f7b193d07bcce"
+        },
+        {
+          "name": "horizontal-tooltip-and-bar-highlight",
+          "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
+          "checksum": "8b06861b85b819b63fa3f7ea2256beb9"
+        },
+        {
+          "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "checksum": "1a595340a681b18532411136205ba781"
+        },
+        {
+          "name": "horizontal-tooltip-and-clipped-highlight",
+          "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+          "checksum": "1f891b675d6e2ae5b20d7950b2a6eda3"
+        },
+        {
+          "name": "horizontal-tooltip-and-highlight",
+          "path": "/example/Bars/horizontal-tooltip-and-highlight",
+          "checksum": "6263955c0cff6ab9b460a999cce342c0"
+        },
+        {
+          "name": "horizontal-tween-on-mount",
+          "path": "/example/Bars/horizontal-tween-on-mount",
+          "checksum": "401b79dc30a8ffe7b5c0f0ce566ee1cb"
+        },
+        {
+          "name": "horizontal-with-grid-on-top",
+          "path": "/example/Bars/horizontal-with-grid-on-top",
+          "checksum": "c526aa173e96c4dd8b966ac718b66747"
+        },
+        {
+          "name": "horizontal-with-grid-on-top-mix-blend",
+          "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
+          "checksum": "6dc9dba74d6c208c01d3cf4d8ef44152"
+        },
+        {
+          "name": "vertical-average-annotation-rule",
+          "path": "/example/Bars/vertical-average-annotation-rule",
+          "checksum": "c0a6506dd3587d5c4a343f79046fa9aa"
+        },
+        {
+          "name": "vertical-basic",
+          "path": "/example/Bars/vertical-basic",
+          "checksum": "6ad93e62f8632b5e2fe7979294bc7381"
+        },
+        {
+          "name": "vertical-calculated-value-domain-negative",
+          "path": "/example/Bars/vertical-calculated-value-domain-negative",
+          "checksum": "11b4797f3a4193432105572e20f57a46"
+        },
+        {
+          "name": "vertical-calculated-value-domain-positive",
+          "path": "/example/Bars/vertical-calculated-value-domain-positive",
+          "checksum": "31b48a92646f34eb4e7d08b0c4f9123f"
+        },
+        {
+          "name": "vertical-click-handler",
+          "path": "/example/Bars/vertical-click-handler",
+          "checksum": "aa8c2804783003db4b91f196f1536b8f"
+        },
+        {
+          "name": "vertical-customize-individual-styles",
+          "path": "/example/Bars/vertical-customize-individual-styles",
+          "checksum": "9e2139bc1821ee3f05d047a4f8cb3181"
+        },
+        {
+          "name": "vertical-fixed-width",
+          "path": "/example/Bars/vertical-fixed-width",
+          "checksum": "25100d1f08d9da028b0fd550389af963"
+        },
+        {
+          "name": "vertical-gradient",
+          "path": "/example/Bars/vertical-gradient",
+          "checksum": "d967b6d4bd6123641dd02612b773e02a"
+        },
+        {
+          "name": "vertical-grouped",
+          "path": "/example/Bars/vertical-grouped",
+          "checksum": "0366ac94f810d72768d356447b245244"
+        },
+        {
+          "name": "vertical-grouped-and-stacked",
+          "path": "/example/Bars/vertical-grouped-and-stacked",
+          "checksum": "24f13675d1d728e5b6481d39c73400c7"
+        },
+        {
+          "name": "vertical-grouped-stacked-or-both-transition",
+          "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+          "checksum": "a59c0294ac2ed6987fbb1471fffd1be0"
+        },
+        {
+          "name": "vertical-highlight-individual-bar",
+          "path": "/example/Bars/vertical-highlight-individual-bar",
+          "checksum": "6e20dfc971d0c0c5b5f055f428cc46af"
+        },
+        {
+          "name": "vertical-highlight-individual-bar-line",
+          "path": "/example/Bars/vertical-highlight-individual-bar-line",
+          "checksum": "22209aebc8d48fbdfcf47aab32177a09"
+        },
+        {
+          "name": "vertical-inside-labels",
+          "path": "/example/Bars/vertical-inside-labels",
+          "checksum": "6e52c08b916715ce0eabecb2c7c65f67"
+        },
+        {
+          "name": "vertical-limit-ticks-count",
+          "path": "/example/Bars/vertical-limit-ticks-count",
+          "checksum": "d56363fe45ff5ffd7fb84016a5ddc2fb"
+        },
+        {
+          "name": "vertical-limit-ticks-second-scale",
+          "path": "/example/Bars/vertical-limit-ticks-second-scale",
+          "checksum": "e37d4770553941de7dc68d811ebe2faf"
+        },
+        {
+          "name": "vertical-multiple-diverging",
+          "path": "/example/Bars/vertical-multiple-diverging",
+          "checksum": "d413a6e712c16945373b526dfcfbf744"
+        },
+        {
+          "name": "vertical-multiple-diverging-rounded-specific",
+          "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+          "checksum": "c33bb04d2d6132c4ab2b1539785133e4"
+        },
+        {
+          "name": "vertical-multiple-overlapping",
+          "path": "/example/Bars/vertical-multiple-overlapping",
+          "checksum": "5f0ce8dab02957c33842c40cad0199bb"
+        },
+        {
+          "name": "vertical-outside-labels-default",
+          "path": "/example/Bars/vertical-outside-labels-default",
+          "checksum": "ecc155fbd5a400ee0c293cb81bc4e5ec"
+        },
+        {
+          "name": "vertical-rounded-top-only",
+          "path": "/example/Bars/vertical-rounded-top-only",
+          "checksum": "701c6f4534c52f24f67e32c7ad552990"
+        },
+        {
+          "name": "vertical-stacked",
+          "path": "/example/Bars/vertical-stacked",
+          "checksum": "33cfeef44046f0e31d8ba81f2d44708d"
+        },
+        {
+          "name": "vertical-stacked-percent",
+          "path": "/example/Bars/vertical-stacked-percent",
+          "checksum": "2941525a8276cd8c262b2e08b776a291"
+        },
+        {
+          "name": "vertical-stagger-tween-on-mount",
+          "path": "/example/Bars/vertical-stagger-tween-on-mount",
+          "checksum": "eaa6fa9bea23f22e29188470872b0f0c"
+        },
+        {
+          "name": "vertical-stagger-tween-on-mount-rounded-edge",
+          "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+          "checksum": "d909cd791740489f5de746a0c43130b3"
+        },
+        {
+          "name": "vertical-time-scale-with-inset",
+          "path": "/example/Bars/vertical-time-scale-with-inset",
+          "checksum": "3c5284e31d5529c630e24fcfd3edb2a8"
+        },
+        {
+          "name": "vertical-time-scale-with-interval",
+          "path": "/example/Bars/vertical-time-scale-with-interval",
+          "checksum": "1045b66e86b7d7460192a9ba20ea7b77"
+        },
+        {
+          "name": "vertical-time-scale-with-interval-months",
+          "path": "/example/Bars/vertical-time-scale-with-interval-months",
+          "checksum": "1045b66e86b7d7460192a9ba20ea7b77"
+        },
+        {
+          "name": "vertical-time-scale-with-missing-data",
+          "path": "/example/Bars/vertical-time-scale-with-missing-data",
+          "checksum": "8dae0033882038f1d1cf65c5ecfaee59"
+        },
+        {
+          "name": "vertical-tooltip-and-bar-highlight",
+          "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+          "checksum": "c8bb8252089c24c032f6c9fd139570d6"
+        },
+        {
+          "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "checksum": "892d8ef9407cb67d2c9fadf8cb12c1d8"
+        },
+        {
+          "name": "vertical-tooltip-and-clipped-highlight",
+          "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+          "checksum": "a3ca70a060b190c5e064270a3dd696cb"
+        },
+        {
+          "name": "vertical-tooltip-and-highlight",
+          "path": "/example/Bars/vertical-tooltip-and-highlight",
+          "checksum": "44d415ea47636b2fb32e4ddee9c86c74"
+        },
+        {
+          "name": "vertical-tween-on-mount",
+          "path": "/example/Bars/vertical-tween-on-mount",
+          "checksum": "4361f0664bd7fccf2235aba4683dc700"
+        },
+        {
+          "name": "vertical-tween-on-mount-rounded-edge",
+          "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
+          "checksum": "198bf04471a8a9c9918ef7a52560bd30"
+        },
+        {
+          "name": "vertical-with-grid-on-top",
+          "path": "/example/Bars/vertical-with-grid-on-top",
+          "checksum": "e08f00bd7fb10b1b65e004dc50838251"
+        },
+        {
+          "name": "vertical-with-grid-on-top-mix-blend",
+          "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
+          "checksum": "70fc6c3f192a3346c22a9885b7980d7d"
+        }
+      ]
+    },
+    {
+      "component": "BoxPlot",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/BoxPlot/basic",
+          "checksum": "8ba6c070d9f42f8b0a4be36250c5320d"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/BoxPlot/horizontal",
+          "checksum": "adbbebb3caeef3f4bf2603fc132b274e"
+        },
+        {
+          "name": "pre-computed",
+          "path": "/example/BoxPlot/pre-computed",
+          "checksum": "5712cd3a5a06623b8dba5ce81fe5b946"
+        },
+        {
+          "name": "styled",
+          "path": "/example/BoxPlot/styled",
+          "checksum": "86e14a7174315dfaa63c4675baa1d437"
+        },
+        {
+          "name": "with-tooltip",
+          "path": "/example/BoxPlot/with-tooltip",
+          "checksum": "e4dd4e96e83735cfc81b482ec83fac89"
+        },
+        {
+          "name": "with-violin",
+          "path": "/example/BoxPlot/with-violin",
+          "checksum": "0cf9b82ea3c13ea009020dbbc5de9f81"
+        }
+      ]
+    },
+    {
+      "component": "BrushContext",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/BrushContext/basic",
+          "checksum": "dd5cc899c307b26e26e728165561eff3"
+        },
+        {
+          "name": "constant-labels",
+          "path": "/example/BrushContext/constant-labels",
+          "checksum": "876222baa33134b2cf96f5765d8f8ce9"
+        },
+        {
+          "name": "handle-arrows",
+          "path": "/example/BrushContext/handle-arrows",
+          "checksum": "0f3aa3a367ce0b4a14a97ce5c378779f"
+        },
+        {
+          "name": "handle-labels",
+          "path": "/example/BrushContext/handle-labels",
+          "checksum": "ed8de9560c2599259de2c9c4b3a00f9e"
+        },
+        {
+          "name": "integrated-brush-(both-axis-area)",
+          "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
+          "checksum": "d2c0bdf4040f0b7df43bd84ce4c291a8"
+        },
+        {
+          "name": "integrated-brush-(x-axis)",
+          "path": "/example/BrushContext/integrated-brush-(x-axis)",
+          "checksum": "403aaae9394e451969779ab30e138525"
+        },
+        {
+          "name": "integrated-brush-(y-axis)",
+          "path": "/example/BrushContext/integrated-brush-(y-axis)",
+          "checksum": "c35d530a935ea41d33eca0da3e6db8f3"
+        },
+        {
+          "name": "minimap",
+          "path": "/example/BrushContext/minimap",
+          "checksum": "f4098f9cda019c94ee830e54558c388d"
+        },
+        {
+          "name": "programmatic-control",
+          "path": "/example/BrushContext/programmatic-control",
+          "checksum": "3519d7e19e6edb775ea5687ceeda80b3"
+        },
+        {
+          "name": "selection",
+          "path": "/example/BrushContext/selection",
+          "checksum": "f18294ca6628abade024b202cdddda5d"
+        },
+        {
+          "name": "separate-chart-(clip-data-y-axis)",
+          "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)",
+          "checksum": "8bbfd1b6ad9fb885cacdbe62d4bc5076"
+        },
+        {
+          "name": "separate-chart-(clip-data)",
+          "path": "/example/BrushContext/separate-chart-(clip-data)",
+          "checksum": "5753dc881ccf61acdde24a7e0f2ab32a"
+        },
+        {
+          "name": "separate-chart-(filter-data)",
+          "path": "/example/BrushContext/separate-chart-(filter-data)",
+          "checksum": "8a5179d8398eeb998e0963b2225844a0"
+        },
+        {
+          "name": "simple-styling",
+          "path": "/example/BrushContext/simple-styling",
+          "checksum": "edc72fe9d5f6d1b9c2d4763bd0776287"
+        },
+        {
+          "name": "striped-background",
+          "path": "/example/BrushContext/striped-background",
+          "checksum": "e34f7726a5d4d73ab8cc235aa78e054d"
+        },
+        {
+          "name": "synced-brushes",
+          "path": "/example/BrushContext/synced-brushes",
+          "checksum": "4437f58eddef3689dc1a7ecbf5badadf"
+        },
+        {
+          "name": "tooltip-interop",
+          "path": "/example/BrushContext/tooltip-interop",
+          "checksum": "fc5173026085a674c90194c12d087cc8"
+        }
+      ]
+    },
+    {
+      "component": "Calendar",
+      "examples": [
+        {
+          "name": "90-days",
+          "path": "/example/Calendar/90-days",
+          "checksum": "7d6100b903ba0e1538552a58ef89ac1f"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Calendar/basic",
+          "checksum": "cfeb67b5333610bc9b7251106f3c4d84"
+        },
+        {
+          "name": "fixed-cell-size",
+          "path": "/example/Calendar/fixed-cell-size",
+          "checksum": "f185643c6a8124494a68a23a3d4aa52b"
+        },
+        {
+          "name": "html-with-padding",
+          "path": "/example/Calendar/html-with-padding",
+          "checksum": "922ec05786b18e547280b38b2c4fd0e3"
+        },
+        {
+          "name": "last-month",
+          "path": "/example/Calendar/last-month",
+          "checksum": "0354c813a0b8719724105f1038497a2e"
+        },
+        {
+          "name": "multiple-years",
+          "path": "/example/Calendar/multiple-years",
+          "checksum": "46bff8039c34213e5bc51ea8a66dfc59"
+        },
+        {
+          "name": "responsive-cell-size-default",
+          "path": "/example/Calendar/responsive-cell-size-default",
+          "checksum": "a030233392eb93f6acee73cdb089d388"
+        },
+        {
+          "name": "rounded-cells",
+          "path": "/example/Calendar/rounded-cells",
+          "checksum": "935d7bfc61eddd8214b49e118ccffded"
+        }
+      ]
+    },
+    {
+      "component": "Cell",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Cell/basic",
+          "checksum": "fa9f733556ba72343e48a8011fd77a8a"
+        },
+        {
+          "name": "circle",
+          "path": "/example/Cell/circle",
+          "checksum": "6bc128d0fba7d4db6e38bf37d842b4c5"
+        },
+        {
+          "name": "color-scale",
+          "path": "/example/Cell/color-scale",
+          "checksum": "aa9d798baeac059e93723616a906d76b"
+        },
+        {
+          "name": "punchcard",
+          "path": "/example/Cell/punchcard",
+          "checksum": "f020a690b2652b4a0cd7ee92c0a57cc3"
+        },
+        {
+          "name": "rounded-insets",
+          "path": "/example/Cell/rounded-insets",
+          "checksum": "45974012ff5d8de20278d9734eff4aba"
+        }
+      ]
+    },
+    {
+      "component": "Chart",
+      "examples": [
+        {
+          "name": "compound-common-scale-with-extra-marks",
+          "path": "/example/Chart/compound-common-scale-with-extra-marks",
+          "checksum": "dc2936a1a1d61bed133357124c858a4f"
+        },
+        {
+          "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
+          "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+          "checksum": "f0c5c6823e677c270998ff660fa1b89e"
+        },
+        {
+          "name": "compound-dual-axis-with-stacked-charts",
+          "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+          "checksum": "0b3080353b317c8b59128a12708dae9a"
+        },
+        {
+          "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+          "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+          "checksum": "840780a42729a6bf43f6da0dd9d646c4"
+        },
+        {
+          "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+          "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+          "checksum": "153be29a0fc7f299df128b61b2aa1a39"
+        },
+        {
+          "name": "data-chart-multi",
+          "path": "/example/Chart/data-chart-multi",
+          "checksum": "8465623d5a3bddbef1e8231669b89bb7"
+        },
+        {
+          "name": "data-chart-single",
+          "path": "/example/Chart/data-chart-single",
+          "checksum": "0c6d2e571568980c6fbbfc35f7447989"
+        },
+        {
+          "name": "data-mark-data",
+          "path": "/example/Chart/data-mark-data",
+          "checksum": "ea3ddec304182b3c9b968aea49d1018a"
+        },
+        {
+          "name": "data-primitive-data",
+          "path": "/example/Chart/data-primitive-data",
+          "checksum": "efd3caa58c1a5ac2d77533bc543ed361"
+        },
+        {
+          "name": "data-series-chart-data",
+          "path": "/example/Chart/data-series-chart-data",
+          "checksum": "88167b58fbe8d1c9cb0b03ffeb2d1ae8"
+        },
+        {
+          "name": "data-series-separate-data",
+          "path": "/example/Chart/data-series-separate-data",
+          "checksum": "52fb678001b7f600236b138391ab8459"
+        }
+      ]
+    },
+    {
+      "component": "Chord",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Chord/basic",
+          "checksum": "b71d018f8b4315ea9db3676b200a1b73"
+        },
+        {
+          "name": "directed",
+          "path": "/example/Chord/directed",
+          "checksum": "076318f9c53aca44077da13ab5ce4909"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Chord/gradient",
+          "checksum": "fa1c3a849c124993bff159b743521a2c"
+        },
+        {
+          "name": "hover",
+          "path": "/example/Chord/hover",
+          "checksum": "9ed77d4c6ac7d3e5f7063d7148048cf1"
+        },
+        {
+          "name": "ticks",
+          "path": "/example/Chord/ticks",
+          "checksum": "a74934a1624ae9247e6bb592c5197019"
+        }
+      ]
+    },
+    {
+      "component": "Circle",
+      "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Circle/color-via-ordinal-scale",
+          "checksum": "4ae3a5b2714cf200c3c8db6640be8af1"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Circle/color-via-threshold-scale",
+          "checksum": "29b9b4331babc06215a0bc2a5c25774c"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Circle/data-mode",
+          "checksum": "3c3650dcac7af315a9acbeef0a79fa7e"
+        },
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Circle/styling-using-attributes",
+          "checksum": "0550f95621c97695df3cf7996374f66f"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Circle/styling-using-classes",
+          "checksum": "03cd7bf2262f712f1a5b1bf696a14450"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Circle/styling-using-css-variables",
+          "checksum": "35dc62747c575c2e2593dccbf5ddd9c7"
+        }
+      ]
+    },
+    {
+      "component": "CircleLegend",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/CircleLegend/basic",
+          "checksum": "675b5d43f0013dc2c2263093dfc6c430"
+        },
+        {
+          "name": "label-placement",
+          "path": "/example/CircleLegend/label-placement",
+          "checksum": "5ad3767fcafc04e0d1db7ba60300e0d7"
+        },
+        {
+          "name": "scale-types",
+          "path": "/example/CircleLegend/scale-types",
+          "checksum": "d7fbf59d4c5254801cb26b6a6985a590"
+        }
+      ]
+    },
+    {
+      "component": "ClipPath",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ClipPath/basic",
+          "checksum": "607df5e650127e75a3820d34590ec48b"
+        },
+        {
+          "name": "clip-snippet",
+          "path": "/example/ClipPath/clip-snippet",
+          "checksum": "d1ce9512758c932c9c0478235eb44ae5"
+        },
+        {
+          "name": "inverted",
+          "path": "/example/ClipPath/inverted",
+          "checksum": "b744385f46b79a27200830f4a1f7428f"
+        },
+        {
+          "name": "use-id",
+          "path": "/example/ClipPath/use-id",
+          "checksum": "b59ac68f7794785ba19df1f91ff42e03"
+        }
+      ]
+    },
+    {
+      "component": "ColorRamp",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ColorRamp/basic",
+          "checksum": "c9050b787b08b0ae92198cc064cb6586"
+        },
+        {
+          "name": "pixelated",
+          "path": "/example/ColorRamp/pixelated",
+          "checksum": "9cda3ba9a3d76ead36bc62055b8b70e5"
+        },
+        {
+          "name": "schemes",
+          "path": "/example/ColorRamp/schemes",
+          "checksum": "6d9beb67ea29ffb722637e64d82d63c0"
+        }
+      ]
+    },
+    {
+      "component": "Contour",
+      "examples": [
+        {
+          "name": "sampled",
+          "path": "/example/Contour/sampled",
+          "checksum": "7eec47e2f63c0a848900c5240a014cbb"
+        },
+        {
+          "name": "sampled-interactive",
+          "path": "/example/Contour/sampled-interactive",
+          "checksum": "09792119c168420d643458abb65c81d0"
+        },
+        {
+          "name": "volcano-filled",
+          "path": "/example/Contour/volcano-filled",
+          "checksum": "b8c40f65aa814b916b2563697e2557f4"
+        },
+        {
+          "name": "volcano-filled-interactive",
+          "path": "/example/Contour/volcano-filled-interactive",
+          "checksum": "c3913b72e27917bba567a9c9bb1e03f1"
+        },
+        {
+          "name": "volcano-lines",
+          "path": "/example/Contour/volcano-lines",
+          "checksum": "c8ef38b4c2423395d2941e621cb27c21"
+        }
+      ]
+    },
+    {
+      "component": "Dagre",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Dagre/basic",
+          "checksum": "fc17ba55c4e98a863898e0d1a1f745fe"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Dagre/playground",
+          "checksum": "0519c7434b2fcb1af51541c110b3d0eb"
+        },
+        {
+          "name": "software-user-flow",
+          "path": "/example/Dagre/software-user-flow",
+          "checksum": "149876b9e8b77f090b428fafd2ea7e4c"
+        },
+        {
+          "name": "tcp-state-diagram",
+          "path": "/example/Dagre/tcp-state-diagram",
+          "checksum": "ce032add4b0ae72c5cd53da4c5379432"
+        }
+      ]
+    },
+    {
+      "component": "Density",
+      "examples": [
+        {
+          "name": "bandwidth",
+          "path": "/example/Density/bandwidth",
+          "checksum": "bf5002c29093bc7f1061f937bc6f6083"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Density/basic",
+          "checksum": "f3208d6d185f2bd671357c286739e26c"
+        },
+        {
+          "name": "stroke-only",
+          "path": "/example/Density/stroke-only",
+          "checksum": "a7208e1ebb9bbff099509598244f3c2c"
+        },
+        {
+          "name": "thresholds",
+          "path": "/example/Density/thresholds",
+          "checksum": "6f07a863caf02fe92ede18386410d893"
+        },
+        {
+          "name": "walmart",
+          "path": "/example/Density/walmart",
+          "checksum": "0c88fdf01fdc901a29ba0cecbe47fe89"
+        },
+        {
+          "name": "weighted",
+          "path": "/example/Density/weighted",
+          "checksum": "13ac6bbfd28529a9923d6aac40cb80f5"
+        }
+      ]
+    },
+    {
+      "component": "Dodge",
+      "examples": [
+        {
+          "name": "anchor",
+          "path": "/example/Dodge/anchor",
+          "checksum": "f50f58be6995d473aea04c2f39bb32de"
+        },
+        {
+          "name": "bank-failures",
+          "path": "/example/Dodge/bank-failures",
+          "checksum": "ff44849c291f965286670e3520033799"
+        },
+        {
+          "name": "beeswarm",
+          "path": "/example/Dodge/beeswarm",
+          "checksum": "d93bcdf5867a76fcc46ef77e8c9db9cd"
+        },
+        {
+          "name": "duration-bars-dense-lanes",
+          "path": "/example/Dodge/duration-bars-dense-lanes",
+          "checksum": "ca46dbfd53a522f3b302ef89685176c8"
+        },
+        {
+          "name": "grouped-horizontal",
+          "path": "/example/Dodge/grouped-horizontal",
+          "checksum": "f1b9a814453e1312edeff09ada82914e"
+        },
+        {
+          "name": "grouped-vertical",
+          "path": "/example/Dodge/grouped-vertical",
+          "checksum": "508e467b3cbf22b9389ea3f21809546f"
+        },
+        {
+          "name": "image-beeswarm",
+          "path": "/example/Dodge/image-beeswarm",
+          "checksum": "6a3490b4460294a2f236d35b6e9da17b"
+        },
+        {
+          "name": "penguins",
+          "path": "/example/Dodge/penguins",
+          "checksum": "1756a61ba1509be4d6ce81b01980a309"
+        },
+        {
+          "name": "tech-layoffs",
+          "path": "/example/Dodge/tech-layoffs",
+          "checksum": "b7c5f399a86af8e7224616072bd4a006"
+        },
+        {
+          "name": "text-beeswarm",
+          "path": "/example/Dodge/text-beeswarm",
+          "checksum": "20e689c1e1a33a21a83856a68fc8337b"
+        },
+        {
+          "name": "timeline",
+          "path": "/example/Dodge/timeline",
+          "checksum": "62fd916bf39a98c23bf60385727bd8a0"
+        },
+        {
+          "name": "timeline-bidirectional",
+          "path": "/example/Dodge/timeline-bidirectional",
+          "checksum": "0fbc817c8c6caff6650dc99f300f6e85"
+        },
+        {
+          "name": "variable-radius",
+          "path": "/example/Dodge/variable-radius",
+          "checksum": "8800b47ec03470d994b627e9360194c3"
+        }
+      ]
+    },
+    {
+      "component": "Ellipse",
+      "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Ellipse/color-via-ordinal-scale",
+          "checksum": "87b4cd9cf38b3ebaf963999779cbe52c"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Ellipse/color-via-threshold-scale",
+          "checksum": "78a4e00ad034487cc868b115b29d74ad"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Ellipse/data-mode",
+          "checksum": "4316ea22b690375874d6385f114b6b48"
+        },
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Ellipse/styling-using-attributes",
+          "checksum": "0c64861aa872dee914fab688fd08a04d"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Ellipse/styling-using-classes",
+          "checksum": "80a2c63e858f12605f55b7304e8f8152"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Ellipse/styling-using-css-variables",
+          "checksum": "f7ef5ded140ccd07987d837980330e04"
+        }
+      ]
+    },
+    {
+      "component": "ForceSimulation",
+      "examples": [
+        {
+          "name": "beeswarm",
+          "path": "/example/ForceSimulation/beeswarm",
+          "checksum": "7708cac1b3bd47eb76692aa061226af6"
+        },
+        {
+          "name": "collision-detection",
+          "path": "/example/ForceSimulation/collision-detection",
+          "checksum": "b81328390e8938f30c6213ed9c54ab8d"
+        },
+        {
+          "name": "disjoint-graph",
+          "path": "/example/ForceSimulation/disjoint-graph",
+          "checksum": "eba37240524ba65b4252507e2de88156"
+        },
+        {
+          "name": "games-industry-layoffs",
+          "path": "/example/ForceSimulation/games-industry-layoffs",
+          "checksum": "09ddee1be11f5a1390e09d17c6668b3a"
+        },
+        {
+          "name": "graph-drag",
+          "path": "/example/ForceSimulation/graph-drag",
+          "checksum": "3ca78657c1f545a8f9c44e2eec1fc6d0"
+        },
+        {
+          "name": "graph-playground",
+          "path": "/example/ForceSimulation/graph-playground",
+          "checksum": "393450b99f185d8419452381cc3d8766"
+        },
+        {
+          "name": "group",
+          "path": "/example/ForceSimulation/group",
+          "checksum": "c3cd41e1bbb46895858d901f5a45c5ce"
+        },
+        {
+          "name": "lattice",
+          "path": "/example/ForceSimulation/lattice",
+          "checksum": "8f41934d67b66dddd9d7df0a2deefd12"
+        },
+        {
+          "name": "layoffs-by-industry",
+          "path": "/example/ForceSimulation/layoffs-by-industry",
+          "checksum": "e63aec0431d5bda4af689e5ce7980c1b"
+        },
+        {
+          "name": "text",
+          "path": "/example/ForceSimulation/text",
+          "checksum": "9a04697db56d9a95029a88ec05f9e055"
+        },
+        {
+          "name": "tree",
+          "path": "/example/ForceSimulation/tree",
+          "checksum": "12ab38864a2dd33c368ddeb8ed330a29"
+        }
+      ]
+    },
+    {
+      "component": "Frame",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Frame/basic",
+          "checksum": "47146c3cb16efcaaafd51e019f554e41"
+        },
+        {
+          "name": "border",
+          "path": "/example/Frame/border",
+          "checksum": "216f086595b3742c895df27487fb1b04"
+        },
+        {
+          "name": "full",
+          "path": "/example/Frame/full",
+          "checksum": "08149873e6b6f15a205394a9c752692f"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Frame/gradient",
+          "checksum": "2e158f96d587d123f572be1be0e35951"
+        }
+      ]
+    },
+    {
+      "component": "GeoCircle",
+      "examples": [
+        {
+          "name": "earthquake-globe",
+          "path": "/example/GeoCircle/earthquake-globe",
+          "checksum": "17cf0da972f87f43c21281eb47894f63"
+        },
+        {
+          "name": "playground",
+          "path": "/example/GeoCircle/playground",
+          "checksum": "4571a093ccae55735fa2cf27e815c5c2"
+        }
+      ]
+    },
+    {
+      "component": "GeoClipPath",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/GeoClipPath/basic",
+          "checksum": "0745bb4e56c3ce8bd744512e53de1b94"
+        }
+      ]
+    },
+    {
+      "component": "GeoContext",
+      "examples": [
+        {
+          "name": "geojson-preview",
+          "path": "/example/GeoContext/geojson-preview",
+          "checksum": "2e05bfea59836d50cfd1fbfbb9f49d91"
+        },
+        {
+          "name": "projection-playground",
+          "path": "/example/GeoContext/projection-playground",
+          "checksum": "d20a4b281420c09dbf164510a76f5e62"
+        },
+        {
+          "name": "shapefile-preview",
+          "path": "/example/GeoContext/shapefile-preview",
+          "checksum": "14817e4e8b57e18999de9b2be22ddc37"
+        },
+        {
+          "name": "topojson-preview",
+          "path": "/example/GeoContext/topojson-preview",
+          "checksum": "fd4202ca3158d4ad00759d3d3b46b28a"
+        }
+      ]
+    },
+    {
+      "component": "GeoLegend",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/GeoLegend/basic",
+          "checksum": "19a0d38c007f5bee214530c7302223c8"
+        },
+        {
+          "name": "canvas-mode",
+          "path": "/example/GeoLegend/canvas-mode",
+          "checksum": "0f7b94f5b68e6dc064b580c74f36f713"
+        },
+        {
+          "name": "stacked-units",
+          "path": "/example/GeoLegend/stacked-units",
+          "checksum": "a6198d65e098496a9b5a810618b2ab0a"
+        },
+        {
+          "name": "tick-format",
+          "path": "/example/GeoLegend/tick-format",
+          "checksum": "9bff1fbe6913bd537185fab31930f391"
+        },
+        {
+          "name": "ticks",
+          "path": "/example/GeoLegend/ticks",
+          "checksum": "8a935b9fefc9d9f45f042a0c3439195b"
+        },
+        {
+          "name": "variants",
+          "path": "/example/GeoLegend/variants",
+          "checksum": "2267da6325cb3abd5e9c999a3cbaafb7"
+        }
+      ]
+    },
+    {
+      "component": "GeoPath",
+      "examples": [
+        {
+          "name": "animated-globe",
+          "path": "/example/GeoPath/animated-globe",
+          "checksum": "80372bfd69f0bc548fee36e69f80fa48"
+        },
+        {
+          "name": "bubble-map",
+          "path": "/example/GeoPath/bubble-map",
+          "checksum": "d48a67e3f5f84dc4d5e27f0a5a05787b"
+        },
+        {
+          "name": "choropleth",
+          "path": "/example/GeoPath/choropleth",
+          "checksum": "f6e6e47b15dc949aba2943c16ef82c8f"
+        },
+        {
+          "name": "eclipses-globe",
+          "path": "/example/GeoPath/eclipses-globe",
+          "checksum": "c4c87a7c15b6a555cd469b57192d3eae"
+        },
+        {
+          "name": "interpolating-projections",
+          "path": "/example/GeoPath/interpolating-projections",
+          "checksum": "d5580ca0449a6e5d5559a9a1b20bd2c8"
+        },
+        {
+          "name": "paint-brush-selection",
+          "path": "/example/GeoPath/paint-brush-selection",
+          "checksum": "b5af73505d7980e1401e976bac2d309a"
+        },
+        {
+          "name": "sketchy-globe",
+          "path": "/example/GeoPath/sketchy-globe",
+          "checksum": "ed1b1d6490736afcbc657b16ee0e9a6b"
+        },
+        {
+          "name": "spike-map",
+          "path": "/example/GeoPath/spike-map",
+          "checksum": "771508f940243cb0b998ae76e91bb233"
+        },
+        {
+          "name": "submarine-cables-globe",
+          "path": "/example/GeoPath/submarine-cables-globe",
+          "checksum": "e24c57a7046a7470b09450785ebe839c"
+        },
+        {
+          "name": "timezones",
+          "path": "/example/GeoPath/timezones",
+          "checksum": "2b5b55f02a3df414e76833e9feaeb605"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/GeoPath/tooltip",
+          "checksum": "421cb186af2f5680810b02d678e9262a"
+        },
+        {
+          "name": "transform-canvas",
+          "path": "/example/GeoPath/transform-canvas",
+          "checksum": "df0c31ed6a2d9ce61395858d20335f40"
+        },
+        {
+          "name": "transform-canvas-scale-extent",
+          "path": "/example/GeoPath/transform-canvas-scale-extent",
+          "checksum": "0a11d564067e496da5000beb1f0d84d8"
+        },
+        {
+          "name": "transform-globe-constrain",
+          "path": "/example/GeoPath/transform-globe-constrain",
+          "checksum": "47486d07f1743955477d7f0e97b90bb2"
+        },
+        {
+          "name": "transform-globe-inertia",
+          "path": "/example/GeoPath/transform-globe-inertia",
+          "checksum": "126b25a293d26ffc1037a09a6d81e3c3"
+        },
+        {
+          "name": "transform-projection",
+          "path": "/example/GeoPath/transform-projection",
+          "checksum": "cdbb0d9cadbab3982cde5abe93e6efd6"
+        },
+        {
+          "name": "transform-world-canvas",
+          "path": "/example/GeoPath/transform-world-canvas",
+          "checksum": "9e8aee50b4d979cd93ca8cc73ecf433d"
+        },
+        {
+          "name": "transform-world-projection",
+          "path": "/example/GeoPath/transform-world-projection",
+          "checksum": "52b2848cd100d6bbd3449bbb90959123"
+        },
+        {
+          "name": "translucent-globe",
+          "path": "/example/GeoPath/translucent-globe",
+          "checksum": "8a43d73a9a0f53ed0680265ebd55aaf6"
+        },
+        {
+          "name": "us-country-map",
+          "path": "/example/GeoPath/us-country-map",
+          "checksum": "d1d2accdb59624b0f354b21da88c5c20"
+        },
+        {
+          "name": "us-state",
+          "path": "/example/GeoPath/us-state",
+          "checksum": "7e1218e4ceb903f23f8ffce1c2d63cf1"
+        },
+        {
+          "name": "us-state-with-counties",
+          "path": "/example/GeoPath/us-state-with-counties",
+          "checksum": "ab3269252bae9cc26394fb6a3c3a43d0"
+        },
+        {
+          "name": "us-state-with-surrounding-states",
+          "path": "/example/GeoPath/us-state-with-surrounding-states",
+          "checksum": "bce63b36a7b322103d7ab0959c463f62"
+        }
+      ]
+    },
+    {
+      "component": "GeoPoint",
+      "examples": [
+        {
+          "name": "icons",
+          "path": "/example/GeoPoint/icons",
+          "checksum": "c7d652113b51658da56467802f169872"
+        },
+        {
+          "name": "us-airports",
+          "path": "/example/GeoPoint/us-airports",
+          "checksum": "b8165561452410b1f4dff29ef9b46a0e"
+        },
+        {
+          "name": "us-state-capitals",
+          "path": "/example/GeoPoint/us-state-capitals",
+          "checksum": "c886914c31fe2e670595063c9b6972e1"
+        },
+        {
+          "name": "world-airports",
+          "path": "/example/GeoPoint/world-airports",
+          "checksum": "f6c46619fe7feabe48799ee2f00fdd04"
+        },
+        {
+          "name": "world-capitals",
+          "path": "/example/GeoPoint/world-capitals",
+          "checksum": "cd1fd2129b56c6e802248b69dc65fbcb"
+        }
+      ]
+    },
+    {
+      "component": "GeoProjection",
+      "examples": [
+        {
+          "name": "geojson-preview",
+          "path": "/example/GeoProjection/geojson-preview",
+          "checksum": "1790b6f47677e1c4762c4216cc6cce54"
+        },
+        {
+          "name": "projection-playground",
+          "path": "/example/GeoProjection/projection-playground",
+          "checksum": "fb7d586d9868f5bb66c001bf15506845"
+        },
+        {
+          "name": "satellite",
+          "path": "/example/GeoProjection/satellite",
+          "checksum": "04dde09b68e6c7cbf54ca00a36215dbb"
+        },
+        {
+          "name": "shapefile-preview",
+          "path": "/example/GeoProjection/shapefile-preview",
+          "checksum": "14817e4e8b57e18999de9b2be22ddc37"
+        },
+        {
+          "name": "topojson-preview",
+          "path": "/example/GeoProjection/topojson-preview",
+          "checksum": "e2612e9ff8a2ef23983a41539ad25688"
+        },
+        {
+          "name": "true-size",
+          "path": "/example/GeoProjection/true-size",
+          "checksum": "49f328b2a7a9eb291fd0ad52d28ca215"
+        },
+        {
+          "name": "true-size-globe",
+          "path": "/example/GeoProjection/true-size-globe",
+          "checksum": "51e3d08a51caea0e5bf109d9d094d4ba"
+        }
+      ]
+    },
+    {
+      "component": "GeoRaster",
+      "examples": [
+        {
+          "name": "globe",
+          "path": "/example/GeoRaster/globe",
+          "checksum": "d353f7e7b29cb94ac113cdb162c98b14"
+        },
+        {
+          "name": "planets",
+          "path": "/example/GeoRaster/planets",
+          "checksum": "ce27cb902e0321c8ee72dd98101a0795"
+        },
+        {
+          "name": "projections",
+          "path": "/example/GeoRaster/projections",
+          "checksum": "dd498ca54f27c9c32d534d941dd5dea3"
+        },
+        {
+          "name": "textures",
+          "path": "/example/GeoRaster/textures",
+          "checksum": "1ab0bfdd3c5ed8c2093901ba45be4526"
+        },
+        {
+          "name": "tiles-globe",
+          "path": "/example/GeoRaster/tiles-globe",
+          "checksum": "8b40e0a3d333bcf8ebc6d4c39bdd8628"
+        }
+      ]
+    },
+    {
+      "component": "GeoSpline",
+      "examples": [
+        {
+          "name": "draggable-globe",
+          "path": "/example/GeoSpline/draggable-globe",
+          "checksum": "360230a0313b9e3d945702fe7d27766e"
+        },
+        {
+          "name": "world-map",
+          "path": "/example/GeoSpline/world-map",
+          "checksum": "16d74457d105638c3357e68fedd777f6"
+        }
+      ]
+    },
+    {
+      "component": "GeoTile",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/GeoTile/basic",
+          "checksum": "c08f8a933ae941d1d53e010e3d15351e"
+        },
+        {
+          "name": "clipped",
+          "path": "/example/GeoTile/clipped",
+          "checksum": "edaed37822a404e867633ee284778622"
+        },
+        {
+          "name": "zoomable",
+          "path": "/example/GeoTile/zoomable",
+          "checksum": "3b43630dc48485d39c9eded81a41d1e4"
+        },
+        {
+          "name": "zoomable-seamless-layers",
+          "path": "/example/GeoTile/zoomable-seamless-layers",
+          "checksum": "7c4560b53210465b529f95e31455baed"
+        },
+        {
+          "name": "zoomable-with-padding",
+          "path": "/example/GeoTile/zoomable-with-padding",
+          "checksum": "f5b08777ea7616aac5b9625111c80239"
+        }
+      ]
+    },
+    {
+      "component": "Graticule",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Graticule/basic",
+          "checksum": "2d4670ae3733aae1d223708ac6e0ca71"
+        }
+      ]
+    },
+    {
+      "component": "Grid",
+      "examples": [
+        {
+          "name": "band-scale-between",
+          "path": "/example/Grid/band-scale-between",
+          "checksum": "6664151e1c0bb95c790971b9357fae62"
+        },
+        {
+          "name": "band-scale-default",
+          "path": "/example/Grid/band-scale-default",
+          "checksum": "f27ff2c23c067bf080bbe4986699ca99"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Grid/basic",
+          "checksum": "9d579fa6146b10271aabcb5baa1bfe07"
+        },
+        {
+          "name": "dashed-lines",
+          "path": "/example/Grid/dashed-lines",
+          "checksum": "b9685013cbf38288913fe680826fcbf0"
+        },
+        {
+          "name": "explicit-ticks",
+          "path": "/example/Grid/explicit-ticks",
+          "checksum": "d7e6c848036053b2dc1c52715d3131bb"
+        },
+        {
+          "name": "inject-tick-value",
+          "path": "/example/Grid/inject-tick-value",
+          "checksum": "1edb891f38d875d6c9c00c68c15b8334"
+        },
+        {
+          "name": "integer-only",
+          "path": "/example/Grid/integer-only",
+          "checksum": "e052955ee76e93f4d4896f7713757a77"
+        },
+        {
+          "name": "padding",
+          "path": "/example/Grid/padding",
+          "checksum": "1f9f8eedd0f6cf6cd22dc01bc4e8549c"
+        },
+        {
+          "name": "radial",
+          "path": "/example/Grid/radial",
+          "checksum": "64e85261d5f752fb17d74da5815340a0"
+        },
+        {
+          "name": "radial-linear",
+          "path": "/example/Grid/radial-linear",
+          "checksum": "c6b5dfc6ac010801902087acefbf5a5e"
+        },
+        {
+          "name": "tick-count",
+          "path": "/example/Grid/tick-count",
+          "checksum": "f9113c6440a1960fd381e31d7bdd98e8"
+        },
+        {
+          "name": "tick-count-null",
+          "path": "/example/Grid/tick-count-null",
+          "checksum": "ae760f0c0cce037110cebd25bba6b20c"
+        },
+        {
+          "name": "x-only",
+          "path": "/example/Grid/x-only",
+          "checksum": "8d7628f71c0f256b69eaee6001190933"
+        },
+        {
+          "name": "y-only",
+          "path": "/example/Grid/y-only",
+          "checksum": "39df43312abea5eedf01a3ac90dcfbb0"
+        }
+      ]
+    },
+    {
+      "component": "Group",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Group/basic",
+          "checksum": "8d44df5e448f13a164aefea1b14dbfa6"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Group/data-mode",
+          "checksum": "2ab83cd5bb10c312124a201461693c60"
+        }
+      ]
+    },
+    {
+      "component": "Hull",
+      "examples": [
+        {
+          "name": "geo",
+          "path": "/example/Hull/geo",
+          "checksum": "1e9a93c96c605dc81d7cf922e12f00a7"
+        },
+        {
+          "name": "scatter",
+          "path": "/example/Hull/scatter",
+          "checksum": "ed08c5848f091ba567fc5bbdadceac1c"
+        }
+      ]
+    },
+    {
+      "component": "Image",
+      "examples": [
+        {
+          "name": "college-football-map",
+          "path": "/example/Image/college-football-map",
+          "checksum": "77ea4515a0df695b372d5f969fe3188b"
+        },
+        {
+          "name": "country-flags",
+          "path": "/example/Image/country-flags",
+          "checksum": "7eca8e326c25e967421e9d39846c40d4"
+        },
+        {
+          "name": "pixel-mode",
+          "path": "/example/Image/pixel-mode",
+          "checksum": "f0a6bd043403c2dc02ed7418a76b36c2"
+        },
+        {
+          "name": "planets",
+          "path": "/example/Image/planets",
+          "checksum": "d7ff51976f5f0a3dd909963464140526"
+        },
+        {
+          "name": "sports-logos",
+          "path": "/example/Image/sports-logos",
+          "checksum": "56e50b2c424f4300a48b1cc31e82cda7"
+        },
+        {
+          "name": "us-presidents",
+          "path": "/example/Image/us-presidents",
+          "checksum": "2bc4913aa3c56edfe0469897a979510c"
+        }
+      ]
+    },
+    {
+      "component": "Layer",
+      "examples": [
+        {
+          "name": "all-3-layers",
+          "path": "/example/Layer/all-3-layers",
+          "checksum": "a5fa41e9c0b0adaaa3714cbd118ce7f6"
+        }
+      ]
+    },
+    {
+      "component": "Legend",
+      "examples": [
+        {
+          "name": "chart-integration",
+          "path": "/example/Legend/chart-integration",
+          "checksum": "bd83d9e56d318dfd098fdfd53c20fab7"
+        },
+        {
+          "name": "chart-placement",
+          "path": "/example/Legend/chart-placement",
+          "checksum": "a87b917c56a8b41244d029434930d092"
+        },
+        {
+          "name": "children-override",
+          "path": "/example/Legend/children-override",
+          "checksum": "f4a550d06f4528137942a68a2829943e"
+        },
+        {
+          "name": "click-handler",
+          "path": "/example/Legend/click-handler",
+          "checksum": "4a984b4d34d3ee3040f79bbf4f1b0db5"
+        },
+        {
+          "name": "diverging",
+          "path": "/example/Legend/diverging",
+          "checksum": "9ce92834f96a9ec8e70ca9d4b7b87496"
+        },
+        {
+          "name": "diverging-sqrt",
+          "path": "/example/Legend/diverging-sqrt",
+          "checksum": "24dd75fbc5f0e3adabc3885a90b0f97e"
+        },
+        {
+          "name": "ordinal",
+          "path": "/example/Legend/ordinal",
+          "checksum": "fe76ccd3319eb1e9b6e9d828b6cb2b6e"
+        },
+        {
+          "name": "quantile",
+          "path": "/example/Legend/quantile",
+          "checksum": "63fa483d3400e639a2db1125732768d8"
+        },
+        {
+          "name": "quantize",
+          "path": "/example/Legend/quantize",
+          "checksum": "ea247b7e7223418eff99e61fc30288e0"
+        },
+        {
+          "name": "responsive-swatches",
+          "path": "/example/Legend/responsive-swatches",
+          "checksum": "8ecfcf13d9c4bae41630dc65c2ed725f"
+        },
+        {
+          "name": "sequential",
+          "path": "/example/Legend/sequential",
+          "checksum": "9764a982e531994b97b81903503e52c7"
+        },
+        {
+          "name": "sequential-log",
+          "path": "/example/Legend/sequential-log",
+          "checksum": "556c42b2ec49d6ba986e7b0ab8ee4564"
+        },
+        {
+          "name": "sequential-quantile",
+          "path": "/example/Legend/sequential-quantile",
+          "checksum": "a6b7a4151a5dfb24692424910de4b12f"
+        },
+        {
+          "name": "sequential-sqrt",
+          "path": "/example/Legend/sequential-sqrt",
+          "checksum": "eb15c0ae5b77a82d3b1d35713eb2e4fb"
+        },
+        {
+          "name": "sqrt",
+          "path": "/example/Legend/sqrt",
+          "checksum": "e361d7102292762356fde50dadc4f88c"
+        },
+        {
+          "name": "square-swatch",
+          "path": "/example/Legend/square-swatch",
+          "checksum": "6f06131767e208c40cc916b8e19b59be"
+        },
+        {
+          "name": "styling",
+          "path": "/example/Legend/styling",
+          "checksum": "0c04324e8eff35bd92a1ac171985ee8d"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/Legend/threshold",
+          "checksum": "0041b7cff8dc3eca9749e58ae89f4110"
+        },
+        {
+          "name": "vertical-orientation",
+          "path": "/example/Legend/vertical-orientation",
+          "checksum": "e0adfc76f7c0da913e1d7ed010b86ef0"
+        }
+      ]
+    },
+    {
+      "component": "Line",
+      "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Line/color-via-ordinal-scale",
+          "checksum": "bdfe94033fbcae60e67230e91f7f63d6"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Line/color-via-threshold-scale",
+          "checksum": "b234f305066484c77fdd7e54791c1fd2"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Line/data-mode",
+          "checksum": "3d40efb42edd9b437af3e71ed8a3e4f9"
+        },
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Line/styling-using-attributes",
+          "checksum": "46030cecd0e7118f30e3f07b8e74961f"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Line/styling-using-classes",
+          "checksum": "37d1d41eda18dea7f79e72dae066fb92"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Line/styling-using-css-variables",
+          "checksum": "f513da820d8bfc9301c11b54ec8e7c5d"
+        }
+      ]
+    },
+    {
+      "component": "LinearGradient",
+      "examples": [
+        {
+          "name": "direction-with-custom-colors",
+          "path": "/example/LinearGradient/direction-with-custom-colors",
+          "checksum": "c3bdca09a48d8640ce889d5781f24455"
+        },
+        {
+          "name": "explicit-offsets",
+          "path": "/example/LinearGradient/explicit-offsets",
+          "checksum": "241907edbd7fc3b0361f6fa7635a5b05"
+        },
+        {
+          "name": "tailwind-colors",
+          "path": "/example/LinearGradient/tailwind-colors",
+          "checksum": "350714554b322e96a252712404f729c9"
+        },
+        {
+          "name": "units",
+          "path": "/example/LinearGradient/units",
+          "checksum": "324e8687f34c4ffaaa542bd22c3db841"
+        }
+      ]
+    },
+    {
+      "component": "LineChart",
+      "examples": [
+        {
+          "name": "axis-labels-inside",
+          "path": "/example/LineChart/axis-labels-inside",
+          "checksum": "27ee3910ee48bce691b64f970fbcea35"
+        },
+        {
+          "name": "basic",
+          "path": "/example/LineChart/basic",
+          "checksum": "dd21cd12b364c17ff08f2e63db52e381"
+        },
+        {
+          "name": "brush",
+          "path": "/example/LineChart/brush",
+          "checksum": "a35a608d56009667a4b9375cfd3b9126"
+        },
+        {
+          "name": "brush-pan-zoom",
+          "path": "/example/LineChart/brush-pan-zoom",
+          "checksum": "0a8dc843864088f749c64517248c983f"
+        },
+        {
+          "name": "bump-state-population-ranks",
+          "path": "/example/LineChart/bump-state-population-ranks",
+          "checksum": "c8cc292e07a22c5e3395646f254c39bd"
+        },
+        {
+          "name": "curve",
+          "path": "/example/LineChart/curve",
+          "checksum": "8eb631f85f99a83c5070bdcafaf5703d"
+        },
+        {
+          "name": "custom",
+          "path": "/example/LineChart/custom",
+          "checksum": "cef64aa9a09c3fd021d22d51d5377b16"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/LineChart/custom-tooltip",
+          "checksum": "19b9fe3d9e22b900afc326e8a6e02de3"
+        },
+        {
+          "name": "default-series-label",
+          "path": "/example/LineChart/default-series-label",
+          "checksum": "06e3736aca2ace50e40d7bfa826be322"
+        },
+        {
+          "name": "draw",
+          "path": "/example/LineChart/draw",
+          "checksum": "b311e46fce3126f453bc4d2f5c9b30f5"
+        },
+        {
+          "name": "dynamic-data",
+          "path": "/example/LineChart/dynamic-data",
+          "checksum": "640297b6c3f12f120424e73c0ac78203"
+        },
+        {
+          "name": "gradient-encoding",
+          "path": "/example/LineChart/gradient-encoding",
+          "checksum": "0120c9bd83f4f501e8ebb6c394e753c8"
+        },
+        {
+          "name": "gradient-threshold",
+          "path": "/example/LineChart/gradient-threshold",
+          "checksum": "62d21e30cedf737a3c9f958243ad0fd9"
+        },
+        {
+          "name": "labels",
+          "path": "/example/LineChart/labels",
+          "checksum": "3f624e87bfa6c80733da91fb5f231ea1"
+        },
+        {
+          "name": "labels-with-points",
+          "path": "/example/LineChart/labels-with-points",
+          "checksum": "59b9e992493c800b43a389a786a0df7c"
+        },
+        {
+          "name": "labels-within-points",
+          "path": "/example/LineChart/labels-within-points",
+          "checksum": "e51ea8a88db13d4f41a016cf49c06307"
+        },
+        {
+          "name": "large-radial-series",
+          "path": "/example/LineChart/large-radial-series",
+          "checksum": "97b2e6034e475ff3937aff3ac34bcfee"
+        },
+        {
+          "name": "large-series",
+          "path": "/example/LineChart/large-series",
+          "checksum": "62c9a150a289803f577455ec6e1a1aac"
+        },
+        {
+          "name": "legend",
+          "path": "/example/LineChart/legend",
+          "checksum": "26bd4fb6521cb943e69c0ef12523e83b"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/LineChart/line-annotation",
+          "checksum": "a357039106b62451b336363626fd8a19"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/LineChart/motion-tween",
+          "checksum": "bb44bf6ebc97b41488c734df40ffda00"
+        },
+        {
+          "name": "null-dashed-gaps",
+          "path": "/example/LineChart/null-dashed-gaps",
+          "checksum": "264bef9de13b096e6f25dc6c64096c3e"
+        },
+        {
+          "name": "null-gaps",
+          "path": "/example/LineChart/null-gaps",
+          "checksum": "44fd65561b258a0fc5346d3db0faf0d7"
+        },
+        {
+          "name": "oscilloscope-time",
+          "path": "/example/LineChart/oscilloscope-time",
+          "checksum": "e71eb384a1d09048f44435d9eadd54a0"
+        },
+        {
+          "name": "override-color",
+          "path": "/example/LineChart/override-color",
+          "checksum": "1037246fe1be98c11509ba855af7024c"
+        },
+        {
+          "name": "pan-zoom",
+          "path": "/example/LineChart/pan-zoom",
+          "checksum": "92fa4d9f749977e5136f7146aa334f1d"
+        },
+        {
+          "name": "pan-zoom-custom-constrain",
+          "path": "/example/LineChart/pan-zoom-custom-constrain",
+          "checksum": "cb4ed9f9cf30ea659b37a9eb95b10a15"
+        },
+        {
+          "name": "pan-zoom-domain-extent",
+          "path": "/example/LineChart/pan-zoom-domain-extent",
+          "checksum": "ac9148079a5e6735d3d8612b49805b2f"
+        },
+        {
+          "name": "pan-zoom-dynamic-data",
+          "path": "/example/LineChart/pan-zoom-dynamic-data",
+          "checksum": "fb286ffd6fb1708b0e2dd57efb09a534"
+        },
+        {
+          "name": "pan-zoom-with-overview",
+          "path": "/example/LineChart/pan-zoom-with-overview",
+          "checksum": "2138a64e8cf67168b92e7b6a7da557ad"
+        },
+        {
+          "name": "perf-dimension-arrays",
+          "path": "/example/LineChart/perf-dimension-arrays",
+          "checksum": "585a7d7fb748b8120423613eb05caaef"
+        },
+        {
+          "name": "perf-dimension-arrays-processed",
+          "path": "/example/LineChart/perf-dimension-arrays-processed",
+          "checksum": "f6ba2b373dfba7f2fda1b4d1ff411a4b"
+        },
+        {
+          "name": "perf-series-arrays",
+          "path": "/example/LineChart/perf-series-arrays",
+          "checksum": "b4221dc6a4852f0fdf509804b6d36f4c"
+        },
+        {
+          "name": "perf-streaming",
+          "path": "/example/LineChart/perf-streaming",
+          "checksum": "a5a2742bdf2c1b82ecf1d8462fda41df"
+        },
+        {
+          "name": "perf-wide-data",
+          "path": "/example/LineChart/perf-wide-data",
+          "checksum": "891390544842b9da2a3a8b74bb4a1578"
+        },
+        {
+          "name": "perf-wide-data-processed",
+          "path": "/example/LineChart/perf-wide-data-processed",
+          "checksum": "db6c07c551ffc19d2d9003e940373355"
+        },
+        {
+          "name": "persist-brush-zoom",
+          "path": "/example/LineChart/persist-brush-zoom",
+          "checksum": "46c20c5237705872fbb4ee89b68f3c3b"
+        },
+        {
+          "name": "persist-series",
+          "path": "/example/LineChart/persist-series",
+          "checksum": "b3ba9b114b413cd4159a0126456e8d0c"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/LineChart/point-annotations",
+          "checksum": "ade5a24eaa9a50ccfac2bda12424922a"
+        },
+        {
+          "name": "points",
+          "path": "/example/LineChart/points",
+          "checksum": "36f37bb3b17298c84ca7dd8c512af699"
+        },
+        {
+          "name": "radar",
+          "path": "/example/LineChart/radar",
+          "checksum": "f9e335705f7d49dee8bde0144e52c63e"
+        },
+        {
+          "name": "radar-rounded",
+          "path": "/example/LineChart/radar-rounded",
+          "checksum": "3002a20dec4a0aef8212426c0cb323d8"
+        },
+        {
+          "name": "radar-series",
+          "path": "/example/LineChart/radar-series",
+          "checksum": "3c0a5bfa8f19e9eea7dbfd81c644bc7f"
+        },
+        {
+          "name": "range-annotation",
+          "path": "/example/LineChart/range-annotation",
+          "checksum": "269c0250b391bb0617f38f8d7b5d1c18"
+        },
+        {
+          "name": "series",
+          "path": "/example/LineChart/series",
+          "checksum": "64d941c7e7c40c777c4deb0b67b43d01"
+        },
+        {
+          "name": "series-brush",
+          "path": "/example/LineChart/series-brush",
+          "checksum": "a2f28b10c515e5cc9f64cb5cdab50dea"
+        },
+        {
+          "name": "series-custom-highlight-point",
+          "path": "/example/LineChart/series-custom-highlight-point",
+          "checksum": "f327f60261a24b9b62034c25bce814d9"
+        },
+        {
+          "name": "series-individual-tooltip",
+          "path": "/example/LineChart/series-individual-tooltip",
+          "checksum": "151366832c1dec6ccaf965f74f2e11e8"
+        },
+        {
+          "name": "series-labels-hover",
+          "path": "/example/LineChart/series-labels-hover",
+          "checksum": "49f560fe1412f6d45d07afe768b1e2b9"
+        },
+        {
+          "name": "series-point-annotations",
+          "path": "/example/LineChart/series-point-annotations",
+          "checksum": "456102a48c1582615b8a52e30344df1b"
+        },
+        {
+          "name": "series-point-click",
+          "path": "/example/LineChart/series-point-click",
+          "checksum": "cd43d9ab9ed1ffe41d62643e313617ff"
+        },
+        {
+          "name": "series-programmatic-control",
+          "path": "/example/LineChart/series-programmatic-control",
+          "checksum": "9c042d8db1df0886fb558979111bf0f8"
+        },
+        {
+          "name": "series-separate-data",
+          "path": "/example/LineChart/series-separate-data",
+          "checksum": "556358b09b613ec7c59f2526c6004123"
+        },
+        {
+          "name": "series-separate-data-diff-length",
+          "path": "/example/LineChart/series-separate-data-diff-length",
+          "checksum": "65ea5c6181ebeaded3c319cef6a7f2b8"
+        },
+        {
+          "name": "series-vertical",
+          "path": "/example/LineChart/series-vertical",
+          "checksum": "43e2d102e4a09181e0056931859dff1c"
+        },
+        {
+          "name": "series-with-nulls",
+          "path": "/example/LineChart/series-with-nulls",
+          "checksum": "e99f077ffa9ff318663140fbacaec578"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/LineChart/single-axis-x",
+          "checksum": "67a1ecc1b6674bc5acda52d944e47eca"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/LineChart/single-axis-y",
+          "checksum": "a2f19c54ab0da2132122e17b940d8cf7"
+        },
+        {
+          "name": "smart-labels-with-points",
+          "path": "/example/LineChart/smart-labels-with-points",
+          "checksum": "5f64549853f26454eab3dbceb4e03b87"
+        },
+        {
+          "name": "sparkline",
+          "path": "/example/LineChart/sparkline",
+          "checksum": "0a0d58d4f09464af31b83dbee57b7a68"
+        },
+        {
+          "name": "sparkline-fixed-position-tooltip",
+          "path": "/example/LineChart/sparkline-fixed-position-tooltip",
+          "checksum": "ed651aa89707e89d33164a65b507297d"
+        },
+        {
+          "name": "sparkline-within-a-paragraph",
+          "path": "/example/LineChart/sparkline-within-a-paragraph",
+          "checksum": "a9675d8ac47b35904d1a21a099b5f1a4"
+        },
+        {
+          "name": "sparkline-within-a-paragraph-with-tooltip-and-highlight",
+          "path": "/example/LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight",
+          "checksum": "342b83e45c290c3a32bb9f0ea64fa4ab"
+        },
+        {
+          "name": "sparkline-zero-axis",
+          "path": "/example/LineChart/sparkline-zero-axis",
+          "checksum": "f770dd27b4a2a168dc559e100277d805"
+        },
+        {
+          "name": "svelte-milestones",
+          "path": "/example/LineChart/svelte-milestones",
+          "checksum": "105e8e340fb846f0bc1dfc43438d06eb"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/LineChart/threshold",
+          "checksum": "ee7d7491fad94c7377b224b55f473bd7"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/LineChart/tooltip-click",
+          "checksum": "45d14a88cfa20412d06439d0bc30d5bd"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/LineChart/vertical",
+          "checksum": "f218b2a2669148b773e570175487e1fb"
+        }
+      ]
+    },
+    {
+      "component": "Link",
+      "examples": [
+        {
+          "name": "bended-arrows",
+          "path": "/example/Link/bended-arrows",
+          "checksum": "2da8fdee57aac534eeef1a59afa7af26"
+        },
+        {
+          "name": "curves",
+          "path": "/example/Link/curves",
+          "checksum": "f950964842e6ea649d824b369f612fc0"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Link/playground",
+          "checksum": "efb57199e0f6df89501ace886a86189b"
+        },
+        {
+          "name": "types",
+          "path": "/example/Link/types",
+          "checksum": "e4195ca99290b73abeea042efba47096"
+        }
+      ]
+    },
+    {
+      "component": "Marker",
+      "examples": [
+        {
+          "name": "line",
+          "path": "/example/Marker/line",
+          "checksum": "3adfc3ba9580394833e6133b00ad2862"
+        },
+        {
+          "name": "orientation",
+          "path": "/example/Marker/orientation",
+          "checksum": "fbdb4b0a504faa6cc2c13e702a73a89b"
+        },
+        {
+          "name": "spline",
+          "path": "/example/Marker/spline",
+          "checksum": "c1e376402212fc10808123bfa6c480e7"
+        },
+        {
+          "name": "spline-w-thicker-stroke",
+          "path": "/example/Marker/spline-w-thicker-stroke",
+          "checksum": "6c020ccd53c77ecd057fbec19feadd85"
+        },
+        {
+          "name": "styling",
+          "path": "/example/Marker/styling",
+          "checksum": "27bc3b64b9858983bf8fbd573169c428"
+        }
+      ]
+    },
+    {
+      "component": "Month",
+      "examples": [
+        {
+          "name": "90-days",
+          "path": "/example/Month/90-days",
+          "checksum": "38666db0aab5d41c08d861cab208f820"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Month/basic",
+          "checksum": "451942bc236fb0e36067f3aec4360371"
+        },
+        {
+          "name": "custom-cell-size",
+          "path": "/example/Month/custom-cell-size",
+          "checksum": "5102a5ac4908a56b2def4291fa3b2d1e"
+        },
+        {
+          "name": "multiple-years",
+          "path": "/example/Month/multiple-years",
+          "checksum": "df3e1f9490addbee71b43676e2c387ad"
+        },
+        {
+          "name": "without-day-numbers",
+          "path": "/example/Month/without-day-numbers",
+          "checksum": "571a6e00733e9fece9397384c95048db"
+        },
+        {
+          "name": "without-month-labels",
+          "path": "/example/Month/without-month-labels",
+          "checksum": "aefe9166f2b6b27f1fc19dc6e05a6bd9"
+        }
+      ]
+    },
+    {
+      "component": "MotionPath",
+      "examples": [
+        {
+          "name": "repeat-indefinitely",
+          "path": "/example/MotionPath/repeat-indefinitely",
+          "checksum": "5fde1737ac8fc61b786175f8d11701a3"
+        },
+        {
+          "name": "rotate-object-with-path",
+          "path": "/example/MotionPath/rotate-object-with-path",
+          "checksum": "4026633e8e8d4e87d57a347993228b5d"
+        },
+        {
+          "name": "sync-with-draw",
+          "path": "/example/MotionPath/sync-with-draw",
+          "checksum": "f0e24da83b4cedd313c9e4fad8ee64f0"
+        }
+      ]
+    },
+    {
+      "component": "Pack",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Pack/basic",
+          "checksum": "22f2d01656b6769cba0449e42b669bd6"
+        }
+      ]
+    },
+    {
+      "component": "Partition",
+      "examples": [
+        {
+          "name": "filterable",
+          "path": "/example/Partition/filterable",
+          "checksum": "76b7242cebb972c62ef3b4394b07be7c"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Partition/horizontal",
+          "checksum": "d4753154cacf43851dd190167b2fd12c"
+        },
+        {
+          "name": "sunburst",
+          "path": "/example/Partition/sunburst",
+          "checksum": "3e761a11294bdb1b0cb5a25bd6ee715e"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Partition/vertical",
+          "checksum": "9fb68ab7036b378243d99dee29998f80"
+        }
+      ]
+    },
+    {
+      "component": "Path",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Path/basic",
+          "checksum": "fe973b72c451728ad5b7e295a74156e0"
+        }
+      ]
+    },
+    {
+      "component": "Pattern",
+      "examples": [
+        {
+          "name": "circles",
+          "path": "/example/Pattern/circles",
+          "checksum": "15ecd0ab0b6ba33955322c0061731afd"
+        },
+        {
+          "name": "circles-custom-pattern-svg-only",
+          "path": "/example/Pattern/circles-custom-pattern-svg-only",
+          "checksum": "449d4e164914b7bfd0d2aecbf99546bd"
+        },
+        {
+          "name": "lineargradient-as-pattern",
+          "path": "/example/Pattern/lineargradient-as-pattern",
+          "checksum": "e89f8e92e07c3063c6dd5c079f364ff9"
+        },
+        {
+          "name": "lines",
+          "path": "/example/Pattern/lines",
+          "checksum": "b6fd15b9f167a98d2f2ae5cb20cee7af"
+        },
+        {
+          "name": "lines-custom-pattern-svg-only",
+          "path": "/example/Pattern/lines-custom-pattern-svg-only",
+          "checksum": "aacd12af57a7486508ad0ff9b75a28a7"
+        },
+        {
+          "name": "rects",
+          "path": "/example/Pattern/rects",
+          "checksum": "530e01c9bbe5dde6d919a5b70c918396"
+        },
+        {
+          "name": "with-fill-color",
+          "path": "/example/Pattern/with-fill-color",
+          "checksum": "592a1c7670f348b875efc19578cacb48"
+        },
+        {
+          "name": "with-lineargradient",
+          "path": "/example/Pattern/with-lineargradient",
+          "checksum": "742206e7d9bb58230f6e9572a355a819"
+        }
+      ]
+    },
+    {
+      "component": "Pie",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Pie/basic",
+          "checksum": "c92021ace1d7816ceabc16b1f86da799"
+        },
+        {
+          "name": "default-slot-render-each-arc",
+          "path": "/example/Pie/default-slot-render-each-arc",
+          "checksum": "283ff9079fce8f584598cac66469d82d"
+        },
+        {
+          "name": "disable-sorting",
+          "path": "/example/Pie/disable-sorting",
+          "checksum": "4b92c0735f499828548ba1532725bfdb"
+        },
+        {
+          "name": "inner-radius-negative",
+          "path": "/example/Pie/inner-radius-negative",
+          "checksum": "bdb5a86cf6ff02e373d99ae192be65be"
+        },
+        {
+          "name": "inner-radius-positive",
+          "path": "/example/Pie/inner-radius-positive",
+          "checksum": "e174a3950a2af268672dd242fadc2881"
+        },
+        {
+          "name": "inner-radius-zero-one",
+          "path": "/example/Pie/inner-radius-zero-one",
+          "checksum": "e174a3950a2af268672dd242fadc2881"
+        },
+        {
+          "name": "labels",
+          "path": "/example/Pie/labels",
+          "checksum": "a9dd25eda2ae16e8d3550d7d808ee97c"
+        },
+        {
+          "name": "labels-centroid",
+          "path": "/example/Pie/labels-centroid",
+          "checksum": "a9dd25eda2ae16e8d3550d7d808ee97c"
+        },
+        {
+          "name": "labels-centroid-multiple",
+          "path": "/example/Pie/labels-centroid-multiple",
+          "checksum": "92ca3a8eb5fe6daeb046ce7aaa3522bd"
+        },
+        {
+          "name": "labels-outer",
+          "path": "/example/Pie/labels-outer",
+          "checksum": "877618360516f8b0292f3706f67cd8c8"
+        },
+        {
+          "name": "labels-outer-radial",
+          "path": "/example/Pie/labels-outer-radial",
+          "checksum": "2ecbe07dbbc92bcd94f08ab09b98a050"
+        },
+        {
+          "name": "labels-outer-with-padding",
+          "path": "/example/Pie/labels-outer-with-padding",
+          "checksum": "ecdfc945008bbe35cbd0966faf958088"
+        },
+        {
+          "name": "multiple-data-prop",
+          "path": "/example/Pie/multiple-data-prop",
+          "checksum": "aeb9110c00969139f289cfcbaad81938"
+        },
+        {
+          "name": "offset",
+          "path": "/example/Pie/offset",
+          "checksum": "9faf59eff184cda9b6ac990ea9fa8124"
+        },
+        {
+          "name": "outer-radius",
+          "path": "/example/Pie/outer-radius",
+          "checksum": "ea116b6ec20d607154589e5fd8c42a16"
+        },
+        {
+          "name": "pad-angle",
+          "path": "/example/Pie/pad-angle",
+          "checksum": "c29b4f5836040551af3a92167d8144d1"
+        },
+        {
+          "name": "pad-angle-with-inner-radius",
+          "path": "/example/Pie/pad-angle-with-inner-radius",
+          "checksum": "6f599f4619f2f0fa24551f63886f422d"
+        },
+        {
+          "name": "partial-range-chart-xrange",
+          "path": "/example/Pie/partial-range-chart-xrange",
+          "checksum": "2ddf8bad7e011a13d3474bef780c70db"
+        },
+        {
+          "name": "partial-range-range-prop",
+          "path": "/example/Pie/partial-range-range-prop",
+          "checksum": "7baff3ac2fbfdf2ec405d09f4e6272c0"
+        },
+        {
+          "name": "placement",
+          "path": "/example/Pie/placement",
+          "checksum": "fe96df7a04a6635c3f1414446be404d1"
+        },
+        {
+          "name": "placement-center",
+          "path": "/example/Pie/placement-center",
+          "checksum": "fe96df7a04a6635c3f1414446be404d1"
+        },
+        {
+          "name": "placement-left",
+          "path": "/example/Pie/placement-left",
+          "checksum": "691910f85fb885297e6d47378b4dbf93"
+        },
+        {
+          "name": "placement-right",
+          "path": "/example/Pie/placement-right",
+          "checksum": "0cc3f2d2f057a718dd6a016228a070f1"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/Pie/tooltip",
+          "checksum": "2fdf4d36ac8b7f2dba6ffefcc2a4c837"
+        },
+        {
+          "name": "tooltip-with-arcs-slot",
+          "path": "/example/Pie/tooltip-with-arcs-slot",
+          "checksum": "0b0d13a0ed4f18b6d531281fdbbaf42a"
+        },
+        {
+          "name": "tweened",
+          "path": "/example/Pie/tweened",
+          "checksum": "2dfef61367f307ffc90557450b1f946c"
+        }
+      ]
+    },
+    {
+      "component": "PieChart",
+      "examples": [
+        {
+          "name": "arc",
+          "path": "/example/PieChart/arc",
+          "checksum": "3d14695344f452f4d0c31ecf13937088"
+        },
+        {
+          "name": "arc-props",
+          "path": "/example/PieChart/arc-props",
+          "checksum": "9f574ba0acfe0b555b61965a4032a59a"
+        },
+        {
+          "name": "basic",
+          "path": "/example/PieChart/basic",
+          "checksum": "5a0ab9d57b00fee6d709df089bd5367c"
+        },
+        {
+          "name": "colors-data-prop",
+          "path": "/example/PieChart/colors-data-prop",
+          "checksum": "6455cdd62590baacef072d081a545a72"
+        },
+        {
+          "name": "colors-interpolator",
+          "path": "/example/PieChart/colors-interpolator",
+          "checksum": "6365f6a9354923c7cbe78eb2420db58e"
+        },
+        {
+          "name": "colors-scheme",
+          "path": "/example/PieChart/colors-scheme",
+          "checksum": "09874931808ef71fd0a1493c90fc2876"
+        },
+        {
+          "name": "colors-variables",
+          "path": "/example/PieChart/colors-variables",
+          "checksum": "cd148424209aec4e114950ce551ce972"
+        },
+        {
+          "name": "donut",
+          "path": "/example/PieChart/donut",
+          "checksum": "61074dd778a16345a0ae6267f3e7e02c"
+        },
+        {
+          "name": "donut-with-text",
+          "path": "/example/PieChart/donut-with-text",
+          "checksum": "e2d1522aefb38746d6935a8219c7084d"
+        },
+        {
+          "name": "labels",
+          "path": "/example/PieChart/labels",
+          "checksum": "8ca5cd0c228f58739337ddfdf39cf308"
+        },
+        {
+          "name": "labels-callout",
+          "path": "/example/PieChart/labels-callout",
+          "checksum": "6bd35a43a6bc662fd07f71aebca2b5f6"
+        },
+        {
+          "name": "legend",
+          "path": "/example/PieChart/legend",
+          "checksum": "177f0d4c0cdf43a49963c0c7ff34185f"
+        },
+        {
+          "name": "legend-custom-label",
+          "path": "/example/PieChart/legend-custom-label",
+          "checksum": "9ecb0e3db7f9cef3eaea45e03c67888b"
+        },
+        {
+          "name": "legend-placement",
+          "path": "/example/PieChart/legend-placement",
+          "checksum": "8d48163a9216a5df893c287931c6371f"
+        },
+        {
+          "name": "legend-responsive",
+          "path": "/example/PieChart/legend-responsive",
+          "checksum": "c5f44996b468c0125633910debbb5831"
+        },
+        {
+          "name": "legend-with-padding",
+          "path": "/example/PieChart/legend-with-padding",
+          "checksum": "fd466e848fe69a673651a747eda9b74b"
+        },
+        {
+          "name": "motion-spring",
+          "path": "/example/PieChart/motion-spring",
+          "checksum": "a3b72cb6035f6cbb459d8a521e334858"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/PieChart/motion-tween",
+          "checksum": "b80ef6f560a7dee0fb91b85eeea9f233"
+        },
+        {
+          "name": "offset-slice",
+          "path": "/example/PieChart/offset-slice",
+          "checksum": "82d8ffdea4384dbcb6dd313facd1b067"
+        },
+        {
+          "name": "placement-custom",
+          "path": "/example/PieChart/placement-custom",
+          "checksum": "f044f66c7e182e5372da432ca6aadefc"
+        },
+        {
+          "name": "placement-left",
+          "path": "/example/PieChart/placement-left",
+          "checksum": "c7906f5ba456b72f0fedd66c36290eb6"
+        },
+        {
+          "name": "placement-right",
+          "path": "/example/PieChart/placement-right",
+          "checksum": "60de5bb8e14229320e56274fcb66295e"
+        },
+        {
+          "name": "radius-fixed",
+          "path": "/example/PieChart/radius-fixed",
+          "checksum": "29cc3aa2418917c9c6e28ef11c8ab970"
+        },
+        {
+          "name": "radius-offset",
+          "path": "/example/PieChart/radius-offset",
+          "checksum": "4e391d058d2254f2b46231514e737714"
+        },
+        {
+          "name": "radius-percent",
+          "path": "/example/PieChart/radius-percent",
+          "checksum": "38edecf5757c6b5dc43a4fccf698fdec"
+        },
+        {
+          "name": "segments",
+          "path": "/example/PieChart/segments",
+          "checksum": "dc4a04d04f493c4ce8ae31f4f764d17d"
+        },
+        {
+          "name": "series",
+          "path": "/example/PieChart/series",
+          "checksum": "b5a86a6b4f63f4e0c832292547100a99"
+        },
+        {
+          "name": "series-click",
+          "path": "/example/PieChart/series-click",
+          "checksum": "183116b4edb9a445b763ccb0d45ffc35"
+        },
+        {
+          "name": "series-props",
+          "path": "/example/PieChart/series-props",
+          "checksum": "a83e6d55c46dc254cc046832526229b0"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/PieChart/tooltip-click",
+          "checksum": "e2d42b0b0b3c2735471f290dc7ede1ec"
+        }
+      ]
+    },
+    {
+      "component": "Point",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Point/basic",
+          "checksum": "276e1c125fcc90b3b02f7344379cb214"
+        }
+      ]
+    },
+    {
+      "component": "Points",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Points/basic",
+          "checksum": "d865689d359b7ec26116bdcefc870a46"
+        },
+        {
+          "name": "color-via-class",
+          "path": "/example/Points/color-via-class",
+          "checksum": "e6562dcc70a0cb99b6cb0a5b808f051c"
+        },
+        {
+          "name": "color-via-fill",
+          "path": "/example/Points/color-via-fill",
+          "checksum": "a15a53c54e67c5f9aef6a0dccf37481c"
+        },
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Points/color-via-ordinal-scale",
+          "checksum": "9272510bad7a7be6801acfeb972c8808"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Points/color-via-threshold-scale",
+          "checksum": "4bab3a142b7a8aa922f6a73a5fe2a58b"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Points/with-labels",
+          "checksum": "636f6924ab7482ca89fb182a9a0deb6f"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Points/with-tooltip-and-highlight",
+          "checksum": "b9a0fba7009574950904a699c924b1ee"
+        }
+      ]
+    },
+    {
+      "component": "Polygon",
+      "examples": [
+        {
+          "name": "10-point-star",
+          "path": "/example/Polygon/10-point-star",
+          "checksum": "8da7fabb08e53130dbeec7c50c65287c"
+        },
+        {
+          "name": "12-point-star",
+          "path": "/example/Polygon/12-point-star",
+          "checksum": "eb335d3c91d2d585c1b4e6d80d7da86a"
+        },
+        {
+          "name": "14-point-star",
+          "path": "/example/Polygon/14-point-star",
+          "checksum": "95c985e320305cca8212dcaf950aca69"
+        },
+        {
+          "name": "16-point-star",
+          "path": "/example/Polygon/16-point-star",
+          "checksum": "c3397827c424d651b04d39a1f11d799f"
+        },
+        {
+          "name": "18-point-star",
+          "path": "/example/Polygon/18-point-star",
+          "checksum": "8ef5a3243873a20e552d6dd2dac67928"
+        },
+        {
+          "name": "20-point-star",
+          "path": "/example/Polygon/20-point-star",
+          "checksum": "9b0a734bc4458b4c9dee44588a1b721c"
+        },
+        {
+          "name": "6-point-star",
+          "path": "/example/Polygon/6-point-star",
+          "checksum": "f78dd91199a69513e72a84c00d04afaa"
+        },
+        {
+          "name": "8-point-star",
+          "path": "/example/Polygon/8-point-star",
+          "checksum": "ff284b37b28805cef6eb4391e5b512f2"
+        },
+        {
+          "name": "arrow",
+          "path": "/example/Polygon/arrow",
+          "checksum": "b5fb42529cdfe9ca4e12d9653b834f0f"
+        },
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Polygon/color-via-ordinal-scale",
+          "checksum": "c2e2787f5806a37a9668885b8192f88a"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Polygon/color-via-threshold-scale",
+          "checksum": "a590fb6107daee1dbb62371211dfb315"
+        },
+        {
+          "name": "cross",
+          "path": "/example/Polygon/cross",
+          "checksum": "3396a48a7b57a9cb2b2c1b508a8d185e"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Polygon/data-mode",
+          "checksum": "c290de623f3b25c373296c6bb708d8d0"
+        },
+        {
+          "name": "diamond",
+          "path": "/example/Polygon/diamond",
+          "checksum": "9baef3deb307fc8869abd8226b156514"
+        },
+        {
+          "name": "hexagon",
+          "path": "/example/Polygon/hexagon",
+          "checksum": "793c2416f5d89a38342c8a61d6816179"
+        },
+        {
+          "name": "octagon",
+          "path": "/example/Polygon/octagon",
+          "checksum": "a0c131410ec415cea0f50ef892a9c085"
+        },
+        {
+          "name": "parallelogram",
+          "path": "/example/Polygon/parallelogram",
+          "checksum": "0def511ebc98175d071bffa045e544d2"
+        },
+        {
+          "name": "pentagon",
+          "path": "/example/Polygon/pentagon",
+          "checksum": "aa4c0e525c4c778a13ceb3fda730f1bc"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Polygon/playground",
+          "checksum": "4e019109b1bd4be0b66ad2078e3a8f84"
+        },
+        {
+          "name": "rectangle",
+          "path": "/example/Polygon/rectangle",
+          "checksum": "5f7a528721d4d1418b1178ed79c42fe4"
+        },
+        {
+          "name": "rhombus",
+          "path": "/example/Polygon/rhombus",
+          "checksum": "c5e098d7f6c0ecd0c5a088f6dc9f5977"
+        },
+        {
+          "name": "square",
+          "path": "/example/Polygon/square",
+          "checksum": "b8d0e0d8a9584d03e0dcffe5a825ee16"
+        },
+        {
+          "name": "trapezoid",
+          "path": "/example/Polygon/trapezoid",
+          "checksum": "0b13b767858fa7dc89be1a8729820a56"
+        },
+        {
+          "name": "triangle",
+          "path": "/example/Polygon/triangle",
+          "checksum": "72486e77c02d49bafc31b4538102d74e"
+        }
+      ]
+    },
+    {
+      "component": "RadialGradient",
+      "examples": [
+        {
+          "name": "focal-location-and-radius-with-custom-colors",
+          "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+          "checksum": "653249f364bb2efdb17bba310bcbbd70"
+        },
+        {
+          "name": "spreadmethod",
+          "path": "/example/RadialGradient/spreadmethod",
+          "checksum": "cce61f0a283c6a49f48e4ca72fa5b03c"
+        },
+        {
+          "name": "tailwind-colors",
+          "path": "/example/RadialGradient/tailwind-colors",
+          "checksum": "a951714dfae5e00f8d3e40d2ab591757"
+        },
+        {
+          "name": "units",
+          "path": "/example/RadialGradient/units",
+          "checksum": "e2e6c2c8ee1ca20acebf58e4e40fe6f9"
+        }
+      ]
+    },
+    {
+      "component": "Raster",
+      "examples": [
+        {
+          "name": "mandelbrot",
+          "path": "/example/Raster/mandelbrot",
+          "checksum": "0b1066ebe004d973fc2058221eb7e0d4"
+        },
+        {
+          "name": "math-functions",
+          "path": "/example/Raster/math-functions",
+          "checksum": "4d94dbf8584421d96992f155b204cdd7"
+        },
+        {
+          "name": "sampled",
+          "path": "/example/Raster/sampled",
+          "checksum": "83f1cd9ea829c198d1f44ae71f058346"
+        },
+        {
+          "name": "us-water-vapor",
+          "path": "/example/Raster/us-water-vapor",
+          "checksum": "e47fb7df200f848720ffab60a9122e48"
+        },
+        {
+          "name": "volcano",
+          "path": "/example/Raster/volcano",
+          "checksum": "70828eeef93c803ba07a5fa52e93f45b"
+        },
+        {
+          "name": "with-contour-overlay",
+          "path": "/example/Raster/with-contour-overlay",
+          "checksum": "6bd1e5ac57b7f30bc81f5b10b3da88da"
+        }
+      ]
+    },
+    {
+      "component": "Rect",
+      "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Rect/color-via-ordinal-scale",
+          "checksum": "10a796cc506feca6a7bd31e61759588f"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Rect/color-via-threshold-scale",
+          "checksum": "3d83c2cb657f24ebcaaf9ce907372f59"
+        },
+        {
+          "name": "data-mode-edge",
+          "path": "/example/Rect/data-mode-edge",
+          "checksum": "c25cf446ae6dd4f3f3ba6e9dcbdbebaf"
+        },
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Rect/styling-using-attributes",
+          "checksum": "1cc662bfdea8432c7900f4db982b77dd"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Rect/styling-using-classes",
+          "checksum": "19acc7734aebeb2ac54e6211de8ec7f4"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Rect/styling-using-css-variables",
+          "checksum": "2aac3410b5bd9e044426fc25413df318"
+        }
+      ]
+    },
+    {
+      "component": "Rule",
+      "examples": [
+        {
+          "name": "annotation-x",
+          "path": "/example/Rule/annotation-x",
+          "checksum": "f3324844d625985900d91f94ce38b94a"
+        },
+        {
+          "name": "annotation-y",
+          "path": "/example/Rule/annotation-y",
+          "checksum": "3f3154daaae6f90a0fe1dafc91c80ab6"
+        },
+        {
+          "name": "baseline-top-right",
+          "path": "/example/Rule/baseline-top-right",
+          "checksum": "bc59c7bfaf697b6273b76f341b9a2791"
+        },
+        {
+          "name": "baseline-x-negative",
+          "path": "/example/Rule/baseline-x-negative",
+          "checksum": "12e05027540a037fc57196b095a8b666"
+        },
+        {
+          "name": "baseline-x-y",
+          "path": "/example/Rule/baseline-x-y",
+          "checksum": "f10cbafb6058a3c7e3782ee900c06d7f"
+        },
+        {
+          "name": "baseline-y-negative",
+          "path": "/example/Rule/baseline-y-negative",
+          "checksum": "7f9c87e4d74bfe1958d02115f92782ad"
+        },
+        {
+          "name": "candlestick",
+          "path": "/example/Rule/candlestick",
+          "checksum": "8d66d9965e3258a57e64ea423d4fefbd"
+        },
+        {
+          "name": "candlestick-open-close-line-color",
+          "path": "/example/Rule/candlestick-open-close-line-color",
+          "checksum": "8ba9507a4b14c4fb9855e2a0a589bfed"
+        },
+        {
+          "name": "candlestick-with-brushing",
+          "path": "/example/Rule/candlestick-with-brushing",
+          "checksum": "c385abcf4265273353802ac3fb4f1e13"
+        },
+        {
+          "name": "data-x-band",
+          "path": "/example/Rule/data-x-band",
+          "checksum": "ce8945c770c5fd6b0102524f43af6c45"
+        },
+        {
+          "name": "data-x-date",
+          "path": "/example/Rule/data-x-date",
+          "checksum": "70dd877121ab46fefedd4f8ad1f819ea"
+        },
+        {
+          "name": "data-x-range",
+          "path": "/example/Rule/data-x-range",
+          "checksum": "b19ac505d7e6b6c9291e4d3793405319"
+        },
+        {
+          "name": "data-y-range",
+          "path": "/example/Rule/data-y-range",
+          "checksum": "8ab2cabaa993c57d5648c4ac583c998a"
+        },
+        {
+          "name": "lollipop",
+          "path": "/example/Rule/lollipop",
+          "checksum": "42f5d4e870cd38525217bc04d716cd99"
+        }
+      ]
+    },
+    {
+      "component": "Sankey",
+      "examples": [
+        {
+          "name": "complex",
+          "path": "/example/Sankey/complex",
+          "checksum": "90e4bdf6826e86d6af609427f1b97247"
+        },
+        {
+          "name": "hierarchy",
+          "path": "/example/Sankey/hierarchy",
+          "checksum": "5736352b98b388a8bfc3a35f0e734904"
+        },
+        {
+          "name": "node-select",
+          "path": "/example/Sankey/node-select",
+          "checksum": "1d5a913841edce89ecae0b4cdfa449dd"
+        },
+        {
+          "name": "simple",
+          "path": "/example/Sankey/simple",
+          "checksum": "e11ca35cc37ba00508b7fd46a951cca0"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/Sankey/tooltip",
+          "checksum": "ee06f79952b499f228a1af4175b13881"
+        }
+      ]
+    },
+    {
+      "component": "ScatterChart",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ScatterChart/basic",
+          "checksum": "67ad96d65960c795abd838afa3d4d9bf"
+        },
+        {
+          "name": "brush",
+          "path": "/example/ScatterChart/brush",
+          "checksum": "67b1f40eec6d6aca43667761a9506387"
+        },
+        {
+          "name": "custom",
+          "path": "/example/ScatterChart/custom",
+          "checksum": "c74806b7046dcf329562c342b533176f"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/ScatterChart/custom-tooltip",
+          "checksum": "16a0d8c0a2c05738f7bd2d743b9f016a"
+        },
+        {
+          "name": "date-series-color-scale",
+          "path": "/example/ScatterChart/date-series-color-scale",
+          "checksum": "4705009c9549a5dc0af296c54562479b"
+        },
+        {
+          "name": "domain-baseline",
+          "path": "/example/ScatterChart/domain-baseline",
+          "checksum": "73a1737d791be77121ed24fd2e9b510d"
+        },
+        {
+          "name": "domain-nice",
+          "path": "/example/ScatterChart/domain-nice",
+          "checksum": "46d9dcf19850a9cef05feef98eb4d7ae"
+        },
+        {
+          "name": "domain-padding",
+          "path": "/example/ScatterChart/domain-padding",
+          "checksum": "9aaef160c92770859224bb0ecfa19c7e"
+        },
+        {
+          "name": "labels",
+          "path": "/example/ScatterChart/labels",
+          "checksum": "eab8f6113c3b33435fb4932266b32b8b"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/ScatterChart/line-annotation",
+          "checksum": "c857ba67f6da21624eefe679ea3c4e26"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/ScatterChart/point-annotations",
+          "checksum": "226815d41e90e95ada32b4063cfe383e"
+        },
+        {
+          "name": "punchcard",
+          "path": "/example/ScatterChart/punchcard",
+          "checksum": "46b7d7aa8b4e400ee5546ebe0542d97f"
+        },
+        {
+          "name": "radius-scale",
+          "path": "/example/ScatterChart/radius-scale",
+          "checksum": "c7f7f1088f68d5636f0c413807c9b492"
+        },
+        {
+          "name": "range-annotation-both",
+          "path": "/example/ScatterChart/range-annotation-both",
+          "checksum": "af356cb13ae5300b10a29bd2441b2990"
+        },
+        {
+          "name": "range-annotation-horizontal",
+          "path": "/example/ScatterChart/range-annotation-horizontal",
+          "checksum": "4dbaa44805d78ecacf0b95c5d4b68f6f"
+        },
+        {
+          "name": "range-annotation-vertical",
+          "path": "/example/ScatterChart/range-annotation-vertical",
+          "checksum": "89100ea72c647ca935993d2e717699a8"
+        },
+        {
+          "name": "series",
+          "path": "/example/ScatterChart/series",
+          "checksum": "ee2cdc1f7dbd07c3694559194326366c"
+        },
+        {
+          "name": "series-custom-labels",
+          "path": "/example/ScatterChart/series-custom-labels",
+          "checksum": "19cfc7ea6f6b8e23933127e72d907436"
+        },
+        {
+          "name": "series-legend",
+          "path": "/example/ScatterChart/series-legend",
+          "checksum": "fb6fa20303aa4e7d6c985289b985baca"
+        },
+        {
+          "name": "series-tween",
+          "path": "/example/ScatterChart/series-tween",
+          "checksum": "988fd6ce2624de28bd78f284db6e341d"
+        },
+        {
+          "name": "series-with-radius",
+          "path": "/example/ScatterChart/series-with-radius",
+          "checksum": "a2071a9ed77b8e3c1179452c2e9a9c93"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/ScatterChart/single-axis-x",
+          "checksum": "4b44094891514ec5f45996f633d2eab0"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/ScatterChart/single-axis-y",
+          "checksum": "a4b150843139b59ded6bc4d0e8d0c1da"
+        },
+        {
+          "name": "single-dimension",
+          "path": "/example/ScatterChart/single-dimension",
+          "checksum": "6339e7c6f606ce565fbfd2a823313ab1"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/ScatterChart/tooltip-click",
+          "checksum": "b8d7a8998752c7bff664de06656c6a22"
+        },
+        {
+          "name": "zoomable-bubble",
+          "path": "/example/ScatterChart/zoomable-bubble",
+          "checksum": "6a3072d771a94aef79edf199d9fbe75b"
+        }
+      ]
+    },
+    {
+      "component": "Spline",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Spline/basic",
+          "checksum": "027d0634888cc136398448e4d51222e4"
+        },
+        {
+          "name": "basic-start-and-end-snippets",
+          "path": "/example/Spline/basic-start-and-end-snippets",
+          "checksum": "3852a074cb1ab4dd30762ddcb565cd59"
+        },
+        {
+          "name": "draw",
+          "path": "/example/Spline/draw",
+          "checksum": "7980a72d6f6d4fa587c720d290741b0a"
+        },
+        {
+          "name": "end-slot-with-draw-with-value",
+          "path": "/example/Spline/end-slot-with-draw-with-value",
+          "checksum": "32291352c29096723e3171a192f93ee7"
+        },
+        {
+          "name": "end-snippet-with-draw",
+          "path": "/example/Spline/end-snippet-with-draw",
+          "checksum": "c26f2e435a5282030b936b27dbdb3f51"
+        },
+        {
+          "name": "geo-routes",
+          "path": "/example/Spline/geo-routes",
+          "checksum": "4aca8ca06a36021106195216e8115343"
+        },
+        {
+          "name": "gradient-encoding",
+          "path": "/example/Spline/gradient-encoding",
+          "checksum": "0425b8023a9878f0b317ec8221125edf"
+        },
+        {
+          "name": "gradient-threshold",
+          "path": "/example/Spline/gradient-threshold",
+          "checksum": "2241988d6c482ead6917fb70542698ad"
+        },
+        {
+          "name": "label-using-start-end-snippets",
+          "path": "/example/Spline/label-using-start-end-snippets",
+          "checksum": "3f1ef855c7d8e14f323fdeb45a9a5bde"
+        },
+        {
+          "name": "markers-arrows",
+          "path": "/example/Spline/markers-arrows",
+          "checksum": "ea1be3788087934c714fa477e10ca368"
+        },
+        {
+          "name": "math-formula",
+          "path": "/example/Spline/math-formula",
+          "checksum": "f3f2ca0bdcc2099f1694537ef4cb90ab"
+        },
+        {
+          "name": "multiple-series",
+          "path": "/example/Spline/multiple-series",
+          "checksum": "7c74b80a74c757ce9c2111a5ef22b626"
+        },
+        {
+          "name": "multiple-series-highlight-on-hover",
+          "path": "/example/Spline/multiple-series-highlight-on-hover",
+          "checksum": "403a7d99d8180c6296f7d9a6e28d303e"
+        },
+        {
+          "name": "multiple-series-using-overrides",
+          "path": "/example/Spline/multiple-series-using-overrides",
+          "checksum": "cf2099dc0eeaf23d908c4d666c81e3cc"
+        },
+        {
+          "name": "multiple-series-with-labels",
+          "path": "/example/Spline/multiple-series-with-labels",
+          "checksum": "73756399058d03b152c38f56f56dcb29"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Spline/playground",
+          "checksum": "8ef06f48a5c5ea3c67165d61d3ea366e"
+        },
+        {
+          "name": "radial-line-with-areas",
+          "path": "/example/Spline/radial-line-with-areas",
+          "checksum": "f611df2b6ea3db7d94cb131d4df64e4e"
+        },
+        {
+          "name": "radial-multi-year-lines",
+          "path": "/example/Spline/radial-multi-year-lines",
+          "checksum": "6ea2fc30eb6cf8c1bde981ec6c6bd6cf"
+        },
+        {
+          "name": "radial-radar",
+          "path": "/example/Spline/radial-radar",
+          "checksum": "aca9c2d39896db1e72857b45d37b5041"
+        },
+        {
+          "name": "stroke-grouping",
+          "path": "/example/Spline/stroke-grouping",
+          "checksum": "4a768802b2277792449647f9513f790a"
+        },
+        {
+          "name": "tween-on-mount",
+          "path": "/example/Spline/tween-on-mount",
+          "checksum": "892c59a9946cacb031bbeb504152deb3"
+        },
+        {
+          "name": "tweened",
+          "path": "/example/Spline/tweened",
+          "checksum": "c6190c9517b45ddb745cbb4e94777c8d"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Spline/vertical",
+          "checksum": "5a25f73ba847399b0cccb0a836b26d92"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Spline/with-labels",
+          "checksum": "6c9e20e8f56b1b220e12138b9a337ec2"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Spline/with-tooltip-and-highlight",
+          "checksum": "5c78a817f135587fc1277d1bc1f576de"
+        }
+      ]
+    },
+    {
+      "component": "Text",
+      "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Text/color-via-ordinal-scale",
+          "checksum": "023dcecc1bbadb7a31923b7fb5287994"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Text/color-via-threshold-scale",
+          "checksum": "edf28e5cf1c671c747bd0d5c62f5b095"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Text/data-mode",
+          "checksum": "f9ca8c6d677069f305e7e577062b6ba3"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Text/playground",
+          "checksum": "b406e9b6f5f2017daa94c1d94b44be90"
+        },
+        {
+          "name": "segments",
+          "path": "/example/Text/segments",
+          "checksum": "47310c15b04f7aaf50b62b0765fa9c71"
+        },
+        {
+          "name": "truncate-axis-labels",
+          "path": "/example/Text/truncate-axis-labels",
+          "checksum": "38d821b89a56c3556fa6a1b6d8706fea"
+        },
+        {
+          "name": "word-wrap-axis-labels",
+          "path": "/example/Text/word-wrap-axis-labels",
+          "checksum": "9259a8aeee3efae56730a51af152e072"
+        },
+        {
+          "name": "word-wrap-with-explicit-newline",
+          "path": "/example/Text/word-wrap-with-explicit-newline",
+          "checksum": "b293fcde4f70c9d1dd4018001d2dff23"
+        }
+      ]
+    },
+    {
+      "component": "Threshold",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Threshold/basic",
+          "checksum": "65a163014c52c23df675efa7d33602c9"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Threshold/with-labels",
+          "checksum": "3a4a4504be12747331a2655af6eb63e5"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Threshold/with-tooltip-and-highlight",
+          "checksum": "8c3676b87504055799d7fc6ca3c3e091"
+        }
+      ]
+    },
+    {
+      "component": "Tooltip",
+      "examples": [
+        {
+          "name": "anchor-location",
+          "path": "/example/Tooltip/anchor-location",
+          "checksum": "b390d38fb9ea7a648bf712f8514e1710"
+        },
+        {
+          "name": "area",
+          "path": "/example/Tooltip/area",
+          "checksum": "d4584bf2a33d4f973ad2ba2609a20d68"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Tooltip/basic",
+          "checksum": "6c943216dbdaee13538ad44efc89160c"
+        },
+        {
+          "name": "color-swatch",
+          "path": "/example/Tooltip/color-swatch",
+          "checksum": "79087f0bf18632a42967ad22fbdddf8b"
+        },
+        {
+          "name": "color-swatch-using-theme",
+          "path": "/example/Tooltip/color-swatch-using-theme",
+          "checksum": "f8a784060e6986a4b2cf0dbc00ef9606"
+        },
+        {
+          "name": "custom-content",
+          "path": "/example/Tooltip/custom-content",
+          "checksum": "36b20859529681c494a229834626d1ae"
+        },
+        {
+          "name": "data-snapping",
+          "path": "/example/Tooltip/data-snapping",
+          "checksum": "e418fdd3c3082a56b1bb516daf4cf036"
+        },
+        {
+          "name": "default-mouse-position-with-offset",
+          "path": "/example/Tooltip/default-mouse-position-with-offset",
+          "checksum": "6c943216dbdaee13538ad44efc89160c"
+        },
+        {
+          "name": "disable-motion",
+          "path": "/example/Tooltip/disable-motion",
+          "checksum": "8fea75821342ea046afd2a3ce3eae293"
+        },
+        {
+          "name": "duration",
+          "path": "/example/Tooltip/duration",
+          "checksum": "831dba9c8338d66b4200b393a022351e"
+        },
+        {
+          "name": "externally-access-tooltip-data",
+          "path": "/example/Tooltip/externally-access-tooltip-data",
+          "checksum": "9b67687b027aac91c010ab539e47c4bd"
+        },
+        {
+          "name": "invert-variant",
+          "path": "/example/Tooltip/invert-variant",
+          "checksum": "eddc7d23c96537f49de7521b73302095"
+        },
+        {
+          "name": "multiple-overlapping-bars",
+          "path": "/example/Tooltip/multiple-overlapping-bars",
+          "checksum": "c69f13cb237110fdbf9bccafd7679d8a"
+        },
+        {
+          "name": "multiple-overlapping-durations",
+          "path": "/example/Tooltip/multiple-overlapping-durations",
+          "checksum": "bd643f838ad6001a28e00f91bfe376b2"
+        },
+        {
+          "name": "multiple-tooltips-with-fixed-single-axis",
+          "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis",
+          "checksum": "712a9b7f707f87723e122377515ebf48"
+        },
+        {
+          "name": "multiple-tooltips-with-fixed-single-axis-scaleband",
+          "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
+          "checksum": "ebc5e3d7b0113bb4061056285e4fb3fa"
+        },
+        {
+          "name": "portal-overflow",
+          "path": "/example/Tooltip/portal-overflow",
+          "checksum": "e5edffde1c2e358da7272edfa7fe0046"
+        },
+        {
+          "name": "scatter-plot",
+          "path": "/example/Tooltip/scatter-plot",
+          "checksum": "b4b4ffc4baa61beba4d2c04bbe567bb5"
+        },
+        {
+          "name": "simple-bars",
+          "path": "/example/Tooltip/simple-bars",
+          "checksum": "7b0ba66de0790a31804b349d0d63a782"
+        },
+        {
+          "name": "single-date-time",
+          "path": "/example/Tooltip/single-date-time",
+          "checksum": "2db73abcb22fa37e6991e1d08a06c38a"
+        },
+        {
+          "name": "stacked-area",
+          "path": "/example/Tooltip/stacked-area",
+          "checksum": "c815802a4a7301665006270328ac7804"
+        }
+      ]
+    },
+    {
+      "component": "Trail",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Trail/basic",
+          "checksum": "9528f390b710bf46b624a8d03aa6b5c9"
+        },
+        {
+          "name": "curves",
+          "path": "/example/Trail/curves",
+          "checksum": "a2d4e77750999e1e6eac316e77b7b110"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Trail/playground",
+          "checksum": "0dabb828fe87e4241516a8f2f6d53bee"
+        },
+        {
+          "name": "tdf-stage",
+          "path": "/example/Trail/tdf-stage",
+          "checksum": "cce5a90e71e2684d2ebbe1b66a76a0bf"
+        }
+      ]
+    },
+    {
+      "component": "TransformContext",
+      "examples": [
+        {
+          "name": "pan-zoom-axes",
+          "path": "/example/TransformContext/pan-zoom-axes",
+          "checksum": "8d2a260aa0edbd1a45cbe6c0c6381773"
+        },
+        {
+          "name": "pan-zoom-html-image",
+          "path": "/example/TransformContext/pan-zoom-html-image",
+          "checksum": "b353b9eb57c6a483ae3dcbc6ee0e8a19"
+        },
+        {
+          "name": "pan-zoom-svg-image",
+          "path": "/example/TransformContext/pan-zoom-svg-image",
+          "checksum": "e250374180cb5df1e07645203cd045e9"
+        },
+        {
+          "name": "planet-distances",
+          "path": "/example/TransformContext/planet-distances",
+          "checksum": "0f1fd4d31c484d4f8fa06043d5c93ca4"
+        },
+        {
+          "name": "playground",
+          "path": "/example/TransformContext/playground",
+          "checksum": "af33cd6874a0e610ab3fb1e7be1aa1c5"
+        },
+        {
+          "name": "scroll-activation-key",
+          "path": "/example/TransformContext/scroll-activation-key",
+          "checksum": "fef6d444365fbcbee6de84fae20f5975"
+        }
+      ]
+    },
+    {
+      "component": "Tree",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Tree/basic",
+          "checksum": "51e749d5e1d9eb8886243f74e84e5d7a"
+        },
+        {
+          "name": "html-nodes",
+          "path": "/example/Tree/html-nodes",
+          "checksum": "a36c2f5a7338f42fcc5c52eedc0d5455"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Tree/playground",
+          "checksum": "f09d0057b0c0c0792df9cbd430503fd3"
+        }
+      ]
+    },
+    {
+      "component": "Treemap",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Treemap/basic",
+          "checksum": "979761309a2b73226ecb6bd5b3201c9e"
+        },
+        {
+          "name": "complex",
+          "path": "/example/Treemap/complex",
+          "checksum": "20b32fc606c1ce45e1069882e2d1f119"
+        },
+        {
+          "name": "nested-filter",
+          "path": "/example/Treemap/nested-filter",
+          "checksum": "4c36f3d717fe777f1e22dba745493bb8"
+        },
+        {
+          "name": "nested-zoom",
+          "path": "/example/Treemap/nested-zoom",
+          "checksum": "401eeb036158acdb3b2e3f1c3262c0dd"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Treemap/playground",
+          "checksum": "7ba152ed8c37f09dc9a6c1951c9f3bb9"
+        },
+        {
+          "name": "stacked-zoom",
+          "path": "/example/Treemap/stacked-zoom",
+          "checksum": "152e00e3548cb03d7655f52355e1d1bf"
+        }
+      ]
+    },
+    {
+      "component": "Vector",
+      "examples": [
+        {
+          "name": "anchor",
+          "path": "/example/Vector/anchor",
+          "checksum": "0a12d31740a7783b782b8a31b0eb21d3"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Vector/basic",
+          "checksum": "93d48c111bbc90f981b3b4fbe607cd1c"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Vector/data-mode",
+          "checksum": "c4860b513e4791b98ff5506d39b07bd6"
+        },
+        {
+          "name": "election-wind-map",
+          "path": "/example/Vector/election-wind-map",
+          "checksum": "843d5f417132b69a391e332e793171b0"
+        },
+        {
+          "name": "shapes",
+          "path": "/example/Vector/shapes",
+          "checksum": "2bde63b936ba0b99adcb1c23f951801b"
+        },
+        {
+          "name": "wind-map",
+          "path": "/example/Vector/wind-map",
+          "checksum": "a0475c0cc501bf4bb2704bae13e6c538"
+        }
+      ]
+    },
+    {
+      "component": "Violin",
+      "examples": [
+        {
+          "name": "bandwidth",
+          "path": "/example/Violin/bandwidth",
+          "checksum": "999902c4aaaef34d03a9aa1ec611ce64"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Violin/basic",
+          "checksum": "819459879600ddb7f55a75b6150d5029"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Violin/horizontal",
+          "checksum": "4fad9620d59552bf0026f95e47ec391d"
+        },
+        {
+          "name": "with-box-median",
+          "path": "/example/Violin/with-box-median",
+          "checksum": "d934cca76224277f79e2af6df03e29a0"
+        }
+      ]
+    },
+    {
+      "component": "Voronoi",
+      "examples": [
+        {
+          "name": "radius",
+          "path": "/example/Voronoi/radius",
+          "checksum": "e5baf4045686443c75179995720f135c"
+        }
+      ]
+    },
+    {
+      "component": "Waffle",
+      "examples": [
+        {
+          "name": "auto-multiple",
+          "path": "/example/Waffle/auto-multiple",
+          "checksum": "873fb8f9d4b56505a8f462da74a6016b"
+        },
+        {
+          "name": "band-padding",
+          "path": "/example/Waffle/band-padding",
+          "checksum": "2aa756fb67c4d9f31399e92f0dfc2f07"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Waffle/basic",
+          "checksum": "9e8fad7fdb70851268ddce0b527ee5e8"
+        },
+        {
+          "name": "circular-cells",
+          "path": "/example/Waffle/circular-cells",
+          "checksum": "3c4ea5992d33169c306e684bc2da9ac0"
+        },
+        {
+          "name": "custom-symbol",
+          "path": "/example/Waffle/custom-symbol",
+          "checksum": "a05e90ca49f70df6c6488dee159a0028"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Waffle/horizontal",
+          "checksum": "9d1efc311d4fa8ba1fac0a24583890a6"
+        },
+        {
+          "name": "months",
+          "path": "/example/Waffle/months",
+          "checksum": "c820209ec1dd4145f4831afe5888f908"
+        },
+        {
+          "name": "olympians-by-birth-year",
+          "path": "/example/Waffle/olympians-by-birth-year",
+          "checksum": "7fa7c2c8eb7c4b78c2742591e546b9ae"
+        },
+        {
+          "name": "olympians-by-sex",
+          "path": "/example/Waffle/olympians-by-sex",
+          "checksum": "186a1a25d22d711fe823b02df4cb32c1"
+        },
+        {
+          "name": "olympians-weight-by-sex",
+          "path": "/example/Waffle/olympians-weight-by-sex",
+          "checksum": "2d69fc0af9f15ae2f614718b5f215f71"
+        },
+        {
+          "name": "penguins",
+          "path": "/example/Waffle/penguins",
+          "checksum": "ef065e62cb62c09276f78791e5bd099b"
+        },
+        {
+          "name": "stacked",
+          "path": "/example/Waffle/stacked",
+          "checksum": "43378685d77bfc9eab6ef225b7483fe1"
+        },
+        {
+          "name": "survey",
+          "path": "/example/Waffle/survey",
+          "checksum": "11695d0b77decee7e15434ed2a274a64"
+        },
+        {
+          "name": "unit-multiple",
+          "path": "/example/Waffle/unit-multiple",
+          "checksum": "4d00cb2d5ec1d77df1921eb49c7395ef"
+        }
+      ]
+    }
+  ]
+}

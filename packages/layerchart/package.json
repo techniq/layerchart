@@ -4,31 +4,40 @@
   "author": "Sean Lynch <techniq35@gmail.com>",
   "license": "MIT",
   "repository": "techniq/layerchart",
-  "version": "1.0.13",
+  "homepage": "https://layerchart.com",
+  "version": "2.0.0",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "pnpm package:watch",
+    "build": "svelte-package",
     "package": "svelte-package",
+    "package:watch": "svelte-package --watch",
     "prepublishOnly": "svelte-package",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "TZ=UTC-5 vitest",
+    "test:ui": "TZ=UTC-5 vitest --ui",
+    "bench": "pnpm bench:primitives && pnpm bench:linechart && pnpm bench:composable && pnpm bench:svg-vs-canvas",
+    "bench:primitives": "TZ=UTC-5 vitest bench --project bench src/lib/bench/primitives.svelte.bench.ts",
+    "bench:linechart": "TZ=UTC-5 vitest bench --project bench src/lib/components/charts/LineChart.svelte.bench.ts",
+    "bench:composable": "TZ=UTC-5 vitest bench --project bench src/lib/bench/composable-vs-linechart.svelte.bench.ts",
+    "bench:svg-vs-canvas": "TZ=UTC-5 vitest bench --project bench src/lib/bench/svg-vs-canvas.svelte.bench.ts",
+    "bench:save": "TZ=UTC-5 vitest bench --project bench --outputJson bench-results/latest.json",
+    "bench:compare": "TZ=UTC-5 vitest bench --project bench --compare bench-results/latest.json",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "prepare": "svelte-kit sync"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.4",
-    "@mdi/js": "^7.4.47",
-    "@rollup/plugin-dsv": "^3.0.5",
-    "@sveltejs/adapter-cloudflare": "^7.0.3",
-    "@sveltejs/kit": "^2.21.0",
-    "@sveltejs/package": "^2.3.11",
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@changesets/cli": "^2.31.0",
+    "@napi-rs/canvas": "^0.1.97",
+    "@sveltejs/adapter-auto": "^7.0.1",
+    "@sveltejs/kit": "^2.62.0",
+    "@sveltejs/package": "^2.5.8",
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
-    "@tailwindcss/typography": "^0.5.16",
-    "@types/d3-array": "^3.2.1",
+    "@types/d3": "^7.4.3",
+    "@types/d3-array": "^3.2.2",
+    "@types/d3-chord": "^3.0.6",
     "@types/d3-color": "^3.1.3",
     "@types/d3-delaunay": "^6.0.4",
     "@types/d3-dsv": "^3.0.7",
@@ -40,53 +49,41 @@
     "@types/d3-path": "^3.1.1",
     "@types/d3-quadtree": "^3.0.6",
     "@types/d3-random": "^3.0.3",
-    "@types/d3-sankey": "^0.12.4",
+    "@types/d3-sankey": "^0.12.5",
     "@types/d3-scale": "^4.0.9",
     "@types/d3-scale-chromatic": "^3.1.0",
-    "@types/d3-shape": "^3.1.7",
+    "@types/d3-shape": "^3.1.8",
     "@types/d3-time": "^3.0.4",
-    "@types/lodash-es": "^4.17.12",
-    "@types/prismjs": "^1.26.5",
-    "@types/shapefile": "^0.6.4",
-    "@types/topojson-client": "^3.1.5",
-    "@types/topojson-simplify": "^3.0.3",
-    "@types/topojson-specification": "^1.0.5",
-    "autoprefixer": "^10.4.21",
-    "marked": "^15.0.7",
-    "mdsvex": "^0.12.3",
-    "posthog-js": "^1.242.1",
-    "prettier": "^3.5.3",
-    "prettier-plugin-svelte": "^3.4.0",
-    "prism-svelte": "^0.5.0",
-    "prism-themes": "^1.9.0",
-    "prismjs": "^1.30.0",
-    "rehype-slug": "^6.0.0",
-    "shapefile": "^0.6.6",
-    "solar-calculator": "^0.3.0",
-    "svelte": "5.38.2",
-    "svelte-check": "^4.2.0",
-    "svelte-json-tree": "^2.2.0",
-    "svelte-ux": "^1.0.5",
-    "svelte2tsx": "^0.7.38",
-    "tailwindcss": "^3.4.16",
-    "topojson-client": "^3.1.0",
-    "topojson-simplify": "^3.0.3",
+    "@vitest/browser": "^4.1.8",
+    "@vitest/browser-playwright": "^4.1.8",
+    "@vitest/ui": "^4.1.8",
+    "playwright": "^1.60.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-svelte": "^4.1.0",
+    "svelte": "5.56.1",
+    "svelte-check": "^4.5.0",
+    "svelte2tsx": "^0.7.56",
     "tslib": "^2.8.1",
-    "typescript": "^5.8.3",
-    "unist-util-visit": "^5.0.0",
-    "us-atlas": "^3.0.1",
-    "vite": "^6.3.5",
-    "vitest": "^3.1.3"
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8",
+    "vitest-browser-svelte": "^2.1.1"
   },
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
-    "@dagrejs/dagre": "^1.1.4",
-    "@layerstack/svelte-actions": "^1.0.1",
-    "@layerstack/svelte-stores": "^1.0.2",
-    "@layerstack/tailwind": "^1.0.1",
-    "@layerstack/utils": "^1.0.1",
+    "@dagrejs/dagre": "^2.0.4",
+    "@layerstack/svelte-actions": "1.0.1-next.18",
+    "@layerstack/svelte-state": "0.1.0-next.23",
+    "@layerstack/tailwind": "2.0.0-next.21",
+    "@layerstack/utils": "2.0.0-next.18",
+    "@types/d3-contour": "^3.0.6",
     "d3-array": "^3.2.4",
+    "d3-chord": "^3.0.1",
     "d3-color": "^3.1.0",
+    "d3-contour": "^4.0.2",
     "d3-delaunay": "^6.0.4",
     "d3-dsv": "^3.0.1",
     "d3-force": "^3.0.0",
@@ -104,12 +101,11 @@
     "d3-shape": "^3.2.0",
     "d3-tile": "^1.0.0",
     "d3-time": "^3.1.0",
-    "date-fns": "^4.1.0",
-    "layercake": "8.4.3",
-    "lodash-es": "^4.17.21"
+    "memoize": "^10.2.0",
+    "runed": "^0.37.1"
   },
   "peerDependencies": {
-    "svelte": "^3.56.0 || ^4.0.0 || ^5.0.0"
+    "svelte": "^5.0.0"
   },
   "main": "./dist/index.js",
   "exports": {
@@ -118,10 +114,54 @@
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "svelte": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    },
+    "./geo": {
+      "types": "./dist/geo.d.ts",
+      "svelte": "./dist/geo.js",
+      "default": "./dist/geo.js"
+    },
+    "./hierarchy": {
+      "types": "./dist/hierarchy.d.ts",
+      "svelte": "./dist/hierarchy.js",
+      "default": "./dist/hierarchy.js"
+    },
+    "./force": {
+      "types": "./dist/force.d.ts",
+      "svelte": "./dist/force.js",
+      "default": "./dist/force.js"
+    },
+    "./graph": {
+      "types": "./dist/graph.d.ts",
+      "svelte": "./dist/graph.js",
+      "default": "./dist/graph.js"
+    },
+    "./svg": {
+      "types": "./dist/svg.d.ts",
+      "svelte": "./dist/svg.js",
+      "default": "./dist/svg.js"
+    },
+    "./canvas": {
+      "types": "./dist/canvas.d.ts",
+      "svelte": "./dist/canvas.js",
+      "default": "./dist/canvas.js"
+    },
+    "./html": {
+      "types": "./dist/html.d.ts",
+      "svelte": "./dist/html.js",
+      "default": "./dist/html.js"
+    },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "svelte": "./dist/utils/*.js",
       "default": "./dist/utils/*.js"
+    },
+    "./*.css": {
+      "style": "./dist/styles/*.css",
+      "default": "./dist/styles/*.css"
     }
   },
   "files": [

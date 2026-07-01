@@ -1,0 +1,87 @@
+{
+  "component": "ColorRamp",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/ColorRamp/basic",
+      "components": [
+        {
+          "component": "Svg",
+          "lineNumber": 23,
+          "line": "<svg {width} {height}>"
+        },
+        {
+          "component": "ColorRamp",
+          "lineNumber": 24,
+          "line": "<ColorRamp {interpolator} {width} {height} />"
+        }
+      ]
+    },
+    {
+      "name": "pixelated",
+      "title": "pixelated",
+      "path": "/docs/components/ColorRamp/pixelated",
+      "components": [
+        {
+          "component": "Svg",
+          "lineNumber": 27,
+          "line": "<svg {width} {height}>"
+        },
+        {
+          "component": "ColorRamp",
+          "lineNumber": 28,
+          "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
+        }
+      ]
+    },
+    {
+      "name": "schemes",
+      "title": "schemes",
+      "path": "/docs/components/ColorRamp/schemes",
+      "components": [
+        {
+          "component": "Svg",
+          "lineNumber": 20,
+          "line": "<svg {width} {height}>"
+        },
+        {
+          "component": "ColorRamp",
+          "lineNumber": 21,
+          "line": "<ColorRamp"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/basic",
+      "lineNumber": 24,
+      "line": "<ColorRamp {interpolator} {width} {height} />"
+    },
+    {
+      "example": "pixelated",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/pixelated",
+      "lineNumber": 28,
+      "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/schemes",
+      "lineNumber": 21,
+      "line": "<ColorRamp"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/schemes",
+      "lineNumber": 35,
+      "line": "<ColorRamp"
+    }
+  ],
+  "updatedAt": "2026-02-07T20:21:31.564Z"
+}

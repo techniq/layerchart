@@ -1,0 +1,129 @@
+{
+  "component": "Threshold",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Threshold/basic",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 22,
+          "line": "<AreaChart"
+        },
+        {
+          "component": "Threshold",
+          "lineNumber": 31,
+          "line": "<Threshold curve={selectedCurve}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 33,
+          "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 37,
+          "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
+        }
+      ]
+    },
+    {
+      "name": "with-labels",
+      "title": "with labels",
+      "path": "/docs/components/Threshold/with-labels",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 22,
+          "line": "<AreaChart"
+        },
+        {
+          "component": "Threshold",
+          "lineNumber": 32,
+          "line": "<Threshold curve={selectedCurve}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 34,
+          "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 42,
+          "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
+        }
+      ]
+    },
+    {
+      "name": "with-tooltip-and-highlight",
+      "title": "with tooltip and highlight",
+      "path": "/docs/components/Threshold/with-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 22,
+          "line": "<AreaChart"
+        },
+        {
+          "component": "Threshold",
+          "lineNumber": 34,
+          "line": "<Threshold curve={selectedCurve}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 36,
+          "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 44,
+          "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 51,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "threshold",
+      "component": "AreaChart",
+      "path": "/docs/components/AreaChart/threshold",
+      "lineNumber": 34,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 37,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
+      "example": "basic",
+      "component": "Threshold",
+      "path": "/docs/components/Threshold/basic",
+      "lineNumber": 31,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
+      "example": "with-labels",
+      "component": "Threshold",
+      "path": "/docs/components/Threshold/with-labels",
+      "lineNumber": 32,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Threshold",
+      "path": "/docs/components/Threshold/with-tooltip-and-highlight",
+      "lineNumber": 34,
+      "line": "<Threshold curve={selectedCurve}>"
+    }
+  ],
+  "updatedAt": "2026-02-10T16:19:23.067Z"
+}

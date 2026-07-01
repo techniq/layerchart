@@ -1,0 +1,42 @@
+{
+  "component": "Ribbon",
+  "examples": [],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 28,
+      "line": "<Ribbon"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 27,
+      "line": "<Ribbon"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 72,
+      "line": "<Ribbon"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 58,
+      "line": "<Ribbon"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 42,
+      "line": "<Ribbon"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:27.891Z"
+}

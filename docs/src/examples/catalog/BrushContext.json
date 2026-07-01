@@ -1,0 +1,642 @@
+{
+  "component": "BrushContext",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/BrushContext/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart {data} x=\"date\" y=\"value\" brush height={40}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 14,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "constant-labels",
+      "title": "constant labels",
+      "path": "/docs/components/BrushContext/constant-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 80, right: 80 }} brush height={40}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 16,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 19,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "handle-arrows",
+      "title": "handle arrows",
+      "path": "/docs/components/BrushContext/handle-arrows",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 24,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 27,
+          "line": "<rect"
+        }
+      ]
+    },
+    {
+      "name": "handle-labels",
+      "title": "handle labels",
+      "path": "/docs/components/BrushContext/handle-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart {data} x=\"date\" y=\"value\" brush height={40}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 16,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 18,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "integrated-brush-(both-axis-area)",
+      "title": "integrated brush (both axis area)",
+      "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 42,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 44,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 45,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "integrated-brush-(x-axis)",
+      "title": "integrated brush (x axis)",
+      "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 39,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 41,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 42,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 44,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "integrated-brush-(y-axis)",
+      "title": "integrated brush (y axis)",
+      "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 39,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 41,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 42,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 44,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "max-window",
+      "title": "max window",
+      "path": "/docs/components/BrushContext/max-window",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 38,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 48,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 51,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 52,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "min-max-extent",
+      "title": "min max extent",
+      "path": "/docs/components/BrushContext/min-max-extent",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 44,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 45,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "minimap",
+      "title": "minimap",
+      "path": "/docs/components/BrushContext/minimap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 54,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 55,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 58,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 59,
+          "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 92,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "programmatic-control",
+      "title": "programmatic control",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 42,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 52,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 53,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 55,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "selection",
+      "title": "selection",
+      "path": "/docs/components/BrushContext/selection",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 43,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 52,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "separate-chart-(clip-data-y-axis)",
+      "title": "separate chart (clip data y axis)",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 38,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 45,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 47,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 48,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        }
+      ]
+    },
+    {
+      "name": "separate-chart-(clip-data)",
+      "title": "separate chart (clip data)",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 35,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 36,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 38,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "separate-chart-(filter-data)",
+      "title": "separate chart (filter data)",
+      "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule motion={{ type: 'tween', duration: 200 }} />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 37,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 39,
+          "line": "<Area"
+        }
+      ]
+    },
+    {
+      "name": "simple-styling",
+      "title": "simple styling",
+      "path": "/docs/components/BrushContext/simple-styling",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 20,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "snap-to-month",
+      "title": "snap to month",
+      "path": "/docs/components/BrushContext/snap-to-month",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 52,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 54,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "striped-background",
+      "title": "striped background",
+      "path": "/docs/components/BrushContext/striped-background",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart {data} x=\"date\" y=\"value\" brush={{ classes: { range: 'striped-background' } }} height={40}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 14,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "synced-brushes",
+      "title": "synced brushes",
+      "path": "/docs/components/BrushContext/synced-brushes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 55,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 64,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 65,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 67,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 68,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 69,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 74,
+          "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "tooltip-interop",
+      "title": "tooltip interop",
+      "path": "/docs/components/BrushContext/tooltip-interop",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 44,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 46,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 47,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 49,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 53,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 56,
+          "line": "<Tooltip.Root"
+        }
+      ]
+    }
+  ],
+  "usage": [],
+  "updatedAt": "2026-07-01T14:36:52.362Z"
+}

@@ -1,2 +1,5 @@
 packages:
-  - "packages/*"
+  - 'packages/*'
+  - 'examples/*'
+  - 'docs'
+  - 'bundle-analyzer'

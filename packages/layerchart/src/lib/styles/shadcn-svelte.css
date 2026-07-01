@@ -1,0 +1,11 @@
+/*
+  When NOT using shadcn-svelte Chart component.
+  Not typically needed even when using built-in Chart, as defaults typically are sufficient
+*/
+.lc-root-container {
+  --color-primary: var(--primary);
+  --color-surface-100: var(--card-background);
+  --color-surface-200: var(--card-muted);
+  /* No direct mapping, should add explicit color (light and dark mode) */
+  --color-surface-content: var(--card-foreground);
+}

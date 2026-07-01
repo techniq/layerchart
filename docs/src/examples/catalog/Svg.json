@@ -1,0 +1,42 @@
+{
+  "component": "Svg",
+  "examples": [],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/basic",
+      "lineNumber": 23,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "pixelated",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/pixelated",
+      "lineNumber": 27,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/schemes",
+      "lineNumber": 20,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/docs/components/ColorRamp/schemes",
+      "lineNumber": 34,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 48,
+      "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
+    }
+  ],
+  "updatedAt": "2026-05-08T16:24:15.913Z"
+}

@@ -1,0 +1,244 @@
+{
+  "component": "Raster",
+  "examples": [
+    {
+      "name": "mandelbrot",
+      "title": "mandelbrot",
+      "path": "/docs/components/Raster/mandelbrot",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 25,
+          "line": "<Raster value={mandelbrot} pixelSize={2} />"
+        }
+      ]
+    },
+    {
+      "name": "math-functions",
+      "title": "math functions",
+      "path": "/docs/components/Raster/math-functions",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 100,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 107,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 108,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 110,
+          "line": "<Raster value={fn.fn} />"
+        },
+        {
+          "component": "Contour",
+          "lineNumber": 112,
+          "line": "<Contour"
+        }
+      ]
+    },
+    {
+      "name": "sampled",
+      "title": "sampled",
+      "path": "/docs/components/Raster/sampled",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 7,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 17,
+          "line": "<Raster value={(x, y) => Math.sin(x) * Math.cos(y)} />"
+        }
+      ]
+    },
+    {
+      "name": "us-water-vapor",
+      "title": "us water vapor",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 29,
+          "line": "<Legend"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoClipPath",
+          "lineNumber": 38,
+          "line": "<GeoClipPath geojson={nation}>"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 39,
+          "line": "<Raster"
+        },
+        {
+          "component": "Contour",
+          "lineNumber": 50,
+          "line": "<Contour"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 66,
+          "line": "<GeoPath geojson={nation} class=\"fill-none stroke-[#2f2f2f]\" strokeWidth={1.25} />"
+        }
+      ]
+    },
+    {
+      "name": "volcano",
+      "title": "volcano",
+      "path": "/docs/components/Raster/volcano",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 18,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 20,
+          "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} />"
+        }
+      ]
+    },
+    {
+      "name": "with-contour-overlay",
+      "title": "with contour overlay",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 18,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 20,
+          "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} />"
+        },
+        {
+          "component": "Contour",
+          "lineNumber": 21,
+          "line": "<Contour"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 25,
+      "line": "<Raster value={mandelbrot} pixelSize={2} />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 110,
+      "line": "<Raster value={fn.fn} />"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 17,
+      "line": "<Raster value={(x, y) => Math.sin(x) * Math.cos(y)} />"
+    },
+    {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 39,
+      "line": "<Raster"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 20,
+      "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} />"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 20,
+      "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} />"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 160,
+      "line": "<Raster value={rasterValue} opacity={0.5} />"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:27.587Z"
+}

@@ -1,0 +1,462 @@
+{
+  "component": "ForceSimulation",
+  "examples": [
+    {
+      "name": "beeswarm",
+      "title": "beeswarm",
+      "path": "/docs/components/ForceSimulation/beeswarm",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 34,
+          "line": "<Axis placement=\"bottom\" format=\"none\" rule grid />"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 35,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 46,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 60,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "collision-detection",
+      "title": "collision detection",
+      "path": "/docs/components/ForceSimulation/collision-detection",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 37,
+          "line": "<Chart height={600} clip>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 39,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 57,
+          "line": "<Group center>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 60,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "disjoint-graph",
+      "title": "disjoint graph",
+      "path": "/docs/components/ForceSimulation/disjoint-graph",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 56,
+          "line": "<Chart height={680}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 57,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 58,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 69,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 78,
+          "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
+        }
+      ]
+    },
+    {
+      "name": "games-industry-layoffs",
+      "title": "games industry layoffs",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 41,
+          "line": "<Chart {data} x=\"date\" xNice padding={{ top: 12, bottom: 28, left: 12, right: 12 }} height={420}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 44,
+          "line": "<Axis placement=\"bottom\" rule grid format={(d: Date) => d.getUTCFullYear().toString()} />"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 45,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 58,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 70,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 86,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "graph-drag",
+      "title": "graph drag",
+      "path": "/docs/components/ForceSimulation/graph-drag",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 69,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 71,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 72,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 82,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 93,
+          "line": "<circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 141,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "graph-playground",
+      "title": "graph playground",
+      "path": "/docs/components/ForceSimulation/graph-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 147,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 149,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 150,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 170,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 181,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 196,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "group",
+      "title": "group",
+      "path": "/docs/components/ForceSimulation/group",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 51,
+          "line": "<Chart data={nodes} x=\"category\" xScale={scaleBand()} r=\"value\" rRange={[3, 12]} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 54,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 55,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 73,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "lattice",
+      "title": "lattice",
+      "path": "/docs/components/ForceSimulation/lattice",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 27,
+          "line": "<Chart height={800}>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 28,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 38,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 47,
+          "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
+        }
+      ]
+    },
+    {
+      "name": "layoffs-by-industry",
+      "title": "layoffs by industry",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 69,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 96,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 97,
+          "line": "<Axis placement=\"top\" />"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 102,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 117,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 132,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "text",
+      "title": "text",
+      "path": "/docs/components/ForceSimulation/text",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 69,
+          "line": "<Chart"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 82,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 98,
+          "line": "<Layer"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 104,
+          "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "tree",
+      "title": "tree",
+      "path": "/docs/components/ForceSimulation/tree",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 36,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 49,
+          "line": "<Link data={link} {...linkPositions[i]} class=\"stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 53,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 68,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "beeswarm",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/beeswarm",
+      "lineNumber": 35,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "collision-detection",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/collision-detection",
+      "lineNumber": 39,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "disjoint-graph",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/disjoint-graph",
+      "lineNumber": 58,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 45,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "graph-drag",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/graph-drag",
+      "lineNumber": 72,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "graph-playground",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/graph-playground",
+      "lineNumber": 150,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "group",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/group",
+      "lineNumber": 55,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "lattice",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/lattice",
+      "lineNumber": 28,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 102,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "text",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/text",
+      "lineNumber": 82,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "tree",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/tree",
+      "lineNumber": 36,
+      "line": "<ForceSimulation"
+    }
+  ],
+  "updatedAt": "2026-05-05T17:35:59.794Z"
+}

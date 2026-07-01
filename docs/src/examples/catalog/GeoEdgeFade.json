@@ -1,0 +1,14 @@
+{
+  "component": "GeoEdgeFade",
+  "examples": [],
+  "usage": [
+    {
+      "example": "draggable-globe",
+      "component": "GeoSpline",
+      "path": "/docs/components/GeoSpline/draggable-globe",
+      "lineNumber": 35,
+      "line": "<GeoEdgeFade {link}>"
+    }
+  ],
+  "updatedAt": "2026-04-12T22:48:25.604Z"
+}

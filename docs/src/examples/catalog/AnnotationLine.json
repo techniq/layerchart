@@ -1,0 +1,353 @@
+{
+  "component": "AnnotationLine",
+  "examples": [
+    {
+      "name": "bar-chart",
+      "title": "bar chart",
+      "path": "/docs/components/AnnotationLine/bar-chart",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 18,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "horizontal",
+      "title": "horizontal",
+      "path": "/docs/components/AnnotationLine/horizontal",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 14,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-placement",
+      "title": "horizontal placement",
+      "path": "/docs/components/AnnotationLine/horizontal-placement",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 19,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 21,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-with-range",
+      "title": "horizontal with range",
+      "path": "/docs/components/AnnotationLine/horizontal-with-range",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 14,
+          "line": "<AnnotationRange"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 25,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/AnnotationLine/playground",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 76,
+          "line": "<LineChart"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 85,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 107,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "sloped",
+      "title": "sloped",
+      "path": "/docs/components/AnnotationLine/sloped",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 19,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 21,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "vertical",
+      "title": "vertical",
+      "path": "/docs/components/AnnotationLine/vertical",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 14,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "vertical-placement",
+      "title": "vertical placement",
+      "path": "/docs/components/AnnotationLine/vertical-placement",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 19,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 21,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "vertical-with-rotation",
+      "title": "vertical with rotation",
+      "path": "/docs/components/AnnotationLine/vertical-with-rotation",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 14,
+          "line": "<AnnotationLine"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "bar-chart",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/bar-chart",
+      "lineNumber": 18,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/horizontal",
+      "lineNumber": 14,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal-placement",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/horizontal-placement",
+      "lineNumber": 21,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal-with-range",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/horizontal-with-range",
+      "lineNumber": 25,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 85,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "sloped",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/sloped",
+      "lineNumber": 21,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/vertical",
+      "lineNumber": 14,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-placement",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/vertical-placement",
+      "lineNumber": 21,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-with-rotation",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/vertical-with-rotation",
+      "lineNumber": 14,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-with-rotation",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/vertical-with-rotation",
+      "lineNumber": 31,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "line-to-point",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/line-to-point",
+      "lineNumber": 62,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "on-series-with-line-and-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
+      "lineNumber": 31,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 32,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 38,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 32,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 38,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 32,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 38,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 26,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 32,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 36,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 35,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 41,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 36,
+      "line": "<AnnotationLine"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:21.362Z"
+}

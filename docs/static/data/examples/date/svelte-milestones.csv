@@ -1,0 +1,46 @@
+date,category,label,dx,dy
+2026-03-11,sveltekit,"server-side
+error boundaries",-9,-32
+2026-02-20,sveltekit,"Vite 8
+support",26,24
+2026-02-18,svelte,"comments
+in tags",-16,-24
+2026-02-15,sveltekit,match,-13,44
+2026-02-13,svelte,TrustedHTML,0,20
+2026-02-12,sveltekit,scroll,-39,13
+2025-12-03,ecosystem,Vite 8 Beta,26,-18
+2025-11-26,svelte,print(),5,-20
+2025-11-25,svelte,hydratable,11,33
+2025-11-20,sveltekit,"stream
+file uploads",-27,-29
+2025-10-26,sveltekit,forking,25,22
+2025-10-25,svelte,forking,12,9
+2025-10-23,svelte,$state.eager(),-20,44
+2025-10-13,svelte,createContext(),-12,-23
+2025-10-05,sveltekit,form API,-18,26
+2025-10-01,ecosystem,MCP,0,-11
+2025-09-22,sveltekit,async SSR,-29,-20
+2025-09-17,svelte,async SSR,-55,-13
+2025-08-15,sveltekit,OpenTelemetry,-65,-17
+2025-07-31,sveltekit,remote functions,-29,17
+2025-07-24,sveltekit,resolve() / asset(),-101,-7
+2025-07-14,svelte,async,-40,-11
+2025-06-24,ecosystem,Vite 7,26,-18
+2025-05-14,svelte,@attach,44,31
+2025-03-21,svelte,$derived writable,10,-26
+2025-02-12,svelte,$props.id(),44,5
+2024-12-24,svelte,class:clsx,35,7
+2024-12-21,sveltekit,hash-based routing,58,-14
+2024-12-19,sveltekit,bundleStrategy,40,7
+2024-12-16,sveltekit,$app/state,-23,-26
+2024-12-13,ecosystem,llms.txt,23,-5
+2024-12-10,sveltekit,init() hook,-46,-12
+2024-12-08,svelte,bind get/set,6,-23
+2024-12-05,svelte,createSubscriber,38,23
+2024-12-01,svelte,error boundary,-22,43
+2024-12-01,ecosystem,Vite 6,-8,-16
+2024-10-19,svelte,Svelte 5.0.0,0,-70
+2024-09-15,ecosystem,Svelte CLI,0,-8
+2024-04-30,svelte,Svelte 5 Release Candidate,-29,-53
+2024-01-19,sveltekit,read(),41,-16
+2023-11-10,svelte,Svelte 5 alpha,48,-63

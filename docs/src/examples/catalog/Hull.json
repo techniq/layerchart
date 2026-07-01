@@ -1,0 +1,96 @@
+{
+  "component": "Hull",
+  "examples": [
+    {
+      "name": "geo",
+      "title": "geo",
+      "path": "/docs/components/Hull/geo",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 33,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "Hull",
+          "lineNumber": 35,
+          "line": "<Hull"
+        },
+        {
+          "component": "GeoPoint",
+          "lineNumber": 47,
+          "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 48,
+          "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 49,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "scatter",
+      "title": "scatter",
+      "path": "/docs/components/Hull/scatter",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 40,
+          "line": "<Points r={3} {data} fill={color} />"
+        },
+        {
+          "component": "Hull",
+          "lineNumber": 41,
+          "line": "<Hull"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/docs/components/Hull/geo",
+      "lineNumber": 35,
+      "line": "<Hull"
+    },
+    {
+      "example": "scatter",
+      "component": "Hull",
+      "path": "/docs/components/Hull/scatter",
+      "lineNumber": 41,
+      "line": "<Hull"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:25.893Z"
+}

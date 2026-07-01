@@ -1,0 +1,23 @@
+{
+	"name": "@layerchart/bundle-analyzer",
+	"description": "Bundle size analyzer for layerchart components and use-case scenarios.",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"bundle:analyze": "tsx bundle-analyzer.ts",
+		"bundle:visualize": "tsx bundle-analyzer.ts --visualize",
+		"bundle:compare": "tsx bundle-analyzer.ts --compare",
+		"generate-comment": "node generate-pr-comment.js"
+	},
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"layerchart": "workspace:*",
+		"rollup-plugin-visualizer": "^7.0.1",
+		"svelte": "5.56.1",
+		"tsx": "^4.22.4",
+		"typescript": "^6.0.3",
+		"vite": "^8.0.16"
+	},
+	"type": "module",
+	"sideEffects": false
+}

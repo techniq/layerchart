@@ -1,5 +1,5 @@
 import { flatGroup, group, max, rollup, sum } from 'd3-array';
-import { stack } from 'd3-shape';
+import { stack, stackOffsetNone, stackOrderNone } from 'd3-shape';
 import { pivotWider } from './pivot.js';
 
 type OrderType = typeof import('d3-shape').stackOrderNone; // all orders share the same API
@@ -37,10 +37,11 @@ export function groupStackData<TData>(
       const stackKeys: Array<any> = [
         ...new Set(groupData.map((d: any) => d[options.stackBy ?? ''])),
       ];
-      // @ts-expect-error
-      const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
-        pivotData
-      );
+      const stackData = stack()
+        .keys(stackKeys)
+        .value((d: any, key: any) => d[key] ?? 0)
+        .order(options.order ?? stackOrderNone)
+        .offset(options.offset ?? stackOffsetNone)(pivotData);
 
       return stackData.flatMap((series) => {
         return series.flatMap((s) => {
@@ -72,10 +73,11 @@ export function groupStackData<TData>(
 
     // @ts-expect-error
     const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy ?? '']))];
-    // @ts-expect-error
-    const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
-      pivotData
-    );
+    const stackData = stack()
+      .keys(stackKeys)
+      .value((d: any, key: any) => d[key] ?? 0)
+      .order(options.order ?? stackOrderNone)
+      .offset(options.offset ?? stackOffsetNone)(pivotData);
 
     const result = stackData.flatMap((series) => {
       return series.flatMap((s) => {
@@ -131,7 +133,7 @@ export function stackOffsetSeparated(series, order) {
 
   // Standard series
   for (var i = 1, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
-    (s0 = s1), (s1 = series[order[i]]);
+    ((s0 = s1), (s1 = series[order[i]]));
     // @ts-expect-error
     let base = max(s0, (d) => d[1]) + gap; // here is where you calculate the maximum of the previous layer
     for (var j = 0; j < m; ++j) {

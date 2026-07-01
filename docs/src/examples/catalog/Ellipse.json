@@ -1,0 +1,287 @@
+{
+  "component": "Ellipse",
+  "examples": [
+    {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 29,
+          "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} fill=\"category\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 32,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 44,
+          "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} fill=\"value\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Ellipse/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 27,
+          "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-attributes",
+      "title": "styling using attributes",
+      "path": "/docs/components/Ellipse/styling-using-attributes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 14,
+          "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} fill=\"var(--color-surface-content)\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-classes",
+      "title": "styling using classes",
+      "path": "/docs/components/Ellipse/styling-using-classes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 14,
+          "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-css-variables",
+      "title": "styling using css variables",
+      "path": "/docs/components/Ellipse/styling-using-css-variables",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 14,
+          "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} fill=\"category\" />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 44,
+      "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} fill=\"value\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 27,
+      "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} class=\"fill-primary\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-attributes",
+      "lineNumber": 14,
+      "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} fill=\"var(--color-surface-content)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-attributes",
+      "lineNumber": 15,
+      "line": "<Ellipse cx={200} cy={200} rx={20} ry={10} fill=\"var(--color-primary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-attributes",
+      "lineNumber": 16,
+      "line": "<Ellipse cx={200} cy={50} rx={20} ry={10} fill=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-attributes",
+      "lineNumber": 17,
+      "line": "<Ellipse"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-classes",
+      "lineNumber": 14,
+      "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-classes",
+      "lineNumber": 15,
+      "line": "<Ellipse cx={200} cy={200} rx={20} ry={10} class=\"fill-primary bg-primary\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-classes",
+      "lineNumber": 16,
+      "line": "<Ellipse cx={200} cy={50} rx={20} ry={10} fill=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-classes",
+      "lineNumber": 17,
+      "line": "<Ellipse"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-css-variables",
+      "lineNumber": 14,
+      "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-css-variables",
+      "lineNumber": 15,
+      "line": "<Ellipse"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-css-variables",
+      "lineNumber": 22,
+      "line": "<Ellipse"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/styling-using-css-variables",
+      "lineNumber": 29,
+      "line": "<Ellipse"
+    },
+    {
+      "example": "custom-symbol",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/custom-symbol",
+      "lineNumber": 53,
+      "line": "<ellipse cx=\"39\" cy=\"16.969\" fill=\"currentColor\" rx=\"2\" ry=\"3\" /><path"
+    }
+  ],
+  "updatedAt": "2026-05-08T16:24:14.655Z"
+}

@@ -1,0 +1,14 @@
+{
+  "component": "GeoVisible",
+  "examples": [],
+  "usage": [
+    {
+      "example": "submarine-cables-globe",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/submarine-cables-globe",
+      "lineNumber": 83,
+      "line": "<GeoVisible {lat} {long}>"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:25.462Z"
+}

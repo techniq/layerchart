@@ -44,6 +44,29 @@ export function cartesianToPolar(x: number, y: number) {
   };
 }
 
+/**
+ * Calculate the angle and length between two points
+ * @param point1 - First point
+ * @param point2 - Second point
+ * @returns Angle in degrees and length
+ */
+export function pointsToAngleAndLength(
+  point1: { x: number; y: number },
+  point2: { x: number; y: number }
+) {
+  const dx = point2.x - point1.x;
+  const dy = point2.y - point1.y;
+
+  const radians = Math.atan2(dy, dx);
+  const length = Math.sqrt(dx * dx + dy * dy);
+
+  return {
+    radians,
+    angle: radiansToDegrees(radians),
+    length,
+  };
+}
+
 /** Convert celsius temperature to fahrenheit */
 export function celsiusToFahrenheit(temperature: number) {
   return temperature * (9 / 5) + 32;

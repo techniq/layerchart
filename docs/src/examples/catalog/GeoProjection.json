@@ -1,0 +1,238 @@
+{
+  "component": "GeoProjection",
+  "examples": [
+    {
+      "name": "geojson-preview",
+      "title": "geojson preview",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 90,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 103,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 105,
+          "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 117,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 127,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "projection-playground",
+      "title": "projection playground",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 62,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 73,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 74,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 75,
+          "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 85,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "satellite",
+      "title": "satellite",
+      "path": "/docs/components/GeoProjection/satellite",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 49,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 56,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 57,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        }
+      ]
+    },
+    {
+      "name": "shapefile-preview",
+      "title": "shapefile preview",
+      "path": "/docs/components/GeoProjection/shapefile-preview",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 106,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 112,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 113,
+          "line": "<GeoPath {geojson} fill=\"white\" />"
+        }
+      ]
+    },
+    {
+      "name": "topojson-preview",
+      "title": "topojson preview",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 98,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 110,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 112,
+          "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 124,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 134,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "true-size",
+      "title": "true size",
+      "path": "/docs/components/GeoProjection/true-size",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 272,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 289,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 290,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 292,
+          "line": "<GeoPath geojson={feature} class=\"stroke-surface-content/20 fill-surface-200\" />"
+        }
+      ]
+    },
+    {
+      "name": "true-size-globe",
+      "title": "true size globe",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 304,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 313,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 314,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 318,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 324,
+          "line": "<Rect"
+        },
+        {
+          "component": "GeoProjection",
+          "lineNumber": 422,
+          "line": "<GeoProjection"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/translucent-globe",
+      "lineNumber": 57,
+      "line": "<GeoProjection"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 422,
+      "line": "<GeoProjection"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 441,
+      "line": "<GeoProjection"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:25.226Z"
+}

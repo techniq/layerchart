@@ -1,0 +1,307 @@
+{
+  "component": "Vector",
+  "examples": [
+    {
+      "name": "anchor",
+      "title": "anchor",
+      "path": "/docs/components/Vector/anchor",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 19,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 23,
+          "line": "<Circle cx={100} cy={150} r={3} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 24,
+          "line": "<Vector x={100} y={150} length={40} width={5} {rotate} anchor=\"start\" class=\"stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Vector/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart padding={{ top: 10, bottom: 10, left: 10, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 23,
+          "line": "<Vector x={v.cx} y={v.cy} length={30} width={5} rotate={v.rotate} class=\"stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Vector/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 38,
+          "line": "<Vector"
+        }
+      ]
+    },
+    {
+      "name": "election-wind-map",
+      "title": "election wind map",
+      "path": "/docs/components/Vector/election-wind-map",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 71,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 86,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 87,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 89,
+          "line": "<Vector"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 114,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "shapes",
+      "title": "shapes",
+      "path": "/docs/components/Vector/shapes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart padding={{ top: 20, bottom: 10, left: 10, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 29,
+          "line": "<Text x={45} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">arrow</Text>"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 30,
+          "line": "<Vector x={45} y={120} {length} {rotate} {anchor} class=\"stroke-primary\" />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 69,
+          "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 70,
+          "line": "<circle cx={0} cy={-len} r={4} class=\"fill-success\" />"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 81,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "wind-map",
+      "title": "wind map",
+      "path": "/docs/components/Vector/wind-map",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 41,
+          "line": "<Vector"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 52,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/spike-map",
+      "lineNumber": 85,
+      "line": "<Vector"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 24,
+      "line": "<Vector x={100} y={150} length={40} width={5} {rotate} anchor=\"start\" class=\"stroke-primary\" />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 28,
+      "line": "<Vector"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 40,
+      "line": "<Vector x={300} y={150} length={40} width={5} {rotate} anchor=\"end\" class=\"stroke-danger\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Vector",
+      "path": "/docs/components/Vector/basic",
+      "lineNumber": 23,
+      "line": "<Vector x={v.cx} y={v.cy} length={30} width={5} rotate={v.rotate} class=\"stroke-primary\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Vector",
+      "path": "/docs/components/Vector/basic",
+      "lineNumber": 26,
+      "line": "<Vector x={v.cx} y={v.cy} length={30} width={5} rotate={v.rotate} class=\"stroke-danger\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 38,
+      "line": "<Vector"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 89,
+      "line": "<Vector"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 30,
+      "line": "<Vector x={45} y={120} {length} {rotate} {anchor} class=\"stroke-primary\" />"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 36,
+      "line": "<Vector x={125} y={120} {length} {rotate} {width} {anchor} class=\"stroke-secondary\" />"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 40,
+      "line": "<Vector"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 54,
+      "line": "<Vector"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 67,
+      "line": "<Vector x={395} y={120} {length} {rotate} {anchor}>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 78,
+      "line": "<Vector x={480} y={120} {length} {rotate} {anchor}>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 101,
+      "line": "<Vector x={570} y={120} {length} {rotate} {anchor}>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 41,
+      "line": "<Vector"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:28.992Z"
+}

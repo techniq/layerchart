@@ -1,0 +1,463 @@
+{
+  "component": "Grid",
+  "examples": [
+    {
+      "name": "band-scale-between",
+      "title": "band scale between",
+      "path": "/docs/components/Grid/band-scale-between",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 11,
+          "line": "<Grid x bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
+    },
+    {
+      "name": "band-scale-default",
+      "title": "band scale default",
+      "path": "/docs/components/Grid/band-scale-default",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 11,
+          "line": "<Grid x />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Grid/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid x y />"
+        }
+      ]
+    },
+    {
+      "name": "dashed-lines",
+      "title": "dashed lines",
+      "path": "/docs/components/Grid/dashed-lines",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y={{ dashArray: [6, 4] }} />"
+        }
+      ]
+    },
+    {
+      "name": "explicit-ticks",
+      "title": "explicit ticks",
+      "path": "/docs/components/Grid/explicit-ticks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart yDomain={[0, 100]} padding={{ left: 20 }} height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y yTicks={[0, 25, 50, 75, 100]} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 8,
+          "line": "<Axis placement=\"left\" rule ticks={[0, 50, 100]} />"
+        }
+      ]
+    },
+    {
+      "name": "inject-tick-value",
+      "title": "inject tick value",
+      "path": "/docs/components/Grid/inject-tick-value",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart yDomain={[0, 100]} padding={{ top: 20, bottom: 20, left: 20, right: 20 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y yTicks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 8,
+          "line": "<Axis placement=\"left\" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />"
+        }
+      ]
+    },
+    {
+      "name": "integer-only",
+      "title": "integer only",
+      "path": "/docs/components/Grid/integer-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart yDomain={[0, 2]} padding={defaultChartPadding({ top: 10, bottom: 10 })} height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y yTicks={(scale) => scale.ticks?.().filter(Number.isInteger)} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 8,
+          "line": "<Axis"
+        }
+      ]
+    },
+    {
+      "name": "padding",
+      "title": "padding",
+      "path": "/docs/components/Grid/padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 12,
+          "line": "<Grid x y />"
+        }
+      ]
+    },
+    {
+      "name": "radial",
+      "title": "radial",
+      "path": "/docs/components/Grid/radial",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} radial height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />"
+        }
+      ]
+    },
+    {
+      "name": "radial-linear",
+      "title": "radial linear",
+      "path": "/docs/components/Grid/radial-linear",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} radial height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY=\"linear\" />"
+        }
+      ]
+    },
+    {
+      "name": "tick-count",
+      "title": "tick count",
+      "path": "/docs/components/Grid/tick-count",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart yDomain={[0, 100]} padding={{ top: 20, bottom: 20, left: 20, right: 20 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y yTicks={20} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 8,
+          "line": "<Axis placement=\"left\" rule ticks={10} />"
+        }
+      ]
+    },
+    {
+      "name": "tick-count-null",
+      "title": "tick count null",
+      "path": "/docs/components/Grid/tick-count-null",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart yDomain={[0, 100]} padding={{ top: 20, bottom: 20, left: 20, right: 20 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y yTicks={null} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 8,
+          "line": "<Axis placement=\"left\" rule ticks={null} />"
+        }
+      ]
+    },
+    {
+      "name": "x-only",
+      "title": "x only",
+      "path": "/docs/components/Grid/x-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid x />"
+        }
+      ]
+    },
+    {
+      "name": "y-only",
+      "title": "y only",
+      "path": "/docs/components/Grid/y-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 7,
+          "line": "<Grid y />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "multiple-axis-grid-and-rules-separate-grid",
+      "component": "Axis",
+      "path": "/docs/components/Axis/multiple-axis-grid-and-rules-separate-grid",
+      "lineNumber": 17,
+      "line": "<Grid x y />"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 30,
+      "line": "<Grid x={false} y bandAlign=\"between\" />"
+    },
+    {
+      "example": "band-scale-between",
+      "component": "Grid",
+      "path": "/docs/components/Grid/band-scale-between",
+      "lineNumber": 11,
+      "line": "<Grid x bandAlign=\"between\" />"
+    },
+    {
+      "example": "band-scale-default",
+      "component": "Grid",
+      "path": "/docs/components/Grid/band-scale-default",
+      "lineNumber": 11,
+      "line": "<Grid x />"
+    },
+    {
+      "example": "basic",
+      "component": "Grid",
+      "path": "/docs/components/Grid/basic",
+      "lineNumber": 7,
+      "line": "<Grid x y />"
+    },
+    {
+      "example": "dashed-lines",
+      "component": "Grid",
+      "path": "/docs/components/Grid/dashed-lines",
+      "lineNumber": 7,
+      "line": "<Grid y={{ dashArray: [6, 4] }} />"
+    },
+    {
+      "example": "explicit-ticks",
+      "component": "Grid",
+      "path": "/docs/components/Grid/explicit-ticks",
+      "lineNumber": 7,
+      "line": "<Grid y yTicks={[0, 25, 50, 75, 100]} />"
+    },
+    {
+      "example": "inject-tick-value",
+      "component": "Grid",
+      "path": "/docs/components/Grid/inject-tick-value",
+      "lineNumber": 7,
+      "line": "<Grid y yTicks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />"
+    },
+    {
+      "example": "integer-only",
+      "component": "Grid",
+      "path": "/docs/components/Grid/integer-only",
+      "lineNumber": 7,
+      "line": "<Grid y yTicks={(scale) => scale.ticks?.().filter(Number.isInteger)} />"
+    },
+    {
+      "example": "padding",
+      "component": "Grid",
+      "path": "/docs/components/Grid/padding",
+      "lineNumber": 12,
+      "line": "<Grid x y />"
+    },
+    {
+      "example": "radial",
+      "component": "Grid",
+      "path": "/docs/components/Grid/radial",
+      "lineNumber": 7,
+      "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />"
+    },
+    {
+      "example": "radial-linear",
+      "component": "Grid",
+      "path": "/docs/components/Grid/radial-linear",
+      "lineNumber": 7,
+      "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY=\"linear\" />"
+    },
+    {
+      "example": "tick-count",
+      "component": "Grid",
+      "path": "/docs/components/Grid/tick-count",
+      "lineNumber": 7,
+      "line": "<Grid y yTicks={20} />"
+    },
+    {
+      "example": "tick-count-null",
+      "component": "Grid",
+      "path": "/docs/components/Grid/tick-count-null",
+      "lineNumber": 7,
+      "line": "<Grid y yTicks={null} />"
+    },
+    {
+      "example": "x-only",
+      "component": "Grid",
+      "path": "/docs/components/Grid/x-only",
+      "lineNumber": 7,
+      "line": "<Grid x />"
+    },
+    {
+      "example": "y-only",
+      "component": "Grid",
+      "path": "/docs/components/Grid/y-only",
+      "lineNumber": 7,
+      "line": "<Grid y />"
+    }
+  ],
+  "updatedAt": "2026-04-17T14:32:26.956Z"
+}

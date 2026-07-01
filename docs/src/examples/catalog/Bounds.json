@@ -1,0 +1,49 @@
+{
+  "component": "Bounds",
+  "examples": [],
+  "usage": [
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/docs/components/Partition/filterable",
+      "lineNumber": 110,
+      "line": "<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/docs/components/Partition/horizontal",
+      "lineNumber": 91,
+      "line": "<Bounds"
+    },
+    {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/docs/components/Partition/sunburst",
+      "lineNumber": 69,
+      "line": "<Bounds"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/docs/components/Partition/vertical",
+      "lineNumber": 91,
+      "line": "<Bounds"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/docs/components/Treemap/nested-zoom",
+      "lineNumber": 90,
+      "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/docs/components/Treemap/stacked-zoom",
+      "lineNumber": 88,
+      "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:22.987Z"
+}

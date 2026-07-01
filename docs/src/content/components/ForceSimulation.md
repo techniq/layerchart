@@ -1,0 +1,10 @@
+---
+description: Layout components which positions nodes using physics-based forces, simulating attraction, repulsion, and link constraints to create an intuitive, collision-free network visualization.
+category: layout
+layers: [svg, canvas, html]
+related: [Dodge]
+---
+
+## Usage
+
+:example{name="tree"}

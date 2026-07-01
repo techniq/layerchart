@@ -1,0 +1,341 @@
+{
+  "component": "GeoTile",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/GeoTile/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 46,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 47,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 50,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 59,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "clipped",
+      "title": "clipped",
+      "path": "/docs/components/GeoTile/clipped",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 44,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoClipPath",
+          "lineNumber": 45,
+          "line": "<GeoClipPath geojson={selectedFeature}>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 46,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 49,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 58,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "zoomable",
+      "title": "zoomable",
+      "path": "/docs/components/GeoTile/zoomable",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 60,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 61,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 64,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 82,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "zoomable-seamless-layers",
+      "title": "zoomable seamless layers",
+      "path": "/docs/components/GeoTile/zoomable-seamless-layers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 63,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 65,
+          "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 71,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 89,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "zoomable-with-padding",
+      "title": "zoomable with padding",
+      "path": "/docs/components/GeoTile/zoomable-with-padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 66,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 67,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 70,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 88,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "lineNumber": 106,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "lineNumber": 107,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "lineNumber": 108,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "lineNumber": 109,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/topojson-preview",
+      "lineNumber": 113,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/topojson-preview",
+      "lineNumber": 114,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/topojson-preview",
+      "lineNumber": 115,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/topojson-preview",
+      "lineNumber": 116,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 105,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 106,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 107,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 108,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 112,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 113,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 114,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 115,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "basic",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/basic",
+      "lineNumber": 47,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "clipped",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/clipped",
+      "lineNumber": 46,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable",
+      "lineNumber": 61,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 65,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 66,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 67,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 68,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable-with-padding",
+      "lineNumber": 67,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:25.374Z"
+}

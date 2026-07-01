@@ -13,5 +13,6 @@ export function quadtreeRects<T>(quadtree: Quadtree<T>, showLeaves = true) {
       rects.push({ x: x0, y: y0, width: x1 - x0, height: y1 - y0 });
     }
   });
+
   return rects;
 }

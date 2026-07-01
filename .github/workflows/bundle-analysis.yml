@@ -1,0 +1,96 @@
+name: Bundle Analysis
+
+on:
+  pull_request:
+    paths:
+      - packages/layerchart/**
+      - bundle-analyzer/**
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  bundle-analysis:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+
+    # No write permissions needed here: this job runs untrusted PR code (build +
+    # analyze) and only produces an artifact. The comment is posted by the
+    # separate `bundle-analysis-comment.yml` workflow, which runs in the base-repo
+    # context and gets a write token. This is what makes fork PRs work securely.
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Run bundle analysis on PR
+        run: pnpm bundle:analyze
+
+      - name: Save PR bundle report
+        run: |
+          mkdir -p /tmp/bundle-analysis
+          cp ./bundle-analyzer/bundle-reports/latest.json /tmp/bundle-analysis/pr-current.json
+
+      - name: Get target branch bundle report
+        id: check-target-bundle
+        run: |
+          if git cat-file -e origin/${{ github.base_ref }}:bundle-analyzer/bundle-reports/latest.json 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            git show origin/${{ github.base_ref }}:bundle-analyzer/bundle-reports/latest.json > /tmp/bundle-analysis/target-baseline.json
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate target baseline if missing
+        if: steps.check-target-bundle.outputs.exists == 'false'
+        run: |
+          git stash push -m "temp stash for baseline generation" || true
+          git checkout origin/${{ github.base_ref }}
+          pnpm install --frozen-lockfile
+          pnpm build:packages
+          pnpm bundle:analyze || echo "Bundle analysis failed on target branch"
+          if [ -f "./bundle-analyzer/bundle-reports/latest.json" ]; then
+            cp ./bundle-analyzer/bundle-reports/latest.json /tmp/bundle-analysis/target-baseline.json
+          else
+            echo '{"timestamp":"","results":[]}' > /tmp/bundle-analysis/target-baseline.json
+          fi
+          git checkout ${{ github.head_ref }}
+          git stash pop || true
+
+      - name: Generate bundle comparison comment
+        run: |
+          node ./bundle-analyzer/generate-pr-comment.js \
+            /tmp/bundle-analysis/pr-current.json \
+            /tmp/bundle-analysis/target-baseline.json
+
+      - name: Save PR number
+        run: echo "${{ github.event.pull_request.number }}" > /tmp/bundle-analysis/pr-number.txt
+
+      # The comment markdown + PR number are handed off to the
+      # `bundle-analysis-comment.yml` workflow, which posts the comment with a
+      # write token. We can't post here because fork PRs only get a read-only token.
+      - name: Upload comment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-analysis-comment
+          path: |
+            /tmp/bundle-analysis/comment.md
+            /tmp/bundle-analysis/pr-number.txt
+          if-no-files-found: error
+          retention-days: 1

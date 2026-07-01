@@ -1,0 +1,188 @@
+{
+  "component": "TransformContext",
+  "examples": [
+    {
+      "name": "pan-zoom-axes",
+      "title": "pan zoom axes",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 41,
+          "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 43,
+          "line": "<Rect"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 53,
+          "line": "<Axis"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom-html-image",
+      "title": "pan zoom html image",
+      "path": "/docs/components/TransformContext/pan-zoom-html-image",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer type=\"html\">"
+        }
+      ],
+      "tags": [
+        "tiger"
+      ]
+    },
+    {
+      "name": "pan-zoom-svg-image",
+      "title": "pan zoom svg image",
+      "path": "/docs/components/TransformContext/pan-zoom-svg-image",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer type=\"svg\">"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 23,
+          "line": "<image"
+        }
+      ],
+      "tags": [
+        "tiger"
+      ]
+    },
+    {
+      "name": "planet-distances",
+      "title": "planet distances",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 218,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 239,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 245,
+          "line": "<line"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 255,
+          "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 256,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 266,
+          "line": "<Axis placement=\"bottom\" format={formatDistance} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 267,
+          "line": "<Highlight lines axis=\"x\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 270,
+          "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/TransformContext/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 50,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 52,
+          "line": "<Spline curve={config.curve} motion=\"tween\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 55,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 58,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "scroll-activation-key",
+      "title": "scroll activation key",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer type=\"svg\">"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 29,
+          "line": "<image"
+        }
+      ],
+      "tags": [
+        "tiger"
+      ]
+    }
+  ],
+  "usage": [],
+  "updatedAt": "2026-04-19T13:23:59.296Z"
+}

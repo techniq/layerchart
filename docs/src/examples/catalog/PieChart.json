@@ -1,0 +1,593 @@
+{
+  "component": "PieChart",
+  "examples": [
+    {
+      "name": "arc",
+      "title": "arc",
+      "path": "/docs/components/PieChart/arc",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "arc-props",
+      "title": "arc props",
+      "path": "/docs/components/PieChart/arc-props",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/PieChart/basic",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} />"
+        }
+      ]
+    },
+    {
+      "name": "colors-data-prop",
+      "title": "colors data prop",
+      "path": "/docs/components/PieChart/colors-data-prop",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 21,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" c=\"color\" height={300} />"
+        }
+      ]
+    },
+    {
+      "name": "colors-interpolator",
+      "title": "colors interpolator",
+      "path": "/docs/components/PieChart/colors-interpolator",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 11,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={quantize(interpolateRainbow, 5)} />"
+        }
+      ]
+    },
+    {
+      "name": "colors-scheme",
+      "title": "colors scheme",
+      "path": "/docs/components/PieChart/colors-scheme",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={schemeTableau10} />"
+        }
+      ]
+    },
+    {
+      "name": "colors-variables",
+      "title": "colors variables",
+      "path": "/docs/components/PieChart/colors-variables",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={fruitColors} />"
+        }
+      ]
+    },
+    {
+      "name": "donut",
+      "title": "donut",
+      "path": "/docs/components/PieChart/donut",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "donut-with-text",
+      "title": "donut with text",
+      "path": "/docs/components/PieChart/donut-with-text",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 12,
+          "line": "<PieChart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 23,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "labels",
+      "title": "labels",
+      "path": "/docs/components/PieChart/labels",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 35,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "labels-callout",
+      "title": "labels callout",
+      "path": "/docs/components/PieChart/labels-callout",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 21,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "legend",
+      "title": "legend",
+      "path": "/docs/components/PieChart/legend",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
+        }
+      ]
+    },
+    {
+      "name": "legend-custom-label",
+      "title": "legend custom label",
+      "path": "/docs/components/PieChart/legend-custom-label",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "legend-placement",
+      "title": "legend placement",
+      "path": "/docs/components/PieChart/legend-placement",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
+        }
+      ]
+    },
+    {
+      "name": "legend-responsive",
+      "title": "legend responsive",
+      "path": "/docs/components/PieChart/legend-responsive",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "legend-with-padding",
+      "title": "legend with padding",
+      "path": "/docs/components/PieChart/legend-with-padding",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "motion-spring",
+      "title": "motion spring",
+      "path": "/docs/components/PieChart/motion-spring",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 17,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "motion-tween",
+      "title": "motion tween",
+      "path": "/docs/components/PieChart/motion-tween",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 17,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "offset-slice",
+      "title": "offset slice",
+      "path": "/docs/components/PieChart/offset-slice",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300}>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 12,
+          "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
+        }
+      ]
+    },
+    {
+      "name": "placement-custom",
+      "title": "placement custom",
+      "path": "/docs/components/PieChart/placement-custom",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "placement-left",
+      "title": "placement left",
+      "path": "/docs/components/PieChart/placement-left",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "placement-right",
+      "title": "placement right",
+      "path": "/docs/components/PieChart/placement-right",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "radius-fixed",
+      "title": "radius fixed",
+      "path": "/docs/components/PieChart/radius-fixed",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={100} />"
+        }
+      ]
+    },
+    {
+      "name": "radius-offset",
+      "title": "radius offset",
+      "path": "/docs/components/PieChart/radius-offset",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={-20} />"
+        }
+      ]
+    },
+    {
+      "name": "radius-percent",
+      "title": "radius percent",
+      "path": "/docs/components/PieChart/radius-percent",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={0.8} />"
+        }
+      ]
+    },
+    {
+      "name": "segments",
+      "title": "segments",
+      "path": "/docs/components/PieChart/segments",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 25,
+          "line": "<PieChart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 37,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "series",
+      "title": "series",
+      "path": "/docs/components/PieChart/series",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 11,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "series-click",
+      "title": "series click",
+      "path": "/docs/components/PieChart/series-click",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 11,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "series-props",
+      "title": "series props",
+      "path": "/docs/components/PieChart/series-props",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 11,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "tooltip-click",
+      "title": "tooltip click",
+      "path": "/docs/components/PieChart/tooltip-click",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "arc",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/arc",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "arc-props",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/arc-props",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "basic",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/basic",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} />"
+    },
+    {
+      "example": "colors-data-prop",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/colors-data-prop",
+      "lineNumber": 21,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" c=\"color\" height={300} />"
+    },
+    {
+      "example": "colors-interpolator",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/colors-interpolator",
+      "lineNumber": 11,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={quantize(interpolateRainbow, 5)} />"
+    },
+    {
+      "example": "colors-scheme",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/colors-scheme",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={schemeTableau10} />"
+    },
+    {
+      "example": "colors-variables",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/colors-variables",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={fruitColors} />"
+    },
+    {
+      "example": "donut",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/donut",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "donut-with-text",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/donut-with-text",
+      "lineNumber": 12,
+      "line": "<PieChart"
+    },
+    {
+      "example": "labels",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/labels",
+      "lineNumber": 35,
+      "line": "<PieChart"
+    },
+    {
+      "example": "labels-callout",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/labels-callout",
+      "lineNumber": 21,
+      "line": "<PieChart"
+    },
+    {
+      "example": "legend",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/legend",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
+    },
+    {
+      "example": "legend-custom-label",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/legend-custom-label",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "legend-placement",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/legend-placement",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
+    },
+    {
+      "example": "legend-responsive",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/legend-responsive",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "legend-with-padding",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/legend-with-padding",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "motion-spring",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/motion-spring",
+      "lineNumber": 17,
+      "line": "<PieChart"
+    },
+    {
+      "example": "motion-tween",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/motion-tween",
+      "lineNumber": 17,
+      "line": "<PieChart"
+    },
+    {
+      "example": "offset-slice",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/offset-slice",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300}>"
+    },
+    {
+      "example": "placement-custom",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/placement-custom",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "placement-left",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/placement-left",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "placement-right",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/placement-right",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "radius-fixed",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/radius-fixed",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={100} />"
+    },
+    {
+      "example": "radius-offset",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/radius-offset",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={-20} />"
+    },
+    {
+      "example": "radius-percent",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/radius-percent",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={0.8} />"
+    },
+    {
+      "example": "segments",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/segments",
+      "lineNumber": 25,
+      "line": "<PieChart"
+    },
+    {
+      "example": "series",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/series",
+      "lineNumber": 11,
+      "line": "<PieChart"
+    },
+    {
+      "example": "series-click",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/series-click",
+      "lineNumber": 11,
+      "line": "<PieChart"
+    },
+    {
+      "example": "series-props",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/series-props",
+      "lineNumber": 11,
+      "line": "<PieChart"
+    },
+    {
+      "example": "tooltip-click",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/tooltip-click",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:27.202Z"
+}

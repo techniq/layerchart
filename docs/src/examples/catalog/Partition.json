@@ -1,0 +1,239 @@
+{
+  "component": "Partition",
+  "examples": [
+    {
+      "name": "filterable",
+      "title": "filterable",
+      "path": "/docs/components/Partition/filterable",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 108,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 109,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bounds",
+          "lineNumber": 110,
+          "line": "<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 112,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Partition",
+          "lineNumber": 113,
+          "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 120,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 129,
+          "line": "<Rect"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 140,
+          "line": "<RectClipPath"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 145,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "horizontal",
+      "title": "horizontal",
+      "path": "/docs/components/Partition/horizontal",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 88,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 90,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bounds",
+          "lineNumber": 91,
+          "line": "<Bounds"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 100,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Partition",
+          "lineNumber": 101,
+          "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 109,
+          "line": "<Group x={xScale(node.y0)} y={yScale(node.x0)} onclick={() => (selected = node)}>"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 110,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 113,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 123,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "sunburst",
+      "title": "sunburst",
+      "path": "/docs/components/Partition/sunburst",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 66,
+          "line": "<Chart height={800}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 68,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Bounds",
+          "lineNumber": 69,
+          "line": "<Bounds"
+        },
+        {
+          "component": "Partition",
+          "lineNumber": 80,
+          "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 91,
+          "line": "<Arc"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 115,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "ArcLabel",
+          "lineNumber": 119,
+          "line": "<ArcLabel"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 136,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "vertical",
+      "title": "vertical",
+      "path": "/docs/components/Partition/vertical",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 88,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 90,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bounds",
+          "lineNumber": 91,
+          "line": "<Bounds"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 100,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Partition",
+          "lineNumber": 101,
+          "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 109,
+          "line": "<Group x={xScale(node.x0)} y={yScale(node.y0)} onclick={() => (selected = node)}>"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 110,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 113,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 123,
+          "line": "<Text"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/docs/components/Partition/filterable",
+      "lineNumber": 113,
+      "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/docs/components/Partition/horizontal",
+      "lineNumber": 101,
+      "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
+    },
+    {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/docs/components/Partition/sunburst",
+      "lineNumber": 80,
+      "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/docs/components/Partition/vertical",
+      "lineNumber": 101,
+      "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
+    }
+  ],
+  "updatedAt": "2026-04-30T15:36:26.913Z"
+}

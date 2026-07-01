@@ -1,0 +1,185 @@
+<script lang="ts">
+	import { getSettings } from 'layerchart';
+	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
+	import { toTitleCase } from '@layerstack/utils';
+	import { LoadingPlaceholder } from '@layerstack/docs/components';
+	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
+
+	import { examples } from '@layerstack/docs/context';
+	import { intersectExampleLayers } from '$lib/utils/layers.js';
+	import { page } from '$app/state';
+
+	import LucideSettings from '~icons/lucide/settings';
+	import LucideChevronLeft from '~icons/lucide/chevron-left';
+	import LucideChevronRight from '~icons/lucide/chevron-right';
+
+	// TODO: `setSettings({...})` or just use default?
+	const settings = getSettings();
+
+	let { data, children } = $props();
+
+	const { metadata } = $derived(data);
+
+	// Derive examples reactively so changes propagate to child components
+	const currentExamples = $derived.by(() => {
+		const base = data.examples ?? {};
+
+		// If there's an example from page data (for individual example pages), merge it in
+		if (page.data.example && page.params.name && page.params.example) {
+			const componentName = page.params.name;
+			const exampleName = page.params.example;
+			return {
+				...base,
+				[componentName]: {
+					...base[componentName],
+					[exampleName]: page.data.example
+				}
+			};
+		}
+
+		// If there are examples from page data (for /examples page), merge them in
+		if (page.data.examples) {
+			const pageExamples = page.data.examples as typeof base;
+			// Deep merge the examples
+			const merged = { ...base };
+			for (const [comp, exs] of Object.entries(pageExamples)) {
+				merged[comp] = { ...merged[comp], ...exs };
+			}
+			return merged;
+		}
+
+		return base;
+	});
+
+	// Add examples to context for Example component to use
+	// Use getter to ensure child components get reactive access
+	const examplesContext = {
+		get current() {
+			return currentExamples;
+		}
+	};
+	examples.set(examplesContext);
+
+	// Determine available layers from per-example (<script module>) or component metadata (markdown frontmatter)
+	const pageExample = $derived.by(() => {
+		const { name, example } = page.params;
+		return name && example ? currentExamples[name]?.[example] : null;
+	});
+	// For example pages, intersect the supported layers of every component used.
+	// A Spline in an otherwise Html-capable example narrows the toggle to [svg, canvas].
+	const computedExampleLayers = $derived.by(() => {
+		const exampleInfo = page.params.example
+			? data.catalog?.examples.find((e) => e.name === page.params.example)
+			: undefined;
+		return exampleInfo
+			? intersectExampleLayers(exampleInfo.components, metadata.layers ?? [])
+			: null;
+	});
+	let layers = $derived(
+		pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []
+	);
+</script>
+
+<div class="mb-4">
+	<!-- Show back if viewing individual example or all component examples -->
+	{#if page.params.example || page.route.id == '/docs/components/[name]/examples'}
+		<Button
+			size="sm"
+			icon={LucideChevronLeft}
+			href="/docs/components/{page.params.name}"
+			class="mb-4 border"
+		>
+			Back to {page.params.name}
+		</Button>
+	{/if}
+
+	<div class="flex items-center gap-2 text-xs font-bold">
+		<div class="text-surface-content/50 capitalize">
+			{metadata.category}
+		</div>
+
+		{#if page.params.example}
+			<LucideChevronRight class="text-sm opacity-25" />
+			<a href="/docs/components/{page.params.name}" class="text-primary">{metadata.name}</a>
+		{/if}
+	</div>
+
+	<div class="flex items-center gap-4">
+		<h1 class="text-3xl font-bold first-letter:capitalize">
+			{pageExample?.module?.title ?? page.params.example?.replaceAll('-', ' ') ?? metadata.name}
+		</h1>
+		<span class="flex items-center gap-1">
+			{#if layers?.length}
+				<ToggleGroup
+					bind:value={settings.layer}
+					variant="outline"
+					color="primary"
+					inset
+					rounded="full"
+					size="sm"
+				>
+					{#each layers as layer}
+						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
+					{/each}
+				</ToggleGroup>
+			{/if}
+
+			<Toggle let:on={open} let:toggle let:toggleOff>
+				<Tooltip title="Settings">
+					<Button iconOnly on:click={toggle}>
+						<LucideSettings class="text-surface-content" />
+						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-2' }}>
+							<label class="flex items-center gap-2">
+								<span class="text-sm text-surface-content">Debug</span>
+								<Switch bind:checked={settings.debug} />
+							</label>
+						</Menu>
+					</Button>
+				</Tooltip>
+			</Toggle>
+		</span>
+	</div>
+
+	{#if pageExample?.module?.description}
+		<div class="text-sm text-surface-content/70">{pageExample.module.description}</div>
+	{/if}
+
+	{#if page.params.example == null}
+		<div class="text-sm text-surface-content/70">{metadata.description}</div>
+
+		<div class="flex gap-2 mt-3">
+			<OpenWithButton {metadata} />
+
+			<!-- <ViewSourceButton
+        label="Page source"
+        source={pageSource}
+        href={pageUrl
+          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
+          : ''}
+        icon={LucideFilePenLine}
+      /> -->
+
+			<!-- {#if !hideTableOfContents}
+        <Button
+          icon={LucideChevronDown}
+          on:click={() => {
+            showTableOfContents = !showTableOfContents;
+          }}
+          variant="fill-light"
+          color="primary"
+          size="sm"
+        >
+          On this page
+        </Button>
+      {/if} -->
+		</div>
+	{/if}
+</div>
+
+<svelte:boundary>
+	{#snippet pending()}
+		<LoadingPlaceholder />
+	{/snippet}
+
+	{@render children()}
+</svelte:boundary>

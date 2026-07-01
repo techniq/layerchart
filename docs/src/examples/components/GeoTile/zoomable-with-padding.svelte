@@ -1,0 +1,104 @@
+<script module lang="ts">
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
+	const geojson = await getUsCountiesTopology();
+</script>
+
+<script lang="ts">
+	import type { ComponentProps } from 'svelte';
+	import { geoMercator } from 'd3-geo';
+	import { feature } from 'topojson-client';
+
+	import { Chart, Layer, Tooltip, geoFitObjectTransform, getSettings } from 'layerchart';
+	import { GeoPath, GeoTile } from 'layerchart/geo';
+	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
+	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
+
+	let settings = getSettings();
+
+	const states = $derived(feature(geojson, geojson.objects.states));
+
+	const filteredStates = $derived({
+		...states,
+		features: states.features.filter((d) => {
+			// Contiguous states
+			return Number(d.id) < 60 && d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii';
+		})
+	});
+
+	let serviceUrl = $state<ComponentProps<typeof GeoTile>['url']>(null!);
+	let zoomDelta = $state(0);
+
+	const data = { geojson, states, filteredStates };
+
+	export { data };
+</script>
+
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
+
+{#if serviceUrl}
+	<Chart
+		geo={{
+			projection: geoMercator,
+			fitGeojson: filteredStates
+		}}
+		transform={{
+			mode: 'projection',
+			scrollMode: 'scale'
+		}}
+		padding={{
+			top: 100,
+			bottom: 100,
+			left: 100,
+			right: 100
+		}}
+		clip
+		height={600}
+	>
+		{#snippet children({ context })}
+			{#if settings.debug}
+				<div class="absolute top-0 left-0 z-10 grid gap-1">
+					<!-- Debug component removed for simplified example -->
+				</div>
+			{/if}
+
+			<TransformControls />
+
+			<Layer>
+				<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
+
+				{#each filteredStates.features as feature}
+					<GeoPath
+						geojson={feature}
+						class="stroke-none"
+						tooltip
+						onclick={() => {
+							if (!context.geo.projection) return;
+							const featureTransform = geoFitObjectTransform(
+								context.geo.projection,
+								[context.width, context.height],
+								feature
+							);
+							context.transform.setTranslate(featureTransform.translate);
+							context.transform.setScale(featureTransform.scale);
+						}}
+					/>
+				{/each}
+			</Layer>
+
+			<Tooltip.Root>
+				{#snippet children({ data })}
+					{@const [longitude, latitude] =
+						context.geo.projection?.invert?.([
+							context.tooltip.x - context.padding.left,
+							context.tooltip.y - context.padding.top
+						]) ?? []}
+					<Tooltip.Header>{data.properties.name}</Tooltip.Header>
+					<Tooltip.List>
+						<Tooltip.Item label="longitude" value={longitude} format="decimal" />
+						<Tooltip.Item label="latitude" value={latitude} format="decimal" />
+					</Tooltip.List>
+				{/snippet}
+			</Tooltip.Root>
+		{/snippet}
+	</Chart>
+{/if}

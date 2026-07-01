@@ -1,0 +1,364 @@
+{
+  "component": "AnnotationPoint",
+  "examples": [
+    {
+      "name": "band-scale-on-axis",
+      "title": "band scale on axis",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-axis",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 5, left: 25, bottom: 35 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 19,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "band-scale-on-value",
+      "title": "band scale on value",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-value",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 19,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "line-to-point",
+      "title": "line to point",
+      "path": "/docs/components/AnnotationPoint/line-to-point",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 58,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 60,
+          "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 62,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 68,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 82,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "link-callouts",
+      "title": "link callouts",
+      "path": "/docs/components/AnnotationPoint/link-callouts",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 55,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 58,
+          "line": "<AnnotationPoint {...annotation} />"
+        }
+      ]
+    },
+    {
+      "name": "on-axis-with-tooltip",
+      "title": "on axis with tooltip",
+      "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 27,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 30,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 32,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 47,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "on-series-with-line-and-tooltip",
+      "title": "on series with line and tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 27,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 31,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 40,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 56,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "on-series-with-tooltip",
+      "title": "on series with tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 27,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 31,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 47,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 188,
+          "line": "<ScatterChart"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 199,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 221,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "series-annotation",
+      "title": "series annotation",
+      "path": "/docs/components/AnnotationPoint/series-annotation",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 21,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "us-cities",
+      "title": "us cities",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 98,
+          "line": "<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} height={500} padding={{ right: 40 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 99,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 100,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 103,
+          "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+        }
+      ]
+    },
+    {
+      "name": "world-landmarks",
+      "title": "world landmarks",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 109,
+          "line": "<Chart geo={{ projection: geoNaturalEarth1, fitGeojson: countries }} height={500}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 110,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 112,
+          "line": "<GeoPath geojson={f} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 116,
+          "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "band-scale-on-axis",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-axis",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "band-scale-on-value",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-value",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "line-to-point",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/line-to-point",
+      "lineNumber": 68,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "link-callouts",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/link-callouts",
+      "lineNumber": 58,
+      "line": "<AnnotationPoint {...annotation} />"
+    },
+    {
+      "example": "on-axis-with-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
+      "lineNumber": 32,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-series-with-line-and-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
+      "lineNumber": 40,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-series-with-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
+      "lineNumber": 31,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 199,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "series-annotation",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/series-annotation",
+      "lineNumber": 21,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "us-cities",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "lineNumber": 103,
+      "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+    },
+    {
+      "example": "world-landmarks",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "lineNumber": 116,
+      "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+    },
+    {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 100,
+      "line": "<AnnotationPoint"
+    }
+  ],
+  "updatedAt": "2026-05-05T17:35:58.006Z"
+}

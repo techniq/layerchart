@@ -1,0 +1,1099 @@
+{
+  "component": "Circle",
+  "examples": [
+    {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 29,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={5} fill=\"category\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 32,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 44,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={5} fill=\"value\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Circle/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 27,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={5} class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-attributes",
+      "title": "styling using attributes",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 14,
+          "line": "<Circle cx={100} cy={100} r={20} fill=\"var(--color-surface-content)\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-classes",
+      "title": "styling using classes",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 14,
+          "line": "<Circle cx={100} cy={100} r={20} />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-css-variables",
+      "title": "styling using css variables",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 14,
+          "line": "<Circle cx={100} cy={100} r={20} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 107,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 121,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 221,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 237,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 251,
+      "line": "<Circle"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 32,
+      "line": "<Circle r={100} class=\"fill-surface-200 stroke-surface-content/20\" strokeWidth={2} />"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 104,
+      "line": "<Circle r={4} class=\"fill-red-500\" />"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 105,
+      "line": "<Circle r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 135,
+      "line": "<Circle r={6} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 136,
+      "line": "<Circle r={3} class=\"fill-surface-200\" />"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 107,
+      "line": "<Circle r={5} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series",
+      "lineNumber": 61,
+      "line": "<Circle cx={x} cy={y} r={4} fill={color} />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 64,
+      "line": "<Circle cx={x} cy={y} r={4} fill={color} />"
+    },
+    {
+      "example": "markers",
+      "component": "AreaChart",
+      "path": "/docs/components/AreaChart/markers",
+      "lineNumber": 39,
+      "line": "<Circle"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/minimap",
+      "lineNumber": 92,
+      "line": "<Circle"
+    },
+    {
+      "example": "selection",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/selection",
+      "lineNumber": 52,
+      "line": "<Circle"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 26,
+      "line": "<Circle cx=\"date\" cy=\"value\" data={temperatureData} r={5} fill=\"var(--color-apples)\" />"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 28,
+      "line": "<Circle cx=\"date\" cy=\"value\" data={humidityData} r={5} fill=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={5} fill=\"category\" />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 44,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={5} fill=\"value\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 27,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "lineNumber": 14,
+      "line": "<Circle cx={100} cy={100} r={20} fill=\"var(--color-surface-content)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "lineNumber": 15,
+      "line": "<Circle cx={200} cy={200} r={20} fill=\"var(--color-primary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "lineNumber": 16,
+      "line": "<Circle cx={200} cy={50} r={20} fill=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "lineNumber": 17,
+      "line": "<Circle"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "lineNumber": 14,
+      "line": "<Circle cx={100} cy={100} r={20} />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "lineNumber": 15,
+      "line": "<Circle cx={200} cy={200} r={20} class=\"fill-primary bg-primary\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "lineNumber": 16,
+      "line": "<Circle cx={200} cy={50} r={20} fill=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "lineNumber": 17,
+      "line": "<Circle"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "lineNumber": 14,
+      "line": "<Circle cx={100} cy={100} r={20} />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "lineNumber": 15,
+      "line": "<Circle cx={200} cy={200} r={20} style=\"--fill-color:var(--color-primary)\" />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "lineNumber": 16,
+      "line": "<Circle cx={200} cy={50} r={20} style=\"--fill-color:var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "lineNumber": 17,
+      "line": "<Circle"
+    },
+    {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 11,
+      "line": "<circle cx=\"120\" cy=\"150\" r=\"90\" />"
+    },
+    {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 12,
+      "line": "<circle cx=\"240\" cy=\"150\" r=\"90\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 57,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 62,
+      "line": "<Circle"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 37,
+      "line": "<Circle"
+    },
+    {
+      "example": "anchor",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/anchor",
+      "lineNumber": 42,
+      "line": "<Circle"
+    },
+    {
+      "example": "bank-failures",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/bank-failures",
+      "lineNumber": 44,
+      "line": "<Circle"
+    },
+    {
+      "example": "beeswarm",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/beeswarm",
+      "lineNumber": 27,
+      "line": "<Circle"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 50,
+      "line": "<Circle"
+    },
+    {
+      "example": "grouped-vertical",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-vertical",
+      "lineNumber": 49,
+      "line": "<Circle"
+    },
+    {
+      "example": "penguins",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/penguins",
+      "lineNumber": 39,
+      "line": "<Circle"
+    },
+    {
+      "example": "tech-layoffs",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/tech-layoffs",
+      "lineNumber": 36,
+      "line": "<Circle"
+    },
+    {
+      "example": "timeline",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline",
+      "lineNumber": 73,
+      "line": "<Circle"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 93,
+      "line": "<Circle"
+    },
+    {
+      "example": "timeline-bidirectional",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/timeline-bidirectional",
+      "lineNumber": 132,
+      "line": "<Circle"
+    },
+    {
+      "example": "variable-radius",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/variable-radius",
+      "lineNumber": 63,
+      "line": "<Circle"
+    },
+    {
+      "example": "beeswarm",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/beeswarm",
+      "lineNumber": 46,
+      "line": "<Circle"
+    },
+    {
+      "example": "collision-detection",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/collision-detection",
+      "lineNumber": 60,
+      "line": "<Circle"
+    },
+    {
+      "example": "disjoint-graph",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/disjoint-graph",
+      "lineNumber": 78,
+      "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
+    },
+    {
+      "example": "games-industry-layoffs",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/games-industry-layoffs",
+      "lineNumber": 58,
+      "line": "<Circle"
+    },
+    {
+      "example": "graph-drag",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/graph-drag",
+      "lineNumber": 93,
+      "line": "<circle"
+    },
+    {
+      "example": "graph-playground",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/graph-playground",
+      "lineNumber": 181,
+      "line": "<Circle"
+    },
+    {
+      "example": "group",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/group",
+      "lineNumber": 73,
+      "line": "<Circle"
+    },
+    {
+      "example": "lattice",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/lattice",
+      "lineNumber": 47,
+      "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "layoffs-by-industry",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/layoffs-by-industry",
+      "lineNumber": 117,
+      "line": "<Circle"
+    },
+    {
+      "example": "tree",
+      "component": "ForceSimulation",
+      "path": "/docs/components/ForceSimulation/tree",
+      "lineNumber": 53,
+      "line": "<Circle"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/bubble-map",
+      "lineNumber": 100,
+      "line": "<Circle"
+    },
+    {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 438,
+      "line": "<Circle"
+    },
+    {
+      "example": "icons",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/icons",
+      "lineNumber": 47,
+      "line": "<Circle"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-airports",
+      "lineNumber": 47,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} class=\"fill-primary pointer-events-none\" />"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-airports",
+      "lineNumber": 53,
+      "line": "<Circle"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-state-capitals",
+      "lineNumber": 39,
+      "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-state-capitals",
+      "lineNumber": 50,
+      "line": "<Circle cx={x} cy={y} r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-airports",
+      "lineNumber": 44,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} class=\"fill-primary pointer-events-none\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-airports",
+      "lineNumber": 50,
+      "line": "<Circle"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-capitals",
+      "lineNumber": 67,
+      "line": "<Circle r={4} class=\"stroke-primary/50 fill-none\" />"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-capitals",
+      "lineNumber": 82,
+      "line": "<Circle cx={x} cy={y} r={4} class=\"stroke-primary/50 fill-none\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Group",
+      "path": "/docs/components/Group/basic",
+      "lineNumber": 10,
+      "line": "<Circle r={20} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Group",
+      "path": "/docs/components/Group/basic",
+      "lineNumber": 13,
+      "line": "<Circle r={10} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 26,
+      "line": "<Circle r={4} class=\"fill-primary\" />"
+    },
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/docs/components/Hull/geo",
+      "lineNumber": 48,
+      "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 64,
+      "line": "<Circle"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/docs/components/Layer/all-3-layers",
+      "lineNumber": 7,
+      "line": "<Circle fill=\"#F2D707\" r={100} />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/docs/components/Layer/all-3-layers",
+      "lineNumber": 11,
+      "line": "<Circle fill=\"black\" r={15} cx={-30} cy={-30} />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/docs/components/Layer/all-3-layers",
+      "lineNumber": 23,
+      "line": "<Circle id=\"left-eye\" fill=\"black\" r={15} cx={30} cy={-30} />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 31,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"category\" />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 45,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"value\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 29,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 71,
+      "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 72,
+      "line": "<Circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 38,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 51,
+      "line": "<Circle"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 48,
+      "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 49,
+      "line": "<Circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+    },
+    {
+      "example": "sync-with-draw",
+      "component": "MotionPath",
+      "path": "/docs/components/MotionPath/sync-with-draw",
+      "lineNumber": 51,
+      "line": "<Circle id={objectId} r={5} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Pack",
+      "path": "/docs/components/Pack/basic",
+      "lineNumber": 113,
+      "line": "<Circle"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 9,
+      "line": "<circle cx={2} cy={2} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 15,
+      "line": "<circle cx={4} cy={4} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 21,
+      "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 27,
+      "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 28,
+      "line": "<circle cx={0} cy={0} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 29,
+      "line": "<circle cx={0} cy={8} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 30,
+      "line": "<circle cx={8} cy={0} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 31,
+      "line": "<circle cx={8} cy={8} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 37,
+      "line": "<circle cx={4} cy={4} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 38,
+      "line": "<circle cx={0} cy={0} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 39,
+      "line": "<circle cx={0} cy={8} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 40,
+      "line": "<circle cx={8} cy={0} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 41,
+      "line": "<circle cx={8} cy={8} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 47,
+      "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content/30\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Point",
+      "path": "/docs/components/Point/basic",
+      "lineNumber": 24,
+      "line": "<Circle cx={x} cy={y} r={10} />"
+    },
+    {
+      "example": "basic",
+      "component": "Point",
+      "path": "/docs/components/Point/basic",
+      "lineNumber": 30,
+      "line": "<Circle cx={x} cy={y} r={15} class=\"fill-primary bg-primary\" />"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 11,
+      "line": "<Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 17,
+      "line": "<Circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 23,
+      "line": "<Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/spreadmethod",
+      "lineNumber": 11,
+      "line": "<Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/spreadmethod",
+      "lineNumber": 17,
+      "line": "<Circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/spreadmethod",
+      "lineNumber": 23,
+      "line": "<Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/tailwind-colors",
+      "lineNumber": 19,
+      "line": "<Circle"
+    },
+    {
+      "example": "units",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/units",
+      "lineNumber": 12,
+      "line": "<Circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "units",
+      "component": "RadialGradient",
+      "path": "/docs/components/RadialGradient/units",
+      "lineNumber": 20,
+      "line": "<Circle cx={radius + i * 120} cy={120 + radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "basic-start-and-end-snippets",
+      "component": "Spline",
+      "path": "/docs/components/Spline/basic-start-and-end-snippets",
+      "lineNumber": 38,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "basic-start-and-end-snippets",
+      "component": "Spline",
+      "path": "/docs/components/Spline/basic-start-and-end-snippets",
+      "lineNumber": 41,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "end-slot-with-draw-with-value",
+      "component": "Spline",
+      "path": "/docs/components/Spline/end-slot-with-draw-with-value",
+      "lineNumber": 44,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "end-snippet-with-draw",
+      "component": "Spline",
+      "path": "/docs/components/Spline/end-snippet-with-draw",
+      "lineNumber": 38,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "label-using-start-end-snippets",
+      "component": "Spline",
+      "path": "/docs/components/Spline/label-using-start-end-snippets",
+      "lineNumber": 38,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "label-using-start-end-snippets",
+      "component": "Spline",
+      "path": "/docs/components/Spline/label-using-start-end-snippets",
+      "lineNumber": 43,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series",
+      "lineNumber": 57,
+      "line": "<Circle r={4} fill={color} />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 60,
+      "line": "<Circle r={4} fill={color} />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"category\" />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 42,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"value\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 25,
+      "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Text",
+      "path": "/docs/components/Text/playground",
+      "lineNumber": 48,
+      "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
+    },
+    {
+      "example": "playground",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/playground",
+      "lineNumber": 58,
+      "line": "<Circle"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 23,
+      "line": "<Circle cx={100} cy={150} r={3} class=\"fill-primary\" />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 27,
+      "line": "<Circle cx={200} cy={150} r={3} class=\"fill-secondary\" />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 39,
+      "line": "<Circle cx={300} cy={150} r={3} class=\"fill-danger\" />"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 70,
+      "line": "<circle cx={0} cy={-len} r={4} class=\"fill-success\" />"
+    },
+    {
+      "example": "radius",
+      "component": "Voronoi",
+      "path": "/docs/components/Voronoi/radius",
+      "lineNumber": 37,
+      "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
+    }
+  ],
+  "updatedAt": "2026-05-05T17:35:59.127Z"
+}

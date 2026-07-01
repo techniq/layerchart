@@ -1,0 +1,62 @@
+<script module lang="ts">
+	import { getAppleTicker } from '$lib/data.remote.js';
+	const data = await getAppleTicker();
+</script>
+
+<script lang="ts">
+	import { BarChart, Spline, Tooltip, defaultChartPadding } from 'layerchart';
+
+	export { data };
+</script>
+
+<div class="grid grid-stack p-4 border rounded-sm">
+	<!-- First chart (bar), with different domain scale for volume -->
+	<BarChart
+		{data}
+		x="date"
+		y="volume"
+		yNice
+		axis={false}
+		grid={false}
+		props={{
+			bars: { radius: 1, class: 'stroke-none fill-surface-content/10' }
+		}}
+		padding={defaultChartPadding({ left: 25 })}
+		height={300}
+	/>
+
+	<!-- Second chart (line), responsible for tooltip -->
+	<BarChart
+		{data}
+		x="date"
+		y={['open', 'close']}
+		yNice
+		yDomain={null}
+		height={300}
+		props={{
+			xAxis: { ticks: 10, rule: true },
+			tooltip: { context: { mode: 'band' } }
+		}}
+		padding={defaultChartPadding({ left: 25 })}
+	>
+		{#snippet marks()}
+			<Spline y="open" class="stroke-primary" />
+			<Spline y="close" class="stroke-secondary" />
+		{/snippet}
+
+		{#snippet tooltip({ context })}
+			<Tooltip.Root {context}>
+				{#snippet children({ data })}
+					<Tooltip.Header value={data.date} format="day" />
+					<Tooltip.List>
+						<Tooltip.Item label="open" value={data.open} format="currency" />
+						<Tooltip.Item label="close" value={data.close} format="currency" />
+						<Tooltip.Item label="high" value={data.high} format="currency" />
+						<Tooltip.Item label="low" value={data.low} format="currency" />
+						<Tooltip.Item label="volume" value={data.volume} format="integer" />
+					</Tooltip.List>
+				{/snippet}
+			</Tooltip.Root>
+		{/snippet}
+	</BarChart>
+</div>
