@@ -29,6 +29,12 @@ export type BrushRange = {
   height: number;
 };
 
+/** Minimum/maximum selection size, per axis. */
+export type BrushExtent = { x?: number; y?: number };
+
+/** Candidate brush selection passed to a custom `constrain` function. */
+export type BrushSelection = { x: BrushDomainType; y: BrushDomainType };
+
 /**
  * Minimal interface for the chart context that BrushState depends on.
  * Narrowed from ChartState to only what brush needs, enabling easier testing.
@@ -77,6 +83,32 @@ export class BrushState {
   axis = $state<'x' | 'y' | 'both'>('x');
   handleSize = $state(0);
 
+  /**
+   * Minimum selection size per axis. In domain units for continuous scales (e.g. milliseconds
+   * for time scales), or number of categories for band/point scales.
+   */
+  minExtent = $state<BrushExtent | undefined>();
+
+  /**
+   * Maximum selection size per axis. In domain units for continuous scales (e.g. milliseconds
+   * for time scales), or number of categories for band/point scales.
+   */
+  maxExtent = $state<BrushExtent | undefined>();
+
+  /**
+   * Custom constraint function, called after `min/maxExtent` on every selection update
+   * (create/resize/move/programmatic). Return corrected `{ x, y }` domain values — e.g. to snap
+   * edges to boundaries. Mirrors `TransformState.constrain`.
+   */
+  constrain = $state<((selection: BrushSelection) => BrushSelection) | undefined>();
+
+  /**
+   * Keep the selection within the domain extent. Enabled by default — pointer gestures already
+   * clamp to the domain, so this additionally clamps `constrain` output (e.g. a snap that rounds
+   * past the first/last value). Set `false` to allow `constrain` to place edges outside the domain.
+   */
+  constrainToDomain = $state<boolean>(true);
+
   constructor(
     ctx: typeof this.ctx,
     options?: {
@@ -84,6 +116,10 @@ export class BrushState {
       y?: BrushDomainType;
       active?: boolean;
       axis?: 'x' | 'y' | 'both';
+      minExtent?: BrushExtent;
+      maxExtent?: BrushExtent;
+      constrain?: (selection: BrushSelection) => BrushSelection;
+      constrainToDomain?: boolean;
     }
   ) {
     this.ctx = ctx;
@@ -92,6 +128,10 @@ export class BrushState {
     this.y = options?.y ?? [null, null];
     this.active = options?.active;
     this.axis = options?.axis ?? 'x';
+    this.minExtent = options?.minExtent;
+    this.maxExtent = options?.maxExtent;
+    this.constrain = options?.constrain;
+    this.constrainToDomain = options?.constrainToDomain ?? true;
   }
 
   /** The domain extent bounds from the base (unzoomed) scales */
@@ -136,11 +176,12 @@ export class BrushState {
     this.y = [null, null];
   }
 
-  /** Select the full domain extent */
+  /** Select the full domain extent (capped by `maxExtent` from the domain start, if set) */
   selectAll() {
     this.active = true;
     this.x = [this.xDomainMin, this.xDomainMax];
     this.y = [this.yDomainMin, this.yDomainMax];
+    this._applyConstraints({ x: this.xDomainMin, y: this.yDomainMin });
   }
 
   /** Programmatically set the brush selection. Like d3's `brush.move()`. */
@@ -151,6 +192,9 @@ export class BrushState {
     if ('y' in selection) {
       this.y = selection.y ?? [null, null];
     }
+
+    // Hold each selection's start edge fixed while enforcing extent limits / `constrain`.
+    this._applyConstraints({ x: this.x[0], y: this.y[0] });
 
     // Determine active state from current values
     const hasX = this.x[0] != null && this.x[1] != null;
@@ -207,6 +251,9 @@ export class BrushState {
         clamp(max([startValue.y, currentValue.y]), this.yDomainMin, this.yDomainMax),
       ];
     }
+
+    // Hold the drag origin fixed and pull the moving edge back to satisfy the extent limits.
+    this._applyConstraints({ x: startValue.x, y: startValue.y });
   }
 
   /** Move the entire brush range by a delta, clamped to domain bounds */
@@ -254,6 +301,9 @@ export class BrushState {
       );
       this.y = [add(start.y[0], dy), add(start.y[1], dy)];
     }
+
+    // Panning preserves width (extent limits are a no-op), but still run `constrain` (e.g. snapping).
+    this._applyConstraints({ x: null, y: null });
   }
 
   /** Adjust a single edge of the brush, clamped to domain bounds. Handles inversion if dragged past opposite edge. */
@@ -305,6 +355,164 @@ export class BrushState {
           clampX(ltX(currentValue.x, start.x[0]) ? start.x[0] : currentValue.x),
         ];
         break;
+    }
+
+    // Hold the opposite (undragged) edge fixed while enforcing the extent limits.
+    switch (edge) {
+      case 'left':
+        this._applyConstraints({ x: start.x[1] });
+        break;
+      case 'right':
+        this._applyConstraints({ x: start.x[0] });
+        break;
+      case 'top':
+        this._applyConstraints({ y: start.y[0] });
+        break;
+      case 'bottom':
+        this._applyConstraints({ y: start.y[1] });
+        break;
+    }
+  }
+
+  /** Which endpoint (if any) equals `anchorValue` and should be held fixed while clamping extent. */
+  private _anchorIndex(values: [any, any], anchorValue: any): 0 | 1 | null {
+    if (anchorValue == null) return null;
+    const a = anchorValue?.valueOf?.() ?? anchorValue;
+    if ((values[0]?.valueOf?.() ?? values[0]) === a) return 0;
+    if ((values[1]?.valueOf?.() ?? values[1]) === a) return 1;
+    return null;
+  }
+
+  /**
+   * Clamp one axis' selection to `min/maxExtent`, holding the endpoint at `anchorValue` fixed
+   * (the edge the user isn't dragging). A `null` anchor shrinks/grows symmetrically about the
+   * center. Extent is measured in domain units (continuous) or category count (band/point).
+   */
+  private _clampExtent(axis: 'x' | 'y', values: [any, any], anchorValue: any): [any, any] {
+    const minExt = this.minExtent?.[axis];
+    const maxExt = this.maxExtent?.[axis];
+    if ((minExt == null && maxExt == null) || values[0] == null || values[1] == null) {
+      return values;
+    }
+
+    const domain = (axis === 'x' ? this.ctx?.baseXScale : this.ctx?.baseYScale)?.domain() ?? [];
+    const domainMin = axis === 'x' ? this.xDomainMin : this.yDomainMin;
+    const domainMax = axis === 'x' ? this.xDomainMax : this.yDomainMax;
+    const anchor = this._anchorIndex(values, anchorValue);
+
+    if (isCategoricalDomain(domain)) {
+      let startIdx = domain.indexOf(values[0]);
+      let endIdx = domain.indexOf(values[1]);
+      if (startIdx === -1 || endIdx === -1) return values;
+      if (startIdx > endIdx) [startIdx, endIdx] = [endIdx, startIdx];
+      const count = endIdx - startIdx + 1;
+
+      if (maxExt != null && count > maxExt) {
+        if (anchor === 1) startIdx = endIdx - (maxExt - 1);
+        else if (anchor === 0) endIdx = startIdx + (maxExt - 1);
+        else {
+          const trim = count - maxExt;
+          startIdx += Math.ceil(trim / 2);
+          endIdx -= Math.floor(trim / 2);
+        }
+      } else if (minExt != null && count < minExt) {
+        if (anchor === 1) startIdx = endIdx - (minExt - 1);
+        else if (anchor === 0) endIdx = startIdx + (minExt - 1);
+        else {
+          const grow = minExt - count;
+          startIdx -= Math.floor(grow / 2);
+          endIdx += Math.ceil(grow / 2);
+        }
+      }
+
+      // Shift back inside [0, lastIdx] if growth pushed past an edge.
+      const lastIdx = domain.length - 1;
+      if (startIdx < 0) {
+        endIdx += -startIdx;
+        startIdx = 0;
+      }
+      if (endIdx > lastIdx) {
+        startIdx -= endIdx - lastIdx;
+        endIdx = lastIdx;
+      }
+      startIdx = Math.max(0, startIdx);
+      endIdx = Math.min(lastIdx, endIdx);
+      return [domain[startIdx], domain[endIdx]];
+    }
+
+    // Continuous scale — measure width as a numeric/Date difference.
+    let lo = values[0];
+    let hi = values[1];
+    let width = +hi - +lo;
+
+    if (maxExt != null && width > maxExt) {
+      if (anchor === 1) lo = add(hi, -maxExt);
+      else if (anchor === 0) hi = add(lo, maxExt);
+      else {
+        const trim = (width - maxExt) / 2;
+        lo = add(lo, trim);
+        hi = add(hi, -trim);
+      }
+    } else if (minExt != null && width < minExt) {
+      if (anchor === 1) lo = add(hi, -minExt);
+      else if (anchor === 0) hi = add(lo, minExt);
+      else {
+        const grow = (minExt - width) / 2;
+        lo = add(lo, -grow);
+        hi = add(hi, grow);
+      }
+      // Growth can overrun the domain — shift the window back inside, then hard-clamp.
+      if (domainMin != null && +lo < +domainMin) {
+        hi = add(hi, +domainMin - +lo);
+        lo = domainMin;
+      }
+      if (domainMax != null && +hi > +domainMax) {
+        lo = add(lo, +domainMax - +hi);
+        hi = domainMax;
+      }
+      lo = clamp(lo, domainMin, domainMax);
+      hi = clamp(hi, domainMin, domainMax);
+    }
+
+    return [lo, hi];
+  }
+
+  /** Clamp both endpoints of one axis to the domain extent. */
+  private _clampToDomain(axis: 'x' | 'y', values: BrushDomainType): BrushDomainType {
+    if (values[0] == null || values[1] == null) return values;
+    const domain = (axis === 'x' ? this.ctx?.baseXScale : this.ctx?.baseYScale)?.domain() ?? [];
+    const domainMin = axis === 'x' ? this.xDomainMin : this.yDomainMin;
+    const domainMax = axis === 'x' ? this.xDomainMax : this.yDomainMax;
+    if (isCategoricalDomain(domain)) {
+      return [
+        clampByIndex(values[0], domainMin, domainMax, domain),
+        clampByIndex(values[1], domainMin, domainMax, domain),
+      ];
+    }
+    return [clamp(values[0], domainMin, domainMax), clamp(values[1], domainMin, domainMax)];
+  }
+
+  /**
+   * Apply extent limits (for each axis whose anchor is provided), then the custom `constrain`,
+   * then re-clamp to the domain (unless `constrainToDomain` is disabled). `anchor.x`/`anchor.y`
+   * is the domain value to hold fixed; `null` = symmetric. Mirrors `TransformState._applyConstraints`.
+   */
+  private _applyConstraints(anchor: { x?: any; y?: any }) {
+    if ('x' in anchor && this.x[0] != null && this.x[1] != null) {
+      this.x = this._clampExtent('x', [this.x[0], this.x[1]], anchor.x);
+    }
+    if ('y' in anchor && this.y[0] != null && this.y[1] != null) {
+      this.y = this._clampExtent('y', [this.y[0], this.y[1]], anchor.y);
+    }
+    if (this.constrain) {
+      const constrained = this.constrain({ x: this.x, y: this.y });
+      this.x = constrained.x;
+      this.y = constrained.y;
+    }
+    // `constrain` output isn't bounded — keep the selection within the domain by default.
+    if (this.constrainToDomain) {
+      this.x = this._clampToDomain('x', this.x);
+      this.y = this._clampToDomain('y', this.y);
     }
   }
 

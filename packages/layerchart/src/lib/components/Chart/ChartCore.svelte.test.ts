@@ -62,4 +62,16 @@ describe('ChartCore', () => {
 
     expect(container.querySelector('.lc-root-container')).not.toBeNull();
   });
+
+  it('should disable text selection on the root container', async () => {
+    const { container } = render(ChartCoreTestHarness, {
+      chartProps: { data, x: 'x', y: 'y', height: 200 },
+    });
+
+    await tick();
+
+    // Charts are interactive widgets — dragging (brush/pan/zoom) must not select text.
+    const root = container.querySelector('.lc-root-container') as HTMLElement;
+    expect(getComputedStyle(root).userSelect).toBe('none');
+  });
 });

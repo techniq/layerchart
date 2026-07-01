@@ -531,6 +531,141 @@ describe('BrushState', () => {
       expect(brush.x).toEqual(['D', 'E']);
     });
   });
+
+  describe('constraints (min/maxExtent + constrain)', () => {
+    const categories = ['A', 'B', 'C', 'D', 'E'];
+    function createBandCtx(): BrushChartContext {
+      return {
+        xScale: Object.assign((v: any) => categories.indexOf(v) * 100, { bandwidth: () => 80 }),
+        yScale: (v: any) => v,
+        baseXScale: { domain: () => categories },
+        baseYScale: { domain: () => [0, 100] },
+        width: 500,
+        height: 300,
+      };
+    }
+
+    it('leaves the selection untouched when no constraints are set', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x' });
+      brush.setRange({ x: 10, y: 0 }, { x: 90, y: 0 });
+      expect(brush.x).toEqual([10, 90]);
+    });
+
+    it('caps a fresh draw to maxExtent, anchored to the drag origin', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 } });
+      brush.setRange({ x: 10, y: 0 }, { x: 90, y: 0 });
+      expect(brush.x).toEqual([10, 40]);
+    });
+
+    it('caps a right-edge resize to maxExtent, holding the left edge fixed', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 }, x: [20, 40] });
+      brush.adjustEdge('right', { x: [20, 40], y: [0, 100] }, { x: 90, y: 50 });
+      expect(brush.x).toEqual([20, 50]);
+    });
+
+    it('caps a left-edge resize to maxExtent, holding the right edge fixed', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 }, x: [50, 80] });
+      brush.adjustEdge('left', { x: [50, 80], y: [0, 100] }, { x: 10, y: 50 });
+      expect(brush.x).toEqual([50, 80]);
+    });
+
+    it('grows a too-small resize to minExtent, holding the dragged-from edge fixed', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', minExtent: { x: 20 }, x: [20, 60] });
+      brush.adjustEdge('right', { x: [20, 60], y: [0, 100] }, { x: 25, y: 50 });
+      expect(brush.x).toEqual([20, 40]);
+    });
+
+    it('shifts a minExtent selection back inside the domain when growth overruns the edge', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', minExtent: { x: 30 }, x: [90, 95] });
+      brush.adjustEdge('right', { x: [90, 95], y: [0, 100] }, { x: 96, y: 50 });
+      expect(brush.x).toEqual([70, 100]);
+    });
+
+    it('does not shrink the window while panning (extent is a no-op for moveRange)', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 }, x: [20, 40] });
+      brush.moveRange({ x: [20, 40], y: [0, 100], value: { x: 30, y: 50 } }, { x: 50, y: 50 });
+      expect(brush.x).toEqual([40, 60]);
+    });
+
+    it('caps selectAll to maxExtent from the domain start', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 } });
+      brush.selectAll();
+      expect(brush.x).toEqual([0, 30]);
+    });
+
+    it('applies a custom constrain function (e.g. snapping)', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const snap10 = (sel: { x: any[]; y: any[] }) => ({
+        x: [Math.round(sel.x[0] / 10) * 10, Math.round(sel.x[1] / 10) * 10],
+        y: sel.y,
+      });
+      const brush = new BrushState(ctx, { axis: 'x', constrain: snap10 });
+      brush.setRange({ x: 12, y: 0 }, { x: 47, y: 0 });
+      expect(brush.x).toEqual([10, 50]);
+    });
+
+    it('runs constrain after maxExtent', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const snap10 = (sel: { x: any[]; y: any[] }) => ({
+        x: [Math.round(sel.x[0] / 10) * 10, Math.round(sel.x[1] / 10) * 10],
+        y: sel.y,
+      });
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 }, constrain: snap10 });
+      brush.setRange({ x: 11, y: 0 }, { x: 88, y: 0 });
+      // capped to [11, 41] by maxExtent, then snapped to [10, 40]
+      expect(brush.x).toEqual([10, 40]);
+    });
+
+    it('clamps constrain output back into the domain by default (constrainToDomain)', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      // constrain pushes the end past the domain max
+      const overshoot = (sel: { x: any[]; y: any[] }) => ({ x: [sel.x[0], 130], y: sel.y });
+      const brush = new BrushState(ctx, { axis: 'x', constrain: overshoot });
+      brush.setRange({ x: 20, y: 0 }, { x: 60, y: 0 });
+      expect(brush.x).toEqual([20, 100]);
+    });
+
+    it('allows out-of-domain constrain output when constrainToDomain is false', () => {
+      const ctx = createMockCtx({ xDomain: [0, 100] });
+      const overshoot = (sel: { x: any[]; y: any[] }) => ({ x: [sel.x[0], 130], y: sel.y });
+      const brush = new BrushState(ctx, {
+        axis: 'x',
+        constrain: overshoot,
+        constrainToDomain: false,
+      });
+      brush.setRange({ x: 20, y: 0 }, { x: 60, y: 0 });
+      expect(brush.x).toEqual([20, 130]);
+    });
+
+    it('measures maxExtent as a category count for band scales', () => {
+      const brush = new BrushState(createBandCtx(), { axis: 'x', maxExtent: { x: 2 } });
+      brush.setRange({ x: 'A', y: 0 }, { x: 'E', y: 0 });
+      expect(brush.x).toEqual(['A', 'B']);
+    });
+
+    it('constrains a Date-domain time brush to a max window', () => {
+      const start = new Date('2024-01-01');
+      const end = new Date('2025-01-01');
+      const ctx = createMockCtx();
+      ctx.baseXScale = { domain: () => [start, end] };
+      const day = 24 * 60 * 60 * 1000;
+      const brush = new BrushState(ctx, { axis: 'x', maxExtent: { x: 30 * day } });
+
+      const origin = new Date('2024-06-01');
+      brush.setRange({ x: origin, y: 0 }, { x: new Date('2024-10-01'), y: 0 });
+
+      expect(brush.x[0]).toEqual(origin);
+      expect((brush.x[1] as Date).getTime() - origin.getTime()).toBe(30 * day);
+    });
+  });
 });
 
 describe('expandBandBrushDomain', () => {

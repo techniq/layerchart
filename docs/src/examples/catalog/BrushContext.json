@@ -216,6 +216,65 @@
       ]
     },
     {
+      "name": "max-window",
+      "title": "max window",
+      "path": "/docs/components/BrushContext/max-window",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 38,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 48,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 51,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 52,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "min-max-extent",
+      "title": "min max extent",
+      "path": "/docs/components/BrushContext/min-max-extent",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 44,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 45,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
       "name": "minimap",
       "title": "minimap",
       "path": "/docs/components/BrushContext/minimap",
@@ -440,6 +499,33 @@
       ]
     },
     {
+      "name": "snap-to-month",
+      "title": "snap to month",
+      "path": "/docs/components/BrushContext/snap-to-month",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 52,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 54,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
       "name": "striped-background",
       "title": "striped background",
       "path": "/docs/components/BrushContext/striped-background",
@@ -552,5 +638,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-04-30T15:36:23.111Z"
+  "updatedAt": "2026-07-01T14:36:52.362Z"
 }
