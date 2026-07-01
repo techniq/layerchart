@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { format } from '@layerstack/utils';
 
-	import H1 from '$lib/markdown/components/h1.svelte';
-	import Button from '$lib/markdown/components/Button.svelte';
+	import { Button, H1 } from '@layerstack/docs/markdown/components';
 
 	import LucideChevronLeft from '~icons/lucide/chevron-left';
 	import ReleaseContent from '../ReleaseContent.svelte';

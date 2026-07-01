@@ -3,7 +3,7 @@
 	import { flatGroup } from 'd3-array';
 
 	import { allComponents, allUtils, allGuides } from 'content-collections';
-	import { sortCollection } from '$lib/collections';
+	import { sortCollection } from '@layerstack/docs/collections';
 	import { page } from '$app/state';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';

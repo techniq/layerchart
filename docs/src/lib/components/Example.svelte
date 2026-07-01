@@ -16,10 +16,10 @@
 	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 
-	import { examples } from '$lib/context';
+	import { examples } from '@layerstack/docs/context';
+	import { resolveExamplePath } from '@layerstack/docs/content';
 	import { untrack } from 'svelte';
-	import Code from './Code.svelte';
-	import Json from './Json.svelte';
+	import { Code, Json } from '@layerstack/docs/components';
 
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
@@ -66,24 +66,6 @@
 		class?: string;
 	} = $props();
 
-	/**
-	 * Resolve a relative or absolute path to a full path from /src
-	 */
-	function resolveExamplePath(examplePath: string, currentPath: string): string {
-		const isGuide = currentPath.startsWith('/docs/guides/');
-		if (isGuide && (examplePath.startsWith('./') || !examplePath.startsWith('/'))) {
-			const relativePath = examplePath.startsWith('./') ? examplePath.slice(2) : examplePath;
-			return `/src/content/guides/${relativePath}`;
-		}
-		if (examplePath.startsWith('./')) {
-			return `/src/routes${currentPath}/${examplePath.slice(2)}`;
-		} else if (examplePath.startsWith('/')) {
-			return `/src${examplePath}`;
-		} else {
-			return `/src/routes${currentPath}/${examplePath}`;
-		}
-	}
-
 	// Get example from context (eagerly loaded by layout)
 	// Cache context at init time — getContext() must be called during component initialization
 	const examplesCtx = examples.get();
@@ -96,7 +78,11 @@
 		let next: typeof example;
 		if (path) {
 			// Path-based example
-			const resolvedPath = resolveExamplePath(path, page.url.pathname);
+			const resolvedPath = resolveExamplePath(
+				path,
+				page.url.pathname,
+				page.url.pathname.startsWith('/docs/guides/') ? 'guides' : 'components'
+			);
 			next = current?.['__path__']?.[resolvedPath];
 		} else if (component && name) {
 			// Component/name-based example

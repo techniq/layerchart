@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { pivotWider } from 'layerchart';
 
-	import Code from '$lib/components/Code.svelte';
-	import Json from '$lib/components/Json.svelte';
+	import { Code, Json } from '@layerstack/docs/components';
 	import { longData } from '$lib/utils/data';
 </script>
 

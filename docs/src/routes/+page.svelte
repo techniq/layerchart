@@ -3,8 +3,8 @@
 	import Stats from '$lib/components/Stats.svelte';
 	import { cls } from '@layerstack/tailwind';
 
-	import ExampleLink from '$lib/components/ExampleLink.svelte';
-	import Search from './docs/search/Search.svelte';
+	import { ExampleLink, Search } from '@layerstack/docs/components';
+	import { quickLinks } from '$lib/searchQuickLinks';
 
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
@@ -176,7 +176,7 @@
 				{label}
 			</a>
 		{/each}
-		<Search hideInput />
+		<Search hideInput showExampleScreenshots defaultOptions={quickLinks} />
 	</div>
 
 	<div class="flex items-center justify-end gap-2 w-60">

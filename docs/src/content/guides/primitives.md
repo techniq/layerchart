@@ -5,7 +5,7 @@ order: 3
 
 <script lang="ts">
   import { allComponents } from 'content-collections';
-  import ComponentLink from '$lib/components/ComponentLink.svelte';
+  import { ComponentLink } from '@layerstack/docs/components';
 
   let primitiveComponents = allComponents.filter(c => c.category === 'primitives');
 </script>
@@ -32,6 +32,7 @@ LayerChart does provide extended support than what is natively possible in some 
 {#each primitiveComponents as component}
   <ComponentLink
     component={component.name}
+    example={component.defaultExample}
     aspect="screenshot"
     supportedLayers={component.layers}
   />

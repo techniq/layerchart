@@ -1,4 +1,4 @@
-import { extractTocFromMarkdown } from '$lib/markdown/toc';
+import { extractTocFromMarkdown } from '@layerstack/docs/markdown';
 
 export const load = async () => {
 	const page = await import('./+page.md?raw');

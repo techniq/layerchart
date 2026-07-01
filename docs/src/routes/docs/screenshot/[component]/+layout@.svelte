@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { examples } from '$lib/context.js';
+	import { examples } from '@layerstack/docs/context';
 
 	let { data, children } = $props();
 

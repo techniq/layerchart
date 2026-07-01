@@ -1,4 +1,4 @@
-import { loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
+import { loadExamplesFromMarkdown } from '$lib/content.js';
 
 export const load = async ({ url }) => {
 	let examples = {};

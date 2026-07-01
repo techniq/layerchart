@@ -3,10 +3,10 @@
 	import { cls } from '@layerstack/tailwind';
 
 	import { page } from '$app/state';
-	import { examples } from '$lib/context.js';
-	import Search from './search/Search.svelte';
+	import { examples } from '@layerstack/docs/context';
+	import { quickLinks } from '$lib/searchQuickLinks';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
-	import TableOfContents from '$lib/components/TableOfContents.svelte';
+	import { Search, TableOfContents } from '@layerstack/docs/components';
 	import LucideAlignLeft from '~icons/lucide/align-left';
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
@@ -70,7 +70,7 @@
 	</a>
 
 	<div class="grow text-end max-lg:ml-10 sm:text-start">
-		<Search />
+		<Search showExampleScreenshots defaultOptions={quickLinks} />
 	</div>
 
 	<div class="flex items-center gap-2">

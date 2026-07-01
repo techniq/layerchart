@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { kde } from 'layerchart';
 
-	import Code from '$lib/components/Code.svelte';
-	import Json from '$lib/components/Json.svelte';
+	import { Code, Json } from '@layerstack/docs/components';
 
 	const values = [10, 15, 18, 20, 22, 25, 28, 30, 32, 35, 37, 40, 42, 45, 48, 50, 55, 58, 60];
 	const result = kde(values, { thresholds: 10 });

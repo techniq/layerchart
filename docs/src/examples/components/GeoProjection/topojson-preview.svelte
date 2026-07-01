@@ -31,7 +31,7 @@
 	} from 'svelte-ux';
 
 	import TilesetField from '$lib/components/controls/GeoTileControls.svelte';
-	import Json from '$lib/components/Json.svelte';
+	import { Json } from '@layerstack/docs/components';
 
 	let topojsonStr = $state('');
 	let topojson = $state<Topology<Record<string, GeometryCollection<{ name: string }>>>>();

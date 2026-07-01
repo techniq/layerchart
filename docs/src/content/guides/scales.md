@@ -7,7 +7,7 @@ order: 5
   import { scaleLinear } from 'd3-scale';
   import { format } from '@layerstack/utils';
 
-  import Code from '$lib/components/Code.svelte';
+  import { Code } from '@layerstack/docs/components';
 	import DomainRangeChart from './scales/DomainRangeChart.svelte';
 
   let domain = $state([100, 400]);

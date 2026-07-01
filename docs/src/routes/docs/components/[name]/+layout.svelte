@@ -2,10 +2,10 @@
 	import { getSettings } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
-	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
+	import { LoadingPlaceholder } from '@layerstack/docs/components';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
-	import { examples } from '$lib/context.js';
+	import { examples } from '@layerstack/docs/context';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { page } from '$app/state';
 

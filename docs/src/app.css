@@ -3,8 +3,10 @@
 @import '@layerstack/tailwind/utils.css';
 /* @import '@layerstack/tailwind/themes/basic.css'; */
 @import '@layerstack/tailwind/themes/all.css';
+@import '@layerstack/docs/styles.css';
 
 @source '../node_modules/svelte-ux/dist';
+@source '../node_modules/@layerstack/docs/dist';
 
 @theme {
 	--breakpoint-xs: 30rem; /* 480px */

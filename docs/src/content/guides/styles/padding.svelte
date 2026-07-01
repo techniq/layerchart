@@ -4,7 +4,7 @@
 	import { flatGroup } from 'd3-array';
 	import circleCheck from '~icons/lucide/circle-check';
 	import circleX from '~icons/lucide/circle-x';
-	import Code from '$lib/components/Code.svelte';
+	import { Code } from '@layerstack/docs/components';
 	import { getPenguins } from '$lib/data.remote';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 

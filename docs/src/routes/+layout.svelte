@@ -7,7 +7,7 @@
 	import { dev } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import { preparePageTransition } from '$lib/page-transitions';
+	import { preparePageTransition } from '@layerstack/docs/page-transitions';
 	import '@fontsource-variable/inter';
 	import '../app.css';
 
