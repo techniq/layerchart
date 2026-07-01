@@ -169,6 +169,49 @@ Size in pixels of the invisible drag handles on the edges of the selection. Defa
 - **Double-click on the selection** — resets the brush (`reset()`)
 - **Double-click on a handle** — extends that edge to the domain boundary
 
+## Constraints
+
+Limit the selection size with `minExtent` / `maxExtent` (`{ x?, y? }`). For continuous scales the value is in domain units — e.g. milliseconds for a time scale — and for band/point scales it's the number of categories. The edge you aren't dragging is held fixed, so creating or resizing past the limit pulls the moving edge back rather than snapping the whole selection.
+
+A common use is a "focus + context" view where the detail chart should never show more than a fixed window, no matter how much data is loaded — here the brush is capped at 90 days:
+
+```svelte
+<!-- Never show more than 90 days at once -->
+<Chart {data} brush={{ maxExtent: { x: 90 * 24 * 60 * 60 * 1000 } }}>
+```
+
+:example{ component="BrushContext" name="max-window" }
+
+`minExtent` and `maxExtent` can be combined to keep the selection within a range:
+
+```svelte
+<Chart {data} brush={{ minExtent: { x: 30 * DAY }, maxExtent: { x: 180 * DAY } }}>
+```
+
+:example{ component="BrushContext" name="min-max-extent" }
+
+For anything the extents can't express, pass a `constrain` function. It receives the candidate `{ x, y }` selection and returns a corrected one, and runs after `min/maxExtent` on every update (create, resize, move, and programmatic changes) — for example, snapping edges to month boundaries:
+
+```svelte
+<Chart
+	{data}
+	brush={{
+		constrain: ({ x, y }) => ({
+			x: [timeMonth.floor(x[0]), timeMonth.ceil(x[1])],
+			y
+		})
+	}}
+/>
+```
+
+::note
+Snapping can round an edge _past_ the first/last data point, but by default the selection is kept within the domain (`constrainToDomain`, on by default), so `constrain` output is clamped back to the edge automatically. Set `constrainToDomain: false` to opt out and allow the selection to extend beyond the domain.
+::
+
+:example{ component="BrushContext" name="snap-to-month" }
+
+This mirrors the `scaleExtent` / `translateExtent` / `constrain` options on [transform](/docs/guides/transform). Because the limits are enforced inside the brush state, the selection never momentarily holds an out-of-range value.
+
 ## Styling
 
 Customize the brush appearance with the `classes` prop:

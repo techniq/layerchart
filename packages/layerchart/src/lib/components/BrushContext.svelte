@@ -1,7 +1,12 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
 
-  import { BrushState, type BrushDomainType } from '$lib/states/brush.svelte.js';
+  import {
+    BrushState,
+    type BrushDomainType,
+    type BrushExtent,
+    type BrushSelection,
+  } from '$lib/states/brush.svelte.js';
 
   type BrushEventPayload = {
     brush: BrushState;
@@ -40,6 +45,34 @@
      * When provided, the brush reactively updates to reflect this value.
      */
     y?: BrushDomainType;
+
+    /**
+     * Minimum selection size per axis. In domain units for continuous scales (e.g. milliseconds
+     * for time scales), or number of categories for band/point scales.
+     */
+    minExtent?: BrushExtent;
+
+    /**
+     * Maximum selection size per axis, e.g. `{ x: 30 * 24 * 60 * 60 * 1000 }` to cap a time-scale
+     * brush at 30 days. In domain units for continuous scales, or number of categories for band scales.
+     */
+    maxExtent?: BrushExtent;
+
+    /**
+     * Custom constraint function, called after `min/maxExtent` on every selection update. Receives
+     * the candidate `{ x, y }` domain selection and returns a corrected one (e.g. snapping edges to
+     * boundaries). Mirrors `TransformContext`'s `constrain`.
+     */
+    constrain?: (selection: BrushSelection) => BrushSelection;
+
+    /**
+     * Keep the selection within the domain extent. Pointer gestures already clamp to the domain;
+     * this additionally clamps `constrain` output (e.g. a snap that rounds past the first/last
+     * value). Set `false` to allow `constrain` to place edges outside the domain.
+     *
+     * @default true
+     */
+    constrainToDomain?: boolean;
 
     /**
      * Disable brush
@@ -108,6 +141,10 @@
     handleSize = 5,
     clickToReset = true,
     disabled = false,
+    minExtent,
+    maxExtent,
+    constrain,
+    constrainToDomain = true,
     range = {},
     handle = {},
     classes = {},
@@ -119,11 +156,27 @@
 
   let rootEl = $state<HTMLElement>();
 
-  const brushState = new BrushState(ctx, { x, y, axis });
+  const brushState = new BrushState(ctx, {
+    x,
+    y,
+    axis,
+    minExtent,
+    maxExtent,
+    constrain,
+    constrainToDomain,
+  });
   stateProp = brushState;
 
   $effect(() => {
     brushState.handleSize = handleSize;
+  });
+
+  // Keep constraint config in sync when props change reactively
+  $effect(() => {
+    brushState.minExtent = minExtent;
+    brushState.maxExtent = maxExtent;
+    brushState.constrain = constrain;
+    brushState.constrainToDomain = constrainToDomain;
   });
 
   const logger = new Logger('BrushContext');
