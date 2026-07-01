@@ -535,4 +535,19 @@
   .lc-root-container :global(*) {
     box-sizing: border-box;
   }
+
+  /*
+   * Treat the chart as an interactive widget rather than selectable text: dragging to brush,
+   * pan, or zoom should never select axis labels or surrounding page content. Text selection
+   * anchors at the pointerdown target, so disabling it on the root (it inherits to descendants)
+   * stops any in-chart gesture from starting a selection.
+   *
+   * Overridable via the `--lc-user-select` custom property — set it to `text` (on the chart, an
+   * ancestor, or a subtree) to re-enable selection where needed. Individual selectable regions
+   * can also just set `user-select: text` on themselves (it overrides the inherited value).
+   */
+  .lc-root-container {
+    -webkit-user-select: var(--lc-user-select, none);
+    user-select: var(--lc-user-select, none);
+  }
 </style>
