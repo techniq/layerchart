@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.0.1
+
+### Patch Changes
+
+- fix(styles): Declare CSS cascade layer order so `components` reliably wins over `base` in production builds. Non-Tailwind consumers can `@import 'layerchart/core.css'` (included by framework presets). ([#883](https://github.com/techniq/layerchart/pull/883))
+
+- fix(styles): Normalize mistyped `@layer component` → `@layer components` in Tooltip and Layer components. ([#883](https://github.com/techniq/layerchart/pull/883))
+
 ## 2.0.0
 
 LayerChart 2.0 rebuilds the library on **Svelte 5** (runes & snippets) and **no longer requires Tailwind CSS** — components ship with their own default styles, with Tailwind 4 now optional. It also streamlines several component and context APIs for consistency. Upgrading from v1? Start with the **[v1 → v2 migration guide](https://layerchart.com/docs/guides/migrations/v1-to-v2)**.
