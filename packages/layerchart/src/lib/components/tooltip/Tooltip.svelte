@@ -492,7 +492,7 @@
 {/if}
 
 <style>
-  @layer component {
+  @layer components {
     :where(.lc-tooltip-root) {
       position: absolute;
       z-index: 50;

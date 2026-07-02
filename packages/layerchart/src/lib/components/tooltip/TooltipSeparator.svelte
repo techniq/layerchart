@@ -22,7 +22,7 @@
 </div>
 
 <style>
-  @layer component {
+  @layer components {
     :where(.lc-tooltip-separator) {
       height: 1px;
       border-radius: 4px;

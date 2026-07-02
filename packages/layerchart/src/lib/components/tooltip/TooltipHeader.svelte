@@ -108,7 +108,7 @@
 </div>
 
 <style>
-  @layer component {
+  @layer components {
     :where(.lc-tooltip-header) {
       font-weight: 600;
       white-space: nowrap;

@@ -77,7 +77,7 @@
 {/if}
 
 <style>
-  @layer component {
+  @layer components {
     :global(:where(.lc-debug-frame)) {
       --fill-color: color-mix(in oklab, var(--color-danger) 10%, transparent);
     }
