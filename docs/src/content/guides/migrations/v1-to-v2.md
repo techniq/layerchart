@@ -401,14 +401,16 @@ Standalone context getters removed — use `getChartContext()` instead:
 
 Bind and property renames:
 
-````svelte diff
+```svelte diff
 - <BrushContext bind:brushContext>
 + <BrushContext bind:state>
 
 - <TransformContext bind:transformContext>
 + <TransformContext bind:state>
 
-- import { getRenderContext } from 'layerchart';+ import { getLayerContext } from 'layerchart';```
+- import { getRenderContext } from 'layerchart';
++ import { getLayerContext } from 'layerchart';
+```
 
 See the [state guide](/docs/guides/state) for the new architecture.
 
@@ -452,4 +454,3 @@ These new defaults work with categorical data and don't require sorted data. See
 | `supportedContexts`         | `layers`                           | Component prop           |
 | `resetOnEnd`                | `e.brush.reset()` in onBrushEnd    | Brush                    |
 | `ignoreResetClick`          | `clickToReset`                     | Brush                    |
-````
