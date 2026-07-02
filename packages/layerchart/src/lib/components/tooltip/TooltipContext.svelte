@@ -818,7 +818,7 @@
 </div>
 
 <style>
-  @layer component {
+  @layer components {
     :where(.lc-tooltip-context-container) {
       position: absolute;
     }

@@ -23,7 +23,7 @@
 </div>
 
 <style>
-  @layer component {
+  @layer components {
     :where(.lc-tooltip-list) {
       display: grid;
       grid-template-columns: 1fr auto;

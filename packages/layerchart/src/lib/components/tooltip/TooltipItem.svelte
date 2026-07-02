@@ -168,7 +168,7 @@
 </div>
 
 <style>
-  @layer component {
+  @layer components {
     :where(.lc-tooltip-item-root) {
       display: contents;
     }

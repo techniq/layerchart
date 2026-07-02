@@ -346,6 +346,30 @@ Many components support data-driven colors via the `c` (color) prop on `Chart`, 
 
 :::
 
+## CSS layers
+
+LayerChart scopes its default styles into [CSS cascade layers](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) (`base` and `components`) so your own styles can reliably override them. Cascade-layer precedence is determined by the order in which each layer name is _first declared_ — not by where the rules appear — and later layers win. LayerChart relies on `base` being declared before `components` so that component defaults win over base defaults.
+
+If you use Tailwind, `@import 'tailwindcss'` emits the canonical `@layer theme, base, components, utilities;` order for you, so there's nothing to do. Likewise, the [framework presets](#third-party-framework-colors) (`layerchart/shadcn-svelte.css`, `layerchart/skeleton-4.css`, etc.) already include it.
+
+:::note
+**If you're not using Tailwind or a framework preset, declare the layer order explicitly.** Without it, the order falls to whatever sequence your bundler happens to emit the component styles in — which can differ between dev and production. A common symptom is `base` rules incorrectly taking precedence over `components` rules _only in a production build_.
+
+Import LayerChart's core stylesheet once, before using LayerChart:
+
+```css title="app.css"
+@import 'layerchart/core.css';
+```
+
+Or declare the order yourself:
+
+```css title="app.css"
+@layer theme, base, components, utilities;
+```
+
+An empty `@layer` statement just registers the priority order; the actual rules slot into it regardless of load order.
+:::
+
 ## Padding
 
 Chart padding controls the space between the chart edges and the data area. Use the `padding` prop on `Chart` to set `top`, `bottom`, `left`, and `right` values individually, or pass a single number to apply uniform padding on all sides.

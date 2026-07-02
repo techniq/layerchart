@@ -1,3 +1,5 @@
+@import './core.css';
+
 .lc-root-container {
   --color-primary: var(--color-primary-500);
 
