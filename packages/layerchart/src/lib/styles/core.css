@@ -1,0 +1,17 @@
+/*
+  LayerChart core styles.
+
+  Declares the cascade layer order LayerChart's component styles rely on.
+  Precedence is determined by the order in which each layer name is *first*
+  declared (later layers win), so this must be established up front — otherwise
+  the order falls to whatever sequence the bundler emits component styles in,
+  which can differ between dev and production builds (e.g. `base` incorrectly
+  overriding `components` only in production).
+
+  When using Tailwind this is redundant (Tailwind emits the same order via
+  `@import 'tailwindcss'`) but harmless — re-declaring an existing order is a
+  no-op. Non-Tailwind consumers should import this file (`layerchart/core.css`)
+  before using LayerChart. The framework presets (shadcn-svelte, skeleton,
+  daisyui) import it for you.
+*/
+@layer theme, base, components, utilities;
