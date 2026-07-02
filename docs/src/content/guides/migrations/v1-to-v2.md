@@ -36,21 +36,30 @@ See the [styles guide](/docs/guides/styles) for details.
 
 ### New Components
 
-| Component                                                                                                                                                           | Description                                                             |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| [`ArcChart`](/docs/components/ArcChart)                                                                                                                             | Simplified arc/donut chart                                              |
-| [`Connector`](/docs/components/Connector)                                                                                                                           | Connection lines between elements                                       |
-| [`Layer`](/docs/components/Layer)                                                                                                                                   | Easy switch between Svg, Canvas, and Html [layers](/docs/guides/layers) |
-| [`Path`](/docs/components/Path)                                                                                                                                     | Low-level path primitive (extracted from Spline)                        |
+| Component                                                                                                                                                          | Description                                                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [`ArcChart`](/docs/components/ArcChart)                                                                                                                           | Simplified arc/donut chart                                              |
+| [`Layer`](/docs/components/Layer)                                                                                                                                 | Easy switch between Svg, Canvas, and Html [layers](/docs/guides/layers) |
+| [`Path`](/docs/components/Path)                                                                                                                                   | Low-level path primitive (extracted from Spline)                        |
 | [`AnnotationLine`](/docs/components/AnnotationLine) / [`AnnotationPoint`](/docs/components/AnnotationPoint) / [`AnnotationRange`](/docs/components/AnnotationRange) | Annotation system                                                       |
-| [`Ellipse`](/docs/components/Ellipse)                                                                                                                               | Ellipse primitive                                                       |
-| [`Polygon`](/docs/components/Polygon)                                                                                                                               | Polygon primitive with custom shapes                                    |
-| [`BoxPlot`](/docs/components/BoxPlot)                                                                                                                               | Box-and-whisker plot (quartiles, whiskers, outliers)                    |
-| [`Violin`](/docs/components/Violin)                                                                                                                                 | Violin plot (KDE density curve with optional box/median)                |
-| [`Cell`](/docs/components/Cell)                                                                                                                                     | Heatmap/matrix cells                                                    |
-| [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon)                                                                                             | Chord diagrams                                                          |
-| [`Image`](/docs/components/Image)                                                                                                                                   | Image rendering in charts                                               |
-| [`Vector`](/docs/components/Vector)                                                                                                                                 | Vector/arrow mark                                                       |
+| [`Ellipse`](/docs/components/Ellipse)                                                                                                                             | Ellipse primitive                                                       |
+| [`Polygon`](/docs/components/Polygon)                                                                                                                             | Polygon primitive with custom shapes                                    |
+| [`BoxPlot`](/docs/components/BoxPlot)                                                                                                                             | Box-and-whisker plot (quartiles, whiskers, outliers)                    |
+| [`Violin`](/docs/components/Violin)                                                                                                                               | Violin plot (KDE density curve with optional box/median)                |
+| [`Density`](/docs/components/Density)                                                                                                                             | 2D kernel density estimation contours from scatter data                |
+| [`Contour`](/docs/components/Contour)                                                                                                                             | Isolines / filled contour bands from scalar fields                      |
+| [`Raster`](/docs/components/Raster)                                                                                                                               | Pixel-based heatmap from grids, functions, or scatter data              |
+| [`Cell`](/docs/components/Cell)                                                                                                                                   | Heatmap/matrix cells                                                    |
+| [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon)                                                                                           | Chord diagrams                                                          |
+| [`Image`](/docs/components/Image)                                                                                                                                 | Image rendering in charts                                               |
+| [`Vector`](/docs/components/Vector)                                                                                                                               | Vector / arrow mark                                                     |
+| [`Trail`](/docs/components/Trail)                                                                                                                                 | Variable-width line                                                     |
+| [`Dodge`](/docs/components/Dodge)                                                                                                                                 | Deterministic non-overlapping layout (beeswarm, labels)                 |
+| [`Waffle`](/docs/components/Waffle)                                                                                                                               | Countable-cell (waffle) visualizations                                  |
+| [`ArcLabel`](/docs/components/ArcLabel)                                                                                                                           | Text labels positioned along / around arc segments                      |
+| [`CircleLegend`](/docs/components/CircleLegend)                                                                                                                   | Nested-circle legend for radius (`rScale`) values                       |
+| [`GeoLegend`](/docs/components/GeoLegend)                                                                                                                         | Scale-bar legend showing real-world distance for a projection           |
+| [`GeoRaster`](/docs/components/GeoRaster)                                                                                                                         | Reproject raster imagery onto any d3-geo projection                     |
 
 ### Annotation Integration
 
@@ -132,6 +141,12 @@ See the [transform guide](/docs/guides/transform) and [brush guide](/docs/guides
 import { downloadImage, downloadSvg, getChartImageBlob, getChartSvgString } from 'layerchart';
 ```
 
+For server-side rendering, `layerchart/server` exposes `renderChart()` to render a chart to a PNG/JPEG image:
+
+```ts
+import { renderChart } from 'layerchart/server';
+```
+
 ### Geo Projection Support
 
 - Primitives (Circle, Rect, etc.) support geo projection
@@ -194,6 +209,24 @@ New `settings` context for configuring global defaults like default layer type a
 - `PeriodTypeCode` strings for simplified date formatting (ex. `format="day"`)
 - `applyLanes()` util for densely packing timelines
 
+### Per-Layer Imports & `ChartCore`
+
+Layer-agnostic components auto-detect the surrounding `<Svg>`, `<Canvas>`, or `<Html>` layer and bundle every render path. If you're committed to a single layer, new sub-path exports ship a smaller, layer-specific variant:
+
+```ts
+// Default: agnostic, dispatches at runtime — works in any layer
+import { Rect, Circle, Text, LineChart } from 'layerchart';
+
+// SVG-only — skips canvas + html branches
+import { Rect, Circle, Text, LineChart } from 'layerchart/svg';
+
+// Canvas-only / HTML-only
+import { Rect, Circle, Text } from 'layerchart/canvas';
+import { Rect, Circle, Text } from 'layerchart/html';
+```
+
+This is purely additive — existing `'layerchart'` imports are unchanged. A new `<ChartCore>` component (exported from each sub-path) provides the chart context, sizing, brush, transform, and tooltip plumbing without pulling in the `Layer`/`Axis`/`Grid`/`Rule`/`Highlight` chain — useful for geo maps and custom layouts (~34–39% smaller than `<Chart>`). See the [bundle size guide](/docs/guides/bundle-size).
+
 ## Foundational Changes
 
 ### Svelte 5
@@ -247,6 +280,27 @@ The following transitive dependencies have also been removed:
 - <LineChart renderContext="canvas">
 + <LineChart layer="canvas">
 ```
+
+#### `get*Props` helpers removed from `marks` / `axis` snippets
+
+Simplified charts (`BarChart`, `LineChart`, `AreaChart`, `ScatterChart`) previously exposed helper functions like `getBarsProps()`, `getSplineProps()`, `getAreaProps()`, `getPointsProps()`, and `getAxisProps()` as parameters of the `marks` / `axis` snippets. These are gone — marks are now series-aware via `seriesKey` and resolve their own data, accessors, and styling from the chart context.
+
+```svelte diff
+- {#snippet marks({ visibleSeries, getBarsProps })}
+-   {#each visibleSeries as s, i (s.key)}
+-     <Bars {...getBarsProps(s, i)} />
+-   {/each}
+- {/snippet}
++ {#snippet marks({ context })}
++   {#each context.series.visibleSeries as s (s.key)}
++     <Bars seriesKey={s.key} {...s.props} />
++   {/each}
++ {/snippet}
+```
+
+The `axis` snippet no longer receives `getAxisProps` either — use `placement` directly (`<Axis placement="bottom" />`, `<Axis placement="left" />`). Per-series overrides move to the `props` field of [series definitions](/docs/guides/series).
+
+> **Note:** chart-level `props` (e.g. `props={{ area: { curve: curveNatural } }}`) are **not** applied when you supply a custom `marks` snippet — move those onto the mark or into series `props`. Also, the `points` snippet only overrides point rendering, whereas `marks` replaces the entire chart (lines + points), so don't rename a `points` snippet to `marks`. See the [state-refactor guide](/docs/guides/migrations/state-refactor) for the full details.
 
 ### Axis
 
@@ -364,8 +418,13 @@ The `selected` prop has been removed from Treemap.
 
 ### GeoContext → GeoProjection
 
-````svelte diff
-- import { GeoContext } from 'layerchart';+ import { GeoProjection } from 'layerchart/geo';```
+```svelte diff
+- import { GeoContext } from 'layerchart';
++ import { GeoProjection } from 'layerchart';
+
+- <GeoContext projection={geoAlbersUsa}>
++ <GeoProjection projection={geoAlbersUsa}>
+```
 
 ### Tooltip prop on Arc, Pie, Calendar, GeoPath
 
@@ -374,7 +433,38 @@ Simplified from config object to boolean:
 ```svelte diff
 - <Arc tooltipContext={{ mode: 'item' }} />
 + <Arc tooltip />
-````
+```
+
+### Custom tooltips: data model changed
+
+If you build custom tooltips that read from the tooltip context directly, the old recharts-style `payload` array has been replaced with `tooltip.data` (the raw hovered datum) and `tooltip.series` (the per-series entries) on the chart context:
+
+```svelte diff
+- import { getTooltipContext } from 'layerchart';
+- const tooltipCtx = getTooltipContext()
++ import { getChartContext } from 'layerchart';
++ const ctx = getChartContext()
+
+  // x-axis value (e.g. a Date)
+- item.label
++ ctx.x(ctx.tooltip.data)
+
+  // series name
+- item.name
++ item.label
+
+  // raw data object
+- item.payload
++ ctx.tooltip.data
+
+  // per-item color
+- item.payload.color
++ item.config?.color
+
+  // iterate over series
+- tooltipCtx.payload
++ ctx.tooltip.series
+```
 
 ### Brush API redesign
 
@@ -395,7 +485,9 @@ See the [brush guide](/docs/guides/brush) for the new `BrushState` API. Removed 
 Standalone context getters removed — use `getChartContext()` instead:
 
 ```svelte diff
-- import { getTooltipContext } from 'layerchart';+ import { getChartContext } from 'layerchart';+ const chart = getChartContext()
+- import { getTooltipContext } from 'layerchart';
++ import { getChartContext } from 'layerchart';
++ const chart = getChartContext()
 + // chart.tooltip, chart.brushState, chart.transformState
 ```
 
@@ -412,7 +504,28 @@ Bind and property renames:
 + import { getLayerContext } from 'layerchart';
 ```
 
+The `ChartContextValue` type has also been renamed to `ChartState`:
+
+```svelte diff
+- import { type ChartContextValue } from 'layerchart';
++ import { type ChartState } from 'layerchart';
+
+- let context = $state<ChartContextValue>()
++ let context = $state<ChartState>()
+```
+
 See the [state guide](/docs/guides/state) for the new architecture.
+
+### Style props now camelCase
+
+Primitive and mark style props use camelCase names rather than the hyphenated SVG attribute names:
+
+```svelte diff
+- <Area fill-opacity={0.4} />
++ <Area fillOpacity={0.4} />
+```
+
+The same applies to `stroke-width` → `strokeWidth`, `stroke-opacity` → `strokeOpacity`, etc. (`class` and inline `style` are unaffected).
 
 ### Default tooltip modes changed
 
@@ -454,3 +567,11 @@ These new defaults work with categorical data and don't require sorted data. See
 | `supportedContexts`         | `layers`                           | Component prop           |
 | `resetOnEnd`                | `e.brush.reset()` in onBrushEnd    | Brush                    |
 | `ignoreResetClick`          | `clickToReset`                     | Brush                    |
+| `onReset`                   | check `brush.active` in onBrushEnd | Brush                    |
+| `get*Props(s, i)`           | `seriesKey={s.key}`                | Simplified chart marks   |
+| `getAxisProps('x')`         | `<Axis placement="bottom" />`      | Simplified chart axis    |
+| `ChartContextValue`         | `ChartState`                       | TypeScript type          |
+| `fill-opacity`              | `fillOpacity`                      | Primitive/mark prop      |
+| `item.payload`              | `ctx.tooltip.data`                 | Custom tooltip           |
+| `tooltipCtx.payload`        | `ctx.tooltip.series`               | Custom tooltip           |
+| `Connector`                 | `Link`                             | Component merged         |
