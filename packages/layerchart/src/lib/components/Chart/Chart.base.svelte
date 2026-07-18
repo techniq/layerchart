@@ -425,6 +425,27 @@
       },
     };
   });
+
+  // Lazy-load interaction contexts into state rather than nested `{#await import()}`
+  // blocks in the template.  Nested awaits (and awaits that render a shared snippet
+  // across their pending/then branches) fail to resolve under Svelte's experimental
+  // `async` compiler mode, leaving the chart blank when `brush` and `transform` are
+  // combined.  Loading via `$effect` + `{#if}` sidesteps `{#await}` entirely.  An
+  // `$effect` (not `$derived.by`) is used deliberately: awaiting an `import()` inside
+  // a `$derived` would require consumers to compile with `experimental.async`.
+  let TransformContext = $state<typeof import('../TransformContext.svelte').default>();
+  let BrushContext = $state<typeof import('../BrushContext.svelte').default>();
+
+  $effect(() => {
+    if (transform && !TransformContext) {
+      import('../TransformContext.svelte').then((m) => (TransformContext = m.default));
+    }
+  });
+  $effect(() => {
+    if (brush && !BrushContext) {
+      import('../BrushContext.svelte').then((m) => (BrushContext = m.default));
+    }
+  });
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -445,7 +466,7 @@
     {...restProps}
   >
     {#key chartState.isMounted}
-      {#if transform}
+      {#if transform && TransformContext}
         <!-- Lazy-load TransformContext only when transform is enabled -->
         {@const {
           domainExtent: _de,
@@ -455,30 +476,26 @@
           translateExtent: _te,
           ...transformProps
         } = transform}
-        {#await import('../TransformContext.svelte')}
+        <!-- svelte-ignore ownership_invalid_binding -->
+        <TransformContext
+          bind:state={chartState.transformState}
+          mode={transform.mode ?? 'none'}
+          initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
+          initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
+          {processTranslate}
+          {...transformProps}
+          scaleExtent={resolvedScaleExtent}
+          translateExtent={resolvedTranslateExtent}
+          constrain={composedConstrain}
+          disablePointer={brush === true ||
+            (typeof brush === 'object' && !brush.disabled) ||
+            transform.disablePointer}
+          {ondragstart}
+          {onTransform}
+          {ondragend}
+        >
           {@render inner()}
-        {:then { default: TransformContext }}
-          <!-- svelte-ignore ownership_invalid_binding -->
-          <TransformContext
-            bind:state={chartState.transformState}
-            mode={transform.mode ?? 'none'}
-            initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
-            initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
-            {processTranslate}
-            {...transformProps}
-            scaleExtent={resolvedScaleExtent}
-            translateExtent={resolvedTranslateExtent}
-            constrain={composedConstrain}
-            disablePointer={brush === true ||
-              (typeof brush === 'object' && !brush.disabled) ||
-              transform.disablePointer}
-            {ondragstart}
-            {onTransform}
-            {ondragend}
-          >
-            {@render inner()}
-          </TransformContext>
-        {/await}
+        </TransformContext>
       {:else}
         {@render inner()}
       {/if}
@@ -495,8 +512,9 @@
 {/snippet}
 
 {#snippet inner()}
-  {#if brush}
-    {#await import('../BrushContext.svelte')}
+  {#if brush && BrushContext}
+    <!-- svelte-ignore ownership_invalid_binding -->
+    <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
       <!-- svelte-ignore ownership_invalid_binding -->
       <TooltipContext
         onclick={onTooltipClick}
@@ -505,19 +523,7 @@
       >
         {@render body()}
       </TooltipContext>
-    {:then { default: BrushContext }}
-      <!-- svelte-ignore ownership_invalid_binding -->
-      <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
-        <!-- svelte-ignore ownership_invalid_binding -->
-        <TooltipContext
-          onclick={onTooltipClick}
-          {...getObjectOrNull(tooltipContext)}
-          bind:state={chartState.tooltipState}
-        >
-          {@render body()}
-        </TooltipContext>
-      </BrushContext>
-    {/await}
+    </BrushContext>
   {:else}
     <!-- svelte-ignore ownership_invalid_binding -->
     <TooltipContext
