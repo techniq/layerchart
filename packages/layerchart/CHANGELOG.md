@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.2
+
+### Patch Changes
+
+- fix(Chart): Fix chart rendering blank when `brush` and `transform` are combined under Svelte's experimental async mode by lazy-loading interaction contexts via `$effect`/`{#if}` instead of nested `{#await import()}`. ([#885](https://github.com/techniq/layerchart/pull/885))
+
 ## 2.0.1
 
 ### Patch Changes
