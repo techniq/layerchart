@@ -18,6 +18,7 @@
 
 	import { examples } from '@layerstack/docs/context';
 	import { resolveExamplePath } from '@layerstack/docs/content';
+	import { exampleViewTransitionName } from '@layerstack/docs/utils';
 	import { untrack } from 'svelte';
 	import { Code, Json } from '@layerstack/docs/components';
 
@@ -141,7 +142,9 @@
 	// This prevents conflicts with ExampleScreenshot on listing pages
 	const isDetailPage = $derived(page.params.example === name);
 	const viewTransitionName = $derived(
-		isDetailPage && resolvedComponent && name ? `lc-${resolvedComponent}-${name}` : undefined
+		isDetailPage && resolvedComponent && name
+			? exampleViewTransitionName(resolvedComponent, name)
+			: undefined
 	);
 
 	let canResize = $derived.by(() => {
