@@ -6,7 +6,10 @@
   --color-surface-100: var(--color-surface-50-950);
   --color-surface-200: var(--color-surface-100);
   --color-surface-300: var(--color-surface-200);
-  --color-surface-content: var(--typo-base--color-dark);
+  --color-surface-content: light-dark(
+    var(--typo-base--color-light),
+    var(--typo-base--color-dark)
+  );
 
   html.dark & {
     --color-surface-100: var(--color-surface-700);
