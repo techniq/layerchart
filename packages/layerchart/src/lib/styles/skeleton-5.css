@@ -15,6 +15,6 @@
     --color-surface-100: var(--color-surface-700);
     --color-surface-200: var(--color-surface-800);
     --color-surface-300: var(--color-surface-900);
-    --color-surface-content: var(--typo-base--color-light);
+    --color-surface-content: var(--typo-base--color-dark);
   }
 }
