@@ -1,0 +1,36 @@
+# Folded/collapsed stacks — sampled CPU profile of a Node.js HTTP request.
+# Format: semicolon-separated frames (leaf last), whitespace, then self samples.
+server.emit('request') 2
+server.emit('request');app.handle 4
+server.emit('request');app.handle;router.handle 6
+server.emit('request');app.handle;router.handle;authenticate 5
+server.emit('request');app.handle;router.handle;authenticate;jwt.verify 30
+server.emit('request');app.handle;router.handle;authenticate;jwt.verify;crypto.createHmac 80
+server.emit('request');app.handle;router.handle;authenticate;jwt.verify;crypto.createHmac;OpenSSL.HMAC 140
+server.emit('request');app.handle;router.handle;authenticate;jwt.verify;Buffer.compare 20
+server.emit('request');app.handle;router.handle;authenticate;session.load 8
+server.emit('request');app.handle;router.handle;authenticate;session.load;redis.get 15
+server.emit('request');app.handle;router.handle;authenticate;session.load;redis.get;net.read 90
+server.emit('request');app.handle;router.handle;UsersController.index 10
+server.emit('request');app.handle;router.handle;UsersController.index;User.findAll 6
+server.emit('request');app.handle;router.handle;UsersController.index;User.findAll;db.query 12
+server.emit('request');app.handle;router.handle;UsersController.index;User.findAll;db.query;pg.Connection.query 20
+server.emit('request');app.handle;router.handle;UsersController.index;User.findAll;db.query;pg.Connection.query;net.write 35
+server.emit('request');app.handle;router.handle;UsersController.index;User.findAll;db.query;pg.Connection.query;net.read 210
+server.emit('request');app.handle;router.handle;UsersController.index;User.findAll;db.query;pg.Connection.query;net.read;parseRows 120
+server.emit('request');app.handle;router.handle;UsersController.index;view.render 14
+server.emit('request');app.handle;router.handle;UsersController.index;view.render;template.compile 25
+server.emit('request');app.handle;router.handle;UsersController.index;view.render;template.compile;lexer.tokenize 70
+server.emit('request');app.handle;router.handle;UsersController.index;view.render;template.compile;codegen 95
+server.emit('request');app.handle;router.handle;UsersController.index;view.render;template.exec 40
+server.emit('request');app.handle;router.handle;UsersController.index;view.render;template.exec;escapeHtml 60
+server.emit('request');app.handle;router.handle;UsersController.index;view.render;template.exec;JSON.stringify 55
+server.emit('request');app.handle;router.handle;UsersController.index;response.json 8
+server.emit('request');app.handle;router.handle;UsersController.index;response.json;JSON.stringify 75
+server.emit('request');app.handle;router.handle;logRequest 4
+server.emit('request');app.handle;router.handle;logRequest;winston.write 20
+server.emit('request');app.handle;router.handle;logRequest;winston.write;fs.writeSync 45
+GarbageCollector 6
+GarbageCollector;Scavenge 55
+GarbageCollector;MarkCompact 90
+epoll_wait 160

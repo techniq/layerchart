@@ -131,6 +131,26 @@ export const getSimpleTree = prerender(async () => {
 	return data;
 });
 
+export const getFlameGraph = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	// "folded"/"collapsed" stacks — the de-facto profiler interchange format.  Parsed into a
+	// hierarchy in the example via `parseFoldedStacks()`.
+	const data = await fetch('/data/examples/hierarchy/flame-graph.folded.txt').then((r) => r.text());
+	return data;
+});
+
+export type TraceSpan = { name: string; start: number; duration: number; children?: TraceSpan[] };
+
+export const getRequestTrace = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	// A traced (not sampled) profile — nested spans with real start/duration times, including
+	// idle gaps.  Rendered as a time-based flame chart.
+	const data = (await fetch('/data/examples/hierarchy/request-trace.json').then((r) =>
+		r.json()
+	)) as TraceSpan;
+	return data;
+});
+
 export type MetroData = {
 	Metro: string;
 	POP_1980: number;

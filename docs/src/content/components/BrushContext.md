@@ -74,3 +74,9 @@ related: []
 ### Minimap
 
 :example{name="minimap"}
+
+### Flame chart (pan / zoom + overview brush)
+
+A time-based [flame chart](https://pyatyispyatil.github.io/flame-chart-js/) (like Chrome DevTools' Network/Performance panels) — the [time-aware sibling](https://www.polarsignals.com/blog/posts/2025/05/28/flamecharts-the-time-aware-sibling-of-flame-graphs) of the [flame graph](/docs/components/Partition). Brushing the overview `Area` chart selects a time window that zooms the main chart (which also supports **drag** to pan and **scroll** to zoom via `transform`). Frames keep their real `start`/`end` times (the `x={['start', 'end']}` duration model), so **empty gaps reveal idle / I/O wait**.
+
+:example{name="flame-chart"}

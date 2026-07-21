@@ -1,0 +1,82 @@
+{
+  "name": "handleRequest",
+  "start": 0,
+  "duration": 300,
+  "children": [
+    { "name": "parseHeaders", "start": 2, "duration": 6 },
+    {
+      "name": "authenticate",
+      "start": 10,
+      "duration": 52,
+      "children": [
+        {
+          "name": "verifyJWT",
+          "start": 12,
+          "duration": 28,
+          "children": [{ "name": "hmacVerify", "start": 14, "duration": 23 }]
+        },
+        {
+          "name": "loadSession",
+          "start": 44,
+          "duration": 16,
+          "children": [
+            {
+              "name": "redis.get",
+              "start": 45,
+              "duration": 14,
+              "children": [{ "name": "net.read", "start": 46, "duration": 12 }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "queryDatabase",
+      "start": 66,
+      "duration": 148,
+      "children": [
+        { "name": "acquireConnection", "start": 67, "duration": 9 },
+        {
+          "name": "executeQuery",
+          "start": 78,
+          "duration": 132,
+          "children": [
+            { "name": "sendQuery", "start": 79, "duration": 7 },
+            {
+              "name": "parseResult",
+              "start": 188,
+              "duration": 20,
+              "children": [{ "name": "decodeRows", "start": 190, "duration": 16 }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "renderResponse",
+      "start": 216,
+      "duration": 78,
+      "children": [
+        {
+          "name": "compileTemplate",
+          "start": 217,
+          "duration": 39,
+          "children": [
+            { "name": "tokenize", "start": 218, "duration": 16 },
+            { "name": "generateCode", "start": 236, "duration": 18 }
+          ]
+        },
+        {
+          "name": "executeTemplate",
+          "start": 258,
+          "duration": 34,
+          "children": [
+            { "name": "escapeHtml", "start": 259, "duration": 13 },
+            { "name": "serializeJson", "start": 274, "duration": 16 }
+          ]
+        }
+      ]
+    },
+    { "name": "sendResponse", "start": 295, "duration": 5 }
+  ]
+}
