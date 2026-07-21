@@ -4,6 +4,7 @@ import { tick } from 'svelte';
 
 import Chart from './Chart/Chart.svelte';
 import BrushTestHarness from './tests/BrushTestHarness.svelte';
+import BrushContextAccessHarness from './tests/BrushContextAccessHarness.svelte';
 
 const data = [
   { x: 0, y: 10 },
@@ -81,6 +82,23 @@ describe('BrushContext', () => {
       expect(range).toBeNull();
       expect(handles.length).toBe(0);
     });
+
+    it('should not throw when children read context.brush before it lazy-loads', async () => {
+      // `BrushContext` is lazy-loaded, so a `children` snippet reading
+      // `context.brush.active` runs before the brush state is bound. `context.brush`
+      // must fall back to a safe object rather than null (regression: previously
+      // threw "Cannot read properties of null (reading 'active')").
+      const { container } = render(BrushContextAccessHarness, {
+        chartProps: defaultChartProps,
+      });
+
+      // Rendered synchronously without throwing, before the brush DOM exists.
+      expect(getBrushElements(container).context).toBeNull();
+
+      // Still safe once the lazy-loaded BrushContext mounts.
+      await awaitBrushReady(container);
+      expect(getBrushElements(container).context).not.toBeNull();
+    });
   });
 
   describe('programmatic control', () => {
@@ -97,7 +115,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       let { range } = getBrushElements(container);
       expect(range).toBeNull();
@@ -123,7 +141,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       chartContext.brush.move({ x: [2, 5] });
       await tick();
@@ -153,7 +171,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       chartContext.brush.move({ x: [2, 5] });
       await tick();
@@ -183,7 +201,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       chartContext.brush.move({ x: [2, 8] });
       await tick();
@@ -211,7 +229,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       chartContext.brush.selectAll();
       await tick();
@@ -239,7 +257,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       chartContext.brush.move({ y: [20, 80] });
       await tick();
@@ -271,7 +289,7 @@ describe('BrushContext', () => {
         },
       });
 
-      await vi.waitFor(() => expect(chartContext?.brush).not.toBeNull());
+      await awaitBrushReady(container);
 
       const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
       const rect = brushEl.getBoundingClientRect();

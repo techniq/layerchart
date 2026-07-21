@@ -1281,6 +1281,18 @@ export class ChartState<
     selectedKeys: { isEmpty: () => true, isSelected: () => false },
   };
 
+  static readonly #fallbackBrush = {
+    x: [null, null] as BrushDomainType,
+    y: [null, null] as BrushDomainType,
+    active: false,
+    axis: 'x' as const,
+    handleSize: 0,
+    range: { x: 0, y: 0, width: 0, height: 0 },
+    reset: () => {},
+    selectAll: () => {},
+    move: () => {},
+  };
+
   // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).
   get tooltip() {
     return this.tooltipState ?? (ChartState.#fallbackTooltip as unknown as TooltipState);
@@ -1289,7 +1301,7 @@ export class ChartState<
     return this.geoState;
   }
   get brush() {
-    return this.brushState;
+    return this.brushState ?? (ChartState.#fallbackBrush as unknown as BrushState);
   }
   get transform() {
     return this.transformState ?? (ChartState.#fallbackTransform as unknown as TransformState);
