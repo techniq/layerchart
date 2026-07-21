@@ -81,6 +81,7 @@
 		variant="fill-light"
 		color="primary"
 		disabled={!focused || focused.depth === 0}
+		size="sm"
 		on:click={() => (focused = undefined)}
 	>
 		Reset zoom
