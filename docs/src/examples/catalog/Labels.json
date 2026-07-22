@@ -24,6 +24,13 @@
       "line": "<Labels x={(d) => 0} value=\"date\" class=\"text-sm fill-surface-300 stroke-none\" />"
     },
     {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 60,
+      "line": "<Labels"
+    },
+    {
       "example": "horizontal-inside-labels",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-inside-labels",
@@ -80,5 +87,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-03-23T11:14:13.366Z"
+  "updatedAt": "2026-07-22T16:53:02.764Z"
 }

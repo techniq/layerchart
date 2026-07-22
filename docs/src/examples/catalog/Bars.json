@@ -2290,6 +2290,13 @@
       "line": "<Bars radius={1} fill={gradient} />"
     },
     {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 59,
+      "line": "<Bars seriesKey={s.key} rounded=\"edge\" radius={4} strokeWidth={1} />"
+    },
+    {
       "example": "horizontal-average-annotation-rule",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-average-annotation-rule",
@@ -2822,5 +2829,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:22.832Z"
+  "updatedAt": "2026-07-22T16:53:01.231Z"
 }

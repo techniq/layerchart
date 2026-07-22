@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-08T16:26:34.913Z",
+  "generatedAt": "2026-07-22T16:52:59.213Z",
   "totalComponents": 78,
-  "totalExamples": 923,
+  "totalExamples": 931,
   "components": [
     {
       "component": "AnnotationLine",
@@ -539,7 +539,7 @@
         {
           "name": "markers",
           "path": "/example/AreaChart/markers",
-          "checksum": "1cf879f77ca5ab7457fc2875d4082096"
+          "checksum": "43c3262eb9a906fa70ecb9388278d5b2"
         },
         {
           "name": "motion-tween",
@@ -1287,6 +1287,16 @@
           "checksum": "a45af53ba921d1867507ff7ba433b9b8"
         },
         {
+          "name": "series-horizontal-diverging-label-gap",
+          "path": "/example/BarChart/series-horizontal-diverging-label-gap",
+          "checksum": "7645e1974b018581cc434cfa5ea3bff7"
+        },
+        {
+          "name": "series-horizontal-diverging-split-scale",
+          "path": "/example/BarChart/series-horizontal-diverging-split-scale",
+          "checksum": "2824bb0a05e126a2b7005f5d76c11fde"
+        },
+        {
           "name": "series-horizontal-labels",
           "path": "/example/BarChart/series-horizontal-labels",
           "checksum": "550834cdd6fa0238e0f8a01314074a31"
@@ -1807,6 +1817,11 @@
           "checksum": "876222baa33134b2cf96f5765d8f8ce9"
         },
         {
+          "name": "flame-chart",
+          "path": "/example/BrushContext/flame-chart",
+          "checksum": "a0395d0e5fd2fec489a26717f1c4ab75"
+        },
+        {
           "name": "handle-arrows",
           "path": "/example/BrushContext/handle-arrows",
           "checksum": "0f3aa3a367ce0b4a14a97ce5c378779f"
@@ -1830,6 +1845,16 @@
           "name": "integrated-brush-(y-axis)",
           "path": "/example/BrushContext/integrated-brush-(y-axis)",
           "checksum": "c35d530a935ea41d33eca0da3e6db8f3"
+        },
+        {
+          "name": "max-window",
+          "path": "/example/BrushContext/max-window",
+          "checksum": "65d7145f661d2d3e2dc17629cd51bd5f"
+        },
+        {
+          "name": "min-max-extent",
+          "path": "/example/BrushContext/min-max-extent",
+          "checksum": "6d03e98a36764ad15804ee23f7702ff0"
         },
         {
           "name": "minimap",
@@ -1865,6 +1890,11 @@
           "name": "simple-styling",
           "path": "/example/BrushContext/simple-styling",
           "checksum": "edc72fe9d5f6d1b9c2d4763bd0776287"
+        },
+        {
+          "name": "snap-to-month",
+          "path": "/example/BrushContext/snap-to-month",
+          "checksum": "f45285ac80e0ebc550acb41f6136e1ec"
         },
         {
           "name": "striped-background",
@@ -2459,7 +2489,7 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoContext/geojson-preview",
-          "checksum": "2e05bfea59836d50cfd1fbfbb9f49d91"
+          "checksum": "7fc910df49f0784e47e82d1280039f8e"
         },
         {
           "name": "projection-playground",
@@ -2474,7 +2504,7 @@
         {
           "name": "topojson-preview",
           "path": "/example/GeoContext/topojson-preview",
-          "checksum": "fd4202ca3158d4ad00759d3d3b46b28a"
+          "checksum": "004ec49b553676159a206b09847f3f43"
         }
       ]
     },
@@ -2689,7 +2719,7 @@
         {
           "name": "topojson-preview",
           "path": "/example/GeoProjection/topojson-preview",
-          "checksum": "e2612e9ff8a2ef23983a41539ad25688"
+          "checksum": "b38fd2e0a9efc8f8631a25fb4712a9d1"
         },
         {
           "name": "true-size",
@@ -3254,17 +3284,17 @@
         {
           "name": "perf-dimension-arrays",
           "path": "/example/LineChart/perf-dimension-arrays",
-          "checksum": "585a7d7fb748b8120423613eb05caaef"
+          "checksum": "d579df57ab197c625553d2cee706087f"
         },
         {
           "name": "perf-dimension-arrays-processed",
           "path": "/example/LineChart/perf-dimension-arrays-processed",
-          "checksum": "f6ba2b373dfba7f2fda1b4d1ff411a4b"
+          "checksum": "853806e93440b4f0ab8139d53e3bd58d"
         },
         {
           "name": "perf-series-arrays",
           "path": "/example/LineChart/perf-series-arrays",
-          "checksum": "b4221dc6a4852f0fdf509804b6d36f4c"
+          "checksum": "a06d86ee8183baa30630fbb3fd985cc1"
         },
         {
           "name": "perf-streaming",
@@ -3274,12 +3304,12 @@
         {
           "name": "perf-wide-data",
           "path": "/example/LineChart/perf-wide-data",
-          "checksum": "891390544842b9da2a3a8b74bb4a1578"
+          "checksum": "a17f8a741c9961c3af6c5ec3460adca3"
         },
         {
           "name": "perf-wide-data-processed",
           "path": "/example/LineChart/perf-wide-data-processed",
-          "checksum": "db6c07c551ffc19d2d9003e940373355"
+          "checksum": "738d3f083dab1c872d06c92c52fa2f50"
         },
         {
           "name": "persist-brush-zoom",
@@ -3459,7 +3489,7 @@
         {
           "name": "playground",
           "path": "/example/Link/playground",
-          "checksum": "efb57199e0f6df89501ace886a86189b"
+          "checksum": "a85139e481d44cb8a863d2f5826b501b"
         },
         {
           "name": "types",
@@ -3570,6 +3600,11 @@
           "name": "filterable",
           "path": "/example/Partition/filterable",
           "checksum": "76b7242cebb972c62ef3b4394b07be7c"
+        },
+        {
+          "name": "flame-graph",
+          "path": "/example/Partition/flame-graph",
+          "checksum": "5e32bdff1eb028b12be2c247f462ef83"
         },
         {
           "name": "horizontal",
@@ -4185,6 +4220,11 @@
           "name": "data-mode-edge",
           "path": "/example/Rect/data-mode-edge",
           "checksum": "c25cf446ae6dd4f3f3ba6e9dcbdbebaf"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Rect/playground",
+          "checksum": "b2d383da5d108363474cada58a420e3f"
         },
         {
           "name": "styling-using-attributes",

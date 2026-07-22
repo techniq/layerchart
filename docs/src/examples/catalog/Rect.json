@@ -110,7 +110,7 @@
         {
           "component": "Rect",
           "lineNumber": 151,
-          "line": "<Rect"
+          "line": "<Rect {...pixelPosition} {corners} fill=\"var(--color-primary)\" />"
         }
       ]
     },
@@ -244,6 +244,27 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
       "lineNumber": 204,
+      "line": "<Rect"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 67,
+      "line": "<Rect"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 86,
+      "line": "<Rect"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 171,
       "line": "<Rect"
     },
     {
@@ -461,6 +482,13 @@
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
       "lineNumber": 129,
+      "line": "<Rect"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 148,
       "line": "<Rect"
     },
     {
@@ -839,28 +867,28 @@
       "component": "Rect",
       "path": "/docs/components/Rect/playground",
       "lineNumber": 151,
-      "line": "<Rect"
+      "line": "<Rect {...pixelPosition} {corners} fill=\"var(--color-primary)\" />"
     },
     {
       "example": "playground",
       "component": "Rect",
       "path": "/docs/components/Rect/playground",
-      "lineNumber": 159,
-      "line": "<Rect"
+      "lineNumber": 153,
+      "line": "<Rect x=\"x\" y=\"y\" width=\"width\" height=\"height\" {corners} fill=\"var(--color-primary)\" />"
     },
     {
       "example": "playground",
       "component": "Rect",
       "path": "/docs/components/Rect/playground",
-      "lineNumber": 170,
-      "line": "<Rect"
+      "lineNumber": 155,
+      "line": "<Rect {...pixelEdges} {corners} fill=\"var(--color-primary)\" />"
     },
     {
       "example": "playground",
       "component": "Rect",
       "path": "/docs/components/Rect/playground",
-      "lineNumber": 178,
-      "line": "<Rect"
+      "lineNumber": 157,
+      "line": "<Rect x0=\"x0\" y0=\"y0\" x1=\"x1\" y1=\"y1\" {corners} fill=\"var(--color-primary)\" />"
     },
     {
       "example": "styling-using-attributes",
@@ -1024,5 +1052,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-05-09T14:31:15.516Z"
+  "updatedAt": "2026-07-22T16:53:03.467Z"
 }

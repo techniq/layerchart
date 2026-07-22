@@ -10,6 +10,13 @@
       "line": "<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>"
     },
     {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 116,
+      "line": "<Bounds"
+    },
+    {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
@@ -45,5 +52,5 @@
       "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:22.987Z"
+  "updatedAt": "2026-07-22T16:53:01.276Z"
 }

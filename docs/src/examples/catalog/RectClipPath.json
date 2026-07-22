@@ -80,11 +80,25 @@
       "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
     },
     {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 179,
+      "line": "<RectClipPath x={labelLeft} width={labelRight - labelLeft - 4} height={barHeight}>"
+    },
+    {
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
       "lineNumber": 140,
       "line": "<RectClipPath"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 156,
+      "line": "<RectClipPath width={nodeWidth - 4} height={barHeight}>"
     },
     {
       "example": "horizontal",
@@ -136,5 +150,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.786Z"
+  "updatedAt": "2026-07-22T16:53:03.501Z"
 }

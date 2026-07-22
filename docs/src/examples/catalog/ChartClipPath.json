@@ -38,6 +38,13 @@
       "line": "<ChartClipPath>"
     },
     {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 51,
+      "line": "<ChartClipPath>"
+    },
+    {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
@@ -94,6 +101,13 @@
       "line": "<ChartClipPath>"
     },
     {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 121,
+      "line": "<ChartClipPath>"
+    },
+    {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
@@ -129,5 +143,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:23.654Z"
+  "updatedAt": "2026-07-22T16:53:01.664Z"
 }

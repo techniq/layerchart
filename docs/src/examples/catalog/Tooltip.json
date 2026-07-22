@@ -2268,6 +2268,76 @@
       "line": "<Tooltip.Item label={s.key} color={s.color}>"
     },
     {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 83,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 85,
+      "line": "<Tooltip.Header>Age: {context.y(data)}</Tooltip.Header>"
+    },
+    {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 86,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 87,
+      "line": "<Tooltip.Item label=\"male\" color=\"var(--color-primary)\">"
+    },
+    {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 93,
+      "line": "<Tooltip.Item label=\"female\" color=\"var(--color-secondary)\">"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 118,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 120,
+      "line": "<Tooltip.Header>Age: {data.age}</Tooltip.Header>"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 121,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 122,
+      "line": "<Tooltip.Item label=\"male\" color=\"var(--color-primary)\" value={data.male} />"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 123,
+      "line": "<Tooltip.Item label=\"female\" color=\"var(--color-secondary)\" value={data.female} />"
+    },
+    {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
@@ -3393,6 +3463,48 @@
       "path": "/docs/components/BoxPlot/with-violin",
       "lineNumber": 103,
       "line": "<Tooltip.Item label=\"Min\" value={data.min} format=\"decimal\" />"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 194,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 196,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 197,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 198,
+      "line": "<Tooltip.Item label=\"Duration\" value=\"{format(data.duration, 'integer')} ms\" />"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 199,
+      "line": "<Tooltip.Item label=\"Self\" value=\"{format(data.self, 'integer')} ms\" />"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 200,
+      "line": "<Tooltip.Item label=\"Start\" value=\"{format(data.start, 'integer')} ms\" />"
     },
     {
       "example": "tooltip-interop",
@@ -5789,6 +5901,48 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 176,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 180,
+      "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 181,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 182,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 186,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 190,
+      "line": "<Tooltip.Item label=\"Depth\" value={data.depth} format=\"integer\" />"
+    },
+    {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
@@ -7756,5 +7910,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:16.098Z"
+  "updatedAt": "2026-07-22T16:53:03.849Z"
 }

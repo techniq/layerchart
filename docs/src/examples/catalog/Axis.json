@@ -2824,6 +2824,13 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 153,
+      "line": "<Axis placement=\"bottom\" rule format={(v) => `${format(v, 'integer')} ms`} />"
+    },
+    {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
@@ -2863,6 +2870,41 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
       "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 48,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 72,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "min-max-extent",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/min-max-extent",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "min-max-extent",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/min-max-extent",
+      "lineNumber": 46,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2947,6 +2989,20 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
       "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "snap-to-month",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/snap-to-month",
+      "lineNumber": 52,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "snap-to-month",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/snap-to-month",
+      "lineNumber": 53,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -5162,5 +5218,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-05-09T14:31:11.978Z"
+  "updatedAt": "2026-07-22T16:53:01.013Z"
 }

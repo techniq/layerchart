@@ -51,6 +51,58 @@
       ]
     },
     {
+      "name": "flame-chart",
+      "title": "flame chart",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 101,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 124,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 125,
+          "line": "<Area"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 153,
+          "line": "<Axis placement=\"bottom\" rule format={(v) => `${format(v, 'integer')} ms`} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 163,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 171,
+          "line": "<Rect"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 179,
+          "line": "<RectClipPath x={labelLeft} width={labelRight - labelLeft - 4} height={barHeight}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 180,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 194,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "handle-arrows",
       "title": "handle arrows",
       "path": "/docs/components/BrushContext/handle-arrows",
@@ -638,5 +690,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-07-01T14:36:52.362Z"
+  "updatedAt": "2026-07-22T16:53:01.347Z"
 }

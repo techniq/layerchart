@@ -867,6 +867,13 @@
       "line": "<Chart"
     },
     {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 42,
+      "line": "<Chart"
+    },
+    {
       "example": "horizontal-average-annotation-rule",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-average-annotation-rule",
@@ -1413,6 +1420,20 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 80, right: 80 }} brush height={40}>"
     },
     {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 101,
+      "line": "<Chart"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 134,
+      "line": "<Chart"
+    },
+    {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
@@ -1445,6 +1466,27 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
       "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 38,
+      "line": "<Chart"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 58,
+      "line": "<Chart"
+    },
+    {
+      "example": "min-max-extent",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/min-max-extent",
+      "lineNumber": 30,
       "line": "<Chart"
     },
     {
@@ -1522,6 +1564,13 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/simple-styling",
       "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "snap-to-month",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/snap-to-month",
+      "lineNumber": 30,
       "line": "<Chart"
     },
     {
@@ -2900,7 +2949,7 @@
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 23,
+      "lineNumber": 33,
       "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
     },
     {
@@ -3035,6 +3084,13 @@
       "path": "/docs/components/Partition/filterable",
       "lineNumber": 108,
       "line": "<Chart height={600}>"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 108,
+      "line": "<Chart"
     },
     {
       "example": "horizontal",
@@ -4451,5 +4507,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-05-09T14:31:12.665Z"
+  "updatedAt": "2026-07-22T16:53:01.521Z"
 }

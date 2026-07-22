@@ -1223,6 +1223,13 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 125,
+      "line": "<Area"
+    },
+    {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
@@ -1256,6 +1263,27 @@
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
       "lineNumber": 44,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 52,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "max-window",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/max-window",
+      "lineNumber": 73,
+      "line": "<Area class=\"fill-surface-content/10\" />"
+    },
+    {
+      "example": "min-max-extent",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/min-max-extent",
+      "lineNumber": 47,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "programmatic-control",
@@ -1311,6 +1339,13 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/simple-styling",
       "lineNumber": 20,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "snap-to-month",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/snap-to-month",
+      "lineNumber": 54,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1517,5 +1552,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:22.071Z"
+  "updatedAt": "2026-07-22T16:53:00.714Z"
 }

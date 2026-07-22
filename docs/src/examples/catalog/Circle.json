@@ -755,14 +755,21 @@
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 38,
+      "lineNumber": 77,
       "line": "<Circle"
     },
     {
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 51,
+      "lineNumber": 91,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 105,
       "line": "<Circle"
     },
     {
@@ -1095,5 +1102,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-05-05T17:35:59.127Z"
+  "updatedAt": "2026-07-22T16:53:01.797Z"
 }

@@ -155,6 +155,20 @@
       "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
     },
     {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 58,
+      "line": "<Group x={(gap / 2) * (s.key === 'male' ? -1 : 1)}>"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 163,
+      "line": "<Group"
+    },
+    {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
@@ -229,6 +243,13 @@
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
       "lineNumber": 120,
+      "line": "<Group"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 133,
       "line": "<Group"
     },
     {
@@ -393,5 +414,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:25.683Z"
+  "updatedAt": "2026-07-22T16:53:02.630Z"
 }

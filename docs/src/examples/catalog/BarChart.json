@@ -1174,6 +1174,70 @@
       ]
     },
     {
+      "name": "series-horizontal-diverging-label-gap",
+      "title": "series horizontal diverging label gap",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 41,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 58,
+          "line": "<Group x={(gap / 2) * (s.key === 'male' ? -1 : 1)}>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 59,
+          "line": "<Bars seriesKey={s.key} rounded=\"edge\" radius={4} strokeWidth={1} />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 60,
+          "line": "<Labels"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 69,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 83,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "series-horizontal-diverging-split-scale",
+      "title": "series horizontal diverging split scale",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 42,
+          "line": "<Chart"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 67,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 75,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 118,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "series-horizontal-labels",
       "title": "series horizontal labels",
       "path": "/docs/components/BarChart/series-horizontal-labels",
@@ -2044,6 +2108,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 41,
+      "line": "<BarChart"
+    },
+    {
       "example": "series-horizontal-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/series-horizontal-labels",
@@ -2254,5 +2325,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:22.677Z"
+  "updatedAt": "2026-07-22T16:53:01.157Z"
 }

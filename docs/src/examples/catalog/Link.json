@@ -73,22 +73,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 23,
+          "lineNumber": 33,
           "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 34,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 25,
+          "lineNumber": 36,
           "line": "<Link"
         },
         {
           "component": "Circle",
-          "lineNumber": 38,
+          "lineNumber": 77,
           "line": "<Circle"
         }
       ]
@@ -176,7 +176,21 @@
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 25,
+      "lineNumber": 36,
+      "line": "<Link"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 49,
+      "line": "<Link"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 63,
       "line": "<Link"
     },
     {
@@ -243,5 +257,5 @@
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:26.570Z"
+  "updatedAt": "2026-07-22T16:53:02.925Z"
 }

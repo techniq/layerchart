@@ -459,6 +459,34 @@
       "line": "<Text"
     },
     {
+      "example": "series-horizontal-diverging-label-gap",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-label-gap",
+      "lineNumber": 69,
+      "line": "<Text"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 75,
+      "line": "<Text"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 94,
+      "line": "<Text"
+    },
+    {
+      "example": "series-horizontal-diverging-split-scale",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-diverging-split-scale",
+      "lineNumber": 105,
+      "line": "<Text"
+    },
+    {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
@@ -498,6 +526,13 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/constant-labels",
       "lineNumber": 27,
+      "line": "<Text"
+    },
+    {
+      "example": "flame-chart",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/flame-chart",
+      "lineNumber": 180,
       "line": "<Text"
     },
     {
@@ -722,6 +757,13 @@
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
       "lineNumber": 145,
+      "line": "<Text"
+    },
+    {
+      "example": "flame-graph",
+      "component": "Partition",
+      "path": "/docs/components/Partition/flame-graph",
+      "lineNumber": 157,
       "line": "<Text"
     },
     {
@@ -1096,5 +1138,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:15.950Z"
+  "updatedAt": "2026-07-22T16:53:03.754Z"
 }
