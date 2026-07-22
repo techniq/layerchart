@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.3
+
+### Patch Changes
+
+- fix(Chart): Guard against `context.brush` being null before `BrushContext` loads ([`e2baf3e`](https://github.com/techniq/layerchart/commit/e2baf3e16cb0acb017a22f684946c8f1b38d0d6e))
+
 ## 2.0.2
 
 ### Patch Changes
