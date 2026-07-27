@@ -3,6 +3,12 @@ description: Interaction component manages and displays tooltips allowing dynami
 category: interactions
 layers: [svg, canvas, html]
 related: [TooltipContext, Highlight]
+components:
+  - { name: Tooltip, label: Tooltip.Root }
+  - TooltipHeader
+  - TooltipList
+  - TooltipItem
+  - TooltipSeparator
 ---
 
 ::note

@@ -324,6 +324,65 @@ For custom tooltips with series data, iterate over the series in your snippet:
 
 :example{ component="Tooltip" name="stacked-area" }
 
+## Default tooltip
+
+The simplified charts (`LineChart`, `AreaChart`, `BarChart`, `ScatterChart`) render a built-in tooltip automatically whenever you set `tooltipContext` — you don't need to add `Tooltip.Root` yourself. Internally this is the `DefaultTooltip` component, composed from the same display parts described above (`Tooltip.Root`, `Tooltip.Header`, `Tooltip.List`, `Tooltip.Item`, `Tooltip.Separator`).
+
+It adapts to the chart and mode:
+
+- **Single-point modes** (`quadtree`, `voronoi`) show the hovered point's `x`, `y`, and (when present) `r` values.
+- **Multi-series modes** show a header (the x-axis value) followed by one row per visible series — and, when more than one series is visible, a separator and a **total** row.
+
+### Customizing
+
+To tweak the default tooltip, pass a `tooltip` object via the chart's `props` — there's no need to replace it. Each key forwards props to the matching display part, plus a `hideTotal` flag:
+
+```svelte
+<LineChart
+	{data}
+	x="date"
+	series={[...]}
+	tooltipContext={{ mode: 'bisect-x' }}
+	props={{
+		tooltip: {
+			root: { variant: 'invert' },
+			header: { format: 'day' },
+			item: { format: 'currency' },
+			hideTotal: true
+		}
+	}}
+/>
+```
+
+| Key         | Forwards to         | Notes                                                |
+| ----------- | ------------------- | ---------------------------------------------------- |
+| `context`   | `TooltipContext`    | Interaction/positioning of the underlying context    |
+| `root`      | `Tooltip.Root`      | Container — positioning, `variant`, `motion`, etc.   |
+| `header`    | `Tooltip.Header`    | Header row (e.g. `format`)                            |
+| `list`      | `Tooltip.List`      | List container                                        |
+| `item`      | `Tooltip.Item`      | Applied to every row (e.g. `format`, `valueAlign`)   |
+| `separator` | `Tooltip.Separator` | Divider shown before the total row                    |
+| `hideTotal` | —                   | Hide the auto **total** row on multi-series charts    |
+
+### Replacing
+
+To fully replace the default tooltip, provide a `tooltip` snippet on the simplified chart and compose the parts yourself:
+
+```svelte
+<LineChart {data} x="date" y="value" tooltipContext={{ mode: 'bisect-x' }}>
+	{#snippet tooltip()}
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header value={data.date} format="day" />
+				<Tooltip.List>
+					<Tooltip.Item label="value" value={data.value} />
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</LineChart>
+```
+
 ## Tooltip locking
 
 Set `locked` to keep the tooltip open and prevent it from updating when the pointer moves. This is useful for interactive tooltips with clickable content:
