@@ -683,6 +683,14 @@
     tooltipState.isHoveringTooltipArea = false;
     hideTooltip();
   }
+
+  function onPointerCancel(e: PointerEvent | MouseEvent | TouchEvent) {
+    // Fired when a touch is stolen for scrolling (ex. `pan-y` vertical scroll on mobile).
+    // The browser dispatches `pointercancel` instead of `pointerleave`/`pointerup`, so
+    // hide the tooltip here to avoid it persisting during/after the scroll.
+    tooltipState.isHoveringTooltipArea = false;
+    hideTooltip();
+  }
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -697,6 +705,7 @@
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}
+  onpointercancel={onPointerCancel}
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
     if (triggerPointerEvents && tooltipState.data != null) {
