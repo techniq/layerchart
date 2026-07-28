@@ -217,6 +217,9 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     - v4:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="simple-icons:stackblitz"}
+    - v5:
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-5" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-5" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="Svelte UX" icon="custom-brands:svelteux"}
