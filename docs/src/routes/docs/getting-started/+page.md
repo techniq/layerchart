@@ -131,6 +131,9 @@ or with a single `.css` import, Layerchart [provides](https://github.com/techniq
 
     /* v4 */
     @import 'layerchart/skeleton-4.css';
+
+    /* v5 */
+    @import 'layerchart/skeleton-5.css';
     ```
     ::
 
