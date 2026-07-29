@@ -113,7 +113,7 @@ Out of the box LayerChart will use [`currentColor`](https://developer.mozilla.or
 If you wish to apply darkmode defaults, see the [dark mode](/docs/guides/styles#dark-mode) section of the styling guide.
 ::
 
-or with a single `.css` import, Layerchart [provides](https://github.com/techniq/layerchart/tree/next/packages/layerchart/src/lib/styles) theming conventions for many popular UI frameworks.
+or with a single `.css` import, Layerchart [provides](https://github.com/techniq/layerchart/tree/main/packages/layerchart/src/lib/styles) theming conventions for many popular UI frameworks.
 
 :::tabs{key="framework"}
 
@@ -196,7 +196,7 @@ All set! Now just fire up the dev server and start iterating. Have fun!
 
 ### Git up and running even quicker!
 
-Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples) are available for popular UI frameworks.
+Starter [project repos](https://github.com/techniq/layerchart/tree/main/examples) are available for popular UI frameworks.
 
 :::tabs{key="framework"}
 

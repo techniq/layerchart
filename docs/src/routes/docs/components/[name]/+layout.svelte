@@ -154,7 +154,7 @@
         label="Page source"
         source={pageSource}
         href={pageUrl
-          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
+          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${pageUrl}`
           : ''}
         icon={LucideFilePenLine}
       /> -->
