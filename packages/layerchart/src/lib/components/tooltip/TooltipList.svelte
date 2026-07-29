@@ -1,15 +1,27 @@
+<script lang="ts" module>
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from '$lib/utils/types.js';
+
+  export type TooltipListPropsWithoutHTML = {
+    /**
+     * Reference to the underlying `div` element.
+     */
+    ref?: HTMLElement;
+  };
+
+  export type TooltipListProps = TooltipListPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TooltipListPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import type { HTMLAttributes } from 'svelte/elements';
 
   let {
     ref: refProp = $bindable(),
     class: className,
     children,
     ...restProps
-  }: HTMLAttributes<HTMLElement> & {
-    ref?: HTMLElement;
-  } = $props();
+  }: TooltipListProps = $props();
 
   let ref = $state<HTMLElement>();
 
