@@ -5,15 +5,19 @@
 .lc-tooltip-root {
   --color-primary: var(--color-primary-500);
 
-  --color-surface-100: var(--color-surface-50-950);
-  --color-surface-200: var(--color-surface-100);
-  --color-surface-300: var(--color-surface-200);
-  --color-surface-content: var(--typo-base-color-dark);
+  /*
+    Surfaces resolve via `light-dark()` so they follow `color-scheme` — the `.dark`
+    toggle (Skeleton sets `color-scheme` alongside it) or `prefers-color-scheme` when
+    no toggle is used. Graduated so 100 is lightest and 300 darkest in both modes.
 
-  html.dark & {
-    --color-surface-100: var(--color-surface-700);
-    --color-surface-200: var(--color-surface-800);
-    --color-surface-300: var(--color-surface-900);
-    --color-surface-content: var(--typo-base-color-light);
-  }
+    200/300 read their light shade from Skeleton's contextual pairing tokens
+    (`--color-surface-100-900`, `--color-surface-200-800`) because LayerChart redefines
+    `--color-surface-100/200` here, which would shadow the raw tokens. The pairings are
+    resolved at `:root`, so they aren't shadowed; only their light branch is used (dark
+    uses `--color-surface-800/900`).
+  */
+  --color-surface-100: light-dark(var(--color-surface-50), var(--color-surface-700));
+  --color-surface-200: light-dark(var(--color-surface-100-900), var(--color-surface-800));
+  --color-surface-300: light-dark(var(--color-surface-200-800), var(--color-surface-900));
+  --color-surface-content: light-dark(var(--typo-base--color-light), var(--typo-base--color-dark));
 }
