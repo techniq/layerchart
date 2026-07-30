@@ -1,6 +1,8 @@
 @import './core.css';
 
-.lc-root-container {
+.lc-root-container,
+/* portaled tooltips render outside `.lc-root-container` (e.g. on `<body>`) */
+.lc-tooltip-root {
   --color-primary: var(--color-primary-500);
 
   --color-surface-100: var(--color-surface-50-950);
