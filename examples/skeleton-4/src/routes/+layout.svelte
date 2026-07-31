@@ -1,7 +1,9 @@
 <script lang="ts">
-	import '../app.css';
-	import Lightswitch from '$lib/components/Lightswitch.svelte';
+	import { Switch } from '@skeletonlabs/skeleton-svelte';
+	import { ModeWatcher, mode, setMode } from 'mode-watcher';
+
 	import favicon from '$lib/assets/favicon.svg';
+	import '../app.css';
 
 	let { children } = $props();
 </script>
@@ -10,9 +12,20 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
+<ModeWatcher defaultTheme="cerberus" />
+
 <main class="p-4">
 	<div class="pb-4 text-right">
-		<Lightswitch />
+		<Switch
+			checked={mode.current === 'dark'}
+			onCheckedChange={(e) => setMode(e.checked ? 'dark' : 'light')}
+		>
+			<Switch.Control>
+				<Switch.Thumb />
+			</Switch.Control>
+			<Switch.HiddenInput />
+		</Switch>
 	</div>
-	{@render children()}
+
+	{@render children?.()}
 </main>
