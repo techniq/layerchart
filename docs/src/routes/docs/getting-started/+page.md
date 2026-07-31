@@ -131,6 +131,9 @@ or with a single `.css` import, Layerchart [provides](https://github.com/techniq
 
     /* v4 */
     @import 'layerchart/skeleton-4.css';
+
+    /* v5 */
+    @import 'layerchart/skeleton-5.css';
     ```
     ::
 
@@ -217,6 +220,9 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/main/examples
     - v4:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="simple-icons:stackblitz"}
+    - v5:
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-5" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-5" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="Svelte UX" icon="custom-brands:svelteux"}

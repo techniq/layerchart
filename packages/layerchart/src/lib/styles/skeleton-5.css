@@ -19,5 +19,5 @@
   --color-surface-100: light-dark(var(--color-surface-50), var(--color-surface-700));
   --color-surface-200: light-dark(var(--color-surface-100-900), var(--color-surface-800));
   --color-surface-300: light-dark(var(--color-surface-200-800), var(--color-surface-900));
-  --color-surface-content: light-dark(var(--base-font-color), var(--base-font-color-dark));
+  --color-surface-content: light-dark(var(--typo-base--color-light), var(--typo-base--color-dark));
 }

@@ -4,7 +4,9 @@
   When NOT using shadcn-svelte Chart component.
   Not typically needed even when using built-in Chart, as defaults typically are sufficient
 */
-.lc-root-container {
+.lc-root-container,
+/* portaled tooltips render outside `.lc-root-container` (e.g. on `<body>`) */
+.lc-tooltip-root {
   --color-primary: var(--primary);
   --color-surface-100: var(--card-background);
   --color-surface-200: var(--card-muted);
