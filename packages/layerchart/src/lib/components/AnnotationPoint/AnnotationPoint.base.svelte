@@ -13,14 +13,14 @@
     Text: Component<any>;
   };
 
-  export type AnnotationPointBaseProps = AnnotationPointProps &
-    AnnotationPointBaseLayerComponents;
+  export type AnnotationPointBaseProps = AnnotationPointProps & AnnotationPointBaseLayerComponents;
 </script>
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { getPixelValue } from '../Text/Text.shared.svelte.js';
   import { cls } from '@layerstack/tailwind';
 
   let {
@@ -34,6 +34,10 @@
     labelPlacement = 'center',
     labelXOffset = 0,
     labelYOffset = 0,
+    labelX,
+    labelY,
+    fontSize = 12,
+    labelGap = 2,
     link,
     details,
     props,
@@ -55,41 +59,105 @@
     };
   });
 
-  const labelProps = $derived.by(() => {
-    const dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
-    const dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
+  const labelLayout = $derived.by(() => {
+    const px = point.x;
+    const py = point.y;
+    const explicit = labelX != null || labelY != null;
+    const capHeight = getPixelValue(fontSize) * 0.71;
+
+    // Direction from the point towards the label. `smart` derives it from the
+    // geometry (snapped to the 8 cardinal/diagonal directions); otherwise it
+    // comes from the discrete placement.
+    let dirX = 0;
+    let dirY = 0;
+    if (labelPlacement === 'smart') {
+      const ddx = (labelX ?? px) - px;
+      const ddy = (labelY ?? py) - py;
+      const ax = Math.abs(ddx);
+      const ay = Math.abs(ddy);
+      if (ax > 1e-6 || ay > 1e-6) {
+        dirX = ax >= ay * 0.4 ? Math.sign(ddx) : 0;
+        dirY = ay >= ax * 0.4 ? Math.sign(ddy) : 0;
+      }
+    } else if (labelPlacement !== 'center') {
+      dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
+      dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
+    }
+
     const mag = Math.hypot(dirX, dirY) || 1;
-    const signX = labelPlacement.includes('left') ? -1 : 1;
-    const signY = labelPlacement.includes('top') ? -1 : 1;
+    const signX = dirX < 0 ? -1 : 1;
+    const signY = dirY < 0 ? -1 : 1;
+
+    // The link connects the ring to this anchor — either an explicit
+    // `labelX`/`labelY`, or offset from the point in the direction.
+    const anchorX = explicit ? (labelX ?? px) : px + (r * dirX) / mag + labelXOffset * signX;
+    const anchorY = explicit ? (labelY ?? py) : py + (r * dirY) / mag + labelYOffset * signY;
+
+    // When there's a leader line, nudge the text away from the point (along the
+    // line) by `labelGap` to leave spacing — the line itself is unchanged.
+    const gap = link ? labelGap : 0;
+    const adx = anchorX - px;
+    const ady = anchorY - py;
+    const adist = Math.hypot(adx, ady) || 1;
+    const gapX = (gap * adx) / adist;
+    const gapY = (gap * ady) / adist;
+
+    // Bias by half the cap height so the near edge (not the center) sits at the
+    // (gap-adjusted) anchor — keeps top/bottom symmetric for any fontSize. Skip
+    // it when the caller sets an explicit `verticalAnchor` (they control it).
+    const capBias =
+      props?.label?.verticalAnchor != null
+        ? 0
+        : dirY > 0
+          ? capHeight / 2
+          : dirY < 0
+            ? -capHeight / 2
+            : 0;
 
     return {
-      x: point.x + (r * dirX) / mag + labelXOffset * signX,
-      y: point.y + (r * dirY) / mag + labelYOffset * signY,
-      dy: -2,
-      textAnchor: labelPlacement.includes('left')
-        ? 'end'
-        : labelPlacement.includes('right')
-          ? 'start'
-          : 'middle',
-      verticalAnchor: labelPlacement.includes('top')
-        ? 'end'
-        : labelPlacement.includes('bottom')
-          ? 'start'
-          : 'middle',
+      dirX,
+      dirY,
+      anchor: { x: anchorX, y: anchorY },
+      text: {
+        x: anchorX + gapX,
+        y: anchorY + gapY + capBias,
+        textAnchor: (dirX > 0 ? 'start' : dirX < 0 ? 'end' : 'middle') as
+          | 'start'
+          | 'end'
+          | 'middle',
+        verticalAnchor: 'middle' as const,
+        fontSize,
+      },
     };
   });
 
+  const labelProps = $derived(labelLayout.text);
+
+  // Leader `<Link>` endpoints. The target is the anchor; the source sits on the
+  // ring — following the label for `smart`, but fixed to the placement direction
+  // otherwise. Spacing to the text is handled by `labelGap` (which moves the
+  // text, not the line).
   const linkEndpoints = $derived.by(() => {
     if (!link) return null;
+    const a = labelLayout.anchor;
 
-    const dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
-    const dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
-    if (dirX === 0 && dirY === 0) return null;
+    if (labelPlacement === 'smart') {
+      const dx = a.x - point.x;
+      const dy = a.y - point.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist <= r) return null;
+      return {
+        source: { x: point.x + (r * dx) / dist, y: point.y + (r * dy) / dist },
+        target: { x: a.x, y: a.y },
+      };
+    }
 
+    const { dirX, dirY } = labelLayout;
+    if (dirX === 0 && dirY === 0) return null; // labelPlacement='center' — no line
     const mag = Math.hypot(dirX, dirY);
     return {
       source: { x: point.x + (r * dirX) / mag, y: point.y + (r * dirY) / mag },
-      target: { x: labelProps.x as number, y: labelProps.y as number },
+      target: { x: a.x, y: a.y },
     };
   });
 
@@ -151,7 +219,6 @@
 <style>
   @layer components {
     :global(:where(.lc-annotation-point-label)) {
-      font-size: 12px;
       pointer-events: none;
     }
 
