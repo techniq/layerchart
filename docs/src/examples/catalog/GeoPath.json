@@ -1594,6 +1594,20 @@
       "line": "<GeoPath"
     },
     {
+      "example": "voronoi-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "lineNumber": 95,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "voronoi-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "lineNumber": 97,
+      "line": "<GeoPath geojson={country} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
@@ -1629,5 +1643,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:25.020Z"
+  "updatedAt": "2026-08-06T13:53:33.225Z"
 }

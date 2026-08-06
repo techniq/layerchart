@@ -2677,6 +2677,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "voronoi",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi",
+      "lineNumber": 66,
+      "line": "<Layer>"
+    },
+    {
+      "example": "voronoi-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "lineNumber": 94,
+      "line": "<Layer>"
+    },
+    {
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
@@ -4301,5 +4315,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:02.786Z"
+  "updatedAt": "2026-08-06T13:53:34.326Z"
 }

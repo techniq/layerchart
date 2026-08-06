@@ -302,6 +302,20 @@
       "line": "<Points r={3} {data} fill={color} />"
     },
     {
+      "example": "voronoi",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi",
+      "lineNumber": 70,
+      "line": "<Points r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "voronoi-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "lineNumber": 100,
+      "line": "<Points r={1.5} class=\"fill-surface-content\" />"
+    },
+    {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
@@ -428,5 +442,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.319Z"
+  "updatedAt": "2026-08-06T13:53:35.277Z"
 }

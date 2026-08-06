@@ -41,6 +41,13 @@
   ],
   "usage": [
     {
+      "example": "voronoi",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi",
+      "lineNumber": 68,
+      "line": "<Voronoi classes={{ path: 'stroke-surface-content/20' }} />"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -48,5 +55,5 @@
       "line": "<Voronoi"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.545Z"
+  "updatedAt": "2026-08-06T13:53:36.920Z"
 }

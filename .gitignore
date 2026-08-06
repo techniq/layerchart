@@ -24,3 +24,5 @@ bench-results/
 
 # Generated StackBlitz files
 **/static/stackblitz-files.json
+
+.playwright-mcp

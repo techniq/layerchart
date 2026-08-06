@@ -379,7 +379,7 @@
       "example": "playground",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/playground",
-      "lineNumber": 188,
+      "lineNumber": 205,
       "line": "<ScatterChart"
     },
     {
@@ -565,5 +565,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:03.092Z"
+  "updatedAt": "2026-08-06T13:53:35.937Z"
 }

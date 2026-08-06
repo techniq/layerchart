@@ -1101,7 +1101,7 @@
       "example": "link-callouts",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/link-callouts",
-      "lineNumber": 55,
+      "lineNumber": 56,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -1721,5 +1721,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:02.120Z"
+  "updatedAt": "2026-08-06T13:53:34.474Z"
 }

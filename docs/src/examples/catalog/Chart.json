@@ -2820,6 +2820,20 @@
       "line": "<Chart"
     },
     {
+      "example": "voronoi",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi",
+      "lineNumber": 65,
+      "line": "<Chart {data} x=\"x\" xDomain={[0, width]} y=\"y\" yDomain={[0, height]} padding={16} height={500}>"
+    },
+    {
+      "example": "voronoi-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "lineNumber": 87,
+      "line": "<Chart"
+    },
+    {
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
@@ -4507,5 +4521,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.521Z"
+  "updatedAt": "2026-08-06T13:53:31.477Z"
 }

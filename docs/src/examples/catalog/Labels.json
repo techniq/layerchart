@@ -1,6 +1,71 @@
 {
   "component": "Labels",
-  "examples": [],
+  "examples": [
+    {
+      "name": "voronoi",
+      "title": "voronoi",
+      "path": "/docs/components/Labels/voronoi",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 65,
+          "line": "<Chart {data} x=\"x\" xDomain={[0, width]} y=\"y\" yDomain={[0, height]} padding={16} height={500}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 66,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Voronoi",
+          "lineNumber": 68,
+          "line": "<Voronoi classes={{ path: 'stroke-surface-content/20' }} />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 70,
+          "line": "<Points r={2} class=\"fill-surface-content\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 71,
+          "line": "<Labels"
+        }
+      ]
+    },
+    {
+      "name": "voronoi-geo",
+      "title": "voronoi geo",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 87,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 94,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 95,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 100,
+          "line": "<Points r={1.5} class=\"fill-surface-content\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 101,
+          "line": "<Labels"
+        }
+      ]
+    }
+  ],
   "usage": [
     {
       "example": "multiple-series-with-labels",
@@ -59,6 +124,20 @@
       "line": "<Labels format=\"integer\" />"
     },
     {
+      "example": "voronoi",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi",
+      "lineNumber": 71,
+      "line": "<Labels"
+    },
+    {
+      "example": "voronoi-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/voronoi-geo",
+      "lineNumber": 101,
+      "line": "<Labels"
+    },
+    {
       "example": "series-labels-hover",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-labels-hover",
@@ -87,5 +166,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:02.764Z"
+  "updatedAt": "2026-08-06T13:53:34.276Z"
 }

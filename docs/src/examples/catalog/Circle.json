@@ -188,21 +188,21 @@
       "example": "playground",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/playground",
-      "lineNumber": 221,
+      "lineNumber": 246,
       "line": "<Circle"
     },
     {
       "example": "playground",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/playground",
-      "lineNumber": 237,
+      "lineNumber": 262,
       "line": "<Circle"
     },
     {
       "example": "playground",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/playground",
-      "lineNumber": 251,
+      "lineNumber": 276,
       "line": "<Circle"
     },
     {
@@ -1102,5 +1102,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.797Z"
+  "updatedAt": "2026-08-06T13:53:32.076Z"
 }

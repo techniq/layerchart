@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-22T16:52:59.213Z",
-  "totalComponents": 78,
-  "totalExamples": 931,
+  "generatedAt": "2026-08-06T14:18:15.051Z",
+  "totalComponents": 79,
+  "totalExamples": 933,
   "components": [
     {
       "component": "AnnotationLine",
@@ -74,7 +74,7 @@
         {
           "name": "link-callouts",
           "path": "/example/AnnotationPoint/link-callouts",
-          "checksum": "17460fa2213d9d4377821c395d350ca3"
+          "checksum": "b32332a8c8997f0270da71b60c3c258f"
         },
         {
           "name": "on-axis-with-tooltip",
@@ -94,7 +94,7 @@
         {
           "name": "playground",
           "path": "/example/AnnotationPoint/playground",
-          "checksum": "cbfc7eb8663dff3a54b29c44a05c932d"
+          "checksum": "b2c1f3c1ebdd5f52d5be76511cfd4295"
         },
         {
           "name": "series-annotation",
@@ -1584,7 +1584,7 @@
         {
           "name": "vertical-average-annotation-rule",
           "path": "/example/Bars/vertical-average-annotation-rule",
-          "checksum": "c0a6506dd3587d5c4a343f79046fa9aa"
+          "checksum": "0aaf24403ec0a8225bc92f4c97dcad23"
         },
         {
           "name": "vertical-basic",
@@ -2699,7 +2699,7 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoProjection/geojson-preview",
-          "checksum": "1790b6f47677e1c4762c4216cc6cce54"
+          "checksum": "09c9bc678a08a361bea0b849a8ec2b05"
         },
         {
           "name": "projection-playground",
@@ -2904,7 +2904,7 @@
         {
           "name": "data-mode",
           "path": "/example/Group/data-mode",
-          "checksum": "2ab83cd5bb10c312124a201461693c60"
+          "checksum": "a9aa025a951b95e558cefc62deaaef0c"
         }
       ]
     },
@@ -2955,6 +2955,21 @@
           "name": "us-presidents",
           "path": "/example/Image/us-presidents",
           "checksum": "2bc4913aa3c56edfe0469897a979510c"
+        }
+      ]
+    },
+    {
+      "component": "Labels",
+      "examples": [
+        {
+          "name": "voronoi",
+          "path": "/example/Labels/voronoi",
+          "checksum": "802a87b1e77d2ce4666eeacc1eeeddd5"
+        },
+        {
+          "name": "voronoi-geo",
+          "path": "/example/Labels/voronoi-geo",
+          "checksum": "941cee8fdbe660a54deb7367d20a7ac4"
         }
       ]
     },
@@ -3479,7 +3494,7 @@
         {
           "name": "bended-arrows",
           "path": "/example/Link/bended-arrows",
-          "checksum": "2da8fdee57aac534eeef1a59afa7af26"
+          "checksum": "665681b0e87336478fd20867388f5294"
         },
         {
           "name": "curves",
@@ -4619,17 +4634,17 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Text/color-via-ordinal-scale",
-          "checksum": "023dcecc1bbadb7a31923b7fb5287994"
+          "checksum": "66225c7e63b97a29a200204aa433a48c"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Text/color-via-threshold-scale",
-          "checksum": "edf28e5cf1c671c747bd0d5c62f5b095"
+          "checksum": "7e2cd3c49a6aced822933d871980056a"
         },
         {
           "name": "data-mode",
           "path": "/example/Text/data-mode",
-          "checksum": "f9ca8c6d677069f305e7e577062b6ba3"
+          "checksum": "4e254b16e22aac2d5303bb4cba85efff"
         },
         {
           "name": "playground",

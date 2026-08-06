@@ -722,7 +722,7 @@
       "component": "Group",
       "path": "/docs/components/Group/data-mode",
       "lineNumber": 27,
-      "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-2} class=\"text-xs fill-surface-content\" />"
+      "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-8} class=\"text-xs fill-surface-content\" />"
     },
     {
       "example": "geo",
@@ -1138,5 +1138,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:03.754Z"
+  "updatedAt": "2026-08-06T13:53:36.132Z"
 }
