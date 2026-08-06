@@ -84,7 +84,13 @@
 	</Field>
 </div>
 
-<Chart {data} x="longitude" y="latitude" geo={{ projection, fitGeojson: countries }} height={500}>
+<Chart
+	{data}
+	x="longitude"
+	y="latitude"
+	geo={{ projection, fitGeojson: { type: 'Sphere' } }}
+	height={500}
+>
 	<Layer>
 		<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-100 stroke-surface-content/20" />
 		{#each countries.features as country}

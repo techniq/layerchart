@@ -14,7 +14,12 @@ export type GeoStateProps = {
    */
   fixedAspectRatio?: number;
   clipAngle?: number;
-  clipExtent?: [[number, number], [number, number]];
+  /**
+   * Clip rendered geometry to a pixel rectangle. Pass `[[x0, y0], [x1, y1]]`, or `true`
+   * to clip to the chart dimensions (`[[0, 0], [width, height]]`) — e.g. to trim the
+   * `Sphere` overflow under `geoMercator`.
+   */
+  clipExtent?: [[number, number], [number, number]] | boolean;
   rotate?: {
     /** Lambda (Center Meridian) */
     yaw: number;
@@ -122,9 +127,13 @@ export class GeoState {
       _projection.clipAngle(this.props.clipAngle);
     }
 
-    // Apply clipExtent
+    // Apply clipExtent (`true` -> clip to chart dimensions, matching `fitSize` range)
     if (this.props.clipExtent && 'clipExtent' in _projection) {
-      _projection.clipExtent(this.props.clipExtent);
+      const clipExtent =
+        this.props.clipExtent === true
+          ? ([[0, 0], this.fitSizeRange] as [[number, number], [number, number]])
+          : this.props.clipExtent;
+      _projection.clipExtent(clipExtent);
     }
 
     return _projection;
