@@ -45,7 +45,7 @@
 			y="value"
 			value="label"
 			textAnchor="middle"
-			dy={-2}
+			dy={-8}
 			fill="value"
 			class="text-xs"
 		/>

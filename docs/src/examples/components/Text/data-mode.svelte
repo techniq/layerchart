@@ -28,7 +28,7 @@
 			y="value"
 			value="label"
 			textAnchor="middle"
-			dy={-2}
+			dy={-8}
 			class="text-xs fill-surface-content"
 		/>
 	</Layer>

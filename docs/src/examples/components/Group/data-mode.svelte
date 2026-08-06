@@ -24,7 +24,7 @@
 		<Axis placement="left" rule />
 		<Group x="date" y="value">
 			<Circle r={4} class="fill-primary" />
-			<Text value="label" textAnchor="middle" dy={-2} class="text-xs fill-surface-content" />
+			<Text value="label" textAnchor="middle" dy={-8} class="text-xs fill-surface-content" />
 		</Group>
 	</Layer>
 </Chart>
