@@ -20,6 +20,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { getPointLabelLayout } from '$lib/utils/labelPlacement.js';
   import { getPixelValue } from '../Text/Text.shared.svelte.js';
   import { cls } from '@layerstack/tailwind';
 
@@ -59,79 +60,27 @@
     };
   });
 
-  const labelLayout = $derived.by(() => {
-    const px = point.x;
-    const py = point.y;
-    const explicit = labelX != null || labelY != null;
-    const capHeight = getPixelValue(fontSize) * 0.71;
+  // Where `smart`/discrete placement puts the label — shared with `getPointLabelRect`
+  // consumers (e.g. occlusion) so the measured box matches the rendered label.
+  const labelLayout = $derived(
+    getPointLabelLayout({
+      x: point.x,
+      y: point.y,
+      r,
+      labelPlacement,
+      labelX,
+      labelY,
+      labelXOffset,
+      labelYOffset,
+      fontSize: getPixelValue(fontSize),
+      labelGap,
+      link: !!link,
+      verticalAnchor: props?.label?.verticalAnchor,
+    })
+  );
 
-    // Direction from the point towards the label. `smart` derives it from the
-    // geometry (snapped to the 8 cardinal/diagonal directions); otherwise it
-    // comes from the discrete placement.
-    let dirX = 0;
-    let dirY = 0;
-    if (labelPlacement === 'smart') {
-      const ddx = (labelX ?? px) - px;
-      const ddy = (labelY ?? py) - py;
-      const ax = Math.abs(ddx);
-      const ay = Math.abs(ddy);
-      if (ax > 1e-6 || ay > 1e-6) {
-        dirX = ax >= ay * 0.4 ? Math.sign(ddx) : 0;
-        dirY = ay >= ax * 0.4 ? Math.sign(ddy) : 0;
-      }
-    } else if (labelPlacement !== 'center') {
-      dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
-      dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
-    }
-
-    const mag = Math.hypot(dirX, dirY) || 1;
-    const signX = dirX < 0 ? -1 : 1;
-    const signY = dirY < 0 ? -1 : 1;
-
-    // The link connects the ring to this anchor — either an explicit
-    // `labelX`/`labelY`, or offset from the point in the direction.
-    const anchorX = explicit ? (labelX ?? px) : px + (r * dirX) / mag + labelXOffset * signX;
-    const anchorY = explicit ? (labelY ?? py) : py + (r * dirY) / mag + labelYOffset * signY;
-
-    // When there's a leader line, nudge the text away from the point (along the
-    // line) by `labelGap` to leave spacing — the line itself is unchanged.
-    const gap = link ? labelGap : 0;
-    const adx = anchorX - px;
-    const ady = anchorY - py;
-    const adist = Math.hypot(adx, ady) || 1;
-    const gapX = (gap * adx) / adist;
-    const gapY = (gap * ady) / adist;
-
-    // Bias by half the cap height so the near edge (not the center) sits at the
-    // (gap-adjusted) anchor — keeps top/bottom symmetric for any fontSize. Skip
-    // it when the caller sets an explicit `verticalAnchor` (they control it).
-    const capBias =
-      props?.label?.verticalAnchor != null
-        ? 0
-        : dirY > 0
-          ? capHeight / 2
-          : dirY < 0
-            ? -capHeight / 2
-            : 0;
-
-    return {
-      dirX,
-      dirY,
-      anchor: { x: anchorX, y: anchorY },
-      text: {
-        x: anchorX + gapX,
-        y: anchorY + gapY + capBias,
-        textAnchor: (dirX > 0 ? 'start' : dirX < 0 ? 'end' : 'middle') as
-          | 'start'
-          | 'end'
-          | 'middle',
-        verticalAnchor: 'middle' as const,
-        fontSize,
-      },
-    };
-  });
-
-  const labelProps = $derived(labelLayout.text);
+  // Render `<Text>` with the raw `fontSize` (it resolves em/etc. itself)
+  const labelProps = $derived({ ...labelLayout.text, fontSize });
 
   // Leader `<Link>` endpoints. The target is the anchor; the source sits on the
   // ring — following the label for `smart`, but fixed to the placement direction
@@ -152,7 +101,7 @@
       };
     }
 
-    const { dirX, dirY } = labelLayout;
+    const { x: dirX, y: dirY } = labelLayout.direction;
     if (dirX === 0 && dirY === 0) return null; // labelPlacement='center' — no line
     const mag = Math.hypot(dirX, dirY);
     return {

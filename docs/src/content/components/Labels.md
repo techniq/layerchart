@@ -51,6 +51,20 @@ Series end labels can be shown for multi-series line charts, and highlighted on 
 
 :example{ component="LineChart" name="series-labels-hover" }
 
+### Scatter plots
+
+Use `layout="voronoi"` to orient each label towards the open space of its Voronoi
+cell, `occlude` to hide labels that would overlap a roomier-cell neighbor, and
+`links` to move each label out into open space with a leader line back to the point
+(d3-ring-note / smart-labels style) — no per-point placement setup required.
+
+:example{ name="voronoi" showCode }
+
+It works on maps too — in a geo `<Chart>`, `<Points>` and the labels project through
+the projection, so the same props place airport labels in open space with leaders.
+
+:example{ name="voronoi-geo" showCode }
+
 ### Simplified charts
 
 Labels are also integrated in simplified charts via the `labels` prop

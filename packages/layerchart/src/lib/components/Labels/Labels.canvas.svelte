@@ -7,10 +7,11 @@
   import Text from '../Text/Text.canvas.svelte';
   import Group from '../Group/Group.canvas.svelte';
   import Points from '../Points/Points.canvas.svelte';
+  import Link from '../Link/Link.canvas.svelte';
 
   import type { LabelsProps } from './Labels.shared.svelte.js';
 
   let props: LabelsProps<TData> = $props();
 </script>
 
-<LabelsBase {Text} {Group} {Points} {...props} />
+<LabelsBase {Text} {Group} {Points} {Link} {...props} />

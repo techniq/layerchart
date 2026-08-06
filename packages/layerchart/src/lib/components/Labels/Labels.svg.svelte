@@ -7,10 +7,11 @@
   import Text from '../Text/Text.svg.svelte';
   import Group from '../Group/Group.svg.svelte';
   import Points from '../Points/Points.svg.svelte';
+  import Link from '../Link/Link.svg.svelte';
 
   import type { LabelsProps } from './Labels.shared.svelte.js';
 
   let props: LabelsProps<TData> = $props();
 </script>
 
-<LabelsBase {Text} {Group} {Points} {...props} />
+<LabelsBase {Text} {Group} {Points} {Link} {...props} />

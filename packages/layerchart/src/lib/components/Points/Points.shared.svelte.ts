@@ -5,7 +5,9 @@ import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
+import type { GeoState } from '$lib/states/geo.svelte.js';
 import type { CircleProps } from '../Circle/Circle.shared.svelte.js';
 
 export type Point = {
@@ -49,6 +51,7 @@ export type PointsProps = PointsPropsWithoutHTML &
 export class PointsState {
   #getProps: () => PointsProps = () => ({}) as PointsProps;
   ctx: ChartState = getChartContext();
+  geo: GeoState = getGeoContext();
 
   constructor(getProps: () => PointsProps) {
     this.#getProps = getProps;
@@ -123,6 +126,21 @@ export class PointsState {
 
   #getPointObject(xVal: number, yVal: number, d: any, edgeIndex?: number): Point {
     const props = this.#getProps();
+
+    // In a geo chart, project the [x, y] pair directly (no band offsets / radial)
+    if (this.geo.projection) {
+      const [projX, projY] = this.geo.projection([xVal, yVal]) ?? [0, 0];
+      return {
+        x: projX,
+        y: projY,
+        r: this.ctx.config.r ? this.ctx.rGet(d) : (props.r ?? 5),
+        xValue: xVal,
+        yValue: yVal,
+        data: d,
+        edgeIndex,
+      };
+    }
+
     const scaledX: number = this.ctx.xScale(xVal);
     const scaledY: number = this.ctx.yScale(yVal);
 
