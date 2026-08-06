@@ -20,7 +20,8 @@
 		'right',
 		'bottom-left',
 		'bottom',
-		'bottom-right'
+		'bottom-right',
+		'smart'
 	] as const;
 
 	const anchorOptions = ['start', 'middle', 'end'].map((v) => ({ label: v, value: v }));
@@ -40,10 +41,12 @@
 	let dataX = $state(80);
 	let dataY = $state(4.25);
 
-	let placement: Placement = $state('bottom-right');
+	let placement: Placement | 'smart' = $state('bottom-right');
 	let xOffset = $state(50);
 	let yOffset = $state(50);
-	let radius = $state(100);
+	let radius = $state(60);
+	let fontSize = $state(16);
+	let labelGap = $state(2);
 	let textAnchor: 'start' | 'middle' | 'end' = $state('middle');
 	let verticalAnchor: 'start' | 'middle' | 'end' = $state('start');
 
@@ -134,6 +137,20 @@
 		max={200}
 		classes={{ root: 'flex-1 basis-40' }}
 	/>
+	<RangeField
+		label="Font size"
+		bind:value={fontSize}
+		min={8}
+		max={48}
+		classes={{ root: 'flex-1 basis-40' }}
+	/>
+	<RangeField
+		label="Label gap"
+		bind:value={labelGap}
+		min={0}
+		max={20}
+		classes={{ root: 'flex-1 basis-40' }}
+	/>
 </div>
 
 <div class="flex flex-wrap gap-2 mb-2 screenshot-hidden">
@@ -196,6 +213,8 @@
 	tooltipContext={false}
 >
 	{#snippet aboveMarks({ context })}
+		{@const ringX = context.xScale(dataX)}
+		{@const ringY = context.yScale(dataY)}
 		<AnnotationPoint
 			x={dataX}
 			y={dataY}
@@ -204,16 +223,22 @@
 			labelPlacement={placement}
 			labelXOffset={xOffset}
 			labelYOffset={yOffset}
+			labelX={placement === 'smart' ? ringX + xOffset : undefined}
+			labelY={placement === 'smart' ? ringY + yOffset : undefined}
+			{fontSize}
+			{labelGap}
 			{link}
 			props={{
 				circle: { class: 'stroke-secondary' },
-				label: { class: 'fill-secondary font-bold', textAnchor, verticalAnchor }
+				label: {
+					class: 'fill-secondary font-bold',
+					// `smart` derives the anchor from geometry; otherwise use the manual controls
+					...(placement === 'smart' ? {} : { textAnchor, verticalAnchor })
+				}
 			}}
 		/>
 
 		{#if showControls}
-			{@const ringX = context.xScale(dataX)}
-			{@const ringY = context.yScale(dataY)}
 			{@const labelX = ringX + (radius * dirX) / dirMag + xOffset * signX}
 			{@const labelY = ringY + (radius * dirY) / dirMag + yOffset * signY}
 

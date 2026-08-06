@@ -16,6 +16,7 @@
 			labelPlacement: 'top',
 			labelXOffset: 20,
 			labelYOffset: 40,
+			labelGap: 0,
 			link: { type: 'beveled', radius: 15, sweep: 'vertical-horizontal' },
 			props: {
 				circle: { class: 'stroke-secondary fill-secondary/10' },

@@ -210,6 +210,12 @@ Restricts rendering to a rectangular pixel region:
 <Chart geo={{ projection: geoMercator, clipExtent: [[0, 0], [width, height]] }}>
 ```
 
+Pass `true` to clip to the chart dimensions (`[[0, 0], [width, height]]`) — e.g. to trim the `Sphere` overflow under `geoMercator`. Clips at the projection level, so it also applies to the canvas renderer and leaves non-projected marks (e.g. `Labels`) untouched:
+
+```svelte
+<Chart geo={{ projection: geoMercator, fitGeojson: countries, clipExtent: true }}>
+```
+
 ## Tooltips on maps
 
 Set `tooltip` on each `GeoPath` to wire up pointer events automatically. The default tooltipContext `manual` mode is used, where each shape calls `show`/`hide` on pointer enter/leave:
@@ -366,7 +372,7 @@ The `geo` prop on `Chart` provides the primary projection context. Use the `GeoP
 | `fitGeojson`       | `GeoPermissibleObjects`                | GeoJSON to fit the projection to                             |
 | `fixedAspectRatio` | `number`                               | Fixed aspect ratio instead of responsive chart dimensions    |
 | `clipAngle`        | `number`                               | Angular extent of visible hemisphere (degrees)               |
-| `clipExtent`       | `[[number, number], [number, number]]` | Rectangular pixel clipping region                            |
+| `clipExtent`       | `[[number, number], [number, number]] \| boolean` | Rectangular pixel clipping region (`true` = chart dimensions) |
 | `rotate`           | `{ yaw, pitch, roll }`                 | Initial rotation in degrees                                  |
 | `scale`            | `number`                               | Manual projection scale (overrides fitGeojson scale)         |
 | `translate`        | `[number, number]`                     | Manual projection translate (overrides fitGeojson translate) |

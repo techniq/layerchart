@@ -14,8 +14,10 @@
 <script lang="ts">
   import { max } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
+  import { geoArea, geoCentroid } from 'd3-geo';
   // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
+  import { polygonArea, polygonCentroid } from 'd3-polygon';
   import { pointRadial } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
@@ -24,6 +26,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { accessor } from '$lib/utils/common.js';
+  import type { VoronoiCell } from './Voronoi.shared.svelte.js';
 
   let {
     Group,
@@ -39,6 +42,7 @@
     onpointerdown,
     onpointermove,
     class: className,
+    children,
     ...restProps
   }: VoronoiBaseProps = $props();
 
@@ -85,38 +89,91 @@
   const boundHeight = $derived(Math.max(ctx.height, 0));
 
   const disableClip = $derived(r === 0 || r == null || r === Infinity);
+
+  // Compute once and share between cell rendering and the `children` cell payload
+  const voronoi = $derived(
+    geo.projection ? null : Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])
+  );
+  const geoPolygons = $derived(geo.projection ? geoVoronoi().polygons(points) : null);
+
+  // Cell geometry exposed to the `children` snippet for custom rendering (e.g. labels).
+  // Only computed when a `children` snippet is provided.
+  const cells = $derived.by<VoronoiCell[]>(() => {
+    if (!children) return [];
+
+    if (geo.projection && geoPolygons) {
+      return geoPolygons.features.map((feature: any, index: number): VoronoiCell => {
+        const projectedPoint = geo.projection?.(feature.properties.sitecoordinates) ?? null;
+        const ring: [number, number][] = (feature.geometry?.coordinates?.[0] ?? [])
+          .map((coord: [number, number]) => geo.projection?.(coord))
+          .filter((p: any): p is [number, number] => p != null);
+        const polygon = ring.length ? ring : null;
+        // Use spherical centroid/area (projected) rather than the projected ring, which
+        // tears across the antimeridian and yields a garbage centroid for large cells.
+        const projectedCentroid = geo.projection?.(geoCentroid(feature)) ?? null;
+        return {
+          data: feature.properties.site?.data,
+          index,
+          point: (projectedPoint ?? [NaN, NaN]) as [number, number],
+          polygon,
+          centroid:
+            projectedCentroid && Number.isFinite(projectedCentroid[0])
+              ? (projectedCentroid as [number, number])
+              : null,
+          // Spherical area (steradians) — see `VoronoiCell.area`
+          area: geoArea(feature),
+        };
+      });
+    }
+
+    if (voronoi) {
+      return points.map((point: any, index: number): VoronoiCell => {
+        const polygon = voronoi.cellPolygon(index) as [number, number][] | null;
+        return {
+          data: point.data,
+          index,
+          point: [point[0], point[1]],
+          polygon,
+          centroid: polygon ? polygonCentroid(polygon) : null,
+          area: polygon ? Math.abs(polygonArea(polygon)) : 0,
+        };
+      });
+    }
+
+    return [];
+  });
 </script>
 
 <Group {...restProps} class={cls('lc-voronoi-g', classes.root, className)}>
   {#if geo.projection}
-    {@const polygons = geoVoronoi().polygons(points)}
-    {#each polygons.features as feature}
-      {@const point = r ? geo.projection?.(feature.properties.sitecoordinates) : null}
-      <CircleClipPath
-        cx={point?.[0]}
-        cy={point?.[1]}
-        r={r ?? 0}
-        disabled={point == null || disableClip}
-      >
-        <GeoPath
-          geojson={feature}
-          class={['lc-voronoi-geo-path', classes.path]}
-          onclick={(e: MouseEvent) =>
-            onclick?.(e, { data: feature.properties.site.data, feature })}
-          onpointerenter={(e: PointerEvent) =>
-            onpointerenter?.(e, { data: feature.properties.site.data, feature })}
-          onpointermove={(e: PointerEvent) =>
-            onpointermove?.(e, { data: feature.properties.site.data, feature })}
-          onpointerdown={(e: PointerEvent) =>
-            onpointerdown?.(e, { data: feature.properties.site.data, feature })}
-          ontouchmove={(e: TouchEvent) => {
-            e.preventDefault();
-          }}
-        />
-      </CircleClipPath>
-    {/each}
-  {:else}
-    {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
+    {#if geoPolygons}
+      {#each geoPolygons.features as feature}
+        {@const point = r ? geo.projection?.(feature.properties.sitecoordinates) : null}
+        <CircleClipPath
+          cx={point?.[0]}
+          cy={point?.[1]}
+          r={r ?? 0}
+          disabled={point == null || disableClip}
+        >
+          <GeoPath
+            geojson={feature}
+            class={['lc-voronoi-geo-path', classes.path]}
+            onclick={(e: MouseEvent) =>
+              onclick?.(e, { data: feature.properties.site.data, feature })}
+            onpointerenter={(e: PointerEvent) =>
+              onpointerenter?.(e, { data: feature.properties.site.data, feature })}
+            onpointermove={(e: PointerEvent) =>
+              onpointermove?.(e, { data: feature.properties.site.data, feature })}
+            onpointerdown={(e: PointerEvent) =>
+              onpointerdown?.(e, { data: feature.properties.site.data, feature })}
+            ontouchmove={(e: TouchEvent) => {
+              e.preventDefault();
+            }}
+          />
+        </CircleClipPath>
+      {/each}
+    {/if}
+  {:else if voronoi}
     {#each points as point, i}
       {@const pathData = voronoi.renderCell(i)}
       {#if pathData}
@@ -139,6 +196,8 @@
       {/if}
     {/each}
   {/if}
+
+  {@render children?.({ cells })}
 </Group>
 
 <style>

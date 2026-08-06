@@ -13,14 +13,15 @@
     Text: Component<any>;
   };
 
-  export type AnnotationPointBaseProps = AnnotationPointProps &
-    AnnotationPointBaseLayerComponents;
+  export type AnnotationPointBaseProps = AnnotationPointProps & AnnotationPointBaseLayerComponents;
 </script>
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { getPointLabelLayout } from '$lib/utils/labelPlacement.js';
+  import { getPixelValue } from '../Text/Text.shared.svelte.js';
   import { cls } from '@layerstack/tailwind';
 
   let {
@@ -34,6 +35,10 @@
     labelPlacement = 'center',
     labelXOffset = 0,
     labelYOffset = 0,
+    labelX,
+    labelY,
+    fontSize = 12,
+    labelGap = 2,
     link,
     details,
     props,
@@ -55,41 +60,53 @@
     };
   });
 
-  const labelProps = $derived.by(() => {
-    const dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
-    const dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
-    const mag = Math.hypot(dirX, dirY) || 1;
-    const signX = labelPlacement.includes('left') ? -1 : 1;
-    const signY = labelPlacement.includes('top') ? -1 : 1;
+  // Where `smart`/discrete placement puts the label — shared with `getPointLabelRect`
+  // consumers (e.g. occlusion) so the measured box matches the rendered label.
+  const labelLayout = $derived(
+    getPointLabelLayout({
+      x: point.x,
+      y: point.y,
+      r,
+      labelPlacement,
+      labelX,
+      labelY,
+      labelXOffset,
+      labelYOffset,
+      fontSize: getPixelValue(fontSize),
+      labelGap,
+      link: !!link,
+      verticalAnchor: props?.label?.verticalAnchor,
+    })
+  );
 
-    return {
-      x: point.x + (r * dirX) / mag + labelXOffset * signX,
-      y: point.y + (r * dirY) / mag + labelYOffset * signY,
-      dy: -2,
-      textAnchor: labelPlacement.includes('left')
-        ? 'end'
-        : labelPlacement.includes('right')
-          ? 'start'
-          : 'middle',
-      verticalAnchor: labelPlacement.includes('top')
-        ? 'end'
-        : labelPlacement.includes('bottom')
-          ? 'start'
-          : 'middle',
-    };
-  });
+  // Render `<Text>` with the raw `fontSize` (it resolves em/etc. itself)
+  const labelProps = $derived({ ...labelLayout.text, fontSize });
 
+  // Leader `<Link>` endpoints. The target is the anchor; the source sits on the
+  // ring — following the label for `smart`, but fixed to the placement direction
+  // otherwise. Spacing to the text is handled by `labelGap` (which moves the
+  // text, not the line).
   const linkEndpoints = $derived.by(() => {
     if (!link) return null;
+    const a = labelLayout.anchor;
 
-    const dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
-    const dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
-    if (dirX === 0 && dirY === 0) return null;
+    if (labelPlacement === 'smart') {
+      const dx = a.x - point.x;
+      const dy = a.y - point.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist <= r) return null;
+      return {
+        source: { x: point.x + (r * dx) / dist, y: point.y + (r * dy) / dist },
+        target: { x: a.x, y: a.y },
+      };
+    }
 
+    const { x: dirX, y: dirY } = labelLayout.direction;
+    if (dirX === 0 && dirY === 0) return null; // labelPlacement='center' — no line
     const mag = Math.hypot(dirX, dirY);
     return {
       source: { x: point.x + (r * dirX) / mag, y: point.y + (r * dirY) / mag },
-      target: { x: labelProps.x as number, y: labelProps.y as number },
+      target: { x: a.x, y: a.y },
     };
   });
 
@@ -151,7 +168,6 @@
 <style>
   @layer components {
     :global(:where(.lc-annotation-point-label)) {
-      font-size: 12px;
       pointer-events: none;
     }
 

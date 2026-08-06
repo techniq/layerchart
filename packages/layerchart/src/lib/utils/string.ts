@@ -33,6 +33,41 @@ export const getStringWidth = memoize(_getStringWidth, {
   cacheKey: ([str, style]) => `${str}_${JSON.stringify(style)}`,
 });
 
+export type TextRectOptions = {
+  /** Horizontal placement of `x` within the text. @default 'start' */
+  textAnchor?: 'start' | 'middle' | 'end';
+  /** Vertical placement of `y` within the text. @default 'middle' */
+  verticalAnchor?: 'start' | 'middle' | 'end';
+  /** Font size (px) — measures the width and sets the height. @default 16 */
+  fontSize?: number;
+  /** Additional offset applied to `x` / `y` (matching `<Text>`'s `dx` / `dy`). */
+  dx?: number;
+  dy?: number;
+};
+
+/**
+ * Bounding box (`{ x, y, width, height }`) of `text` anchored at (`x`, `y`) — matching
+ * how `<Text>` positions it for the given `textAnchor`/`verticalAnchor`. Width is measured
+ * with the same memoized metrics as `<Text>` (falling back to a character-count estimate
+ * when the DOM is unavailable, e.g. during SSR), making it a convenient `bounds` for
+ * `occlude()`.
+ */
+export function getTextRect(text: string, x: number, y: number, options: TextRectOptions = {}) {
+  const { textAnchor = 'start', verticalAnchor = 'middle', fontSize = 16, dx = 0, dy = 0 } = options;
+  const width =
+    getStringWidth(text, { fontSize: `${fontSize}px` } as CSSStyleDeclaration) ??
+    text.length * fontSize * 0.6;
+  const height = fontSize;
+  const ax = x + dx;
+  const ay = y + dy;
+  return {
+    x: textAnchor === 'end' ? ax - width : textAnchor === 'middle' ? ax - width / 2 : ax,
+    y: verticalAnchor === 'end' ? ay - height : verticalAnchor === 'middle' ? ay - height / 2 : ay,
+    width,
+    height,
+  };
+}
+
 export type RasterizeTextOptions = {
   fontSize?: string;
   fontWeight?: number;

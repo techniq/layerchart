@@ -1,14 +1,20 @@
 import type { ComponentProps, Snippet } from 'svelte';
+import { Delaunay } from 'd3-delaunay';
+import { polygonArea, polygonCentroid } from 'd3-polygon';
 import { format as formatValue, type FormatType, type FormatConfig } from '@layerstack/utils';
 
 import type { Without } from '$lib/utils/types.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
+import { occlude } from '$lib/utils/occlusion.js';
+import { getTextRect } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { createDimensionGetter } from '$lib/utils/rect.svelte.js';
-import type { TextProps } from '../Text/Text.shared.svelte.js';
+import { getPixelValue, type TextProps } from '../Text/Text.shared.svelte.js';
+import { getPointLabelLayout, getPointLabelRect } from '$lib/utils/labelPlacement.js';
 import type { Point } from '../Points/Points.shared.svelte.js';
+import type Link from '../Link/Link.svelte';
 
 export type LabelsPropsWithoutHTML<T = any> = {
   /** Override data instead of using context */
@@ -25,13 +31,33 @@ export type LabelsPropsWithoutHTML<T = any> = {
   seriesKey?: string;
   /** @default 'outside' */
   placement?: 'inside' | 'outside' | 'middle' | 'center' | 'smart';
+  /**
+   * Global positioning algorithm applied across all labels (distinct from the
+   * per-point `placement`). `'voronoi'` orients each label towards the open space
+   * of its cell — good for scatter plots and maps.
+   */
+  layout?: 'voronoi';
+  /**
+   * Hide labels that would overlap a higher-priority (roomier-cell) one, resolving
+   * the actual boxes rather than dropping by a proxy. Requires `layout`. Pass an
+   * object to tune the spacing — e.g. `{ padding: 8 }` for a sparser result.
+   */
+  occlude?: boolean | { padding?: number };
+  /**
+   * With `layout="voronoi"`, move each label out into its cell's open space and draw
+   * a leader line back to the point (d3-ring-note / smart-labels style). Pass `true`
+   * for a straight line, or an object to configure the `<Link>`.
+   */
+  links?: boolean | Partial<ComponentProps<typeof Link>>;
   /** @default placement === 'center' || placement === 'middle' ? 0 : 4 */
   offset?: number;
   /** The format of the label */
   format?: FormatType | FormatConfig;
   /** @default (d, index) => index */
   key?: (d: T, index: number) => any;
-  children?: Snippet<[{ data: Point; textProps: TextProps }]>;
+  children?: Snippet<
+    [{ data: Point; textProps: TextProps; link?: { x1: number; y1: number; x2: number; y2: number } | null }]
+  >;
 };
 
 export type LabelsProps<T = any> = LabelsPropsWithoutHTML<T> &
@@ -221,5 +247,128 @@ export class LabelsState<T = any> {
     }
 
     return result;
+  }
+
+  /**
+   * `layout="voronoi"`: orient each label towards the open space of its Voronoi cell.
+   * With `links`, move the label out to the cell centroid and draw a leader back to the
+   * point (using AnnotationPoint's `smart` geometry). When `occlude` is set, drop labels
+   * that would overlap a roomier-cell label. Returns per-point `{ textProps, link, visible }`,
+   * index-aligned to `points`.
+   */
+  getVoronoiLabels(points: Point[]): Array<{
+    textProps: TextProps;
+    link: { x1: number; y1: number; x2: number; y2: number } | null;
+    visible: boolean;
+  }> {
+    const props = this.#getProps();
+    const offset = props.offset ?? 4;
+    const fontSize = getPixelValue(props.fontSize ?? 12);
+    const links = props.links != null && props.links !== false;
+    // Don't fling labels across the chart when a cell's centroid is distant (sparse regions)
+    const maxMove = this.ctx.width * 0.2;
+
+    // Four candidate orientations (towards the cell centroid / open space)
+    const orient = [
+      { textAnchor: 'start', dx: offset, dy: 0 },
+      { textAnchor: 'middle', dx: 0, dy: offset + fontSize / 2 },
+      { textAnchor: 'end', dx: -offset, dy: 0 },
+      { textAnchor: 'middle', dx: 0, dy: -(offset + fontSize / 2) },
+    ] as const;
+
+    const voronoi = Delaunay.from(
+      points,
+      (p) => p.x,
+      (p) => p.y
+    ).voronoi([0, 0, this.ctx.width, this.ctx.height]);
+
+    type Leader = { x1: number; y1: number; x2: number; y2: number } | null;
+
+    const candidates = points.map((point, i) => {
+      const polygon = voronoi.cellPolygon(i) as [number, number][] | null;
+      const centroid = polygon ? polygonCentroid(polygon) : [point.x, point.y];
+      const area = polygon ? Math.abs(polygonArea(polygon)) : 0;
+
+      const displayValue = props.value
+        ? accessor(props.value)(point.data)
+        : isScaleBand(this.ctx.yScale)
+          ? point.xValue
+          : point.yValue;
+      const text = String(formatValue(displayValue, props.format as FormatType));
+      const fill = typeof props.fill === 'function' ? accessor(props.fill)(point.data) : props.fill;
+
+      if (links) {
+        // Move the label into the cell's open space (unless the centroid is too far)
+        const dist = Math.hypot(centroid[0] - point.x, centroid[1] - point.y);
+        const move = polygon != null && dist > 1e-6 && dist <= maxMove;
+        const opts = {
+          x: point.x,
+          y: point.y,
+          labelPlacement: 'smart' as const,
+          labelX: move ? centroid[0] : point.x,
+          labelY: move ? centroid[1] : point.y,
+          fontSize,
+          link: move,
+        };
+        const layout = getPointLabelLayout(opts);
+        return {
+          point,
+          i,
+          area,
+          textProps: {
+            value: text,
+            fill,
+            x: layout.text.x,
+            y: layout.text.y,
+            textAnchor: layout.text.textAnchor,
+            verticalAnchor: layout.text.verticalAnchor,
+          } as TextProps,
+          box: getPointLabelRect(text, opts),
+          link: (move
+            ? { x1: point.x, y1: point.y, x2: layout.anchor.x, y2: layout.anchor.y }
+            : null) as Leader,
+        };
+      }
+
+      // Orient the label near the point, towards the open space (no leader)
+      const angle =
+        (Math.round((Math.atan2(centroid[1] - point.y, centroid[0] - point.x) / Math.PI) * 2) + 4) %
+        4;
+      const o = orient[angle];
+      return {
+        point,
+        i,
+        area,
+        textProps: {
+          value: text,
+          fill,
+          x: point.x,
+          y: point.y,
+          dx: o.dx,
+          dy: o.dy,
+          textAnchor: o.textAnchor,
+          verticalAnchor: 'middle',
+        } as TextProps,
+        box: getTextRect(text, point.x, point.y, {
+          dx: o.dx,
+          dy: o.dy,
+          textAnchor: o.textAnchor,
+          fontSize,
+        }),
+        link: null as Leader,
+      };
+    });
+
+    const occludeOn = props.occlude != null && props.occlude !== false;
+    const padding = typeof props.occlude === 'object' ? (props.occlude.padding ?? 2) : 2;
+    const visible = occludeOn
+      ? new Set(occlude(candidates, (c) => c.box, { priority: (c) => c.area, padding }).map((c) => c.i))
+      : null;
+
+    return candidates.map((c) => ({
+      textProps: c.textProps,
+      link: c.link,
+      visible: visible == null || visible.has(c.i),
+    }));
   }
 }
