@@ -54,7 +54,7 @@ Globe projections (those with a default `clipAngle`, like `geoOrthographic`) are
 
 Explore all available projections and their parameters interactively:
 
-:example{ component="GeoContext" name="projection-playground" }
+:example{ component="GeoProjection" name="projection-playground" }
 
 ## Fitting to data
 
@@ -366,19 +366,19 @@ The `geo` prop on `Chart` provides the primary projection context. Use the `GeoP
 
 ### Configuration props (`GeoStateProps`)
 
-| Prop               | Type                                   | Description                                                  |
-| ------------------ | -------------------------------------- | ------------------------------------------------------------ |
-| `projection`       | `() => GeoProjection`                  | D3 projection factory (pass uncalled, e.g. `geoMercator`)    |
-| `fitGeojson`       | `GeoPermissibleObjects`                | GeoJSON to fit the projection to                             |
-| `fixedAspectRatio` | `number`                               | Fixed aspect ratio instead of responsive chart dimensions    |
-| `clipAngle`        | `number`                               | Angular extent of visible hemisphere (degrees)               |
+| Prop               | Type                                              | Description                                                   |
+| ------------------ | ------------------------------------------------- | ------------------------------------------------------------- |
+| `projection`       | `() => GeoProjection`                             | D3 projection factory (pass uncalled, e.g. `geoMercator`)     |
+| `fitGeojson`       | `GeoPermissibleObjects`                           | GeoJSON to fit the projection to                              |
+| `fixedAspectRatio` | `number`                                          | Fixed aspect ratio instead of responsive chart dimensions     |
+| `clipAngle`        | `number`                                          | Angular extent of visible hemisphere (degrees)                |
 | `clipExtent`       | `[[number, number], [number, number]] \| boolean` | Rectangular pixel clipping region (`true` = chart dimensions) |
-| `rotate`           | `{ yaw, pitch, roll }`                 | Initial rotation in degrees                                  |
-| `scale`            | `number`                               | Manual projection scale (overrides fitGeojson scale)         |
-| `translate`        | `[number, number]`                     | Manual projection translate (overrides fitGeojson translate) |
-| `center`           | `[number, number]`                     | Projection center `[longitude, latitude]`                    |
-| `reflectX`         | `boolean`                              | Mirror the projection horizontally                           |
-| `reflectY`         | `boolean`                              | Mirror the projection vertically                             |
+| `rotate`           | `{ yaw, pitch, roll }`                            | Initial rotation in degrees                                   |
+| `scale`            | `number`                                          | Manual projection scale (overrides fitGeojson scale)          |
+| `translate`        | `[number, number]`                                | Manual projection translate (overrides fitGeojson translate)  |
+| `center`           | `[number, number]`                                | Projection center `[longitude, latitude]`                     |
+| `reflectX`         | `boolean`                                         | Mirror the projection horizontally                            |
+| `reflectY`         | `boolean`                                         | Mirror the projection vertically                              |
 
 ## Quick reference
 
@@ -406,8 +406,7 @@ The `geo` prop on `Chart` provides the primary projection context. Use the `GeoP
 
 ## API reference
 
-- [GeoContext](/docs/components/GeoContext) — projection context component (also available via `<Chart geo={...}>`)
-- [GeoProjection](/docs/components/GeoProjection) — secondary projection context component
+- [GeoProjection](/docs/components/GeoProjection) — projection context component (also available via `<Chart geo={...}>`, or as a secondary projection context)
 - [GeoPath](/docs/components/GeoPath) — geographic shape rendering
 - [GeoPoint](/docs/components/GeoPoint) — geographic point plotting
 - [GeoTile](/docs/components/GeoTile) — raster map tiles

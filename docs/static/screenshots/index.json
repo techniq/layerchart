@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-06T14:43:18.289Z",
-  "totalComponents": 79,
-  "totalExamples": 933,
+  "generatedAt": "2026-08-06T14:50:38.005Z",
+  "totalComponents": 78,
+  "totalExamples": 929,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2480,31 +2480,6 @@
           "name": "basic",
           "path": "/example/GeoClipPath/basic",
           "checksum": "0745bb4e56c3ce8bd744512e53de1b94"
-        }
-      ]
-    },
-    {
-      "component": "GeoContext",
-      "examples": [
-        {
-          "name": "geojson-preview",
-          "path": "/example/GeoContext/geojson-preview",
-          "checksum": "7fc910df49f0784e47e82d1280039f8e"
-        },
-        {
-          "name": "projection-playground",
-          "path": "/example/GeoContext/projection-playground",
-          "checksum": "d20a4b281420c09dbf164510a76f5e62"
-        },
-        {
-          "name": "shapefile-preview",
-          "path": "/example/GeoContext/shapefile-preview",
-          "checksum": "f3002409d0332392fea5cd6a724caf9f"
-        },
-        {
-          "name": "topojson-preview",
-          "path": "/example/GeoContext/topojson-preview",
-          "checksum": "004ec49b553676159a206b09847f3f43"
         }
       ]
     },

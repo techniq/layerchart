@@ -2232,34 +2232,6 @@
       "line": "<Chart"
     },
     {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 90,
-      "line": "<Chart"
-    },
-    {
-      "example": "projection-playground",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 62,
-      "line": "<Chart"
-    },
-    {
-      "example": "shapefile-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/shapefile-preview",
-      "lineNumber": 106,
-      "line": "<Chart"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 98,
-      "line": "<Chart"
-    },
-    {
       "example": "basic",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/basic",
@@ -2522,7 +2494,7 @@
       "example": "shapefile-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/shapefile-preview",
-      "lineNumber": 106,
+      "lineNumber": 118,
       "line": "<Chart"
     },
     {
@@ -4521,5 +4493,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:31.477Z"
+  "updatedAt": "2026-08-06T14:50:43.928Z"
 }

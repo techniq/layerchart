@@ -170,62 +170,6 @@
   "usage": [
     {
       "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 106,
-      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
-    },
-    {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 107,
-      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
-    },
-    {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 108,
-      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
-    },
-    {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 109,
-      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 113,
-      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 114,
-      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 115,
-      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 116,
-      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
-    },
-    {
-      "example": "geojson-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/geojson-preview",
       "lineNumber": 105,
@@ -337,5 +281,5 @@
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:25.374Z"
+  "updatedAt": "2026-08-06T14:44:37.930Z"
 }

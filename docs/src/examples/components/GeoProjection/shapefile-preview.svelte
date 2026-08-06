@@ -80,7 +80,9 @@
 							<Menu {open} on:close={toggle} placement="bottom-end">
 								<MenuItem
 									on:click={() => {
-										loadFile('https://cdn.jsdelivr.net/gh/mbostock/shapefile@master/test/points.shp');
+										loadFile(
+											'https://cdn.jsdelivr.net/gh/mbostock/shapefile@master/test/points.shp'
+										);
 									}}
 								>
 									Load basic example

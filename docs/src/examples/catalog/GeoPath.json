@@ -817,41 +817,6 @@
       "line": "<GeoPath geojson={nation} class=\"fill-none stroke-surface-content\" />"
     },
     {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 118,
-      "line": "<GeoPath"
-    },
-    {
-      "example": "projection-playground",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 75,
-      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
-    },
-    {
-      "example": "projection-playground",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 78,
-      "line": "<GeoPath"
-    },
-    {
-      "example": "shapefile-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/shapefile-preview",
-      "lineNumber": 113,
-      "line": "<GeoPath {geojson} fill=\"white\" />"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 125,
-      "line": "<GeoPath"
-    },
-    {
       "example": "basic",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/basic",
@@ -1387,7 +1352,7 @@
       "example": "shapefile-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/shapefile-preview",
-      "lineNumber": 113,
+      "lineNumber": 125,
       "line": "<GeoPath {geojson} fill=\"white\" />"
     },
     {
@@ -1643,5 +1608,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:33.225Z"
+  "updatedAt": "2026-08-06T14:50:45.720Z"
 }

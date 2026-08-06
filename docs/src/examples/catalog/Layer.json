@@ -1900,48 +1900,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 104,
-      "line": "<Layer>"
-    },
-    {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 115,
-      "line": "<Layer>"
-    },
-    {
-      "example": "projection-playground",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 74,
-      "line": "<Layer>"
-    },
-    {
-      "example": "shapefile-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/shapefile-preview",
-      "lineNumber": 112,
-      "line": "<Layer>"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 111,
-      "line": "<Layer>"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 122,
-      "line": "<Layer>"
-    },
-    {
       "example": "basic",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/basic",
@@ -2302,7 +2260,7 @@
       "example": "shapefile-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/shapefile-preview",
-      "lineNumber": 112,
+      "lineNumber": 124,
       "line": "<Layer>"
     },
     {
@@ -4315,5 +4273,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:34.326Z"
+  "updatedAt": "2026-08-06T14:50:46.981Z"
 }

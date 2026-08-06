@@ -57,13 +57,6 @@
       "line": "<Graticule class=\"stroke-primary/30\" />"
     },
     {
-      "example": "projection-playground",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 76,
-      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
-    },
-    {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
@@ -246,5 +239,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:25.487Z"
+  "updatedAt": "2026-08-06T14:44:37.980Z"
 }

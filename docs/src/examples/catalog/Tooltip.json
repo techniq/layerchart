@@ -4767,55 +4767,6 @@
       "line": "<Tooltip.Item label=\"Magnitude\" value={data.magnitude} format=\"decimal\" />"
     },
     {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 128,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 130,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "geojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/geojson-preview",
-      "lineNumber": 132,
-      "line": "<Tooltip.Item label={key} {value} />"
-    },
-    {
-      "example": "projection-playground",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 86,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 135,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 137,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "topojson-preview",
-      "component": "GeoContext",
-      "path": "/docs/components/GeoContext/topojson-preview",
-      "lineNumber": 139,
-      "line": "<Tooltip.Item label={key} {value} />"
-    },
-    {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
@@ -7910,5 +7861,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:03.849Z"
+  "updatedAt": "2026-08-06T14:44:39.384Z"
 }
