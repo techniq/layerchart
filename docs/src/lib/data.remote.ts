@@ -590,13 +590,6 @@ export const getProgrammingLanguages = prerender(async () => {
 	return data;
 });
 
-export const getShapeData = query(z.string().nullable(), async (file) => {
-	if (!file) return null;
-	const { fetch } = getRequestEvent();
-	const geojson = await fetch(file).then((r) => r.json());
-	return geojson;
-});
-
 export type TdfStageData = { long: number; lat: number; elev: number }[];
 
 export const getTdfStage = prerender(async () => {

@@ -1,8 +1,3 @@
-<script module lang="ts">
-	import { getShapeData } from '$lib/data.remote.js';
-	let data = await getShapeData(null);
-</script>
-
 <script lang="ts">
 	import {
 		geoAlbersUsa,
@@ -30,11 +25,30 @@
 	} from 'svelte-ux';
 
 	import LucideChevronDown from '~icons/lucide/chevron-down';
-	import { goto } from '$app/navigation';
 
-	let file = $state(data.file);
+	let file = $state('');
+	let geojson = $state<GeoJSON.FeatureCollection | null>(null);
+	let loading = $state(false);
+	let error = $state('');
 
-	const geojson = $derived(data.geojson);
+	async function loadFile(url = file) {
+		file = url;
+		if (!url) return;
+
+		loading = true;
+		error = '';
+		try {
+			// Imported lazily so the shapefile parser is only fetched (and only ever runs) in the browser
+			const { read } = await import('shapefile');
+			// Reads the binary `.shp` along with the sibling `.dbf` (feature properties), if available
+			geojson = await read(url);
+		} catch (e) {
+			geojson = null;
+			error = e instanceof Error ? e.message : 'Unable to read shapefile';
+		} finally {
+			loading = false;
+		}
+	}
 
 	let projection = $state(geoIdentity as unknown as () => GeoProjection);
 	const projections = [
@@ -47,10 +61,6 @@
 		{ label: 'Natural Earth', value: geoNaturalEarth1 },
 		{ label: 'Orthographic', value: geoOrthographic }
 	];
-
-	function loadFile() {
-		goto(`?file=${file}`);
-	}
 </script>
 
 <div class="grid gap-2">
@@ -58,28 +68,28 @@
 		<TextField
 			label="File"
 			bind:value={file}
+			{error}
 			placeholder="Please specify a file or load an example"
 		>
 			<div slot="append">
 				<ButtonGroup variant="fill-outline" color="primary">
-					<Button on:click={() => loadFile()}>Load file</Button>
+					<Button {loading} on:click={() => loadFile()}>Load file</Button>
 					<Toggle let:on={open} let:toggle>
 						<span class="flex">
 							<Button icon={LucideChevronDown} on:click={toggle} rounded class="px-1" />
 							<Menu {open} on:close={toggle} placement="bottom-end">
 								<MenuItem
 									on:click={() => {
-										file = 'https://cdn.rawgit.com/mbostock/shapefile/master/test/points.shp';
-										loadFile();
+										loadFile('https://cdn.jsdelivr.net/gh/mbostock/shapefile@master/test/points.shp');
 									}}
 								>
 									Load basic example
 								</MenuItem>
 								<MenuItem
 									on:click={() => {
-										file =
-											'https://cdn.rawgit.com/matplotlib/basemap/v1.1.0/lib/mpl_toolkits/basemap/data/UScounties.shp';
-										loadFile();
+										loadFile(
+											'https://cdn.jsdelivr.net/gh/matplotlib/basemap@v1.1.0/lib/mpl_toolkits/basemap/data/UScounties.shp'
+										);
 									}}
 								>
 									Load complex example

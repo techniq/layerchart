@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T14:18:15.051Z",
+  "generatedAt": "2026-08-06T14:43:18.289Z",
   "totalComponents": 79,
   "totalExamples": 933,
   "components": [
@@ -2499,7 +2499,7 @@
         {
           "name": "shapefile-preview",
           "path": "/example/GeoContext/shapefile-preview",
-          "checksum": "14817e4e8b57e18999de9b2be22ddc37"
+          "checksum": "f3002409d0332392fea5cd6a724caf9f"
         },
         {
           "name": "topojson-preview",
@@ -2714,7 +2714,7 @@
         {
           "name": "shapefile-preview",
           "path": "/example/GeoProjection/shapefile-preview",
-          "checksum": "14817e4e8b57e18999de9b2be22ddc37"
+          "checksum": "f3002409d0332392fea5cd6a724caf9f"
         },
         {
           "name": "topojson-preview",

@@ -89,6 +89,7 @@
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.1.0",
 		"runed": "^0.37.1",
+		"shapefile": "^0.6.6",
 		"solar-calculator": "^0.3.0",
 		"svelte": "5.56.1",
 		"svelte-check": "^4.5.0",
