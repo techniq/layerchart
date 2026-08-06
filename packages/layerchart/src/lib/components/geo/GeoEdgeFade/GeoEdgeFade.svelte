@@ -1,5 +1,8 @@
 <script lang="ts" module>
-  export type { GeoEdgeFadeProps, GeoEdgeFadePropsWithoutHTML } from './GeoEdgeFade.shared.svelte.js';
+  export type {
+    GeoEdgeFadeProps,
+    GeoEdgeFadePropsWithoutHTML,
+  } from './GeoEdgeFade.shared.svelte.js';
 </script>
 
 <script lang="ts">

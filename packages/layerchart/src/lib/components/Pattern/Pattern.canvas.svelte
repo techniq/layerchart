@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    PatternProps,
-    PatternPropsWithoutHTML,
-  } from './Pattern.shared.svelte.js';
+  export type { PatternProps, PatternPropsWithoutHTML } from './Pattern.shared.svelte.js';
 </script>
 
 <script lang="ts">

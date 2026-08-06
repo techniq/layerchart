@@ -15,16 +15,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
-  let {
-    Rect,
-    Circle,
-    Group,
-    shape = 'rect',
-    r,
-    x,
-    y,
-    ...restProps
-  }: CellBaseProps = $props();
+  let { Rect, Circle, Group, shape = 'rect', r, x, y, ...restProps }: CellBaseProps = $props();
 
   const chartCtx = getChartContext();
   const cellWidth = $derived(isScaleBand(chartCtx.xScale) ? chartCtx.xScale.bandwidth() : 0);

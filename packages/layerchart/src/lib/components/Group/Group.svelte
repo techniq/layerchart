@@ -1,11 +1,11 @@
 <script lang="ts" module>
-  export type {
-    GroupProps,
-    GroupPropsWithoutHTML,
-  } from './Group.shared.svelte.js';
+  export type { GroupProps, GroupPropsWithoutHTML } from './Group.shared.svelte.js';
 </script>
 
-<script lang="ts" generics="T extends import('$lib/utils/types.js').Transition = import('$lib/utils/types.js').Transition">
+<script
+  lang="ts"
+  generics="T extends import('$lib/utils/types.js').Transition = import('$lib/utils/types.js').Transition"
+>
   import { getLayerContext } from '$lib/contexts/layer.js';
   import GroupSvg from './Group.svg.svelte';
   import GroupCanvas from './Group.canvas.svelte';

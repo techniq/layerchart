@@ -4,11 +4,7 @@ import type { HTMLAttributes } from 'svelte/elements';
 
 import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
 import type { DataProp } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import {
   createMotion,

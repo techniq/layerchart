@@ -1,5 +1,8 @@
 <script lang="ts" module>
-  export type { ChartClipPathProps, ChartClipPathPropsWithoutHTML } from './ChartClipPath.shared.svelte.js';
+  export type {
+    ChartClipPathProps,
+    ChartClipPathPropsWithoutHTML,
+  } from './ChartClipPath.shared.svelte.js';
 </script>
 
 <script lang="ts">

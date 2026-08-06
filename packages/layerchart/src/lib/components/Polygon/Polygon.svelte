@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    PolygonProps,
-    PolygonPropsWithoutHTML,
-  } from './Polygon.shared.svelte.js';
+  export type { PolygonProps, PolygonPropsWithoutHTML } from './Polygon.shared.svelte.js';
 </script>
 
 <script lang="ts">

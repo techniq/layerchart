@@ -1,9 +1,6 @@
 <script lang="ts" module>
   // Re-export so existing `import type { RectProps } from 'layerchart'` keeps working.
-  export type {
-    RectProps,
-    RectPropsWithoutHTML,
-  } from './Rect.shared.svelte.js';
+  export type { RectProps, RectPropsWithoutHTML } from './Rect.shared.svelte.js';
 </script>
 
 <script lang="ts">

@@ -9,8 +9,7 @@
     Text: Component<any>;
   };
 
-  export type AnnotationRangeBaseProps = AnnotationRangeProps &
-    AnnotationRangeBaseLayerComponents;
+  export type AnnotationRangeBaseProps = AnnotationRangeProps & AnnotationRangeBaseLayerComponents;
 </script>
 
 <script lang="ts">

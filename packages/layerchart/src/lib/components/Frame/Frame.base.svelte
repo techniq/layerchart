@@ -13,12 +13,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  let {
-    Rect,
-    ref: refProp = $bindable(),
-    full = false,
-    ...restProps
-  }: FrameBaseProps = $props();
+  let { Rect, ref: refProp = $bindable(), full = false, ...restProps }: FrameBaseProps = $props();
 
   let ref = $state<SVGRectElement>();
   $effect.pre(() => {

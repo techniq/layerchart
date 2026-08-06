@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    EllipseProps,
-    EllipsePropsWithoutHTML,
-  } from './Ellipse.shared.svelte.js';
+  export type { EllipseProps, EllipsePropsWithoutHTML } from './Ellipse.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -20,9 +17,7 @@
     ...rest
   }: EllipseProps = $props();
 
-  const c = new EllipseState(
-    () => ({ cx, cy, rx: rxProp, ry: ryProp, ...rest }) as EllipseProps
-  );
+  const c = new EllipseState(() => ({ cx, cy, rx: rxProp, ry: ryProp, ...rest }) as EllipseProps);
 
   let ref = $state<SVGEllipseElement>();
 

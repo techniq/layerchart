@@ -1,10 +1,7 @@
 <script lang="ts" module>
   // Re-export types from the shared module so existing
   // `import type { CircleProps } from 'layerchart'` keeps working.
-  export type {
-    CircleProps,
-    CirclePropsWithoutHTML,
-  } from './Circle.shared.svelte.js';
+  export type { CircleProps, CirclePropsWithoutHTML } from './Circle.shared.svelte.js';
 </script>
 
 <script lang="ts">

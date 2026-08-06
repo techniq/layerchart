@@ -69,7 +69,9 @@
   // Make the `fontSize` prop win over the `.lc-labels-text` CSS default (a bare
   // `font-size` attribute would lose to the class rule).
   const fontSizeVar = $derived(
-    restProps.fontSize != null ? `--labels-font-size: ${getPixelValue(restProps.fontSize)}px` : undefined
+    restProps.fontSize != null
+      ? `--labels-font-size: ${getPixelValue(restProps.fontSize)}px`
+      : undefined
   );
 </script>
 

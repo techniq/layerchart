@@ -71,9 +71,7 @@ export class PointsState {
     });
   }
 
-  series = $derived(
-    this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey)
-  );
+  series = $derived(this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey));
   seriesAccessor = $derived(
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
@@ -105,12 +103,7 @@ export class PointsState {
 
   pointsData = $derived(this.#getProps().data ?? this.series?.data ?? this.ctx.data);
 
-  #getOffset(
-    value: any,
-    offset: Offset,
-    scale: AnyScale,
-    subScale?: AnyScale
-  ): number {
+  #getOffset(value: any, offset: Offset, scale: AnyScale, subScale?: AnyScale): number {
     const seriesKey = this.#getProps().seriesKey;
     if (typeof offset === 'function') {
       return offset(value, this.ctx);
@@ -156,7 +149,7 @@ export class PointsState {
     return {
       x: this.ctx.radial ? radialPoint[0] : x,
       y: this.ctx.radial ? radialPoint[1] : y,
-      r: this.ctx.config.r ? this.ctx.rGet(d) : props.r ?? 5,
+      r: this.ctx.config.r ? this.ctx.rGet(d) : (props.r ?? 5),
       xValue: xVal,
       yValue: yVal,
       data: d,
@@ -172,9 +165,7 @@ export class PointsState {
       if (Array.isArray(xValue)) {
         return xValue
           .filter(Boolean)
-          .map((xVal: number, i: number) =>
-            this.#getPointObject(xVal, yValue as number, d, i)
-          );
+          .map((xVal: number, i: number) => this.#getPointObject(xVal, yValue as number, d, i));
       } else if (Array.isArray(yValue)) {
         return yValue
           .filter(Boolean)

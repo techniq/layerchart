@@ -1,5 +1,8 @@
 <script lang="ts" module>
-  export type { GeoClipPathProps, GeoClipPathPropsWithoutHTML } from './GeoClipPath.shared.svelte.js';
+  export type {
+    GeoClipPathProps,
+    GeoClipPathPropsWithoutHTML,
+  } from './GeoClipPath.shared.svelte.js';
 </script>
 
 <script lang="ts">

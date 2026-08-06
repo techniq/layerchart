@@ -53,7 +53,13 @@ export type TextRectOptions = {
  * `occlude()`.
  */
 export function getTextRect(text: string, x: number, y: number, options: TextRectOptions = {}) {
-  const { textAnchor = 'start', verticalAnchor = 'middle', fontSize = 16, dx = 0, dy = 0 } = options;
+  const {
+    textAnchor = 'start',
+    verticalAnchor = 'middle',
+    fontSize = 16,
+    dx = 0,
+    dy = 0,
+  } = options;
   const width =
     getStringWidth(text, { fontSize: `${fontSize}px` } as CSSStyleDeclaration) ??
     text.length * fontSize * 0.6;

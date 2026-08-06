@@ -1,9 +1,5 @@
 <script lang="ts" module>
-  export type {
-    TextProps,
-    TextPropsWithoutHTML,
-    TextSegment,
-  } from './Text.shared.svelte.js';
+  export type { TextProps, TextPropsWithoutHTML, TextSegment } from './Text.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -13,12 +9,7 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { degreesToRadians } from '$lib/utils/math.js';
-  import {
-    TextState,
-    textMarkInfo,
-    getPixelValue,
-    type TextProps,
-  } from './Text.shared.svelte.js';
+  import { TextState, textMarkInfo, getPixelValue, type TextProps } from './Text.shared.svelte.js';
 
   let { ...rest }: TextProps = $props();
 
@@ -53,14 +44,10 @@
             ...(rest.fontSize != null
               ? {
                   fontSize:
-                    typeof rest.fontSize === 'number'
-                      ? `${rest.fontSize}px`
-                      : rest.fontSize,
+                    typeof rest.fontSize === 'number' ? `${rest.fontSize}px` : rest.fontSize,
                 }
               : {}),
-            ...((rest.textAnchor ?? 'start') !== 'start'
-              ? { textAnchor: rest.textAnchor }
-              : {}),
+            ...((rest.textAnchor ?? 'start') !== 'start' ? { textAnchor: rest.textAnchor } : {}),
           },
           classes: cls('lc-text', itemClass ?? c.staticClassName),
           style: (rest as any).style as string | undefined,
@@ -84,8 +71,7 @@
       const baseStyles = getTextStyles(styleOverrides);
       const computedStyles = getComputedStyles(ctx.canvas, baseStyles);
       ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
-      const textAlign =
-        textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+      const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
       ctx.textAlign = textAlign;
 
       for (const item of c.resolvedItems) {
@@ -140,8 +126,7 @@
       const computedStyles = getComputedStyles(ctx.canvas, styles);
       ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
 
-      const textAlign =
-        textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+      const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
       ctx.textAlign = textAlign;
 
       if (rest.segments) {

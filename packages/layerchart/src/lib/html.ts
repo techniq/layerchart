@@ -23,7 +23,10 @@ export type {
 export { default as ChartChildren } from './components/ChartChildren/ChartChildren.html.svelte';
 export type { ChartChildrenProps } from './components/ChartChildren/ChartChildren.shared.svelte.js';
 export { default as Circle } from './components/Circle/Circle.html.svelte';
-export type { CircleProps, CirclePropsWithoutHTML } from './components/Circle/Circle.shared.svelte.js';
+export type {
+  CircleProps,
+  CirclePropsWithoutHTML,
+} from './components/Circle/Circle.shared.svelte.js';
 export { default as Text } from './components/Text/Text.html.svelte';
 export type {
   TextProps,
@@ -31,15 +34,9 @@ export type {
   TextSegment,
 } from './components/Text/Text.shared.svelte.js';
 export { default as Rect } from './components/Rect/Rect.html.svelte';
-export type {
-  RectProps,
-  RectPropsWithoutHTML,
-} from './components/Rect/Rect.shared.svelte.js';
+export type { RectProps, RectPropsWithoutHTML } from './components/Rect/Rect.shared.svelte.js';
 export { default as Line } from './components/Line/Line.html.svelte';
-export type {
-  LineProps,
-  LinePropsWithoutHTML,
-} from './components/Line/Line.shared.svelte.js';
+export type { LineProps, LinePropsWithoutHTML } from './components/Line/Line.shared.svelte.js';
 export { default as ClipPath } from './components/ClipPath/ClipPath.html.svelte';
 export type {
   ClipPathProps,
@@ -51,10 +48,7 @@ export type {
   LinearGradientPropsWithoutHTML,
 } from './components/LinearGradient/LinearGradient.shared.svelte.js';
 export { default as Group } from './components/Group/Group.html.svelte';
-export type {
-  GroupProps,
-  GroupPropsWithoutHTML,
-} from './components/Group/Group.shared.svelte.js';
+export type { GroupProps, GroupPropsWithoutHTML } from './components/Group/Group.shared.svelte.js';
 export { default as Pattern } from './components/Pattern/Pattern.html.svelte';
 export type {
   PatternProps,
@@ -66,25 +60,13 @@ export type {
   EllipsePropsWithoutHTML,
 } from './components/Ellipse/Ellipse.shared.svelte.js';
 export { default as Image } from './components/Image/Image.html.svelte';
-export type {
-  ImageProps,
-  ImagePropsWithoutHTML,
-} from './components/Image/Image.shared.svelte.js';
+export type { ImageProps, ImagePropsWithoutHTML } from './components/Image/Image.shared.svelte.js';
 export { default as Axis } from './components/Axis/Axis.html.svelte';
-export type {
-  AxisProps,
-  AxisPropsWithoutHTML,
-} from './components/Axis/Axis.shared.svelte.js';
+export type { AxisProps, AxisPropsWithoutHTML } from './components/Axis/Axis.shared.svelte.js';
 export { default as Rule } from './components/Rule/Rule.html.svelte';
-export type {
-  RuleProps,
-  RulePropsWithoutHTML,
-} from './components/Rule/Rule.shared.svelte.js';
+export type { RuleProps, RulePropsWithoutHTML } from './components/Rule/Rule.shared.svelte.js';
 export { default as Grid } from './components/Grid/Grid.html.svelte';
-export type {
-  GridProps,
-  GridPropsWithoutHTML,
-} from './components/Grid/Grid.shared.svelte.js';
+export type { GridProps, GridPropsWithoutHTML } from './components/Grid/Grid.shared.svelte.js';
 export { default as Highlight } from './components/Highlight/Highlight.html.svelte';
 export type {
   HighlightProps,
@@ -114,10 +96,7 @@ export type {
   LabelsPropsWithoutHTML,
 } from './components/Labels/Labels.shared.svelte.js';
 export { default as Frame } from './components/Frame/Frame.html.svelte';
-export type {
-  FrameProps,
-  FramePropsWithoutHTML,
-} from './components/Frame/Frame.shared.svelte.js';
+export type { FrameProps, FramePropsWithoutHTML } from './components/Frame/Frame.shared.svelte.js';
 export { default as Cell } from './components/Cell/Cell.html.svelte';
 export type { CellProps } from './components/Cell/Cell.shared.svelte.js';
 export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.html.svelte';

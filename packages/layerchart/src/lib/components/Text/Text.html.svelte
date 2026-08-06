@@ -1,9 +1,5 @@
 <script lang="ts" module>
-  export type {
-    TextProps,
-    TextPropsWithoutHTML,
-    TextSegment,
-  } from './Text.shared.svelte.js';
+  export type { TextProps, TextPropsWithoutHTML, TextSegment } from './Text.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -46,9 +42,7 @@
       {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
       style:white-space="pre-wrap"
       style:line-height={rest.lineHeight ?? '1em'}
-      style:font-size={typeof rest.fontSize === 'number'
-        ? `${rest.fontSize}px`
-        : rest.fontSize}
+      style:font-size={typeof rest.fontSize === 'number' ? `${rest.fontSize}px` : rest.fontSize}
       style:color={resolvedFill}
       style:opacity={resolvedOpacity ?? resolvedFillOpacity}
       class={['lc-text', resolvedClass]}
@@ -77,9 +71,7 @@
     {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
     style:white-space="pre-wrap"
     style:line-height={rest.lineHeight ?? '1em'}
-    style:font-size={typeof rest.fontSize === 'number'
-      ? `${rest.fontSize}px`
-      : rest.fontSize}
+    style:font-size={typeof rest.fontSize === 'number' ? `${rest.fontSize}px` : rest.fontSize}
     style:color={c.staticFill}
     style:opacity={c.staticOpacity ?? c.staticFillOpacity}
     class={['lc-text', c.staticClassName]}

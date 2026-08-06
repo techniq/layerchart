@@ -3,11 +3,7 @@ import type { SVGAttributes } from 'svelte/elements';
 
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
@@ -107,15 +103,35 @@ export class EllipseState {
       return {
         cx: projX,
         cy: projY,
-        rx: resolveDataProp(props.rx, d, this.chartCtx.rScale, typeof props.rx === 'number' ? props.rx : 1),
-        ry: resolveDataProp(props.ry, d, this.chartCtx.rScale, typeof props.ry === 'number' ? props.ry : 1),
+        rx: resolveDataProp(
+          props.rx,
+          d,
+          this.chartCtx.rScale,
+          typeof props.rx === 'number' ? props.rx : 1
+        ),
+        ry: resolveDataProp(
+          props.ry,
+          d,
+          this.chartCtx.rScale,
+          typeof props.ry === 'number' ? props.ry : 1
+        ),
       };
     }
     return {
       cx: resolveDataProp(props.cx, d, this.chartCtx.xScale, 0),
       cy: resolveDataProp(props.cy, d, this.chartCtx.yScale, 0),
-      rx: resolveDataProp(props.rx, d, this.chartCtx.rScale, typeof props.rx === 'number' ? props.rx : 1),
-      ry: resolveDataProp(props.ry, d, this.chartCtx.rScale, typeof props.ry === 'number' ? props.ry : 1),
+      rx: resolveDataProp(
+        props.rx,
+        d,
+        this.chartCtx.rScale,
+        typeof props.rx === 'number' ? props.rx : 1
+      ),
+      ry: resolveDataProp(
+        props.ry,
+        d,
+        this.chartCtx.rScale,
+        typeof props.ry === 'number' ? props.ry : 1
+      ),
     };
   }
 
@@ -155,9 +171,7 @@ export class EllipseState {
       : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number'
-      ? (this.#getProps().opacity as number)
-      : undefined
+    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
   );
   staticClassName = $derived(
     typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined

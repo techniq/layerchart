@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    LineProps,
-    LinePropsWithoutHTML,
-  } from './Line.shared.svelte.js';
+  export type { LineProps, LinePropsWithoutHTML } from './Line.shared.svelte.js';
 </script>
 
 <script lang="ts">

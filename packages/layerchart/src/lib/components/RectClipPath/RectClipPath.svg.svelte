@@ -1,5 +1,8 @@
 <script lang="ts" module>
-  export type { RectClipPathProps, RectClipPathPropsWithoutHTML } from './RectClipPath.shared.svelte.js';
+  export type {
+    RectClipPathProps,
+    RectClipPathPropsWithoutHTML,
+  } from './RectClipPath.shared.svelte.js';
 </script>
 
 <script lang="ts">

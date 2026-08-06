@@ -50,7 +50,7 @@
     return geoCurvePath(projection, curve);
   });
 
-  const pathData = $derived(geojson ? geoPath?.(geojson) ?? '' : '');
+  const pathData = $derived(geojson ? (geoPath?.(geojson) ?? '') : '');
 
   function _onClick(e: MouseEvent) {
     onclick?.(e, geoPath);

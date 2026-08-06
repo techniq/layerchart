@@ -52,11 +52,7 @@
         {#if Array.isArray(stop)}
           <stop offset={stop[0]} stop-color={stop[1]} class={stopClass} />
         {:else}
-          <stop
-            offset="{i * (100 / (stops.length - 1))}%"
-            stop-color={stop}
-            class={stopClass}
-          />
+          <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} class={stopClass} />
         {/if}
       {/each}
     {/if}

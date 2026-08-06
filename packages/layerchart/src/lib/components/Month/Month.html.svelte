@@ -1,9 +1,5 @@
 <script lang="ts" module>
-  export type {
-    MonthProps,
-    MonthPropsWithoutHTML,
-    MonthCell,
-  } from './Month.shared.svelte.js';
+  export type { MonthProps, MonthPropsWithoutHTML, MonthCell } from './Month.shared.svelte.js';
 </script>
 
 <script lang="ts">

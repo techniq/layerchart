@@ -1,10 +1,6 @@
 <script lang="ts" module>
   // Re-export so existing `import type { TextProps } from 'layerchart'` keeps working.
-  export type {
-    TextProps,
-    TextPropsWithoutHTML,
-    TextSegment,
-  } from './Text.shared.svelte.js';
+  export type { TextProps, TextPropsWithoutHTML, TextSegment } from './Text.shared.svelte.js';
   export { isTextDataProp } from './Text.shared.svelte.js';
 </script>
 

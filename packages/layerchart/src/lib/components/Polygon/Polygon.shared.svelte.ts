@@ -4,11 +4,7 @@ import { interpolatePath } from 'd3-interpolate-path';
 
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import { polygon } from '$lib/utils/shape.js';
 import { roundedPolygonPath } from '$lib/utils/path.js';
@@ -84,9 +80,7 @@ export class PolygonState {
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
-  dataMode = $derived(
-    hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r)
-  );
+  dataMode = $derived(hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r));
 
   resolvedData: any[] = $derived(
     this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
@@ -220,9 +214,7 @@ export class PolygonState {
       : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number'
-      ? (this.#getProps().opacity as number)
-      : undefined
+    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
   );
   staticClassName = $derived(
     typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
@@ -279,7 +271,12 @@ export class PolygonState {
           activeKeys.add(key);
           let resolvedCx: number, resolvedCy: number;
           if (this.geo.projection) {
-            [resolvedCx, resolvedCy] = resolveGeoDataPair(props.cx, props.cy, d, this.geo.projection);
+            [resolvedCx, resolvedCy] = resolveGeoDataPair(
+              props.cx,
+              props.cy,
+              d,
+              this.geo.projection
+            );
           } else {
             resolvedCx = resolveDataProp(props.cx, d, this.chartCtx.xScale, 0);
             resolvedCy = resolveDataProp(props.cy, d, this.chartCtx.yScale, 0);
@@ -290,9 +287,7 @@ export class PolygonState {
             this.chartCtx.rScale,
             typeof props.r === 'number' ? props.r : 1
           );
-          untrack(() =>
-            motionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR })
-          );
+          untrack(() => motionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR }));
         }
         untrack(() => motionMap.cleanup(activeKeys));
       });

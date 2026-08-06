@@ -1,11 +1,6 @@
 import type { ComponentProps } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
-import {
-  type Area as D3Area,
-  area as d3Area,
-  areaRadial,
-  type CurveFactory,
-} from 'd3-shape';
+import { type Area as D3Area, area as d3Area, areaRadial, type CurveFactory } from 'd3-shape';
 import { min } from 'd3-array';
 import { interpolatePath } from 'd3-interpolate-path';
 
@@ -85,12 +80,14 @@ export class AreaState {
         }
       : undefined;
 
-    this.#tweenState = createMotion(this.#defaultPathData(tweenOptions), () => this.d, tweenOptions);
+    this.#tweenState = createMotion(
+      this.#defaultPathData(tweenOptions),
+      () => this.d,
+      tweenOptions
+    );
   }
 
-  series = $derived(
-    this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey)
-  );
+  series = $derived(this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey));
   seriesData = $derived(this.series?.data);
   seriesAccessor = $derived(
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)

@@ -73,9 +73,7 @@
   const chartCtx = getChartContext();
   const geo = getGeoContext();
 
-  const resolvedData: any[] = $derived(
-    dataMode ? dataProp ?? chartDataArray(chartCtx.data) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   function resolveVector(d: any) {
     let resolvedX: number, resolvedY: number;
@@ -95,7 +93,7 @@
         typeof lengthProp === 'number' ? lengthProp : 12
       ),
       rotate:
-        typeof rotateProp === 'number' ? rotateProp : extractRawDataValue(rotateProp, d) ?? 0,
+        typeof rotateProp === 'number' ? rotateProp : (extractRawDataValue(rotateProp, d) ?? 0),
     };
   }
 

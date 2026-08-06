@@ -3,10 +3,7 @@ import type { SVGAttributes } from 'svelte/elements';
 
 import type { Without } from '$lib/utils/types.js';
 import type { DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-import {
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { get } from '@layerstack/utils';
@@ -304,10 +301,7 @@ export function resolveCapHeight(
 }
 
 export function isValidXOrY(xOrY: string | number | undefined) {
-  return (
-    (typeof xOrY === 'number' && Number.isFinite(xOrY)) ||
-    typeof xOrY === 'string'
-  );
+  return (typeof xOrY === 'number' && Number.isFinite(xOrY)) || typeof xOrY === 'string';
 }
 
 /** Build the standard `markInfo` payload used by every Text variant. */
@@ -427,7 +421,9 @@ export class TextState {
   }
 
   // Resolved width: for path text, defer to the (SVG-bound) pathRef length
-  resolvedWidth = $derived(this.#getProps().path ? getPathLength(this.pathRef) : this.#getProps().width);
+  resolvedWidth = $derived(
+    this.#getProps().path ? getPathLength(this.pathRef) : this.#getProps().width
+  );
 
   #defaultTruncateOptions: TruncateTextOptions = $derived({
     maxChars: undefined,

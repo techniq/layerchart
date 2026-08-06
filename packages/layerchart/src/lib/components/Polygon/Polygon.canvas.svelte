@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    PolygonProps,
-    PolygonPropsWithoutHTML,
-  } from './Polygon.shared.svelte.js';
+  export type { PolygonProps, PolygonPropsWithoutHTML } from './Polygon.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -27,10 +24,7 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge(
-          { styles: { strokeWidth: itemStrokeWidth ?? c.staticStrokeWidth } },
-          styleOverrides
-        )
+      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? c.staticStrokeWidth } }, styleOverrides)
       : {
           // Use raw `rest.fill` / `rest.stroke` (not `staticFill`) so canvas
           // accepts non-string values like `CanvasPattern` / `CanvasGradient`.

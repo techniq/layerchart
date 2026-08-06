@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    CircleProps,
-    CirclePropsWithoutHTML,
-  } from './Circle.shared.svelte.js';
+  export type { CircleProps, CirclePropsWithoutHTML } from './Circle.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -11,11 +8,7 @@
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import {
-    CircleState,
-    circleMarkInfo,
-    type CircleProps,
-  } from './Circle.shared.svelte.js';
+  import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
 
   let { ...rest }: CircleProps = $props();
 
@@ -83,11 +76,7 @@
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
-      renderCircle(
-        ctx,
-        { cx: c.motionCx, cy: c.motionCy, r: c.motionR },
-        styleOpts
-      );
+      renderCircle(ctx, { cx: c.motionCx, cy: c.motionCy, r: c.motionR }, styleOpts);
     }
   }
 

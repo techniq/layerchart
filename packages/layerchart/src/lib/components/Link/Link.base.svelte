@@ -217,7 +217,7 @@
   // inside `<Path>`'s own template — the parent stays stable.
   const getPathData = () => motionPath.current;
 
-  const arrayRows = $derived(isArrayMode ? data ?? ctx.data ?? [] : []);
+  const arrayRows = $derived(isArrayMode ? (data ?? ctx.data ?? []) : []);
 
   function resolvePerDatum<T>(value: T | ((d: any) => T) | undefined, d: any): T | undefined {
     return typeof value === 'function' ? (value as (d: any) => T)(d) : (value as T | undefined);

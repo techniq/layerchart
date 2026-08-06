@@ -89,5 +89,7 @@ export class PieState {
     return _pie;
   });
 
-  arcs = $derived(this.pie(this.#getProps().data ?? (Array.isArray(this.ctx.data) ? this.ctx.data : [])));
+  arcs = $derived(
+    this.pie(this.#getProps().data ?? (Array.isArray(this.ctx.data) ? this.ctx.data : []))
+  );
 }

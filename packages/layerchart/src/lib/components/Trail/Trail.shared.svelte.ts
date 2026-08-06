@@ -26,5 +26,4 @@ export type TrailPropsWithoutHTML = {
   motion?: MotionProp;
 };
 
-export type TrailProps = TrailPropsWithoutHTML &
-  Omit<PathProps, keyof TrailPropsWithoutHTML | 'r'>;
+export type TrailProps = TrailPropsWithoutHTML & Omit<PathProps, keyof TrailPropsWithoutHTML | 'r'>;

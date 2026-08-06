@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    PolygonProps,
-    PolygonPropsWithoutHTML,
-  } from './Polygon.shared.svelte.js';
+  export type { PolygonProps, PolygonPropsWithoutHTML } from './Polygon.shared.svelte.js';
 </script>
 
 <script lang="ts">
@@ -10,10 +7,7 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { PolygonState, polygonMarkInfo, type PolygonProps } from './Polygon.shared.svelte.js';
 
-  let {
-    ref: refProp = $bindable(),
-    ...rest
-  }: PolygonProps = $props();
+  let { ref: refProp = $bindable(), ...rest }: PolygonProps = $props();
 
   const c = new PolygonState(() => rest as PolygonProps);
 

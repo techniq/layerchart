@@ -157,9 +157,7 @@ export class ArcState {
     return innerRadius;
   }
 
-  innerRadius = $derived(
-    this.#getInnerRadius(this.#getProps().innerRadius, this.outerRadius)
-  );
+  innerRadius = $derived(this.#getInnerRadius(this.#getProps().innerRadius, this.outerRadius));
   trackInnerRadius = $derived.by(() => {
     const trackInnerRadiusProp = this.#getProps().trackInnerRadius;
     return trackInnerRadiusProp
@@ -174,9 +172,7 @@ export class ArcState {
       degreesToRadians(this.range[0])
   );
   trackEndAngle = $derived(
-    this.#getProps().trackEndAngle ??
-      this.#getProps().endAngle ??
-      degreesToRadians(this.range[1])
+    this.#getProps().trackEndAngle ?? this.#getProps().endAngle ?? degreesToRadians(this.range[1])
   );
   trackCornerRadius = $derived(
     this.#getProps().trackCornerRadius ?? this.#getProps().cornerRadius ?? 0

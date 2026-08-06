@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    EllipseProps,
-    EllipsePropsWithoutHTML,
-  } from './Ellipse.shared.svelte.js';
+  export type { EllipseProps, EllipsePropsWithoutHTML } from './Ellipse.shared.svelte.js';
 </script>
 
 <script lang="ts">

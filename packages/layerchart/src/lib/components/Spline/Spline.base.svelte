@@ -28,8 +28,7 @@
   }: SplineBaseProps = $props();
 
   const c = new SplineState(
-    () =>
-      ({ data, x, y, seriesKey, defined, curve, stroke, fill, opacity, motion }) as SplineProps
+    () => ({ data, x, y, seriesKey, defined, curve, stroke, fill, opacity, motion }) as SplineProps
   );
 </script>
 

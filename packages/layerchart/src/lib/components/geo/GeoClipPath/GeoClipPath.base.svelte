@@ -29,7 +29,7 @@
   const geo = getGeoContext();
 
   const path = $derived(
-    geo.projection && geojson ? d3GeoPath(geo.projection)(geojson) ?? undefined : undefined
+    geo.projection && geojson ? (d3GeoPath(geo.projection)(geojson) ?? undefined) : undefined
   );
 </script>
 

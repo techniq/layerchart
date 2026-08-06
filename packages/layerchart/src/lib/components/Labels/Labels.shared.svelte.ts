@@ -56,7 +56,13 @@ export type LabelsPropsWithoutHTML<T = any> = {
   /** @default (d, index) => index */
   key?: (d: T, index: number) => any;
   children?: Snippet<
-    [{ data: Point; textProps: TextProps; link?: { x1: number; y1: number; x2: number; y2: number } | null }]
+    [
+      {
+        data: Point;
+        textProps: TextProps;
+        link?: { x1: number; y1: number; x2: number; y2: number } | null;
+      },
+    ]
   >;
 };
 
@@ -133,8 +139,12 @@ export class LabelsState<T = any> {
 
     if (isScaleBand(this.ctx.yScale)) {
       if (placement === 'center') {
-        const dims =
-          this.getDimensions(point.data) ?? { x: point.x, y: point.y, width: 0, height: 0 };
+        const dims = this.getDimensions(point.data) ?? {
+          x: point.x,
+          y: point.y,
+          width: 0,
+          height: 0,
+        };
         result = {
           value: formattedValue,
           fill: fillValue,
@@ -150,8 +160,7 @@ export class LabelsState<T = any> {
           fill: fillValue,
           x: point.x + (placement === 'outside' ? -offset : offset),
           y: point.y,
-          textAnchor:
-            placement === 'middle' ? 'middle' : placement === 'outside' ? 'end' : 'start',
+          textAnchor: placement === 'middle' ? 'middle' : placement === 'outside' ? 'end' : 'start',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         } as TextProps;
@@ -161,16 +170,19 @@ export class LabelsState<T = any> {
           fill: fillValue,
           x: point.x + (placement === 'outside' ? offset : -offset),
           y: point.y,
-          textAnchor:
-            placement === 'middle' ? 'middle' : placement === 'outside' ? 'start' : 'end',
+          textAnchor: placement === 'middle' ? 'middle' : placement === 'outside' ? 'start' : 'end',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         } as TextProps;
       }
     } else {
       if (placement === 'center') {
-        const dims =
-          this.getDimensions(point.data) ?? { x: point.x, y: point.y, width: 0, height: 0 };
+        const dims = this.getDimensions(point.data) ?? {
+          x: point.x,
+          y: point.y,
+          width: 0,
+          height: 0,
+        };
         result = {
           value: formattedValue,
           fill: fillValue,
@@ -206,8 +218,7 @@ export class LabelsState<T = any> {
     }
 
     if (placement === 'smart' && points != null && i != null) {
-      const getValue = (p: Point): number =>
-        isScaleBand(this.ctx.yScale) ? p.xValue : p.yValue;
+      const getValue = (p: Point): number => (isScaleBand(this.ctx.yScale) ? p.xValue : p.yValue);
       const curr = getValue(point);
       const prev = i > 0 ? getValue(points[i - 1]) : curr;
       const next = i < points.length - 1 ? getValue(points[i + 1]) : curr;
@@ -367,7 +378,9 @@ export class LabelsState<T = any> {
     const occludeOn = props.occlude != null && props.occlude !== false;
     const padding = typeof props.occlude === 'object' ? (props.occlude.padding ?? 2) : 2;
     const visible = occludeOn
-      ? new Set(occlude(candidates, (c) => c.box, { priority: (c) => c.area, padding }).map((c) => c.i))
+      ? new Set(
+          occlude(candidates, (c) => c.box, { priority: (c) => c.area, padding }).map((c) => c.i)
+        )
       : null;
 
     return candidates.map((c) => ({

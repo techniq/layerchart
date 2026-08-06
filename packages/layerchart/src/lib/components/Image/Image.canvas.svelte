@@ -1,8 +1,5 @@
 <script lang="ts" module>
-  export type {
-    ImageProps,
-    ImagePropsWithoutHTML,
-  } from './Image.shared.svelte.js';
+  export type { ImageProps, ImagePropsWithoutHTML } from './Image.shared.svelte.js';
 </script>
 
 <script lang="ts">

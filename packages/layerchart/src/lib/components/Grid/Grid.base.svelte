@@ -165,7 +165,9 @@
       {#if isScaleBand(c.ctx.yScale) && bandAlign === 'between' && c.yTickVals.length}
         {#if c.ctx.radial}
           <Circle
-            r={c.ctx.yScale(c.yTickVals[c.yTickVals.length - 1])! + c.ctx.yScale.step() + c.yBandOffset}
+            r={c.ctx.yScale(c.yTickVals[c.yTickVals.length - 1])! +
+              c.ctx.yScale.step() +
+              c.yBandOffset}
             {stroke}
             {motion}
             {...splineProps}
@@ -173,7 +175,9 @@
           />
         {:else}
           {@const yEnd =
-            c.ctx.yScale(c.yTickVals[c.yTickVals.length - 1])! + c.ctx.yScale.step() + c.yBandOffset}
+            c.ctx.yScale(c.yTickVals[c.yTickVals.length - 1])! +
+            c.ctx.yScale.step() +
+            c.yBandOffset}
           <Line
             x1={c.ctx.xRange[0]}
             y1={yEnd}

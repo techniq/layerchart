@@ -3,11 +3,7 @@ import type { SVGAttributes } from 'svelte/elements';
 
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import { parseDashArray } from '$lib/utils/path.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
@@ -118,17 +114,9 @@ export function lineMarkInfo(props: LineProps, dataMode: boolean) {
   return {
     data: props.data,
     x:
-      typeof props.x1 === 'string'
-        ? props.x1
-        : typeof props.x2 === 'string'
-          ? props.x2
-          : undefined,
+      typeof props.x1 === 'string' ? props.x1 : typeof props.x2 === 'string' ? props.x2 : undefined,
     y:
-      typeof props.y1 === 'string'
-        ? props.y1
-        : typeof props.y2 === 'string'
-          ? props.y2
-          : undefined,
+      typeof props.y1 === 'string' ? props.y1 : typeof props.y2 === 'string' ? props.y2 : undefined,
     color:
       typeof props.stroke === 'string'
         ? props.stroke
@@ -238,18 +226,14 @@ export class LineState {
       : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number'
-      ? (this.#getProps().opacity as number)
-      : undefined
+    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
   );
   staticClassName = $derived(
     typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
   );
   // For HTML rendering: stroke-width fallback as div height
   staticHeight = $derived(
-    typeof this.#getProps().strokeWidth === 'number'
-      ? `${this.#getProps().strokeWidth}px`
-      : '1px'
+    typeof this.#getProps().strokeWidth === 'number' ? `${this.#getProps().strokeWidth}px` : '1px'
   );
 
   constructor(getProps: () => LineProps) {

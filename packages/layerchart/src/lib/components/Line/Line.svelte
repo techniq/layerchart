@@ -1,9 +1,6 @@
 <script lang="ts" module>
   // Re-export so existing `import type { LineProps } from 'layerchart'` keeps working.
-  export type {
-    LineProps,
-    LinePropsWithoutHTML,
-  } from './Line.shared.svelte.js';
+  export type { LineProps, LinePropsWithoutHTML } from './Line.shared.svelte.js';
 </script>
 
 <script lang="ts">

@@ -4,11 +4,7 @@ import { get } from '@layerstack/utils';
 
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import {
   createMotion,
@@ -93,13 +89,10 @@ export class ImageState {
 
   resolveImage(d: any) {
     const props = this.#getProps();
-    const resolvedR =
-      props.r !== undefined ? resolveDataProp(props.r, d, null, 0) : undefined;
+    const resolvedR = props.r !== undefined ? resolveDataProp(props.r, d, null, 0) : undefined;
     const defaultSize = resolvedR !== undefined ? resolvedR * 2 : 16;
     const resolvedWidth =
-      props.width !== undefined
-        ? resolveDataProp(props.width, d, null, defaultSize)
-        : defaultSize;
+      props.width !== undefined ? resolveDataProp(props.width, d, null, defaultSize) : defaultSize;
     const resolvedHeight =
       props.height !== undefined
         ? resolveDataProp(props.height, d, null, defaultSize)

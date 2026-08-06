@@ -1,23 +1,13 @@
 <script lang="ts" module>
-  export type {
-    CircleProps,
-    CirclePropsWithoutHTML,
-  } from './Circle.shared.svelte.js';
+  export type { CircleProps, CirclePropsWithoutHTML } from './Circle.shared.svelte.js';
 </script>
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-  import {
-    CircleState,
-    circleMarkInfo,
-    type CircleProps,
-  } from './Circle.shared.svelte.js';
+  import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
 
-  let {
-    children,
-    ...rest
-  }: CircleProps = $props();
+  let { children, ...rest }: CircleProps = $props();
 
   const c = new CircleState(() => rest as CircleProps);
 

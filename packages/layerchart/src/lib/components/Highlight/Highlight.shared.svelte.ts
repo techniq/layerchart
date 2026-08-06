@@ -75,10 +75,7 @@ export type HighlightPropsWithoutHTML = {
    * Show area and pass props to Rect
    * @default false
    */
-  area?:
-    | boolean
-    | Partial<ComponentProps<typeof Rect>>
-    | Snippet<[{ area: HighlightArea }]>;
+  area?: boolean | Partial<ComponentProps<typeof Rect>> | Snippet<[{ area: HighlightArea }]>;
 
   /**
    * Show bar and pass props to Rect

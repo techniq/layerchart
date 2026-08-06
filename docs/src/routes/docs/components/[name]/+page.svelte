@@ -2,7 +2,10 @@
 	import { Table } from 'svelte-ux';
 	import { allComponents, type Component } from 'content-collections';
 
-	import { h2 as H2, h3 as H3 } from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
+	import {
+		h2 as H2,
+		h3 as H3
+	} from '@layerstack/docs/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
 	import { ExampleListing, RelatedLink } from '@layerstack/docs/components';
 	import { page } from '$app/state';

@@ -75,7 +75,9 @@ export class BarState {
   });
 
   seriesAccessor = $derived(
-    this.series ? this.series.value ?? (this.series.data ? undefined : this.series.key) : undefined
+    this.series
+      ? (this.series.value ?? (this.series.data ? undefined : this.series.key))
+      : undefined
   );
 
   stackAccessors = $derived.by(() => {
@@ -89,7 +91,9 @@ export class BarState {
     const xProp = this.#getProps().x;
     return (
       xProp ??
-      (this.ctx.valueAxis === 'x' ? this.stackAccessors?.value ?? this.seriesAccessor : undefined) ??
+      (this.ctx.valueAxis === 'x'
+        ? (this.stackAccessors?.value ?? this.seriesAccessor)
+        : undefined) ??
       this.ctx.x
     );
   });
@@ -97,7 +101,9 @@ export class BarState {
     const yProp = this.#getProps().y;
     return (
       yProp ??
-      (this.ctx.valueAxis === 'y' ? this.stackAccessors?.value ?? this.seriesAccessor : undefined) ??
+      (this.ctx.valueAxis === 'y'
+        ? (this.stackAccessors?.value ?? this.seriesAccessor)
+        : undefined) ??
       this.ctx.y
     );
   });
@@ -178,9 +184,7 @@ export class BarState {
     const roundedProp = this.#getProps().rounded ?? 'all';
     if (roundedProp !== 'edge') return roundedProp;
     if (this.ctx.valueAxis === 'y') {
-      return this.resolvedValue >= 0 && this.ctx.yRange[0] > this.ctx.yRange[1]
-        ? 'top'
-        : 'bottom';
+      return this.resolvedValue >= 0 && this.ctx.yRange[0] > this.ctx.yRange[1] ? 'top' : 'bottom';
     }
     return this.resolvedValue >= 0 && this.ctx.xRange[0] < this.ctx.xRange[1] ? 'right' : 'left';
   });

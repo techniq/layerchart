@@ -7,11 +7,7 @@ import { interpolatePath } from 'd3-interpolate-path';
 
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
-import {
-  createMotion,
-  extractTweenConfig,
-  type MotionProp,
-} from '$lib/utils/motion.svelte.js';
+import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
 import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
@@ -102,9 +98,7 @@ export class SplineState {
     return value;
   }
 
-  series = $derived(
-    this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey)
-  );
+  series = $derived(this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey));
   seriesAccessor = $derived(
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
@@ -137,9 +131,7 @@ export class SplineState {
           .x((d) => this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) + this.xOffset)
           .y((d) => this.#getScaleValue(d, this.ctx.yScale, this.yAccessor) + this.yOffset);
 
-    path.defined(
-      props.defined ?? ((d) => this.xAccessor(d) != null && this.yAccessor(d) != null)
-    );
+    path.defined(props.defined ?? ((d) => this.xAccessor(d) != null && this.yAccessor(d) != null));
     if (props.curve) path.curve(props.curve);
 
     return path(resolvedData) ?? '';

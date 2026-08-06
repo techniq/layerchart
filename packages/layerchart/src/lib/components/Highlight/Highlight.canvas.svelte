@@ -1,5 +1,10 @@
 <script lang="ts" module>
-  export type { HighlightProps, HighlightPropsWithoutHTML, HighlightPoint, HighlightPointData } from './Highlight.shared.svelte.js';
+  export type {
+    HighlightProps,
+    HighlightPropsWithoutHTML,
+    HighlightPoint,
+    HighlightPointData,
+  } from './Highlight.shared.svelte.js';
 </script>
 
 <script lang="ts">

@@ -4,11 +4,7 @@ import type { SVGAttributes } from 'svelte/elements';
 
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-import {
-  hasAnyDataProp,
-  resolveDataProp,
-  resolveGeoDataPair,
-} from '$lib/utils/dataProp.js';
+import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
 import { chartDataArray } from '$lib/utils/common.js';
 import { parseDashArray } from '$lib/utils/path.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
@@ -177,9 +173,7 @@ export class CircleState {
 
   // Reactive derivations
   dashArrayResolved = $derived(parseDashArray(this.#getProps().dashArray));
-  dashArrayAttr = $derived(
-    this.dashArrayResolved ? this.dashArrayResolved.join(' ') : undefined
-  );
+  dashArrayAttr = $derived(this.dashArrayResolved ? this.dashArrayResolved.join(' ') : undefined);
   dataMode = $derived(
     this.#getProps().data != null ||
       hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r)
@@ -233,9 +227,7 @@ export class CircleState {
       : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number'
-      ? (this.#getProps().opacity as number)
-      : undefined
+    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
   );
   staticClassName = $derived(
     typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
@@ -245,12 +237,9 @@ export class CircleState {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialCx =
-      initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
-    const initialCy =
-      initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
-    const initialR =
-      initial.initialR ?? (typeof initial.r === 'number' ? initial.r : 1);
+    const initialCx = initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
+    const initialCy = initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
+    const initialR = initial.initialR ?? (typeof initial.r === 'number' ? initial.r : 1);
 
     this.#motionCx = createMotion(
       initialCx,

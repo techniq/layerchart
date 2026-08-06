@@ -95,9 +95,7 @@
     if (!ctx.width || !ctx.height) return new Float64Array(0);
 
     if (isGridMode) {
-      return dataProp instanceof Float64Array
-        ? dataProp
-        : Float64Array.from(dataProp as number[]);
+      return dataProp instanceof Float64Array ? dataProp : Float64Array.from(dataProp as number[]);
     }
 
     if (typeof valueProp === 'function' && valueProp.length >= 2) {
