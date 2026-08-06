@@ -77,7 +77,7 @@
 				y="R90_10_2015"
 				value="nyt_display"
 				textAnchor="middle"
-				dy={-6}
+				dy={-8}
 				class="text-xs text-current stroke-2 stroke-surface-100 font-semibold pointer-events-none"
 			/>
 		</Layer>

@@ -30,7 +30,7 @@
 			y="value"
 			value="label"
 			textAnchor="middle"
-			dy={-2}
+			dy={-8}
 			fill="category"
 			class="text-xs"
 		/>

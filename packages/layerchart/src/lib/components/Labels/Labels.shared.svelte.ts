@@ -219,20 +219,25 @@ export class LabelsState<T = any> {
       const isRising = !isPeak && !isTrough && prev < curr;
       const isFalling = !isPeak && !isTrough && prev >= curr;
 
+      // Place the label edge `offset` past the point marker, so a dot of radius `r` is cleared by
+      // exactly `offset` on whichever side the label sits (`textAnchor`/`verticalAnchor` positions
+      // the label edge at `point ± markOffset`).
+      const markOffset = (point.r ?? 0) + offset;
+
       return {
         ...result,
         x: point.x,
         y: point.y,
         dx: isRising
           ? xPrevTight
-            ? offset
-            : -offset
+            ? markOffset
+            : -markOffset
           : isFalling
             ? xNextTight
-              ? -offset
-              : offset
+              ? -markOffset
+              : markOffset
             : 0,
-        dy: isPeak ? -offset : isTrough ? offset : 0,
+        dy: isPeak ? -markOffset : isTrough ? markOffset : 0,
         textAnchor: isRising
           ? xPrevTight
             ? 'start'

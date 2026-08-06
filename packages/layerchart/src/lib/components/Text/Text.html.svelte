@@ -102,6 +102,13 @@
     }
 
     /* Html layers */
+    :global(:where(.lc-layout-html .lc-text)) {
+      /* Trim the CSS line box down to the cap-height/baseline box so `verticalAnchor`
+         anchors the same glyph edges (cap-top / center / baseline) as the SVG and Canvas
+         layers, which position by cap height rather than the full line box. Browsers
+         without `text-box` support fall back to line-box anchoring (a few px looser). */
+      text-box: trim-both cap alphabetic;
+    }
     :global(:where(.lc-layout-html .lc-text):not([background-color])) {
       color: var(--fill-color);
     }

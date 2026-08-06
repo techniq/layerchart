@@ -39,7 +39,7 @@
 			<Text
 				x={context.width}
 				y={context.yScale(avg)}
-				dy={-4}
+				dy={-6}
 				value="Avg"
 				textAnchor="end"
 				verticalAnchor="end"

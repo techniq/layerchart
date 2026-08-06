@@ -195,7 +195,10 @@ export class AxisState {
 
   scale = $derived.by(() => {
     const scaleProp = this.#getProps().scale;
-    return scaleProp ?? (['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale);
+    return (
+      scaleProp ??
+      (['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale)
+    );
   });
 
   interval = $derived(
@@ -259,14 +262,16 @@ export class AxisState {
   tickCount = $derived.by(() => {
     const ticks = this.#getProps().ticks;
     if (typeof ticks === 'number') return ticks;
-    if (this.tickSpacing && this.effectiveSize) return Math.round(this.effectiveSize / this.tickSpacing);
+    if (this.tickSpacing && this.effectiveSize)
+      return Math.round(this.effectiveSize / this.tickSpacing);
     return undefined;
   });
 
   formatCount = $derived.by(() => {
     const ticks = this.#getProps().ticks;
     if (typeof ticks === 'number') return ticks;
-    if (this.defaultTickSpacing && this.effectiveSize) return Math.round(this.effectiveSize / this.defaultTickSpacing);
+    if (this.defaultTickSpacing && this.effectiveSize)
+      return Math.round(this.effectiveSize / this.defaultTickSpacing);
     return undefined;
   });
 
@@ -366,19 +371,24 @@ export class AxisState {
 
   getDefaultTickLabelProps(tick: any): Partial<TextProps> {
     const { placement, tickLength = 4 } = this.#getProps();
+    // Cap-height anchoring (`verticalAnchor` start/end, see Text `startDy`) places the label
+    // edge exactly `tickLength` from the axis, leaving no gap to the tick. Add a little padding
+    // above/below so the label clears the tick — matching the `left`/`right` visual, whose
+    // horizontal `textAnchor` already sits a comfortable distance out.
+    const labelPadding = 2;
     switch (placement) {
       case 'top':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'end',
-          dy: -tickLength,
+          dy: -(tickLength + labelPadding),
         };
 
       case 'bottom':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'start',
-          dy: tickLength,
+          dy: tickLength + labelPadding,
         };
 
       case 'left':
@@ -493,13 +503,7 @@ export class AxisState {
   });
 
   tickItems = $derived.by<AxisTickItem[]>(() => {
-    const {
-      motion,
-      stroke,
-      fill,
-      tickLabelProps,
-      classes = {},
-    } = this.#getProps();
+    const { motion, stroke, fill, tickLabelProps, classes = {} } = this.#getProps();
     return this.tickVals.map((tick, index) => {
       const tickCoords = this.getCoords(tick);
       const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y);

@@ -513,21 +513,24 @@ export class TextState {
     const lineHeight = props.lineHeight ?? '1em';
     const capHeight = resolveCapHeight(props.capHeight, props.fontSize);
     if (verticalAnchor === 'start') {
-      return getPixelValue(lineHeight);
+      // Align the cap-height top of the first line to `y`.
+      return getPixelValue(capHeight);
     } else if (verticalAnchor === 'middle') {
       return ((this.lineCount - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
     }
-    return (this.lineCount - 1) * -getPixelValue(lineHeight) - getPixelValue(capHeight) / 2;
+    // `end`: align the baseline (cap-height bottom) of the last line to `y`.
+    return (this.lineCount - 1) * -getPixelValue(lineHeight);
   });
 
   dataModeStartDy = $derived.by(() => {
     const props = this.#getProps();
     const verticalAnchor = props.verticalAnchor ?? 'end';
-    const lineHeight = props.lineHeight ?? '1em';
     const capHeight = resolveCapHeight(props.capHeight, props.fontSize);
-    if (verticalAnchor === 'start') return getPixelValue(lineHeight);
+    // Match `startDy`, but single-line (data mode renders one tspan per item):
+    // `start` → cap-height top at `y`, `middle` → cap-height center, `end` → baseline.
+    if (verticalAnchor === 'start') return getPixelValue(capHeight);
     if (verticalAnchor === 'middle') return getPixelValue(capHeight) / 2;
-    return -getPixelValue(capHeight) / 2;
+    return 0;
   });
 
   scaleTransform = $derived.by(() => {
