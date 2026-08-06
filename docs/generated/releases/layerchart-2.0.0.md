@@ -1,12 +1,13 @@
 ---
-title: "layerchart@2.0.0"
-tag: "layerchart@2.0.0"
-date: "2026-07-01T21:31:30Z"
-url: "https://github.com/techniq/layerchart/releases/tag/layerchart%402.0.0"
+title: 'layerchart@2.0.0'
+tag: 'layerchart@2.0.0'
+date: '2026-07-01T21:31:30Z'
+url: 'https://github.com/techniq/layerchart/releases/tag/layerchart%402.0.0'
 draft: false
 prerelease: false
-author: "github-actions[bot]"
+author: 'github-actions[bot]'
 ---
+
 LayerChart 2.0 rebuilds the library on **Svelte 5** (runes & snippets) and **no longer requires Tailwind CSS** — components ship with their own default styles, with Tailwind 4 now optional. It also streamlines several component and context APIs for consistency. Upgrading from v1? Start with the **[v1 → v2 migration guide](https://layerchart.com/docs/guides/migrations/v1-to-v2)**.
 
 **Highlights**
@@ -417,17 +418,17 @@ LayerChart 2.0 rebuilds the library on **Svelte 5** (runes & snippets) and **no 
 
   ```svelte
   <script>
-    import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
+  	import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
   </script>
 
   <ChartCore data={countries}>
-    {#snippet children({ context })}
-      <Svg>
-        <GeoProjection projection={geoMercator} fitGeojson={countries}>
-          <GeoPath geojson={countries} fill="steelblue" />
-        </GeoProjection>
-      </Svg>
-    {/snippet}
+  	{#snippet children({ context })}
+  		<Svg>
+  			<GeoProjection projection={geoMercator} fitGeojson={countries}>
+  				<GeoPath geojson={countries} fill="steelblue" />
+  			</GeoProjection>
+  		</Svg>
+  	{/snippet}
   </ChartCore>
   ```
 
@@ -459,12 +460,12 @@ LayerChart 2.0 rebuilds the library on **Svelte 5** (runes & snippets) and **no 
   ```svelte
   <!-- Before -->
   <Chart {data} x="date" y="value" r="size" rRange={[2, 10]}>
-    <Circle {data} cx="date" cy="value" r="size" />
+  	<Circle {data} cx="date" cy="value" r="size" />
   </Chart>
 
   <!-- After -->
   <Chart {data} x="date" y="value" r="size" rRange={[2, 10]}>
-    <Circle {data} />
+  	<Circle {data} />
   </Chart>
   ```
 

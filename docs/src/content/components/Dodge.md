@@ -52,10 +52,10 @@ Any mark works inside the snippet — drive a `<Text>` font size from the resolv
 
 Circular packing produces unnecessarily large vertical gaps when an item is much wider than tall — typical for text labels and Gantt-style time bars. Provide `rx` and `ry` (per-axis half-extents) instead of `r` to switch to axis-aligned rectangular collision: items snap to fixed-height rows along the dodge axis, with collision checked along the anchor axis.
 
-| `axis` | Anchor-axis half-extent | Dodge-axis half-extent (row size) |
-| ------ | ----------------------- | --------------------------------- |
+| `axis` | Anchor-axis half-extent                        | Dodge-axis half-extent (row size)                     |
+| ------ | ---------------------------------------------- | ----------------------------------------------------- |
 | `'y'`  | `rx` (typically per-item, e.g. `labelWidth/2`) | `ry` (typically a constant) — row spacing is `2 * ry` |
-| `'x'`  | `ry` (per-item)         | `rx` (constant) — column spacing is `2 * rx` |
+| `'x'`  | `ry` (per-item)                                | `rx` (constant) — column spacing is `2 * rx`          |
 
 ```svelte
 <Dodge axis="y" rx={(d) => labelWidth(d) / 2} ry={8} />

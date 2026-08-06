@@ -1,12 +1,13 @@
 ---
-title: "layerchart@2.0.4"
-tag: "layerchart@2.0.4"
-date: "2026-07-31T00:27:33Z"
-url: "https://github.com/techniq/layerchart/releases/tag/layerchart%402.0.4"
+title: 'layerchart@2.0.4'
+tag: 'layerchart@2.0.4'
+date: '2026-07-31T00:27:33Z'
+url: 'https://github.com/techniq/layerchart/releases/tag/layerchart%402.0.4'
 draft: false
 prerelease: false
-author: "github-actions[bot]"
+author: 'github-actions[bot]'
 ---
+
 ### Patch Changes
 
 - feat: Support Skeleton 5 (`skeleton-5.css`) ([#890](https://github.com/techniq/layerchart/pull/890))

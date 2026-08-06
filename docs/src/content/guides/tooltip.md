@@ -354,15 +354,15 @@ To tweak the default tooltip, pass a `tooltip` object via the chart's `props` �
 />
 ```
 
-| Key         | Forwards to         | Notes                                                |
-| ----------- | ------------------- | ---------------------------------------------------- |
-| `context`   | `TooltipContext`    | Interaction/positioning of the underlying context    |
-| `root`      | `Tooltip.Root`      | Container — positioning, `variant`, `motion`, etc.   |
-| `header`    | `Tooltip.Header`    | Header row (e.g. `format`)                            |
-| `list`      | `Tooltip.List`      | List container                                        |
-| `item`      | `Tooltip.Item`      | Applied to every row (e.g. `format`, `valueAlign`)   |
-| `separator` | `Tooltip.Separator` | Divider shown before the total row                    |
-| `hideTotal` | —                   | Hide the auto **total** row on multi-series charts    |
+| Key         | Forwards to         | Notes                                              |
+| ----------- | ------------------- | -------------------------------------------------- |
+| `context`   | `TooltipContext`    | Interaction/positioning of the underlying context  |
+| `root`      | `Tooltip.Root`      | Container — positioning, `variant`, `motion`, etc. |
+| `header`    | `Tooltip.Header`    | Header row (e.g. `format`)                         |
+| `list`      | `Tooltip.List`      | List container                                     |
+| `item`      | `Tooltip.Item`      | Applied to every row (e.g. `format`, `valueAlign`) |
+| `separator` | `Tooltip.Separator` | Divider shown before the total row                 |
+| `hideTotal` | —                   | Hide the auto **total** row on multi-series charts |
 
 ### Replacing
 

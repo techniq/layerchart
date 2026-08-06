@@ -18,17 +18,17 @@ The first two cost you nothing — they're transparent. The third is opt-in: you
 
 The following heavy features are loaded only when you use them, with no code change required from you:
 
-| Feature | When it loads |
-| --- | --- |
-| `<BrushContext>` (and brush state) | When `<Chart brush={...}>` is set |
-| `<TransformContext>` (and transform state) | When `<Chart transform={...}>` is set |
-| `<DefaultTooltip>` | When `tooltipContext` is set and you don't provide a custom `tooltip` snippet |
-| `Voronoi` hit-detection | When `<TooltipContext mode="voronoi">` is used |
-| `Arc` (radial tooltip rects) | When `<TooltipContext mode="bounds">` or `mode="band"` is used inside a radial chart |
-| `d3-quadtree` | When `<TooltipContext mode="quadtree">` (or `quadtree-x` / `quadtree-y`) is used |
-| `Spline` (radial linear grid) | When `<Chart radial>` with `<Grid radialY="linear">` is used |
-| `Bar` highlight overlay | When `<Chart highlight={{ bar: ... }}>` is set |
-| `<Points>`, `<Labels>`, `<Legend>`, `<ChartAnnotations>` | When the corresponding prop is set on `<Chart>` |
+| Feature                                                  | When it loads                                                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `<BrushContext>` (and brush state)                       | When `<Chart brush={...}>` is set                                                    |
+| `<TransformContext>` (and transform state)               | When `<Chart transform={...}>` is set                                                |
+| `<DefaultTooltip>`                                       | When `tooltipContext` is set and you don't provide a custom `tooltip` snippet        |
+| `Voronoi` hit-detection                                  | When `<TooltipContext mode="voronoi">` is used                                       |
+| `Arc` (radial tooltip rects)                             | When `<TooltipContext mode="bounds">` or `mode="band"` is used inside a radial chart |
+| `d3-quadtree`                                            | When `<TooltipContext mode="quadtree">` (or `quadtree-x` / `quadtree-y`) is used     |
+| `Spline` (radial linear grid)                            | When `<Chart radial>` with `<Grid radialY="linear">` is used                         |
+| `Bar` highlight overlay                                  | When `<Chart highlight={{ bar: ... }}>` is set                                       |
+| `<Points>`, `<Labels>`, `<Legend>`, `<ChartAnnotations>` | When the corresponding prop is set on `<Chart>`                                      |
 
 These additions to your chart cause an extra HTTP fetch the first time the corresponding feature is used. On a fast network this is unnoticeable; on slow networks the chart paints first and the optional feature appears as it loads.
 
@@ -36,12 +36,12 @@ These additions to your chart cause an extra HTTP fetch the first time the corre
 
 Components that bring in large d3 modules or framework-specific libraries are not re-exported from the root `'layerchart'` entry. They live behind opt-in sub-paths so the default barrel doesn't drag those deps into bundlers that don't tree-shake aggressively.
 
-| Sub-path | Components | Heavy dep saved |
-| --- | --- | --- |
-| `layerchart/geo` | `Geo*` (12), `Graticule`, `TileImage` | `d3-geo` (~15 KB), `d3-tile` |
-| `layerchart/hierarchy` | `Tree`, `Treemap`, `Pack`, `Partition` | `d3-hierarchy` (~6 KB) |
-| `layerchart/force` | `ForceSimulation` | `d3-force` (~7 KB) |
-| `layerchart/graph` | `Dagre`, `Sankey`, `Chord`, `Ribbon` | `@dagrejs/dagre` (~22 KB), `d3-sankey`, `d3-chord` |
+| Sub-path               | Components                             | Heavy dep saved                                    |
+| ---------------------- | -------------------------------------- | -------------------------------------------------- |
+| `layerchart/geo`       | `Geo*` (12), `Graticule`, `TileImage`  | `d3-geo` (~15 KB), `d3-tile`                       |
+| `layerchart/hierarchy` | `Tree`, `Treemap`, `Pack`, `Partition` | `d3-hierarchy` (~6 KB)                             |
+| `layerchart/force`     | `ForceSimulation`                      | `d3-force` (~7 KB)                                 |
+| `layerchart/graph`     | `Dagre`, `Sankey`, `Chord`, `Ribbon`   | `@dagrejs/dagre` (~22 KB), `d3-sankey`, `d3-chord` |
 
 If you use these components, just import from the sub-path:
 
@@ -64,17 +64,17 @@ Each sub-path also re-exports the layer-agnostic helpers you'd need alongside it
 
 ```svelte
 <script>
-  import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
+	import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
 </script>
 
 <ChartCore data={countries}>
-  {#snippet children({ context })}
-    <Svg>
-      <GeoProjection projection={geoMercator} fitGeojson={countries}>
-        <GeoPath geojson={countries} fill="steelblue" />
-      </GeoProjection>
-    </Svg>
-  {/snippet}
+	{#snippet children({ context })}
+		<Svg>
+			<GeoProjection projection={geoMercator} fitGeojson={countries}>
+				<GeoPath geojson={countries} fill="steelblue" />
+			</GeoProjection>
+		</Svg>
+	{/snippet}
 </ChartCore>
 ```
 
@@ -83,6 +83,7 @@ A typical geo chart drops from ~87 KB gz with `<Chart>` to ~55 KB gz with `<Char
 `<ChartCore>` is exported from each layer sub-path (`layerchart`, `layerchart/svg`, `layerchart/canvas`, `layerchart/html`). The component itself is layer-agnostic — the layer is whatever you put inside the `children` snippet — so the sub-path choice only affects what other components (like `<Svg>` or `<GeoPath>`) tree-shake to.
 
 When to use `<ChartCore>`:
+
 - ✅ Geo maps (you'll render `<GeoProjection>` + `<GeoPath>` directly, no axes needed)
 - ✅ Custom force-directed or hierarchy layouts that compose their own primitives
 - ✅ Pre-rendered SVG/canvas content that just needs chart context for sizing
@@ -126,21 +127,21 @@ The `layerchart/svg`, `layerchart/canvas`, and `layerchart/html` sub-paths re-ex
 
 ### Primitives
 
-| Primitive | Svg-only saves | Canvas-only saves | Html-only saves |
-| --- | --- | --- | --- |
-| `Circle` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~22%) |
-| `Text` | ~13 KB gz (~45%) | ~2 KB gz (~8%) | ~13 KB gz (~46%) |
-| `Rect` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~23%) |
-| `Line` | ~4 KB gz (~22%) | ~3 KB gz (~14%) | ~5 KB gz (~27%) |
-| `Path` | ~3 KB gz (~15%) | ~4 KB gz (~20%) | n/a (no HTML variant) |
-| `Ellipse` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~23%) |
-| `Polygon` | ~3 KB gz (~16%) | ~1 KB gz (~3%) | n/a (no HTML variant) |
-| `Group` | ~0.5 KB gz (~13%) | ~1 KB gz (~22%) | ~0.5 KB gz (~12%) |
-| `Image` | ~1 KB gz (~8%) | **~11 KB gz (~75%)** | ~2 KB gz (~11%) |
-| `ClipPath` | ~0.5 KB gz (~27%) | ~0.8 KB gz (~40%) | ~0.7 KB gz (~36%) |
-| `Pattern` | ~4 KB gz (~26%) | ~1 KB gz (~9%) | **~14 KB gz (~94%)** |
-| `LinearGradient` | ~4 KB gz (~26%) | ~1 KB gz (~7%) | **~14 KB gz (~96%)** |
-| `RadialGradient` | ~4 KB gz (~25%) | ~0.8 KB gz (~6%) | n/a (no HTML variant) |
+| Primitive        | Svg-only saves    | Canvas-only saves    | Html-only saves       |
+| ---------------- | ----------------- | -------------------- | --------------------- |
+| `Circle`         | ~4 KB gz (~23%)   | ~1 KB gz (~7%)       | ~4 KB gz (~22%)       |
+| `Text`           | ~13 KB gz (~45%)  | ~2 KB gz (~8%)       | ~13 KB gz (~46%)      |
+| `Rect`           | ~4 KB gz (~23%)   | ~1 KB gz (~7%)       | ~4 KB gz (~23%)       |
+| `Line`           | ~4 KB gz (~22%)   | ~3 KB gz (~14%)      | ~5 KB gz (~27%)       |
+| `Path`           | ~3 KB gz (~15%)   | ~4 KB gz (~20%)      | n/a (no HTML variant) |
+| `Ellipse`        | ~4 KB gz (~23%)   | ~1 KB gz (~7%)       | ~4 KB gz (~23%)       |
+| `Polygon`        | ~3 KB gz (~16%)   | ~1 KB gz (~3%)       | n/a (no HTML variant) |
+| `Group`          | ~0.5 KB gz (~13%) | ~1 KB gz (~22%)      | ~0.5 KB gz (~12%)     |
+| `Image`          | ~1 KB gz (~8%)    | **~11 KB gz (~75%)** | ~2 KB gz (~11%)       |
+| `ClipPath`       | ~0.5 KB gz (~27%) | ~0.8 KB gz (~40%)    | ~0.7 KB gz (~36%)     |
+| `Pattern`        | ~4 KB gz (~26%)   | ~1 KB gz (~9%)       | **~14 KB gz (~94%)**  |
+| `LinearGradient` | ~4 KB gz (~26%)   | ~1 KB gz (~7%)       | **~14 KB gz (~96%)**  |
+| `RadialGradient` | ~4 KB gz (~25%)   | ~0.8 KB gz (~6%)     | n/a (no HTML variant) |
 
 Notice the dramatic per-layer savings for components like `Pattern` and `LinearGradient` on HTML — the HTML implementation is just CSS-string generation (no canvas API or SVG element overhead), so the per-layer variant is ~95% smaller than agnostic.
 
@@ -148,27 +149,27 @@ Notice the dramatic per-layer savings for components like `Pattern` and `LinearG
 
 These are the chart-relative shapes built on top of primitives — bars, splines, areas, axes, points, annotations, etc. Per-layer savings here are typically 8–15% gz; outliers like `Highlight` (-30% canvas), `Cell` (-22% svg), and `CircleClipPath` (-37% canvas) are larger because their HTML/canvas vs. SVG paths diverge significantly.
 
-| Component | Svg-only saves | Canvas-only saves | Html-only saves |
-| --- | --- | --- | --- |
-| `Axis` | ~5 KB gz (~13%) | ~6 KB gz (~14%) | ~7 KB gz (~15%) |
-| `Highlight` | ~2 KB gz (~23%) | ~3 KB gz (~30%) | ~2 KB gz (~21%) |
-| `Bars` / `Bar` | ~3 KB gz (~8%) | ~3–4 KB gz (~8–9%) | n/a |
-| `Spline` | ~3 KB gz (~11%) | ~4 KB gz (~16%) | n/a |
-| `Area` | ~3 KB gz (~11%) | ~4 KB gz (~15%) | n/a |
-| `Pie` / `Arc` / `ArcLabel` | ~3 KB gz (~8–9%) | ~4 KB gz (~12–13%) | n/a |
-| `Points` | ~4 KB gz (~20%) | ~1 KB gz (~5%) | ~4 KB gz (~20%) |
-| `Cell` | ~5 KB gz (~22%) | ~2 KB gz (~11%) | ~5 KB gz (~22%) |
-| `Frame` | ~4 KB gz (~22%) | ~1 KB gz (~6%) | ~4 KB gz (~22%) |
-| `Threshold` | ~3 KB gz (~11%) | ~5 KB gz (~15%) | n/a |
-| `Trail` / `Vector` / `Link` | ~3 KB gz (~11–13%) | ~3–4 KB gz (~15–17%) | n/a |
-| `AnnotationLine` / `AnnotationPoint` / `AnnotationRange` | ~3–4 KB gz (~9–11%) | ~3–6 KB gz (~9–14%) | n/a |
-| `Labels` | ~4 KB gz (~12%) | ~4 KB gz (~10%) | ~5 KB gz (~13%) |
-| `ChartClipPath` | ~0.5 KB gz (~5%) | ~0.8 KB gz (~7%) | ~0.8 KB gz (~6%) |
-| `CircleClipPath` | ~0.5 KB gz (~25%) | ~0.8 KB gz (~37%) | ~0.7 KB gz (~33%) |
-| `Density` / `Contour` / `Raster` | ~1–3 KB gz (~3–8%) | ~1–3 KB gz (~4–8%) | `Raster` only on html (~4%) |
-| `Violin` / `BoxPlot` | ~4 KB gz (~13–16%) | ~3–4 KB gz (~12–13%) | n/a |
-| `Calendar` / `Month` | ~1–3 KB gz (~3–10%) | ~2 KB gz (~5–7%) | n/a |
-| `Hull` / `Voronoi` | ~0 KB | ~0–0.5 KB gz | n/a |
+| Component                                                | Svg-only saves      | Canvas-only saves    | Html-only saves             |
+| -------------------------------------------------------- | ------------------- | -------------------- | --------------------------- |
+| `Axis`                                                   | ~5 KB gz (~13%)     | ~6 KB gz (~14%)      | ~7 KB gz (~15%)             |
+| `Highlight`                                              | ~2 KB gz (~23%)     | ~3 KB gz (~30%)      | ~2 KB gz (~21%)             |
+| `Bars` / `Bar`                                           | ~3 KB gz (~8%)      | ~3–4 KB gz (~8–9%)   | n/a                         |
+| `Spline`                                                 | ~3 KB gz (~11%)     | ~4 KB gz (~16%)      | n/a                         |
+| `Area`                                                   | ~3 KB gz (~11%)     | ~4 KB gz (~15%)      | n/a                         |
+| `Pie` / `Arc` / `ArcLabel`                               | ~3 KB gz (~8–9%)    | ~4 KB gz (~12–13%)   | n/a                         |
+| `Points`                                                 | ~4 KB gz (~20%)     | ~1 KB gz (~5%)       | ~4 KB gz (~20%)             |
+| `Cell`                                                   | ~5 KB gz (~22%)     | ~2 KB gz (~11%)      | ~5 KB gz (~22%)             |
+| `Frame`                                                  | ~4 KB gz (~22%)     | ~1 KB gz (~6%)       | ~4 KB gz (~22%)             |
+| `Threshold`                                              | ~3 KB gz (~11%)     | ~5 KB gz (~15%)      | n/a                         |
+| `Trail` / `Vector` / `Link`                              | ~3 KB gz (~11–13%)  | ~3–4 KB gz (~15–17%) | n/a                         |
+| `AnnotationLine` / `AnnotationPoint` / `AnnotationRange` | ~3–4 KB gz (~9–11%) | ~3–6 KB gz (~9–14%)  | n/a                         |
+| `Labels`                                                 | ~4 KB gz (~12%)     | ~4 KB gz (~10%)      | ~5 KB gz (~13%)             |
+| `ChartClipPath`                                          | ~0.5 KB gz (~5%)    | ~0.8 KB gz (~7%)     | ~0.8 KB gz (~6%)            |
+| `CircleClipPath`                                         | ~0.5 KB gz (~25%)   | ~0.8 KB gz (~37%)    | ~0.7 KB gz (~33%)           |
+| `Density` / `Contour` / `Raster`                         | ~1–3 KB gz (~3–8%)  | ~1–3 KB gz (~4–8%)   | `Raster` only on html (~4%) |
+| `Violin` / `BoxPlot`                                     | ~4 KB gz (~13–16%)  | ~3–4 KB gz (~12–13%) | n/a                         |
+| `Calendar` / `Month`                                     | ~1–3 KB gz (~3–10%) | ~2 KB gz (~5–7%)     | n/a                         |
+| `Hull` / `Voronoi`                                       | ~0 KB               | ~0–0.5 KB gz         | n/a                         |
 
 `Hull` and `Voronoi` show no per-layer wins because their cost is dominated by the d3 algorithm rather than the rendering path.
 
@@ -176,29 +177,29 @@ These are the chart-relative shapes built on top of primitives — bars, splines
 
 Geo marks live on `layerchart/geo` (and `layerchart/geo`-prefixed variants like `layerchart/svg` re-export them too).
 
-| Component | Svg-only saves | Canvas-only saves |
-| --- | --- | --- |
-| `GeoPath` | ~3 KB gz (~12%) | ~5 KB gz (~18%) |
-| `GeoSpline` | ~3 KB gz (~10%) | ~4 KB gz (~14%) |
-| `GeoPoint` | ~3 KB gz (~18%) | ~1 KB gz (~6%) |
-| `GeoCircle` | ~3 KB gz (~12%) | ~5 KB gz (~17%) |
-| `GeoTile` / `TileImage` | ~3 KB gz (~9%) | ~2 KB gz (~5–6%) |
-| `Graticule` | ~3 KB gz (~12%) | ~3 KB gz (~11%) |
-| `GeoClipPath` | ~0.3 KB gz (~7%) | ~0.6 KB gz (~13%) |
-| `GeoEdgeFade` | ~0.5 KB gz (~2%) | ~0.7 KB gz (~3%) |
+| Component               | Svg-only saves   | Canvas-only saves |
+| ----------------------- | ---------------- | ----------------- |
+| `GeoPath`               | ~3 KB gz (~12%)  | ~5 KB gz (~18%)   |
+| `GeoSpline`             | ~3 KB gz (~10%)  | ~4 KB gz (~14%)   |
+| `GeoPoint`              | ~3 KB gz (~18%)  | ~1 KB gz (~6%)    |
+| `GeoCircle`             | ~3 KB gz (~12%)  | ~5 KB gz (~17%)   |
+| `GeoTile` / `TileImage` | ~3 KB gz (~9%)   | ~2 KB gz (~5–6%)  |
+| `Graticule`             | ~3 KB gz (~12%)  | ~3 KB gz (~11%)   |
+| `GeoClipPath`           | ~0.3 KB gz (~7%) | ~0.6 KB gz (~13%) |
+| `GeoEdgeFade`           | ~0.5 KB gz (~2%) | ~0.7 KB gz (~3%)  |
 
 ### High-level chart wrappers
 
-`<LineChart>`, `<AreaChart>`, `<BarChart>`, `<ScatterChart>`, `<PieChart>`, and `<ArcChart>` are pre-composed charts — they include `<Chart>` itself plus the appropriate marks, tooltip wiring, highlight handling, and series management. Importing a high-level chart from a per-layer sub-path skips both the chart wrapper's layer dispatch *and* every primitive/mark it composes, so the savings are larger than any single primitive.
+`<LineChart>`, `<AreaChart>`, `<BarChart>`, `<ScatterChart>`, `<PieChart>`, and `<ArcChart>` are pre-composed charts — they include `<Chart>` itself plus the appropriate marks, tooltip wiring, highlight handling, and series management. Importing a high-level chart from a per-layer sub-path skips both the chart wrapper's layer dispatch _and_ every primitive/mark it composes, so the savings are larger than any single primitive.
 
-| Chart | Agnostic | `from 'layerchart/svg'` | `from 'layerchart/canvas'` |
-| --- | --- | --- | --- |
-| `LineChart` | 89.6 KB gz | 79.0 KB gz (-12%) | 80.7 KB gz (-10%) |
-| `AreaChart` | 87.3 KB gz | 81.2 KB gz (-7%) | 82.8 KB gz (-5%) |
-| `BarChart` | 85.4 KB gz | 79.2 KB gz (-7%) | 80.9 KB gz (-5%) |
-| `ScatterChart` | 84.5 KB gz | 78.1 KB gz (-8%) | 79.8 KB gz (-6%) |
-| `PieChart` | 91.9 KB gz | 85.3 KB gz (-7%) | 86.9 KB gz (-5%) |
-| `ArcChart` | 90.7 KB gz | 84.2 KB gz (-7%) | 85.9 KB gz (-5%) |
+| Chart          | Agnostic   | `from 'layerchart/svg'` | `from 'layerchart/canvas'` |
+| -------------- | ---------- | ----------------------- | -------------------------- |
+| `LineChart`    | 89.6 KB gz | 79.0 KB gz (-12%)       | 80.7 KB gz (-10%)          |
+| `AreaChart`    | 87.3 KB gz | 81.2 KB gz (-7%)        | 82.8 KB gz (-5%)           |
+| `BarChart`     | 85.4 KB gz | 79.2 KB gz (-7%)        | 80.9 KB gz (-5%)           |
+| `ScatterChart` | 84.5 KB gz | 78.1 KB gz (-8%)        | 79.8 KB gz (-6%)           |
+| `PieChart`     | 91.9 KB gz | 85.3 KB gz (-7%)        | 86.9 KB gz (-5%)           |
+| `ArcChart`     | 90.7 KB gz | 84.2 KB gz (-7%)        | 85.9 KB gz (-5%)           |
 
 ```ts
 // Agnostic — supports Svg / Canvas / Html
@@ -223,25 +224,25 @@ If you're not sure what your bundle looks like in practice, run a tool like [`ro
 
 The numbers below are gzipped totals from LayerChart's own bundle analyzer. They represent the cost of importing the listed components from `'layerchart'` (or the sub-path when noted), measured against a minimal Svelte app with Svelte's own runtime treated as external.
 
-| Scenario | Imports | Gzipped |
-| --- | --- | --- |
-| `base` | `Chart` | ~83 KB |
-| `base-svg` (per-layer) | `Chart`, `Svg` from `layerchart/svg` | ~77 KB |
-| `base-canvas` (per-layer) | `Chart`, `Canvas` from `layerchart/canvas` | ~79 KB |
-| `base-html` (per-layer) | `Chart`, `Html` from `layerchart/html` | ~79 KB |
-| `core` | `ChartCore` (no Axis/Grid/Highlight) | ~51 KB |
-| `core-svg` (per-layer) | `ChartCore`, `Svg` from `layerchart/svg` | ~51 KB |
-| `core-geo` | `ChartCore`, `Svg`, `GeoProjection`, `GeoPath` | ~55 KB |
-| `line-chart` | `Chart`, `Svg`, `Line`, `Axis`, `Grid` | ~83 KB |
-| `LineChart` | high-level `LineChart` | ~90 KB |
-| `LineChart-svg` (per-layer) | high-level `LineChart` from `layerchart/svg` | ~79 KB |
-| `geo` (sub-path) | `Chart`, `Svg`, `GeoProjection`, `GeoPath`, `GeoPoint` | ~87 KB |
-| `force` (sub-path) | `Chart`, `Svg`, `ForceSimulation`, `Link`, `Circle`, `Text` | ~94 KB |
-| `dagre` (sub-path) | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text` | ~109 KB |
-| `circle-svg` (per-layer) | `Circle` from `layerchart/svg` | ~13 KB |
-| `circle-agnostic` | `Circle` from `layerchart` | ~17 KB |
-| `text-svg` (per-layer) | `Text` from `layerchart/svg` | ~16 KB |
-| `text-agnostic` | `Text` from `layerchart` | ~29 KB |
+| Scenario                    | Imports                                                     | Gzipped |
+| --------------------------- | ----------------------------------------------------------- | ------- |
+| `base`                      | `Chart`                                                     | ~83 KB  |
+| `base-svg` (per-layer)      | `Chart`, `Svg` from `layerchart/svg`                        | ~77 KB  |
+| `base-canvas` (per-layer)   | `Chart`, `Canvas` from `layerchart/canvas`                  | ~79 KB  |
+| `base-html` (per-layer)     | `Chart`, `Html` from `layerchart/html`                      | ~79 KB  |
+| `core`                      | `ChartCore` (no Axis/Grid/Highlight)                        | ~51 KB  |
+| `core-svg` (per-layer)      | `ChartCore`, `Svg` from `layerchart/svg`                    | ~51 KB  |
+| `core-geo`                  | `ChartCore`, `Svg`, `GeoProjection`, `GeoPath`              | ~55 KB  |
+| `line-chart`                | `Chart`, `Svg`, `Line`, `Axis`, `Grid`                      | ~83 KB  |
+| `LineChart`                 | high-level `LineChart`                                      | ~90 KB  |
+| `LineChart-svg` (per-layer) | high-level `LineChart` from `layerchart/svg`                | ~79 KB  |
+| `geo` (sub-path)            | `Chart`, `Svg`, `GeoProjection`, `GeoPath`, `GeoPoint`      | ~87 KB  |
+| `force` (sub-path)          | `Chart`, `Svg`, `ForceSimulation`, `Link`, `Circle`, `Text` | ~94 KB  |
+| `dagre` (sub-path)          | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text`           | ~109 KB |
+| `circle-svg` (per-layer)    | `Circle` from `layerchart/svg`                              | ~13 KB  |
+| `circle-agnostic`           | `Circle` from `layerchart`                                  | ~17 KB  |
+| `text-svg` (per-layer)      | `Text` from `layerchart/svg`                                | ~16 KB  |
+| `text-agnostic`             | `Text` from `layerchart`                                    | ~29 KB  |
 
 `base` is the cost of `<Chart>` (with the cartesian frame baked in) — what every cartesian chart pays. `core` is the cost of `<ChartCore>` — what geo and custom-layout charts pay instead.
 
