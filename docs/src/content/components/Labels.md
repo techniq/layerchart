@@ -13,7 +13,7 @@ related: []
 
 By default labels will be on the outside of bars, above for positive values and below for negative values
 
-:example{ component="Bars" name="vertical-outside-labels-default" showCode }
+:example{ component="Bars" name="vertical-outside-labels-default" }
 
 You can also use `placement="inside"` to place within the bars (near the value edge)
 
@@ -58,12 +58,12 @@ cell, `occlude` to hide labels that would overlap a roomier-cell neighbor, and
 `links` to move each label out into open space with a leader line back to the point
 (d3-ring-note / smart-labels style) — no per-point placement setup required.
 
-:example{ name="voronoi" showCode }
+:example{ name="voronoi" }
 
 It works on maps too — in a geo `<Chart>`, `<Points>` and the labels project through
 the projection, so the same props place airport labels in open space with leaders.
 
-:example{ name="voronoi-geo" showCode }
+:example{ name="voronoi-geo" }
 
 ### Simplified charts
 
