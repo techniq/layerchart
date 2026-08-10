@@ -786,19 +786,9 @@ export class ChartState<
     if (this.valueAxis === axis && this.seriesState) {
       // For stacked series, collect all y0/y1 values for domain calculation
       if (this.seriesState.isStacked) {
-        const stackAccessor = (d: TData) => {
-          const values: number[] = [];
-          for (const s of this.seriesState.visibleSeries) {
-            const stackValue = this.seriesState.getStackValue(s.key, d);
-            if (stackValue) {
-              values.push(stackValue[0], stackValue[1]);
-            }
-          }
-          return values.length ? values : undefined;
-        };
-
-        // @ts-ignore - fix type
-        return extent(chartDataArray(this.data).flatMap(stackAccessor));
+        // Collect in a single pass — see `getStackedValues`, which hoists the
+        // `keyBy` accessor and stack derived reads out of the per-row loop.
+        return extent(this.seriesState.getStackedValues(chartDataArray(this.data)));
       }
 
       // For non-default series, calculate domain from all visible series values
