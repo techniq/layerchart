@@ -768,6 +768,45 @@ export class ChartState<
     return undefined;
   }
 
+  /**
+   * Every non-null value the visible series contribute to `axis`'s domain.
+   *
+   * Inlines what `data.flatMap(acc).filter((v) => v != null)` would do —
+   * an array-valued accessor returns one array per datum, hence the single
+   * level of flattening — to avoid the intermediate arrays.
+   */
+  #getAxisSeriesValues(axis: 'x' | 'y'): any[] {
+    const seriesState = this.seriesState;
+    if (!seriesState || seriesState.isDefaultSeries) return [];
+
+    const axisAccessor = axis === 'x' ? this.props.x : this.props.y;
+    const values: any[] = [];
+
+    for (const s of seriesState.visibleSeries) {
+      const acc = accessor(s.value ?? axisAccessor ?? s.key);
+      for (const d of s.data ?? chartDataArray(this.data)) {
+        const value = acc(d);
+        if (Array.isArray(value)) {
+          for (const v of value) if (v != null) values.push(v);
+        } else if (value != null) {
+          values.push(value);
+        }
+      }
+    }
+
+    return values;
+  }
+
+  /**
+   * Memoized per axis. `resolveDomain` re-runs on every mark registration —
+   * each mounting mark bumps `_markInfosVersion` — so recollecting these
+   * inline made mount cost O(series² × rows). Only the mark loop in
+   * `resolveDomain` depends on `_markInfos`; these values don't, so the
+   * repeated calls reuse them.
+   */
+  #xSeriesValues: any[] = $derived(this.#getAxisSeriesValues('x'));
+  #ySeriesValues: any[] = $derived(this.#getAxisSeriesValues('y'));
+
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
     const domain =
       axis === 'x'
@@ -793,11 +832,7 @@ export class ChartState<
 
       // For non-default series, calculate domain from all visible series values
       if (!this.seriesState.isDefaultSeries) {
-        const seriesValues = this.series.visibleSeries.flatMap((s) => {
-          const acc = accessor(s.value ?? axisAccessor ?? s.key);
-          const data = s.data ?? chartDataArray(this.data);
-          return data.flatMap(acc);
-        });
+        const seriesValues = axis === 'x' ? this.#xSeriesValues : this.#ySeriesValues;
 
         // Also include data from registered marks whose data isn't the primary
         // data for any visible series. This handles marks with the same accessor
@@ -819,10 +854,16 @@ export class ChartState<
           }
         }
 
-        const allValues = [...seriesValues, ...extraMarkValues].filter((v) => v != null);
+        // `seriesValues` is already null-filtered, so skip the copy entirely in
+        // the common case where no mark contributes its own data.
+        const allValues = extraMarkValues.length
+          ? [...seriesValues, ...extraMarkValues].filter((v) => v != null)
+          : seriesValues;
         if (allValues.length > 0) {
           if (baseline != null) {
-            return [min([baseline, ...allValues]), max([baseline, ...allValues])];
+            // Reduce first, then fold in the baseline — spreading every value
+            // into `min`/`max` copied the whole array twice.
+            return [min([baseline, min(allValues)]), max([baseline, max(allValues)])];
           }
           return extent(allValues);
         }
@@ -840,7 +881,9 @@ export class ChartState<
     // Baseline-based domain: include the baseline value in the extent
     if (baseline != null && Array.isArray(this.data)) {
       const values = this.data.flatMap(accessor(axisAccessor));
-      return [min([baseline, ...values]), max([baseline, ...values])];
+      // Reduce first, then fold in the baseline — spreading every value into
+      // `min`/`max` copied the whole array twice.
+      return [min([baseline, min(values)]), max([baseline, max(values)])];
     }
   }
 
