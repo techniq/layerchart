@@ -70,25 +70,32 @@ export function imageMarkInfo(props: ImageProps, dataMode: boolean) {
 export class ImageState {
   #getProps: () => ImageProps = () => ({}) as ImageProps;
 
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: ImageProps = $derived(this.#getProps());
+
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
   dataMode = $derived(
     hasAnyDataProp(
-      this.#getProps().x,
-      this.#getProps().y,
-      this.#getProps().width,
-      this.#getProps().height,
-      this.#getProps().r
-    ) || typeof this.#getProps().href === 'function'
+      this.#props.x,
+      this.#props.y,
+      this.#props.width,
+      this.#props.height,
+      this.#props.r
+    ) || typeof this.#props.href === 'function'
   );
 
   #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
+    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
   );
 
   resolveImage(d: any) {
-    const props = this.#getProps();
+    const props = this.#props;
     const resolvedR = props.r !== undefined ? resolveDataProp(props.r, d, null, 0) : undefined;
     const defaultSize = resolvedR !== undefined ? resolvedR * 2 : 16;
     const resolvedWidth =
@@ -117,7 +124,7 @@ export class ImageState {
   }
 
   resolveHref(d: any): string | undefined {
-    const href = this.#getProps().href;
+    const href = this.#props.href;
     if (!href) return undefined;
     if (typeof href === 'function') return href(d);
     const dataValue = get(d, href);
@@ -127,7 +134,7 @@ export class ImageState {
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
-    const props = this.#getProps();
+    const props = this.#props;
     const keyFn = props.key ?? defaultKey;
     return this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
@@ -147,24 +154,16 @@ export class ImageState {
   });
 
   // Pixel-mode helpers
-  defaultSize = $derived(
-    typeof this.#getProps().r === 'number' ? (this.#getProps().r as number) * 2 : 16
-  );
+  defaultSize = $derived(typeof this.#props.r === 'number' ? (this.#props.r as number) * 2 : 16);
   resolvedPixelWidth = $derived(
-    typeof this.#getProps().width === 'number'
-      ? (this.#getProps().width as number)
-      : this.defaultSize
+    typeof this.#props.width === 'number' ? (this.#props.width as number) : this.defaultSize
   );
   resolvedPixelHeight = $derived(
-    typeof this.#getProps().height === 'number'
-      ? (this.#getProps().height as number)
-      : this.defaultSize
+    typeof this.#props.height === 'number' ? (this.#props.height as number) : this.defaultSize
   );
-  pixelR = $derived(
-    typeof this.#getProps().r === 'number' ? (this.#getProps().r as number) : undefined
-  );
+  pixelR = $derived(typeof this.#props.r === 'number' ? (this.#props.r as number) : undefined);
   pixelRotate = $derived(
-    typeof this.#getProps().rotate === 'number' ? (this.#getProps().rotate as number) : undefined
+    typeof this.#props.rotate === 'number' ? (this.#props.rotate as number) : undefined
   );
 
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
@@ -210,12 +209,12 @@ export class ImageState {
 
     this.#motionX = createMotion(
       initialX,
-      () => (typeof getProps().x === 'number' ? (getProps().x as number) : 0),
+      () => (typeof this.#props.x === 'number' ? (this.#props.x as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'x')
     );
     this.#motionY = createMotion(
       initialY,
-      () => (typeof getProps().y === 'number' ? (getProps().y as number) : 0),
+      () => (typeof this.#props.y === 'number' ? (this.#props.y as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'y')
     );
     this.#motionWidth = createMotion(
@@ -234,7 +233,7 @@ export class ImageState {
       const motionMap = this.#dataMotionMap;
       $effect(() => {
         if (!this.dataMode) return;
-        const props = getProps();
+        const props = this.#props;
         const keyFn = props.key ?? defaultKey;
         const activeKeys = new Set<any>();
         for (let i = 0; i < this.#resolvedData.length; i++) {

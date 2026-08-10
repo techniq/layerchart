@@ -326,6 +326,12 @@ export function textMarkInfo(props: TextProps, dataMode: boolean) {
 export class TextState {
   #getProps: () => TextProps = () => ({}) as TextProps;
 
+  /**
+   * Memoized props — `#getProps()` allocates a fresh object (it spreads `rest`),
+   * so calling it per derived meant ~30 allocations per instance per update.
+   */
+  #props: TextProps = $derived(this.#getProps());
+
   // Contexts
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
@@ -335,19 +341,17 @@ export class TextState {
 
   // Data mode detection
   dataMode = $derived(
-    this.#getProps().data != null ||
-      isTextDataProp(this.#getProps().x) ||
-      isTextDataProp(this.#getProps().y)
+    this.#props.data != null || isTextDataProp(this.#props.x) || isTextDataProp(this.#props.y)
   );
 
   // Data resolution
   #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
+    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
   );
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
-    const props = this.#getProps();
+    const props = this.#props;
     const keyFn = props.key ?? defaultKey;
     return this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
@@ -363,7 +367,7 @@ export class TextState {
   });
 
   resolveTextPosition(d: any): { x: number; y: number } {
-    const props = this.#getProps();
+    const props = this.#props;
     if (this.geo.projection) {
       const [projX, projY] = resolveGeoDataPair(
         props.x as any,
@@ -394,7 +398,7 @@ export class TextState {
   }
 
   resolveTextValue(d: any): string {
-    const value = this.#getProps().value;
+    const value = this.#props.value;
     if (typeof value === 'function') {
       const v = value(d);
       return v != null ? String(v) : '';
@@ -421,9 +425,7 @@ export class TextState {
   }
 
   // Resolved width: for path text, defer to the (SVG-bound) pathRef length
-  resolvedWidth = $derived(
-    this.#getProps().path ? getPathLength(this.pathRef) : this.#getProps().width
-  );
+  resolvedWidth = $derived(this.#props.path ? getPathLength(this.pathRef) : this.#props.width);
 
   #defaultTruncateOptions: TruncateTextOptions = $derived({
     maxChars: undefined,
@@ -432,7 +434,7 @@ export class TextState {
   });
 
   truncateConfig: TruncateTextOptions | boolean = $derived.by(() => {
-    const truncate = this.#getProps().truncate;
+    const truncate = this.#props.truncate;
     if (typeof truncate === 'boolean') {
       if (truncate) return this.#defaultTruncateOptions;
       return false;
@@ -442,9 +444,9 @@ export class TextState {
 
   // Numeric value tweening
   rawText = $derived.by(() => {
-    const value = this.#getProps().value;
-    const motion = this.#getProps().motion;
-    const format = this.#getProps().format;
+    const value = this.#props.value;
+    const motion = this.#props.motion;
+    const format = this.#props.format;
     if (typeof value === 'function' || value == null) return '';
     if (typeof value === 'number' && motion) {
       const v = this.#motionValue.current;
@@ -468,7 +470,7 @@ export class TextState {
   #spaceWidth = $derived(getStringWidth(' ', undefined as any) || 0);
 
   wordsByLines = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const width = props.width;
     const scaleToFit = props.scaleToFit ?? false;
     const lines = this.textValue.split('\n');
@@ -504,7 +506,7 @@ export class TextState {
 
   // Vertical positioning
   startDy = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const verticalAnchor = props.verticalAnchor ?? 'end';
     const lineHeight = props.lineHeight ?? '1em';
     const capHeight = resolveCapHeight(props.capHeight, props.fontSize);
@@ -519,7 +521,7 @@ export class TextState {
   });
 
   dataModeStartDy = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const verticalAnchor = props.verticalAnchor ?? 'end';
     const capHeight = resolveCapHeight(props.capHeight, props.fontSize);
     // Match `startDy`, but single-line (data mode renders one tspan per item):
@@ -530,7 +532,7 @@ export class TextState {
   });
 
   scaleTransform = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const x = props.x;
     const y = props.y;
     const width = props.width;
@@ -553,37 +555,33 @@ export class TextState {
   });
 
   rotateTransform = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return props.rotate ? `rotate(${props.rotate}, ${props.x}, ${props.y})` : '';
   });
 
   transform = $derived(
-    (this.#getProps().transform as string | undefined) ??
+    (this.#props.transform as string | undefined) ??
       `${this.scaleTransform} ${this.rotateTransform}`
   );
 
   // Static (non-data-driven) values
   staticFill = $derived(
-    typeof this.#getProps().fill === 'string' ? (this.#getProps().fill as string) : undefined
+    typeof this.#props.fill === 'string' ? (this.#props.fill as string) : undefined
   );
   staticFillOpacity = $derived(
-    typeof this.#getProps().fillOpacity === 'number'
-      ? (this.#getProps().fillOpacity as number)
-      : undefined
+    typeof this.#props.fillOpacity === 'number' ? (this.#props.fillOpacity as number) : undefined
   );
   staticStroke = $derived(
-    typeof this.#getProps().stroke === 'string' ? (this.#getProps().stroke as string) : undefined
+    typeof this.#props.stroke === 'string' ? (this.#props.stroke as string) : undefined
   );
   staticStrokeWidth = $derived(
-    typeof this.#getProps().strokeWidth === 'number'
-      ? (this.#getProps().strokeWidth as number)
-      : undefined
+    typeof this.#props.strokeWidth === 'number' ? (this.#props.strokeWidth as number) : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
+    typeof this.#props.opacity === 'number' ? (this.#props.opacity as number) : undefined
   );
   staticClassName = $derived(
-    typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
+    typeof this.#props.class === 'string' ? (this.#props.class as string) : undefined
   );
 
   constructor(getProps: () => TextProps) {
@@ -598,7 +596,7 @@ export class TextState {
     this.#motionX = createMotion(
       _initialX,
       () => {
-        const x = getProps().x;
+        const x = this.#props.x;
         return typeof x === 'number' || typeof x === 'string' ? x : 0;
       },
       initial.motion
@@ -606,7 +604,7 @@ export class TextState {
     this.#motionY = createMotion(
       _initialY,
       () => {
-        const y = getProps().y;
+        const y = this.#props.y;
         return typeof y === 'number' || typeof y === 'string' ? y : 0;
       },
       initial.motion
@@ -615,7 +613,7 @@ export class TextState {
     // Tween numeric values when motion is configured
     this.#motionValue = createMotion(
       typeof initial.value === 'number' ? initial.value : 0,
-      () => (typeof getProps().value === 'number' ? (getProps().value as number) : 0),
+      () => (typeof this.#props.value === 'number' ? (this.#props.value as number) : 0),
       typeof initial.value === 'number' && initial.motion
         ? typeof initial.motion === 'object' && 'type' in initial.motion
           ? initial.motion
@@ -628,7 +626,7 @@ export class TextState {
       const motionMap = this.#dataMotionMap;
       $effect(() => {
         if (!this.dataMode) return;
-        const props = getProps();
+        const props = this.#props;
         const keyFn = props.key ?? defaultKey;
         const activeKeys = new Set<any>();
         for (let i = 0; i < this.#resolvedData.length; i++) {

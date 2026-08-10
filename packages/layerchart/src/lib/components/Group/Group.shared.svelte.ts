@@ -100,19 +100,26 @@ const defaultKey = (_: any, i: number) => i;
 export class GroupState {
   #getProps: () => GroupProps = () => ({}) as GroupProps;
 
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: GroupProps = $derived(this.#getProps());
+
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
   // Data mode detection
-  dataMode = $derived(hasAnyDataProp(this.#getProps().x, this.#getProps().y));
+  dataMode = $derived(hasAnyDataProp(this.#props.x, this.#props.y));
 
   #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
+    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
   );
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
-    const props = this.#getProps();
+    const props = this.#props;
     const keyFn = props.key ?? defaultKey;
     return this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
@@ -128,7 +135,7 @@ export class GroupState {
   });
 
   #resolveGroup(d: any): { x: number; y: number } {
-    const props = this.#getProps();
+    const props = this.#props;
     if (this.geo.projection) {
       const [projX, projY] = resolveGeoDataPair(props.x, props.y, d, this.geo.projection);
       return { x: projX, y: projY };
@@ -141,14 +148,14 @@ export class GroupState {
 
   // Pixel-mode position (with center support)
   trueX = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (typeof props.x === 'number') return props.x;
     if (props.x == null && (props.center === 'x' || props.center === true))
       return this.chartCtx.width / 2;
     return 0;
   });
   trueY = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (typeof props.y === 'number') return props.y;
     if (props.y == null && (props.center === 'y' || props.center === true))
       return this.chartCtx.height / 2;
@@ -168,7 +175,7 @@ export class GroupState {
 
   // Transform string for SVG/HTML pixel mode
   transform = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (props.center || props.x != null || props.y != null) {
       return `translate(${this.motionX}px, ${this.motionY}px)`;
     }
@@ -177,7 +184,7 @@ export class GroupState {
 
   // Default transition (fade when motion is tweened)
   defaultTransitionIn = $derived(
-    extractTweenConfig(this.#getProps().motion)?.options ? fade : () => ({})
+    extractTweenConfig(this.#props.motion)?.options ? fade : () => ({})
   );
   defaultTransitionInParams = { easing: cubicIn };
 
@@ -196,7 +203,7 @@ export class GroupState {
       const motionMap = this.#dataMotionMap;
       $effect(() => {
         if (!this.dataMode) return;
-        const props = getProps();
+        const props = this.#props;
         const keyFn = props.key ?? defaultKey;
         const activeKeys = new Set<any>();
         for (let i = 0; i < this.#resolvedData.length; i++) {

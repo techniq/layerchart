@@ -49,6 +49,14 @@ export type AreaProps = AreaPropsWithoutHTML &
  */
 export class AreaState {
   #getProps: () => AreaProps = () => ({}) as AreaProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: AreaProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   #tweenState!: ReturnType<typeof createMotion<string | undefined>>;
@@ -61,7 +69,7 @@ export class AreaState {
       name: 'Area',
       kind: 'composite-mark',
       markInfo: () => {
-        const p = getProps();
+        const p = this.#props;
         return {
           data: p.data,
           x: p.x,
@@ -87,26 +95,26 @@ export class AreaState {
     );
   }
 
-  series = $derived(this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey));
+  series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
   seriesData = $derived(this.series?.data);
   seriesAccessor = $derived(
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
 
   stackAccessors = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey && this.ctx.series.isStacked
       ? this.ctx.series.getStackAccessors(seriesKey)
       : null;
   });
 
   xAccessor = $derived.by(() => {
-    const x = this.#getProps().x;
+    const x = this.#props.x;
     return x ? accessor(x) : this.ctx.x;
   });
 
   y0Accessor = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (props.y0) return accessor(props.y0);
     if (this.stackAccessors) return this.stackAccessors.y0;
     if (Array.isArray(this.seriesAccessor)) return accessor(this.seriesAccessor[0]);
@@ -118,7 +126,7 @@ export class AreaState {
   });
 
   y1Accessor = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (props.y1) return accessor(props.y1);
     if (this.stackAccessors) return this.stackAccessors.y1;
     if (Array.isArray(this.seriesAccessor)) return accessor(this.seriesAccessor[1]);
@@ -129,13 +137,13 @@ export class AreaState {
     return this.ctx.y;
   });
 
-  resolvedData = $derived(this.#getProps().data ?? this.seriesData ?? this.ctx.data);
+  resolvedData = $derived(this.#props.data ?? this.seriesData ?? this.ctx.data);
 
   xOffset = $derived(isScaleBand(this.ctx.xScale) ? this.ctx.xScale.bandwidth() / 2 : 0);
   yOffset = $derived(isScaleBand(this.ctx.yScale) ? this.ctx.yScale.bandwidth() / 2 : 0);
 
   #defaultPathData(tweenOptions: ResolvedMotion | undefined): string {
-    const props = this.#getProps();
+    const props = this.#props;
     if (!tweenOptions) return '';
     if (props.pathData) {
       return flattenPathData(props.pathData, Math.min(this.ctx.yScale(0), this.ctx.yRange[0]));
@@ -162,7 +170,7 @@ export class AreaState {
   }
 
   d = $derived.by<string | undefined>(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const _path = this.ctx.radial
       ? areaRadial()
           .angle((d) => this.ctx.xScale(this.xAccessor(d)))
@@ -186,7 +194,7 @@ export class AreaState {
   }
 
   lineYAccessor = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (this.stackAccessors && this.ctx.series.stackLayout === 'stackDiverging') {
       const firstPoint = this.resolvedData?.[0];
       if (firstPoint) {

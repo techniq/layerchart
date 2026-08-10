@@ -50,6 +50,14 @@ export type PointsProps = PointsPropsWithoutHTML &
  */
 export class PointsState {
   #getProps: () => PointsProps = () => ({}) as PointsProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: PointsProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
@@ -59,7 +67,7 @@ export class PointsState {
       name: 'Points',
       kind: 'mark',
       markInfo: () => {
-        const p = getProps();
+        const p = this.#props;
         return {
           data: p.data,
           x: p.x,
@@ -71,13 +79,13 @@ export class PointsState {
     });
   }
 
-  series = $derived(this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey));
+  series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
   seriesAccessor = $derived(
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
 
   stackAccessors = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey && this.ctx.series.isStacked
       ? this.ctx.series.getStackAccessors(seriesKey)
       : null;
@@ -85,14 +93,12 @@ export class PointsState {
 
   xAccessor = $derived(
     accessor(
-      this.#getProps().x ??
-        (this.ctx.valueAxis === 'x' ? this.seriesAccessor : undefined) ??
-        this.ctx.x
+      this.#props.x ?? (this.ctx.valueAxis === 'x' ? this.seriesAccessor : undefined) ?? this.ctx.x
     )
   );
 
   yAccessor = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (props.y) return accessor(props.y);
     if (this.stackAccessors) return this.stackAccessors.y1;
     if (Array.isArray(this.seriesAccessor) && this.ctx.valueAxis === 'y') {
@@ -101,10 +107,10 @@ export class PointsState {
     return accessor((this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ?? this.ctx.y);
   });
 
-  pointsData = $derived(this.#getProps().data ?? this.series?.data ?? this.ctx.data);
+  pointsData = $derived(this.#props.data ?? this.series?.data ?? this.ctx.data);
 
   #getOffset(value: any, offset: Offset, scale: AnyScale, subScale?: AnyScale): number {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     if (typeof offset === 'function') {
       return offset(value, this.ctx);
     } else if (offset != null) {
@@ -118,7 +124,7 @@ export class PointsState {
   }
 
   #getPointObject(xVal: number, yVal: number, d: any, edgeIndex?: number): Point {
-    const props = this.#getProps();
+    const props = this.#props;
 
     // In a geo chart, project the [x, y] pair directly (no band offsets / radial)
     if (this.geo.projection) {

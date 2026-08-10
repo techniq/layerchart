@@ -139,6 +139,14 @@ export type WaffleLayoutOptions = {
  */
 export class WaffleState {
   #getProps: () => WaffleProps = () => ({}) as WaffleProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: WaffleProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   constructor(getProps: () => WaffleProps) {
@@ -147,7 +155,7 @@ export class WaffleState {
       name: 'Waffle',
       kind: 'mark',
       markInfo: () => {
-        const p = getProps();
+        const p = this.#props;
         return {
           data: p.data,
           seriesKey: p.seriesKey,
@@ -157,14 +165,14 @@ export class WaffleState {
     });
   }
 
-  axis = $derived<'x' | 'y'>(this.#getProps().axis ?? this.ctx.valueAxis);
-  unit = $derived(Math.max(0, this.#getProps().unit ?? 1));
-  gap = $derived(+(this.#getProps().gap ?? 1));
-  round = $derived(maybeRound(this.#getProps().round));
-  multipleProp = $derived(maybeMultiple(this.#getProps().multiple));
+  axis = $derived<'x' | 'y'>(this.#props.axis ?? this.ctx.valueAxis);
+  unit = $derived(Math.max(0, this.#props.unit ?? 1));
+  gap = $derived(+(this.#props.gap ?? 1));
+  round = $derived(maybeRound(this.#props.round));
+  multipleProp = $derived(maybeMultiple(this.#props.multiple));
 
   series = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey ? this.ctx.series.series.find((s) => s.key === seriesKey) : undefined;
   });
 
@@ -187,20 +195,20 @@ export class WaffleState {
   );
 
   stackAccessors = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey && this.ctx.series.isStacked
       ? this.ctx.series.getStackAccessors(seriesKey)
       : null;
   });
 
   data = $derived.by(() => {
-    const dataProp = this.#getProps().data;
+    const dataProp = this.#props.data;
     if (dataProp) return dataProp;
     return this.series?.data ?? chartDataArray(this.ctx.data);
   });
 
   x = $derived.by<Accessor>(() => {
-    const xProp = this.#getProps().x;
+    const xProp = this.#props.x;
     return (
       xProp ??
       (this.ctx.valueAxis === 'x'
@@ -210,7 +218,7 @@ export class WaffleState {
     );
   });
   y = $derived.by<Accessor>(() => {
-    const yProp = this.#getProps().y;
+    const yProp = this.#props.y;
     return (
       yProp ??
       (this.ctx.valueAxis === 'y'
@@ -224,9 +232,9 @@ export class WaffleState {
     createDimensionGetter(this.ctx, () => ({
       x: this.x,
       y: this.y,
-      x1: this.#getProps().x1,
-      y1: this.#getProps().y1,
-      insets: this.#getProps().insets,
+      x1: this.#props.x1,
+      y1: this.#props.y1,
+      insets: this.#props.insets,
     }))
   );
 
@@ -248,7 +256,7 @@ export class WaffleState {
   });
 
   items = $derived.by<WaffleItem[]>(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const axis = this.axis;
     const unit = this.unit;
     const round = this.round;
@@ -268,8 +276,8 @@ export class WaffleState {
     // produced by the chart's stack series; otherwise treats value as [0, v].
     const valueAccessorFn = accessor(
       axis === 'y'
-        ? (this.stackAccessors?.value ?? this.seriesAccessor ?? this.#getProps().y ?? this.ctx.y)
-        : (this.stackAccessors?.value ?? this.seriesAccessor ?? this.#getProps().x ?? this.ctx.x)
+        ? (this.stackAccessors?.value ?? this.seriesAccessor ?? this.#props.y ?? this.ctx.y)
+        : (this.stackAccessors?.value ?? this.seriesAccessor ?? this.#props.x ?? this.ctx.x)
     );
 
     for (let i = 0; i < data.length; i++) {

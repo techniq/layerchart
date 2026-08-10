@@ -173,6 +173,14 @@ export type AxisTickItem = {
  */
 export class AxisState {
   #getProps: () => AxisProps = () => ({}) as AxisProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: AxisProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   constructor(getProps: () => AxisProps) {
@@ -183,7 +191,7 @@ export class AxisState {
   // --- Derived from placement ---
 
   orientation = $derived.by(() => {
-    const placement = this.#getProps().placement;
+    const placement = this.#props.placement;
     return placement === 'angle'
       ? 'angle'
       : placement === 'radius'
@@ -194,7 +202,7 @@ export class AxisState {
   });
 
   scale = $derived.by(() => {
-    const scaleProp = this.#getProps().scale;
+    const scaleProp = this.#props.scale;
     return (
       scaleProp ??
       (['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale)
@@ -206,7 +214,7 @@ export class AxisState {
   );
 
   defaultTickSpacing = $derived.by(() => {
-    const placement = this.#getProps().placement;
+    const placement = this.#props.placement;
     return ['top', 'bottom', 'angle'].includes(placement)
       ? 80
       : ['left', 'right', 'radius'].includes(placement)
@@ -215,14 +223,14 @@ export class AxisState {
   });
 
   tickSpacing = $derived.by(() => {
-    const tickSpacingProp = this.#getProps().tickSpacing;
+    const tickSpacingProp = this.#props.tickSpacing;
     if (tickSpacingProp !== undefined) return tickSpacingProp;
     if (isScaleBand(this.scale) && this.interval == null) return null;
     return this.defaultTickSpacing;
   });
 
   resolvedFormat = $derived.by(() => {
-    const format = this.#getProps().format;
+    const format = this.#props.format;
     if (format !== undefined) return format;
 
     if (this.ctx.series.stackLayout === 'stackExpand') {
@@ -260,7 +268,7 @@ export class AxisState {
   });
 
   tickCount = $derived.by(() => {
-    const ticks = this.#getProps().ticks;
+    const ticks = this.#props.ticks;
     if (typeof ticks === 'number') return ticks;
     if (this.tickSpacing && this.effectiveSize)
       return Math.round(this.effectiveSize / this.tickSpacing);
@@ -268,7 +276,7 @@ export class AxisState {
   });
 
   formatCount = $derived.by(() => {
-    const ticks = this.#getProps().ticks;
+    const ticks = this.#props.ticks;
     if (typeof ticks === 'number') return ticks;
     if (this.defaultTickSpacing && this.effectiveSize)
       return Math.round(this.effectiveSize / this.defaultTickSpacing);
@@ -276,7 +284,7 @@ export class AxisState {
   });
 
   tickVals = $derived.by(() => {
-    const ticks = this.#getProps().ticks;
+    const ticks = this.#props.ticks;
     let tickVals = autoTickVals(this.scale, ticks, this.tickCount);
 
     if (this.interval != null) {
@@ -316,16 +324,16 @@ export class AxisState {
   tickFormat = $derived.by(() =>
     autoTickFormat({
       scale: this.scale,
-      ticks: this.#getProps().ticks,
+      ticks: this.#props.ticks,
       count: this.formatCount,
       formatType: this.resolvedFormat,
-      multiline: this.#getProps().tickMultiline ?? false,
-      placement: this.#getProps().placement,
+      multiline: this.#props.tickMultiline ?? false,
+      placement: this.#props.placement,
     })
   );
 
   getCoords(tick: any): { x: number; y: number } {
-    const placement = this.#getProps().placement;
+    const placement = this.#props.placement;
     const scale = this.scale;
     switch (placement) {
       case 'top':
@@ -370,7 +378,7 @@ export class AxisState {
   }
 
   getDefaultTickLabelProps(tick: any): Partial<TextProps> {
-    const { placement, tickLength = 4 } = this.#getProps();
+    const { placement, tickLength = 4 } = this.#props;
     // Cap-height anchoring (`verticalAnchor` start/end, see Text `startDy`) places the label
     // edge exactly `tickLength` from the axis, leaving no gap to the tick. Add a little padding
     // above/below so the label clears the tick — matching the `left`/`right` visual, whose
@@ -433,7 +441,7 @@ export class AxisState {
   }
 
   resolvedLabelX = $derived.by(() => {
-    const { placement, labelPlacement = 'middle' } = this.#getProps();
+    const { placement, labelPlacement = 'middle' } = this.#props;
     if (placement === 'left' || (this.orientation === 'horizontal' && labelPlacement === 'start')) {
       return -this.ctx.padding.left;
     } else if (
@@ -446,7 +454,7 @@ export class AxisState {
   });
 
   resolvedLabelY = $derived.by(() => {
-    const { placement, labelPlacement = 'middle' } = this.#getProps();
+    const { placement, labelPlacement = 'middle' } = this.#props;
     if (placement === 'top' || (this.orientation === 'vertical' && labelPlacement === 'start')) {
       return -this.ctx.padding.top;
     } else if (this.orientation === 'vertical' && labelPlacement === 'middle') {
@@ -458,7 +466,7 @@ export class AxisState {
   });
 
   resolvedLabelTextAnchor = $derived.by(() => {
-    const { placement, labelPlacement = 'middle' } = this.#getProps();
+    const { placement, labelPlacement = 'middle' } = this.#props;
     if (labelPlacement === 'middle') return 'middle';
     if (placement === 'right' || (this.orientation === 'horizontal' && labelPlacement === 'end'))
       return 'end';
@@ -466,7 +474,7 @@ export class AxisState {
   });
 
   resolvedLabelVerticalAnchor = $derived.by(() => {
-    const { placement, labelPlacement = 'middle' } = this.#getProps();
+    const { placement, labelPlacement = 'middle' } = this.#props;
     if (
       placement === 'top' ||
       (this.orientation === 'vertical' && labelPlacement === 'start') ||
@@ -485,7 +493,7 @@ export class AxisState {
       stroke,
       fill,
       classes = {},
-    } = this.#getProps();
+    } = this.#props;
     return {
       value: typeof label === 'function' ? '' : label,
       x: this.resolvedLabelX,
@@ -503,13 +511,13 @@ export class AxisState {
   });
 
   tickItems = $derived.by<AxisTickItem[]>(() => {
-    const { motion, stroke, fill, tickLabelProps, classes = {} } = this.#getProps();
+    const { motion, stroke, fill, tickLabelProps, classes = {} } = this.#props;
     return this.tickVals.map((tick, index) => {
       const tickCoords = this.getCoords(tick);
       const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y);
       const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
         tickCoords.x,
-        tickCoords.y + (this.#getProps().tickLength ?? 4)
+        tickCoords.y + (this.#props.tickLength ?? 4)
       );
       const labelProps: TextProps = {
         x: this.orientation === 'angle' ? radialTickCoordsX : tickCoords.x,

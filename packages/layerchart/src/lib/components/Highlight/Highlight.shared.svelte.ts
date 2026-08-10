@@ -111,16 +111,24 @@ export type HighlightProps = HighlightPropsWithoutHTML;
  */
 export class HighlightState {
   #getProps: () => HighlightProps = () => ({}) as HighlightProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: HighlightProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   constructor(getProps: () => HighlightProps) {
     this.#getProps = getProps;
   }
 
-  x = $derived(accessor(this.#getProps().x ?? this.ctx.x));
-  y = $derived(accessor(this.#getProps().y ?? this.ctx.y));
+  x = $derived(accessor(this.#props.x ?? this.ctx.x));
+  y = $derived(accessor(this.#props.y ?? this.ctx.y));
 
-  highlightData = $derived(this.#getProps().data ?? this.ctx.tooltip.data);
+  highlightData = $derived(this.#props.data ?? this.ctx.tooltip.data);
 
   xValue = $derived(this.x(this.highlightData));
   xCoord = $derived(
@@ -153,7 +161,7 @@ export class HighlightState {
   );
 
   axis = $derived.by(() => {
-    const axisProp = this.#getProps().axis;
+    const axisProp = this.#props.axis;
     return axisProp == null
       ? isScaleBand(this.ctx.yScale) || isScaleTime(this.ctx.yScale) || this.ctx.valueAxis === 'x'
         ? 'y'
@@ -163,7 +171,7 @@ export class HighlightState {
 
   /** Resolve radius for a data item using the chart's rScale */
   getPointRadius(d: any): number | undefined {
-    const rProp = this.#getProps().r;
+    const rProp = this.#props.r;
     if (!rProp || !d) return undefined;
     if (rProp === true) {
       return this.ctx.config.r ? this.ctx.rGet(d) : undefined;
@@ -310,7 +318,7 @@ export class HighlightState {
   points = $derived.by<HighlightPoint[]>(() => {
     let tmpPoints: HighlightPoint[] = [];
     if (!this.highlightData) return tmpPoints;
-    const props = this.#getProps();
+    const props = this.#props;
 
     if (props.data === undefined && this.ctx.tooltip.series.length > 0) {
       tmpPoints = this.ctx.tooltip.series

@@ -63,6 +63,14 @@ export type BarProps = BarPropsWithoutHTML &
  */
 export class BarState {
   #getProps: () => BarProps = () => ({}) as BarProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: BarProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   constructor(getProps: () => BarProps) {
@@ -70,7 +78,7 @@ export class BarState {
   }
 
   series = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey ? this.ctx.series.series.find((s) => s.key === seriesKey) : undefined;
   });
 
@@ -81,14 +89,14 @@ export class BarState {
   );
 
   stackAccessors = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey && this.ctx.series.isStacked
       ? this.ctx.series.getStackAccessors(seriesKey)
       : null;
   });
 
   x = $derived.by(() => {
-    const xProp = this.#getProps().x;
+    const xProp = this.#props.x;
     return (
       xProp ??
       (this.ctx.valueAxis === 'x'
@@ -98,7 +106,7 @@ export class BarState {
     );
   });
   y = $derived.by(() => {
-    const yProp = this.#getProps().y;
+    const yProp = this.#props.y;
     return (
       yProp ??
       (this.ctx.valueAxis === 'y'
@@ -107,11 +115,11 @@ export class BarState {
       this.ctx.y
     );
   });
-  x1 = $derived(this.#getProps().x1);
-  y1 = $derived(this.#getProps().y1);
+  x1 = $derived(this.#props.x1);
+  y1 = $derived(this.#props.y1);
 
   seriesIndex = $derived.by(() => {
-    const seriesKey = this.#getProps().seriesKey;
+    const seriesKey = this.#props.seriesKey;
     return seriesKey
       ? this.ctx.series.visibleSeries.findIndex((s) => s.key === seriesKey)
       : undefined;
@@ -119,7 +127,7 @@ export class BarState {
   seriesCount = $derived(this.ctx.series.visibleSeries.length);
 
   stackInsets = $derived.by<Insets | undefined>(() => {
-    const stackPadding = this.#getProps().stackPadding ?? 0;
+    const stackPadding = this.#props.stackPadding ?? 0;
     if (!this.ctx.series.isStacked || stackPadding === 0 || this.seriesIndex === undefined) {
       return undefined;
     }
@@ -140,7 +148,7 @@ export class BarState {
     };
   });
 
-  insets = $derived(this.#getProps().insets ?? this.stackInsets);
+  insets = $derived(this.#props.insets ?? this.stackInsets);
 
   getDimensions = $derived(
     createDimensionGetter(this.ctx, () => ({
@@ -153,12 +161,12 @@ export class BarState {
   );
 
   scaleDimensions = $derived(
-    this.getDimensions(this.#getProps().data) ?? { x: 0, y: 0, width: 0, height: 0 }
+    this.getDimensions(this.#props.data) ?? { x: 0, y: 0, width: 0, height: 0 }
   );
 
   dimensions = $derived.by(() => {
     let { x, y, width, height } = this.scaleDimensions;
-    const props = this.#getProps();
+    const props = this.#props;
 
     if (props.width != null) {
       x = x + (width - props.width) / 2;
@@ -175,13 +183,13 @@ export class BarState {
 
   valueAccessor = $derived(accessor(this.ctx.valueAxis === 'y' ? this.y : this.x));
   resolvedValue = $derived.by(() => {
-    const value = this.valueAccessor(this.#getProps().data);
+    const value = this.valueAccessor(this.#props.data);
     return Array.isArray(value) ? greatestAbs(value) : value;
   });
 
   /** Resolved `rounded="edge"` based on orientation and value */
   rounded = $derived.by(() => {
-    const roundedProp = this.#getProps().rounded ?? 'all';
+    const roundedProp = this.#props.rounded ?? 'all';
     if (roundedProp !== 'edge') return roundedProp;
     if (this.ctx.valueAxis === 'y') {
       return this.resolvedValue >= 0 && this.ctx.yRange[0] > this.ctx.yRange[1] ? 'top' : 'bottom';
@@ -190,7 +198,7 @@ export class BarState {
   });
 
   corners = $derived.by<[number, number, number, number]>(() => {
-    const radius = this.#getProps().radius ?? 0;
+    const radius = this.#props.radius ?? 0;
     const rounded = this.rounded;
     const topLeft = ['all', 'top', 'left', 'top-left'].includes(rounded);
     const topRight = ['all', 'top', 'right', 'top-right'].includes(rounded);
@@ -205,7 +213,7 @@ export class BarState {
   });
 
   resolvedInitialY = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return (
       props.initialY ??
       (props.motion && this.ctx.valueAxis === 'y'
@@ -214,11 +222,11 @@ export class BarState {
     );
   });
   resolvedInitialHeight = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return props.initialHeight ?? (props.motion && this.ctx.valueAxis === 'y' ? 0 : undefined);
   });
   resolvedInitialX = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return (
       props.initialX ??
       (props.motion && this.ctx.valueAxis === 'x'
@@ -227,7 +235,7 @@ export class BarState {
     );
   });
   resolvedInitialWidth = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return props.initialWidth ?? (props.motion && this.ctx.valueAxis === 'x' ? 0 : undefined);
   });
 }
