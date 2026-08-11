@@ -61,25 +61,27 @@ export function ellipseMarkInfo(props: EllipseProps, dataMode: boolean) {
 export class EllipseState {
   #getProps: () => EllipseProps = () => ({}) as EllipseProps;
 
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: EllipseProps = $derived(this.#getProps());
+
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
   dataMode = $derived(
-    hasAnyDataProp(
-      this.#getProps().cx,
-      this.#getProps().cy,
-      this.#getProps().rx,
-      this.#getProps().ry
-    )
+    hasAnyDataProp(this.#props.cx, this.#props.cy, this.#props.rx, this.#props.ry)
   );
 
   #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
+    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
   );
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
-    const props = this.#getProps();
+    const props = this.#props;
     const keyFn = props.key ?? defaultKey;
     return this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
@@ -97,7 +99,7 @@ export class EllipseState {
   });
 
   #resolveEllipse(d: any) {
-    const props = this.#getProps();
+    const props = this.#props;
     if (this.geo.projection) {
       const [projX, projY] = resolveGeoDataPair(props.cx, props.cy, d, this.geo.projection);
       return {
@@ -155,29 +157,25 @@ export class EllipseState {
   }
 
   staticFill = $derived(
-    typeof this.#getProps().fill === 'string' ? (this.#getProps().fill as string) : undefined
+    typeof this.#props.fill === 'string' ? (this.#props.fill as string) : undefined
   );
   staticFillOpacity = $derived(
-    typeof this.#getProps().fillOpacity === 'number'
-      ? (this.#getProps().fillOpacity as number)
-      : undefined
+    typeof this.#props.fillOpacity === 'number' ? (this.#props.fillOpacity as number) : undefined
   );
   staticStroke = $derived(
-    typeof this.#getProps().stroke === 'string' ? (this.#getProps().stroke as string) : undefined
+    typeof this.#props.stroke === 'string' ? (this.#props.stroke as string) : undefined
   );
   staticStrokeWidth = $derived(
-    typeof this.#getProps().strokeWidth === 'number'
-      ? (this.#getProps().strokeWidth as number)
-      : undefined
+    typeof this.#props.strokeWidth === 'number' ? (this.#props.strokeWidth as number) : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
+    typeof this.#props.opacity === 'number' ? (this.#props.opacity as number) : undefined
   );
   staticClassName = $derived(
-    typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
+    typeof this.#props.class === 'string' ? (this.#props.class as string) : undefined
   );
   staticBorderWidth = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (typeof props.strokeWidth === 'number') return `${props.strokeWidth}px`;
     if (typeof props.stroke === 'string') return '1px';
     return undefined;
@@ -194,22 +192,22 @@ export class EllipseState {
 
     this.#motionCx = createMotion(
       initialCx,
-      () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
+      () => (typeof this.#props.cx === 'number' ? (this.#props.cx as number) : 0),
       initial.motion
     );
     this.#motionCy = createMotion(
       initialCy,
-      () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
+      () => (typeof this.#props.cy === 'number' ? (this.#props.cy as number) : 0),
       initial.motion
     );
     this.#motionRx = createMotion(
       initialRx,
-      () => (typeof getProps().rx === 'number' ? (getProps().rx as number) : 1),
+      () => (typeof this.#props.rx === 'number' ? (this.#props.rx as number) : 1),
       initial.motion
     );
     this.#motionRy = createMotion(
       initialRy,
-      () => (typeof getProps().ry === 'number' ? (getProps().ry as number) : 1),
+      () => (typeof this.#props.ry === 'number' ? (this.#props.ry as number) : 1),
       initial.motion
     );
 
@@ -218,7 +216,7 @@ export class EllipseState {
       const motionMap = this.#dataMotionMap;
       $effect(() => {
         if (!this.dataMode) return;
-        const props = getProps();
+        const props = this.#props;
         const keyFn = props.key ?? defaultKey;
         const activeKeys = new Set<any>();
         for (let i = 0; i < this.#resolvedData.length; i++) {

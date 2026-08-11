@@ -184,36 +184,33 @@ export function rectMarkInfo(props: RectProps, dataMode: boolean) {
 export class RectState {
   #getProps: () => RectProps = () => ({}) as RectProps;
 
+  /**
+   * Memoized props. `#getProps()` allocates a fresh object (it spreads `rest`),
+   * so calling it once per derived meant ~30 allocations per instance per update.
+   */
+  #props: RectProps = $derived(this.#getProps());
+
   // Contexts
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
   // Data mode detection
   hasEdgeProps = $derived(
-    hasAnyDataProp(
-      this.#getProps().x0,
-      this.#getProps().y0,
-      this.#getProps().x1,
-      this.#getProps().y1
-    )
+    hasAnyDataProp(this.#props.x0, this.#props.y0, this.#props.x1, this.#props.y1)
   );
   dataMode = $derived(
-    hasAnyDataProp(
-      this.#getProps().x,
-      this.#getProps().y,
-      this.#getProps().width,
-      this.#getProps().height
-    ) || this.hasEdgeProps
+    hasAnyDataProp(this.#props.x, this.#props.y, this.#props.width, this.#props.height) ||
+      this.hasEdgeProps
   );
 
   // Data resolution
   #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
+    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
   );
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
-    const props = this.#getProps();
+    const props = this.#props;
     const keyFn = props.key ?? defaultKey;
     return this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
@@ -231,7 +228,7 @@ export class RectState {
   });
 
   #resolveRect(d: any): { x: number; y: number; width: number; height: number } {
-    const props = this.#getProps();
+    const props = this.#props;
     const resolvedInsets = resolveInsets(props.insets);
 
     if (this.hasEdgeProps) {
@@ -283,31 +280,27 @@ export class RectState {
   }
 
   // Dash array
-  dashArrayResolved = $derived(parseDashArray(this.#getProps().dashArray));
+  dashArrayResolved = $derived(parseDashArray(this.#props.dashArray));
   dashArrayAttr = $derived(this.dashArrayResolved ? this.dashArrayResolved.join(' ') : undefined);
 
   // Corners
   cornersUniformValue = $derived.by(() => {
-    const corners = this.#getProps().corners;
+    const corners = this.#props.corners;
     if (corners === undefined) return undefined;
     if (typeof corners === 'number') return corners;
     const resolved = resolveCorners(corners, Infinity, Infinity);
     return cornersUniform(resolved) ? resolved[0] : undefined;
   });
   cornersNonUniform = $derived(
-    this.#getProps().corners !== undefined && this.cornersUniformValue === undefined
+    this.#props.corners !== undefined && this.cornersUniformValue === undefined
   );
 
   // Normalize rx/ry: if only one provided, use for both (SVG behavior)
   rx = $derived(
-    Number(
-      (this.#getProps() as any).rx ?? (this.#getProps() as any).ry ?? this.cornersUniformValue
-    ) || 0
+    Number((this.#props as any).rx ?? (this.#props as any).ry ?? this.cornersUniformValue) || 0
   );
   ry = $derived(
-    Number(
-      (this.#getProps() as any).ry ?? (this.#getProps() as any).rx ?? this.cornersUniformValue
-    ) || 0
+    Number((this.#props as any).ry ?? (this.#props as any).rx ?? this.cornersUniformValue) || 0
   );
 
   // Pixel-mode motion sources
@@ -332,7 +325,7 @@ export class RectState {
 
   // Resolved per-corner radii (clamped to current bounds)
   resolveCorners(width: number, height: number) {
-    const corners = this.#getProps().corners;
+    const corners = this.#props.corners;
     if (corners === undefined) return undefined;
     return resolveCorners(corners, width, height);
   }
@@ -371,35 +364,31 @@ export class RectState {
 
   // Static (non-data-driven) values for SVG/HTML pixel mode
   staticFill = $derived(
-    typeof this.#getProps().fill === 'string' ? (this.#getProps().fill as string) : undefined
+    typeof this.#props.fill === 'string' ? (this.#props.fill as string) : undefined
   );
   staticFillOpacity = $derived(
-    typeof this.#getProps().fillOpacity === 'number'
-      ? (this.#getProps().fillOpacity as number)
-      : undefined
+    typeof this.#props.fillOpacity === 'number' ? (this.#props.fillOpacity as number) : undefined
   );
   staticStroke = $derived(
-    typeof this.#getProps().stroke === 'string' ? (this.#getProps().stroke as string) : undefined
+    typeof this.#props.stroke === 'string' ? (this.#props.stroke as string) : undefined
   );
   staticStrokeOpacity = $derived(
-    typeof this.#getProps().strokeOpacity === 'number'
-      ? (this.#getProps().strokeOpacity as number)
+    typeof this.#props.strokeOpacity === 'number'
+      ? (this.#props.strokeOpacity as number)
       : undefined
   );
   staticStrokeWidth = $derived(
-    typeof this.#getProps().strokeWidth === 'number'
-      ? (this.#getProps().strokeWidth as number)
-      : undefined
+    typeof this.#props.strokeWidth === 'number' ? (this.#props.strokeWidth as number) : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
+    typeof this.#props.opacity === 'number' ? (this.#props.opacity as number) : undefined
   );
   staticClassName = $derived(
-    typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
+    typeof this.#props.class === 'string' ? (this.#props.class as string) : undefined
   );
   // Match SVG's implicit `stroke-width: 1` default
   staticBorderWidth = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (typeof props.strokeWidth === 'number') return `${props.strokeWidth}px`;
     if (typeof props.stroke === 'string') return '1px';
     return undefined;
@@ -419,22 +408,22 @@ export class RectState {
 
     this.#motionX = createMotion(
       initialX,
-      () => (typeof getProps().x === 'number' ? (getProps().x as number) : 0),
+      () => (typeof this.#props.x === 'number' ? (this.#props.x as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'x')
     );
     this.#motionY = createMotion(
       initialY,
-      () => (typeof getProps().y === 'number' ? (getProps().y as number) : 0),
+      () => (typeof this.#props.y === 'number' ? (this.#props.y as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'y')
     );
     this.#motionWidth = createMotion(
       initialWidth,
-      () => (typeof getProps().width === 'number' ? (getProps().width as number) : 0),
+      () => (typeof this.#props.width === 'number' ? (this.#props.width as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'width')
     );
     this.#motionHeight = createMotion(
       initialHeight,
-      () => (typeof getProps().height === 'number' ? (getProps().height as number) : 0),
+      () => (typeof this.#props.height === 'number' ? (this.#props.height as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'height')
     );
 
@@ -443,7 +432,7 @@ export class RectState {
       const motionMap = this.#dataMotionMap;
       $effect(() => {
         if (!this.dataMode) return;
-        const props = getProps();
+        const props = this.#props;
         const keyFn = props.key ?? defaultKey;
         const activeKeys = new Set<any>();
         for (let i = 0; i < this.#resolvedData.length; i++) {

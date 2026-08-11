@@ -57,6 +57,14 @@ export type SplineSegment = {
  */
 export class SplineState {
   #getProps: () => SplineProps = () => ({}) as SplineProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: SplineProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
@@ -70,7 +78,7 @@ export class SplineState {
       name: 'Spline',
       kind: 'mark',
       markInfo: () => {
-        const p = getProps();
+        const p = this.#props;
         return {
           data: p.data,
           x: p.x,
@@ -81,10 +89,16 @@ export class SplineState {
       },
     });
 
-    this.#tweenState = createMotion(this.#defaultPathData(), () => this.d, {
-      type: 'tween',
-      interpolate: interpolatePath,
-    });
+    // Only build the tween when `motion` asks for one. `Spline.base` renders
+    // `c.d` unless `isTweened`, so an unconditional tween re-interpolated the
+    // full path on every data change and threw the result away — the dominant
+    // cost in streaming charts.
+    const tween = extractTweenConfig(this.#props.motion);
+    this.#tweenState = createMotion(
+      this.#defaultPathData(),
+      () => this.d,
+      tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined
+    );
   }
 
   #getScaleValue(
@@ -98,23 +112,19 @@ export class SplineState {
     return value;
   }
 
-  series = $derived(this.ctx.series.series.find((s) => s.key === this.#getProps().seriesKey));
+  series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
   seriesAccessor = $derived(
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
 
   xAccessor = $derived(
     accessor(
-      this.#getProps().x ??
-        (this.ctx.valueAxis === 'x' ? this.seriesAccessor : undefined) ??
-        this.ctx.x
+      this.#props.x ?? (this.ctx.valueAxis === 'x' ? this.seriesAccessor : undefined) ?? this.ctx.x
     )
   );
   yAccessor = $derived(
     accessor(
-      this.#getProps().y ??
-        (this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ??
-        this.ctx.y
+      this.#props.y ?? (this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ?? this.ctx.y
     )
   );
 
@@ -122,7 +132,7 @@ export class SplineState {
   yOffset = $derived(isScaleBand(this.ctx.yScale) ? this.ctx.yScale.bandwidth() / 2 : 0);
 
   #buildPath(resolvedData: any[]): string {
-    const props = this.#getProps();
+    const props = this.#props;
     const path = this.ctx.radial
       ? lineRadial()
           .angle((d) => this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) + 0)
@@ -138,7 +148,7 @@ export class SplineState {
   }
 
   hasAnyStyleFn = $derived.by(() => {
-    const p = this.#getProps();
+    const p = this.#props;
     return (
       typeof p.stroke === 'function' ||
       typeof p.fill === 'function' ||
@@ -147,7 +157,7 @@ export class SplineState {
   });
 
   d = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (this.hasAnyStyleFn && !this.geo.projection) return '';
 
     const resolvedData = props.data ?? this.series?.data ?? this.ctx.data;
@@ -169,7 +179,7 @@ export class SplineState {
 
   segments = $derived.by<SplineSegment[] | null>(() => {
     if (!this.hasAnyStyleFn) return null;
-    const props = this.#getProps();
+    const props = this.#props;
     const resolvedData = props.data ?? this.series?.data ?? this.ctx.data;
     if (this.geo.projection) return null;
 
@@ -187,7 +197,7 @@ export class SplineState {
   });
 
   #defaultPathData(): string {
-    const props = this.#getProps();
+    const props = this.#props;
     if (!extractTweenConfig(props.motion)) return '';
 
     if (this.ctx.config.x) {
@@ -213,7 +223,7 @@ export class SplineState {
     return '';
   }
 
-  isTweened = $derived(extractTweenConfig(this.#getProps().motion) != null);
+  isTweened = $derived(extractTweenConfig(this.#props.motion) != null);
 
   get tweenedPath() {
     return this.#tweenState.current;

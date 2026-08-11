@@ -26,6 +26,40 @@ Some primitives are not available in all layer types based on the primitive's ne
 
 LayerChart does provide extended support than what is natively possible in some cases. For example `Text` provides word wrapping in `Svg` and `Canvas` layers, and all primitives support pointer and css styling in `Canvas`.
 
+## Using native elements
+
+Primitives are components, and mounting a component costs more than rendering a plain element. Inside an `Svg` layer you can always drop down to native SVG elements and position them yourself using the chart's scales:
+
+```svelte
+<Chart {data} x="date" y="value">
+	{#snippet marks({ context })}
+		{#each data as d}
+			<rect x={context.xScale(d.date)} y={context.yScale(d.value)} width={4} height={10} />
+		{/each}
+	{/snippet}
+</Chart>
+```
+
+Mounting 100 instances into an `Svg` layer, measured by the repo's primitives benchmark:
+
+| Element | Native  | Primitive |
+| ------- | ------- | --------- |
+| `rect`  | ~1.2 ms | ~7.0 ms   |
+| `text`  | ~1.3 ms | ~10.2 ms  |
+
+That gap is worth having when you're rendering thousands of marks. But a native element is only an element — you give up everything primitives add:
+
+- **Data mode** — no scale resolution or automatic per-item iteration; you index scales and write the `{#each}` yourself
+- **Motion** — no tween/spring transitions on position or dimensions
+- **Layer portability** — native SVG renders only in `Svg`; moving that chart to `Canvas` means rewriting the marks
+- **Canvas pointer events and CSS styling**, which primitives provide even on `Canvas`
+- **Extended behavior** like `Text` word wrapping
+- **Mark registration** — in data mode, primitives register with the chart and contribute to automatic domains, legends, and tooltips. Native elements are invisible to all of that, so a domain you were relying on may quietly change.
+
+Reach for native elements for static, high-count, decorative content where you already have pixel coordinates and need none of the above — backdrops, reference marks, dense scatter overlays. Use primitives everywhere else.
+
+If you want part of the speedup without giving any of this up, importing from a [layer-specific entrypoint](/docs/guides/bundle-size#per-layer-is-also-faster-to-mount) skips the layer-dispatch wrapper while keeping full primitive behavior.
+
 ## Components
 
 <div class="grid grid-cols-sm gap-3 mt-8">

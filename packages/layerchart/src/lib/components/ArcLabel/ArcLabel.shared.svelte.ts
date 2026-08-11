@@ -65,17 +65,24 @@ export type ArcLabelCalloutGeometry = {
 export class ArcLabelState {
   #getProps: () => ArcLabelProps = () => ({}) as ArcLabelProps;
 
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: ArcLabelProps = $derived(this.#getProps());
+
   constructor(getProps: () => ArcLabelProps) {
     this.#getProps = getProps;
   }
 
   midAngle = $derived.by(() => {
-    const { startAngle, endAngle } = this.#getProps();
+    const { startAngle, endAngle } = this.#props;
     return startAngle != null && endAngle != null ? (startAngle + endAngle) / 2 : 0;
   });
 
   offsetCentroid = $derived.by<[number, number] | undefined>(() => {
-    const { centroid, offset = 0, startAngle, endAngle } = this.#getProps();
+    const { centroid, offset = 0, startAngle, endAngle } = this.#props;
     if (!centroid) return centroid;
     if (!offset || startAngle == null || endAngle == null) return centroid;
     const angle = this.midAngle - Math.PI / 2;
@@ -83,7 +90,7 @@ export class ArcLabelState {
   });
 
   effectiveOuterPadding = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const base = props.outerPadding ?? 0;
     if (props.placement === 'outer' || props.placement === 'middle') {
       return base + (props.offset ?? 0);
@@ -92,17 +99,17 @@ export class ArcLabelState {
   });
 
   effectiveInnerPadding = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     if (props.placement === 'inner' || props.placement === 'middle') return props.offset ?? 0;
     return 0;
   });
 
   effectiveCalloutLineLength = $derived(
-    (this.#getProps().calloutLineLength ?? 16) + (this.#getProps().offset ?? 0)
+    (this.#props.calloutLineLength ?? 16) + (this.#props.offset ?? 0)
   );
 
   centroidRotation = $derived.by(() => {
-    const { startAngle, endAngle, placement } = this.#getProps();
+    const { startAngle, endAngle, placement } = this.#props;
     if (startAngle == null || endAngle == null) return 0;
     let deg = radiansToDegrees(this.midAngle);
     if (placement === 'centroid-radial') {
@@ -124,7 +131,7 @@ export class ArcLabelState {
       outerRadius,
       calloutLabelOffset = 12,
       calloutPadding = 4,
-    } = this.#getProps();
+    } = this.#props;
     if (placement !== 'callout' || startAngle == null || endAngle == null || outerRadius == null) {
       return null;
     }
@@ -153,7 +160,7 @@ export class ArcLabelState {
   });
 
   arcTextProps = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     const { placement = 'centroid', startOffset, outerPadding, getArcTextProps } = props;
 
     if (placement === 'centroid') {

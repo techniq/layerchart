@@ -104,6 +104,14 @@ function getOuterRadius(outerRadius: number | undefined, chartRadius: number) {
  */
 export class ArcState {
   #getProps: () => ArcProps = () => ({}) as ArcProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: ArcProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   trackRef = $state<SVGPathElement>();
@@ -115,7 +123,7 @@ export class ArcState {
     const initial = getProps();
     this.#motionEndAngle = createMotion(
       initial.initialValue ?? 0,
-      () => getProps().value ?? 0,
+      () => this.#props.value ?? 0,
       initial.motion
     );
   }
@@ -124,11 +132,11 @@ export class ArcState {
     return this.#motionEndAngle.current;
   }
 
-  range = $derived(this.#getProps().range ?? ([0, 360] as [number, number]));
-  domain = $derived(this.#getProps().domain ?? ([0, 100] as [number, number]));
+  range = $derived(this.#props.range ?? ([0, 360] as [number, number]));
+  domain = $derived(this.#props.domain ?? ([0, 100] as [number, number]));
 
   endAngle = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return (
       props.endAngle ??
       degreesToRadians(
@@ -141,9 +149,9 @@ export class ArcState {
 
   chartRadius = $derived((Math.min(this.ctx.width, this.ctx.height) ?? 0) / 2);
 
-  outerRadius = $derived(getOuterRadius(this.#getProps().outerRadius, this.chartRadius));
+  outerRadius = $derived(getOuterRadius(this.#props.outerRadius, this.chartRadius));
   trackOuterRadius = $derived.by(() => {
-    const trackOuterRadiusProp = this.#getProps().trackOuterRadius;
+    const trackOuterRadiusProp = this.#props.trackOuterRadius;
     return trackOuterRadiusProp
       ? getOuterRadius(trackOuterRadiusProp, this.chartRadius)
       : this.outerRadius;
@@ -157,34 +165,30 @@ export class ArcState {
     return innerRadius;
   }
 
-  innerRadius = $derived(this.#getInnerRadius(this.#getProps().innerRadius, this.outerRadius));
+  innerRadius = $derived(this.#getInnerRadius(this.#props.innerRadius, this.outerRadius));
   trackInnerRadius = $derived.by(() => {
-    const trackInnerRadiusProp = this.#getProps().trackInnerRadius;
+    const trackInnerRadiusProp = this.#props.trackInnerRadius;
     return trackInnerRadiusProp
       ? this.#getInnerRadius(trackInnerRadiusProp, this.trackOuterRadius)
       : this.innerRadius;
   });
 
-  startAngle = $derived(this.#getProps().startAngle ?? degreesToRadians(this.range[0]));
+  startAngle = $derived(this.#props.startAngle ?? degreesToRadians(this.range[0]));
   trackStartAngle = $derived(
-    this.#getProps().trackStartAngle ??
-      this.#getProps().startAngle ??
-      degreesToRadians(this.range[0])
+    this.#props.trackStartAngle ?? this.#props.startAngle ?? degreesToRadians(this.range[0])
   );
   trackEndAngle = $derived(
-    this.#getProps().trackEndAngle ?? this.#getProps().endAngle ?? degreesToRadians(this.range[1])
+    this.#props.trackEndAngle ?? this.#props.endAngle ?? degreesToRadians(this.range[1])
   );
-  trackCornerRadius = $derived(
-    this.#getProps().trackCornerRadius ?? this.#getProps().cornerRadius ?? 0
-  );
-  trackPadAngle = $derived(this.#getProps().trackPadAngle ?? this.#getProps().padAngle ?? 0);
+  trackCornerRadius = $derived(this.#props.trackCornerRadius ?? this.#props.cornerRadius ?? 0);
+  trackPadAngle = $derived(this.#props.trackPadAngle ?? this.#props.padAngle ?? 0);
 
   arcEndAngle = $derived(
-    this.#getProps().endAngle ?? degreesToRadians(this.scale(this.motionEndAngleValue))
+    this.#props.endAngle ?? degreesToRadians(this.scale(this.motionEndAngleValue))
   );
 
   arc = $derived.by(() => {
-    const props = this.#getProps();
+    const props = this.#props;
     return d3arc()
       .innerRadius(this.innerRadius)
       .outerRadius(this.outerRadius)
@@ -205,8 +209,8 @@ export class ArcState {
   );
 
   angle = $derived(((this.startAngle ?? 0) + (this.endAngle ?? 0)) / 2);
-  xOffset = $derived(Math.sin(this.angle) * (this.#getProps().offset ?? 0));
-  yOffset = $derived(-Math.cos(this.angle) * (this.#getProps().offset ?? 0));
+  xOffset = $derived(Math.sin(this.angle) * (this.#props.offset ?? 0));
+  yOffset = $derived(-Math.cos(this.angle) * (this.#props.offset ?? 0));
 
   trackArcCentroid = $derived.by<[number, number]>(() => {
     // @ts-expect-error - this is fine.
@@ -238,7 +242,7 @@ export class ArcState {
         endAngle: () => this.arcEndAngle,
         outerRadius: () => this.outerRadius + (opts.outerPadding ?? 0),
         innerRadius: () => this.innerRadius - (opts.innerPadding ?? 0),
-        cornerRadius: () => this.#getProps().cornerRadius ?? 0,
+        cornerRadius: () => this.#props.cornerRadius ?? 0,
         centroid: () => this.trackArcCentroid,
       },
       opts,

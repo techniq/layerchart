@@ -50,3 +50,48 @@ describe('rect — scaling', () => {
     });
   }
 });
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Where the overhead above actually goes
+//
+// `import { Rect } from 'layerchart'` mounts TWO components: the dispatcher
+// reads the layer context and renders the layer-specific variant. The
+// layer-specific entrypoints (`layerchart/svg`) export that variant
+// directly, skipping the dispatcher — so both arms are public API.
+//
+// Holding Chart + Layer constant and varying only the component makes the
+// cost decompose:
+//
+//   dispatcher   = layerchart      - layerchart/svg   (the wrapper)
+//   component    = layerchart/svg  - native in Chart  (State + template)
+//   chart/layer  = native in Chart - native (bare)    (fixed setup)
+//
+// rect and text are the two heaviest primitives; the rest share the same
+// architecture and show the same shape.
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+for (const primitive of ['rect', 'text'] as const) {
+  const Name = `${primitive[0].toUpperCase()}${primitive.slice(1)}`;
+
+  describe(`${primitive} — overhead decomposition, ${COUNT} instances`, () => {
+    bench(`native <${primitive}>, no Chart`, () => {
+      cleanup();
+      render(PrimitiveBench, { primitive, mode: 'native', count: COUNT });
+    });
+
+    bench(`native <${primitive}> in Chart+Layer`, () => {
+      cleanup();
+      render(PrimitiveBench, { primitive, mode: 'native-in-chart', count: COUNT });
+    });
+
+    bench(`<${Name}> from 'layerchart/svg'`, () => {
+      cleanup();
+      render(PrimitiveBench, { primitive, mode: 'direct', count: COUNT });
+    });
+
+    bench(`<${Name}> from 'layerchart'`, () => {
+      cleanup();
+      render(PrimitiveBench, { primitive, mode: 'layerchart', count: COUNT });
+    });
+  });
+}

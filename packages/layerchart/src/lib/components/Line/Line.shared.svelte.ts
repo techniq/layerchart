@@ -132,27 +132,29 @@ export function lineMarkInfo(props: LineProps, dataMode: boolean) {
 export class LineState {
   #getProps: () => LineProps = () => ({}) as LineProps;
 
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: LineProps = $derived(this.#getProps());
+
   // Contexts
   chartCtx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
   // Data mode detection
   dataMode = $derived(
-    hasAnyDataProp(
-      this.#getProps().x1,
-      this.#getProps().y1,
-      this.#getProps().x2,
-      this.#getProps().y2
-    )
+    hasAnyDataProp(this.#props.x1, this.#props.y1, this.#props.x2, this.#props.y2)
   );
 
   #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
+    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
   );
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
-    const props = this.#getProps();
+    const props = this.#props;
     const keyFn = props.key ?? defaultKey;
     return this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
@@ -170,7 +172,7 @@ export class LineState {
   });
 
   #resolveLine(d: any): { x1: number; y1: number; x2: number; y2: number } {
-    const props = this.#getProps();
+    const props = this.#props;
     if (this.geo.projection) {
       const [projX1, projY1] = resolveGeoDataPair(props.x1, props.y1, d, this.geo.projection);
       const [projX2, projY2] = resolveGeoDataPair(props.x2, props.y2, d, this.geo.projection);
@@ -185,7 +187,7 @@ export class LineState {
   }
 
   // Dash array
-  dashArrayResolved = $derived(parseDashArray(this.#getProps().dashArray));
+  dashArrayResolved = $derived(parseDashArray(this.#props.dashArray));
   dashArrayAttr = $derived(this.dashArrayResolved ? this.dashArrayResolved.join(' ') : undefined);
 
   // Pixel-mode motion sources
@@ -210,30 +212,26 @@ export class LineState {
 
   // Static (non-data-driven) values for SVG/HTML pixel mode
   staticFill = $derived(
-    typeof this.#getProps().fill === 'string' ? (this.#getProps().fill as string) : undefined
+    typeof this.#props.fill === 'string' ? (this.#props.fill as string) : undefined
   );
   staticFillOpacity = $derived(
-    typeof this.#getProps().fillOpacity === 'number'
-      ? (this.#getProps().fillOpacity as number)
-      : undefined
+    typeof this.#props.fillOpacity === 'number' ? (this.#props.fillOpacity as number) : undefined
   );
   staticStroke = $derived(
-    typeof this.#getProps().stroke === 'string' ? (this.#getProps().stroke as string) : undefined
+    typeof this.#props.stroke === 'string' ? (this.#props.stroke as string) : undefined
   );
   staticStrokeWidth = $derived(
-    typeof this.#getProps().strokeWidth === 'number'
-      ? (this.#getProps().strokeWidth as number)
-      : undefined
+    typeof this.#props.strokeWidth === 'number' ? (this.#props.strokeWidth as number) : undefined
   );
   staticOpacity = $derived(
-    typeof this.#getProps().opacity === 'number' ? (this.#getProps().opacity as number) : undefined
+    typeof this.#props.opacity === 'number' ? (this.#props.opacity as number) : undefined
   );
   staticClassName = $derived(
-    typeof this.#getProps().class === 'string' ? (this.#getProps().class as string) : undefined
+    typeof this.#props.class === 'string' ? (this.#props.class as string) : undefined
   );
   // For HTML rendering: stroke-width fallback as div height
   staticHeight = $derived(
-    typeof this.#getProps().strokeWidth === 'number' ? `${this.#getProps().strokeWidth}px` : '1px'
+    typeof this.#props.strokeWidth === 'number' ? `${this.#props.strokeWidth}px` : '1px'
   );
 
   constructor(getProps: () => LineProps) {
@@ -247,22 +245,22 @@ export class LineState {
 
     this.#motionX1 = createMotion(
       initialX1,
-      () => (typeof getProps().x1 === 'number' ? (getProps().x1 as number) : 0),
+      () => (typeof this.#props.x1 === 'number' ? (this.#props.x1 as number) : 0),
       initial.motion
     );
     this.#motionY1 = createMotion(
       initialY1,
-      () => (typeof getProps().y1 === 'number' ? (getProps().y1 as number) : 0),
+      () => (typeof this.#props.y1 === 'number' ? (this.#props.y1 as number) : 0),
       initial.motion
     );
     this.#motionX2 = createMotion(
       initialX2,
-      () => (typeof getProps().x2 === 'number' ? (getProps().x2 as number) : 0),
+      () => (typeof this.#props.x2 === 'number' ? (this.#props.x2 as number) : 0),
       initial.motion
     );
     this.#motionY2 = createMotion(
       initialY2,
-      () => (typeof getProps().y2 === 'number' ? (getProps().y2 as number) : 0),
+      () => (typeof this.#props.y2 === 'number' ? (this.#props.y2 as number) : 0),
       initial.motion
     );
 
@@ -271,7 +269,7 @@ export class LineState {
       const motionMap = this.#dataMotionMap;
       $effect(() => {
         if (!this.dataMode) return;
-        const props = getProps();
+        const props = this.#props;
         const keyFn = props.key ?? defaultKey;
         const activeKeys = new Set<any>();
         for (let i = 0; i < this.#resolvedData.length; i++) {

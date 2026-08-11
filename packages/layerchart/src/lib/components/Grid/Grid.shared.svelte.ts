@@ -110,6 +110,14 @@ export type GridProps<In extends Transition = Transition> = Omit<
  */
 export class GridState {
   #getProps: () => GridProps = () => ({}) as GridProps;
+
+  /**
+   * Memoized props — the component's props closure allocates a fresh object
+   * (it spreads `rest`), so calling it once per derived meant one allocation
+   * per derived per update. Read it once here instead.
+   */
+  #props: GridProps = $derived(this.#getProps());
+
   ctx: ChartState = getChartContext();
 
   constructor(getProps: () => GridProps) {
@@ -118,20 +126,20 @@ export class GridState {
     this.ctx.registerComponent({ name: 'Grid', kind: 'composite-mark' });
   }
 
-  yTicks = $derived(this.#getProps().yTicks ?? (!isScaleBand(this.ctx.yScale) ? 4 : undefined));
+  yTicks = $derived(this.#props.yTicks ?? (!isScaleBand(this.ctx.yScale) ? 4 : undefined));
 
-  tweenConfig = $derived(extractTweenConfig(this.#getProps().motion));
+  tweenConfig = $derived(extractTweenConfig(this.#props.motion));
 
   defaultTransitionIn = $derived(
-    (this.#getProps().transitionIn ?? this.tweenConfig?.options) ? fade : () => ({})
+    (this.#props.transitionIn ?? this.tweenConfig?.options) ? fade : () => ({})
   );
   defaultTransitionInParams: TransitionParams<Transition> = { easing: cubicIn };
 
-  xTickVals = $derived(autoTickVals(this.ctx.xScale, this.#getProps().xTicks));
+  xTickVals = $derived(autoTickVals(this.ctx.xScale, this.#props.xTicks));
   yTickVals = $derived(autoTickVals(this.ctx.yScale, this.yTicks));
 
   xBandOffset = $derived.by(() => {
-    const bandAlign = this.#getProps().bandAlign ?? 'center';
+    const bandAlign = this.#props.bandAlign ?? 'center';
     if (!isScaleBand(this.ctx.xScale)) return 0;
     return bandAlign === 'between'
       ? -(this.ctx.xScale.padding() * this.ctx.xScale.step()) / 2
@@ -139,7 +147,7 @@ export class GridState {
   });
 
   yBandOffset = $derived.by(() => {
-    const bandAlign = this.#getProps().bandAlign ?? 'center';
+    const bandAlign = this.#props.bandAlign ?? 'center';
     if (!isScaleBand(this.ctx.yScale)) return 0;
     return bandAlign === 'between'
       ? -(this.ctx.yScale.padding() * this.ctx.yScale.step()) / 2

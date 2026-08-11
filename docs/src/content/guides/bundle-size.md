@@ -12,7 +12,7 @@ That flexibility has a cost: every consumer of `import { Chart } from 'layerchar
 2. **Sub-path exports for heavy dependencies** — Components that pull in big external deps live behind opt-in sub-paths
 3. **Per-layer variants** — Almost every component has SVG/Canvas/HTML-specific variants for users who commit to one layer (primitives, compound marks, geo, graph, and the high-level chart wrappers like `<LineChart>`)
 
-The first two cost you nothing — they're transparent. The third is opt-in: you swap an import to get a smaller bundle in exchange for losing layer flexibility on that import.
+The first two cost you nothing — they're transparent. The third is opt-in: you swap an import to get a smaller bundle — and a slightly faster mount, see [below](#per-layer-is-also-faster-to-mount) — in exchange for losing layer flexibility on that import.
 
 ## What you get for free
 
@@ -109,7 +109,25 @@ import { Circle } from 'layerchart/canvas';
 import { Circle } from 'layerchart/html';
 ```
 
-The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer variant under the hood at runtime, so you can mix per-layer and agnostic imports in the same chart — the resolved code path is identical.
+The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer variant under the hood at runtime, so you can mix per-layer and agnostic imports in the same chart — the rendered result is identical.
+
+### Per-layer is also faster to mount
+
+The dispatch isn't free. An agnostic import mounts **two** components per instance — the dispatcher that reads the layer context, plus the layer-specific variant it renders. A per-layer import mounts only the variant, so you skip that wrapper entirely.
+
+Mounting **100 instances** into an `<Svg>` layer, measured by the repo's primitives benchmark:
+
+| Import                  | `<Rect>`    | `<Text>`    |
+| ----------------------- | ----------- | ----------- |
+| `from 'layerchart'`     | ~7.0 ms     | ~10.2 ms    |
+| `from 'layerchart/svg'` | ~4.7 ms     | ~8.4 ms     |
+| **Saved**               | **~2.3 ms** | **~1.8 ms** |
+
+Those are totals for 100 instances, so the wrapper works out to roughly **0.02 ms each** (2.3 ms ÷ 100). It's one extra component per instance, so the cost scales with how many marks you render — not with how large your chart or dataset is.
+
+Note that it's a flat cost per instance rather than a fixed percentage. The same ~2 ms is ~33% of `<Rect>`'s total but only ~18% of `<Text>`'s, because `<Text>` does considerably more work of its own.
+
+So the saving matters when you render **many instances** — a scatter plot of thousands of `<Circle>`s, a heatmap of `<Rect>`s. For a chart with a handful of marks it won't be measurable.
 
 The `layerchart/svg`, `layerchart/canvas`, and `layerchart/html` sub-paths re-export every layer-agnostic helper too (layouts, scales, tooltip primitives, etc.), so a single per-layer import path can cover a typical chart end-to-end.
 
@@ -117,6 +135,7 @@ The `layerchart/svg`, `layerchart/canvas`, and `layerchart/html` sub-paths re-ex
 
 - ✅ You're building many charts in a single layer (most likely SVG)
 - ✅ You're shipping to a bandwidth-sensitive context (mobile, embedded views, AMP-style pages)
+- ✅ You're rendering many instances of one primitive, where skipping the dispatcher measurably speeds up mounting
 - ✅ You want to sketch out the absolute minimum bundle for a specific use case
 
 ### When to stay on the agnostic API
