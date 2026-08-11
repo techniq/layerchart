@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import LineChart from '../charts/LineChart/LineChart.svelte';
@@ -32,6 +32,21 @@ function triggerTooltip(el: Element, position?: { clientX: number; clientY: numb
   el.dispatchEvent(new PointerEvent('pointermove', eventInit));
 }
 
+/**
+ * The tooltip root is portaled to `document.body`, outside the render container, so it is not
+ * removed with it.  Its fade transition can also outlive the test which rendered it, leaving a
+ * root from a previous test as the first match in the body.  Clear any leftovers before each test
+ * and always read the most recently portaled root.
+ */
+beforeEach(() => {
+  document.body.querySelectorAll('.lc-tooltip-root').forEach((el) => el.remove());
+});
+
+function getTooltipRoot(target: ParentNode = document.body) {
+  const roots = target.querySelectorAll<HTMLElement>('.lc-tooltip-root');
+  return roots.length ? roots[roots.length - 1] : null;
+}
+
 describe('Tooltip', () => {
   describe('portal', () => {
     it('should portal tooltip to body by default', async () => {
@@ -45,7 +60,7 @@ describe('Tooltip', () => {
 
       await vi.waitFor(() => {
         // Tooltip root should be portaled to body (outside the chart container)
-        const tooltipInBody = document.body.querySelector('.lc-tooltip-root');
+        const tooltipInBody = getTooltipRoot();
         expect(tooltipInBody).not.toBeNull();
 
         // Should use fixed positioning when portaled
@@ -68,7 +83,7 @@ describe('Tooltip', () => {
 
       await vi.waitFor(() => {
         // Tooltip root should be inside the chart container
-        const tooltipInContainer = container.querySelector('.lc-tooltip-root');
+        const tooltipInContainer = getTooltipRoot(container);
         expect(tooltipInContainer).not.toBeNull();
 
         // Should use absolute positioning when not portaled
@@ -96,7 +111,7 @@ describe('Tooltip', () => {
         triggerTooltip(tooltipCtx);
 
         await vi.waitFor(() => {
-          const tooltipInTarget = portalTarget.querySelector('.lc-tooltip-root');
+          const tooltipInTarget = getTooltipRoot(portalTarget);
           expect(tooltipInTarget).not.toBeNull();
         });
       } finally {
@@ -114,7 +129,7 @@ describe('Tooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root');
+        const tooltipRoot = getTooltipRoot();
         expect(tooltipRoot).not.toBeNull();
 
         // Should contain tooltip content (items from default tooltip)
@@ -133,7 +148,7 @@ describe('Tooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         // Should have valid pixel positions (not NaN or empty)
@@ -162,7 +177,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipLeft = parseFloat(tooltipRoot.style.left);
@@ -193,7 +208,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipLeft = parseFloat(tooltipRoot.style.left);
@@ -219,7 +234,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipTop = parseFloat(tooltipRoot.style.top);
@@ -248,7 +263,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipTop = parseFloat(tooltipRoot.style.top);
@@ -279,7 +294,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipLeft = parseFloat(tooltipRoot.style.left);
@@ -307,7 +322,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipTop = parseFloat(tooltipRoot.style.top);
@@ -337,7 +352,7 @@ describe('Tooltip', () => {
       });
 
       await vi.waitFor(() => {
-        const tooltipRoot = document.body.querySelector('.lc-tooltip-root') as HTMLElement;
+        const tooltipRoot = getTooltipRoot()!;
         expect(tooltipRoot).not.toBeNull();
 
         const tooltipLeft = parseFloat(tooltipRoot.style.left);
