@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { scaleBand } from 'd3-scale';
+import { scaleBand, scaleLinear, scaleTime, scaleUtc } from 'd3-scale';
 
-import { scaleBandInvert, scaleInvert } from './scales.svelte.js';
+import { isScaleUtc, scaleBandInvert, scaleInvert } from './scales.svelte.js';
 
 describe('scaleBandInvert', () => {
   const domain = ['A', 'B', 'C', 'D', 'E'];
@@ -81,5 +81,30 @@ describe('scaleInvert', () => {
     const scale = scaleBand().domain(['A', 'B', 'C']).range([0, 300]).padding(0.1);
     const center = scale('B')! + scale.bandwidth() / 2;
     expect(scaleInvert(scale, center)).toBe('B');
+  });
+});
+
+// The suite runs under a fixed non-zero offset (`TZ=UTC-5`), so local and UTC boundaries differ.
+describe('isScaleUtc', () => {
+  const domain = [new Date('2024-01-01T00:00:00Z'), new Date('2024-01-08T00:00:00Z')];
+
+  it('is true for scaleUtc', () => {
+    expect(isScaleUtc(scaleUtc().domain(domain) as any)).toBe(true);
+  });
+
+  it('is false for scaleTime', () => {
+    expect(isScaleUtc(scaleTime().domain(domain) as any)).toBe(false);
+  });
+
+  it('is false for non-time scales', () => {
+    expect(isScaleUtc(scaleLinear().domain([0, 10]) as any)).toBe(false);
+    expect(isScaleUtc(scaleBand().domain(['a', 'b']) as any)).toBe(false);
+  });
+
+  it('does not disturb the scale it probes', () => {
+    const scale = scaleUtc().domain(domain).range([0, 100]);
+    isScaleUtc(scale as any);
+    expect(scale.domain()).toEqual(domain);
+    expect(scale.range()).toEqual([0, 100]);
   });
 });

@@ -3,7 +3,6 @@ import type { SVGAttributes } from 'svelte/elements';
 
 import { extent } from 'd3-array';
 import { pointRadial } from 'd3-shape';
-import { timeDay, timeHour, timeMillisecond, timeMinute, timeSecond, timeYear } from 'd3-time';
 
 import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
 import { cls } from '@layerstack/tailwind';
@@ -12,11 +11,16 @@ import type { Transition, TransitionParams, Without } from '$lib/utils/types.js'
 import type { GroupProps } from '../Group/Group.shared.svelte.js';
 import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type Rule from '../Rule/Rule.svelte';
-import { isScaleBand } from '$lib/utils/scales.svelte.js';
+import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { type MotionProp } from '$lib/utils/motion.svelte.js';
-import { autoTickVals, autoTickFormat, type TicksConfig } from '$lib/utils/ticks.js';
+import {
+  autoTickVals,
+  autoTickFormat,
+  filterTicksByFormat,
+  type TicksConfig,
+} from '$lib/utils/ticks.js';
 
 export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
   /**
@@ -292,31 +296,9 @@ export class AxisState {
       tickVals.pop();
     }
 
-    // Use format to filter ticks (helpful to keep ticks above a threshold for wide charts or short durations)
-    const formatType =
-      typeof this.resolvedFormat === 'object' ? this.resolvedFormat?.type : this.resolvedFormat;
-
-    if (formatType === 'integer') {
-      tickVals = tickVals.filter(Number.isInteger);
-    } else if (formatType === 'year' || formatType === PeriodType.CalendarYear) {
-      tickVals = tickVals.filter((val) => +timeYear.floor(val) === +val);
-    } else if (
-      formatType === 'month' ||
-      formatType === PeriodType.Month ||
-      formatType === PeriodType.MonthYear
-    ) {
-      tickVals = tickVals.filter((val) => val.getDate() < 7); // first week of the month
-    } else if (formatType === 'day' || formatType === PeriodType.Day) {
-      tickVals = tickVals.filter((val) => +timeDay.floor(val) === +val);
-    } else if (formatType === 'hour' || formatType === PeriodType.Hour) {
-      tickVals = tickVals.filter((val) => +timeHour.floor(val) === +val);
-    } else if (formatType === 'minute' || formatType === PeriodType.Minute) {
-      tickVals = tickVals.filter((val) => +timeMinute.floor(val) === +val);
-    } else if (formatType === 'second' || formatType === PeriodType.Second) {
-      tickVals = tickVals.filter((val) => +timeSecond.floor(val) === +val);
-    } else if (formatType === 'millisecond' || formatType === PeriodType.Millisecond) {
-      tickVals = tickVals.filter((val) => +timeMillisecond.floor(val) === +val);
-    }
+    // Filter to the boundary implied by the format, matching the scale's own (local vs UTC)
+    // day/hour/... boundaries — see `filterTicksByFormat`.
+    tickVals = filterTicksByFormat(tickVals, this.resolvedFormat, { utc: isScaleUtc(this.scale) });
 
     return unique(tickVals);
   });

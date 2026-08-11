@@ -1,5 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
-import { autoTickVals } from './ticks.js';
+import { scaleTime, scaleUtc } from 'd3-scale';
+import { utcDay } from 'd3-time';
+import { PeriodType } from '@layerstack/utils';
+
+import { autoTickFormat, autoTickVals, filterTicksByFormat } from './ticks.js';
 import type { TimeInterval } from 'd3-time';
 
 // Mock helpers
@@ -77,5 +81,64 @@ describe('autoTickVals', () => {
     const scale = { domain: mockDomain, ticks: vi.fn(() => [1, 2, 3]) } as any;
     expect(autoTickVals(scale, null, undefined)).toEqual([1, 2, 3]);
     expect(scale.ticks).toHaveBeenCalledWith(undefined);
+  });
+});
+
+// The suite runs under a fixed non-zero offset (`TZ=UTC-5`), so local and UTC boundaries differ.
+describe('filterTicksByFormat', () => {
+  const utcMidnights = [
+    new Date('2024-01-01T00:00:00Z'),
+    new Date('2024-01-02T00:00:00Z'),
+    new Date('2024-01-03T00:00:00Z'),
+  ];
+
+  it('keeps UTC-midnight ticks for a day format when utc is set', () => {
+    expect(filterTicksByFormat(utcMidnights, 'day', { utc: true })).toEqual(utcMidnights);
+    expect(filterTicksByFormat(utcMidnights, PeriodType.Day, { utc: true })).toEqual(utcMidnights);
+  });
+
+  it('drops UTC-midnight ticks for a day format when utc is not set', () => {
+    // Regression: filtering a `scaleUtc()` axis with local intervals removed every tick, so a
+    // day-formatted axis rendered no labels at all.
+    expect(filterTicksByFormat(utcMidnights, 'day')).toEqual([]);
+  });
+
+  it('keeps local-midnight ticks for a day format without utc', () => {
+    const localMidnights = [new Date(2024, 0, 1), new Date(2024, 0, 2)];
+    expect(filterTicksByFormat(localMidnights, 'day')).toEqual(localMidnights);
+    expect(filterTicksByFormat(localMidnights, 'day', { utc: true })).toEqual([]);
+  });
+
+  it('honours utc for month/year boundaries', () => {
+    const firstOfMonth = [new Date('2024-01-01T00:00:00Z'), new Date('2024-02-01T00:00:00Z')];
+    expect(filterTicksByFormat(firstOfMonth, 'month', { utc: true })).toEqual(firstOfMonth);
+    expect(filterTicksByFormat(firstOfMonth, 'year', { utc: true })).toEqual([firstOfMonth[0]]);
+  });
+
+  it('passes through unknown/absent format types', () => {
+    expect(filterTicksByFormat(utcMidnights, undefined)).toEqual(utcMidnights);
+  });
+
+  it('filters integers', () => {
+    expect(filterTicksByFormat([1, 1.5, 2], 'integer')).toEqual([1, 2]);
+  });
+});
+
+describe('autoTickFormat with a UTC scale', () => {
+  const start = new Date('2024-01-02T00:00:00Z');
+  const domain: [Date, Date] = [start, utcDay.offset(start, 3)];
+
+  it('labels a UTC-midnight tick with its UTC day', () => {
+    const scale = scaleUtc().domain(domain).range([0, 100]);
+    const fmt = autoTickFormat({ scale: scale as any, formatType: 'day', count: 3 });
+    expect(fmt(start, 0)).toContain('2');
+    // Under TZ=UTC-5 the local day of this instant is Jan 1 — the label must not say that.
+    expect(fmt(start, 0)).not.toContain('1/1');
+  });
+
+  it('still labels a local scale in local time', () => {
+    const scale = scaleTime().domain(domain).range([0, 100]);
+    const fmt = autoTickFormat({ scale: scale as any, formatType: 'day', count: 3 });
+    expect(typeof fmt(start, 0)).toBe('string');
   });
 });

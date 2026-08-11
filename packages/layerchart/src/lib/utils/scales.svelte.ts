@@ -53,6 +53,32 @@ export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, 
   return domain[0] instanceof Date || domain[1] instanceof Date;
 }
 
+/**
+ * Whether a time scale floors on UTC boundaries (`scaleUtc()`) rather than local ones
+ * (`scaleTime()`).
+ *
+ * d3 exposes no marker distinguishing the two, so probe the scale's own tick generator: ask a
+ * copy for daily ticks over a fixed multi-day window and check whether they land on UTC
+ * midnight. A local scale returns local midnights, which are only UTC midnight when the
+ * ambient offset is 0 — and there the distinction doesn't matter anyway.
+ */
+export function isScaleUtc(scale: AnyScale<any, any>): boolean {
+  if (!isScaleTime(scale)) return false;
+  if (typeof scale.ticks !== 'function' || typeof scale.copy !== 'function') return false;
+
+  const probe = scale
+    .copy()
+    .domain([new Date(Date.UTC(2024, 0, 1)), new Date(Date.UTC(2024, 0, 4))]);
+  const ticks: Date[] = probe.ticks(3);
+
+  return (
+    ticks.length > 0 &&
+    ticks.every(
+      (tick) => tick.getUTCHours() === 0 && tick.getUTCMinutes() === 0 && tick.getUTCSeconds() === 0
+    )
+  );
+}
+
 export function isScaleNumeric(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
   const domain = scale.domain();
   return typeof domain[0] === 'number' || typeof domain[1] === 'number';

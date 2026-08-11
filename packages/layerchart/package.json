@@ -79,7 +79,7 @@
     "@layerstack/svelte-actions": "1.0.1-next.18",
     "@layerstack/svelte-state": "0.1.0-next.23",
     "@layerstack/tailwind": "2.0.0-next.21",
-    "@layerstack/utils": "2.0.0-next.18",
+    "@layerstack/utils": "2.0.0-next.19",
     "@types/d3-contour": "^3.0.6",
     "d3-array": "^3.2.4",
     "d3-chord": "^3.0.1",
