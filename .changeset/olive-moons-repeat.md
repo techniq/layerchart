@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-perf: Memoize props in component state classes (~3x faster `<Rect>`, ~2x faster `LineChart` mount)
+perf: Memoize props in component state classes (~3x faster `<Rect>` mount in benchmarks)
