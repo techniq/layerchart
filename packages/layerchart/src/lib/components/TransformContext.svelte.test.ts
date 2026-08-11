@@ -208,4 +208,263 @@ describe('TransformContext', () => {
       });
     });
   });
+
+  describe('pinch to zoom', () => {
+    /** Render the harness and return the transform state along with pointer event helpers */
+    async function setup(transform: Record<string, any>) {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: { height: 300, transform },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      // TransformContext is lazy-loaded, so wait for it to render
+      const element = await vi.waitFor(() => {
+        const el = document.querySelector<HTMLElement>('.lc-transform-context');
+        expect(el).not.toBeNull();
+        return el!;
+      });
+
+      const rect = element.getBoundingClientRect();
+      function dispatch(type: string, pointerId: number, x: number, y: number) {
+        element.dispatchEvent(
+          new PointerEvent(type, {
+            pointerId,
+            pointerType: 'touch',
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      }
+
+      return {
+        get context() {
+          return chartContext;
+        },
+        get transform() {
+          return chartContext.transform;
+        },
+        dispatch,
+      };
+    }
+
+    it('should scale by the change in distance between two pointers', async () => {
+      const { transform, dispatch } = await setup({ mode: 'canvas' });
+
+      expect(transform.scale).toBe(1);
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointerdown', 2, 200, 100);
+      expect(transform.pinching).toBe(true);
+
+      // Double the distance between pointers (100 -> 200)
+      dispatch('pointermove', 2, 300, 100);
+      expect(transform.scale).toBe(2);
+
+      // Halve the distance from the gesture start (100 -> 50)
+      dispatch('pointermove', 2, 150, 100);
+      expect(transform.scale).toBe(0.5);
+
+      dispatch('pointerup', 2, 150, 100);
+      dispatch('pointerup', 1, 100, 100);
+      expect(transform.pinching).toBe(false);
+      expect(transform.dragging).toBe(false);
+    });
+
+    it('should keep the pinch midpoint anchored while zooming', async () => {
+      const { context, transform, dispatch } = await setup({ mode: 'canvas' });
+      const { padding } = context;
+
+      dispatch('pointerdown', 1, 100, 200);
+      dispatch('pointerdown', 2, 300, 200);
+      // Midpoint (200, 200), distance 200
+      dispatch('pointermove', 1, 50, 200);
+      dispatch('pointermove', 2, 350, 200);
+      // Midpoint (200, 200), distance 300
+
+      expect(transform.scale).toBe(1.5);
+      // The point under the midpoint should remain under the midpoint after scaling
+      // (chart coordinates are relative to padding)
+      expect(transform.translate.x).toBeCloseTo((200 - padding.left) * (1 - 1.5), 5);
+      expect(transform.translate.y).toBeCloseTo((200 - padding.top) * (1 - 1.5), 5);
+    });
+
+    it('should pan when both pointers move together', async () => {
+      const { transform, dispatch } = await setup({ mode: 'canvas' });
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointerdown', 2, 200, 100);
+
+      dispatch('pointermove', 1, 130, 150);
+      dispatch('pointermove', 2, 230, 150);
+
+      expect(transform.scale).toBe(1);
+      expect(transform.translate).toEqual({ x: 30, y: 50 });
+    });
+
+    it('should respect scaleExtent', async () => {
+      const { transform, dispatch } = await setup({ mode: 'canvas', scaleExtent: [1, 2] });
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointerdown', 2, 200, 100);
+
+      dispatch('pointermove', 2, 500, 100); // 4x
+      expect(transform.scale).toBe(2);
+
+      dispatch('pointermove', 2, 120, 100); // 0.2x
+      expect(transform.scale).toBe(1);
+    });
+
+    it('should continue dragging with the remaining pointer without jumping', async () => {
+      const { transform, dispatch } = await setup({ mode: 'canvas' });
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointerdown', 2, 200, 100);
+      dispatch('pointermove', 2, 300, 100);
+
+      const translateAfterPinch = { ...transform.translate };
+
+      // Release the second pointer - the first should continue panning from its current position
+      dispatch('pointerup', 2, 300, 100);
+      expect(transform.pinching).toBe(false);
+
+      dispatch('pointermove', 1, 140, 100);
+      expect(transform.translate.x).toBeCloseTo(translateAfterPinch.x + 40, 5);
+      expect(transform.scale).toBe(2);
+    });
+
+    it('should release cancelled pointers', async () => {
+      const { transform, dispatch } = await setup({ mode: 'canvas' });
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointercancel', 1, 100, 100);
+      expect(transform.moving).toBe(false);
+
+      // Stale pointer should not be treated as part of a new gesture
+      dispatch('pointerdown', 2, 100, 100);
+      expect(transform.pinching).toBe(false);
+    });
+
+    it('should only use the horizontal distance in domain mode with `axis: x`', async () => {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: {
+          height: 300,
+          data: [
+            { date: 0, value: 1 },
+            { date: 10, value: 2 },
+          ],
+          x: 'date',
+          y: 'value',
+          transform: { mode: 'domain' as const, axis: 'x' as const },
+        },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      const element = await vi.waitFor(() => {
+        const el = document.querySelector<HTMLElement>('.lc-transform-context');
+        expect(el).not.toBeNull();
+        return el!;
+      });
+
+      const rect = element.getBoundingClientRect();
+      const dispatch = (type: string, pointerId: number, x: number, y: number) =>
+        element.dispatchEvent(
+          new PointerEvent(type, {
+            pointerId,
+            pointerType: 'touch',
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointerdown', 2, 200, 150);
+
+      // Doubling the horizontal distance doubles the scale, regardless of vertical movement
+      dispatch('pointermove', 2, 300, 250);
+
+      expect(chartContext.transform.scale).toBe(2);
+      expect(chartContext.transform.translate.y).toBe(0);
+    });
+
+    it('should not show the tooltip while pinching', async () => {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: {
+          height: 300,
+          data: [
+            { date: 0, value: 1 },
+            { date: 10, value: 2 },
+          ],
+          x: 'date',
+          y: 'value',
+          transform: { mode: 'domain' as const, axis: 'x' as const },
+          tooltipContext: { mode: 'bisect-x' as const },
+        },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+      const { transformEl, tooltipEl } = await vi.waitFor(() => {
+        const transformEl = document.querySelector<HTMLElement>('.lc-transform-context');
+        const tooltipEl = document.querySelector<HTMLElement>('.lc-tooltip-context');
+        expect(transformEl).not.toBeNull();
+        expect(tooltipEl).not.toBeNull();
+        return { transformEl: transformEl!, tooltipEl: tooltipEl! };
+      });
+
+      const rect = transformEl.getBoundingClientRect();
+      const dispatch = (el: HTMLElement, type: string, pointerId: number, x: number, y: number) =>
+        el.dispatchEvent(
+          new PointerEvent(type, {
+            pointerId,
+            pointerType: 'touch',
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+
+      // Sanity check - the tooltip shows on pointer move
+      dispatch(tooltipEl, 'pointermove', 1, 100, 100);
+      await vi.waitFor(() => expect(chartContext.tooltipState.data).not.toBeNull());
+
+      // Start a pinch (events bubble from the tooltip area up to the transform context)
+      dispatch(tooltipEl, 'pointerdown', 1, 100, 100);
+      dispatch(tooltipEl, 'pointerdown', 2, 200, 100);
+      expect(chartContext.transform.pinching).toBe(true);
+
+      dispatch(tooltipEl, 'pointermove', 2, 300, 100);
+      await vi.waitFor(() => expect(chartContext.tooltipState.data).toBeNull());
+    });
+
+    it('should not pinch when disabled', async () => {
+      const { transform, dispatch } = await setup({ mode: 'canvas', pinch: false });
+
+      dispatch('pointerdown', 1, 100, 100);
+      dispatch('pointerdown', 2, 200, 100);
+      dispatch('pointermove', 2, 300, 100);
+
+      expect(transform.pinching).toBe(false);
+      expect(transform.scale).toBe(1);
+    });
+  });
 });

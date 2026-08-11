@@ -153,12 +153,27 @@ When set, scroll events without the key held are ignored (no `preventDefault`), 
 - **Drag** — pan (click and drag to move the view)
 - **Double-click** — zoom in 2x at the click point
 - **Shift + double-click** — zoom out 0.5x
-- **Pinch-to-zoom** — detected as ctrl+wheel events, always zooms regardless of scroll mode
+- **Trackpad pinch** — detected as ctrl+wheel events, always zooms regardless of scroll mode
+- **Touch pinch** — two fingers zoom and pan together (see below)
 - **Trackpad horizontal scroll** — pans horizontally in domain mode
 
 The `clickDistance` option (default: `10` pixels) sets the threshold before a pointer movement is treated as a drag rather than a click.
 
 Set `disablePointer: true` to disable all pointer-based interactions (useful when using programmatic zoom only).
+
+### Pinch to zoom (touch)
+
+Two-finger pinch gestures are supported on touch devices and are enabled by default. The scale follows the change in distance between the two fingers, while the midpoint between them stays anchored to the same point in the chart, so zooming and panning happen together in a single gesture.
+
+Set `pinch: false` to disable it (drag-to-pan and trackpad pinch remain available):
+
+```svelte
+<Chart transform={{ mode: 'canvas', pinch: false }} />
+```
+
+In `domain` mode with `axis: 'x'` or `axis: 'y'`, only the distance along the active axis is used, so a horizontal pinch zooms the x domain without vertical finger movement affecting it.
+
+Adding or removing a finger mid-gesture re-anchors the gesture instead of jumping — lifting one finger continues as a drag with the remaining finger. Inertia is not applied when a pinch ends.
 
 ### Brush integration
 
@@ -515,6 +530,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Dynamic data loading   | Derive data from `context.xDomain` visible range          | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |
 | Drag inertia           | `inertia: true` with `motion: 'spring'`                   | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)             |
 | Require key to scroll  | `scrollActivationKey: 'meta'`                             | [scroll-activation-key](/docs/components/TransformContext/scroll-activation-key)        |
+| Disable touch pinch    | `pinch: false`                                            | enabled by default for all modes                                                        |
 
 ## API reference
 

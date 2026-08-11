@@ -33,6 +33,7 @@
     onpointermove = () => {},
     ontouchmove = () => {},
     onpointerup = () => {},
+    onpointercancel = () => {},
     ondblclick = () => {},
     onclickcapture = () => {},
     ref: refProp = $bindable(),
@@ -54,6 +55,7 @@
     translateExtent,
     constrain,
     inertia,
+    pinch,
     scrollActivationKey,
     ...restProps
   }: TransformContextProps = $props();
@@ -75,6 +77,7 @@
     translateExtent,
     constrain,
     inertia,
+    pinch,
     scrollActivationKey,
   };
 
@@ -159,6 +162,10 @@
   });
 
   $effect.pre(() => {
+    transformState.pinch = pinch ?? true;
+  });
+
+  $effect.pre(() => {
     transformState.scrollActivationKey = scrollActivationKey;
   });
 
@@ -178,6 +185,11 @@
   function onPointerUp(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointerup?.(e);
     transformState.onPointerUp(e);
+  }
+
+  function onPointerCancel(e: PointerEvent & { currentTarget: HTMLElement }) {
+    onpointercancel?.(e);
+    transformState.onPointerCancel(e);
   }
 
   function onClick(e: MouseEvent & { currentTarget: HTMLElement }) {
@@ -213,8 +225,10 @@
     }
   }}
   onpointerup={onPointerUp}
+  onpointercancel={onPointerCancel}
   ondblclick={onDoubleClick}
   onclickcapture={onClick}
+  style:touch-action={mode && mode !== 'none' && !disablePointer ? 'none' : undefined}
   class={['lc-transform-context', className]}
   bind:this={ref}
   {...restProps}
