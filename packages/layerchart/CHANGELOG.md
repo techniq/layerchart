@@ -1,5 +1,17 @@
 # LayerChart
 
+## 2.1.1
+
+### Patch Changes
+
+- fix(Spline): Only tween path data when `motion` is set (~20x less memory growth while streaming, issue #585) ([#896](https://github.com/techniq/layerchart/pull/896))
+
+- perf(Chart): Remove quadratic domain recalculation on mount for series-based charts ([#896](https://github.com/techniq/layerchart/pull/896))
+
+- perf: Memoize props in component state classes (~3x faster `<Rect>` mount in benchmarks) ([#896](https://github.com/techniq/layerchart/pull/896))
+
+- perf(Chart): Resolve stacked value domain in a single pass ([#896](https://github.com/techniq/layerchart/pull/896))
+
 ## 2.1.0
 
 ### Minor Changes
