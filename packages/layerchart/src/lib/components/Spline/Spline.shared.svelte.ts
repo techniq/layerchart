@@ -89,10 +89,16 @@ export class SplineState {
       },
     });
 
-    this.#tweenState = createMotion(this.#defaultPathData(), () => this.d, {
-      type: 'tween',
-      interpolate: interpolatePath,
-    });
+    // Only build the tween when `motion` asks for one. `Spline.base` renders
+    // `c.d` unless `isTweened`, so an unconditional tween re-interpolated the
+    // full path on every data change and threw the result away — the dominant
+    // cost in streaming charts.
+    const tween = extractTweenConfig(this.#props.motion);
+    this.#tweenState = createMotion(
+      this.#defaultPathData(),
+      () => this.d,
+      tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined
+    );
   }
 
   #getScaleValue(
