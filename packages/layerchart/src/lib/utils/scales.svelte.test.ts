@@ -84,7 +84,8 @@ describe('scaleInvert', () => {
   });
 });
 
-// The suite runs under a fixed non-zero offset (`TZ=UTC-5`), so local and UTC boundaries differ.
+// The suite runs under a fixed non-zero offset (`TEST_TIMEZONE` in `vite.config.js`), so local and
+// UTC boundaries differ.
 describe('isScaleUtc', () => {
   const domain = [new Date('2024-01-01T00:00:00Z'), new Date('2024-01-08T00:00:00Z')];
 
