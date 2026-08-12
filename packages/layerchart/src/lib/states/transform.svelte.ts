@@ -55,6 +55,13 @@ export type TransformStateOptions = {
   /** Enable inertia (momentum) after drag release. Pass `true` for defaults or an options object. */
   inertia?: boolean | InertiaOptions;
 
+  /**
+   * Enable two-finger pinch-to-zoom (and simultaneous pan) on touch devices.
+   * Trackpad pinch (wheel + ctrl) is always supported when `scrollMode` is not `none`.
+   * Default: `true`
+   */
+  pinch?: boolean;
+
   /** Require a modifier key to be held for scroll/wheel to activate zoom/pan. Default: no key required. */
   scrollActivationKey?: ScrollActivationKey;
 
@@ -106,16 +113,29 @@ export class TransformState {
     maxVelocity: number;
     velocityWindow: number;
   };
+  pinch: boolean;
 
   // State
   pointerDown = $state(false);
   dragging = $state(false);
+  pinching = $state(false);
   scrollMode = $state<TransformScrollMode>('none');
   startPoint = $state({ x: 0, y: 0 });
   startTranslate = $state({ x: 0, y: 0 });
 
   // Velocity tracking for inertia
   private _pointerSamples: { x: number; y: number; t: number }[] = [];
+
+  // Active pointers (by `pointerId`), used to detect multi-touch pinch gestures
+  private _pointers = new Map<number, { x: number; y: number }>();
+
+  // Gesture reference captured when a pinch begins (null when not pinching)
+  private _pinchStart: {
+    distance: number;
+    midpoint: { x: number; y: number };
+    scale: number;
+    translate: { x: number; y: number };
+  } | null = null;
 
   // Motion controllers (internal)
   private _translate: ReturnType<typeof createControlledMotion<{ x: number; y: number }>>;
@@ -141,6 +161,7 @@ export class TransformState {
     this.scaleExtent = options.scaleExtent;
     this.translateExtent = options.translateExtent;
     this.constrain = options.constrain;
+    this.pinch = options.pinch ?? true;
 
     // Inertia
     const inertiaOpt = options.inertia;
@@ -232,9 +253,32 @@ export class TransformState {
     return { scale, translate };
   }
 
+  /**
+   * Motion options which apply the change immediately (used while following a pointer/wheel gesture)
+   */
+  private _instantMotion(motion: { type: string }) {
+    return motion.type === 'spring'
+      ? { instant: true }
+      : motion.type === 'tween'
+        ? { duration: 0 }
+        : undefined;
+  }
+
+  /**
+   * In domain mode, reflect the Y coordinate since screen Y is inverted vs data Y.  This ensures
+   * zooming targets the correct data position under the cursor/gesture.
+   */
+  private _reflectPoint(point: { x: number; y: number }) {
+    if (!this.ctx || this.mode !== 'domain' || this.axis === 'x') return point;
+    return {
+      x: point.x,
+      y: this.ctx.padding.top + this.ctx.height - (point.y - this.ctx.padding.top),
+    };
+  }
+
   // Derived state
   get moving() {
-    return this.dragging || this._translating.current || this._scaling.current;
+    return this.dragging || this.pinching || this._translating.current || this._scaling.current;
   }
 
   // Public getters and setters for scale and translate
@@ -328,14 +372,7 @@ export class TransformState {
   ) {
     if (!this.ctx) return;
 
-    // In domain mode, reflect Y point because screen Y is inverted vs data Y.
-    // This ensures zoom targets the correct data position under the cursor.
-    if (this.mode === 'domain' && this.axis !== 'x') {
-      point = {
-        x: point.x,
-        y: this.ctx.padding.top + this.ctx.height - (point.y - this.ctx.padding.top),
-      };
-    }
+    point = this._reflectPoint(point);
 
     const currentScale = this._scale.current;
     const newScale = this._clampScale(this._scale.current * value);
@@ -362,10 +399,129 @@ export class TransformState {
     }
   }
 
+  /** Continue receiving events for a pointer after it leaves the element */
+  private _capturePointer(e: PointerEvent & { currentTarget: HTMLElement }) {
+    try {
+      e.currentTarget?.setPointerCapture(e.pointerId);
+    } catch {
+      // Pointer is no longer active
+    }
+  }
+
+  /** The two oldest active pointers, if a pinch gesture is possible */
+  private _pinchPoints() {
+    if (this._pointers.size < 2) return null;
+    const [a, b] = [...this._pointers.values()];
+    return [a, b] as const;
+  }
+
+  /** Distance between pinch pointers, restricted to the active axis in domain mode */
+  private _pinchDistance(a: { x: number; y: number }, b: { x: number; y: number }) {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    if (this.mode === 'domain') {
+      if (this.axis === 'x') return Math.abs(dx);
+      if (this.axis === 'y') return Math.abs(dy);
+    }
+    return Math.hypot(dx, dy);
+  }
+
+  /** Capture the current scale/translate as the reference for the (re)starting pinch gesture */
+  private _startPinch() {
+    const points = this._pinchPoints();
+    if (!points) return;
+
+    const distance = this._pinchDistance(points[0], points[1]);
+    if (distance === 0) return;
+
+    this._pinchStart = {
+      distance,
+      midpoint: {
+        x: (points[0].x + points[1].x) / 2,
+        y: (points[0].y + points[1].y) / 2,
+      },
+      scale: this._scale.current,
+      translate: this._translate.current,
+    };
+    this.pinching = true;
+    this.pointerDown = true;
+    // Suppress click/tooltip while pinching (same as dragging)
+    this.dragging = true;
+    // Do not carry pointer movement from before the pinch into inertia
+    this._pointerSamples = [];
+  }
+
+  private _endPinch() {
+    this._pinchStart = null;
+    this.pinching = false;
+  }
+
+  private _updatePinch() {
+    const pinchStart = this._pinchStart;
+    const points = this._pinchPoints();
+    if (!pinchStart || !points || !this.ctx) return;
+
+    const distance = this._pinchDistance(points[0], points[1]);
+    if (distance === 0) return;
+
+    const midpoint = {
+      x: (points[0].x + points[1].x) / 2,
+      y: (points[0].y + points[1].y) / 2,
+    };
+
+    const newScale = this._clampScale(pinchStart.scale * (distance / pinchStart.distance));
+    this.setScale(newScale, this._instantMotion(this._scale));
+
+    const translateMotion = this._instantMotion(this._translate);
+
+    if (this.processTranslate) {
+      // Translate is not in screen space (ex. globe rotation) - pan by the midpoint delta, same as dragging
+      this.setTranslate(
+        this._applyTranslate(
+          pinchStart.translate.x,
+          pinchStart.translate.y,
+          midpoint.x - pinchStart.midpoint.x,
+          midpoint.y - pinchStart.midpoint.y
+        ),
+        translateMotion
+      );
+    } else {
+      // Keep the content under the initial midpoint anchored to the current midpoint, which
+      // handles zooming and two-finger panning together
+      const startMidpoint = this._reflectPoint(pinchStart.midpoint);
+      const currentMidpoint = this._reflectPoint(midpoint);
+
+      const invertTransformPoint = {
+        x: (startMidpoint.x - this.ctx.padding.left - pinchStart.translate.x) / pinchStart.scale,
+        y: (startMidpoint.y - this.ctx.padding.top - pinchStart.translate.y) / pinchStart.scale,
+      };
+      const newTranslate = {
+        x: currentMidpoint.x - this.ctx.padding.left - invertTransformPoint.x * newScale,
+        y: currentMidpoint.y - this.ctx.padding.top - invertTransformPoint.y * newScale,
+      };
+
+      // Constrain translate to active axis in domain mode
+      if (this.mode === 'domain') {
+        if (this.axis === 'x') newTranslate.y = 0;
+        if (this.axis === 'y') newTranslate.x = 0;
+      }
+
+      this.setTranslate(newTranslate, translateMotion);
+    }
+  }
+
   onPointerDown(e: PointerEvent & { currentTarget: HTMLElement }) {
     if (this.mode === 'none' || this.disablePointer) return;
 
     e.preventDefault();
+
+    this._pointers.set(e.pointerId, localPoint(e));
+
+    if (this.pinch && this._pointers.size >= 2) {
+      // Additional pointer - transition from dragging (or a previous pinch) to a new pinch gesture
+      this._startPinch();
+      return;
+    }
 
     this.pointerDown = true;
     this.dragging = false;
@@ -377,11 +533,27 @@ export class TransformState {
   }
 
   onPointerMove(e: PointerEvent & { currentTarget: HTMLElement }) {
-    if (!this.pointerDown) return;
+    const endPoint = this._pointers.has(e.pointerId) ? localPoint(e) : null;
+    if (endPoint) this._pointers.set(e.pointerId, endPoint);
+
+    if (this.pinch && !this._pinchStart && this._pointers.size >= 2) {
+      // Pointers started at the same location (zero distance) - anchor the pinch once they separate
+      this._startPinch();
+    }
+
+    if (this._pinchStart) {
+      e.preventDefault();
+      e.stopPropagation(); // Stop tooltip from triggering (along with `capture: true`)
+      // Keep receiving moves for both pointers, even if one leaves the element
+      this._capturePointer(e);
+      this._updatePinch();
+      return;
+    }
+
+    if (!this.pointerDown || !endPoint) return;
 
     e.preventDefault(); // Stop text selection
 
-    const endPoint = localPoint(e);
     const deltaX = endPoint.x - this.startPoint.x;
     const deltaY = endPoint.y - this.startPoint.y;
 
@@ -392,7 +564,7 @@ export class TransformState {
 
     if (this.dragging) {
       e.stopPropagation(); // Stop tooltip from triggering (along with `capture: true`)
-      e.currentTarget?.setPointerCapture(e.pointerId);
+      this._capturePointer(e);
 
       // Track pointer samples for inertia velocity calculation
       if (this.inertia.enabled) {
@@ -407,16 +579,39 @@ export class TransformState {
 
       this.setTranslate(
         this._applyTranslate(this.startTranslate.x, this.startTranslate.y, deltaX, deltaY),
-        this._translate.type === 'spring'
-          ? { instant: true }
-          : this._translate.type === 'tween'
-            ? { duration: 0 }
-            : undefined
+        this._instantMotion(this._translate)
       );
     }
   }
 
-  onPointerUp(_e: PointerEvent & { currentTarget: HTMLElement }) {
+  onPointerUp(e: PointerEvent & { currentTarget: HTMLElement }) {
+    this._pointers.delete(e.pointerId);
+
+    if (this._pinchStart) {
+      if (this._pointers.size >= 2) {
+        // Still enough pointers to pinch - re-anchor to the remaining pointers
+        this._startPinch();
+        return;
+      }
+
+      this._endPinch();
+
+      const remaining = [...this._pointers.values()][0];
+      if (remaining) {
+        // Continue dragging with the remaining pointer without jumping
+        this.startPoint = remaining;
+        this.startTranslate = this._translate.current;
+        this._pointerSamples = [];
+        return;
+      }
+
+      // Pinch ended without inertia (velocity samples are not tracked while pinching)
+      this.pointerDown = false;
+      this.dragging = false;
+      this.ondragend?.();
+      return;
+    }
+
     const wasDragging = this.dragging;
     this.pointerDown = false;
     this.dragging = false;
@@ -500,6 +695,38 @@ export class TransformState {
     this.ondragend?.();
   }
 
+  /**
+   * Release a cancelled pointer (ex. touch interrupted by the browser).  Without this, stale
+   * pointers would remain active and be treated as part of a subsequent pinch gesture.
+   */
+  onPointerCancel(e: PointerEvent & { currentTarget: HTMLElement }) {
+    this._pointers.delete(e.pointerId);
+
+    if (this._pinchStart) {
+      if (this._pointers.size >= 2) {
+        this._startPinch();
+        return;
+      }
+      this._endPinch();
+    }
+
+    const remaining = [...this._pointers.values()][0];
+    if (remaining) {
+      // Continue dragging with the remaining pointer without jumping
+      this.startPoint = remaining;
+      this.startTranslate = this._translate.current;
+      this._pointerSamples = [];
+      return;
+    }
+
+    if (!this.pointerDown) return;
+
+    this.pointerDown = false;
+    this.dragging = false;
+    this._pointerSamples = [];
+    this.ondragend?.();
+  }
+
   onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     if (this.mode === 'none') return;
     const point = localPoint(e);
@@ -531,12 +758,7 @@ export class TransformState {
     // Pinch to zoom is registered as a wheel event with control key
     const pinchToZoom = e.ctrlKey;
 
-    const instantMotionOptions =
-      this._scale.type === 'spring'
-        ? { instant: true }
-        : this._scale.type === 'tween'
-          ? { duration: 0 }
-          : undefined;
+    const instantMotionOptions = this._instantMotion(this._scale);
 
     if (this.scrollMode === 'scale' || pinchToZoom) {
       // https://github.com/d3/d3-zoom#zoom_wheelDelta

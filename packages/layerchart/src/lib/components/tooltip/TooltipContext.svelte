@@ -245,6 +245,12 @@
   }
 
   function showTooltip(e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any) {
+    if (isTransforming) {
+      // Pointer gesture (drag/pinch) owns the pointer - do not show/update the tooltip
+      hideTooltip();
+      return;
+    }
+
     // Cancel hiding tooltip if from previous event loop
     if (hideTimeoutId) {
       clearTimeout(hideTimeoutId);
@@ -666,7 +672,25 @@
     ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)
   );
 
+  /**
+   * Whether a transform pointer gesture (drag or pinch) is in progress.  Pointer capture normally
+   * retargets events to `TransformContext` mid-gesture, but events which arrive before capture is
+   * established (ex. each new pointer of a pinch) would otherwise show/update the tooltip.
+   */
+  const isTransforming = $derived(
+    ctx.transformState?.dragging === true || ctx.transformState?.pinching === true
+  );
+
+  $effect(() => {
+    // Hide a tooltip shown before the gesture started (ex. first finger of a pinch)
+    if (isTransforming) {
+      hideTooltip();
+    }
+  });
+
   function onPointerEnter(e: PointerEvent | MouseEvent | TouchEvent) {
+    if (isTransforming) return;
+
     tooltipState.isHoveringTooltipArea = true;
     if (triggerPointerEvents) {
       showTooltip(e);
@@ -674,6 +698,8 @@
   }
 
   function onPointerMove(e: PointerEvent | MouseEvent | TouchEvent) {
+    if (isTransforming) return;
+
     if (triggerPointerEvents) {
       showTooltip(e);
     }
