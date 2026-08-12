@@ -16,6 +16,7 @@ export * from './string.js';
 export * from './ticks.js';
 export * from './treemap.js';
 export * from './threshold.js';
+export * from './tooltip.js';
 export * from './rasterInterpolate.js';
 export * from './rasterBounds.js';
 export * from './stats.js';

@@ -166,7 +166,7 @@
   import { cls } from '@layerstack/tailwind';
   import { portal as portalAction } from '@layerstack/svelte-actions/portal';
 
-  import { isScaleBand } from '../../utils/scales.svelte.js';
+  import { dataCoords } from '$lib/utils/tooltip.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { ChartState } from '$lib/states/chart.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
@@ -227,21 +227,10 @@
       return { x: null, y: null };
     }
 
-    const xBandOffset = isScaleBand(ctx.xScale)
-      ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
-      : 0;
+    // Container-relative position of the tooltip data, used by the `'data'` placement
+    const coords = x === 'data' || y === 'data' ? dataCoords(ctx, ctx.tooltip.data) : null;
 
-    const rawXGet = x === 'data' ? ctx.xGet(ctx.tooltip.data) : undefined;
-    const xFromData = Array.isArray(rawXGet)
-      ? (rawXGet[0] + rawXGet[rawXGet.length - 1]) / 2
-      : rawXGet;
-
-    const xValue: number =
-      typeof x === 'number'
-        ? x
-        : x === 'data'
-          ? xFromData + ctx.padding.left + xBandOffset
-          : ctx.tooltip.x;
+    const xValue: number = typeof x === 'number' ? x : x === 'data' ? coords!.x : ctx.tooltip.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -264,20 +253,7 @@
         break;
     }
 
-    const yBandOffset = isScaleBand(ctx.yScale)
-      ? ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2
-      : 0;
-    const rawYGet = y === 'data' ? ctx.yGet(ctx.tooltip.data) : undefined;
-    const yFromData = Array.isArray(rawYGet)
-      ? (rawYGet[0] + rawYGet[rawYGet.length - 1]) / 2
-      : rawYGet;
-
-    const yValue: number =
-      typeof y === 'number'
-        ? y
-        : y === 'data'
-          ? yFromData + ctx.padding.top + yBandOffset
-          : ctx.tooltip.y;
+    const yValue: number = typeof y === 'number' ? y : y === 'data' ? coords!.y : ctx.tooltip.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {

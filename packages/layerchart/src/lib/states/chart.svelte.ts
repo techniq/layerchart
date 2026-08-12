@@ -99,6 +99,13 @@ export class ChartState<
   XScale extends AnyScale = AnyScale,
   YScale extends AnyScale = AnyScale,
 > {
+  /**
+   * Stable identity for this chart instance.  Used to attribute state changes to their
+   * originating chart (ex. so a chart can ignore the echo of its own update when synchronized
+   * with others).
+   */
+  readonly id: symbol = Symbol('Chart');
+
   // The `$props()` proxy from the host component. Reads on `this.props.X` go
   // straight through to the underlying reactive prop — no spread / no derived
   // wrapper needed.

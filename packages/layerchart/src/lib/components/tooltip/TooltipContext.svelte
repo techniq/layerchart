@@ -111,7 +111,7 @@
 
 <script lang="ts" generics="TData = any">
   import type { Snippet } from 'svelte';
-  import { bisector, max, min } from 'd3-array';
+  import { max, min } from 'd3-array';
   // d3-quadtree (used only for quadtree* tooltip modes) is dynamically
   // imported inside the $effect below so non-quadtree users don't pay for it.
   import type { Quadtree } from 'd3-quadtree';
@@ -131,7 +131,8 @@
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/chart.js';
-  import { TooltipState } from '$lib/states/tooltip.svelte.js';
+  import { TooltipState, type TooltipShowOptions } from '$lib/states/tooltip.svelte.js';
+  import { dataCoords, findDatumByValue } from '$lib/utils/tooltip.js';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
   import { getSettings } from '$lib/contexts/settings.js';
 
@@ -179,53 +180,6 @@
 
   let hideTimeoutId: ReturnType<typeof setTimeout>;
 
-  const bisectX = bisector((d: any) => {
-    const value = ctx.x(d);
-    if (Array.isArray(value)) {
-      // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-      // Using first value.  Consider using average, max, etc
-      // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-      // return midpoint;
-      return value[0];
-    } else {
-      return value;
-    }
-  }).left;
-
-  const bisectY = bisector((d: any) => {
-    const value = ctx.y(d);
-    if (Array.isArray(value)) {
-      // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-      // Using first value.  Consider using average, max, etc
-      // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-      // return midpoint;
-      return value[0];
-    } else {
-      return value;
-    }
-  }).left;
-
-  function findData(previousValue: any, currentValue: any, valueAtPoint: any, accessor: Function) {
-    switch (findTooltipData) {
-      case 'closest':
-        if (currentValue === undefined) {
-          return previousValue;
-        } else if (previousValue === undefined) {
-          return currentValue;
-        } else {
-          return Number(valueAtPoint) - Number(accessor(previousValue)) >
-            Number(accessor(currentValue)) - Number(valueAtPoint)
-            ? currentValue
-            : previousValue;
-        }
-      case 'left':
-        return previousValue;
-      case 'right':
-      default:
-        return currentValue;
-    }
-  }
-
   function resolveTooltipSeriesKey(series: any, seriesTooltipData: any) {
     if (
       mode === 'manual' &&
@@ -244,11 +198,15 @@
     return series.key;
   }
 
-  function showTooltip(e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any) {
+  /**
+   * Guards shared by every `show*` entry point.  Returns `false` when the tooltip should not
+   * update, and cancels a pending hide from a previous event loop otherwise.
+   */
+  function canShow() {
     if (isTransforming) {
       // Pointer gesture (drag/pinch) owns the pointer - do not show/update the tooltip
       hideTooltip();
-      return;
+      return false;
     }
 
     // Cancel hiding tooltip if from previous event loop
@@ -256,22 +214,157 @@
       clearTimeout(hideTimeoutId);
     }
 
-    if (locked) {
-      // Ignore (keep current position / data)
-      return;
-    }
+    // Ignore while locked (keep current position / data)
+    return !locked;
+  }
 
-    const containerNode = (e.target as Element).closest('.lc-root-container')!;
-    const point = localPoint(e, containerNode);
-
-    // If pointer is outside of the chart area (ex. within padding), hide tooltip.  This prevents showing tooltip when interacting with axes, legends, etc.  For voronoi/quadtreemodes, this is handled by quadtree finding no point, but for bisect modes we need to check manually.
-    if (
+  /**
+   * Whether a container-relative point falls outside the plot area (ex. within the chart's
+   * padding).  Prevents showing the tooltip when interacting with axes, legends, etc.  For
+   * voronoi/quadtree modes this is handled by the lookup finding no point, but for bisect modes
+   * it has to be checked manually.
+   */
+  function isOutsidePlotArea(point: { x: number; y: number }) {
+    return (
       ref !== undefined &&
-      tooltipData == null && // mode !== 'manual' but support annotations
       (point.x < ref.offsetLeft ||
         point.x > ref.offsetLeft + ref.offsetWidth ||
         point.y < ref.offsetTop ||
         point.y > ref.offsetTop + ref.offsetHeight)
+    );
+  }
+
+  /** Find the data point at a container-relative pixel coordinate, using the configured `mode` */
+  function findDataAtPoint(point: { x: number; y: number }) {
+    switch (mode) {
+      case 'bisect-x': {
+        let xValueAtPoint: any;
+        if (ctx.radial) {
+          // Assume radial is always centered
+          const { radians } = cartesianToPolar(point.x - ctx.width / 2, point.y - ctx.height / 2);
+          xValueAtPoint = scaleInvert(ctx.xScale, radians);
+        } else {
+          xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
+        }
+
+        return findDatumByValue(ctx, { x: xValueAtPoint }, { mode, findTooltipData });
+      }
+
+      case 'bisect-y': {
+        // `y` value at pointer coordinate
+        const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
+
+        return findDatumByValue(ctx, { y: yValueAtPoint }, { mode, findTooltipData });
+      }
+
+      case 'bisect-band': {
+        // `x` and `y` values at pointer coordinate
+        const xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
+        const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
+
+        return findDatumByValue(ctx, { x: xValueAtPoint, y: yValueAtPoint }, { mode, findTooltipData }); // prettier-ignore
+      }
+
+      case 'quadtree-x':
+      case 'quadtree-y':
+      case 'quadtree': {
+        let qx = point.x - ctx.padding.left;
+        let qy = point.y - ctx.padding.top;
+
+        // Apply inverse transform to convert screen coordinates to canvas coordinates
+        if (ctx.transform.mode === 'canvas') {
+          qx = (qx - ctx.transform.translate.x) / ctx.transform.scale;
+          qy = (qy - ctx.transform.translate.y) / ctx.transform.scale;
+        }
+
+        return quadtree?.find(qx, qy, radius);
+      }
+
+      default:
+        return undefined;
+    }
+  }
+
+  /** Resolve the per-series values shown in the tooltip for a data point */
+  function resolveSeries(tooltipData: any) {
+    // For quadtree/voronoi modes, the tooltip finds a single specific point (by x+y proximity),
+    // so only the owning series should be matched. For bisect and quadtree-x/y modes,
+    // the tooltip finds by a single axis position and all series at that position should show values.
+    const isSinglePointMode = mode === 'quadtree' || mode === 'voronoi';
+
+    return ctx.series.series.map((s) => {
+      // Find related data point for this series (if series has its own data)
+      const seriesTooltipData = s.data
+        ? isSinglePointMode
+          ? tooltipData?.seriesKey != null
+            ? s.key === tooltipData.seriesKey
+              ? tooltipData
+              : undefined
+            : s.data.includes(tooltipData)
+              ? tooltipData
+              : undefined
+          : findRelatedData(s.data, tooltipData, ctx.x)
+        : tooltipData;
+
+      const valueAcc = accessor(
+        s.value ?? (s.data ? (ctx.props.y ?? ctx.props.x ?? asAny(ctx.y) ?? asAny(ctx.x)) : s.key)
+      );
+
+      // Extract value from the data
+      const value = seriesTooltipData ? valueAcc(seriesTooltipData) : undefined;
+
+      const seriesKey = resolveTooltipSeriesKey(s, seriesTooltipData);
+
+      // When user explicitly provides cScale, prefer scale-derived color (e.g. gradient encoding).
+      // Otherwise prefer series-defined color (e.g. BarChart with explicit series colors).
+      const scaleColor = ctx.cScale?.(ctx.c(tooltipData));
+      const color = ctx.props.cScale ? (scaleColor ?? s.color) : (s.color ?? scaleColor);
+
+      return {
+        key: seriesKey,
+        label: s.label ?? (seriesKey !== 'default' ? seriesKey : 'value'),
+        value: value,
+        color,
+        visible:
+          seriesKey === s.key
+            ? ctx.series.isVisible(s.key)
+            : ctx.series.selectedKeys.isEmpty() || ctx.series.selectedKeys.isSelected(seriesKey),
+        config: s,
+      };
+    });
+  }
+
+  /** Commit a resolved data point to the tooltip state, or hide if there is none */
+  function applyTooltip(point: { x: number; y: number }, tooltipData: any) {
+    if (tooltipData == null) {
+      // Hide tooltip if unable to locate
+      hideTooltip();
+      return;
+    }
+
+    const series = resolveSeries(tooltipData);
+
+    tooltipState.x = point.x;
+    tooltipState.y = point.y;
+    tooltipState.data = tooltipData;
+    // Reverse series order for stacked charts to match visual stack order (bottom to top)
+    tooltipState.series = ctx.series.isStacked ? [...series].reverse() : series;
+  }
+
+  /** Distinguish the `show(e, data)` overload from `show({ point, value, data })` */
+  function isPointerLike(value: unknown): value is PointerEvent | MouseEvent | TouchEvent {
+    // Duck-typed rather than `instanceof Event` so events from another realm (ex. an iframe)
+    // are still recognized
+    return typeof (value as any)?.preventDefault === 'function';
+  }
+
+  function showFromEvent(e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any) {
+    const containerNode = (e.target as Element).closest('.lc-root-container')!;
+    const point = localPoint(e, containerNode);
+
+    if (
+      tooltipData == null && // mode !== 'manual' but support annotations
+      isOutsidePlotArea(point)
     ) {
       // Ignore if within padding of chart
       hideTooltip();
@@ -279,145 +372,47 @@
     }
 
     // If tooltipData not provided already (voronoi, etc), attempt to find it
-    if (tooltipData == null) {
-      switch (mode) {
-        case 'bisect-x': {
-          let xValueAtPoint: any;
-          if (ctx.radial) {
-            // Assume radial is always centered
-            const { radians } = cartesianToPolar(point.x - ctx.width / 2, point.y - ctx.height / 2);
-            xValueAtPoint = scaleInvert(ctx.xScale, radians);
-          } else {
-            xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
-          }
+    tooltipData ??= findDataAtPoint(point);
 
-          // Requires values to be sorted
-          const index = bisectX(ctx.flatData, xValueAtPoint, 1);
-          const previousValue = ctx.flatData[index - 1];
-          const currentValue = ctx.flatData[index];
-          tooltipData = findData(previousValue, currentValue, xValueAtPoint, ctx.x);
-          break;
-        }
-
-        case 'bisect-y': {
-          // `y` value at pointer coordinate
-          const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
-
-          // Requires values to be sorted
-          const index = bisectY(ctx.flatData, yValueAtPoint, 1);
-          const previousValue = ctx.flatData[index - 1];
-          const currentValue = ctx.flatData[index];
-          tooltipData = findData(previousValue, currentValue, yValueAtPoint, ctx.y);
-          break;
-        }
-
-        case 'bisect-band': {
-          // `x` and `y` values at pointer coordinate
-          const xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
-          const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
-
-          if (isScaleBand(ctx.xScale)) {
-            // Find point closest to pointer within the x band
-            const bandData = ctx.flatData
-              .filter((d) => ctx.x(d) === xValueAtPoint)
-              .sort(sortFunc(ctx.y as () => any)); // sort for bisect
-            // Requires values to be sorted
-            const index = bisectY(bandData, yValueAtPoint, 1);
-            const previousValue = bandData[index - 1];
-            const currentValue = bandData[index];
-            tooltipData = findData(previousValue, currentValue, yValueAtPoint, ctx.y);
-          } else if (isScaleBand(ctx.yScale)) {
-            // Find point closest to pointer within the y band
-            const bandData = ctx.flatData
-              .filter((d) => ctx.y(d) === yValueAtPoint)
-              .sort(sortFunc(ctx.x as () => any)); // sort for bisect
-            // Requires values to be sorted
-            const index = bisectX(bandData, xValueAtPoint, 1);
-            const previousValue = bandData[index - 1];
-            const currentValue = bandData[index];
-            tooltipData = findData(previousValue, currentValue, xValueAtPoint, ctx.x);
-          } else {
-            // TODO: Support `bisect-band` without band?  Fallback to bisect?
-          }
-          break;
-        }
-
-        case 'quadtree-x':
-        case 'quadtree-y':
-        case 'quadtree': {
-          let qx = point.x - ctx.padding.left;
-          let qy = point.y - ctx.padding.top;
-
-          // Apply inverse transform to convert screen coordinates to canvas coordinates
-          if (ctx.transform.mode === 'canvas') {
-            qx = (qx - ctx.transform.translate.x) / ctx.transform.scale;
-            qy = (qy - ctx.transform.translate.y) / ctx.transform.scale;
-          }
-
-          tooltipData = quadtree?.find(qx, qy, radius);
-          break;
-        }
-      }
+    if (tooltipData && raiseTarget) {
+      raise(e.target as Element);
     }
 
-    if (tooltipData) {
-      if (raiseTarget) {
-        raise(e.target as Element);
+    applyTooltip(point, tooltipData);
+  }
+
+  function showFromOptions({ point, value, data }: TooltipShowOptions<TData>) {
+    // Resolve *what* to show — an explicit data point, the nearest point to a domain value, or
+    // whatever is found at `point` using the configured `mode`
+    let tooltipData: any = data ?? (value ? findDatumByValue(ctx, value, { mode, findTooltipData }) : undefined); // prettier-ignore
+
+    if (tooltipData == null && point) {
+      if (isOutsidePlotArea(point)) {
+        hideTooltip();
+        return;
       }
+      tooltipData = findDataAtPoint(point);
+    }
 
-      // For quadtree/voronoi modes, the tooltip finds a single specific point (by x+y proximity),
-      // so only the owning series should be matched. For bisect and quadtree-x/y modes,
-      // the tooltip finds by a single axis position and all series at that position should show values.
-      const isSinglePointMode = mode === 'quadtree' || mode === 'voronoi';
-      const series = ctx.series.series.map((s) => {
-        // Find related data point for this series (if series has its own data)
-        const seriesTooltipData = s.data
-          ? isSinglePointMode
-            ? tooltipData?.seriesKey != null
-              ? s.key === tooltipData.seriesKey
-                ? tooltipData
-                : undefined
-              : s.data.includes(tooltipData)
-                ? tooltipData
-                : undefined
-            : findRelatedData(s.data, tooltipData, ctx.x)
-          : tooltipData;
-
-        const valueAcc = accessor(
-          s.value ?? (s.data ? (ctx.props.y ?? ctx.props.x ?? asAny(ctx.y) ?? asAny(ctx.x)) : s.key)
-        );
-
-        // Extract value from the data
-        const value = seriesTooltipData ? valueAcc(seriesTooltipData) : undefined;
-
-        const seriesKey = resolveTooltipSeriesKey(s, seriesTooltipData);
-
-        // When user explicitly provides cScale, prefer scale-derived color (e.g. gradient encoding).
-        // Otherwise prefer series-defined color (e.g. BarChart with explicit series colors).
-        const scaleColor = ctx.cScale?.(ctx.c(tooltipData));
-        const color = ctx.props.cScale ? (scaleColor ?? s.color) : (s.color ?? scaleColor);
-
-        return {
-          key: seriesKey,
-          label: s.label ?? (seriesKey !== 'default' ? seriesKey : 'value'),
-          value: value,
-          color,
-          visible:
-            seriesKey === s.key
-              ? ctx.series.isVisible(s.key)
-              : ctx.series.selectedKeys.isEmpty() || ctx.series.selectedKeys.isSelected(seriesKey),
-          config: s,
-        };
-      });
-
-      tooltipState.x = point.x;
-      tooltipState.y = point.y;
-      tooltipState.data = tooltipData;
-      // Reverse series order for stacked charts to match visual stack order (bottom to top)
-      tooltipState.series = ctx.series.isStacked ? [...series].reverse() : series;
-    } else {
-      // Hide tooltip if unable to locate
+    if (tooltipData == null) {
       hideTooltip();
+      return;
+    }
+
+    // Resolve *where* to show it — the given point, else the data point's own position
+    applyTooltip(point ?? dataCoords(ctx, tooltipData), tooltipData);
+  }
+
+  function showTooltip(
+    optionsOrEvent: TooltipShowOptions<TData> | PointerEvent | MouseEvent | TouchEvent,
+    eventData?: any
+  ) {
+    if (!canShow()) return;
+
+    if (isPointerLike(optionsOrEvent)) {
+      showFromEvent(optionsOrEvent, eventData);
+    } else {
+      showFromOptions(optionsOrEvent ?? {});
     }
   }
 
