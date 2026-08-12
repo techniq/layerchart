@@ -17,13 +17,41 @@ Controls the number of pixels allotted for each tick (higher => fewer ticks). Wo
 Default: `80` for horizontal axes (top/bottom/angle) and `50` for vertical axes (left/right/radius).
 ::
 
-:example{ name="linechart-tickspacing" showCode }
+:example{ name="linechart-tickspacing" }
 
-:example{ name="barchart-tickspacing" showCode }
+:example{ name="barchart-tickspacing" }
 
 ::tip
-See also: time scale [auto](/docs/components/Axis/time-scale-auto), [multiline](/docs/components/Axis/time-scale-auto-multiline), and [brush](/docs/components/Axis/time-scale-brush-multiline) examples
+See [time scales](#time-scales) for how tick labels are chosen, and [brush](/docs/components/Axis/time-scale-brush-multiline) for tick spacing while zooming.
 ::
+
+### time scales
+
+With no `format`, tick labels are chosen automatically from the duration between ticks — a domain spanning years is labelled with years, one spanning a minute with seconds. Resizing the chart (or changing `tickSpacing`) changes the tick density, and the labels follow.
+
+:example{ name="time-scale-auto" }
+
+Passing an explicit `format` does two things: it labels the ticks, and it **filters** them to that boundary. A `day` format keeps only ticks landing exactly on a day, so a denser tick set never repeats the same label.
+
+:example{ name="time-scale-auto-format-filtering" }
+
+::note
+Because the filter is what keeps labels unique, an explicit `format` can yield fewer ticks than `tickSpacing` alone would produce. If an axis renders no ticks, check that the format's boundary matches the values — see [UTC](#utc) for the common case.
+::
+
+`tickMultiline` splits the automatic labels across two lines (ex. day above, month below), fitting more context into the same width.
+
+:example{ name="time-scale-auto-multiline" }
+
+#### UTC
+
+Ticks are filtered and labelled on the same boundaries the scale uses, so pass `xScale={scaleUtc()}` when your values are keyed on a UTC calendar date (ex. daily partitions) rather than on an instant. The default `scaleTime()` floors on _local_ boundaries, which sits one UTC offset away from each UTC day for every viewer outside UTC.
+
+::note
+This applies to the tick _labels_ as well — a `scaleUtc()` axis formats its ticks in UTC, so a tick at UTC midnight is never labelled with the previous local day.
+::
+
+:example{ name="utc-scale" }
 
 ### band scales
 
@@ -33,7 +61,7 @@ To enable this, you must define the interval (daily, hourly, etc) of your data u
 
 Since band padding is not available when not using a band scale, you can leverage `xInset={...}` to add padding between bars.
 
-:example{ name="barchart-xinterval-xinset" showCode }
+:example{ name="barchart-xinterval-xinset" }
 
 <!-- ## Examples
 

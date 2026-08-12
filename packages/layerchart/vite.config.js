@@ -2,6 +2,14 @@ import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { playwright } from '@vitest/browser-playwright';
 
+// Tests run under a fixed non-zero UTC offset so bugs where local and UTC boundaries differ (day
+// starts, tick alignment, ...) actually surface.  Applied to both the node processes and the
+// browser context below - Chromium picks up `TZ` on macOS but ignores it on Linux (CI).
+const TEST_TIMEZONE = 'Etc/GMT-5'; // UTC+5 (IANA inverts the sign)
+if (process.env.VITEST) {
+  process.env.TZ = TEST_TIMEZONE;
+}
+
 /** @type {import('vite').UserConfig} */
 const config = defineConfig({
   plugins: [sveltekit()],
@@ -33,7 +41,9 @@ const config = defineConfig({
           retry: 1,
           browser: {
             enabled: true,
-            provider: playwright(),
+            provider: playwright({
+              contextOptions: { timezoneId: TEST_TIMEZONE },
+            }),
             instances: [
               { browser: 'chromium' },
               // { browser: 'firefox' },

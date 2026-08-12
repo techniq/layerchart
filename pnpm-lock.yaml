@@ -133,8 +133,8 @@ importers:
         specifier: 2.0.0-next.21
         version: 2.0.0-next.21
       '@layerstack/utils':
-        specifier: 2.0.0-next.18
-        version: 2.0.0-next.18
+        specifier: 2.0.0-next.19
+        version: 2.0.0-next.19
       '@napi-rs/canvas':
         specifier: ^0.1.97
         version: 0.1.97
@@ -769,8 +769,8 @@ importers:
         specifier: 2.0.0-next.21
         version: 2.0.0-next.21
       '@layerstack/utils':
-        specifier: 2.0.0-next.18
-        version: 2.0.0-next.18
+        specifier: 2.0.0-next.19
+        version: 2.0.0-next.19
       '@types/d3-contour':
         specifier: ^3.0.6
         version: 3.0.6
@@ -951,7 +951,7 @@ importers:
         version: 5.56.1(@typescript-eslint/types@8.60.1)
       svelte-check:
         specifier: ^4.5.0
-        version: 4.5.0(picomatch@4.0.5)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+        version: 4.5.0(picomatch@4.0.4)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
       svelte2tsx:
         specifier: ^0.7.56
         version: 0.7.56(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
@@ -1974,6 +1974,9 @@ packages:
 
   '@layerstack/utils@2.0.0-next.18':
     resolution: {integrity: sha512-EYILHpfBRYMMEahajInu9C2AXQom5IcAEdtCeucD3QIl/fdDgRbtzn6/8QW9ewumfyNZetdUvitOksmI1+gZYQ==}
+
+  '@layerstack/utils@2.0.0-next.19':
+    resolution: {integrity: sha512-HyXCEz9pge4rFWklrSgFr3YIwdE1gP8WM6GPetmnKPDfYLF1/oetRFKI9FqiE+dw4brnULGPKJsVhjM3vQfD4A==}
 
   '@lezer/common@1.4.0':
     resolution: {integrity: sha512-DVeMRoGrgn/k45oQNu189BoW4SZwgZFzJ1+1TV5j2NJ/KFC83oa/enRqZSGshyeMk5cPWMhsKs9nx+8o0unwGg==}
@@ -7169,7 +7172,7 @@ snapshots:
 
   '@layerstack/tailwind@2.0.0-next.17':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/utils': 2.0.0-next.19
       clsx: 2.1.1
       d3-array: 3.2.4
       lodash-es: 4.17.23
@@ -7177,14 +7180,14 @@ snapshots:
 
   '@layerstack/tailwind@2.0.0-next.21':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/utils': 2.0.0-next.19
       clsx: 2.1.1
       d3-array: 3.2.4
       tailwind-merge: 3.5.0
 
   '@layerstack/tailwind@2.0.0-next.22':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/utils': 2.0.0-next.19
       clsx: 2.1.1
       d3-array: 3.2.4
       tailwind-merge: 3.6.0
@@ -7197,6 +7200,12 @@ snapshots:
       lodash-es: 4.17.23
 
   '@layerstack/utils@2.0.0-next.18':
+    dependencies:
+      d3-array: 3.2.4
+      d3-time: 3.1.0
+      d3-time-format: 4.1.0
+
+  '@layerstack/utils@2.0.0-next.19':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0
@@ -11674,6 +11683,18 @@ snapshots:
       - sass
       - stylus
       - sugarss
+
+  svelte-check@4.5.0(picomatch@4.0.4)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      chokidar: 4.0.3
+      fdir: 6.5.0(picomatch@4.0.4)
+      picocolors: 1.1.1
+      sade: 1.8.1
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
+      typescript: 6.0.3
+    transitivePeerDependencies:
+      - picomatch
 
   svelte-check@4.5.0(picomatch@4.0.5)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
     dependencies:
