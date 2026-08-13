@@ -433,7 +433,9 @@
   });
 </script>
 
-{#if ctx.tooltip.data}
+<!-- `suppressed` keeps the data set (so `Highlight` still draws a crosshair) while hiding the
+     tooltip content — used by chart groups sharing a crosshair without tooltips -->
+{#if ctx.tooltip.data && !ctx.tooltip.suppressed}
   <div
     {...props.root}
     use:portalAction={portalProp}

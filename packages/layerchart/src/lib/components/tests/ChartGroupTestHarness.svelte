@@ -1,0 +1,63 @@
+<script lang="ts">
+  import Chart from '../Chart/Chart.svelte';
+  import ChartGroup from '../ChartGroup.svelte';
+  import type { ChartState } from '$lib/states/chart.svelte.js';
+  import type {
+    ChartGroupMemberOptions,
+    ChartGroupState,
+    ChartGroupPointerOptions,
+  } from '$lib/states/group.svelte.js';
+
+  type Member = {
+    chartProps?: Record<string, any>;
+    groupOptions?: ChartGroupMemberOptions;
+  };
+
+  let {
+    members = [],
+    /** Provide the group via `<ChartGroup>` context rather than an explicit `group` prop */
+    useContext = false,
+    pointer,
+    group,
+    oncontext,
+    ongroup,
+  }: {
+    members?: Member[];
+    useContext?: boolean;
+    pointer?: ChartGroupPointerOptions | boolean;
+    group?: ChartGroupState;
+    oncontext?: (ctx: ChartState<any, any, any>, index: number) => void;
+    ongroup?: (group: ChartGroupState) => void;
+  } = $props();
+
+  let contexts = $state<Array<ChartState<any, any, any> | undefined>>([]);
+
+  $effect(() => {
+    contexts.forEach((ctx, i) => ctx && oncontext?.(ctx, i));
+  });
+</script>
+
+{#snippet charts()}
+  {#each members as member, i (i)}
+    <Chart
+      width={400}
+      height={200}
+      padding={{ top: 0, right: 0, bottom: 0, left: 20 }}
+      {...member.chartProps}
+      group={useContext ? undefined : group}
+      groupOptions={member.groupOptions}
+      bind:context={contexts[i]}
+    />
+  {/each}
+{/snippet}
+
+{#if useContext}
+  <ChartGroup {pointer}>
+    {#snippet children({ group: contextGroup })}
+      {@const _ = ongroup?.(contextGroup)}
+      {@render charts()}
+    {/snippet}
+  </ChartGroup>
+{:else}
+  {@render charts()}
+{/if}

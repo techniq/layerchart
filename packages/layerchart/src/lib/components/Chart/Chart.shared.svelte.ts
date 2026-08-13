@@ -18,6 +18,7 @@ import type {
 import type { GeoStateProps } from '$lib/states/geo.svelte.js';
 import type { StackLayout } from '$lib/states/series.svelte.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
+import type { ChartGroupMemberOptions, ChartGroupState } from '$lib/states/group.svelte.js';
 
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type TransformContext from '../TransformContext.svelte';
@@ -231,6 +232,15 @@ export type ChartPropsWithoutHTML<
         zoomOnBrush?: boolean;
       })
     | boolean;
+
+  /**
+   * Synchronize state (ex. the hovered data point) with other charts sharing this group.
+   * Defaults to the group provided by an ancestor `<ChartGroup>`, when there is one.
+   */
+  group?: ChartGroupState;
+
+  /** Per-chart control over which slices this chart publishes to / subscribes from `group` */
+  groupOptions?: ChartGroupMemberOptions;
 
   series?: SeriesData<T, any>[];
 

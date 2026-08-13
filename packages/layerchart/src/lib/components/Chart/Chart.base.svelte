@@ -28,7 +28,9 @@
   import { setGeoContext } from '$lib/contexts/geo.js';
   import { getSettings } from '$lib/contexts/settings.js';
   import { setChartContext } from '$lib/contexts/chart.js';
+  import { getChartGroup } from '$lib/contexts/group.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
+  import { connectToChartGroup } from '$lib/states/group.svelte.js';
   import type { ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
@@ -61,6 +63,8 @@
     ondragend,
     ondragstart,
     brush,
+    group,
+    groupOptions,
     motion,
     debug = false,
     clip = false,
@@ -96,6 +100,14 @@
 
   setChartContext(chartState);
   setGeoContext(chartState.geoState);
+
+  // Join a chart group — an explicit `group` prop, else one provided by an ancestor `<ChartGroup>`
+  const inheritedGroup = getChartGroup();
+  connectToChartGroup(
+    chartState,
+    () => group ?? inheritedGroup,
+    () => groupOptions
+  );
 
   const settings = getSettings();
   $effect(() => {

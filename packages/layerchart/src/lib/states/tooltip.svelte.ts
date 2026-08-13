@@ -29,6 +29,19 @@ export type TooltipShowOptions<T = any> = {
 
   /** An explicit data point, skipping resolution */
   data?: T;
+
+  /**
+   * Identity of whatever drove this tooltip, or `null` when it was the chart's own pointer.
+   * Set by chart groups so the chart can ignore the echo of its own update.
+   * @default null
+   */
+  source?: symbol | null;
+
+  /**
+   * Set the data (so `Highlight` renders a crosshair) without rendering the `Tooltip` content.
+   * @default false
+   */
+  suppressed?: boolean;
 };
 
 export interface TooltipShow<T = any> {
@@ -51,10 +64,27 @@ export interface TooltipShow<T = any> {
 export class TooltipState<T = any> {
   x = $state(0);
   y = $state(0);
-  data = $state<T | null>(null);
+  /**
+   * `$state.raw` — the data point is always replaced wholesale, and deep proxying would wrap
+   * consumers' data, breaking identity checks against the source array (ex. `flatData.indexOf`).
+   */
+  data = $state.raw<T | null>(null);
   series = $state<TooltipSeries[]>([]);
   isHoveringTooltipArea = $state(false);
   isHoveringTooltipContent = $state(false);
+
+  /**
+   * Identity of whatever drove the current tooltip, or `null` when it was this chart's own
+   * pointer.  Set by chart groups (see `ChartGroupState`) so a chart can tell an externally
+   * driven tooltip from one it resolved itself.
+   */
+  source = $state<symbol | null>(null);
+
+  /**
+   * Whether the `Tooltip` content is suppressed while the data is still set.  Used for a shared
+   * crosshair without tooltips — `Highlight` still renders, `Tooltip` does not.
+   */
+  suppressed = $state(false);
 
   mode: TooltipMode;
 

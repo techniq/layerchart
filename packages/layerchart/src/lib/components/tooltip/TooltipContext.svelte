@@ -335,7 +335,11 @@
   }
 
   /** Commit a resolved data point to the tooltip state, or hide if there is none */
-  function applyTooltip(point: { x: number; y: number }, tooltipData: any) {
+  function applyTooltip(
+    point: { x: number; y: number },
+    tooltipData: any,
+    options: { source?: symbol | null; suppressed?: boolean } = {}
+  ) {
     if (tooltipData == null) {
       // Hide tooltip if unable to locate
       hideTooltip();
@@ -347,6 +351,8 @@
     tooltipState.x = point.x;
     tooltipState.y = point.y;
     tooltipState.data = tooltipData;
+    tooltipState.source = options.source ?? null;
+    tooltipState.suppressed = options.suppressed ?? false;
     // Reverse series order for stacked charts to match visual stack order (bottom to top)
     tooltipState.series = ctx.series.isStacked ? [...series].reverse() : series;
   }
@@ -381,7 +387,7 @@
     applyTooltip(point, tooltipData);
   }
 
-  function showFromOptions({ point, value, data }: TooltipShowOptions<TData>) {
+  function showFromOptions({ point, value, data, source, suppressed }: TooltipShowOptions<TData>) {
     // Resolve *what* to show — an explicit data point, the nearest point to a domain value, or
     // whatever is found at `point` using the configured `mode`
     let tooltipData: any = data ?? (value ? findDatumByValue(ctx, value, { mode, findTooltipData }) : undefined); // prettier-ignore
@@ -400,7 +406,7 @@
     }
 
     // Resolve *where* to show it — the given point, else the data point's own position
-    applyTooltip(point ?? dataCoords(ctx, tooltipData), tooltipData);
+    applyTooltip(point ?? dataCoords(ctx, tooltipData), tooltipData, { source, suppressed });
   }
 
   function showTooltip(
@@ -430,6 +436,10 @@
     hideTimeoutId = setTimeout(() => {
       if (!tooltipState.isHoveringTooltipArea && !tooltipState.isHoveringTooltipContent) {
         tooltipState.data = null;
+        // Release ownership so the chart is free to publish again (ex. to a chart group) the
+        // next time it is interacted with directly
+        tooltipState.source = null;
+        tooltipState.suppressed = false;
       }
     }, hideDelay);
   }

@@ -47,6 +47,8 @@ const fallbackContext = {
     isHoveringTooltipArea: false,
     isHoveringTooltipContent: false,
     mode: 'manual' as const,
+    source: null,
+    suppressed: false,
     show: () => {},
     hide: () => {},
   },
