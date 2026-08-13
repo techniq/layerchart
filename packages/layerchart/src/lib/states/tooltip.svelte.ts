@@ -31,14 +31,13 @@ export type TooltipShowOptions<T = any> = {
   data?: T;
 
   /**
-   * Identity of whatever drove this tooltip, or `null` when it was the chart's own pointer.
-   * Set by chart groups so the chart can ignore the echo of its own update.
-   * @default null
+   * Identity of whatever drove this tooltip.  Defaults to the chart's own `id`, meaning its own
+   * pointer.  Chart groups pass the publishing chart's id so the echo can be ignored.
    */
-  source?: symbol | null;
+  source?: string | symbol | null;
 
   /**
-   * Set the data (so `Highlight` renders a crosshair) without rendering the `Tooltip` content.
+   * Set the data (so `Highlight` still renders) without rendering the `Tooltip` content.
    * @default false
    */
   suppressed?: boolean;
@@ -74,15 +73,17 @@ export class TooltipState<T = any> {
   isHoveringTooltipContent = $state(false);
 
   /**
-   * Identity of whatever drove the current tooltip, or `null` when it was this chart's own
-   * pointer.  Set by chart groups (see `ChartGroupState`) so a chart can tell an externally
-   * driven tooltip from one it resolved itself.
+   * Identity of whatever drove the current tooltip — this chart's own `id` when it came from
+   * its own pointer, otherwise the id of the chart (or group) that drove it.
+   *
+   * Compare against the chart's `id` to tell the two apart:
+   * `context.tooltip.source === context.id`.
    */
-  source = $state<symbol | null>(null);
+  source = $state<string | symbol | null>(null);
 
   /**
    * Whether the `Tooltip` content is suppressed while the data is still set.  Used for a shared
-   * crosshair without tooltips — `Highlight` still renders, `Tooltip` does not.
+   * highlight without tooltips — `Highlight` still renders, `Tooltip` does not.
    */
   suppressed = $state(false);
 
@@ -104,6 +105,20 @@ export class TooltipState<T = any> {
 
   /** Hide the tooltip (after `hideDelay`) */
   hide: (e?: PointerEvent) => void;
+
+  /**
+   * Called whenever the tooltip is shown or cleared, whatever drove it.  Check `source` to tell
+   * this chart's own input (`source === chart.id`) from a group or other caller.
+   *
+   * This is a notification rather than something to derive from state, because chart groups need
+   * to know *when* an interaction happened, not just what the state is: while a pointer moves
+   * from one chart to another both briefly hold locally-shown data (the first chart's `hide()` is
+   * async), so state alone cannot say which chart the pointer actually moved to.
+   *
+   * Note this is a single handler, not a subscriber list — assigning to it replaces whatever was
+   * there, including a chart group's.
+   */
+  onChange?: () => void;
 
   constructor(mode: TooltipMode, show: TooltipShow<T>, hide: (e?: PointerEvent) => void) {
     this.mode = mode;

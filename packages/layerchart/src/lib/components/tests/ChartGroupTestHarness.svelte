@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Component } from 'svelte';
+
   import Chart from '../Chart/Chart.svelte';
   import ChartGroup from '../ChartGroup.svelte';
   import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -17,6 +19,8 @@
     members = [],
     /** Provide the group via `<ChartGroup>` context rather than an explicit `group` prop */
     useContext = false,
+    /** Chart component to render — defaults to `Chart`, override to test simplified charts */
+    component = Chart,
     pointer,
     group,
     oncontext,
@@ -24,11 +28,14 @@
   }: {
     members?: Member[];
     useContext?: boolean;
+    component?: Component<any>;
     pointer?: ChartGroupPointerOptions | boolean;
     group?: ChartGroupState;
     oncontext?: (ctx: ChartState<any, any, any>, index: number) => void;
     ongroup?: (group: ChartGroupState) => void;
   } = $props();
+
+  const ChartComponent = $derived(component);
 
   let contexts = $state<Array<ChartState<any, any, any> | undefined>>([]);
 
@@ -39,7 +46,7 @@
 
 {#snippet charts()}
   {#each members as member, i (i)}
-    <Chart
+    <ChartComponent
       width={400}
       height={200}
       padding={{ top: 0, right: 0, bottom: 0, left: 20 }}

@@ -2,6 +2,7 @@ import { clamp } from '@layerstack/utils';
 import { min, max } from 'd3-array';
 
 import { add } from '../utils/math.js';
+import { isEqualValue } from '../utils/common.js';
 
 export type BrushDomainType = Array<number | Date | string | null>;
 
@@ -528,16 +529,10 @@ export class BrushState {
     const newY = externalY ?? [null, null];
 
     // Only write when values actually differ to avoid reactive loops
-    if (
-      this.x[0]?.valueOf() !== newX[0]?.valueOf() ||
-      this.x[1]?.valueOf() !== newX[1]?.valueOf()
-    ) {
+    if (!isEqualValue(this.x[0], newX[0]) || !isEqualValue(this.x[1], newX[1])) {
       this.x = newX;
     }
-    if (
-      this.y[0]?.valueOf() !== newY[0]?.valueOf() ||
-      this.y[1]?.valueOf() !== newY[1]?.valueOf()
-    ) {
+    if (!isEqualValue(this.y[0], newY[0]) || !isEqualValue(this.y[1], newY[1])) {
       this.y = newY;
     }
 
@@ -545,14 +540,14 @@ export class BrushState {
       externalX != null &&
       externalX[0] != null &&
       externalX[1] != null &&
-      (externalX[0].valueOf() !== this.xDomainMin?.valueOf() ||
-        externalX[1].valueOf() !== this.xDomainMax?.valueOf());
+      (!isEqualValue(externalX[0], this.xDomainMin) ||
+        !isEqualValue(externalX[1], this.xDomainMax));
     const isYAxisActive =
       externalY != null &&
       externalY[0] != null &&
       externalY[1] != null &&
-      (externalY[0].valueOf() !== this.yDomainMin?.valueOf() ||
-        externalY[1].valueOf() !== this.yDomainMax?.valueOf());
+      (!isEqualValue(externalY[0], this.yDomainMin) ||
+        !isEqualValue(externalY[1], this.yDomainMax));
 
     const newActive =
       this.axis === 'x'

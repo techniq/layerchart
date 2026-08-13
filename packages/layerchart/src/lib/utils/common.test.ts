@@ -1,6 +1,12 @@
 import { describe, it, expect } from 'vitest';
 
-import { accessor, findRelatedData, resolveMaybeFn, getObjectOrNull } from './common.js';
+import {
+  accessor,
+  findRelatedData,
+  isEqualValue,
+  resolveMaybeFn,
+  getObjectOrNull,
+} from './common.js';
 
 export const testData = {
   one: 1,
@@ -62,6 +68,53 @@ describe('getObjectOrNull', () => {
   it('returns the object if value is an object', () => {
     const obj = { a: 1 };
     expect(getObjectOrNull(obj)).toBe(obj);
+  });
+});
+
+describe('isEqualValue', () => {
+  it('compares primitives by value', () => {
+    expect(isEqualValue(1, 1)).toBe(true);
+    expect(isEqualValue(1, 2)).toBe(false);
+    expect(isEqualValue('a', 'a')).toBe(true);
+    expect(isEqualValue('a', 'b')).toBe(false);
+    expect(isEqualValue(true, true)).toBe(true);
+    expect(isEqualValue(0, false)).toBe(false);
+    expect(isEqualValue(0, '0')).toBe(false);
+  });
+
+  it('compares distinct Date instances by their instant', () => {
+    expect(isEqualValue(new Date('2024-01-01'), new Date('2024-01-01'))).toBe(true);
+    expect(isEqualValue(new Date('2024-01-01'), new Date('2024-01-02'))).toBe(false);
+  });
+
+  it('treats null and undefined as equal to each other, but not to a value', () => {
+    // matches the `?.valueOf()` semantics `findRelatedData` has always had
+    expect(isEqualValue(null, undefined)).toBe(true);
+    expect(isEqualValue(null, null)).toBe(true);
+    expect(isEqualValue(null, 0)).toBe(false);
+    expect(isEqualValue(undefined, '')).toBe(false);
+  });
+
+  it('compares categorical (band/point scale) values correctly', () => {
+    // the reason for `valueOf()` over d3's `+a === +b`: numeric coercion turns these into NaN,
+    // so identical categories would never compare equal
+    expect(isEqualValue('apples', 'apples')).toBe(true);
+    expect(+'apples' === +'apples').toBe(false); // what the numeric idiom would report
+  });
+
+  it('falls back to identity for plain objects', () => {
+    const datum = { value: 1 };
+    expect(isEqualValue(datum, datum)).toBe(true);
+    expect(isEqualValue(datum, { value: 1 })).toBe(false);
+  });
+
+  it('does not consider NaN equal to itself', () => {
+    expect(isEqualValue(NaN, NaN)).toBe(false);
+  });
+
+  it('equates a Date with the matching timestamp', () => {
+    // a consequence of comparing by `valueOf()` — worth knowing when domains mix the two
+    expect(isEqualValue(new Date(0), 0)).toBe(true);
   });
 });
 

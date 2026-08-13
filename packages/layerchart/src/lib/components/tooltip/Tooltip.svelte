@@ -163,6 +163,8 @@
 
 <script lang="ts" generics="T = any">
   import { fade } from 'svelte/transition';
+  import { createSubscriber } from 'svelte/reactivity';
+  import { on } from 'svelte/events';
   import { cls } from '@layerstack/tailwind';
   import { portal as portalAction } from '@layerstack/svelte-actions/portal';
 
@@ -214,15 +216,46 @@
     typeof portalProp === 'boolean' ? portalProp : portalProp?.enabled !== false
   );
 
+  /**
+   * Makes reading the container's viewport rect reactive to scrolling and resizing.
+   *
+   * A portaled tooltip is positioned from the chart container's *viewport* rect, and
+   * `getBoundingClientRect()` is not reactive — scrolling moves the chart out from under a
+   * tooltip that never re-measures.  Pointer-driven tooltips mostly dodge this (scrolling fires
+   * `pointercancel`, or a pointer event as content moves under the cursor), but one shown
+   * programmatically — keyboard navigation, a chart group, `locked` — has no pointer to cancel it
+   * and must follow the chart.
+   *
+   * `createSubscriber` ties the listeners to whether anything is actually reading: they attach
+   * when `positions` starts depending on this and detach when it stops, so an idle chart costs
+   * nothing.
+   *
+   * `capture` is what catches scrolling of any *ancestor* (ex. a dashboard inside a scrolling
+   * panel), not just the window — which is also why `scrollY` from `svelte/reactivity/window`
+   * isn't enough here, and why runed's `ScrollState` (bound to one element) doesn't fit either.
+   */
+  const subscribeToViewport = createSubscriber((update) => {
+    const offScroll = on(window, 'scroll', update, { capture: true, passive: true });
+    const offResize = on(window, 'resize', update, { passive: true });
+
+    return () => {
+      offScroll();
+      offResize();
+    };
+  });
+
   const positions = $derived.by(() => {
     // if no data or tooltip size is not known yet, return null
     if (!ctx.tooltip.data || tooltipWidth === null || tooltipHeight === null) {
       return { x: null, y: null };
     }
 
+    // Only track the viewport while there is a portaled tooltip to keep positioned
+    if (isPortaled) subscribeToViewport();
+
     // When portaled, we need the container's viewport rect to convert coordinates
     const containerRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
-    // If portaled but container rect not available yet, bail
+    // If portaled but the container rect is not available yet, bail
     if (isPortaled && !containerRect) {
       return { x: null, y: null };
     }
@@ -433,8 +466,8 @@
   });
 </script>
 
-<!-- `suppressed` keeps the data set (so `Highlight` still draws a crosshair) while hiding the
-     tooltip content — used by chart groups sharing a crosshair without tooltips -->
+<!-- `suppressed` keeps the data set (so `Highlight` still renders) while hiding the tooltip
+     content — used by chart groups sharing a highlight without tooltips -->
 {#if ctx.tooltip.data && !ctx.tooltip.suppressed}
   <div
     {...props.root}

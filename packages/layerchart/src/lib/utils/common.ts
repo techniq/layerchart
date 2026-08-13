@@ -68,6 +68,17 @@ export function defaultChartPadding<TData>(
 }
 
 /**
+ * Compare two scale/domain values, treating boxed values such as `Date` as equal when they
+ * represent the same instant.  `null` and `undefined` are equal to each other.
+ *
+ * Uses `valueOf()` rather than d3's `+a === +b` idiom: numeric coercion turns the string values
+ * of a band/point scale into `NaN`, so identical categories would never compare equal.
+ */
+export function isEqualValue(a: any, b: any) {
+  return a?.valueOf() === b?.valueOf();
+}
+
+/**
  * Find the first instance within `data` with the same value as `original` using prop accessor.
  * Handles complex objects such as `Date` by invoking `.valueOf()`
  */
@@ -76,9 +87,7 @@ export function findRelatedData(data: any[], original: any, accessor: Function) 
     return original;
   }
 
-  return data.find((d) => {
-    return accessor(d)?.valueOf() === accessor(original)?.valueOf();
-  });
+  return data.find((d) => isEqualValue(accessor(d), accessor(original)));
 }
 
 /**

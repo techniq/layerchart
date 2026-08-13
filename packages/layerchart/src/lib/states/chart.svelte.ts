@@ -103,8 +103,12 @@ export class ChartState<
    * Stable identity for this chart instance.  Used to attribute state changes to their
    * originating chart (ex. so a chart can ignore the echo of its own update when synchronized
    * with others).
+   *
+   * Defaults to an opaque symbol.  Pass `id` to `Chart` to supply your own, which makes the
+   * identity comparable from outside — ex. `group.pointer.source === 'requests'` to tell which
+   * chart in a group is currently driving it.
    */
-  readonly id: symbol = Symbol('Chart');
+  readonly id: string | symbol;
 
   // The `$props()` proxy from the host component. Reads on `this.props.X` go
   // straight through to the underlying reactive prop — no spread / no derived
@@ -292,6 +296,8 @@ export class ChartState<
     }
   ) {
     this.props = props;
+    // Read once — identity must stay stable for the life of the chart
+    this.id = props.id ?? Symbol('Chart');
     this.#brushXDomain = overrides?.brushXDomain ?? (() => undefined);
     this.#brushYDomain = overrides?.brushYDomain ?? (() => undefined);
 

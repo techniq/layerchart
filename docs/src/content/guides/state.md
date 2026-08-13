@@ -102,6 +102,12 @@ Interactive drag-to-select regions for filtering, zooming, or syncing charts. Su
 
 `context.brush` — `x`, `y`, `active`, `reset()`, `selectAll()`, `move()`
 
+### [Chart Group (Syncing)](/docs/guides/chart-group)
+
+Synchronize state between multiple charts — hovering one shows the tooltip and highlight on all of them, each resolved against its own data and scales.
+
+`context.tooltip.source` — which chart (if any) drove the current tooltip
+
 ### [Geo (Maps & Projections)](/docs/guides/geo)
 
 Geographic rendering with d3 projections, auto-fitting, and a suite of geo components (`GeoPath`, `GeoPoint`, `GeoTile`, `GeoCircle`, `GeoSpline`).

@@ -234,6 +234,13 @@ export type ChartPropsWithoutHTML<
     | boolean;
 
   /**
+   * Stable identity for this chart, also applied to the root element.  Defaults to an opaque
+   * symbol.  Supply one to make the chart comparable from outside — ex. checking
+   * `group.pointer.source === 'requests'` to see which chart is driving a `ChartGroup`.
+   */
+  id?: string;
+
+  /**
    * Synchronize state (ex. the hovered data point) with other charts sharing this group.
    * Defaults to the group provided by an ancestor `<ChartGroup>`, when there is one.
    */

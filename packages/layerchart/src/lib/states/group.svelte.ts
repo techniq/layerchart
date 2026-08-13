@@ -2,6 +2,7 @@ import { max, min } from 'd3-array';
 
 import type { ChartState } from './chart.svelte.js';
 import { findDatumByValue } from '$lib/utils/tooltip.js';
+import { isEqualValue } from '$lib/utils/common.js';
 import { scaleInvert, type AnyScale } from '$lib/utils/scales.svelte.js';
 
 /** State slices that can be shared between charts in a group */
@@ -38,7 +39,7 @@ export type ChartGroupPointerOptions = {
   axis?: 'x' | 'y' | 'both';
 
   /**
-   * Show the tooltip on subscribing charts.  Set `false` for a shared crosshair without the
+   * Show the tooltip on subscribing charts.  Set `false` for a shared highlight without the
    * tooltip content — the chart being hovered still shows its own tooltip.
    * @default true
    */
@@ -82,7 +83,7 @@ export type ChartGroupPointer = {
   /** Whether a pointer is currently active */
   active: boolean;
   /** Identity of the publishing chart, so it can ignore the echo of its own update */
-  source: symbol | null;
+  source: string | symbol | null;
 };
 
 const emptyPointer = (): ChartGroupPointer => ({
@@ -94,6 +95,16 @@ const emptyPointer = (): ChartGroupPointer => ({
   active: false,
   source: null,
 });
+
+/**
+ * Whether two pointers indicate the same place.  A data point identifies a position on its own,
+ * so the values only need comparing when there isn't one — ex. an external caller passing just
+ * `x`, where identity alone would treat every update as unchanged.
+ */
+function samePosition(a: ChartGroupPointer, b: ChartGroupPointer) {
+  if (a.source !== b.source) return false;
+  return b.data != null ? a.data === b.data : isEqualValue(a.x, b.x) && isEqualValue(a.y, b.y);
+}
 
 /**
  * Shared state for a group of charts.
@@ -116,7 +127,7 @@ export class ChartGroupState {
    * Identity of the group itself, used as the `source` for pointers written from outside a chart
    * so subscribers can still tell them apart from their own pointer.
    */
-  readonly id: symbol = Symbol('ChartGroup');
+  readonly id: string | symbol = Symbol('ChartGroup');
 
   /**
    * `$state.raw` rather than `$state` — the pointer is always replaced wholesale, and deep
@@ -147,13 +158,18 @@ export class ChartGroupState {
   /**
    * Publish a pointer position to the group.  No-ops when the position is unchanged, so repeated
    * publishes of the same point don't wake subscribers.
+   *
+   * Charts supply every field, but outside callers only need the ones their `match` strategy
+   * uses — usually just a domain value:
+   *
+   * ```ts
+   * group.setPointer({ x: someDate });
+   * ```
    */
-  setPointer(pointer: Omit<ChartGroupPointer, 'active'>) {
-    const current = this.pointer;
-    if (current.active && current.source === pointer.source && current.data === pointer.data) {
-      return;
-    }
-    this.pointer = { ...pointer, active: true };
+  setPointer(pointer: Partial<Omit<ChartGroupPointer, 'active'>>) {
+    const next = { ...emptyPointer(), ...pointer, active: true };
+    if (this.pointer.active && samePosition(this.pointer, next)) return;
+    this.pointer = next;
   }
 
   /**
@@ -164,7 +180,7 @@ export class ChartGroupState {
    * actually being hovered (which would clear that chart, making it re-publish, and so on).
    * Pass no `source` to clear regardless of owner.
    */
-  clearPointer(source: symbol | null = null) {
+  clearPointer(source: string | symbol | null = null) {
     if (!this.pointer.active) return;
     if (source != null && this.pointer.source !== source) return;
     this.pointer = { ...emptyPointer(), source };
@@ -243,33 +259,48 @@ export function connectToChartGroup(
   getGroup: () => ChartGroupState | undefined,
   getMemberOptions: () => ChartGroupMemberOptions | undefined = () => undefined
 ) {
-  // Publish — only when this chart's tooltip was driven locally.  A tooltip set by the group
-  // carries the originating chart's id as its `source`, which stops the echo here.
+  // Publish — driven by the interaction itself rather than by watching state, so the chart the
+  // pointer actually moved to is the one that wins.  A tooltip set by the group carries the
+  // originating chart's id as its `source`, which the handler filters out.
   $effect(() => {
     const group = getGroup();
     const pointerOptions = group?.pointerOptions;
-    if (!group || !pointerOptions) return;
+    // `tooltipState` is bound by `TooltipContext` after this runs, so wait for it
+    const tooltip = ctx.tooltipState;
+    if (!group || !pointerOptions || !tooltip) return;
     if (!allows(getMemberOptions()?.publish, 'pointer')) return;
 
-    const data = ctx.tooltip.data;
-    if (ctx.tooltip.source !== null) return;
+    const publish = () => {
+      // Ignore changes this chart didn't cause — applying the group's own pointer would
+      // otherwise echo straight back out
+      if (tooltip.source !== ctx.id) return;
 
-    if (data == null) {
-      group.clearPointer(ctx.id);
-      return;
-    }
+      const data = tooltip.data;
 
-    group.setPointer({
-      x: singleValue(ctx.x, data),
-      y: singleValue(ctx.y, data),
-      percent: {
-        x: toPercent(ctx.xScale, ctx.xRange, singleValue(ctx.x, data)),
-        y: toPercent(ctx.yScale, ctx.yRange, singleValue(ctx.y, data)),
-      },
-      index: ctx.flatData.indexOf(data),
-      data,
-      source: ctx.id,
-    });
+      if (data == null) {
+        group.clearPointer(ctx.id);
+        return;
+      }
+
+      group.setPointer({
+        x: singleValue(ctx.x, data),
+        y: singleValue(ctx.y, data),
+        percent: {
+          x: toPercent(ctx.xScale, ctx.xRange, singleValue(ctx.x, data)),
+          y: toPercent(ctx.yScale, ctx.yRange, singleValue(ctx.y, data)),
+        },
+        index: ctx.flatData.indexOf(data),
+        data,
+        source: ctx.id,
+      });
+    };
+
+    tooltip.onChange = publish;
+
+    return () => {
+      // Only release our own handler — a re-run may already have installed a newer one
+      if (tooltip.onChange === publish) tooltip.onChange = undefined;
+    };
   });
 
   // Subscribe — resolve the group's pointer against this chart's own data and scales
@@ -295,11 +326,11 @@ export function connectToChartGroup(
 
     ctx.tooltip.show({
       data,
-      // Always non-null. `source === null` means "this chart's own pointer", so attributing an
-      // externally-written pointer (which has no source) to the group itself is what stops every
-      // subscriber from treating it as local input and immediately re-publishing it.
+      // Never the subscriber's own id — a chart treats `source === ctx.id` as its own pointer
+      // and would immediately re-publish.  An externally-written pointer (no source) is
+      // attributed to the group itself.
       source: pointer.source ?? group.id,
-      // `false` shows the highlight/crosshair without the tooltip content
+      // `false` shows the `Highlight` without the tooltip content
       suppressed: !pointerOptions.tooltip,
     });
   });

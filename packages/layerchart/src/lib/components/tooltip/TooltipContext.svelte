@@ -338,7 +338,7 @@
   function applyTooltip(
     point: { x: number; y: number },
     tooltipData: any,
-    options: { source?: symbol | null; suppressed?: boolean } = {}
+    options: { source?: string | symbol | null; suppressed?: boolean } = {}
   ) {
     if (tooltipData == null) {
       // Hide tooltip if unable to locate
@@ -351,8 +351,10 @@
     tooltipState.x = point.x;
     tooltipState.y = point.y;
     tooltipState.data = tooltipData;
-    tooltipState.source = options.source ?? null;
+    // Unset `source` means this chart's own pointer drove it
+    tooltipState.source = options.source ?? ctx.id;
     tooltipState.suppressed = options.suppressed ?? false;
+    tooltipState.onChange?.();
     // Reverse series order for stacked charts to match visual stack order (bottom to top)
     tooltipState.series = ctx.series.isStacked ? [...series].reverse() : series;
   }
@@ -436,10 +438,11 @@
     hideTimeoutId = setTimeout(() => {
       if (!tooltipState.isHoveringTooltipArea && !tooltipState.isHoveringTooltipContent) {
         tooltipState.data = null;
-        // Release ownership so the chart is free to publish again (ex. to a chart group) the
-        // next time it is interacted with directly
-        tooltipState.source = null;
+        // This chart cleared its own tooltip — attributing the clear to it is what lets a group
+        // member publish the clear (and take ownership back) on the next interaction
+        tooltipState.source = ctx.id;
         tooltipState.suppressed = false;
+        tooltipState.onChange?.();
       }
     }, hideDelay);
   }

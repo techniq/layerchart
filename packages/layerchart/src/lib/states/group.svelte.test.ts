@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import ChartGroupTestHarness from '../components/tests/ChartGroupTestHarness.svelte';
+import LineChart from '../components/charts/LineChart/LineChart.svelte';
 import { ChartGroupState } from './group.svelte.js';
 import type { ChartState } from './chart.svelte.js';
 
@@ -92,7 +93,7 @@ describe('ChartGroupState', () => {
       await vi.waitFor(() => {
         expect(chartB.tooltip.source).toBe(chartA.id);
       });
-      expect(chartA.tooltip.source).toBeNull();
+      expect(chartA.tooltip.source).toBe(chartA.id); // its own pointer drove it
     });
 
     it('does not echo back and overwrite the publisher', async () => {
@@ -144,6 +145,33 @@ describe('ChartGroupState', () => {
     });
   });
 
+  describe('simplified charts', () => {
+    it('forward `group` through to the underlying Chart', async () => {
+      // `LineChart` spreads rest props onto `Chart`, and defaults to `quadtree-x` — a mode with
+      // no value-based equivalent, so this also covers the bisect fallback end to end
+      const group = new ChartGroupState();
+      const contexts: ChartState<any, any, any>[] = [];
+
+      render(ChartGroupTestHarness, {
+        group,
+        component: LineChart,
+        members: [
+          { chartProps: { data: dataA, x: 'date', y: 'value' } },
+          { chartProps: { data: dataB, x: 'date', y: 'value' } },
+        ],
+        oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+      });
+
+      await vi.waitFor(() => expect(contexts[1]?.width).toBeGreaterThan(0));
+
+      contexts[0].tooltip.show({ data: dataA[3] }); // 2024-01-04
+
+      await vi.waitFor(() => {
+        expect(contexts[1].tooltip.data).toEqual(dataB[2]);
+      });
+    });
+  });
+
   describe('match', () => {
     it('`index` uses position rather than value', async () => {
       const { chartA, chartB } = await renderPair({ pointer: { match: 'index' } });
@@ -152,6 +180,49 @@ describe('ChartGroupState', () => {
 
       await vi.waitFor(() => {
         expect(chartB.tooltip.data).toEqual(dataB[2]); // index 2, a different date
+      });
+    });
+
+    it('`percent` uses relative position within the plot area', async () => {
+      // domains are deliberately unrelated — only the relative position carries over
+      const early = [
+        { date: new Date('2024-01-01'), value: 1 },
+        { date: new Date('2024-01-02'), value: 2 },
+        { date: new Date('2024-01-03'), value: 3 },
+      ];
+      const late = [
+        { date: new Date('2030-06-01'), value: 1 },
+        { date: new Date('2030-06-02'), value: 2 },
+        { date: new Date('2030-06-03'), value: 3 },
+      ];
+      const { chartA, chartB } = await renderPair({
+        pointer: { match: 'percent' },
+        dataFor: [early, late],
+      });
+
+      chartA.tooltip.show({ data: early[2] }); // 100% along its domain
+
+      await vi.waitFor(() => {
+        expect(chartB.tooltip.data).toEqual(late[2]); // 100% along a totally different domain
+      });
+    });
+
+    it('`value` finds nothing useful across unrelated domains', async () => {
+      // the contrast with `percent` above — nearest-by-value clamps to an edge
+      const early = [
+        { date: new Date('2024-01-01'), value: 1 },
+        { date: new Date('2024-01-03'), value: 3 },
+      ];
+      const late = [
+        { date: new Date('2030-06-01'), value: 1 },
+        { date: new Date('2030-06-03'), value: 3 },
+      ];
+      const { chartA, chartB } = await renderPair({ dataFor: [early, late] });
+
+      chartA.tooltip.show({ data: early[1] });
+
+      await vi.waitFor(() => {
+        expect(chartB.tooltip.data).toEqual(late[0]); // clamped to the first point
       });
     });
 
@@ -175,7 +246,7 @@ describe('ChartGroupState', () => {
       chartA.tooltip.show({ data: dataA[0] });
 
       await vi.waitFor(() => {
-        // data is still set so `Highlight` can draw a crosshair
+        // data is still set so `Highlight` still renders
         expect(chartB.tooltip.data).toEqual(dataB[0]);
       });
       expect(chartB.tooltip.suppressed).toBe(true);
@@ -249,19 +320,43 @@ describe('ChartGroupState', () => {
       const { chartA, chartB, group } = await renderPair();
 
       // no chart involved — as a table row or scrubber would do
-      group.setPointer({
-        x: new Date('2024-01-03'),
-        y: undefined,
-        percent: { x: 0, y: 0 },
-        index: -1,
-        data: null,
-        source: null,
-      });
+      group.setPointer({ x: new Date('2024-01-03') });
 
       await vi.waitFor(() => {
         expect(chartA.tooltip.data).toEqual(dataA[2]);
         expect(chartB.tooltip.data).toEqual(dataB[1]);
       });
     });
+
+    it('tracks successive external positions that carry no data point', async () => {
+      const { chartA, group } = await renderPair();
+
+      group.setPointer({ x: new Date('2024-01-01') });
+      await vi.waitFor(() => expect(chartA.tooltip.data).toEqual(dataA[0]));
+
+      // `data` is null for both updates, so identity alone would treat this as unchanged
+      group.setPointer({ x: new Date('2024-01-04') });
+      await vi.waitFor(() => expect(chartA.tooltip.data).toEqual(dataA[3]));
+    });
+  });
+});
+
+describe('regression', () => {
+  it('survives the pointer moving between charts without a hide in between', async () => {
+    // A real pointer entering chart B fires before chart A's (async) hide completes, so both
+    // charts briefly hold data.  Driving `show` on each in turn reproduces that overlap.
+    const { chartA, chartB, group } = await renderPair();
+
+    chartA.tooltip.show({ data: dataA[1] });
+    await vi.waitFor(() => expect(chartB.tooltip.data).not.toBeNull());
+
+    chartA.tooltip.hide(); // pointer leaves A — clears on a later tick
+    chartB.tooltip.show({ data: dataB[2] }); // ...but B is entered immediately
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    expect(group.pointer.source).toBe(chartB.id);
+    expect(chartB.tooltip.data).toEqual(dataB[2]);
+    expect(chartA.tooltip.data).toEqual(dataA[3]); // A follows B's date (2024-01-04)
   });
 });
