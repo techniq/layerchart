@@ -1177,14 +1177,22 @@ export class ChartState<
 
   y1Get = $derived(this.y1 ? createGetter(this.y1, this.y1Scale) : null);
 
-  cScale = $derived(
-    this.props.cScale || this.props.cRange
-      ? createScale(this.props.cScale ?? scaleOrdinal(), this.cDomain, this.props.cRange, {
-          width: this.width,
-          height: this.height,
-        })
-      : null
-  );
+  /**
+   * Color scale marks resolve a categorical `fill` / `stroke` through: `cScale` / `cRange` when
+   * configured, else the colors declared on `series`.
+   *
+   * Marks that instead treat this as a continuous ramp (`Contour`, `Density`, `Raster`) copy and
+   * re-domain it — they skip an ordinal scale, since the series fallback means nothing re-domained.
+   */
+  cScale = $derived.by<AnyScale | null>(() => {
+    if (this.props.cScale || this.props.cRange) {
+      return createScale(this.props.cScale ?? scaleOrdinal(), this.cDomain, this.props.cRange, {
+        width: this.width,
+        height: this.height,
+      });
+    }
+    return (this.seriesState?.cScale as AnyScale | null) ?? null;
+  });
 
   cGet = $derived((d: any) => this.cScale?.(this.c(d)));
 
@@ -1337,6 +1345,7 @@ export class ChartState<
     isDefaultSeries: true,
     allSeriesData: [],
     allSeriesColors: [],
+    cScale: null,
     selectedKeys: { current: [], isEmpty: () => true, isSelected: () => false },
   };
 

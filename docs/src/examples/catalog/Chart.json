@@ -436,7 +436,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 27,
+      "lineNumber": 25,
       "line": "<Chart"
     },
     {
@@ -816,6 +816,20 @@
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "lineNumber": 110,
       "line": "<Chart"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 18,
+      "line": "<Chart xScale={scaleUtc()} {xDomain} padding={24} height={48}>"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 31,
+      "line": "<Chart {xDomain} padding={24} height={48}>"
     },
     {
       "example": "company-race",
@@ -1514,7 +1528,7 @@
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 23,
+      "lineNumber": 12,
       "line": "<Chart"
     },
     {
@@ -1549,15 +1563,15 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 52,
-      "line": "<Chart"
+      "lineNumber": 49,
+      "line": "<Chart bind:context={brushChart} {data} x=\"date\" y=\"value\" padding={{ left: 16 }} brush height={40}>"
     },
     {
       "example": "simple-styling",
@@ -1754,6 +1768,34 @@
       "path": "/docs/components/Chart/data-series-separate-data",
       "lineNumber": 23,
       "line": "<Chart"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 55,
+      "line": "<Chart"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 45,
+      "line": "<Chart"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 71,
+      "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 16 }} brush height={20}>"
     },
     {
       "example": "basic",
@@ -3922,7 +3964,14 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 26,
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 59,
       "line": "<Chart"
     },
     {
@@ -3943,7 +3992,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 16,
+      "lineNumber": 14,
       "line": "<Chart"
     },
     {
@@ -4493,5 +4542,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-06T14:50:43.928Z"
+  "updatedAt": "2026-08-14T21:32:48.649Z"
 }

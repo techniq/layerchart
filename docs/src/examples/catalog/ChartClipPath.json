@@ -80,6 +80,20 @@
       "line": "<ChartClipPath>"
     },
     {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 48,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 58,
+      "line": "<ChartClipPath>"
+    },
+    {
       "example": "weighted",
       "component": "Density",
       "path": "/docs/components/Density/weighted",
@@ -143,5 +157,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.664Z"
+  "updatedAt": "2026-08-14T18:32:52.514Z"
 }

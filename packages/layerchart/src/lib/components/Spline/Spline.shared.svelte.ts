@@ -2,13 +2,13 @@ import type { SVGAttributes } from 'svelte/elements';
 import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 import { line as d3Line, lineRadial } from 'd3-shape';
 import { geoPath as d3GeoPath } from 'd3-geo';
-import { max } from 'd3-array';
+import { group as d3Group, max } from 'd3-array';
 import { interpolatePath } from 'd3-interpolate-path';
 
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
 import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
-import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
+import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
 import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
@@ -24,6 +24,14 @@ export type SplinePropsWithoutHTML = {
   x?: Accessor;
   /** Override `y` accessor from Chart context */
   y?: Accessor;
+  /**
+   * Group the data into a separate line per distinct value, drawing them all from this one mark.
+   * Defaults to the Chart's `z` accessor.
+   *
+   * Replaces grouping the data and rendering a `Spline` per group — which registers a mark, and
+   * rebuilds the chart's domains, once per line.
+   */
+  z?: Accessor;
   /** Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `x`/`y` are not set. */
   seriesKey?: string;
   /** Function to determine if a point is defined */
@@ -36,6 +44,8 @@ export type SplinePropsWithoutHTML = {
   fill?: ColorProp;
   /** Opacity or function returning opacity per data point. */
   opacity?: StyleProp<number | undefined>;
+  /** CSS class name(s), or a function returning them per data point. */
+  class?: StyleProp<string | undefined>;
   /** Whether to animate the path using tweened interpolation. */
   motion?: MotionProp;
 } & Omit<PathProps, 'x' | 'y' | 'motion' | 'stroke' | 'fill' | 'opacity'>;
@@ -47,6 +57,7 @@ export type SplineSegment = {
   stroke?: string;
   fill?: string;
   opacity?: number;
+  class?: string;
   d: string;
 };
 
@@ -128,6 +139,34 @@ export class SplineState {
     )
   );
 
+  /** Kept separate from `lines` so `zAccessor` can read it without a cycle */
+  resolvedData = $derived(this.#props.data ?? this.series?.data ?? this.ctx.data);
+
+  /**
+   * Accessor grouping the data into one line per distinct value, or `null` for a single line.
+   *
+   * Resolves in order: this mark's `z`, the chart's `z`, then the data property named by
+   * `stroke` / `fill` — so `stroke="fruit"` alone gives a line per fruit, as in Observable Plot.
+   *
+   * Falls back to the chart's `z` *prop* rather than `ctx.z`: `makeAccessor` returns `null` when
+   * the prop is unset, but isn't typed that way, so the raw prop is the honest check.
+   */
+  zAccessor = $derived.by<((d: any) => any) | null>(() => {
+    const props = this.#props;
+    const z = props.z ?? this.ctx.props.z;
+    if (z != null) return accessor(z);
+
+    const first = this.resolvedData?.[0];
+    const implied = colorPropDataKey(props.stroke, first) ?? colorPropDataKey(props.fill, first);
+    return implied != null ? accessor(implied) : null;
+  });
+
+  /** The data this Spline draws, split into one array per line */
+  lines = $derived.by<any[][]>(() => {
+    if (!this.zAccessor) return [this.resolvedData];
+    return Array.from(d3Group(this.resolvedData, this.zAccessor).values());
+  });
+
   xOffset = $derived(isScaleBand(this.ctx.xScale) ? this.ctx.xScale.bandwidth() / 2 : 0);
   yOffset = $derived(isScaleBand(this.ctx.yScale) ? this.ctx.yScale.bandwidth() / 2 : 0);
 
@@ -152,15 +191,17 @@ export class SplineState {
     return (
       typeof p.stroke === 'function' ||
       typeof p.fill === 'function' ||
-      typeof p.opacity === 'function'
+      typeof p.opacity === 'function' ||
+      typeof p.class === 'function'
     );
   });
 
   d = $derived.by(() => {
     const props = this.#props;
-    if (this.hasAnyStyleFn && !this.geo.projection) return '';
+    // Both style functions and `z` produce more than one path, which `segments` builds instead
+    if ((this.hasAnyStyleFn || this.zAccessor) && !this.geo.projection) return '';
 
-    const resolvedData = props.data ?? this.series?.data ?? this.ctx.data;
+    const resolvedData = this.resolvedData;
 
     if (this.geo.projection) {
       const coordinates = resolvedData
@@ -178,22 +219,43 @@ export class SplineState {
   });
 
   segments = $derived.by<SplineSegment[] | null>(() => {
-    if (!this.hasAnyStyleFn) return null;
+    if (!this.hasAnyStyleFn && !this.zAccessor) return null;
     const props = this.#props;
-    const resolvedData = props.data ?? this.series?.data ?? this.ctx.data;
     if (this.geo.projection) return null;
 
-    const groups = groupConsecutive(resolvedData, (d, i, arr) => {
-      const s = resolveColorProp(props.stroke, d, this.ctx.cScale, i, arr);
-      const f = resolveColorProp(props.fill, d, this.ctx.cScale, i, arr);
-      const o = resolveStyleProp(props.opacity, d, i, arr);
-      return { key: `${s}\0${f}\0${o}`, style: { stroke: s, fill: f, opacity: o } };
-    });
+    const out: SplineSegment[] = [];
 
-    return groups.map((group) => ({
-      ...group.style,
-      d: this.#buildPath(group.data),
-    }));
+    for (const lineData of this.lines) {
+      if (this.hasAnyStyleFn) {
+        // Style functions split each line further, into one path per run of matching style
+        const groups = groupConsecutive(lineData, (d, i, arr) => {
+          const s = resolveColorProp(props.stroke, d, this.ctx.cScale, i, arr);
+          const f = resolveColorProp(props.fill, d, this.ctx.cScale, i, arr);
+          const o = resolveStyleProp(props.opacity, d, i, arr);
+          const c = resolveStyleProp(props.class, d, i, arr);
+          return {
+            key: `${s}\0${f}\0${o}\0${c}`,
+            style: { stroke: s, fill: f, opacity: o, class: c },
+          };
+        });
+        for (const group of groups) {
+          out.push({ ...group.style, d: this.#buildPath(group.data) });
+        }
+      } else {
+        // One path for the whole line, styled from its first point — so `stroke="species"` picks
+        // the line's color out of the data via the chart's color scale
+        out.push({
+          stroke:
+            resolveColorProp(props.stroke, lineData[0], this.ctx.cScale) ?? this.series?.color,
+          fill: resolveColorProp(props.fill, lineData[0], this.ctx.cScale),
+          opacity: resolveStyleProp(props.opacity, lineData[0]),
+          class: resolveStyleProp(props.class, lineData[0]),
+          d: this.#buildPath(lineData),
+        });
+      }
+    }
+
+    return out;
   });
 
   #defaultPathData(): string {
@@ -201,7 +263,7 @@ export class SplineState {
     if (!extractTweenConfig(props.motion)) return '';
 
     if (this.ctx.config.x) {
-      const resolvedData = props.data ?? this.series?.data ?? this.ctx.data;
+      const resolvedData = this.resolvedData;
       const baseline = Math.min(this.ctx.yScale(0) ?? this.ctx.yRange[0], this.ctx.yRange[0]);
 
       const path = this.ctx.radial
@@ -222,6 +284,21 @@ export class SplineState {
 
     return '';
   }
+
+  /**
+   * `stroke` / `fill` for the single-path case, resolved the way every other mark resolves them:
+   * a string naming a data property goes through the chart's color scale, anything else is a
+   * literal CSS color.  Uniform across the path, so it resolves from the first point.
+   */
+  resolvedStroke = $derived(
+    resolveColorProp(this.#props.stroke, this.lines[0]?.[0], this.ctx.cScale) ?? this.series?.color
+  );
+  resolvedFill = $derived(resolveColorProp(this.#props.fill, this.lines[0]?.[0], this.ctx.cScale));
+  // Annotated: the inferred type reaches into `clsx`'s internals, which can't be named in the
+  // emitted declaration — without this, `tsc` drops the whole file's `.d.ts`
+  resolvedClass = $derived<string | undefined>(
+    resolveStyleProp(this.#props.class, this.lines[0]?.[0]) as string | undefined
+  );
 
   isTweened = $derived(extractTweenConfig(this.#props.motion) != null);
 

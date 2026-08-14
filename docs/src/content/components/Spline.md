@@ -13,9 +13,45 @@ See also: [LineChart](/docs/components/LineChart) for simplified examples
 
 :example{ name="basic" showCode }
 
+### Multiple lines (`z`)
+
+Set `z` to draw a separate line per distinct value, all from one mark — the same channel Observable Plot and SveltePlot use for series.
+
+```svelte
+<Chart {data} x="date" y="value" c="fruit" {cRange}>
+	<Spline stroke="fruit" />
+</Chart>
+```
+
+Most of the time you don't set it at all: a `stroke` (or `fill`) that names a data property implies it, so the line above draws one line per fruit. `z` resolves in order — this mark's `z`, the Chart's `z`, then whatever `stroke` / `fill` names.
+
+This replaces grouping the data yourself and rendering a `Spline` per group. Prefer it: every mark registers with the chart and rebuilds its domains, so a mark per line costs O(lines × rows) at mount — with a few hundred lines that's the difference between ~1.9s and under 100ms.
+
+`z` keeps its scale, so the same field can group the lines _and_ encode them:
+
+```svelte
+<Chart {data} x="date" y="value" z="year" zDomain={[1940, 2024]} zRange={[0.1, 0.2]}>
+	<Spline opacity={(d) => context.zScale(d.year)} />
+</Chart>
+```
+
+Set it explicitly when the grouping isn't the color — [parallel coordinates](#parallel-coordinates) groups by row (`z="index"`) while coloring by species.
+
+### Colors
+
+`stroke` and `fill` accept a CSS color, or the name of a data property — which resolves through the chart's [`c` scale](/docs/guides/scales), like every other mark. With `z`, the color resolves per line.
+
+```svelte
+<Spline stroke="fruit" />
+```
+
 ### Per-segment styling
 
-Pass a function to `stroke`, `fill`, or `opacity` to style each segment independently. Consecutive data points with the same resolved value are grouped into separate path segments.
+Pass a function to `stroke`, `fill`, `opacity`, or `class` to style each segment independently. Consecutive data points with the same resolved value are grouped into separate path segments. This composes with `z` — each line is split into its own segments, so a function is the way to style a grouped `Spline` per line:
+
+```svelte
+<Spline z="year" class={(d) => (d.year === 2024 ? 'stroke-primary' : 'stroke-surface-content')} />
+```
 
 :example{ name="stroke-grouping" showCode }
 
@@ -24,6 +60,12 @@ Pass a function to `stroke`, `fill`, or `opacity` to style each segment independ
 When inside a `GeoProjection` context, Spline automatically renders as a projected geographic path. The `x` and `y` accessors extract longitude/latitude from each data point, which are converted to a GeoJSON `LineString` and rendered via `geoPath(projection)` — providing geodesic interpolation (great circle arcs) and proper antimeridian wrapping.
 
 :example{ name="geo-routes" showCode }
+
+### Parallel coordinates
+
+One line per row across an axis per dimension, from a single `Spline` grouped by `z`. Each dimension keeps its own domain — `Axis` takes a `scale` override, so the ticks read in real units — while positions are normalized to a shared `0–1` domain so every dimension can share the chart's `y` scale. `Group` places each axis at its point on the categorical `x` scale.
+
+:example{ name="parallel-coordinates" showCode }
 
 ### Playground
 

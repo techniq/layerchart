@@ -249,14 +249,28 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 83,
+      "lineNumber": 84,
       "line": "<Points>"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 43,
+      "lineNumber": 27,
+      "line": "<Points>"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 49,
+      "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 65,
       "line": "<Points>"
     },
     {
@@ -442,5 +456,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:35.277Z"
+  "updatedAt": "2026-08-14T18:32:53.891Z"
 }

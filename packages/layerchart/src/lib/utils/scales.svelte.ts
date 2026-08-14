@@ -48,6 +48,23 @@ export function isScaleBand(scale: AnyScale<any, any>): scale is ScaleBand<any> 
   return typeof scale.bandwidth === 'function';
 }
 
+/**
+ * Whether the scale maps discrete values, so it can't be re-domained to a continuous extent.
+ *
+ * d3 ordinal scales (including band and point) interpolate nothing — `.copy().domain([min, max])`
+ * on one maps those two values and recycles the range for everything else.  Marks that build a
+ * color ramp check this before adopting `ctx.cScale`, which defaults to an ordinal lookup of the
+ * `series` colors.
+ */
+export function isScaleOrdinal(scale: AnyScale<any, any>): boolean {
+  // Ordinal scales carry `unknown()`; continuous ones interpolate instead
+  return (
+    typeof (scale as any).unknown === 'function' &&
+    typeof (scale as any).interpolate !== 'function' &&
+    typeof (scale as any).interpolator !== 'function'
+  );
+}
+
 export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
   const domain = scale.domain();
   return domain[0] instanceof Date || domain[1] instanceof Date;

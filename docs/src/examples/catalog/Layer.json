@@ -251,7 +251,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 41,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -644,6 +644,20 @@
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "lineNumber": 114,
+      "line": "<Layer>"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 19,
+      "line": "<Layer>"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
@@ -1294,7 +1308,7 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 82,
+      "lineNumber": 83,
       "line": "<Layer>"
     },
     {
@@ -1308,7 +1322,7 @@
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 39,
+      "lineNumber": 23,
       "line": "<Layer>"
     },
     {
@@ -1343,14 +1357,14 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 34,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 64,
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -1505,6 +1519,34 @@
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 46,
+      "line": "<Layer>"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 45,
+      "line": "<Layer>"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 64,
+      "line": "<Layer>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 54,
+      "line": "<Layer>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 72,
       "line": "<Layer>"
     },
     {
@@ -3786,7 +3828,7 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 40,
+      "lineNumber": 38,
       "line": "<Layer>"
     },
     {
@@ -3807,7 +3849,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Layer center>"
     },
     {
@@ -4273,5 +4315,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-06T14:50:46.981Z"
+  "updatedAt": "2026-08-14T21:13:43.955Z"
 }

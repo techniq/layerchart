@@ -21,6 +21,7 @@
   import { accessor as resolveAccessor, chartDataArray } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
+  import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
 
   const ctx = getChartContext();
   const geo = getGeoContext();
@@ -91,7 +92,8 @@
   const colorScale = $derived.by(() => {
     if (fill) return null;
     const maxValue = max(contours, (d) => d.value) ?? 1;
-    if (ctx.cScale) {
+    // Not an ordinal scale — `cScale` defaults to a `series` color lookup, which can't ramp
+    if (ctx.cScale && !isScaleOrdinal(ctx.cScale)) {
       return ctx.cScale.copy().domain([0, maxValue]);
     }
     return scaleSequential([0, maxValue], interpolateYlGnBu);

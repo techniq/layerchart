@@ -28,6 +28,7 @@
     resolveRasterBounds,
   } from '$lib/utils/index.js';
   import { interpolateGrid } from '$lib/utils/rasterInterpolate.js';
+  import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
 
   const ctx = getChartContext();
   const geo = getGeoContext();
@@ -207,7 +208,8 @@
     if (fill) return null;
     const minValue = min(contourData, (d) => d.value) ?? 0;
     const maxValue = max(contourData, (d) => d.value) ?? 1;
-    if (ctx.cScale) {
+    // Not an ordinal scale — `cScale` defaults to a `series` color lookup, which can't ramp
+    if (ctx.cScale && !isScaleOrdinal(ctx.cScale)) {
       const scale = ctx.cScale.copy();
       return ctx.props.cDomain ? scale : scale.domain([minValue, maxValue]);
     }

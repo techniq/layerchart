@@ -557,6 +557,13 @@
       "line": "<Legend"
     },
     {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 72,
+      "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
+    },
+    {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
@@ -578,5 +585,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:15.193Z"
+  "updatedAt": "2026-08-14T21:32:49.585Z"
 }

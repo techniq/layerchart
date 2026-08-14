@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { flatGroup } from 'd3-array';
 	import { Area, Axis, Chart, Highlight, Labels, Layer, Tooltip, pivotLonger } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -13,7 +12,6 @@
 	});
 
 	const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
-	const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
 	const fruitColors = {
 		apples: 'var(--color-apples)',
@@ -37,14 +35,11 @@
 	tooltipContext={{ mode: 'quadtree' }}
 	height={300}
 >
-	{#snippet children({ context })}
+	{#snippet children()}
 		<Layer>
 			<Axis placement="left" grid rule />
 			<Axis placement="bottom" rule />
-			{#each dataByFruit as [fruit, data]}
-				{@const color = context.cScale?.(fruit)}
-				<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
-			{/each}
+			<Area fill="fruit" fillOpacity={0.3} line={{ class: 'stroke-2' }} />
 			<Labels format="integer" />
 			<Highlight points lines />
 		</Layer>

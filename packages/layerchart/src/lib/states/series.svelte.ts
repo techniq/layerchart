@@ -2,6 +2,7 @@ import type { Component } from 'svelte';
 import type { SeriesData } from '../components/charts/types.js';
 import { InternMap } from 'd3-array';
 import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
+import { scaleOrdinal } from 'd3-scale';
 import { accessor, type Accessor } from '../utils/common.js';
 import { SelectionState } from '@layerstack/svelte-state';
 
@@ -358,6 +359,27 @@ export class SeriesState<TData, TComponent extends Component> {
       .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
       .filter((d) => d) as Array<TData & { seriesKey: string }>;
   }
+
+  /**
+   * Ordinal scale mapping series key to its declared color, or `null` when no series declares one
+   * (or the series are the implicit default).
+   *
+   * Backs `ChartState.cScale` when nothing configures one, so `series` is the single source of
+   * truth for the marks and the legend alike, without restating the palette as `cDomain`/`cRange`.
+   */
+  cScale = $derived.by(() => {
+    if (this.isDefaultSeries) return null;
+    const colored = this.#series.filter((s) => s.color != null);
+    if (colored.length === 0) return null;
+
+    return (
+      scaleOrdinal<string, string>()
+        .domain(colored.map((s) => s.key))
+        .range(colored.map((s) => s.color as string))
+        // Keys the series don't cover stay unresolved rather than recycling the palette
+        .unknown(undefined as any)
+    );
+  });
 
   get allSeriesColors() {
     return this.#series.map((s) => s.color).filter((c) => c != null) as Array<

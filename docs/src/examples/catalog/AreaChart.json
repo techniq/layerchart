@@ -983,6 +983,13 @@
       "line": "<AreaChart"
     },
     {
+      "example": "synced-legend",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-legend",
+      "lineNumber": 26,
+      "line": "<AreaChart {data} x=\"date\" {series} seriesLayout=\"stack\" {padding} height={200} legend />"
+    },
+    {
       "example": "basic",
       "component": "Threshold",
       "path": "/docs/components/Threshold/basic",
@@ -1004,5 +1011,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:22.186Z"
+  "updatedAt": "2026-08-14T18:32:52.168Z"
 }

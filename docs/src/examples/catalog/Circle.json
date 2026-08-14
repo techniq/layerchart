@@ -272,14 +272,14 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 92,
+      "lineNumber": 89,
       "line": "<Circle"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 52,
+      "lineNumber": 32,
       "line": "<Circle"
     },
     {
@@ -295,6 +295,13 @@
       "path": "/docs/components/Chart/data-primitive-data",
       "lineNumber": 28,
       "line": "<Circle cx=\"date\" cy=\"value\" data={humidityData} r={5} fill=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 70,
+      "line": "<Circle"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -1102,5 +1109,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:32.076Z"
+  "updatedAt": "2026-08-14T18:32:52.608Z"
 }

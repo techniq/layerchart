@@ -1,11 +1,18 @@
 import type { ComponentProps } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 import { type Area as D3Area, area as d3Area, areaRadial, type CurveFactory } from 'd3-shape';
-import { min } from 'd3-array';
+import { group as d3Group, min } from 'd3-array';
 import { interpolatePath } from 'd3-interpolate-path';
 
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
+import {
+  colorPropDataKey,
+  resolveColorProp,
+  resolveStyleProp,
+  type ColorProp,
+  type StyleProp,
+} from '$lib/utils/dataProp.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
 import { flattenPathData } from '$lib/utils/path.js';
 import {
@@ -30,6 +37,14 @@ export type AreaPropsWithoutHTML = {
   y0?: Accessor;
   /** Override y1 accessor. Defaults to y accessor */
   y1?: Accessor;
+  /**
+   * Group the data into a separate area per distinct value, drawing them all from this one mark.
+   * Defaults to the Chart's `z` accessor, then to the data property named by `fill` / `stroke`.
+   *
+   * Replaces grouping the data and rendering an `Area` per group — which registers a mark, and
+   * rebuilds the chart's domains, once per area.
+   */
+  z?: Accessor;
   /** Series key to use for accessor. */
   seriesKey?: string;
   /** Whether to tween the interpolated path data using d3-interpolate-path */
@@ -38,7 +53,15 @@ export type AreaPropsWithoutHTML = {
   defined?: Parameters<D3Area<any>['defined']>[0];
   /** Enable showing line @default false */
   line?: boolean | Partial<ComponentProps<typeof Spline>>;
-} & Omit<PathProps, 'x' | 'y' | 'y0' | 'y1'>;
+  /** Fill color, the name of a data property (resolved via the chart's `c` scale), or a function. */
+  fill?: ColorProp;
+  /** Stroke color, the name of a data property, or a function. */
+  stroke?: ColorProp;
+  /** Opacity, or a function returning it per area. */
+  opacity?: StyleProp<number | undefined>;
+  /** CSS class name(s), or a function returning them per area. */
+  class?: StyleProp<string | undefined>;
+} & Omit<PathProps, 'x' | 'y' | 'y0' | 'y1' | 'fill' | 'stroke' | 'opacity' | 'class'>;
 
 export type AreaProps = AreaPropsWithoutHTML &
   Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;
@@ -139,6 +162,53 @@ export class AreaState {
 
   resolvedData = $derived(this.#props.data ?? this.seriesData ?? this.ctx.data);
 
+  /**
+   * Accessor grouping the data into one area per distinct value, or `null` for a single area.
+   * Mirrors `Spline` — see its `zAccessor` for why the chart's raw `z` prop is the honest check.
+   */
+  zAccessor = $derived.by<((d: any) => any) | null>(() => {
+    const props = this.#props;
+    const z = props.z ?? this.ctx.props.z;
+    if (z != null) return accessor(z);
+
+    const first = this.resolvedData?.[0];
+    const implied = colorPropDataKey(props.fill, first) ?? colorPropDataKey(props.stroke, first);
+    return implied != null ? accessor(implied) : null;
+  });
+
+  /**
+   * One entry per area, with its own path and styles — or `null` when there's no grouping, which
+   * leaves the single-path (and tweenable) branch in place.
+   */
+  areas = $derived.by(() => {
+    if (!this.zAccessor || this.#props.pathData) return null;
+    const props = this.#props;
+
+    return Array.from(d3Group(this.resolvedData, this.zAccessor).values()).map((data) => ({
+      data,
+      d: this.#buildPath(data),
+      // Styles are uniform across an area, so they resolve from its first point
+      fill: resolveColorProp(props.fill, data[0], this.ctx.cScale) ?? this.series?.color,
+      stroke: resolveColorProp(props.stroke, data[0], this.ctx.cScale),
+      opacity: resolveStyleProp(props.opacity, data[0]),
+      class: resolveStyleProp(props.class, data[0]),
+    }));
+  });
+
+  /** `fill` / `stroke` / `class` for the ungrouped case, resolved the same way */
+  resolvedFill = $derived(
+    resolveColorProp(this.#props.fill, this.resolvedData?.[0], this.ctx.cScale) ??
+      this.series?.color
+  );
+  resolvedStroke = $derived(
+    resolveColorProp(this.#props.stroke, this.resolvedData?.[0], this.ctx.cScale)
+  );
+  // Annotated for the same reason as `Spline`'s — see there
+  resolvedClass = $derived<string | undefined>(
+    resolveStyleProp(this.#props.class, this.resolvedData?.[0]) as string | undefined
+  );
+  resolvedOpacity = $derived(resolveStyleProp(this.#props.opacity, this.resolvedData?.[0]));
+
   xOffset = $derived(isScaleBand(this.ctx.xScale) ? this.ctx.xScale.bandwidth() / 2 : 0);
   yOffset = $derived(isScaleBand(this.ctx.yScale) ? this.ctx.yScale.bandwidth() / 2 : 0);
 
@@ -169,7 +239,7 @@ export class AreaState {
     return '';
   }
 
-  d = $derived.by<string | undefined>(() => {
+  #buildPath(data: any[]): string {
     const props = this.#props;
     const _path = this.ctx.radial
       ? areaRadial()
@@ -186,7 +256,11 @@ export class AreaState {
     );
     if (props.curve) _path.curve(props.curve);
 
-    return props.pathData ?? _path(this.resolvedData) ?? '';
+    return _path(data) ?? '';
+  }
+
+  d = $derived.by<string | undefined>(() => {
+    return this.#props.pathData ?? this.#buildPath(this.resolvedData);
   });
 
   get tweenedPath() {

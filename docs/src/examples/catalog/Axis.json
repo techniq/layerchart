@@ -909,6 +909,28 @@
           "line": "<Axis"
         }
       ]
+    },
+    {
+      "name": "utc-scale",
+      "title": "utc scale",
+      "path": "/docs/components/Axis/utc-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart xScale={scaleUtc()} {xDomain} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 20,
+          "line": "<Axis placement=\"bottom\" format={{ type: 'day', options: { variant: 'short' } }} rule />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -1063,14 +1085,14 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 42,
+      "lineNumber": 40,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 43,
+      "lineNumber": 41,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1723,6 +1745,20 @@
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "lineNumber": 115,
       "line": "<Axis"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"bottom\" format={{ type: 'day', options: { variant: 'short' } }} rule />"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 33,
+      "line": "<Axis placement=\"bottom\" format={{ type: 'day', options: { variant: 'short' } }} rule />"
     },
     {
       "example": "company-race",
@@ -2939,14 +2975,14 @@
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 40,
+      "lineNumber": 24,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 41,
+      "lineNumber": 25,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2981,14 +3017,14 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 35,
+      "lineNumber": 32,
       "line": "<Axis placement=\"left\" grid rule motion={{ type: 'tween', duration: 200 }} />"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 36,
+      "lineNumber": 33,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3158,6 +3194,34 @@
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "lineNumber": 71,
       "line": "<Axis"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 46,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 47,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 55,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -4563,15 +4627,22 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 41,
+      "lineNumber": 39,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 42,
+      "lineNumber": 40,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 79,
+      "line": "<Axis"
     },
     {
       "example": "playground",
@@ -4605,14 +4676,14 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 45,
+      "lineNumber": 40,
       "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
     },
     {
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 46,
+      "lineNumber": 41,
       "line": "<Axis"
     },
     {
@@ -5218,5 +5289,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.013Z"
+  "updatedAt": "2026-08-14T21:32:48.323Z"
 }

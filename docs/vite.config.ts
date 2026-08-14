@@ -13,7 +13,19 @@ export default defineConfig({
 	// which causes "Failed to fetch dynamically imported module" errors
 	// Ref: https://github.com/vitest-dev/vitest/issues/5477
 	optimizeDeps: {
-		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux']
+		include: [
+			'@layerstack/tailwind',
+			'@layerstack/utils',
+			'svelte-ux',
+			// LayerChart `import()`s these lazily, so Vite only discovers them the first time an
+			// interaction reaches them (ex. hovering a `quadtree` tooltip). That triggers a
+			// re-optimization mid-interaction and the in-flight import fails, leaving the feature
+			// dead until reload — tooltips being the visible symptom.
+			'd3-quadtree',
+			'd3-chord',
+			'd3-shape',
+			'd3-interpolate-path'
+		]
 	},
 	plugins: [
 		tailwindcss(),

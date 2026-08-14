@@ -1210,6 +1210,41 @@
       "line": "<LineChart"
     },
     {
+      "example": "basic",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/basic",
+      "lineNumber": 31,
+      "line": "<LineChart"
+    },
+    {
+      "example": "highlight-only",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/highlight-only",
+      "lineNumber": 36,
+      "line": "<LineChart"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/programmatic-control",
+      "lineNumber": 87,
+      "line": "<LineChart"
+    },
+    {
+      "example": "synced-legend",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-legend",
+      "lineNumber": 25,
+      "line": "<LineChart {data} x=\"date\" {series} {padding} height={200} />"
+    },
+    {
+      "example": "synced-zoom",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-zoom",
+      "lineNumber": 32,
+      "line": "<LineChart"
+    },
+    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1721,5 +1756,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:34.474Z"
+  "updatedAt": "2026-08-14T18:32:53.572Z"
 }

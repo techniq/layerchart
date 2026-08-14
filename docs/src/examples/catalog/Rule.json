@@ -565,6 +565,13 @@
       "line": "<Rule y={0} />"
     },
     {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 57,
+      "line": "<Rule y={0} />"
+    },
+    {
       "example": "annotation-x",
       "component": "Rule",
       "path": "/docs/components/Rule/annotation-x",
@@ -698,5 +705,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.982Z"
+  "updatedAt": "2026-08-14T18:32:54.039Z"
 }

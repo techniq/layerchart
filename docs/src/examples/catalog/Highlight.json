@@ -69,7 +69,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 49,
+      "lineNumber": 44,
       "line": "<Highlight points lines />"
     },
     {
@@ -489,7 +489,7 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 48,
+      "lineNumber": 43,
       "line": "<Highlight points lines />"
     },
     {
@@ -661,5 +661,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:25.764Z"
+  "updatedAt": "2026-08-14T21:25:32.821Z"
 }

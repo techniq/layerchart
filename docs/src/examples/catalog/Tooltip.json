@@ -1088,28 +1088,28 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 52,
+      "lineNumber": 47,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 54,
+      "lineNumber": 49,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 55,
+      "lineNumber": 50,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 56,
+      "lineNumber": 51,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} />"
     },
     {
@@ -6555,28 +6555,28 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 50,
+      "lineNumber": 45,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 52,
+      "lineNumber": 47,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 53,
+      "lineNumber": 48,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 54,
+      "lineNumber": 49,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} />"
     },
     {
@@ -7861,5 +7861,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-06T14:44:39.384Z"
+  "updatedAt": "2026-08-14T21:25:33.748Z"
 }
