@@ -1330,12 +1330,14 @@ export class ChartState<
     series: [],
     visibleSeries: [],
     highlightKey: null,
+    highlightSource: null,
+    setHighlight: () => {},
     isVisible: () => true,
     isHighlighted: () => false,
     isDefaultSeries: true,
     allSeriesData: [],
     allSeriesColors: [],
-    selectedKeys: { isEmpty: () => true, isSelected: () => false },
+    selectedKeys: { current: [], isEmpty: () => true, isSelected: () => false },
   };
 
   static readonly #fallbackBrush = {

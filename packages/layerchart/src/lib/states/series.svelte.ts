@@ -24,10 +24,54 @@ export class SeriesState<TData, TComponent extends Component> {
 
   selectedKeys: SelectionState<string>;
 
+  #highlightKey = $state<SeriesData<TData, TComponent>['key'] | null>(null);
+
   /**
    * The current highlight series key for the chart.
    */
-  highlightKey = $state<SeriesData<TData, TComponent>['key'] | null>(null);
+  get highlightKey() {
+    return this.#highlightKey;
+  }
+  set highlightKey(key: SeriesData<TData, TComponent>['key'] | null) {
+    this.setHighlight(key);
+  }
+
+  /**
+   * Identity of whatever set the current highlight — `null` for this chart's own interaction, and
+   * the id of the publishing chart (or group) when a chart group applied it.
+   *
+   * Compare against `null` to tell the two apart, which is what keeps an applied highlight from
+   * echoing straight back out of the group.
+   */
+  highlightSource = $state<string | symbol | null>(null);
+
+  /**
+   * Set the highlighted series, recording what drove it.  Assigning to `highlightKey` is the same
+   * thing with no `source`, meaning this chart's own interaction.
+   */
+  setHighlight(
+    key: SeriesData<TData, TComponent>['key'] | null,
+    source: string | symbol | null = null
+  ) {
+    this.#highlightKey = key;
+    this.highlightSource = source;
+    this.onHighlightChange?.();
+  }
+
+  /**
+   * Called whenever the highlight is set, whatever drove it — including re-asserting the key
+   * already highlighted.  Check `highlightSource` to tell this chart's own interaction
+   * (`source === null`) from a group or other caller.
+   *
+   * This is a notification rather than something to derive from state, for the same reason as
+   * `TooltipState.onChange`: moving between two charts' legends clears the one being left and sets
+   * the one being entered, so both briefly hold a local highlight and state alone cannot say which
+   * one the pointer actually moved to.
+   *
+   * Note this is a single handler, not a subscriber list — assigning to it replaces whatever was
+   * there, including a chart group's.
+   */
+  onHighlightChange?: () => void;
 
   constructor(
     getSeries: () => SeriesData<TData, TComponent>[],
@@ -292,10 +336,10 @@ export class SeriesState<TData, TComponent extends Component> {
    * Changing default to `true` is useful to determine if series should be faded
    */
   isHighlighted(seriesKey: SeriesData<TData, TComponent>['key'], defaultValue = false) {
-    if (this.highlightKey === null) {
+    if (this.#highlightKey === null) {
       return defaultValue;
     } else {
-      return this.highlightKey === seriesKey;
+      return this.#highlightKey === seriesKey;
     }
   }
 

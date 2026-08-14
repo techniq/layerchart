@@ -598,6 +598,289 @@ describe('domain slice', () => {
   });
 });
 
+describe('series slice', () => {
+  const seriesData = [
+    { date: new Date('2024-01-01'), apples: 10, bananas: 5, grapes: 1 },
+    { date: new Date('2024-01-02'), apples: 30, bananas: 15, grapes: 3 },
+  ];
+
+  const seriesChartProps = (keys: string[]) => ({
+    data: seriesData,
+    x: 'date',
+    series: keys.map((key) => ({ key, value: key })),
+  });
+
+  /** Two charts with explicit series joined to a group */
+  async function renderSeriesPair(
+    options: { series?: any; memberOptions?: any[]; keysFor?: string[][] } = {}
+  ) {
+    const [a, b] = options.keysFor ?? [
+      ['apples', 'bananas'],
+      ['apples', 'bananas'],
+    ];
+    const group = new ChartGroupState({ series: options.series });
+    const contexts: ChartState<any, any, any>[] = [];
+
+    render(ChartGroupTestHarness, {
+      group,
+      members: [
+        { chartProps: seriesChartProps(a), groupOptions: options.memberOptions?.[0] },
+        { chartProps: seriesChartProps(b), groupOptions: options.memberOptions?.[1] },
+      ],
+      oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+    });
+
+    await vi.waitFor(() => {
+      expect(contexts[0]?.series.series).toHaveLength(a.length);
+      expect(contexts[1]?.series.series).toHaveLength(b.length);
+    });
+
+    return { chartA: contexts[0], chartB: contexts[1], group };
+  }
+
+  describe('highlight', () => {
+    it('highlights the same series on the other chart', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      chartA.series.highlightKey = 'bananas';
+
+      await vi.waitFor(() => expect(chartB.series.highlightKey).toBe('bananas'));
+      expect(chartB.series.isHighlighted('bananas')).toBe(true);
+      expect(chartB.series.isHighlighted('apples')).toBe(false);
+      expect(group.series.highlightSource).toBe(chartA.id);
+    });
+
+    it('clears the other chart when the highlight is released', async () => {
+      const { chartA, chartB } = await renderSeriesPair();
+
+      chartA.series.highlightKey = 'bananas';
+      await vi.waitFor(() => expect(chartB.series.highlightKey).toBe('bananas'));
+
+      chartA.series.highlightKey = null;
+
+      await vi.waitFor(() => expect(chartB.series.highlightKey).toBe(null));
+    });
+
+    it('does not echo an applied highlight back out', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      chartA.series.highlightKey = 'apples';
+      await vi.waitFor(() => expect(chartB.series.highlightKey).toBe('apples'));
+
+      // Settle any further effect passes — the publisher must still own the highlight, rather
+      // than the follower having re-published it as its own
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(group.series.highlightSource).toBe(chartA.id);
+      expect(chartB.series.highlightSource).toBe(chartA.id);
+      expect(chartA.series.highlightSource).toBe(null); // its own interaction
+    });
+
+    it('ignores a stale clear from the chart the pointer left', async () => {
+      // Moving between two charts' legends: the entered chart may publish before the left one
+      // clears, and that clear must not wipe the highlight that just replaced it
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      chartA.series.highlightKey = 'apples';
+      await vi.waitFor(() => expect(group.series.highlightSource).toBe(chartA.id));
+
+      chartB.series.highlightKey = 'bananas'; // entered B
+      chartA.series.highlightKey = null; // left A
+
+      await vi.waitFor(() => expect(group.series.highlightSource).toBe(chartB.id));
+      expect(group.series.highlightKey).toBe('bananas');
+      await vi.waitFor(() => expect(chartA.series.highlightKey).toBe('bananas'));
+    });
+
+    it('takes ownership when the same series is entered on another chart', async () => {
+      // Same key on both, so nothing about the highlight *value* changes — only its owner, which
+      // is what decides whose release clears it
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      chartA.series.highlightKey = 'apples';
+      await vi.waitFor(() => expect(chartB.series.highlightKey).toBe('apples'));
+
+      chartB.series.highlightKey = 'apples'; // entered B's legend on the same series
+      chartA.series.highlightKey = null; // left A
+
+      await vi.waitFor(() => expect(group.series.highlightSource).toBe(chartB.id));
+      expect(group.series.highlightKey).toBe('apples');
+      // and B releasing it does clear the group
+      chartB.series.highlightKey = null;
+      await vi.waitFor(() => expect(group.series.highlightKey).toBe(null));
+    });
+
+    it('drives every chart when set on the group directly', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      group.setHighlight('bananas');
+
+      await vi.waitFor(() => {
+        expect(chartA.series.highlightKey).toBe('bananas');
+        expect(chartB.series.highlightKey).toBe('bananas');
+      });
+      // attributed to the group, so neither chart mistakes it for its own and re-publishes
+      expect(chartA.series.highlightSource).toBe(group.id);
+    });
+
+    it('does not share the highlight when `series: false`', async () => {
+      const { chartA, chartB } = await renderSeriesPair({ series: false });
+
+      chartA.series.highlightKey = 'bananas';
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(chartB.series.highlightKey).toBe(null);
+    });
+
+    it('does not share the highlight when `series: { highlight: false }`', async () => {
+      const { chartA, chartB } = await renderSeriesPair({ series: { highlight: false } });
+
+      chartA.series.highlightKey = 'bananas';
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(chartB.series.highlightKey).toBe(null);
+    });
+  });
+
+  describe('visibility', () => {
+    it('hides the same series on the other chart', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      chartA.series.selectedKeys.current = ['apples']; // hides bananas
+
+      await vi.waitFor(() => expect(chartB.series.isVisible('bananas')).toBe(false));
+      expect(chartB.series.isVisible('apples')).toBe(true);
+      expect(group.series.hiddenKeys).toEqual(['bananas']);
+      expect(group.series.visibilitySource).toBe(chartA.id);
+    });
+
+    it('shows it again when unhidden', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      chartA.series.selectedKeys.current = ['apples'];
+      await vi.waitFor(() => expect(chartB.series.isVisible('bananas')).toBe(false));
+
+      chartA.series.selectedKeys.current = [];
+
+      await vi.waitFor(() => expect(chartB.series.isVisible('bananas')).toBe(true));
+      expect(group.series.hiddenKeys).toEqual([]);
+    });
+
+    it('leaves a chart alone when it does not have the hidden series', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair({
+        keysFor: [
+          ['apples', 'bananas'],
+          ['apples', 'grapes'],
+        ],
+      });
+
+      chartA.series.selectedKeys.current = ['apples']; // hides bananas, which B lacks
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(chartB.series.isVisible('apples')).toBe(true);
+      expect(chartB.series.isVisible('grapes')).toBe(true);
+      // and B reporting nothing hidden must not unhide bananas for A
+      expect(group.series.hiddenKeys).toEqual(['bananas']);
+      expect(chartA.series.isVisible('bananas')).toBe(false);
+    });
+
+    it('keeps each chart owning only its own series', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair({
+        keysFor: [
+          ['apples', 'bananas'],
+          ['apples', 'grapes'],
+        ],
+      });
+
+      chartA.series.selectedKeys.current = ['apples']; // A hides bananas
+      await vi.waitFor(() => expect(group.series.hiddenKeys).toEqual(['bananas']));
+
+      chartB.series.selectedKeys.current = ['apples']; // B hides grapes
+
+      await vi.waitFor(() => expect(group.series.hiddenKeys).toContain('grapes'));
+      expect(group.series.hiddenKeys).toContain('bananas');
+      expect(chartA.series.isVisible('bananas')).toBe(false);
+      expect(chartB.series.isVisible('grapes')).toBe(false);
+    });
+
+    it('hides across the group when set on the group directly', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      group.setHidden(['apples']);
+
+      await vi.waitFor(() => {
+        expect(chartA.series.isVisible('apples')).toBe(false);
+        expect(chartB.series.isVisible('apples')).toBe(false);
+      });
+      expect(chartA.series.visibleSeries.map((s) => s.key)).toEqual(['bananas']);
+    });
+
+    it('shows everything again when cleared', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair();
+
+      group.setHidden(['apples']);
+      await vi.waitFor(() => expect(chartB.series.isVisible('apples')).toBe(false));
+
+      group.clearHidden();
+
+      await vi.waitFor(() => {
+        expect(chartA.series.isVisible('apples')).toBe(true);
+        expect(chartB.series.isVisible('apples')).toBe(true);
+      });
+      expect(group.series.hiddenKeys).toEqual([]);
+    });
+
+    it('does not share visibility when `series: { visibility: false }`', async () => {
+      const { chartA, chartB } = await renderSeriesPair({ series: { visibility: false } });
+
+      chartA.series.selectedKeys.current = ['apples'];
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(chartB.series.isVisible('bananas')).toBe(true);
+    });
+  });
+
+  describe('publish / subscribe filters', () => {
+    it('a listen-only chart does not publish', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair({
+        memberOptions: [{ publish: false }, undefined],
+      });
+
+      chartA.series.highlightKey = 'bananas';
+      chartA.series.selectedKeys.current = ['apples'];
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(group.series.highlightKey).toBe(null);
+      expect(group.series.hiddenKeys).toEqual([]);
+      expect(chartB.series.highlightKey).toBe(null);
+    });
+
+    it('a broadcast-only chart does not subscribe', async () => {
+      const { chartB, group } = await renderSeriesPair({
+        memberOptions: [undefined, { subscribe: false }],
+      });
+
+      group.setHighlight('bananas');
+      group.setHidden(['apples']);
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(chartB.series.highlightKey).toBe(null);
+      expect(chartB.series.isVisible('apples')).toBe(true);
+    });
+
+    it('shares series without the pointer when named in `publish`', async () => {
+      const { chartA, chartB, group } = await renderSeriesPair({
+        memberOptions: [{ publish: ['series'] }, undefined],
+      });
+
+      chartA.tooltip.show({ data: seriesData[0] });
+      chartA.series.highlightKey = 'bananas';
+
+      await vi.waitFor(() => expect(chartB.series.highlightKey).toBe('bananas'));
+      expect(group.pointer.active).toBe(false);
+    });
+  });
+});
+
 describe('<ChartGroup> options', () => {
   it('forwards every slice option, not just `pointer`', async () => {
     let group: ChartGroupState = null!;
@@ -607,6 +890,7 @@ describe('<ChartGroup> options', () => {
       pointer: { axis: 'both' },
       brush: { axis: 'both' },
       domain: { axis: 'both' },
+      series: { highlight: false },
       members: [{ chartProps: chartProps(dataA) }],
       ongroup: (g: any) => (group = g),
     });
@@ -616,6 +900,7 @@ describe('<ChartGroup> options', () => {
     expect(group.pointerOptions?.axis).toBe('both');
     expect(group.brushOptions?.axis).toBe('both');
     expect(group.domainOptions?.axis).toBe('both');
+    expect(group.seriesOptions).toEqual({ highlight: false, visibility: true });
   });
 });
 
@@ -660,6 +945,7 @@ describe('lifecycle', () => {
     contexts[0].tooltip.show({ data: dataA[1] });
     group.setBrush({ x: [dataA[0].date, dataA[2].date], source: contexts[0].id });
     group.setDomain({ x: [dataA[0].date, dataA[2].date], source: contexts[0].id });
+    group.setHighlight('value', contexts[0].id);
     await vi.waitFor(() => expect(group.pointer.active).toBe(true));
 
     unmount();
@@ -668,5 +954,27 @@ describe('lifecycle', () => {
     expect(group.pointer.active).toBe(false);
     expect(group.brush.active).toBe(false);
     expect(group.domain.active).toBe(false);
+    expect(group.series.highlightKey).toBe(null);
+  });
+
+  it('keeps hidden series hidden when the chart that hid them unmounts', async () => {
+    // Hidden keys describe series rather than the chart that hid them — other members may still
+    // be showing the same ones hidden, and unhiding those would be the surprise
+    const group = new ChartGroupState();
+    const contexts: ChartState<any, any, any>[] = [];
+
+    const { unmount } = render(ChartGroupTestHarness, {
+      group,
+      members: [{ chartProps: chartProps(dataA) }],
+      oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+    });
+    await vi.waitFor(() => expect(contexts[0]?.width).toBeGreaterThan(0));
+
+    group.setHidden(['bananas'], contexts[0].id);
+
+    unmount();
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    expect(group.series.hiddenKeys).toEqual(['bananas']);
   });
 });

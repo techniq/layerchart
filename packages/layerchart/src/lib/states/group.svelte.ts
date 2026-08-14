@@ -9,7 +9,7 @@ import { isEqualValue } from '$lib/utils/common.js';
 import { scaleInvert, type AnyScale } from '$lib/utils/scales.svelte.js';
 
 /** State slices that can be shared between charts in a group */
-export type ChartGroupSlice = 'pointer' | 'brush' | 'domain';
+export type ChartGroupSlice = 'pointer' | 'brush' | 'domain' | 'series';
 
 /**
  * How a published pointer is resolved to a data point on each subscribing chart.
@@ -65,9 +65,26 @@ export type ChartGroupDomainOptions = {
   axis?: 'x' | 'y' | 'both';
 };
 
+export type ChartGroupSeriesOptions = {
+  /**
+   * Share the highlighted series, ex. hovering a legend item fades the same series everywhere
+   * @default true
+   */
+  highlight?: boolean;
+
+  /**
+   * Share which series are visible, ex. toggling a legend item hides the same series everywhere
+   * @default true
+   */
+  visibility?: boolean;
+};
+
 export type ChartGroupOptions = {
   /** Share the hovered data point.  Pass `false` to disable. */
   pointer?: ChartGroupPointerOptions | boolean;
+
+  /** Share series highlight and visibility.  Pass `false` to disable. */
+  series?: ChartGroupSeriesOptions | boolean;
 
   /** Share the brush selection.  Pass `false` to disable. */
   brush?: ChartGroupBrushOptions | boolean;
@@ -118,6 +135,39 @@ const emptyBrush = (): ChartGroupBrush => ({
   active: false,
   source: null,
 });
+
+/**
+ * The shared series state.
+ *
+ * Unlike the other slices this carries two independent channels — which series is highlighted, and
+ * which are hidden — and so records a source for each.  One shared `source` could not express a
+ * chart owning the highlight while another changes visibility.
+ */
+export type ChartGroupSeries = {
+  /** Highlighted series key, or `null` when nothing is highlighted */
+  highlightKey: string | null;
+  /** Identity of the chart that set the highlight */
+  highlightSource: string | symbol | null;
+  /**
+   * Series keys hidden across the group.  Hidden rather than visible keys, so that a chart only
+   * has to speak for the series it actually has — see `setHidden`.
+   */
+  hiddenKeys: string[];
+  /** Identity of the chart that last changed visibility */
+  visibilitySource: string | symbol | null;
+};
+
+const emptySeries = (): ChartGroupSeries => ({
+  highlightKey: null,
+  highlightSource: null,
+  hiddenKeys: [],
+  visibilitySource: null,
+});
+
+/** Whether two key lists hold the same keys, regardless of order */
+function sameKeys(a: readonly string[], b: readonly string[]) {
+  return a.length === b.length && a.every((key) => b.includes(key));
+}
 
 /** Per-chart control over which slices a chart publishes to / subscribes from the group */
 export type ChartGroupMemberOptions = {
@@ -230,6 +280,9 @@ export class ChartGroupState {
   /** Shared brush selection.  `$state.raw` for the same reasons as `pointer`. */
   brush = $state.raw<ChartGroupBrush>(emptyBrush());
 
+  /** Shared series highlight and visibility.  `$state.raw` for the same reasons as `pointer`. */
+  series = $state.raw<ChartGroupSeries>(emptySeries());
+
   options: ChartGroupOptions;
 
   constructor(options: ChartGroupOptions = {}) {
@@ -251,6 +304,17 @@ export class ChartGroupState {
     const brush = this.options.brush ?? true;
     if (brush === false) return null;
     return { axis: (brush === true ? undefined : brush.axis) ?? 'x' };
+  }
+
+  /** Resolved series options, or `null` when series sharing is disabled */
+  get seriesOptions(): Required<ChartGroupSeriesOptions> | null {
+    const series = this.options.series ?? true;
+    if (series === false) return null;
+    const options = series === true ? {} : series;
+    return {
+      highlight: options.highlight ?? true,
+      visibility: options.visibility ?? true,
+    };
   }
 
   /** Resolved pointer options, or `null` when pointer sharing is disabled */
@@ -322,6 +386,61 @@ export class ChartGroupState {
   clearBrush(source: string | symbol | null = null) {
     if (!this.brush.active) return;
     this.brush = { ...emptyBrush(), source };
+  }
+
+  /**
+   * Highlight a series across the group, ex. from hovering a legend item.  Charts without that
+   * series simply have nothing to highlight.
+   *
+   * ```ts
+   * group.setHighlight('revenue');
+   * ```
+   */
+  setHighlight(key: string, source: string | symbol | null = null) {
+    if (this.series.highlightKey === key && this.series.highlightSource === source) return;
+    this.series = { ...this.series, highlightKey: key, highlightSource: source };
+  }
+
+  /**
+   * Clear the shared highlight (ex. on pointer leave).
+   *
+   * Owner-gated like `clearPointer`, and for the same reason: moving between two charts' legends
+   * clears one and sets the other in the same tick, and the chart being left must not wipe the
+   * highlight belonging to the one being entered.  Pass no `source` to clear regardless of owner.
+   */
+  clearHighlight(source: string | symbol | null = null) {
+    if (this.series.highlightKey == null) return;
+    if (source != null && this.series.highlightSource !== source) return;
+    this.series = { ...this.series, highlightKey: null, highlightSource: source };
+  }
+
+  /**
+   * Hide series across the group, ex. from toggling a legend item.  Pass the full set of hidden
+   * keys — anything not listed is visible.  No-ops when unchanged.
+   *
+   * ```ts
+   * group.setHidden(['forecast']);
+   * ```
+   *
+   * Hidden keys rather than visible ones, because a chart only speaks for the series it has: a
+   * chart showing an unrelated metric contributes nothing here, where publishing *visible* keys
+   * would have it repeatedly claim everything else is hidden.
+   */
+  setHidden(keys: string[], source: string | symbol | null = null) {
+    // Unchanged keys leave `visibilitySource` alone rather than re-attributing them, so whoever
+    // hid a series stays its owner when another chart merely reports the same set back
+    if (sameKeys(this.series.hiddenKeys, keys)) return;
+    this.series = { ...this.series, hiddenKeys: keys, visibilitySource: source };
+  }
+
+  /**
+   * Show every series again.
+   *
+   * Any member may clear it — see `clearBrush`.
+   */
+  clearHidden(source: string | symbol | null = null) {
+    if (this.series.hiddenKeys.length === 0) return;
+    this.series = { ...this.series, hiddenKeys: [], visibilitySource: source };
   }
 
   /**
@@ -475,6 +594,104 @@ export function connectToChartGroup(
     };
   });
 
+  // Publish — the highlighted series.  An event rather than an effect for the same reason as the
+  // pointer: moving between two charts' legends clears the one being left and sets the one being
+  // entered, so only the interaction itself knows which is which.
+  $effect(() => {
+    const group = getGroup();
+    const seriesOptions = group?.seriesOptions;
+    if (!group || !seriesOptions?.highlight) return;
+    if (!allows(getMemberOptions()?.publish, 'series')) return;
+
+    const series = ctx.series;
+
+    const publish = () => {
+      // Ignore a highlight the group applied — it would echo straight back out
+      if (series.highlightSource != null) return;
+
+      const key = series.highlightKey;
+      if (key == null) {
+        group.clearHighlight(ctx.id);
+      } else {
+        group.setHighlight(key, ctx.id);
+      }
+    };
+
+    series.onHighlightChange = publish;
+
+    return () => {
+      // Only release our own handler — a re-run may already have installed a newer one
+      if (series.onHighlightChange === publish) series.onHighlightChange = undefined;
+    };
+  });
+
+  // Subscribe — apply the group's highlight to this chart
+  $effect(() => {
+    const group = getGroup();
+    const seriesOptions = group?.seriesOptions;
+    if (!group || !seriesOptions?.highlight) return;
+    if (!allows(getMemberOptions()?.subscribe, 'series')) return;
+
+    const shared = group.series;
+    if (shared.highlightSource === ctx.id) return; // this chart published it
+
+    // `untrack` so reading this chart's own highlight (to skip a redundant write) doesn't make
+    // the effect re-run on every local hover
+    untrack(() => {
+      if (ctx.series.highlightKey === shared.highlightKey) return;
+      ctx.series.setHighlight(
+        shared.highlightKey,
+        // Never `null` — that marks a local highlight, which would publish straight back out.
+        // An externally-written highlight is attributed to the group itself.
+        shared.highlightSource ?? group.id
+      );
+    });
+  });
+
+  // Publish — which of this chart's series are hidden.  Safe as an effect where the highlight is
+  // not: hiding a series is a deliberate toggle, so no two charts are mid-gesture at once.
+  $effect(() => {
+    const group = getGroup();
+    const seriesOptions = group?.seriesOptions;
+    if (!group || !seriesOptions?.visibility) return;
+    if (!allows(getMemberOptions()?.publish, 'series')) return;
+
+    const keys = ctx.series.series.map((s) => s.key);
+    const hidden = keys.filter((key) => !ctx.series.isVisible(key));
+
+    untrack(() => {
+      // Merge rather than replace, so a chart only ever speaks for its own series — see
+      // `setHidden`.  Untracked because this effect reacts to *local* visibility; reading the
+      // shared set as a dependency would make it re-run on its own write.
+      const shared = group.series.hiddenKeys;
+      group.setHidden([...shared.filter((key) => !keys.includes(key)), ...hidden], ctx.id);
+    });
+  });
+
+  // Subscribe — hide the series the group has hidden, ignoring keys this chart doesn't have
+  $effect(() => {
+    const group = getGroup();
+    const seriesOptions = group?.seriesOptions;
+    if (!group || !seriesOptions?.visibility) return;
+    if (!allows(getMemberOptions()?.subscribe, 'series')) return;
+
+    const shared = group.series;
+    if (shared.visibilitySource === ctx.id) return; // this chart published it
+
+    const keys = ctx.series.series.map((s) => s.key);
+    const visible = keys.filter((key) => !shared.hiddenKeys.includes(key));
+    // `SelectionState` reads an empty selection as "everything visible", so only narrow it when
+    // something is actually hidden
+    const next = visible.length === keys.length ? [] : visible;
+
+    untrack(() => {
+      const selectedKeys = ctx.series.selectedKeys;
+      // Assigning always produces a new set, waking the publish effect for no reason
+      if (sameKeys(selectedKeys.current, next)) return;
+      selectedKeys.current = next;
+    });
+  });
+
   // Release anything this chart owns when it goes away (or moves to another group).  Without
   // this, a chart unmounted while hovering — a route change, a tab switch, a conditional block —
   // leaves the group holding its pointer forever, and every other chart showing a phantom
@@ -488,6 +705,10 @@ export function connectToChartGroup(
       if (group.pointer.source === ctx.id) group.clearPointer();
       if (group.brush.source === ctx.id) group.clearBrush();
       if (group.domain.source === ctx.id) group.clearDomain();
+      if (group.series.highlightSource === ctx.id) group.clearHighlight();
+      // Hidden keys are deliberately not released.  They describe series, not the chart that
+      // hid them, and other members may still be showing the same ones hidden — unhiding those
+      // because an unrelated chart unmounted would be the surprise.
     };
   });
 

@@ -21,7 +21,18 @@ Wrap the charts in `<ChartGroup>`:
 
 The charts don't need matching data. Each one looks up the **nearest data point to the shared domain value** in its own data, then positions the highlight with its own scales — so panels with different lengths, sampling rates, value ranges, sizes, or padding all stay in step.
 
-## Sharing without a wrapper
+## What's shared
+
+A group holds one piece of state per concern, each mirroring the chart state it syncs. All four are shared by default; pass `false` to any of them to opt out.
+
+| State                 | Shares                                         | Disable with                   |
+| --------------------- | ---------------------------------------------- | ------------------------------ |
+| [`pointer`](#pointer) | the hovered data point — tooltip and highlight | `<ChartGroup pointer={false}>` |
+| [`series`](#series)   | legend highlight and visibility                | `<ChartGroup series={false}>`  |
+| [`brush`](#brush)     | the brush selection                            | `<ChartGroup brush={false}>`   |
+| [`domain`](#domain)   | the visible domain, so zoom follows            | `<ChartGroup domain={false}>`  |
+
+## Group state
 
 `<ChartGroup>` is sugar over a `ChartGroupState` object. Create one yourself and pass it as `group` when the charts aren't siblings, or when you want to read the shared state:
 
@@ -54,7 +65,63 @@ every chart follow.
 Create the state inside a component (or `<ChartGroup>`), not at module scope. A module-level instance is shared across requests on the server and across every user of that module on the client.
 ::
 
-## Highlight without tooltips
+| Member    | Description                                                 |
+| --------- | ----------------------------------------------------------- |
+| `options` | The options the group was created with                      |
+| `id`      | Identity of the group, used as `source` for external writes |
+
+### Identifying charts
+
+Every shared state records a `source` — the `id` of the chart that put it there. That's what lets a chart ignore the echo of its own update, and what you compare against to tell which chart is driving.
+
+Charts get an opaque symbol by default; pass `id` to `Chart` (or any simplified chart) to supply your own, which also lands on the root element:
+
+```svelte
+<LineChart id="requests" {group} />
+```
+
+```svelte
+{#if group.pointer.source === 'requests'}
+	<!-- the requests chart is the one being hovered -->
+{/if}
+```
+
+Inside a chart, `context.tooltip.source` names whatever drove the tooltip — the chart's own `id` when it came from its own pointer, otherwise the id of the chart or group that drove it:
+
+```svelte
+{#if context.tooltip.source === context.id}
+	<!-- this chart is the one being hovered -->
+{/if}
+```
+
+## Pointer
+
+The headline behaviour: hovering one chart shows the tooltip and highlight on all of them, each resolving the shared position against its own data and scales.
+
+### Matching
+
+`match` controls how a shared position resolves to a data point on each chart.
+
+| Value                    | Behavior                                      | Use when                                        |
+| ------------------------ | --------------------------------------------- | ----------------------------------------------- |
+| `'value'` (default)      | Nearest data point to the shared domain value | Charts share a domain (ex. the same time range) |
+| `'index'`                | Data point at the same index                  | Data arrays are aligned and equal length        |
+| `'percent'`              | Same relative position within the plot area   | Domains are unrelated but comparable in shape   |
+| `(pointer, ctx) => data` | Resolve it yourself                           | Joining on an id, snapping to an interval, etc. |
+
+```svelte
+<ChartGroup pointer={{ match: 'index' }}>
+```
+
+`'value'` is the default because it degrades gracefully — charts with different lengths still line up. `'index'` is exact and cheap but silently mismatches when the arrays differ.
+
+Use `axis` to share on `'y'` or `'both'` instead of the default `'x'`:
+
+```svelte
+<ChartGroup pointer={{ axis: 'both' }}>
+```
+
+### Highlight without tooltips
 
 By default every chart shows its own tooltip. For a busy dashboard, `tooltip: false` shows the highlight on the other charts but leaves the tooltip to the one being hovered:
 
@@ -80,73 +147,48 @@ To vary the highlight itself — say, a point on the chart being hovered and jus
 
 :example{ component="ChartGroup" name="highlight-only" }
 
-## Matching
-
-`match` controls how a shared position resolves to a data point on each chart.
-
-| Value                    | Behavior                                      | Use when                                        |
-| ------------------------ | --------------------------------------------- | ----------------------------------------------- |
-| `'value'` (default)      | Nearest data point to the shared domain value | Charts share a domain (ex. the same time range) |
-| `'index'`                | Data point at the same index                  | Data arrays are aligned and equal length        |
-| `'percent'`              | Same relative position within the plot area   | Domains are unrelated but comparable in shape   |
-| `(pointer, ctx) => data` | Resolve it yourself                           | Joining on an id, snapping to an interval, etc. |
-
-```svelte
-<ChartGroup pointer={{ match: 'index' }}>
-```
-
-`'value'` is the default because it degrades gracefully — charts with different lengths still line up. `'index'` is exact and cheap but silently mismatches when the arrays differ.
-
-Use `axis` to share on `'y'` or `'both'` instead of the default `'x'`:
-
-```svelte
-<ChartGroup pointer={{ axis: 'both' }}>
-```
-
-## Publishing and subscribing
-
-Each chart can opt out of either direction with `groupOptions`. An overview chart that drives others without being driven by them:
-
-```svelte
-<AreaChart {group} groupOptions={{ subscribe: false }} />
-<LineChart {group} groupOptions={{ publish: false }} />
-```
-
-Both default to `true`. Passing an array limits it to specific slices — `'pointer'`, `'brush'`, `'domain'`:
-
-```svelte
-<Chart {group} groupOptions={{ publish: ['pointer'], subscribe: ['pointer', 'domain'] }} />
-```
-
-Naming a slice also opts into behaviour the default doesn't include — see [zooming the others without zooming yourself](#zooming-the-others-without-zooming-yourself).
-
-## Programmatic control
-
 | Member                            | Description                                                                        |
 | --------------------------------- | ---------------------------------------------------------------------------------- |
 | `pointer`                         | Current shared position — `x`, `y`, `data`, `index`, `percent`, `active`, `source` |
 | `setPointer({ x, y, data, ... })` | Publish a position to the group                                                    |
 | `clearPointer()`                  | Clear the shared position                                                          |
-| `options`                         | The options the group was created with                                             |
-| `id`                              | Identity of the group, used as `source` for external writes                        |
 
-### Identifying charts
+## Series
 
-`pointer.source` is the `id` of the chart that published the current position. Charts get an opaque symbol by default; pass `id` to `Chart` (or any simplified chart) to supply your own, which also lands on the root element:
+Charts in a group share their [series](/docs/guides/series) highlight and visibility, so a legend drives every chart at once — hovering an item fades that series everywhere, and clicking one hides it everywhere:
 
 ```svelte
-<LineChart id="requests" {group} />
+<ChartGroup>
+	<LineChart {data} x="date" {series} legend />
+	<AreaChart {data} x="date" {series} seriesLayout="stack" legend />
+</ChartGroup>
 ```
 
-Inside a chart, `context.tooltip.source` names whatever drove the tooltip — the chart's own `id` when it came from its own pointer, otherwise the id of the chart or group that drove it:
+:example{ component="ChartGroup" name="synced-legend" }
+
+Series are matched **by key**, so the charts don't need the same ones. A chart is only affected by keys it actually has, and only ever speaks for its own — a panel showing an unrelated metric neither hides anything nor unhides what another chart hid.
+
+Disable either channel on its own:
 
 ```svelte
-{#if context.tooltip.source === context.id}
-	<!-- this chart is the one being hovered -->
-{/if}
+<ChartGroup series={{ visibility: false }}>
 ```
 
-## Brush selections
+| Member              | Description                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------ |
+| `series`            | Current shared state — `highlightKey`, `highlightSource`, `hiddenKeys`, `visibilitySource` |
+| `setHighlight(key)` | Highlight a series across the group                                                        |
+| `clearHighlight()`  | Clear the shared highlight                                                                 |
+| `setHidden(keys)`   | Hide series across the group — pass the full set of hidden keys                            |
+| `clearHidden()`     | Show every series again                                                                    |
+
+`group.series` mirrors a chart's own `context.series`. Unlike the other slices it carries two independent channels, and so records a source for each: a chart owning the highlight stays its owner while another toggles visibility.
+
+::note
+Hidden keys survive a chart unmounting. They describe series rather than the chart that hid them, and other charts may still be showing the same ones hidden.
+::
+
+## Brush
 
 Charts in a group share their [brush](/docs/guides/brush) selection — dragging on one selects the same domain range on the others. A chart without a brush can follow along by reading `group.brush`, which is all an overview/detail pair needs:
 
@@ -166,7 +208,7 @@ Charts in a group share their [brush](/docs/guides/brush) selection — dragging
 
 :example{ component="ChartGroup" name="synced-brushes" }
 
-Use `brush: false` to opt out, or `axis` to share `'y'` / `'both'` instead of the default `'x'`:
+Use `axis` to share `'y'` / `'both'` instead of the default `'x'`:
 
 ```svelte
 <ChartGroup brush={{ axis: 'both' }}>
@@ -178,7 +220,7 @@ Use `brush: false` to opt out, or `axis` to share `'y'` / `'both'` instead of th
 | `setBrush({ x, y })` | Publish a selection to the group                        |
 | `clearBrush()`       | Clear the shared selection                              |
 
-## Zoom
+## Domain
 
 Brush-to-zoom (`zoomOnBrush`, the default on simplified charts) consumes the selection into the chart's domain and resets it — so there is no lasting selection to share. What gets shared instead is the resulting **domain**, which zooms every chart in the group:
 
@@ -190,6 +232,26 @@ Brush-to-zoom (`zoomOnBrush`, the default on simplified charts) consumes the sel
 ```
 
 :example{ component="ChartGroup" name="synced-zoom" }
+
+| Member                | Description                                          |
+| --------------------- | ---------------------------------------------------- |
+| `domain`              | Current shared domain — `x`, `y`, `active`, `source` |
+| `setDomain({ x, y })` | Publish a visible domain to the group                |
+| `clearDomain()`       | Reset charts to their natural extent                 |
+
+### Precedence
+
+When several things want to set a chart's domain, highest first:
+
+1. the chart's **own** brush zoom — direct interaction on that chart
+2. an explicit `xDomain` / `yDomain` **prop** — a sibling must not override what the app controls
+3. the **group's** shared domain
+
+A domain arriving from the group releases a zoom the chart performed earlier, so the most recent interaction wins rather than the first one pinning the chart forever.
+
+::note
+Charts using `transform={{ mode: 'domain' }}` publish their zoom but don't currently apply a shared one — the transform narrows the domain itself, so the two would fight.
+::
 
 ### Zooming the others without zooming yourself
 
@@ -213,23 +275,22 @@ This has to be asked for by name. The default is to share everything, and under 
 
 :example{ component="ChartGroup" name="minimap" }
 
-| Member                | Description                                          |
-| --------------------- | ---------------------------------------------------- |
-| `domain`              | Current shared domain — `x`, `y`, `active`, `source` |
-| `setDomain({ x, y })` | Publish a visible domain to the group                |
-| `clearDomain()`       | Reset charts to their natural extent                 |
+## Publishing and subscribing
 
-Precedence when several things want to set a chart's domain, highest first:
+Everything above is shared in both directions. Each chart can opt out of either one with `groupOptions` — an overview chart that drives others without being driven by them:
 
-1. the chart's **own** brush zoom — direct interaction on that chart
-2. an explicit `xDomain` / `yDomain` **prop** — a sibling must not override what the app controls
-3. the **group's** shared domain
+```svelte
+<AreaChart {group} groupOptions={{ subscribe: false }} />
+<LineChart {group} groupOptions={{ publish: false }} />
+```
 
-A domain arriving from the group releases a zoom the chart performed earlier, so the most recent interaction wins rather than the first one pinning the chart forever.
+Both default to `true`. Passing an array limits it to specific state — `'pointer'`, `'series'`, `'brush'`, `'domain'`:
 
-::note
-Charts using `transform={{ mode: 'domain' }}` publish their zoom but don't currently apply a shared one — the transform narrows the domain itself, so the two would fight.
-::
+```svelte
+<Chart {group} groupOptions={{ publish: ['pointer'], subscribe: ['pointer', 'domain'] }} />
+```
+
+Naming one also opts into behaviour the default doesn't include — see [zooming the others without zooming yourself](#zooming-the-others-without-zooming-yourself).
 
 ## API reference
 

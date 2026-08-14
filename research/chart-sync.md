@@ -8,9 +8,10 @@ consumers that are **not** a `<Chart>`.
 
 ## 0. Status (as of 2026-08-14)
 
-Phases 0–2 are **built, tested, and documented**. Sections 1–2 below are the original research and
-still accurate; section 3 onward is the original *proposal* and has been overtaken in places by
-what actually shipped — trust the code and `docs/src/content/guides/chart-group.md` over it.
+Phases 0–2 and the **series half of Phase 3** are **built, tested, and documented**. Sections 1–2
+below are the original research and still accurate; section 3 onward is the original *proposal* and
+has been overtaken in places by what actually shipped — trust the code and
+`docs/src/content/guides/chart-group.md` over it.
 
 **Shipped**
 
@@ -19,7 +20,9 @@ what actually shipped — trust the code and `docs/src/content/guides/chart-grou
 - **Phase 1** — `ChartGroupState`, `<ChartGroup>`, `group` / `groupOptions` props, user-settable
   chart `id`, the `pointer` slice.
 - **Phase 2** — `brush` and `domain` slices.
-- Six examples under `docs/src/examples/components/ChartGroup/` and a guide.
+- **Phase 3a** — `series` slice: legend highlight and visibility, plus `SeriesState.setHighlight` /
+  `highlightSource` / `onHighlightChange`.
+- Seven examples under `docs/src/examples/components/ChartGroup/` and a guide.
 
 **Design rules that emerged** (each is commented at its site — don't re-derive them):
 
@@ -36,11 +39,27 @@ what actually shipped — trust the code and `docs/src/content/guides/chart-grou
   are not (only a deliberate gesture reaches them).
 - Any method added to a state class needs a matching entry in `ChartState`'s `#fallback*` objects,
   or it throws on first paint while the lazy context loads.
+- A slice with two independent channels needs a **source per channel**, not per slice — `series`
+  carries `highlightSource` and `visibilitySource` so a chart owning the highlight stays its owner
+  while another toggles visibility.
+- Group slices are named after the chart state they mirror — `group.series` reads like
+  `context.series`, `group.brush` like `context.brush`. That symmetry is worth more than making
+  every slice share one `{ active, source }` envelope type: splitting `series` into `highlight` /
+  `visibility` slices to fit such an envelope was tried and reverted, because it broke the
+  correspondence and `group.highlight.key` reads worse than `group.series.highlightKey`.
+- Share visibility as **hidden** keys, not visible ones, and merge rather than replace. A chart only
+  ever speaks for the keys it has; publishing *visible* keys would have a chart with an unrelated
+  metric repeatedly claim everything else is hidden.
+- Highlight publishing is an event (`SeriesState.onHighlightChange`) for the same reason as the
+  pointer; visibility publishing is a plain `$effect`, because hiding a series is a deliberate
+  toggle rather than a gesture two charts can be mid-way through at once.
 
 **Open, roughly by priority**
 
-1. **Phase 3** — `series` slice (legend highlight / visibility) and `selection` slice
-   (cross-filtering). Not started.
+1. **Phase 3b** — `selection` slice (cross-filtering). Not started, and the shape is still open:
+   there is no chart-side "selected data" concept for a subscriber to drive, so it's either shared
+   state plus helpers that consumers wire up themselves (the Crosstalk model), or it grows a
+   chart-side selection first.
 2. `transform={{ mode: 'domain' }}` charts publish their zoom but don't apply a shared one — the
    transform narrows the domain itself, so the two fight. Documented in the guide.
 3. Duplicate user-supplied `id`s are indistinguishable as `source`; no guard or warning.
@@ -344,7 +363,8 @@ chain rather than fighting it.
 | **0** | Extract `findDatum` / `resolveTooltipSeries`; add `TooltipState.show({ point, value, data })`; add `ChartState.id` | **Yes** — programmatic tooltips, a11y, testing |
 | **1** | `ChartGroupState` + `group` prop + `<ChartGroup>` wrapper; pointer slice only (tooltip + highlight, `match` strategies, echo guard, pub/sub filters) | Yes — the headline feature |
 | **2** | `brush` and `domain` slices; rewrite the brush guide's manual sync example | Yes — removes existing boilerplate |
-| **3** | `series` slice (legend highlight + visibility) and `selection` slice (cross-filtering) | Yes |
+| **3a** | `series` slice (legend highlight + visibility) | Yes |
+| **3b** | `selection` slice (cross-filtering) | Yes |
 | **4** | Headless `<ChartGroupPointer>` snippet for non-chart consumers | Sugar |
 
 `<ChartGroup>` moves into Phase 1 rather than landing as late sugar: with no string-key form it is

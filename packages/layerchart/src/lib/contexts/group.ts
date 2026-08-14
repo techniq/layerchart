@@ -7,6 +7,8 @@ export type {
   ChartGroupPointerOptions,
   ChartGroupMemberOptions,
   ChartGroupOptions,
+  ChartGroupSeries,
+  ChartGroupSeriesOptions,
   ChartGroupSlice,
   PointerMatch,
 } from '$lib/states/group.svelte.js';

@@ -4,6 +4,7 @@
     ChartGroupBrushOptions,
     ChartGroupDomainOptions,
     ChartGroupPointerOptions,
+    ChartGroupSeriesOptions,
     ChartGroupState as ChartGroupStateType,
   } from '$lib/states/group.svelte.js';
 
@@ -31,6 +32,14 @@
     domain?: ChartGroupDomainOptions | boolean;
 
     /**
+     * Share series highlight and visibility, so hovering or toggling a legend item affects every
+     * chart in the group.  Pass `false` to disable.
+     *
+     * @default true
+     */
+    series?: ChartGroupSeriesOptions | boolean;
+
+    /**
      * The group state, exposed for reading (ex. `group.pointer.data`) or for driving the group
      * from outside a chart.
      *
@@ -50,6 +59,7 @@
     pointer,
     brush,
     domain,
+    series,
     state: stateProp = $bindable(),
     children,
   }: ChartGroupProps = $props();
@@ -65,6 +75,9 @@
     },
     get domain() {
       return domain;
+    },
+    get series() {
+      return series;
     },
   });
 

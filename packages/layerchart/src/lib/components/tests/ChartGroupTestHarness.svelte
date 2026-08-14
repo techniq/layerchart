@@ -24,6 +24,7 @@
     pointer,
     brush,
     domain,
+    series,
     group,
     oncontext,
     ongroup,
@@ -34,6 +35,7 @@
     pointer?: ChartGroupPointerOptions | boolean;
     brush?: any;
     domain?: any;
+    series?: any;
     group?: ChartGroupState;
     oncontext?: (ctx: ChartState<any, any, any>, index: number) => void;
     ongroup?: (group: ChartGroupState) => void;
@@ -63,7 +65,7 @@
 {/snippet}
 
 {#if useContext}
-  <ChartGroup {pointer} {brush} {domain}>
+  <ChartGroup {pointer} {brush} {domain} {series}>
     {#snippet children({ group: contextGroup })}
       {@const _ = ongroup?.(contextGroup)}
       {@render charts()}

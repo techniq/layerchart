@@ -16,6 +16,12 @@ Set `pointer={{ tooltip: false }}` so the other charts show the highlight withou
 
 :example{name="highlight-only"}
 
+### Synced legend
+
+Series highlight and visibility are shared — hovering a legend item fades that series on every chart, and clicking one hides it everywhere. Series are matched by key, so a chart is only affected by keys it has.
+
+:example{name="synced-legend"}
+
 ### Programmatic control
 
 `ChartGroupState` is plain reactive state, so buttons and keyboard handlers can drive every chart in the group without touching a chart.
