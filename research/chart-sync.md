@@ -6,6 +6,51 @@ consumers that are **not** a `<Chart>`.
 
 ---
 
+## 0. Status (as of 2026-08-14)
+
+Phases 0–2 are **built, tested, and documented**. Sections 1–2 below are the original research and
+still accurate; section 3 onward is the original *proposal* and has been overtaken in places by
+what actually shipped — trust the code and `docs/src/content/guides/chart-group.md` over it.
+
+**Shipped**
+
+- **Phase 0** — value-addressed tooltips: `tooltip.show({ point, value, data })` plus the extracted
+  `findDatumByValue` / `dataCoords` in `utils/tooltip.ts`.
+- **Phase 1** — `ChartGroupState`, `<ChartGroup>`, `group` / `groupOptions` props, user-settable
+  chart `id`, the `pointer` slice.
+- **Phase 2** — `brush` and `domain` slices.
+- Six examples under `docs/src/examples/components/ChartGroup/` and a guide.
+
+**Design rules that emerged** (each is commented at its site — don't re-derive them):
+
+- Publishing is an **event**, subscribing is a **derivation**. Publishing can't be an effect: two
+  charts briefly hold locally-shown data while a pointer moves between them, and state alone
+  can't say which one the pointer actually moved to.
+- Group state is `$state.raw`. `$state` deep-proxies, so a datum read back out is never `===` the
+  one that went in — which silently breaks identity guards and `flatData.indexOf`.
+- Calling `BrushState.move()` / `reset()` inside an effect needs `untrack` — they read `x`/`y` and
+  write them, so the effect invalidates itself.
+- Precedence lists can't express **recency**. An applied group domain releases the chart's own
+  earlier brush zoom so the most recent interaction wins.
+- `clearPointer` is owner-gated (every chart's effect evaluates it); `clearBrush` / `clearDomain`
+  are not (only a deliberate gesture reaches them).
+- Any method added to a state class needs a matching entry in `ChartState`'s `#fallback*` objects,
+  or it throws on first paint while the lazy context loads.
+
+**Open, roughly by priority**
+
+1. **Phase 3** — `series` slice (legend highlight / visibility) and `selection` slice
+   (cross-filtering). Not started.
+2. `transform={{ mode: 'domain' }}` charts publish their zoom but don't apply a shared one — the
+   transform narrows the domain itself, so the two fight. Documented in the guide.
+3. Duplicate user-supplied `id`s are indistinguishable as `source`; no guard or warning.
+4. Bundle cost **to charts** is unmeasured. `bundle-analyzer/bundle-reports/latest.json` is from
+   2026-07-01, so comparing against it attributes six weeks of unrelated work to this. Needs a
+   main-vs-branch run. (Verified structurally that the group can't reach non-chart components.)
+5. Pointer throttling at 60fps x N charts is unmeasured.
+
+---
+
 ## 1. How other libraries do it
 
 ### Group-key registries (most common)

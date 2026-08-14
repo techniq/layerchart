@@ -3,6 +3,8 @@ import { render } from 'vitest-browser-svelte';
 
 import ChartGroupTestHarness from '../components/tests/ChartGroupTestHarness.svelte';
 import LineChart from '../components/charts/LineChart/LineChart.svelte';
+import ChartCanvas from '../components/Chart/Chart.canvas.svelte';
+import ChartHtml from '../components/Chart/Chart.html.svelte';
 import { ChartGroupState } from './group.svelte.js';
 import type { ChartState } from './chart.svelte.js';
 
@@ -614,5 +616,57 @@ describe('<ChartGroup> options', () => {
     expect(group.pointerOptions?.axis).toBe('both');
     expect(group.brushOptions?.axis).toBe('both');
     expect(group.domainOptions?.axis).toBe('both');
+  });
+});
+
+describe('layers', () => {
+  // the group works off chart state and accessors, so it should not be svg-specific
+  for (const [name, component] of [
+    ['canvas', ChartCanvas],
+    ['html', ChartHtml],
+  ] as const) {
+    it(`syncs the pointer on ${name} charts`, async () => {
+      const group = new ChartGroupState();
+      const contexts: ChartState<any, any, any>[] = [];
+
+      render(ChartGroupTestHarness, {
+        group,
+        component,
+        members: [{ chartProps: chartProps(dataA) }, { chartProps: chartProps(dataB) }],
+        oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+      });
+      await vi.waitFor(() => expect(contexts[1]?.width).toBeGreaterThan(0));
+
+      contexts[0].tooltip.show({ data: dataA[3] });
+      await vi.waitFor(() => expect(contexts[1].tooltip.data).toEqual(dataB[2]));
+    });
+  }
+});
+
+describe('lifecycle', () => {
+  it('releases what a chart owns when it unmounts', async () => {
+    // A chart removed while hovering — route change, tab switch, conditional block — must not
+    // leave the group holding its pointer.  It would also wedge it: only the owner may clear.
+    const group = new ChartGroupState();
+    const contexts: ChartState<any, any, any>[] = [];
+
+    const { unmount } = render(ChartGroupTestHarness, {
+      group,
+      members: [{ chartProps: chartProps(dataA) }, { chartProps: chartProps(dataB) }],
+      oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+    });
+    await vi.waitFor(() => expect(contexts[1]?.width).toBeGreaterThan(0));
+
+    contexts[0].tooltip.show({ data: dataA[1] });
+    group.setBrush({ x: [dataA[0].date, dataA[2].date], source: contexts[0].id });
+    group.setDomain({ x: [dataA[0].date, dataA[2].date], source: contexts[0].id });
+    await vi.waitFor(() => expect(group.pointer.active).toBe(true));
+
+    unmount();
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    expect(group.pointer.active).toBe(false);
+    expect(group.brush.active).toBe(false);
+    expect(group.domain.active).toBe(false);
   });
 });

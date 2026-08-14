@@ -475,6 +475,22 @@ export function connectToChartGroup(
     };
   });
 
+  // Release anything this chart owns when it goes away (or moves to another group).  Without
+  // this, a chart unmounted while hovering — a route change, a tab switch, a conditional block —
+  // leaves the group holding its pointer forever, and every other chart showing a phantom
+  // tooltip.  Worse for the pointer: `clearPointer` only lets the owner clear, so a departed
+  // chart would wedge the group with no way back.
+  $effect(() => {
+    const group = getGroup();
+    if (!group) return;
+
+    return () => {
+      if (group.pointer.source === ctx.id) group.clearPointer();
+      if (group.brush.source === ctx.id) group.clearBrush();
+      if (group.domain.source === ctx.id) group.clearDomain();
+    };
+  });
+
   // Subscribe — apply the group's visible domain to this chart.  Writes plain state that this
   // effect never reads back, so it cannot feed itself; publishing happens from the zoom
   // interaction via `publishDomain` instead.
