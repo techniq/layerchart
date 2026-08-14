@@ -360,3 +360,259 @@ describe('regression', () => {
     expect(chartA.tooltip.data).toEqual(dataA[3]); // A follows B's date (2024-01-04)
   });
 });
+
+describe('brush slice', () => {
+  /** Two charts with (non-zooming) brushes joined to a group */
+  async function renderBrushPair(options: { brush?: any; memberOptions?: any[] } = {}) {
+    const group = new ChartGroupState({ brush: options.brush });
+    const contexts: ChartState<any, any, any>[] = [];
+
+    render(ChartGroupTestHarness, {
+      group,
+      members: [
+        { chartProps: { ...chartProps(dataA), brush: true }, groupOptions: options.memberOptions?.[0] }, // prettier-ignore
+        { chartProps: { ...chartProps(dataB), brush: true }, groupOptions: options.memberOptions?.[1] }, // prettier-ignore
+      ],
+      oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+    });
+
+    await vi.waitFor(() => {
+      expect(contexts[0]?.brushState).toBeTruthy();
+      expect(contexts[1]?.brushState).toBeTruthy();
+    });
+
+    return { chartA: contexts[0], chartB: contexts[1], group };
+  }
+
+  const range = [new Date('2024-01-02'), new Date('2024-01-04')];
+
+  it('applies a published selection to the other chart', async () => {
+    const { chartB, group } = await renderBrushPair();
+
+    group.setBrush({ x: range });
+
+    await vi.waitFor(() => {
+      expect(chartB.brush.x[0]).toEqual(range[0]);
+      expect(chartB.brush.x[1]).toEqual(range[1]);
+      expect(chartB.brush.active).toBe(true);
+    });
+  });
+
+  it('clears the other chart when the selection is cleared', async () => {
+    const { chartB, group } = await renderBrushPair();
+
+    group.setBrush({ x: range });
+    await vi.waitFor(() => expect(chartB.brush.active).toBe(true));
+
+    group.clearBrush();
+
+    await vi.waitFor(() => {
+      expect(chartB.brush.active).toBe(false);
+      expect(chartB.brush.x).toEqual([null, null]);
+    });
+  });
+
+  it('does not apply a chart its own selection back', async () => {
+    const { chartA, group } = await renderBrushPair();
+
+    // as though chart A had published from a gesture
+    group.setBrush({ x: range, source: chartA.id });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    // A never had a local selection, and must not be given one by its own publish
+    expect(chartA.brush.active).toBeFalsy();
+    expect(group.pointer.active).toBe(false);
+  });
+
+  it('lets a chart clear a selection it did not make', async () => {
+    const { chartA, chartB, group } = await renderBrushPair();
+
+    // published by neither chart, so both apply it and both are observable followers
+    group.setBrush({ x: range, source: Symbol('elsewhere') });
+    await vi.waitFor(() => {
+      expect(chartA.brush.active).toBe(true);
+      expect(chartB.brush.active).toBe(true);
+    });
+
+    // chart B clicking to reset must clear the group rather than be ignored for not owning it
+    group.clearBrush(chartB.id);
+
+    await vi.waitFor(() => {
+      expect(group.brush.active).toBe(false);
+      // A follows; B already reset itself as part of the gesture, so it skips its own update
+      expect(chartA.brush.active).toBe(false);
+    });
+  });
+
+  it('respects `subscribe: false`', async () => {
+    const { chartB, group } = await renderBrushPair({
+      memberOptions: [undefined, { subscribe: false }],
+    });
+
+    group.setBrush({ x: range });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(chartB.brush.active).toBeFalsy();
+  });
+
+  it('does not share the selection when `brush: false`', async () => {
+    const { chartB, group } = await renderBrushPair({ brush: false });
+
+    group.setBrush({ x: range });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(chartB.brush.active).toBeFalsy();
+  });
+});
+
+describe('domain slice', () => {
+  const zoomTo = [new Date('2024-01-02'), new Date('2024-01-04')];
+
+  async function renderDomainPair(options: { domain?: any; memberOptions?: any[] } = {}) {
+    const group = new ChartGroupState({ domain: options.domain });
+    const contexts: ChartState<any, any, any>[] = [];
+
+    render(ChartGroupTestHarness, {
+      group,
+      members: [
+        { chartProps: chartProps(dataA), groupOptions: options.memberOptions?.[0] },
+        { chartProps: chartProps(dataB), groupOptions: options.memberOptions?.[1] },
+      ],
+      oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+    });
+
+    await vi.waitFor(() => expect(contexts[1]?.width).toBeGreaterThan(0));
+    return { chartA: contexts[0], chartB: contexts[1], group };
+  }
+
+  it('zooms the other chart to a published domain', async () => {
+    const { chartB, group } = await renderDomainPair();
+
+    group.setDomain({ x: zoomTo });
+
+    await vi.waitFor(() => {
+      expect(chartB.xDomain[0]).toEqual(zoomTo[0]);
+      expect(chartB.xDomain[1]).toEqual(zoomTo[1]);
+    });
+  });
+
+  it('returns to the natural extent when cleared', async () => {
+    const { chartB, group } = await renderDomainPair();
+
+    group.setDomain({ x: zoomTo });
+    await vi.waitFor(() => expect(chartB.xDomain[0]).toEqual(zoomTo[0]));
+
+    group.clearDomain();
+
+    await vi.waitFor(() => {
+      // back to the full extent of dataB
+      expect(chartB.xDomain[0]).toEqual(dataB[0].date);
+      expect(chartB.xDomain[1]).toEqual(dataB[dataB.length - 1].date);
+    });
+  });
+
+  it('does not apply a chart its own published domain', async () => {
+    const { chartA, group } = await renderDomainPair();
+
+    group.setDomain({ x: zoomTo, source: chartA.id });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(chartA.xDomain[0]).toEqual(dataA[0].date); // untouched
+  });
+
+  it('lets a chart clear a domain it did not set', async () => {
+    const { chartA, chartB, group } = await renderDomainPair();
+
+    group.setDomain({ x: zoomTo, source: Symbol('elsewhere') });
+    await vi.waitFor(() => {
+      expect(chartA.xDomain[0]).toEqual(zoomTo[0]);
+      expect(chartB.xDomain[0]).toEqual(zoomTo[0]);
+    });
+
+    group.clearDomain(chartB.id);
+
+    await vi.waitFor(() => {
+      expect(group.domain.active).toBe(false);
+      expect(chartA.xDomain[0]).toEqual(dataA[0].date);
+    });
+  });
+
+  it('respects `subscribe: false`', async () => {
+    const { chartB, group } = await renderDomainPair({
+      memberOptions: [undefined, { subscribe: false }],
+    });
+
+    group.setDomain({ x: zoomTo });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(chartB.xDomain[0]).toEqual(dataB[0].date);
+  });
+
+  it('does not share when `domain: false`', async () => {
+    const { chartB, group } = await renderDomainPair({ domain: false });
+
+    group.setDomain({ x: zoomTo });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(chartB.xDomain[0]).toEqual(dataB[0].date);
+  });
+
+  it('lets an explicit `xDomain` prop win over the shared domain', async () => {
+    const explicit = [new Date('2024-01-01'), new Date('2024-01-03')];
+    const group = new ChartGroupState();
+    const contexts: ChartState<any, any, any>[] = [];
+
+    render(ChartGroupTestHarness, {
+      group,
+      members: [
+        { chartProps: chartProps(dataA) },
+        { chartProps: { ...chartProps(dataB), xDomain: explicit } },
+      ],
+      oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+    });
+    await vi.waitFor(() => expect(contexts[1]?.width).toBeGreaterThan(0));
+
+    group.setDomain({ x: zoomTo });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(contexts[1].xDomain[0]).toEqual(explicit[0]);
+    expect(contexts[1].xDomain[1]).toEqual(explicit[1]);
+  });
+
+  it('supersedes a stale local zoom, so the most recent interaction wins', async () => {
+    const { chartA, chartB, group } = await renderDomainPair();
+
+    // chart A zoomed itself earlier (what `zoomOnBrush` does)
+    chartA.brushXDomain = [new Date('2024-01-03'), new Date('2024-01-04')];
+    await vi.waitFor(() => expect(chartA.xDomain[0]).toEqual(new Date('2024-01-03')));
+
+    // ...then another chart publishes a domain — A must follow it rather than stay pinned
+    group.setDomain({ x: zoomTo, source: chartB.id });
+
+    await vi.waitFor(() => {
+      expect(chartA.brushXDomain).toBeUndefined();
+      expect(chartA.xDomain[0]).toEqual(zoomTo[0]);
+    });
+  });
+});
+
+describe('<ChartGroup> options', () => {
+  it('forwards every slice option, not just `pointer`', async () => {
+    let group: ChartGroupState = null!;
+
+    render(ChartGroupTestHarness, {
+      useContext: true,
+      pointer: { axis: 'both' },
+      brush: { axis: 'both' },
+      domain: { axis: 'both' },
+      members: [{ chartProps: chartProps(dataA) }],
+      ongroup: (g: any) => (group = g),
+    });
+
+    await vi.waitFor(() => expect(group).toBeTruthy());
+
+    expect(group.pointerOptions?.axis).toBe('both');
+    expect(group.brushOptions?.axis).toBe('both');
+    expect(group.domainOptions?.axis).toBe('both');
+  });
+});

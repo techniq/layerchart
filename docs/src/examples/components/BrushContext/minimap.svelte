@@ -79,31 +79,29 @@
 				}
 			}}
 		>
-			<Layer>
-				<Points>
-					{#snippet children({ points })}
-						{#each points as point}
-							{@const isSelected =
-								(xDomain?.[0] == null || xDomain?.[0] <= point.data.x) &&
-								(xDomain?.[1] == null || point.data.x <= xDomain?.[1]) &&
-								(yDomain?.[0] == null || yDomain?.[0] <= point.data.y) &&
-								(yDomain?.[1] == null || point.data.y <= yDomain?.[1])}
+			{#snippet children({ context })}
+				<Layer>
+					<Points>
+						{#snippet children({ points })}
+							{#each points as point}
+								{@const isSelected = context.brush.contains(point.data)}
 
-							<Circle
-								cx={point.x}
-								cy={point.y}
-								r={0.5}
-								class={cls(
-									isSelected
-										? 'fill-primary/30 stroke-primary'
-										: 'fill-surface-content/10 stroke-neutral'
-								)}
-								motion="spring"
-							/>
-						{/each}
-					{/snippet}
-				</Points>
-			</Layer>
+								<Circle
+									cx={point.x}
+									cy={point.y}
+									r={0.5}
+									class={cls(
+										isSelected
+											? 'fill-primary/30 stroke-primary'
+											: 'fill-surface-content/10 stroke-neutral'
+									)}
+									motion="spring"
+								/>
+							{/each}
+						{/snippet}
+					</Points>
+				</Layer>
+			{/snippet}
 		</Chart>
 	</div>
 </div>

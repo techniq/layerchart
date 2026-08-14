@@ -11,20 +11,17 @@
 		Layer,
 		LinearGradient,
 		defaultChartPadding,
-		type DomainType
+		type ChartState
 	} from 'layerchart';
 
 	export { data };
 
-	let xDomain = $state<DomainType>([null, null]);
+	// The lower chart owns the brush; filter the upper chart's data by its selection
+	let brushChart = $state<ChartState>();
 </script>
 
 <Chart
-	data={data.filter(
-		(d: any) =>
-			(xDomain?.[0] == null || d.date >= xDomain?.[0]) &&
-			(xDomain?.[1] == null || d.date <= xDomain?.[1])
-	)}
+	data={data.filter((d: any) => brushChart?.brush.contains({ x: d.date }) ?? true)}
 	x="date"
 	y="value"
 	yDomain={[0, null]}
@@ -49,18 +46,7 @@
 	</Layer>
 </Chart>
 
-<Chart
-	{data}
-	x="date"
-	y="value"
-	padding={{ left: 16 }}
-	brush={{
-		onChange: (e) => {
-			xDomain = e.brush.x;
-		}
-	}}
-	height={40}
->
+<Chart bind:context={brushChart} {data} x="date" y="value" padding={{ left: 16 }} brush height={40}>
 	<Layer>
 		<Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 	</Layer>

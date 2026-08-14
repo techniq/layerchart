@@ -115,11 +115,22 @@ export class ChartState<
   // wrapper needed.
   props!: ChartPropsWithoutHTML<TData, XScale, YScale>;
 
-  // Brush-domain overrides. The host component owns the brush state as local
-  // `$state` and supplies these getters so brush selections take precedence
-  // over `props.xDomain` / `props.yDomain` when reading the effective domain.
-  #brushXDomain!: () => BrushDomainType | undefined;
-  #brushYDomain!: () => BrushDomainType | undefined;
+  /**
+   * Domain this chart zoomed to from its own brush (`zoomOnBrush`), which takes precedence over
+   * `props.xDomain` / `props.yDomain`.  Set by `Chart` on brush end.
+   */
+  brushXDomain = $state<BrushDomainType | undefined>();
+  brushYDomain = $state<BrushDomainType | undefined>();
+
+  /**
+   * Domain shared by a chart group, applied only when nothing more specific is set.  This chart's
+   * own brush zoom wins (it is direct interaction), and so does an explicitly supplied
+   * `props.xDomain` — a sibling chart must not silently override a domain the app controls.
+   *
+   * Written by `connectToChartGroup`; not intended to be set directly.
+   */
+  groupXDomain = $state<BrushDomainType | undefined>();
+  groupYDomain = $state<BrushDomainType | undefined>();
 
   // State / contexts
   geoState: GeoState;
@@ -288,18 +299,10 @@ export class ChartState<
   // Meta data - reactive to props.meta changes
   meta = $derived(this.props.meta ?? {});
 
-  constructor(
-    props: ChartPropsWithoutHTML<TData, XScale, YScale>,
-    overrides?: {
-      brushXDomain?: () => BrushDomainType | undefined;
-      brushYDomain?: () => BrushDomainType | undefined;
-    }
-  ) {
+  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this.props = props;
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
-    this.#brushXDomain = overrides?.brushXDomain ?? (() => undefined);
-    this.#brushYDomain = overrides?.brushYDomain ?? (() => undefined);
 
     // Create GeoState instance — pass a dimensions getter so projection
     // is available during SSR (where $effect doesn't run)
@@ -532,7 +535,11 @@ export class ChartState<
     if (this.props.bandPadding != null && this.valueAxis === 'y') {
       return scaleBand().padding(this.props.bandPadding);
     }
-    return autoScale(this.#brushXDomain() ?? this.props.xDomain, this.flatData, this.x);
+    return autoScale(
+      this.brushXDomain ?? this.props.xDomain ?? this.groupXDomain,
+      this.flatData,
+      this.x
+    );
   });
 
   _yScaleProp = $derived.by(() => {
@@ -543,7 +550,11 @@ export class ChartState<
     if (this.props.bandPadding != null && this.valueAxis === 'x') {
       return scaleBand().padding(this.props.bandPadding);
     }
-    return autoScale(this.#brushYDomain() ?? this.props.yDomain, this.flatData, this.y);
+    return autoScale(
+      this.brushYDomain ?? this.props.yDomain ?? this.groupYDomain,
+      this.flatData,
+      this.y
+    );
   });
 
   _zScaleProp = $derived.by(() => {
@@ -823,8 +834,8 @@ export class ChartState<
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
     const domain =
       axis === 'x'
-        ? (this.#brushXDomain() ?? this.props.xDomain)
-        : (this.#brushYDomain() ?? this.props.yDomain);
+        ? (this.brushXDomain ?? this.props.xDomain ?? this.groupXDomain)
+        : (this.brushYDomain ?? this.props.yDomain ?? this.groupYDomain);
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
     const explicitBaseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
     // Use explicit baseline if provided (null means "no baseline"), otherwise auto-derive
@@ -1337,6 +1348,8 @@ export class ChartState<
     reset: () => {},
     selectAll: () => {},
     move: () => {},
+    // No selection yet, so nothing is excluded — matches an inactive brush
+    contains: () => true,
   };
 
   // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).

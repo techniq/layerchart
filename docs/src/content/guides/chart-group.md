@@ -112,7 +112,13 @@ Each chart can opt out of either direction with `groupOptions`. An overview char
 <LineChart {group} groupOptions={{ publish: false }} />
 ```
 
-Both default to `true`. Passing an array (`publish: ['pointer']`) limits it to specific slices.
+Both default to `true`. Passing an array limits it to specific slices — `'pointer'`, `'brush'`, `'domain'`:
+
+```svelte
+<Chart {group} groupOptions={{ publish: ['pointer'], subscribe: ['pointer', 'domain'] }} />
+```
+
+Naming a slice also opts into behaviour the default doesn't include — see [zooming the others without zooming yourself](#zooming-the-others-without-zooming-yourself).
 
 ## Programmatic control
 
@@ -140,9 +146,90 @@ Inside a chart, `context.tooltip.source` names whatever drove the tooltip — th
 {/if}
 ```
 
-## Syncing brush and zoom
+## Brush selections
 
-Brush selections are synced today with shared state and the `x` / `onChange` props — see [Syncing charts](/docs/guides/brush#syncing-charts) in the brush guide.
+Charts in a group share their [brush](/docs/guides/brush) selection — dragging on one selects the same domain range on the others. A chart without a brush can follow along by reading `group.brush`, which is all an overview/detail pair needs:
+
+```svelte
+<ChartGroup>
+	{#snippet children({ group })}
+		{@const selection = group.brush.active ? group.brush : null}
+
+		<!-- detail: follows the selection -->
+		<Chart {data} x="date" y="value" xDomain={selection?.x}>…</Chart>
+
+		<!-- overview: owns the brush -->
+		<Chart {data} x="date" y="value" brush>…</Chart>
+	{/snippet}
+</ChartGroup>
+```
+
+:example{ component="ChartGroup" name="synced-brushes" }
+
+Use `brush: false` to opt out, or `axis` to share `'y'` / `'both'` instead of the default `'x'`:
+
+```svelte
+<ChartGroup brush={{ axis: 'both' }}>
+```
+
+| Member               | Description                                             |
+| -------------------- | ------------------------------------------------------- |
+| `brush`              | Current shared selection — `x`, `y`, `active`, `source` |
+| `setBrush({ x, y })` | Publish a selection to the group                        |
+| `clearBrush()`       | Clear the shared selection                              |
+
+## Zoom
+
+Brush-to-zoom (`zoomOnBrush`, the default on simplified charts) consumes the selection into the chart's domain and resets it — so there is no lasting selection to share. What gets shared instead is the resulting **domain**, which zooms every chart in the group:
+
+```svelte
+<ChartGroup>
+	<LineChart {data} x="date" y="value" brush />
+	<LineChart {data} x="date" y="count" brush />
+</ChartGroup>
+```
+
+:example{ component="ChartGroup" name="synced-zoom" }
+
+### Zooming the others without zooming yourself
+
+An overview chart shouldn't zoom — it has to keep showing the full extent. Naming `'domain'` in its `publish` makes its brush set the group's domain instead of sharing a selection:
+
+```svelte
+{@const viewport = group.brush.active ? group.brush : group.domain}
+
+<Chart
+	{data}
+	x="x"
+	y="y"
+	brush={{ x: viewport.x ?? [null, null], y: viewport.y ?? [null, null] }}
+	groupOptions={{ publish: ['domain'] }}
+/>
+```
+
+Controlling the overview's brush is what keeps its rectangle showing the current viewport. Read `group.brush` while a selection is in progress so the rectangle tracks a drag on another chart live, and fall back to `group.domain` once it commits. Use `[null, null]` rather than `undefined` for "no selection" — `undefined` means _uncontrolled_, so the rectangle would stay behind when the domain is cleared.
+
+This has to be asked for by name. The default is to share everything, and under that default every plain brush would zoom the whole group — which is not what making a selection means.
+
+:example{ component="ChartGroup" name="minimap" }
+
+| Member                | Description                                          |
+| --------------------- | ---------------------------------------------------- |
+| `domain`              | Current shared domain — `x`, `y`, `active`, `source` |
+| `setDomain({ x, y })` | Publish a visible domain to the group                |
+| `clearDomain()`       | Reset charts to their natural extent                 |
+
+Precedence when several things want to set a chart's domain, highest first:
+
+1. the chart's **own** brush zoom — direct interaction on that chart
+2. an explicit `xDomain` / `yDomain` **prop** — a sibling must not override what the app controls
+3. the **group's** shared domain
+
+A domain arriving from the group releases a zoom the chart performed earlier, so the most recent interaction wins rather than the first one pinning the chart forever.
+
+::note
+Charts using `transform={{ mode: 'domain' }}` publish their zoom but don't currently apply a shared one — the transform narrows the domain itself, so the two would fight.
+::
 
 ## API reference
 

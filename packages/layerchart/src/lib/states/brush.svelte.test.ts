@@ -701,3 +701,54 @@ describe('expandBandBrushDomain', () => {
     expect(expandBandBrushDomain(['X', 'Y'], baseDomain)).toEqual(['X', 'Y']);
   });
 });
+
+describe('contains', () => {
+  function brushWith(selection: { x?: any; y?: any }) {
+    const brush = new BrushState(null, { axis: 'both' });
+    brush.x = selection.x ?? [null, null];
+    brush.y = selection.y ?? [null, null];
+    return brush;
+  }
+
+  it('tests a point against both axes', () => {
+    const brush = brushWith({ x: [10, 20], y: [0, 5] });
+
+    expect(brush.contains({ x: 15, y: 2 })).toBe(true);
+    expect(brush.contains({ x: 25, y: 2 })).toBe(false);
+    expect(brush.contains({ x: 15, y: 9 })).toBe(false);
+  });
+
+  it('is inclusive of the edges', () => {
+    const brush = brushWith({ x: [10, 20] });
+
+    expect(brush.contains({ x: 10 })).toBe(true);
+    expect(brush.contains({ x: 20 })).toBe(true);
+  });
+
+  it('leaves an axis without a selection unconstrained', () => {
+    const brush = brushWith({ x: [10, 20] });
+
+    // no `y` selection, so any `y` passes
+    expect(brush.contains({ x: 15, y: 1000 })).toBe(true);
+    // and an omitted value is never tested
+    expect(brush.contains({ x: 15 })).toBe(true);
+  });
+
+  it('contains everything when inactive', () => {
+    expect(brushWith({}).contains({ x: 15, y: 2 })).toBe(true);
+  });
+
+  it('treats a null end as open', () => {
+    const brush = brushWith({ x: [10, null] });
+
+    expect(brush.contains({ x: 9 })).toBe(false);
+    expect(brush.contains({ x: 1e9 })).toBe(true);
+  });
+
+  it('compares dates', () => {
+    const brush = brushWith({ x: [new Date('2024-01-02'), new Date('2024-01-04')] });
+
+    expect(brush.contains({ x: new Date('2024-01-03') })).toBe(true);
+    expect(brush.contains({ x: new Date('2024-01-05') })).toBe(false);
+  });
+});

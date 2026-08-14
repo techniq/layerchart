@@ -22,6 +22,8 @@
     /** Chart component to render — defaults to `Chart`, override to test simplified charts */
     component = Chart,
     pointer,
+    brush,
+    domain,
     group,
     oncontext,
     ongroup,
@@ -30,6 +32,8 @@
     useContext?: boolean;
     component?: Component<any>;
     pointer?: ChartGroupPointerOptions | boolean;
+    brush?: any;
+    domain?: any;
     group?: ChartGroupState;
     oncontext?: (ctx: ChartState<any, any, any>, index: number) => void;
     ongroup?: (group: ChartGroupState) => void;
@@ -59,7 +63,7 @@
 {/snippet}
 
 {#if useContext}
-  <ChartGroup {pointer}>
+  <ChartGroup {pointer} {brush} {domain}>
     {#snippet children({ group: contextGroup })}
       {@const _ = ongroup?.(contextGroup)}
       {@render charts()}

@@ -1,12 +1,15 @@
+import { untrack } from 'svelte';
 import { max, min } from 'd3-array';
 
 import type { ChartState } from './chart.svelte.js';
+import type { BrushDomainType } from './brush.svelte.js';
+import type { DomainType } from '$lib/utils/scales.svelte.js';
 import { findDatumByValue } from '$lib/utils/tooltip.js';
 import { isEqualValue } from '$lib/utils/common.js';
 import { scaleInvert, type AnyScale } from '$lib/utils/scales.svelte.js';
 
 /** State slices that can be shared between charts in a group */
-export type ChartGroupSlice = 'pointer';
+export type ChartGroupSlice = 'pointer' | 'brush' | 'domain';
 
 /**
  * How a published pointer is resolved to a data point on each subscribing chart.
@@ -46,10 +49,75 @@ export type ChartGroupPointerOptions = {
   tooltip?: boolean;
 };
 
+export type ChartGroupBrushOptions = {
+  /**
+   * Which axes of the selection are shared
+   * @default 'x'
+   */
+  axis?: 'x' | 'y' | 'both';
+};
+
+export type ChartGroupDomainOptions = {
+  /**
+   * Which axes of the visible domain are shared
+   * @default 'x'
+   */
+  axis?: 'x' | 'y' | 'both';
+};
+
 export type ChartGroupOptions = {
   /** Share the hovered data point.  Pass `false` to disable. */
   pointer?: ChartGroupPointerOptions | boolean;
+
+  /** Share the brush selection.  Pass `false` to disable. */
+  brush?: ChartGroupBrushOptions | boolean;
+
+  /**
+   * Share the visible domain, so zooming one chart zooms the others.  Pass `false` to disable.
+   *
+   * Published when a chart zooms to a brush selection (`zoomOnBrush`, the default on simplified
+   * charts).  A chart's own `xDomain` / `yDomain` props still win over a shared domain.
+   */
+  domain?: ChartGroupDomainOptions | boolean;
 };
+
+/** The shared visible domain */
+export type ChartGroupDomain = {
+  /** Visible `x` domain, or `undefined` for the chart's natural extent */
+  x: DomainType | undefined;
+  /** Visible `y` domain, or `undefined` for the chart's natural extent */
+  y: DomainType | undefined;
+  /** Whether a domain is currently shared */
+  active: boolean;
+  /** Identity of the chart that set it */
+  source: string | symbol | null;
+};
+
+const emptyDomain = (): ChartGroupDomain => ({
+  x: undefined,
+  y: undefined,
+  active: false,
+  source: null,
+});
+
+/** The shared brush selection, in domain values */
+export type ChartGroupBrush = {
+  /** Selected `x` extent, or `[null, null]` when there is no selection */
+  x: BrushDomainType;
+  /** Selected `y` extent, or `[null, null]` when there is no selection */
+  y: BrushDomainType;
+  /** Whether a selection exists */
+  active: boolean;
+  /** Identity of the chart that made the selection */
+  source: string | symbol | null;
+};
+
+const emptyBrush = (): ChartGroupBrush => ({
+  x: [null, null],
+  y: [null, null],
+  active: false,
+  source: null,
+});
 
 /** Per-chart control over which slices a chart publishes to / subscribes from the group */
 export type ChartGroupMemberOptions = {
@@ -106,6 +174,28 @@ function samePosition(a: ChartGroupPointer, b: ChartGroupPointer) {
   return b.data != null ? a.data === b.data : isEqualValue(a.x, b.x) && isEqualValue(a.y, b.y);
 }
 
+/** Whether two shared domains cover the same extent, from the same source */
+function sameDomain(a: ChartGroupDomain, b: ChartGroupDomain) {
+  return (
+    a.source === b.source &&
+    isEqualValue(a.x?.[0], b.x?.[0]) &&
+    isEqualValue(a.x?.[1], b.x?.[1]) &&
+    isEqualValue(a.y?.[0], b.y?.[0]) &&
+    isEqualValue(a.y?.[1], b.y?.[1])
+  );
+}
+
+/** Whether two selections cover the same extent, from the same source */
+function sameSelection(a: ChartGroupBrush, b: ChartGroupBrush) {
+  return (
+    a.source === b.source &&
+    isEqualValue(a.x[0], b.x[0]) &&
+    isEqualValue(a.x[1], b.x[1]) &&
+    isEqualValue(a.y[0], b.y[0]) &&
+    isEqualValue(a.y[1], b.y[1])
+  );
+}
+
 /**
  * Shared state for a group of charts.
  *
@@ -137,10 +227,30 @@ export class ChartGroupState {
    */
   pointer = $state.raw<ChartGroupPointer>(emptyPointer());
 
+  /** Shared brush selection.  `$state.raw` for the same reasons as `pointer`. */
+  brush = $state.raw<ChartGroupBrush>(emptyBrush());
+
   options: ChartGroupOptions;
 
   constructor(options: ChartGroupOptions = {}) {
     this.options = options;
+  }
+
+  /** Shared visible domain.  `$state.raw` for the same reasons as `pointer`. */
+  domain = $state.raw<ChartGroupDomain>(emptyDomain());
+
+  /** Resolved domain options, or `null` when domain sharing is disabled */
+  get domainOptions(): Required<ChartGroupDomainOptions> | null {
+    const domain = this.options.domain ?? true;
+    if (domain === false) return null;
+    return { axis: (domain === true ? undefined : domain.axis) ?? 'x' };
+  }
+
+  /** Resolved brush options, or `null` when brush sharing is disabled */
+  get brushOptions(): Required<ChartGroupBrushOptions> | null {
+    const brush = this.options.brush ?? true;
+    if (brush === false) return null;
+    return { axis: (brush === true ? undefined : brush.axis) ?? 'x' };
   }
 
   /** Resolved pointer options, or `null` when pointer sharing is disabled */
@@ -179,12 +289,74 @@ export class ChartGroupState {
    * publish, and one sitting idle with no tooltip must not wipe the pointer belonging to the chart
    * actually being hovered (which would clear that chart, making it re-publish, and so on).
    * Pass no `source` to clear regardless of owner.
+   *
+   * `clearBrush` / `clearDomain` deliberately do *not* gate this way: those are only reached from
+   * an explicit gesture on a chart, never from an idle one, so a clear anywhere clears the group.
    */
   clearPointer(source: string | symbol | null = null) {
     if (!this.pointer.active) return;
     if (source != null && this.pointer.source !== source) return;
     this.pointer = { ...emptyPointer(), source };
   }
+
+  /**
+   * Publish a brush selection to the group, in domain values.  No-ops when unchanged.
+   *
+   * ```ts
+   * group.setBrush({ x: [start, end] });
+   * ```
+   */
+  setBrush(brush: Partial<Omit<ChartGroupBrush, 'active'>>) {
+    const next = { ...emptyBrush(), ...brush, active: true };
+    if (this.brush.active && sameSelection(this.brush, next)) return;
+    this.brush = next;
+  }
+
+  /**
+   * Clear the shared brush selection.
+   *
+   * Any member may clear it, not just whoever set it — unlike `clearPointer`, a brush is only
+   * ever cleared by a deliberate gesture on a chart (click-to-reset), so clearing from one chart
+   * is meant to clear the group.  `source` records who did it.
+   */
+  clearBrush(source: string | symbol | null = null) {
+    if (!this.brush.active) return;
+    this.brush = { ...emptyBrush(), source };
+  }
+
+  /**
+   * Publish a visible domain to the group, so other charts zoom to match.
+   *
+   * ```ts
+   * group.setDomain({ x: [start, end] });
+   * ```
+   */
+  setDomain(domain: Partial<Omit<ChartGroupDomain, 'active'>>) {
+    const next = { ...emptyDomain(), ...domain, active: true };
+    if (this.domain.active && sameDomain(this.domain, next)) return;
+    this.domain = next;
+  }
+
+  /**
+   * Clear the shared domain, returning charts to their natural extent.
+   *
+   * Any member may clear it — see `clearBrush`.
+   */
+  clearDomain(source: string | symbol | null = null) {
+    if (!this.domain.active) return;
+    this.domain = { ...emptyDomain(), source };
+  }
+}
+
+/**
+ * Whether `slice` was opted into by name, rather than merely covered by the default.
+ *
+ * Sharing a brush *selection* as the group's *domain* has to be asked for: the default is to
+ * share everything, and under that default every plain brush would zoom the whole group, which
+ * is not what making a selection means.  Naming `'domain'` in `publish` is that request.
+ */
+function optedInto(option: boolean | ChartGroupSlice[] | undefined, slice: ChartGroupSlice) {
+  return Array.isArray(option) && option.includes(slice);
 }
 
 /** Whether `slice` is enabled by a `publish` / `subscribe` option */
@@ -303,6 +475,63 @@ export function connectToChartGroup(
     };
   });
 
+  // Subscribe — apply the group's visible domain to this chart.  Writes plain state that this
+  // effect never reads back, so it cannot feed itself; publishing happens from the zoom
+  // interaction via `publishDomain` instead.
+  $effect(() => {
+    const group = getGroup();
+    const domainOptions = group?.domainOptions;
+    if (!group || !domainOptions) return;
+    if (!allows(getMemberOptions()?.subscribe, 'domain')) return;
+
+    const shared = group.domain;
+    if (shared.source === ctx.id) return; // this chart published it
+
+    untrack(() => {
+      // A zoom this chart performed earlier sits at a higher precedence than the group's domain,
+      // so it would pin the chart there forever.  Releasing it makes the most recent interaction
+      // win, which is what precedence alone cannot express.
+      ctx.brushXDomain = undefined;
+      ctx.brushYDomain = undefined;
+    });
+
+    ctx.groupXDomain = domainOptions.axis !== 'y' ? (shared.x as BrushDomainType) : undefined;
+    ctx.groupYDomain = domainOptions.axis !== 'x' ? (shared.y as BrushDomainType) : undefined;
+  });
+
+  // Subscribe — apply the group's brush selection to this chart.
+  //
+  // No publish effect is needed: `BrushContext` only fires its `onChange` / `onBrushEnd` events
+  // from user gestures, and `Chart` publishes from there (see `enhancedBrushProps`).  Applying a
+  // selection here uses `brush.move()` / `brush.reset()`, which write state without firing those
+  // events — so an applied selection can't echo back out.
+  $effect(() => {
+    const group = getGroup();
+    const brushOptions = group?.brushOptions;
+    // `brushState` only exists when the chart has `brush` enabled
+    const brush = ctx.brushState;
+    if (!group || !brushOptions || !brush) return;
+    if (!allows(getMemberOptions()?.subscribe, 'brush')) return;
+
+    const shared = group.brush;
+    if (shared.source === ctx.id) return; // this chart made the selection
+
+    // `untrack` for the same reason `BrushContext` does when syncing external `x`/`y`: `move()`
+    // and `reset()` both read `brush.x` / `brush.y` and write them, so tracking their internals
+    // would make this effect invalidate itself.
+    untrack(() => {
+      if (!shared.active) {
+        brush.reset();
+        return;
+      }
+
+      brush.move({
+        ...(brushOptions.axis !== 'y' ? { x: shared.x } : null),
+        ...(brushOptions.axis !== 'x' ? { y: shared.y } : null),
+      });
+    });
+  });
+
   // Subscribe — resolve the group's pointer against this chart's own data and scales
   $effect(() => {
     const group = getGroup();
@@ -334,4 +563,60 @@ export function connectToChartGroup(
       suppressed: !pointerOptions.tooltip,
     });
   });
+
+  /**
+   * Drop any domain this chart had applied *from* the group.
+   *
+   * A publisher is skipped by its own subscribe effect, so nothing else would release what it
+   * previously applied — leaving it pinned to a domain it has just replaced or cleared.  After
+   * publishing, a chart shows its own zoom (via `brushXDomain`) or nothing at all.
+   */
+  function releaseAppliedDomain() {
+    ctx.groupXDomain = undefined;
+    ctx.groupYDomain = undefined;
+  }
+
+  return {
+    /**
+     * Share a brush gesture with the group — as a selection, and as the group's visible domain
+     * when this chart's `publish` names `'domain'` (an overview driving the others' zoom without
+     * zooming itself).
+     */
+    publishBrush(brush: { x: BrushDomainType; y: BrushDomainType; active?: boolean }) {
+      const group = getGroup();
+      if (!group) return;
+      const publish = getMemberOptions()?.publish;
+
+      if (group.brushOptions && allows(publish, 'brush')) {
+        if (brush.active) {
+          group.setBrush({ x: brush.x, y: brush.y, source: ctx.id });
+        } else {
+          group.clearBrush(ctx.id);
+        }
+      }
+
+      if (group.domainOptions && optedInto(publish, 'domain')) {
+        if (brush.active) {
+          group.setDomain({ x: brush.x as any, y: brush.y as any, source: ctx.id });
+        } else {
+          group.clearDomain(ctx.id);
+        }
+        releaseAppliedDomain();
+      }
+    },
+
+    /** Share the domain this chart just zoomed to with the group */
+    publishDomain(x: BrushDomainType | undefined, y: BrushDomainType | undefined) {
+      const group = getGroup();
+      if (!group?.domainOptions) return;
+      if (!allows(getMemberOptions()?.publish, 'domain')) return;
+
+      if (x == null && y == null) {
+        group.clearDomain(ctx.id);
+      } else {
+        group.setDomain({ x: x as any, y: y as any, source: ctx.id });
+      }
+      releaseAppliedDomain();
+    },
+  };
 }

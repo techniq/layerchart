@@ -73,20 +73,13 @@
     ...restProps
   } = $derived(props);
 
-  let brushXDomain = $state<BrushDomainType>();
-  let brushYDomain = $state<BrushDomainType>();
-
   // Pass the `$props()` proxy directly — `props.X` reads stay reactive and
   // don't pay the cost of an `{...props}` spread (recursive `ownKeys` across
   // nested rest/spread proxies). Brush selections are supplied as getters so
   // the chart's domain calculation can layer them on top of `props.xDomain`
   // / `props.yDomain` at the read sites.
   const chartState = new ChartState<TData, XScale, YScale>(
-    props as ChartPropsWithoutHTML<TData, XScale, YScale>,
-    {
-      brushXDomain: () => brushXDomain,
-      brushYDomain: () => brushYDomain,
-    }
+    props as ChartPropsWithoutHTML<TData, XScale, YScale>
   );
 
   let ref = $state<HTMLElement>();
@@ -103,9 +96,10 @@
 
   // Join a chart group — an explicit `group` prop, else one provided by an ancestor `<ChartGroup>`
   const inheritedGroup = getChartGroup();
-  connectToChartGroup(
+  const resolvedGroup = $derived(group ?? inheritedGroup);
+  const groupSync = connectToChartGroup(
     chartState,
-    () => group ?? inheritedGroup,
+    () => resolvedGroup,
     () => groupOptions
   );
 
@@ -403,25 +397,42 @@
     if (!brush) return { disabled: true };
     const userProps = typeof brush === 'object' ? brush : {};
 
+    const userOnChange = userProps.onChange;
     const userOnBrushEnd = userProps.onBrushEnd;
     const zoomOnBrush = 'zoomOnBrush' in userProps ? userProps.zoomOnBrush : false;
-    const needsEnhancement = transform?.mode === 'domain' || zoomOnBrush;
-    if (!needsEnhancement) return userProps;
+    // Brush-to-zoom consumes the selection (it becomes the domain) and resets it afterwards.
+    // Sharing must not opt a plain brush into that — it would wipe the selection on release.
+    const zoomsOnBrush = transform?.mode === 'domain' || zoomOnBrush;
+    const sharesBrush = resolvedGroup?.brushOptions != null;
+    if (!zoomsOnBrush && !sharesBrush) return userProps;
 
     return {
       ...userProps,
+      // Publish live so followers track the drag, not just its result
+      onChange: (e: { brush: BrushState }) => {
+        groupSync.publishBrush(e.brush);
+        userOnChange?.(e);
+      },
       onBrushEnd: (e: { brush: BrushState }) => {
+        if (!zoomsOnBrush) {
+          userOnBrushEnd?.(e);
+          // Covers click-to-reset, which never fires `onChange`
+          groupSync.publishBrush(e.brush);
+          return;
+        }
+
         if (e.brush.active) {
           if (transform?.mode === 'domain') {
             chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
           } else if (zoomOnBrush) {
             const axis = userProps.axis ?? 'x';
             if (axis === 'x' || axis === 'both') {
-              brushXDomain = expandBandBrushDomain(e.brush.x, chartState._baseXDomain);
+              chartState.brushXDomain = expandBandBrushDomain(e.brush.x, chartState._baseXDomain);
             }
             if (axis === 'y' || axis === 'both') {
-              brushYDomain = expandBandBrushDomain(e.brush.y, chartState._baseYDomain);
+              chartState.brushYDomain = expandBandBrushDomain(e.brush.y, chartState._baseYDomain);
             }
+            groupSync.publishDomain(chartState.brushXDomain, chartState.brushYDomain);
           }
           userOnBrushEnd?.(e);
           e.brush.reset();
@@ -429,11 +440,15 @@
           if (transform?.mode === 'domain') {
             chartState.transform.reset();
           } else if (zoomOnBrush) {
-            brushXDomain = undefined;
-            brushYDomain = undefined;
+            chartState.brushXDomain = undefined;
+            chartState.brushYDomain = undefined;
+            groupSync.publishDomain(undefined, undefined);
           }
           userOnBrushEnd?.(e);
         }
+
+        // the selection was just reset above, so this publishes the cleared state
+        groupSync.publishBrush(e.brush);
       },
     };
   });

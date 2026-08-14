@@ -3,6 +3,7 @@ import { min, max } from 'd3-array';
 
 import { add } from '../utils/math.js';
 import { isEqualValue } from '../utils/common.js';
+import { isWithinSelection } from '../utils/brush.js';
 
 export type BrushDomainType = Array<number | Date | string | null>;
 
@@ -171,6 +172,18 @@ export class BrushState {
   }
 
   /** Reset brush to cleared state */
+  /**
+   * Whether a point falls within the current selection.  Axes without a selection (and an
+   * inactive brush) are unconstrained.
+   *
+   * ```svelte
+   * {@const isSelected = context.brush.contains({ x: d.date, y: d.value })}
+   * ```
+   */
+  contains(point: { x?: any; y?: any }) {
+    return isWithinSelection(this, point);
+  }
+
   reset() {
     this.active = false;
     this.x = [null, null];
