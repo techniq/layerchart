@@ -4641,7 +4641,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 79,
+      "lineNumber": 62,
       "line": "<Axis"
     },
     {
@@ -5289,5 +5289,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-14T21:32:48.323Z"
+  "updatedAt": "2026-08-14T22:21:33.628Z"
 }

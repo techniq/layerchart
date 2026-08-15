@@ -938,7 +938,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 85,
+      "lineNumber": 68,
       "line": "<Text"
     },
     {
@@ -1145,5 +1145,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-14T21:32:50.287Z"
+  "updatedAt": "2026-08-14T22:21:35.757Z"
 }

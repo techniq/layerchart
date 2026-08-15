@@ -4,66 +4,51 @@
 </script>
 
 <script lang="ts">
-	import { Axis, Chart, Group, Legend, Spline, Text } from 'layerchart';
+	import { Axis, Chart, Group, Legend, Spline, Text, pivotLonger } from 'layerchart';
 	import { extent } from 'd3-array';
 	import { scaleLinear, scalePoint } from 'd3-scale';
 
-	type DimensionKey = 'bill_length_mm' | 'bill_depth_mm' | 'flipper_length_mm' | 'body_mass_g';
+	const dimensions = {
+		bill_length_mm: 'Bill length',
+		bill_depth_mm: 'Bill depth',
+		flipper_length_mm: 'Flipper length',
+		body_mass_g: 'Body mass'
+	};
+	const keys = Object.keys(dimensions) as (keyof typeof dimensions)[];
 
-	const dimensions: { key: DimensionKey; label: string }[] = [
-		{ key: 'bill_length_mm', label: 'Bill length' },
-		{ key: 'bill_depth_mm', label: 'Bill depth' },
-		{ key: 'flipper_length_mm', label: 'Flipper length' },
-		{ key: 'body_mass_g', label: 'Body mass' }
-	];
+	const rows = penguins
+		.filter((d) => keys.every((k) => d[k] !== 'NA'))
+		.map((d, id) => ({ ...d, id }));
 
-	const rows = penguins.filter((d) => dimensions.every((dim) => d[dim.key] !== 'NA'));
-
-	// Each dimension keeps its own domain — this is what the axes are drawn from, so their ticks
-	// read in real units rather than normalized ones.
-	const domains = new Map(
-		dimensions.map((dim) => [
-			dim.key,
-			extent(rows, (d) => d[dim.key] as number) as [number, number]
+	// One scale per dimension. Its default `0–1` range positions the lines on the chart's shared
+	// `y`, and a pixel-ranged copy draws that dimension's axis in real units.
+	const scales = new Map(
+		keys.map((k) => [
+			k as string,
+			scaleLinear().domain(extent(rows, (d) => d[k] as number) as [number, number])
 		])
 	);
 
-	// ...but positions are normalized to a shared 0–1 domain, so every dimension can share the
-	// chart's own y scale.
-	function normalize(key: DimensionKey, value: number) {
-		const [min, max] = domains.get(key)!;
-		return (value - min) / (max - min);
-	}
-
-	// Long format — one point per (penguin, dimension). `z` splits it back into a line each.
-	const data = rows.flatMap((d, index) =>
-		dimensions.map((dim) => ({
-			index,
-			species: d.species,
-			dimension: dim.key,
-			value: d[dim.key] as number,
-			t: normalize(dim.key, d[dim.key] as number)
-		}))
-	);
-	export { data };
-
-	type Point = (typeof data)[number];
+	// One row per (penguin, dimension), carrying `id` and `species` along for `z` and the color
+	const data = pivotLonger(rows, keys, 'dimension', 'value');
 
 	const series = [
 		{ key: 'Adelie', color: 'var(--color-info)' },
 		{ key: 'Chinstrap', color: 'var(--color-warning)' },
 		{ key: 'Gentoo', color: 'var(--color-success)' }
 	];
+
+	export { data };
 </script>
 
 <Chart
 	{data}
 	x="dimension"
 	xScale={scalePoint()}
-	xDomain={dimensions.map((d) => d.key)}
-	y="t"
+	xDomain={keys}
+	y={(d) => scales.get(d.dimension)?.(d.value)}
 	yDomain={[0, 1]}
-	z="index"
+	z="id"
 	{series}
 	padding={{ left: 48, right: 48, top: 48, bottom: 8 }}
 	height={400}
@@ -73,17 +58,16 @@
 	{/snippet}
 
 	{#snippet axis({ context })}
-		{#each dimensions as dim (dim.key)}
-			<Group x={context.xScale(dim.key)}>
-				<!-- Each axis draws from its own scale, sharing the chart's pixel range -->
+		{#each keys as key (key)}
+			<Group x={context.xScale(key)}>
 				<Axis
 					placement="left"
-					scale={scaleLinear().domain(domains.get(dim.key)!).range([context.height, 0])}
+					scale={scales.get(key)?.copy().range([context.height, 0])}
 					ticks={6}
 					rule
 				/>
 				<Text
-					value={dim.label}
+					value={dimensions[key]}
 					y={-12}
 					textAnchor="middle"
 					class="text-xs font-medium fill-surface-content"
@@ -98,7 +82,7 @@
 			data={data.filter((d) => context.series.isVisible(d.species))}
 			stroke="species"
 			strokeWidth={1}
-			opacity={(d: Point) => (context.series.isHighlighted(d.species, true) ? 0.4 : 0.05)}
+			opacity={(d) => (context.series.isHighlighted(d.species, true) ? 0.4 : 0.05)}
 		/>
 	{/snippet}
 </Chart>

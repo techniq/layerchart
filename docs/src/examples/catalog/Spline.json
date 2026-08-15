@@ -528,32 +528,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 59,
+          "lineNumber": 43,
           "line": "<Chart"
         },
         {
           "component": "Legend",
-          "lineNumber": 72,
+          "lineNumber": 56,
           "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
         },
         {
           "component": "Group",
-          "lineNumber": 77,
-          "line": "<Group x={context.xScale(dim.key)}>"
+          "lineNumber": 61,
+          "line": "<Group x={context.xScale(key)}>"
         },
         {
           "component": "Axis",
-          "lineNumber": 79,
+          "lineNumber": 62,
           "line": "<Axis"
         },
         {
           "component": "Text",
-          "lineNumber": 85,
+          "lineNumber": 68,
           "line": "<Text"
         },
         {
           "component": "Spline",
-          "lineNumber": 97,
+          "lineNumber": 80,
           "line": "<Spline"
         }
       ]
@@ -1301,7 +1301,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 97,
+      "lineNumber": 80,
       "line": "<Spline"
     },
     {
@@ -1445,5 +1445,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-14T21:32:50.228Z"
+  "updatedAt": "2026-08-14T22:21:35.703Z"
 }
