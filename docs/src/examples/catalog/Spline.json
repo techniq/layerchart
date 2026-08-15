@@ -559,6 +559,33 @@
       ]
     },
     {
+      "name": "parallel-coordinates-faceted",
+      "title": "parallel coordinates faceted",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 47,
+          "line": "<Chart"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 62,
+          "line": "<Axis placement=\"top\" format={(d) => dimensions[d as keyof typeof dimensions]} tickLength={0} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 65,
+          "line": "<Group x={context.xScale(key)}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 80,
+          "line": "<Spline stroke=\"species\" strokeWidth={1} opacity={0.4} />"
+        }
+      ]
+    },
+    {
       "name": "playground",
       "title": "playground",
       "path": "/docs/components/Spline/playground",
@@ -1312,6 +1339,13 @@
       "line": "<Spline"
     },
     {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 80,
+      "line": "<Spline stroke=\"species\" strokeWidth={1} opacity={0.4} />"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/docs/components/Spline/playground",
@@ -1452,5 +1486,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-15T02:07:38.630Z"
+  "updatedAt": "2026-08-15T17:29:24.365Z"
 }

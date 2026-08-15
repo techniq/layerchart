@@ -344,6 +344,13 @@
       "line": "<Group x={context.xScale(key)}>"
     },
     {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 65,
+      "line": "<Group x={context.xScale(key)}>"
+    },
+    {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
@@ -421,5 +428,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-08-15T02:07:37.890Z"
+  "updatedAt": "2026-08-15T17:29:23.642Z"
 }

@@ -4659,6 +4659,20 @@
       "line": "<Axis"
     },
     {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 62,
+      "line": "<Axis placement=\"top\" format={(d) => dimensions[d as keyof typeof dimensions]} tickLength={0} />"
+    },
+    {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 67,
+      "line": "<Axis"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/docs/components/Spline/playground",
@@ -5303,5 +5317,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-15T15:48:27.191Z"
+  "updatedAt": "2026-08-15T17:29:22.381Z"
 }

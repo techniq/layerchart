@@ -4202,6 +4202,13 @@
       "line": "<Chart"
     },
     {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 47,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/docs/components/Spline/playground",
@@ -4769,5 +4776,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-15T17:16:46.572Z"
+  "updatedAt": "2026-08-15T17:29:22.751Z"
 }

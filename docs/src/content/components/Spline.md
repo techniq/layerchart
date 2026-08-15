@@ -67,6 +67,12 @@ One line per row across an axis per dimension, from a single `Spline` grouped by
 
 :example{ name="parallel-coordinates" showCode }
 
+### Faceted parallel coordinates
+
+A line crosses every dimension, so the dimensions can't be panels — but `fy` gives one plot per group, sharing the dimension scales so the panels stay comparable. The per-dimension axes repeat in each panel with `facetAll`, while the dimension names, being an axis over the shared `x`, draw above the top panel only.
+
+:example{ name="parallel-coordinates-faceted" showCode }
+
 ### Playground
 
 :example{ name="playground" }
