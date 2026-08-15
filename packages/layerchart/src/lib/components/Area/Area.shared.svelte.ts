@@ -22,6 +22,7 @@ import {
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type Spline from '../Spline/Spline.svelte';
 import type { PathProps } from '../Path/Path.shared.svelte.js';
@@ -81,6 +82,8 @@ export class AreaState {
   #props: AreaProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+
+  markData = getMarkData();
 
   #tweenState!: ReturnType<typeof createMotion<string | undefined>>;
 
@@ -160,7 +163,7 @@ export class AreaState {
     return this.ctx.y;
   });
 
-  resolvedData = $derived(this.#props.data ?? this.seriesData ?? this.ctx.data);
+  resolvedData = $derived(this.markData(this.#props.data ?? this.seriesData));
 
   /**
    * Accessor grouping the data into one area per distinct value, or `null` for a single area.

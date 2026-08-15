@@ -560,7 +560,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 56,
+      "lineNumber": 57,
       "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
     },
     {
@@ -585,5 +585,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-08-14T22:21:35.120Z"
+  "updatedAt": "2026-08-15T02:07:38.027Z"
 }

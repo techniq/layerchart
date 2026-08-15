@@ -6,6 +6,7 @@ import type { SankeyGraph } from 'd3-sankey';
 
 import type { Accessor } from '$lib/utils/common.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
+import type { FacetOptions } from '$lib/states/facet.svelte.js';
 import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
 import type {
   BaseRange,
@@ -135,6 +136,22 @@ export type ChartPropsWithoutHTML<
   x1?: Accessor<T>;
   y1?: Accessor<T>;
   c?: Accessor<T>;
+
+  /**
+   * Partition the data into a column of panels ("small multiples"), one per distinct value.
+   * The `x` / `y` scales stay shared across every panel, so they remain comparable.
+   */
+  fx?: Accessor<T>;
+  /** Partition the data into a row of panels.  Combines with `fx` to form a grid. */
+  fy?: Accessor<T>;
+
+  /** Panel order.  Defaults to the distinct `fx` values in the order they appear in the data. */
+  fxDomain?: DomainType;
+  /** Panel order for `fy`. */
+  fyDomain?: DomainType;
+
+  /** Facet layout options */
+  facet?: FacetOptions;
 
   xDomain?: DomainType;
   yDomain?: DomainType;

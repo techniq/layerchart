@@ -2,8 +2,9 @@ import type { Snippet } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 
 import type { ChartState } from '$lib/states/chart.svelte.js';
-import { accessor, chartDataArray, type Accessor } from '$lib/utils/common.js';
+import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { createDimensionGetter, type Insets } from '$lib/utils/rect.svelte.js';
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -149,6 +150,8 @@ export class WaffleState {
 
   ctx: ChartState = getChartContext();
 
+  markData = getMarkData();
+
   constructor(getProps: () => WaffleProps) {
     this.#getProps = getProps;
     this.ctx.registerComponent({
@@ -204,7 +207,7 @@ export class WaffleState {
   data = $derived.by(() => {
     const dataProp = this.#props.data;
     if (dataProp) return dataProp;
-    return this.series?.data ?? chartDataArray(this.ctx.data);
+    return this.markData(this.series?.data);
   });
 
   x = $derived.by<Accessor>(() => {

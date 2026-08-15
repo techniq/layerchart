@@ -18,12 +18,14 @@
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max } from 'd3-array';
 
-  import { accessor as resolveAccessor, chartDataArray } from '$lib/utils/common.js';
+  import { accessor as resolveAccessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
 
   const ctx = getChartContext();
+  const markData = getMarkData();
   const geo = getGeoContext();
 
   let {
@@ -50,7 +52,7 @@
   const yAccessor = $derived(yProp ? resolveAccessor(yProp) : ctx.y);
   const weightAccessor = $derived(weightProp ? resolveAccessor(weightProp) : null);
 
-  const data = $derived(dataProp ?? chartDataArray(ctx.data));
+  const data = $derived(markData(dataProp));
 
   const contours = $derived.by(() => {
     if (!data || data.length === 0 || !ctx.width || !ctx.height) return [];

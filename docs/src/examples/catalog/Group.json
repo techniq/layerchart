@@ -340,7 +340,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 61,
+      "lineNumber": 62,
       "line": "<Group x={context.xScale(key)}>"
     },
     {
@@ -421,5 +421,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-08-14T22:21:34.985Z"
+  "updatedAt": "2026-08-15T02:07:37.890Z"
 }

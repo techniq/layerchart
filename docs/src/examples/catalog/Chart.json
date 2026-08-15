@@ -247,6 +247,177 @@
           "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
         }
       ]
+    },
+    {
+      "name": "facet-composed",
+      "title": "facet composed",
+      "path": "/docs/components/Chart/facet-composed",
+      "components": [
+        {
+          "component": "Facet",
+          "lineNumber": 14,
+          "line": "Faceting is applied by the layer, so a hand-composed chart facets too — no `<Facet>` needed."
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Svg",
+          "lineNumber": 27,
+          "line": "<Svg>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 28,
+          "line": "<Grid y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"left\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 31,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 32,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-grid",
+      "title": "facet grid",
+      "path": "/docs/components/Chart/facet-grid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 29,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-lines",
+      "title": "facet lines",
+      "path": "/docs/components/Chart/facet-lines",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 27,
+          "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "facet-non-faceted-marks",
+      "title": "facet non faceted marks",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 27,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 33,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-spacing",
+      "title": "facet spacing",
+      "path": "/docs/components/Chart/facet-spacing",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 27,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 40,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-two-dimensional",
+      "title": "facet two dimensional",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 29,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 30,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-x",
+      "title": "facet x",
+      "path": "/docs/components/Chart/facet-x",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 24,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-y",
+      "title": "facet y",
+      "path": "/docs/components/Chart/facet-y",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 25,
+          "line": "<Circle"
+        }
+      ]
     }
   ],
   "usage": [
@@ -1767,6 +1938,62 @@
       "component": "Chart",
       "path": "/docs/components/Chart/data-series-separate-data",
       "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-grid",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-grid",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-lines",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-lines",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-spacing",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-spacing",
+      "lineNumber": 27,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-two-dimensional",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-x",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-x",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-y",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-y",
+      "lineNumber": 14,
       "line": "<Chart"
     },
     {
@@ -3971,7 +4198,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Chart"
     },
     {
@@ -4542,5 +4769,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-14T22:21:34.133Z"
+  "updatedAt": "2026-08-15T17:16:46.572Z"
 }

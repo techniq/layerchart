@@ -361,6 +361,13 @@
       "line": "<Grid x={false} y bandAlign=\"between\" />"
     },
     {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 28,
+      "line": "<Grid y />"
+    },
+    {
       "example": "band-scale-between",
       "component": "Grid",
       "path": "/docs/components/Grid/band-scale-between",
@@ -459,5 +466,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-04-17T14:32:26.956Z"
+  "updatedAt": "2026-08-15T15:47:54.146Z"
 }

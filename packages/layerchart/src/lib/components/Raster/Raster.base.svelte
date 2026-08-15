@@ -16,14 +16,16 @@
   import { max, min } from 'd3-array';
   import { rgb } from 'd3-color';
 
-  import { accessor as resolveAccessor, chartDataArray, type Accessor } from '$lib/utils/common.js';
+  import { accessor as resolveAccessor, type Accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { gridCellCenterToBounds, resolveRasterBounds } from '$lib/utils/index.js';
   import { interpolateGrid } from '$lib/utils/rasterInterpolate.js';
   import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
 
   const ctx = getChartContext();
+  const markData = getMarkData();
   const geo = getGeoContext();
 
   let {
@@ -106,7 +108,7 @@
       return grid;
     }
 
-    const chartData = dataProp ? (dataProp as any[]) : chartDataArray(ctx.data);
+    const chartData = markData(dataProp);
     if (!chartData || chartData.length === 0) return new Float64Array(0);
 
     const xAcc = xProp ? resolveAccessor(xProp) : ctx.x;

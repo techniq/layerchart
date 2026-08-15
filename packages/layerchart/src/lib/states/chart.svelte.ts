@@ -22,7 +22,9 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 
+import { getFacetPanel } from '$lib/contexts/facet.js';
 import { GeoState } from './geo.svelte.js';
+import { FacetState } from './facet.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
@@ -90,6 +92,11 @@ const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParen
 /** Mark info is "empty" when none of the fields the chart uses for series /
  * domain inference are populated. Pixel-mode primitives produce empty info
  * since they have no string/function accessors and no own data. */
+/** The grid's first panel — the one that registers marks on every panel's behalf */
+function isFirstPanel(facet: { column: number; row: number }) {
+  return facet.column === 0 && facet.row === 0;
+}
+
 function isEmptyMarkInfo(info: MarkInfo): boolean {
   return !info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label;
 }
@@ -255,7 +262,13 @@ export class ChartState<
       };
     });
 
-    if (markInfo && !insideCompositeMark) {
+    // Every panel of a faceted chart renders the same marks with the same accessors, so only the
+    // first registers.  Registering per panel bumped `_markInfosVersion` once each, and every bump
+    // invalidates `flatData` → `extents` → domains → scales → every mark's positions.
+    const facetPanel = getFacetPanel();
+    const isRepeatedPanel = facetPanel != null && !isFirstPanel(facetPanel());
+
+    if (markInfo && !insideCompositeMark && !isRepeatedPanel) {
       // Probe once at construction: if mark info is initially empty
       // (pixel-mode primitives where cx/cy/r are numbers), skip the
       // tracking $effect entirely. This is the common case for
@@ -310,6 +323,8 @@ export class ChartState<
       () => this.props.geo ?? {},
       () => ({ width: this.width, height: this.height })
     );
+
+    this.facetState = new FacetState(() => this);
 
     // Create SeriesState internally from series/seriesLayout props.
     // When no explicit series are provided, derive implicit series from mark registrations.
@@ -507,11 +522,15 @@ export class ChartState<
   flatData = $derived.by(() => {
     const base = (this.props.flatData ?? this.data) as TData[];
 
-    // Include data from marks that have their own data but aren't already in a series.
     // Include data from marks that have their own data but aren't already in a series
     const extra: TData[] = [];
+    // Appending the same array twice can't widen a domain, and a mark repeated across facet
+    // panels registers its data once per panel — which grew `flatData` (and every domain
+    // recalculation over it) by a factor of the panel count.
+    const seen = new Set<unknown>();
     for (const { info } of this._markInfos) {
-      if (!info.data) continue;
+      if (!info.data || seen.has(info.data)) continue;
+      seen.add(info.data);
       // If this mark's exact data array is already included via a series, skip it.
       // Use reference equality (===) so marks sharing the same accessor key but
       // different data arrays (e.g. two Circle marks with separate datasets) are
@@ -703,8 +722,19 @@ export class ChartState<
     };
   });
 
-  width = $derived(this.box.width);
-  height = $derived(this.box.height);
+  /**
+   * Panel layout when `fx` / `fy` partition the chart.  `width` / `height` below are one panel's
+   * box rather than the whole plot area, so every scale, mark, and axis computes against a single
+   * panel and the enclosing `<Facet>` translate places it.
+   */
+  facetState!: FacetState;
+
+  get facet() {
+    return this.facetState;
+  }
+
+  width = $derived(this.facetState.width);
+  height = $derived(this.facetState.height);
 
   extents = $derived.by((): Extents => {
     const scaleLookup: Record<string, ScaleEntry> = {

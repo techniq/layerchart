@@ -18,8 +18,9 @@
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max, min } from 'd3-array';
 
-  import { accessor as resolveAccessor, chartDataArray, type Accessor } from '$lib/utils/common.js';
+  import { accessor as resolveAccessor, type Accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import {
     blurGridIgnoringNaN,
@@ -31,6 +32,7 @@
   import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
 
   const ctx = getChartContext();
+  const markData = getMarkData();
   const geo = getGeoContext();
 
   let {
@@ -116,7 +118,7 @@
       return grid;
     }
 
-    const chartData = dataProp ? (dataProp as any[]) : chartDataArray(ctx.data);
+    const chartData = markData(dataProp);
     if (!chartData || chartData.length === 0) return new Float64Array(0);
 
     const xAcc = xProp ? resolveAccessor(xProp) : ctx.x;

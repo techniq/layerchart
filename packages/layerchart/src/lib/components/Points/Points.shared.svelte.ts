@@ -5,6 +5,7 @@ import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -59,6 +60,8 @@ export class PointsState {
   #props: PointsProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   constructor(getProps: () => PointsProps) {
@@ -107,7 +110,7 @@ export class PointsState {
     return accessor((this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ?? this.ctx.y);
   });
 
-  pointsData = $derived(this.#props.data ?? this.series?.data ?? this.ctx.data);
+  pointsData = $derived(this.markData(this.#props.data ?? this.series?.data));
 
   #getOffset(value: any, offset: Offset, scale: AnyScale, subScale?: AnyScale): number {
     const seriesKey = this.#props.seriesKey;

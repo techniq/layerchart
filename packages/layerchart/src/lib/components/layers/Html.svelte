@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  // aliased — `Facet` is the component rendering the panels
+  import type { Facet as Panel } from '$lib/states/facet.svelte.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
@@ -46,7 +48,7 @@
      */
     clip?: boolean;
 
-    children?: Snippet<[{ ref: HTMLElement }]>;
+    children?: Snippet<[{ ref: HTMLElement; facet: Panel }]>;
   };
 
   export type HTMLProps = HTMLPropsWithoutHTML &
@@ -54,6 +56,7 @@
 </script>
 
 <script lang="ts">
+  import Facet from '../Facet.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
 
@@ -69,7 +72,7 @@
     ignoreTransform = false,
     clip = false,
     class: className,
-    children,
+    children: childrenProp,
     ...restProps
   }: HTMLProps = $props();
 
@@ -111,7 +114,11 @@
   aria-describedby={describedBy}
   {...restProps}
 >
-  {@render children?.({ ref })}
+  <Facet>
+    {#snippet children({ facet })}
+      {@render childrenProp?.({ ref: ref!, facet })}
+    {/snippet}
+  </Facet>
 </div>
 
 <style>

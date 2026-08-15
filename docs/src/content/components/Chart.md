@@ -29,3 +29,35 @@ To re-enable selection where you need it, set the `--lc-user-select` custom prop
 ```
 
 An individual selectable region can also just set `user-select: text` on itself (e.g. Tailwind's `select-text`), which overrides the inherited value.
+
+### Facet (fx)
+
+:example{ name="facet-x" }
+
+### Facet (fy)
+
+:example{ name="facet-y" }
+
+### Facet grid (fx + fy)
+
+:example{ name="facet-grid" }
+
+### Faceted lines
+
+:example{ name="facet-lines" }
+
+### Facet with composed children
+
+:example{ name="facet-composed" }
+
+### Two-dimensional faceting
+
+:example{ name="facet-two-dimensional" }
+
+### Non-faceted marks
+
+:example{ name="facet-non-faceted-marks" }
+
+### Panel spacing
+
+:example{ name="facet-spacing" }

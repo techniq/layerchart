@@ -297,6 +297,62 @@
       "line": "<Circle cx=\"date\" cy=\"value\" data={humidityData} r={5} fill=\"var(--color-oranges)\" />"
     },
     {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 32,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-grid",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-grid",
+      "lineNumber": 29,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 33,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 42,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-spacing",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-spacing",
+      "lineNumber": 40,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-two-dimensional",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "lineNumber": 30,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-x",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-x",
+      "lineNumber": 24,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-y",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-y",
+      "lineNumber": 25,
+      "line": "<Circle"
+    },
+    {
       "example": "minimap",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/minimap",
@@ -1109,5 +1165,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:52.608Z"
+  "updatedAt": "2026-08-15T17:16:46.754Z"
 }

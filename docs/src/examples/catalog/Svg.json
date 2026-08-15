@@ -3,6 +3,13 @@
   "examples": [],
   "usage": [
     {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 27,
+      "line": "<Svg>"
+    },
+    {
       "example": "basic",
       "component": "ColorRamp",
       "path": "/docs/components/ColorRamp/basic",
@@ -38,5 +45,5 @@
       "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:15.913Z"
+  "updatedAt": "2026-08-15T15:47:55.107Z"
 }

@@ -3196,6 +3196,20 @@
       "line": "<Axis"
     },
     {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
       "example": "minimap",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/minimap",
@@ -4641,7 +4655,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 62,
+      "lineNumber": 63,
       "line": "<Axis"
     },
     {
@@ -5289,5 +5303,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-14T22:21:33.628Z"
+  "updatedAt": "2026-08-15T15:48:27.191Z"
 }

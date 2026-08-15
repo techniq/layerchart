@@ -16,8 +16,9 @@
   import { index } from 'd3-array';
   import { format } from '@layerstack/utils';
 
-  import { chartDataArray } from '$lib/utils/common.js';
+  import {} from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const DAYS_PER_WEEK = 7;
@@ -41,6 +42,7 @@
   }: MonthBaseProps = $props();
 
   const ctx = getChartContext();
+  const markData = getMarkData();
 
   const rangeDays = $derived(timeDays(start, end));
   const monthLabelHeight = $derived(monthLabel ? cellSize : 0);
@@ -54,7 +56,7 @@
   );
 
   const dataByDate = $derived(
-    ctx.data && ctx.config.x ? index(chartDataArray(ctx.data), (d) => ctx.x(d)) : new Map()
+    ctx.data && ctx.config.x ? index(markData(), (d) => ctx.x(d)) : new Map()
   );
 
   const allCells = $derived.by(() => {

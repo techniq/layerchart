@@ -565,6 +565,13 @@
       "line": "<Rule y={0} />"
     },
     {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 31,
+      "line": "<Rule y={0} />"
+    },
+    {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
@@ -705,5 +712,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:54.039Z"
+  "updatedAt": "2026-08-15T15:48:29.950Z"
 }

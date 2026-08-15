@@ -17,8 +17,9 @@
 
   // MonthPath isn't split — only used here when `monthPath` is set.
   import MonthPath from '../MonthPath.svelte';
-  import { chartDataArray } from '$lib/utils/common.js';
+  import {} from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
@@ -35,6 +36,7 @@
   }: CalendarBaseProps = $props();
 
   const ctx = getChartContext();
+  const markData = getMarkData();
 
   const yearDays = $derived(timeDays(start, end));
   const yearMonths = $derived(timeMonths(start, end));
@@ -52,7 +54,7 @@
   );
 
   const dataByDate = $derived(
-    ctx.data && ctx.config.x ? index(chartDataArray(ctx.data), (d) => ctx.x(d)) : new Map()
+    ctx.data && ctx.config.x ? index(markData(), (d) => ctx.x(d)) : new Map()
   );
 
   const cells = $derived(

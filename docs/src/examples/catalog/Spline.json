@@ -528,32 +528,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Chart"
         },
         {
           "component": "Legend",
-          "lineNumber": 56,
+          "lineNumber": 57,
           "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
         },
         {
           "component": "Group",
-          "lineNumber": 61,
+          "lineNumber": 62,
           "line": "<Group x={context.xScale(key)}>"
         },
         {
           "component": "Axis",
-          "lineNumber": 62,
+          "lineNumber": 63,
           "line": "<Axis"
         },
         {
           "component": "Text",
-          "lineNumber": 68,
+          "lineNumber": 69,
           "line": "<Text"
         },
         {
           "component": "Spline",
-          "lineNumber": 80,
+          "lineNumber": 81,
           "line": "<Spline"
         }
       ]
@@ -1011,6 +1011,13 @@
       "line": "<Spline seriesKey=\"oranges\" stroke=\"var(--color-oranges)\" />"
     },
     {
+      "example": "facet-lines",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-lines",
+      "lineNumber": 27,
+      "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -1301,7 +1308,7 @@
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
-      "lineNumber": 80,
+      "lineNumber": 81,
       "line": "<Spline"
     },
     {
@@ -1445,5 +1452,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-14T22:21:35.703Z"
+  "updatedAt": "2026-08-15T02:07:38.630Z"
 }

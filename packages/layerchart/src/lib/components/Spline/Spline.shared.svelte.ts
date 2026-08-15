@@ -11,6 +11,7 @@ import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/mo
 import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
 import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -77,6 +78,8 @@ export class SplineState {
   #props: SplineProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   #tweenState!: ReturnType<typeof createMotion<string>>;
@@ -140,7 +143,7 @@ export class SplineState {
   );
 
   /** Kept separate from `lines` so `zAccessor` can read it without a cycle */
-  resolvedData = $derived(this.#props.data ?? this.series?.data ?? this.ctx.data);
+  resolvedData = $derived(this.markData(this.#props.data ?? this.series?.data));
 
   /**
    * Accessor grouping the data into one line per distinct value, or `null` for a single line.

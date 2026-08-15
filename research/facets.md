@@ -237,6 +237,11 @@ schedule will actually go.
 7. **Sparse grids.** Empty `fx × fy` combinations and the axis placement around them
    (Plot's `facetAnchor`).
 8. **Motion.** Domain motion (`ChartState._xDomainMotion`) and facet count changing at runtime.
+9. **Pixel panel gaps.** `facet.padding` is a fraction of a panel (Plot parity — `fx` / `fy` are
+   band scales, default `0.1`), so the gap shrinks as panels are added, and the same value gives
+   different x/y gaps on a non-square plot. Vega-Lite (`spacing: 20`) and ggplot2 (`panel.spacing`)
+   use pixels instead. Deferred: `padding: 20` could mean pixels under the `< 1` fraction /
+   `>= 1` pixel convention already used for `Arc` radius — `paddingInner = gap * n / (size + gap)`.
 
 ---
 

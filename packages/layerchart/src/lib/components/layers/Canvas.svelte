@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  // aliased — `Facet` is the component rendering the panels
+  import type { Facet as Panel } from '$lib/states/facet.svelte.js';
   import type { ComponentNode } from '$lib/contexts/chart.js';
   import type { ChartState } from '$lib/states/chart.svelte.js';
 
@@ -93,7 +95,13 @@
     ssrCaptureCallback?: (data: SSRCaptureTarget) => void;
 
     children?: Snippet<
-      [{ ref: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D | undefined }]
+      [
+        {
+          ref: HTMLCanvasElement;
+          canvasContext: CanvasRenderingContext2D | undefined;
+          facet: Panel;
+        },
+      ]
     >;
   };
 
@@ -102,6 +110,7 @@
 </script>
 
 <script lang="ts">
+  import Facet from '../Facet.svelte';
   import { onMount, untrack, type Snippet } from 'svelte';
   import { Logger, localPoint } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
@@ -134,7 +143,7 @@
     ignoreTransform = false,
     disableHitCanvas = false,
     class: className,
-    children,
+    children: childrenProp,
     onclick,
     ondblclick,
     onpointerenter,
@@ -472,7 +481,11 @@
 <!-- Hit canvas used for hidden context -->
 <canvas bind:this={hitCanvasElement} class="lc-hit-canvas" class:debug></canvas>
 
-{@render children?.({ ref, canvasContext: context })}
+<Facet>
+  {#snippet children({ facet })}
+    {@render childrenProp?.({ ref: ref!, canvasContext: context, facet })}
+  {/snippet}
+</Facet>
 {captureSSR()}
 
 <style>
