@@ -217,6 +217,42 @@ describe('facets', () => {
       await expect.poll(() => ctx().tooltip.data?.id).toBe('a1');
     });
 
+    it('resolves per panel in rect modes, whose hit targets render per panel', async () => {
+      // `bounds` / `band` build a `<rect>` per row inside the layer, so each panel draws its own
+      let ctx: ChartState<any, any, any> = null!;
+      render(TestHarness, {
+        component: Circle,
+        chartProps: {
+          data: [
+            { g: 'a', cat: 'x', v: 10, id: 'a' },
+            { g: 'b', cat: 'x', v: 20, id: 'b' },
+          ],
+          x: 'cat',
+          xScale: scaleBand(),
+          y: 'v',
+          yDomain: [0, 50],
+          width: 400,
+          height: 300,
+          padding: 0,
+          fx: 'g',
+          tooltipContext: { mode: 'band' },
+        },
+        componentProps: { cx: 'cat', cy: 'v', r: 3 },
+        oncontext: (c: any) => (ctx = c),
+      });
+
+      await expect.poll(() => ctx?.facet.panels.length).toBe(2);
+      // one hit rect per row, in its own panel — not every row in every panel
+      await expect.poll(() => document.querySelectorAll('.lc-tooltip-rect').length).toBe(2);
+
+      const rects = Array.from(document.querySelectorAll('.lc-tooltip-rect'));
+      await vi.waitFor(() => {
+        rects[1].dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+        rects[1].dispatchEvent(new PointerEvent('pointermove', { bubbles: true }));
+        expect(ctx.tooltip.data?.id).toBe('b');
+      });
+    });
+
     it('resolves per panel in bisect modes too', async () => {
       const ctx = renderPaired({ tooltipContext: { mode: 'bisect-x' } });
       await expect.poll(() => ctx()?.facet.panels.length).toBe(2);
