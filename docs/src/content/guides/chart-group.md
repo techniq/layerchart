@@ -21,6 +21,30 @@ Wrap the charts in `<ChartGroup>`:
 
 The charts don't need matching data. Each one looks up the **nearest data point to the shared domain value** in its own data, then positions the highlight with its own scales — so panels with different lengths, sampling rates, value ranges, sizes, or padding all stay in step.
 
+## Group or facets?
+
+Both put several plots on the screen, but they answer different questions.
+
+|                 | [Facets](/docs/guides/facets)                    | `ChartGroup`                               |
+| --------------- | ------------------------------------------------ | ------------------------------------------ |
+| Charts          | one `<Chart>`, divided into panels               | one `<Chart>` per plot                     |
+| Data            | one dataset, partitioned by `fx` / `fy`          | each chart brings its own                  |
+| Position scales | **shared** — that's the point                    | independent, unless you share the `domain` |
+| Marks           | the same marks in every panel                    | whatever each chart needs                  |
+| Cost            | one chart's worth of scales, tooltip, and layout | N charts                                   |
+
+The question to ask is whether the panels measure **the same thing**:
+
+- **Same measure, split by a category** — sales by region, temperature by year. Facet it. Shared scales make the panels comparable, which is the whole point of small multiples, and a category can't drift out of sync with the others.
+- **Different measures that share an axis** — requests, latency, and errors over the same dates. Group them. Each chart keeps its own y scale (they're different units) while the pointer, brush, and zoom stay in step.
+- **Different chart types entirely** — a line beside a bar beside a map. Only a group can do this.
+
+They compose: a faceted chart is a single group member, with one id, so a group of them syncs as any other chart does.
+
+:example{ component="ChartGroup" name="faceted-member" }
+
+Hovering a panel moves the crosshair on the chart below, and hovering that chart draws the crosshair in every panel while marking the point in the one that owns it.
+
 ## What's shared
 
 A group holds one piece of state per concern, each mirroring the chart state it syncs. All four are shared by default; pass `false` to any of them to opt out.

@@ -10,14 +10,6 @@
 	export { data };
 </script>
 
-<!--
-	Drag in any panel to zoom every panel. A brush gesture belongs to the panel it starts in, but
-	the selection it produces is a range of the shared scales — so it applies, and is drawn, in all
-	of them. Double-click to reset.
-
-	Marks are clipped to their own panel while brushing, so a zoomed point can't spill into the
-	panel next door.
--->
 <Chart
 	{data}
 	x="flipper_length_mm"

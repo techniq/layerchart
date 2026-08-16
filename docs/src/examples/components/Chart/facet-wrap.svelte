@@ -4,42 +4,45 @@
 </script>
 
 <script lang="ts">
-	import { Area, Chart, Frame, Text, pivotLonger } from 'layerchart';
-	import { rollup, sum, union, max as d3Max } from 'd3-array';
+	import { Area, Chart, Frame, Text } from 'layerchart';
+	import { rollups, sum, max } from 'd3-array';
+	import { sort } from '@layerstack/utils';
 	import { utcMonth } from 'd3-time';
 
 	const columns = 3;
 
-	// Monthly totals per industry, for the nine hardest-hit industries
-	const byIndustry = rollup(
+	// Monthly totals per industry
+	const byIndustry = rollups(
 		layoffs.filter((d) => d.totalLaidOff != null),
 		(rows) => sum(rows, (d) => d.totalLaidOff ?? 0),
 		(d) => d.industry,
 		(d) => +utcMonth.floor(d.date)
 	);
 
-	const industries = Array.from(byIndustry)
-		.sort(([, a], [, b]) => sum(b.values()) - sum(a.values()))
-		.slice(0, 9)
-		.map(([industry]) => industry);
+	// The nine hardest-hit
+	const industries = sort(
+		byIndustry.map(([industry, months]) => ({
+			industry,
+			months,
+			total: sum(months, ([, total]) => total)
+		})),
+		'total',
+		'desc'
+	).slice(0, columns * 3);
 
-	// `fx` is the column, `fy` the row — the index of the industry divided by the column count.
-	// This is how Observable Plot wraps a one-dimensional facet into a grid.
-	const position = new Map(industries.map((industry, i) => [industry, i]));
-	const column = (d: { industry: string }) => (position.get(d.industry) ?? 0) % columns;
-	const row = (d: { industry: string }) => Math.floor((position.get(d.industry) ?? 0) / columns);
-
-	// Each industry is scaled to its own peak, so the panels compare shape rather than magnitude —
-	// Plot's `normalizeY("extent")`
-	const data = industries.flatMap((industry) => {
-		const months = byIndustry.get(industry)!;
-		const peak = d3Max(months.values()) ?? 1;
-		return Array.from(months, ([date, total]) => ({
+	// Each scaled to its own peak, so the panels compare shape rather than magnitude
+	const data = industries.flatMap(({ industry, months }) => {
+		const peak = max(months, ([, total]) => total) ?? 1;
+		return sort(months, ([date]) => date).map(([date, total]) => ({
 			industry,
 			date: new Date(date),
 			share: total / peak
-		})).sort((a, b) => +a.date - +b.date);
+		}));
 	});
+
+	const names = industries.map((d) => d.industry);
+	const column = (d: { industry: string }) => names.indexOf(d.industry) % columns;
+	const row = (d: { industry: string }) => Math.floor(names.indexOf(d.industry) / columns);
 
 	export { data };
 </script>
@@ -71,7 +74,7 @@
 			not names — so `facet` gives each panel the industry it's drawing.
 		-->
 		<Text
-			value={industries[facet.row * columns + facet.column]}
+			value={names[facet.row * columns + facet.column]}
 			x={6}
 			y={6}
 			verticalAnchor="start"

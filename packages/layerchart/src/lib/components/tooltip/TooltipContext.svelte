@@ -259,19 +259,6 @@
     return panel ? { panel, x: x - panel.x, y: y - panel.y } : undefined;
   }
 
-  /**
-   * Where a row sits in container coordinates, including the offset of the panel it belongs to.
-   *
-   * The scales are panel-relative, so a row of a faceted chart would otherwise be positioned as
-   * if it were in the first panel — which is what a tooltip shown by value or by data (a group's
-   * shared pointer, `tooltip.show({ value })`) resolves to.
-   */
-  function dataCoordsInPanel(data: any) {
-    const coords = dataCoords(ctx, data);
-    const panel = ctx.facet.enabled ? ctx.facet.panelFor(data) : undefined;
-    return panel ? { x: coords.x + panel.x, y: coords.y + panel.y } : coords;
-  }
-
   /** Find the data point at a container-relative pixel coordinate, using the configured `mode` */
   function findDataAtPoint(point: { x: number; y: number }) {
     const hit = resolvePanel(point);
@@ -461,7 +448,7 @@
     }
 
     // Resolve *where* to show it — the given point, else the data point's own position
-    applyTooltip(point ?? dataCoordsInPanel(tooltipData), tooltipData, { source, suppressed });
+    applyTooltip(point ?? dataCoords(ctx, tooltipData), tooltipData, { source, suppressed });
   }
 
   function showTooltip(

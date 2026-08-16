@@ -60,8 +60,6 @@ export { default as Frame } from './Frame/Frame.svelte';
 export * from './Frame/Frame.svelte';
 export { default as Grid } from './Grid/Grid.svelte';
 export * from './Grid/Grid.svelte';
-export { default as Facet } from './Facet.svelte';
-export * from './Facet.svelte';
 export { default as Group } from './Group/Group.svelte';
 export * from './Group/Group.svelte';
 export { default as Highlight } from './Highlight/Highlight.svelte';

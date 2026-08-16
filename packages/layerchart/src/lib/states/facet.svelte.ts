@@ -51,12 +51,23 @@ export type Facet<TData = any> = {
   right: boolean;
   top: boolean;
   bottom: boolean;
+
+  /**
+   * Whether a row belongs to this panel.
+   *
+   * Compares the row's `fx` / `fy` values rather than its identity, so a row from a mark's own
+   * data belongs to the panel those values place it in, the same as one of the chart's own.
+   */
+  has(row: any): boolean;
 };
 
 /** The chart surface the facet layout reads, narrowed so `FacetState` is testable on its own */
 export type FacetChartContext = {
   data: any;
   box: { width: number; height: number };
+  /** The chart's position accessors, for matching a row across panels */
+  x?: (d: any) => any;
+  y?: (d: any) => any;
   props: {
     fx?: any;
     fy?: any;
@@ -160,25 +171,13 @@ export class FacetState {
           right: column === columns.length - 1,
           top: row === 0,
           bottom: row === rows.length - 1,
+          // Keyed rather than a scan of `data`, so this stays O(1) as the grid and the data grow
+          has: (r: any) => !this.enabled || facetKey(this.x?.(r), this.y?.(r)) === key,
         });
       }
     }
     return out;
   });
-
-  /** Panels by `key`, for resolving the one a datum belongs to */
-  #byKey = $derived(new Map(this.panels.map((panel) => [panel.key, panel])));
-
-  /**
-   * The panel a datum belongs to, or `undefined` when its `fx` / `fy` fall outside the domains.
-   *
-   * Keyed rather than searched, so this stays O(1) as the grid grows — interactions resolve it
-   * per pointer event.
-   */
-  panelFor(d: any): Facet | undefined {
-    if (!this.enabled) return this.panels[0];
-    return this.#byKey.get(facetKey(this.x?.(d), this.y?.(d)));
-  }
 
   /**
    * The panel containing a point in plot-area coordinates, or `undefined` in the gap between

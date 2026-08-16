@@ -6,6 +6,7 @@ import TestHarness from '../components/tests/TestHarness.svelte';
 import Circle from '../components/Circle/Circle.svelte';
 import Highlight from '../components/Highlight/Highlight.svelte';
 import ScatterChart from '../components/charts/ScatterChart/ScatterChart.svelte';
+import { panelDatum } from '../utils/tooltip.js';
 import type { ChartState } from './chart.svelte.js';
 
 const data = [
@@ -264,6 +265,114 @@ describe('facets', () => {
       await expect.poll(() => ctx().tooltip.data?.id).toBe('a4');
     });
 
+    it('marks the same position in every panel with `facetAll`', async () => {
+      // `v: 1` is in both panels; `v: 2` only in the first
+      const shared = [
+        { g: 'a', v: 1, w: 10 },
+        { g: 'a', v: 2, w: 20 },
+        { g: 'b', v: 1, w: 30 },
+      ];
+      let ctx: ChartState<any, any, any> = null!;
+      render(TestHarness, {
+        component: Highlight,
+        chartProps: {
+          data: shared,
+          x: 'v',
+          y: 'w',
+          xDomain: [0, 5],
+          yDomain: [0, 50],
+          width: 400,
+          height: 300,
+          padding: 0,
+          fx: 'g',
+        },
+        componentProps: { points: true, lines: true, facetAll: true },
+        oncontext: (c: any) => (ctx = c),
+      });
+      await expect.poll(() => ctx?.facet.panels.length).toBe(2);
+
+      // both panels have a row at `v: 1`, so both mark it
+      ctx.tooltip.show({ data: shared[0] });
+      await expect.poll(() => document.querySelectorAll('.lc-highlight-point').length).toBe(2);
+
+      // the second panel has nothing at `v: 2`, so it marks no point — but the crosshair, which
+      // marks a position rather than a row, is still drawn in both
+      ctx.tooltip.show({ data: shared[1] });
+      await expect.poll(() => document.querySelectorAll('.lc-highlight-point').length).toBe(1);
+      expect(document.querySelectorAll('.lc-highlight-line').length).toBe(2);
+    });
+
+    it('renders a tooltip per panel with `facetAll`, each showing its own row', async () => {
+      // `props.tooltip.root` only reaches `DefaultTooltip`, which the default layout renders
+      const shared = [
+        { g: 'a', v: 1, w: 11 },
+        { g: 'a', v: 4, w: 12 },
+        { g: 'b', v: 1, w: 33 },
+        { g: 'b', v: 4, w: 34 },
+      ];
+      // nested under `props`, since a bare `props` key would read as a Svelte mount option
+      render(ScatterChart, {
+        props: {
+          data: shared,
+          x: 'v',
+          y: 'w',
+          fx: 'g',
+          xDomain: [0, 5],
+          yDomain: [0, 50],
+          width: 400,
+          height: 300,
+          padding: 0,
+          props: { tooltip: { root: { facetAll: true } } },
+        },
+      } as any);
+
+      const hitArea = (await vi.waitUntil(() =>
+        document.querySelector('.lc-tooltip-context')
+      )) as HTMLElement;
+
+      await vi.waitFor(() => {
+        const rect = hitArea.getBoundingClientRect();
+        const eventInit = {
+          bubbles: true,
+          clientX: rect.x + rect.width * 0.05,
+          clientY: rect.y + rect.height * 0.8,
+        };
+        hitArea.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+        hitArea.dispatchEvent(new PointerEvent('pointermove', eventInit));
+
+        // one per panel, each showing its own row rather than the hovered one's
+        const text = Array.from(document.querySelectorAll('.lc-tooltip-root')).map((t) =>
+          t.textContent?.replace(/\s+/g, ' ').trim()
+        );
+        expect(text.length).toBe(2);
+        expect(text.some((v) => v?.includes('11'))).toBe(true);
+        expect(text.some((v) => v?.includes('33'))).toBe(true);
+      });
+    });
+
+    it('resolves each panel`s row at a hovered position', async () => {
+      const ctx = renderPaired();
+      await expect.poll(() => ctx()?.facet.panels.length).toBe(2);
+
+      const [a, b] = ctx().facet.panels;
+      // `v: 1` is in both panels, so each resolves its own row there
+      expect(panelDatum(ctx(), a, paired[2])?.id).toBe('a1');
+      expect(panelDatum(ctx(), b, paired[0])?.id).toBe('b1');
+      // ...and nothing when the panel has no row at that position
+      expect(panelDatum(ctx(), a, { v: 3, w: 30 })).toBeUndefined();
+    });
+
+    it('tells whether a row belongs to a panel', async () => {
+      const ctx = renderPaired();
+      await expect.poll(() => ctx()?.facet.panels.length).toBe(2);
+
+      const [a, b] = ctx().facet.panels;
+      expect(a.has(paired[0])).toBe(true);
+      expect(b.has(paired[0])).toBe(false);
+      // by `fx` value rather than identity, so a mark's own row belongs where its values place it
+      expect(b.has({ g: 'b', v: 9, w: 9 })).toBe(true);
+    });
+
     it('positions a tooltip shown by data in that row`s panel', async () => {
       // the path a `ChartGroup`'s shared pointer takes — the row is resolved, not the point
       const ctx = renderPaired();
@@ -277,7 +386,7 @@ describe('facets', () => {
       expect(ctx().tooltip.x).toBeLessThanOrEqual(second.x + second.width);
     });
 
-    it('draws the highlight point only in the panel owning the row', async () => {
+    it('confines the highlight to the panel owning the row', async () => {
       let ctx: ChartState<any, any, any> = null!;
       render(TestHarness, {
         component: Highlight,
@@ -299,9 +408,9 @@ describe('facets', () => {
 
       ctx.tooltip.show({ data: paired[2] });
 
-      // the crosshair is shared across panels, the point belongs to one
+      // both the point and the crosshair stay in that panel — `facetAll` opts into all of them
       await expect.poll(() => document.querySelectorAll('.lc-highlight-point').length).toBe(1);
-      expect(document.querySelectorAll('.lc-highlight-line').length).toBeGreaterThan(1);
+      expect(document.querySelectorAll('.lc-highlight-line').length).toBe(1);
     });
   });
 

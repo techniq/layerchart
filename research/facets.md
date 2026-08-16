@@ -235,8 +235,10 @@ schedule will actually go.
   panel's point closer than the hovered panel's.
 - `bounds`/`band` rects and the `voronoi` diagram render *inside* the layer, so they were already
   repeating per panel — they just needed their rows narrowed to the panel.
-- `Highlight` splits by what a thing means: `lines` (the crosshair) draw in every panel, while
-  `points`/`area`/`bar` mark one row and draw only in its panel (`HighlightState.inPanel`).
+- `Highlight` stays in the hovered panel by default — crosshair included. Drawing the crosshair in
+  every panel was tried first (the Grafana shared-crosshair reading) and reverted: it left `lines`
+  and `points` with different defaults, so `facetAll` only governed half the component. One switch
+  now means "the hovered *position*, in every panel", and covers the tooltip as well.
 - Tooltips shown *by value or data* rather than by point — `tooltip.show({ value })`, and every
   `ChartGroup` follower — needed `dataCoords` offset into the row's panel, or they positioned as
   if every row were in the first panel. This is what §3.6's "no obvious home" concern turned out

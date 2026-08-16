@@ -554,7 +554,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<BarChart"
         }
       ]
@@ -1876,7 +1876,7 @@
       "example": "group-stack-series",
       "component": "BarChart",
       "path": "/docs/components/BarChart/group-stack-series",
-      "lineNumber": 24,
+      "lineNumber": 25,
       "line": "<BarChart"
     },
     {
@@ -2352,7 +2352,7 @@
       "example": "facet-annotation",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-annotation",
-      "lineNumber": 37,
+      "lineNumber": 28,
       "line": "<BarChart"
     },
     {
@@ -2370,5 +2370,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-16T01:46:53.398Z"
+  "updatedAt": "2026-08-16T02:33:13.798Z"
 }

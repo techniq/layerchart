@@ -5,6 +5,8 @@ category: state
 
 Faceting partitions the data into a grid of panels, one per distinct value, and draws the same chart in each. The **position scales stay shared across every panel**, which is what makes them comparable — the point of small multiples over a row of separate charts.
 
+Reach for faceting when the panels measure **the same thing** split by a category, so shared scales make them comparable. When the plots measure _different_ things that happen to share an axis — requests, latency, and errors over the same dates — use [`ChartGroup`](/docs/guides/chart-group#group-or-facets) instead, which syncs interaction between charts that keep their own data and scales. A faceted chart can be a member of a group, so the two compose.
+
 ## Quick start
 
 Set `fx` to split the data into a column per value:
@@ -226,11 +228,30 @@ A panel itself carries:
 
 The pointer resolves the panel it's over, then finds the row within _that_ panel — so equal values in neighbouring panels stay distinct, in every mode (`bisect-*`, `quadtree*`, `bounds` / `band`, `voronoi`).
 
-`Highlight` follows the same split: the crosshair `lines` draw in every panel, since comparing the same position across panels is the point of small multiples, while `points`, `area`, and `bar` mark the one row the tooltip is showing and so only draw in its panel.
+`Highlight` stays in that panel too — the crosshair, the point, and the area all mark the row the tooltip is showing, which lives in one panel. Set `facetAll` to mark the hovered _position_ in every panel instead; see [one tooltip per panel](#one-tooltip-per-panel).
 
 `lines` draws one crosshair by default — on `x` for a value-per-category chart. Set `axis="both"` for both, as a scatter usually wants (`ScatterChart` does this for you).
 
 :example{ component="Chart" name="facet-tooltip" }
+
+### One tooltip per panel
+
+A chart has one pointer, so by default the row, the highlight, and the tooltip all belong to the panel being hovered. `facetAll` on the highlight and the tooltip marks and labels the same position in _every_ panel, each showing its own value:
+
+```svelte
+<LineChart
+	{data}
+	fx="region"
+	highlight={{ lines: true, points: true, facetAll: true }}
+	props={{ tooltip: { root: { facetAll: true } } }}
+/>
+```
+
+:example{ component="ChartGroup" name="faceted-member" }
+
+Panels with nothing at that position draw no point and no tooltip — the crosshair still marks the position, since that's a place rather than a row. A hand-composed chart sets it on the tooltip directly — `<Tooltip.Root facetAll />` — which renders one per panel, each positioned by its own row.
+
+To build the rows yourself (a single tooltip listing every panel, say), `context.facet.rowAt(panel, row)` gives a panel's row at the same position, or `undefined` when it has none there — the counterpart of what a [`ChartGroup`](/docs/guides/chart-group) member does with another chart's pointer.
 
 ::note
 A faceted chart resolves tooltips against the rows the panels were partitioned from — the chart's `data`. Marks given their own `data` aren't part of that partition, so their points are not found by the pointer.

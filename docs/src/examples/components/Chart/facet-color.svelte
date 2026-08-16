@@ -10,12 +10,6 @@
 	export { data };
 </script>
 
-<!--
-	`fx` is a data property like any other, so a mark can colour by it: `fill="species"` resolves
-	through the chart's `c` scale. The scale's domain is built from the whole dataset, so the
-	colours stay stable no matter which rows land in which panel. No legend needed — the panel
-	headers already name each colour.
--->
 <Chart
 	{data}
 	x="flipper_length_mm"

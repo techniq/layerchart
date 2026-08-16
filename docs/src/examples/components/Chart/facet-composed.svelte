@@ -10,10 +10,6 @@
 	export { data };
 </script>
 
-<!--
-	Faceting is applied by the layer, so a hand-composed chart facets too — no `<Facet>` needed.
-	`Axis` places itself on the grid's outer edge on its own, and the panel headers come with it.
--->
 <Chart
 	{data}
 	x="flipper_length_mm"

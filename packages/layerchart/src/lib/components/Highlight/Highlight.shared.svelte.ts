@@ -9,6 +9,7 @@ import type Line from '../Line/Line.svelte';
 import type Rect from '../Rect/Rect.svelte';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
+import { panelDatum } from '$lib/utils/tooltip.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -42,6 +43,15 @@ export type HighlightPropsWithoutHTML = {
   r?: boolean | Accessor;
 
   axis?: 'x' | 'y' | 'both' | 'none';
+
+  /**
+   * In a faceted chart, also mark the hovered position in the panels that don't hold the hovered
+   * row — each resolving it against its own rows, the way a `ChartGroup` member resolves another
+   * chart's pointer.  Panels with nothing at that position draw nothing.
+   *
+   * @default false
+   */
+  facetAll?: boolean;
 
   /**
    * Show points and pass props to Circles
@@ -133,17 +143,12 @@ export class HighlightState {
   highlightData = $derived(this.#props.data ?? this.ctx.tooltip.data);
 
   /**
-   * Whether the highlighted point belongs to the panel this is rendering into.
+   * Whether the highlighted row belongs to the panel this is rendering into.
    *
-   * The crosshair lines still draw in every panel of a faceted chart — a shared crosshair is
-   * what makes small multiples comparable — but the point, area, and bar mark a single datum,
-   * which lives in exactly one of them.
+   * Everything is confined to that panel unless `facetAll` asks for the hovered position to be
+   * marked in all of them.
    */
-  inPanel = $derived.by(() => {
-    const panel = this.#facetPanel?.();
-    if (!panel || !this.ctx.facet.enabled) return true;
-    return this.ctx.facet.panelFor(this.highlightData)?.key === panel.key;
-  });
+  inPanel = $derived(this.#facetPanel?.().has(this.highlightData) ?? true);
 
   xValue = $derived(this.x(this.highlightData));
   xCoord = $derived(
@@ -198,6 +203,9 @@ export class HighlightState {
   lines = $derived.by<HighlightLineSegment[]>(() => {
     let tmpLines: HighlightLineSegment[] = [];
     if (!this.highlightData) return tmpLines;
+    // The crosshair marks a position rather than a row, so `facetAll` draws it in every panel —
+    // including ones with nothing there, which `points` skips
+    if (!this.inPanel && !this.#props.facetAll) return tmpLines;
     const axis = this.axis;
     if (axis === 'x' || axis === 'both') {
       if (Array.isArray(this.xCoord)) {
@@ -330,9 +338,35 @@ export class HighlightState {
     return tmpArea;
   });
 
+  /**
+   * The row this panel marks when the hovered one belongs to another — `facetAll` only.
+   *
+   * Resolved by position rather than copied, so each panel shows *its* value there, and a panel
+   * with no row at that position shows nothing.
+   */
+  #facetMatch = $derived.by(() => {
+    const panel = this.#facetPanel?.();
+    if (!this.#props.facetAll || !panel || !this.highlightData) return null;
+
+    const match = panelDatum(this.ctx, panel, this.highlightData);
+    if (match == null) return null;
+
+    const x = this.x(match);
+    const y = this.y(match);
+
+    return {
+      x: (this.ctx.xScale(x) as number) + this.xOffset,
+      y: (this.ctx.yScale(y) as number) + this.yOffset,
+      fill: this.ctx.tooltip.series[0]?.color ?? '',
+      data: { x, y },
+      seriesKey: undefined,
+    } satisfies HighlightPoint;
+  });
+
   points = $derived.by<HighlightPoint[]>(() => {
     let tmpPoints: HighlightPoint[] = [];
     if (!this.highlightData) return tmpPoints;
+    if (!this.inPanel) return this.#facetMatch ? [this.#facetMatch] : tmpPoints;
     const props = this.#props;
 
     if (props.data === undefined && this.ctx.tooltip.series.length > 0) {

@@ -11,7 +11,6 @@
 	const series = keys.map((key) => ({ key, color: `var(--color-${key})` }));
 </script>
 
-<!-- A panel per series, each drawn by the same mark against the shared scales -->
 <Chart
 	{data}
 	x="date"

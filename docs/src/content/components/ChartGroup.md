@@ -10,6 +10,10 @@ related: [Chart, Tooltip, Highlight]
 
 :example{name="basic"}
 
+### Faceted member
+
+:example{name="faceted-member"}
+
 ### Highlight without tooltips
 
 Set `pointer={{ tooltip: false }}` so the other charts show the highlight without their own tooltip.

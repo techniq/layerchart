@@ -117,6 +117,13 @@
   ],
   "usage": [
     {
+      "example": "facet-annotation",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-annotation",
+      "lineNumber": 44,
+      "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+    },
+    {
       "example": "facet-non-faceted-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-non-faceted-marks",
@@ -194,5 +201,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-08-16T01:16:13.150Z"
+  "updatedAt": "2026-08-16T02:33:14.732Z"
 }

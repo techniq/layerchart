@@ -255,12 +255,17 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 37,
+          "lineNumber": 28,
           "line": "<BarChart"
         },
         {
+          "component": "Frame",
+          "lineNumber": 44,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
           "component": "Text",
-          "lineNumber": 54,
+          "lineNumber": 46,
           "line": "<Text"
         }
       ]
@@ -4924,5 +4929,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-16T01:16:12.487Z"
+  "updatedAt": "2026-08-16T02:33:14.082Z"
 }

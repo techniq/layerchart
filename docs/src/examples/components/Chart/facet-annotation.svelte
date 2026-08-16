@@ -7,7 +7,7 @@
 	import { BarChart, Frame, Text } from 'layerchart';
 	import { flatGroup } from 'd3-array';
 
-	// One row per species × island, with a column per sex to stack
+	// One row per species * island, with a column per sex to stack
 	const data = flatGroup(
 		penguins.filter((d) => d.sex !== 'NA'),
 		(d) => d.species,
@@ -21,10 +21,6 @@
 	export { data };
 </script>
 
-<!--
-	The `marks` snippet is rendered once per panel and handed the one it's drawing, so a mark can
-	be placed in a single panel — here the note only belongs to Adelie.
--->
 <BarChart
 	{data}
 	orientation="horizontal"

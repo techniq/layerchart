@@ -14,6 +14,23 @@
      * @default 'pointer'
      */
     x?: 'pointer' | 'data' | number;
+
+    /**
+     * The row to show, instead of the one the chart's pointer resolved.
+     *
+     * Lets a chart show more than one tooltip at a time, which is what `facetAll` does.
+     */
+    data?: T;
+
+    /**
+     * In a faceted chart, show one tooltip per panel — each labelling *its* row at the hovered
+     * position, beside its own point.  Panels with nothing there show nothing.
+     *
+     * Pairs with `<Highlight facetAll />`, which marks those same rows.
+     *
+     * @default false
+     */
+    facetAll?: boolean;
     /**
      * `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an
      * explicit fixed position.
@@ -170,6 +187,7 @@
 
   import { dataCoords } from '$lib/utils/tooltip.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { panelDatum } from '$lib/utils/tooltip.js';
   import type { ChartState } from '$lib/states/chart.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { type Snippet } from 'svelte';
@@ -183,10 +201,12 @@
     pointerEvents = false,
     portal: portalProp = true,
     variant = 'default',
+    data: dataProp,
+    facetAll = false,
     x = 'pointer',
-    xOffset = x === 'pointer' ? 10 : 0,
+    xOffset = x === 'pointer' || facetAll ? 10 : 0,
     y = 'pointer',
-    yOffset = y === 'pointer' ? 10 : 0,
+    yOffset = y === 'pointer' || facetAll ? 10 : 0,
     children,
     rootRef: rootRefProp = $bindable(),
     props = {
@@ -202,7 +222,13 @@
     rootRefProp = rootRef;
   });
 
+  // Imports itself to render the per-panel copies of `facetAll`
+  import Self from './Tooltip.svelte';
+
   const ctx = getChartContext();
+
+  /** The row this tooltip shows — its own when given, else whatever the pointer resolved */
+  const tooltipData = $derived(dataProp ?? ctx.tooltip.data);
 
   let tooltipWidth = $state<number | null>(null);
   let tooltipHeight = $state<number | null>(null);
@@ -246,7 +272,7 @@
 
   const positions = $derived.by(() => {
     // if no data or tooltip size is not known yet, return null
-    if (!ctx.tooltip.data || tooltipWidth === null || tooltipHeight === null) {
+    if (!tooltipData || tooltipWidth === null || tooltipHeight === null) {
       return { x: null, y: null };
     }
 
@@ -261,7 +287,7 @@
     }
 
     // Container-relative position of the tooltip data, used by the `'data'` placement
-    const coords = x === 'data' || y === 'data' ? dataCoords(ctx, ctx.tooltip.data) : null;
+    const coords = x === 'data' || y === 'data' ? dataCoords(ctx, tooltipData) : null;
 
     const xValue: number = typeof x === 'number' ? x : x === 'data' ? coords!.x : ctx.tooltip.x;
 
@@ -468,7 +494,35 @@
 
 <!-- `suppressed` keeps the data set (so `Highlight` still renders) while hiding the tooltip
      content — used by chart groups sharing a highlight without tooltips -->
-{#if ctx.tooltip.data && !ctx.tooltip.suppressed}
+<!--
+  `facetAll` renders one of these per panel instead — each with its own row and position, since
+  the size and placement below are per-instance state.
+-->
+{#if facetAll && ctx.facet.enabled && dataProp === undefined}
+  {#each ctx.facet.panels as panel (panel.key)}
+    {@const row = panelDatum(ctx, panel, ctx.tooltip.data)}
+    {#if row}
+      <Self
+        data={row}
+        x={x === 'pointer' ? 'data' : x}
+        y={y === 'pointer' ? 'data' : y}
+        {anchor}
+        {xOffset}
+        {yOffset}
+        {classes}
+        {contained}
+        {fadeDuration}
+        {motion}
+        {pointerEvents}
+        portal={portalProp}
+        {variant}
+        {props}
+        class={className}
+        {children}
+      />
+    {/if}
+  {/each}
+{:else if tooltipData && !ctx.tooltip.suppressed}
   <div
     {...props.root}
     use:portalAction={portalProp}
@@ -495,7 +549,7 @@
     >
       {#if children}
         <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
-          {@render children({ data: ctx.tooltip.data })}
+          {@render children({ data: tooltipData })}
         </div>
       {/if}
     </div>

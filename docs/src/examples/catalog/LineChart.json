@@ -1217,6 +1217,20 @@
       "line": "<LineChart"
     },
     {
+      "example": "faceted-member",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-member",
+      "lineNumber": 39,
+      "line": "<LineChart"
+    },
+    {
+      "example": "faceted-member",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-member",
+      "lineNumber": 51,
+      "line": "<LineChart data={totals} x=\"date\" y=\"value\" height={100} padding={{ left: 40, bottom: 20 }} />"
+    },
+    {
       "example": "highlight-only",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/highlight-only",
@@ -1756,5 +1770,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:53.572Z"
+  "updatedAt": "2026-08-16T02:36:13.063Z"
 }

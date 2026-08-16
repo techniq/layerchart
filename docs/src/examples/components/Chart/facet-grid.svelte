@@ -10,10 +10,6 @@
 	export { data };
 </script>
 
-<!--
-	Crossing `fx` and `fy` gives a grid. Not every combination has data — Chinstrap only nest on
-	Dream, for instance — and those panels simply come out empty, with the scales still shared.
--->
 <Chart
 	{data}
 	x="flipper_length_mm"

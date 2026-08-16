@@ -6,6 +6,7 @@
   // bloat the lazy chunk and trip Vite dev-server compilation in CI).
   import { sum } from 'd3-array';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { accessor } from '$lib/utils/common.js';
   import Root from '../tooltip/Tooltip.svelte';
   import Header from '../tooltip/TooltipHeader.svelte';
   import List from '../tooltip/TooltipList.svelte';
@@ -27,6 +28,25 @@
 
   // Get visible series (already in correct order from TooltipContext)
   const visibleSeries = $derived(context.tooltip.series.filter((s) => s.visible));
+
+  /**
+   * The series values for the row being shown.
+   *
+   * `Tooltip.Root facetAll` renders one tooltip per facet panel, each for a *different* row, so
+   * the values resolved for the hovered row can't be reused — they're re-read with the same
+   * accessor rule `TooltipContext` uses.
+   */
+  function seriesFor(data: any) {
+    if (data === context.tooltip.data) return visibleSeries;
+
+    return visibleSeries.map((s) => {
+      const config: any = s.config;
+      const valueAcc = accessor(
+        config?.value ?? (config?.data ? (context.props.y ?? context.props.x) : config?.key)
+      );
+      return { ...s, value: valueAcc(data) };
+    });
+  }
 
   // Single-point modes find one specific data point (by proximity in both x+y),
   // so the tooltip shows dimensional info (x, y, r) for that point.
@@ -103,7 +123,7 @@
       <Tooltip.Header value={headerLabel} {format} {...tooltipProps?.header} />
 
       <Tooltip.List {...tooltipProps?.list}>
-        {#each visibleSeries as s, i (s.key ?? i)}
+        {#each seriesFor(data) as s, i (s.key ?? i)}
           <Tooltip.Item
             label={s.label}
             value={s.value}
@@ -122,7 +142,7 @@
 
           <Tooltip.Item
             label="total"
-            value={sum(visibleSeries, (s) => s.value ?? 0)}
+            value={sum(seriesFor(data), (s) => s.value ?? 0)}
             format="integer"
             valueAlign="right"
             {...tooltipProps?.item}

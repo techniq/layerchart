@@ -1,6 +1,8 @@
 import { bisector } from 'd3-array';
 import { sortFunc } from '@layerstack/utils';
 
+import { isEqualValue } from './common.js';
+
 import { isScaleBand, type AnyScale } from './scales.svelte.js';
 import type { TooltipMode } from '$lib/components/tooltip/TooltipContext.svelte';
 
@@ -31,6 +33,8 @@ export type TooltipCoordContext = {
   xScale: AnyScale;
   yScale: AnyScale;
   padding: { top: number; right: number; bottom: number; left: number };
+  /** Present on a real `ChartState`; used to offset into the panel a row belongs to */
+  facet?: { enabled: boolean; panels: Array<{ x: number; y: number; has(row: any): boolean }> };
 };
 
 /**
@@ -170,8 +174,40 @@ function coordCenter(value: any) {
  * (ex. `x={['start', 'end']}`) to the midpoint of the scaled values.
  */
 export function dataCoords(ctx: TooltipCoordContext, data: any) {
+  // The scales are panel-relative, so a row of a faceted chart would otherwise be placed as if it
+  // were in the first panel
+  const panel = ctx.facet?.enabled ? ctx.facet.panels.find((p) => p.has(data)) : undefined;
+
   return {
-    x: coordCenter(ctx.xGet(data)) + ctx.padding.left + bandCenterOffset(ctx.xScale),
-    y: coordCenter(ctx.yGet(data)) + ctx.padding.top + bandCenterOffset(ctx.yScale),
+    x: coordCenter(ctx.xGet(data)) + ctx.padding.left + bandCenterOffset(ctx.xScale) + (panel?.x ?? 0), // prettier-ignore
+    y: coordCenter(ctx.yGet(data)) + ctx.padding.top + bandCenterOffset(ctx.yScale) + (panel?.y ?? 0), // prettier-ignore
   };
+}
+
+/** The subset of the chart context needed to match a row across facet panels */
+export type FacetRowContext = {
+  x: (d: any) => any;
+  y: (d: any) => any;
+  /** Which axis carries the value — the *other* one is the position the panels share */
+  valueAxis: 'x' | 'y';
+};
+
+/**
+ * The row in `panel` at the same position as `data`, or `undefined` when it has none there.
+ *
+ * The facet counterpart of `findDatumByValue`: panels share the position scales, so "the same
+ * position" is the same domain value on the category axis — which is how a panel shows *its*
+ * value at the spot another panel was hovered.
+ *
+ * Matches exactly rather than to the nearest, so a panel with nothing at that position shows
+ * nothing rather than a value from somewhere else.
+ */
+export function panelDatum(ctx: FacetRowContext, panel: { data: any[] }, data: any) {
+  if (data == null) return undefined;
+
+  const accessor = ctx.valueAxis === 'y' ? ctx.x : ctx.y;
+  if (!accessor) return undefined;
+
+  const value = accessor(data);
+  return panel.data.find((d) => isEqualValue(accessor(d), value));
 }

@@ -19,6 +19,23 @@
       ]
     },
     {
+      "name": "faceted-member",
+      "title": "faceted member",
+      "path": "/docs/components/ChartGroup/faceted-member",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 35,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 39,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "highlight-only",
       "title": "highlight only",
       "path": "/docs/components/ChartGroup/highlight-only",
@@ -185,6 +202,13 @@
       "line": "<ChartGroup>"
     },
     {
+      "example": "faceted-member",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-member",
+      "lineNumber": 35,
+      "line": "<ChartGroup>"
+    },
+    {
       "example": "highlight-only",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/highlight-only",
@@ -220,5 +244,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:52.559Z"
+  "updatedAt": "2026-08-16T02:36:12.267Z"
 }

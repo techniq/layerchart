@@ -127,7 +127,7 @@ describe('ChartGroupState', () => {
 
       await vi.waitFor(() => {
         // the nearest row by date, and positioned in whichever panel holds it
-        const panel = chartB.facet.panelFor(chartB.tooltip.data);
+        const panel = chartB.facet.panels.find((p: any) => p.has(chartB.tooltip.data));
         expect(panel).toBeDefined();
         // `tooltip.x` is container-relative, so the panel's offset carries the chart's padding
         const left = panel!.x + chartB.padding.left;

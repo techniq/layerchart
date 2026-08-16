@@ -10,11 +10,6 @@
 	export { data };
 </script>
 
-<!--
-	The pointer resolves the panel it's in, then the nearest point *within* that panel — so equal
-	values in neighbouring panels stay distinct. The crosshair is drawn in every panel, while the
-	point marks the row the tooltip is actually showing.
--->
 <Chart
 	{data}
 	x="flipper_length_mm"
@@ -37,7 +32,6 @@
 			fill="var(--color-primary)"
 			fillOpacity={0.6}
 		/>
-		<!-- `axis="both"` — a scatter wants a crosshair on each axis; `lines` defaults to one -->
 		<Highlight lines points axis="both" />
 	</Svg>
 

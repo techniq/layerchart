@@ -117,7 +117,7 @@
     {/if}
   {/if}
 
-  {#if points && c.inPanel}
+  {#if points}
     {#if typeof points === 'function'}
       {@render points({ points: c.points })}
     {:else}

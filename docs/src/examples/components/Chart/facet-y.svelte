@@ -10,7 +10,6 @@
 	export { data };
 </script>
 
-<!-- `fy` stacks the panels into rows, sharing one x axis along the bottom -->
 <Chart
 	{data}
 	x="flipper_length_mm"
