@@ -1041,7 +1041,7 @@
       "example": "facet-lines",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-lines",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
     },
     {
@@ -1486,5 +1486,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-15T17:29:24.365Z"
+  "updatedAt": "2026-08-16T16:11:44.994Z"
 }

@@ -6,14 +6,14 @@
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 27,
+      "lineNumber": 23,
       "line": "<Svg>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 29,
+      "lineNumber": 24,
       "line": "<Svg>"
     },
     {
@@ -52,5 +52,5 @@
       "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
     }
   ],
-  "updatedAt": "2026-08-16T00:54:32.793Z"
+  "updatedAt": "2026-08-16T16:11:45.020Z"
 }

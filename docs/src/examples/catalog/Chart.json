@@ -255,17 +255,17 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 28,
+          "lineNumber": 24,
           "line": "<BarChart"
         },
         {
           "component": "Frame",
-          "lineNumber": 44,
+          "lineNumber": 40,
           "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 46,
+          "lineNumber": 42,
           "line": "<Text"
         }
       ]
@@ -277,12 +277,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 21,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Circle",
-          "lineNumber": 35,
+          "lineNumber": 27,
           "line": "<Circle"
         }
       ]
@@ -294,12 +294,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 19,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Circle",
-          "lineNumber": 33,
+          "lineNumber": 27,
           "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
         }
       ]
@@ -310,38 +310,33 @@
       "path": "/docs/components/Chart/facet-composed",
       "components": [
         {
-          "component": "Facet",
-          "lineNumber": 14,
-          "line": "Faceting is applied by the layer, so a hand-composed chart facets too — no `<Facet>` needed."
-        },
-        {
           "component": "Chart",
-          "lineNumber": 17,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Svg",
-          "lineNumber": 27,
+          "lineNumber": 23,
           "line": "<Svg>"
         },
         {
           "component": "Grid",
-          "lineNumber": 28,
+          "lineNumber": 24,
           "line": "<Grid y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 29,
+          "lineNumber": 25,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Rule",
-          "lineNumber": 31,
+          "lineNumber": 27,
           "line": "<Rule y={0} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 32,
+          "lineNumber": 28,
           "line": "<Circle"
         }
       ]
@@ -353,12 +348,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 17,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Circle",
-          "lineNumber": 29,
+          "lineNumber": 25,
           "line": "<Circle"
         }
       ]
@@ -370,12 +365,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<Chart"
         },
         {
           "component": "Spline",
-          "lineNumber": 27,
+          "lineNumber": 26,
           "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
         }
       ]
@@ -409,12 +404,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 27,
+          "lineNumber": 22,
           "line": "<Chart"
         },
         {
           "component": "Circle",
-          "lineNumber": 40,
+          "lineNumber": 35,
           "line": "<Circle"
         }
       ]
@@ -426,37 +421,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 18,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Svg",
-          "lineNumber": 29,
+          "lineNumber": 24,
           "line": "<Svg>"
         },
         {
           "component": "Grid",
-          "lineNumber": 30,
+          "lineNumber": 25,
           "line": "<Grid x y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 31,
+          "lineNumber": 26,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Circle",
-          "lineNumber": 33,
+          "lineNumber": 28,
           "line": "<Circle"
         },
         {
           "component": "Highlight",
-          "lineNumber": 41,
+          "lineNumber": 35,
           "line": "<Highlight lines points axis=\"both\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 44,
+          "lineNumber": 38,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -490,22 +485,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 47,
+          "lineNumber": 50,
           "line": "<Chart"
         },
         {
           "component": "Frame",
-          "lineNumber": 60,
+          "lineNumber": 65,
           "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
         },
         {
           "component": "Area",
-          "lineNumber": 61,
+          "lineNumber": 66,
           "line": "<Area"
         },
         {
           "component": "Text",
-          "lineNumber": 73,
+          "lineNumber": 78,
           "line": "<Text"
         }
       ]
@@ -534,12 +529,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Circle",
-          "lineNumber": 25,
+          "lineNumber": 24,
           "line": "<Circle"
         }
       ]
@@ -2069,35 +2064,35 @@
       "example": "facet-brush",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-brush",
-      "lineNumber": 21,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
       "example": "facet-color",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-color",
-      "lineNumber": 19,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 17,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
       "example": "facet-grid",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-grid",
-      "lineNumber": 17,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
       "example": "facet-lines",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-lines",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<Chart"
     },
     {
@@ -2111,14 +2106,14 @@
       "example": "facet-spacing",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-spacing",
-      "lineNumber": 27,
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 18,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
@@ -2132,7 +2127,7 @@
       "example": "facet-wrap",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-wrap",
-      "lineNumber": 47,
+      "lineNumber": 50,
       "line": "<Chart"
     },
     {
@@ -2146,7 +2141,7 @@
       "example": "facet-y",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
@@ -4929,5 +4924,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-16T02:33:14.082Z"
+  "updatedAt": "2026-08-16T16:11:43.032Z"
 }

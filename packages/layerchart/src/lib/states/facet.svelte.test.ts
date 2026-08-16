@@ -254,6 +254,42 @@ describe('facets', () => {
       });
     });
 
+    it('resolves per panel in voronoi mode, whose cells are built per panel', async () => {
+      let ctx: ChartState<any, any, any> = null!;
+      render(TestHarness, {
+        component: Circle,
+        chartProps: {
+          data: paired,
+          x: 'v',
+          y: 'w',
+          xDomain: [0, 5],
+          yDomain: [0, 50],
+          width: 400,
+          height: 300,
+          padding: 0,
+          fx: 'g',
+          tooltipContext: { mode: 'voronoi' },
+        },
+        componentProps: { cx: 'v', cy: 'w', r: 3 },
+        oncontext: (c: any) => (ctx = c),
+      });
+
+      await expect.poll(() => ctx?.facet.panels.length).toBe(2);
+      // one cell per row, in its own panel — `Voronoi` is lazily imported
+      await expect
+        .poll(() => document.querySelectorAll('.lc-tooltip-voronoi-path').length)
+        .toBe(paired.length);
+
+      const cells = Array.from(document.querySelectorAll('.lc-tooltip-voronoi-path'));
+      const ids = new Set<string>();
+      for (const cell of cells) {
+        cell.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+        ids.add(ctx.tooltip.data?.id);
+      }
+      // every row reachable, rather than the same panel's rows found twice over
+      expect([...ids].sort()).toEqual(['a1', 'a4', 'b1', 'b4']);
+    });
+
     it('resolves per panel in bisect modes too', async () => {
       const ctx = renderPaired({ tooltipContext: { mode: 'bisect-x' } });
       await expect.poll(() => ctx()?.facet.panels.length).toBe(2);

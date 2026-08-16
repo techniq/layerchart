@@ -3930,35 +3930,35 @@
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 44,
+      "lineNumber": 38,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 46,
+      "lineNumber": 40,
       "line": "<Tooltip.Header>{data.species} · {data.island}</Tooltip.Header>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 47,
+      "lineNumber": 41,
       "line": "<Tooltip.List>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 48,
+      "lineNumber": 42,
       "line": "<Tooltip.Item label=\"flipper\" value={data.flipper_length_mm} />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 49,
+      "lineNumber": 43,
       "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
     },
     {
@@ -7896,5 +7896,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-15T17:50:58.412Z"
+  "updatedAt": "2026-08-16T16:11:45.154Z"
 }

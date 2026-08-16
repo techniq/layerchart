@@ -1,14 +1,6 @@
 {
   "component": "Facet",
   "examples": [],
-  "usage": [
-    {
-      "example": "facet-composed",
-      "component": "Chart",
-      "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 14,
-      "line": "Faceting is applied by the layer, so a hand-composed chart facets too — no `<Facet>` needed."
-    }
-  ],
-  "updatedAt": "2026-08-16T02:36:12.554Z"
+  "usage": [],
+  "updatedAt": "2026-08-16T16:11:43.607Z"
 }

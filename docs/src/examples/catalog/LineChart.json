@@ -1220,14 +1220,14 @@
       "example": "faceted-member",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/faceted-member",
-      "lineNumber": 39,
+      "lineNumber": 42,
       "line": "<LineChart"
     },
     {
       "example": "faceted-member",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/faceted-member",
-      "lineNumber": 51,
+      "lineNumber": 56,
       "line": "<LineChart data={totals} x=\"date\" y=\"value\" height={100} padding={{ left: 40, bottom: 20 }} />"
     },
     {
@@ -1770,5 +1770,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-16T02:36:13.063Z"
+  "updatedAt": "2026-08-16T16:11:44.345Z"
 }

@@ -2352,7 +2352,7 @@
       "example": "facet-annotation",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-annotation",
-      "lineNumber": 28,
+      "lineNumber": 24,
       "line": "<BarChart"
     },
     {
@@ -2370,5 +2370,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-16T02:33:13.798Z"
+  "updatedAt": "2026-08-16T16:11:42.702Z"
 }

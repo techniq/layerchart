@@ -560,14 +560,14 @@
       "example": "facet-annotation",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-annotation",
-      "lineNumber": 46,
+      "lineNumber": 42,
       "line": "<Text"
     },
     {
       "example": "facet-wrap",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-wrap",
-      "lineNumber": 73,
+      "lineNumber": 78,
       "line": "<Text"
     },
     {
@@ -1159,5 +1159,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-16T02:33:16.011Z"
+  "updatedAt": "2026-08-16T16:11:45.076Z"
 }

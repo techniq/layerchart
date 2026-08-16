@@ -300,28 +300,28 @@
       "example": "facet-brush",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-brush",
-      "lineNumber": 35,
+      "lineNumber": 27,
       "line": "<Circle"
     },
     {
       "example": "facet-color",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-color",
-      "lineNumber": 33,
+      "lineNumber": 27,
       "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
     },
     {
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 32,
+      "lineNumber": 28,
       "line": "<Circle"
     },
     {
       "example": "facet-grid",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-grid",
-      "lineNumber": 29,
+      "lineNumber": 25,
       "line": "<Circle"
     },
     {
@@ -342,14 +342,14 @@
       "example": "facet-spacing",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-spacing",
-      "lineNumber": 40,
+      "lineNumber": 35,
       "line": "<Circle"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 33,
+      "lineNumber": 28,
       "line": "<Circle"
     },
     {
@@ -370,7 +370,7 @@
       "example": "facet-y",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Circle"
     },
     {
@@ -1186,5 +1186,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-16T00:54:31.212Z"
+  "updatedAt": "2026-08-16T16:11:43.288Z"
 }

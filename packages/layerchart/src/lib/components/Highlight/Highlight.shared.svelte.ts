@@ -357,7 +357,7 @@ export class HighlightState {
     return {
       x: (this.ctx.xScale(x) as number) + this.xOffset,
       y: (this.ctx.yScale(y) as number) + this.yOffset,
-      fill: this.ctx.tooltip.series[0]?.color ?? '',
+      fill: (this.ctx.config.c ? this.ctx.cGet(match) : null) as string,
       data: { x, y },
       seriesKey: undefined,
     } satisfies HighlightPoint;

@@ -568,7 +568,7 @@
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 31,
+      "lineNumber": 27,
       "line": "<Rule y={0} />"
     },
     {
@@ -712,5 +712,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-08-15T15:48:29.950Z"
+  "updatedAt": "2026-08-16T16:11:44.910Z"
 }

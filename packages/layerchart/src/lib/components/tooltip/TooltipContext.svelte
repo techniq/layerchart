@@ -808,9 +808,9 @@
     {#if mode === 'voronoi'}
       {#await import('../Voronoi/Voronoi.svelte') then { default: Voronoi }}
         <Svg>
-          {#snippet children({ facet })}
+          {#snippet children()}
+            <!-- `Voronoi` resolves its own panel's rows, so there's nothing to narrow here -->
             <Voronoi
-              data={ctx.facet.enabled ? facet.data : undefined}
               x={xProp}
               y={yProp}
               r={radius}

@@ -120,7 +120,7 @@
       "example": "facet-annotation",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-annotation",
-      "lineNumber": 44,
+      "lineNumber": 40,
       "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
     },
     {
@@ -141,7 +141,7 @@
       "example": "facet-wrap",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-wrap",
-      "lineNumber": 60,
+      "lineNumber": 65,
       "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
     },
     {
@@ -201,5 +201,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-08-16T02:33:14.732Z"
+  "updatedAt": "2026-08-16T16:11:43.702Z"
 }

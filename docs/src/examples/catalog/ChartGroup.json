@@ -25,12 +25,12 @@
       "components": [
         {
           "component": "ChartGroup",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<ChartGroup>"
         },
         {
           "component": "LineChart",
-          "lineNumber": 39,
+          "lineNumber": 42,
           "line": "<LineChart"
         }
       ]
@@ -205,7 +205,7 @@
       "example": "faceted-member",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/faceted-member",
-      "lineNumber": 35,
+      "lineNumber": 38,
       "line": "<ChartGroup>"
     },
     {
@@ -244,5 +244,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-08-16T02:36:12.267Z"
+  "updatedAt": "2026-08-16T16:11:43.191Z"
 }

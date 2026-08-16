@@ -43,7 +43,7 @@ They compose: a faceted chart is a single group member, with one id, so a group 
 
 :example{ component="ChartGroup" name="faceted-member" }
 
-Hovering a panel moves the crosshair on the chart below, and hovering that chart draws the crosshair in every panel while marking the point in the one that owns it.
+Hovering a panel moves the crosshair on the chart below, and vice versa. This example also sets [`facetAll`](/docs/guides/facets#one-tooltip-per-panel), so every panel marks and labels the hovered date with its own value; without it the highlight stays in the panel being hovered.
 
 ## What's shared
 
