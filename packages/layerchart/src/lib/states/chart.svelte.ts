@@ -24,7 +24,7 @@ import { printDebug } from '$lib/utils/debug.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { GeoState } from './geo.svelte.js';
-import { FacetState } from './facet.svelte.js';
+import { FacetState, facetKey } from './facet.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
@@ -382,6 +382,8 @@ export class ChartState<
           data: hasSeparateData ? undefined : chartDataArray(this.props.data),
           keyBy: keyBy!,
           valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
+          // Anything that subdivides the plot also subdivides the stack — see `StackConfig.groupBy`
+          groupBy: this.#stackGroupBy,
         };
       }
     );
@@ -654,6 +656,25 @@ export class ChartState<
   c = $derived(accessor(this.props.c));
   x1 = $derived(makeAccessor(this.props.x1));
   y1 = $derived(makeAccessor(this.props.y1));
+
+  /**
+   * Partitions rows into separate stacks, or `undefined` when there's a single stack per category.
+   *
+   * A stack belongs to whatever subdivides the plot around it: the facet panel it's drawn in, and
+   * the `x1` / `y1` sub-band it's positioned within (grouped *and* stacked bars).  Without this
+   * the stacks of every panel and group collide, since they share a `keyBy` value.
+   */
+  #stackGroupBy = $derived.by<((d: any) => string) | undefined>(() => {
+    const facet = this.facetState.enabled ? this.facetState : null;
+    const subBand = this.props.x1 != null ? this.x1 : this.props.y1 != null ? this.y1 : null;
+    if (!facet && !subBand) return undefined;
+
+    return (d: any) =>
+      JSON.stringify([
+        facet ? facetKey(facet.x?.(d), facet.y?.(d)) : null,
+        subBand ? (subBand(d) ?? null) : null,
+      ]);
+  });
 
   filteredExtents = $derived(filterObject($state.snapshot(this.props.extents ?? {})));
 

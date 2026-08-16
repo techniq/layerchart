@@ -58,6 +58,26 @@ An individual selectable region can also just set `user-select: text` on itself 
 
 :example{ name="facet-non-faceted-marks" }
 
+### Facet wrap
+
+:example{ name="facet-wrap" }
+
+### Annotated facets
+
+:example{ name="facet-annotation" }
+
+### Panel colours
+
+:example{ name="facet-color" }
+
 ### Panel spacing
 
 :example{ name="facet-spacing" }
+
+### Facet tooltips
+
+:example{ name="facet-tooltip" }
+
+### Facet brushing
+
+:example{ name="facet-brush" }

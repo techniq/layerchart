@@ -297,6 +297,20 @@
       "line": "<Circle cx=\"date\" cy=\"value\" data={humidityData} r={5} fill=\"var(--color-oranges)\" />"
     },
     {
+      "example": "facet-brush",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush",
+      "lineNumber": 35,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-color",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-color",
+      "lineNumber": 33,
+      "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
+    },
+    {
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
@@ -329,6 +343,13 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-spacing",
       "lineNumber": 40,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 33,
       "line": "<Circle"
     },
     {
@@ -1165,5 +1186,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-15T17:16:46.754Z"
+  "updatedAt": "2026-08-16T00:54:31.212Z"
 }

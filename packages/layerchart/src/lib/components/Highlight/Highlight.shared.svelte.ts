@@ -10,6 +10,7 @@ import type Rect from '../Rect/Rect.svelte';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
@@ -120,6 +121,7 @@ export class HighlightState {
   #props: HighlightProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+  #facetPanel = getFacetPanel();
 
   constructor(getProps: () => HighlightProps) {
     this.#getProps = getProps;
@@ -129,6 +131,19 @@ export class HighlightState {
   y = $derived(accessor(this.#props.y ?? this.ctx.y));
 
   highlightData = $derived(this.#props.data ?? this.ctx.tooltip.data);
+
+  /**
+   * Whether the highlighted point belongs to the panel this is rendering into.
+   *
+   * The crosshair lines still draw in every panel of a faceted chart — a shared crosshair is
+   * what makes small multiples comparable — but the point, area, and bar mark a single datum,
+   * which lives in exactly one of them.
+   */
+  inPanel = $derived.by(() => {
+    const panel = this.#facetPanel?.();
+    if (!panel || !this.ctx.facet.enabled) return true;
+    return this.ctx.facet.panelFor(this.highlightData)?.key === panel.key;
+  });
 
   xValue = $derived(this.x(this.highlightData));
   xCoord = $derived(

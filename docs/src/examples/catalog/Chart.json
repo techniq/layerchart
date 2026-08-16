@@ -249,6 +249,57 @@
       ]
     },
     {
+      "name": "facet-annotation",
+      "title": "facet annotation",
+      "path": "/docs/components/Chart/facet-annotation",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 37,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 54,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush",
+      "title": "facet brush",
+      "path": "/docs/components/Chart/facet-brush",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 35,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-color",
+      "title": "facet color",
+      "path": "/docs/components/Chart/facet-color",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 33,
+          "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
+        }
+      ]
+    },
+    {
       "name": "facet-composed",
       "title": "facet composed",
       "path": "/docs/components/Chart/facet-composed",
@@ -364,6 +415,48 @@
       ]
     },
     {
+      "name": "facet-tooltip",
+      "title": "facet tooltip",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Svg",
+          "lineNumber": 29,
+          "line": "<Svg>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 30,
+          "line": "<Grid x y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis placement=\"left\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 33,
+          "line": "<Circle"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 41,
+          "line": "<Highlight lines points axis=\"both\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 44,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "facet-two-dimensional",
       "title": "facet two dimensional",
       "path": "/docs/components/Chart/facet-two-dimensional",
@@ -382,6 +475,33 @@
           "component": "Circle",
           "lineNumber": 30,
           "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-wrap",
+      "title": "facet wrap",
+      "path": "/docs/components/Chart/facet-wrap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 47,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 60,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 61,
+          "line": "<Area"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 73,
+          "line": "<Text"
         }
       ]
     },
@@ -1941,6 +2061,20 @@
       "line": "<Chart"
     },
     {
+      "example": "facet-brush",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush",
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-color",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-color",
+      "lineNumber": 19,
+      "line": "<Chart"
+    },
+    {
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
@@ -1976,10 +2110,24 @@
       "line": "<Chart"
     },
     {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
       "example": "facet-two-dimensional",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-two-dimensional",
       "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 47,
       "line": "<Chart"
     },
     {
@@ -4776,5 +4924,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-15T17:29:22.751Z"
+  "updatedAt": "2026-08-16T01:16:12.487Z"
 }

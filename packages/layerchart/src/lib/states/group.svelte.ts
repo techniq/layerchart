@@ -289,6 +289,28 @@ export class ChartGroupState {
     this.options = options;
   }
 
+  /** Ids of the charts currently joined, to catch two members answering to the same one */
+  #memberIds = new Set<string | symbol>();
+
+  /**
+   * Join a chart to the group, returning the leave callback.
+   *
+   * Every slice attributes changes by member id, and a subscriber skips what it published by
+   * comparing `source` to its own — so two charts sharing an id both ignore the other's updates
+   * and silently stop syncing.  Ids are only user-supplied via `<Chart id>`; the default is a
+   * `Symbol`, which can't collide.
+   */
+  join(id: string | symbol) {
+    if (this.#memberIds.has(id)) {
+      // `console.warn` rather than `Logger`, which stays silent unless explicitly enabled
+      console.warn(
+        `[layerchart] Two charts joined a ChartGroup with id "${String(id)}" — they can't be told apart as a pointer/brush source, so updates between them are ignored. Give each chart a unique \`id\`.`
+      );
+    }
+    this.#memberIds.add(id);
+    return () => this.#memberIds.delete(id);
+  }
+
   /** Shared visible domain.  `$state.raw` for the same reasons as `pointer`. */
   domain = $state.raw<ChartGroupDomain>(emptyDomain());
 
@@ -550,6 +572,8 @@ export function connectToChartGroup(
   getGroup: () => ChartGroupState | undefined,
   getMemberOptions: () => ChartGroupMemberOptions | undefined = () => undefined
 ) {
+  $effect(() => getGroup()?.join(ctx.id));
+
   // Publish — driven by the interaction itself rather than by watching state, so the chart the
   // pointer actually moved to is the one that wins.  A tooltip set by the group carries the
   // originating chart's id as its `source`, which the handler filters out.

@@ -3,9 +3,10 @@ import type { SVGAttributes } from 'svelte/elements';
 import { extent } from 'd3-array';
 
 import type { Without } from '$lib/utils/types.js';
-import { accessor, chartDataArray, type Accessor } from '$lib/utils/common.js';
+import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { LinePropsWithoutHTML } from '../Line/Line.shared.svelte.js';
 
@@ -72,13 +73,14 @@ export type RuleLineSegment = {
 export class RuleState {
   #getProps: () => RuleProps = () => ({}) as RuleProps;
   ctx: ChartState = getChartContext();
+  markData = getMarkData();
 
   constructor(getProps: () => RuleProps) {
     this.#getProps = getProps;
     this.ctx.registerComponent({ name: 'Rule', kind: 'composite-mark' });
   }
 
-  data = $derived(chartDataArray(this.#getProps().data ?? this.ctx.data));
+  data = $derived(this.markData(this.#getProps().data));
 
   singleX = $derived.by(() => {
     const x = this.#getProps().x;

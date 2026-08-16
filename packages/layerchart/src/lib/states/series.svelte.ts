@@ -1,10 +1,13 @@
 import type { Component } from 'svelte';
 import type { SeriesData } from '../components/charts/types.js';
-import { InternMap } from 'd3-array';
+import { group, InternMap } from 'd3-array';
 import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
 import { scaleOrdinal } from 'd3-scale';
 import { accessor, type Accessor } from '../utils/common.js';
 import { SelectionState } from '@layerstack/svelte-state';
+
+/** Key for the single stack of an unfaceted chart */
+const STACK_UNGROUPED = '';
 
 export type StackLayout = 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
 
@@ -13,6 +16,13 @@ export type StackConfig<TData> = {
   data?: TData[];
   keyBy: Accessor<TData>;
   valueAccessor?: Accessor<TData>;
+  /**
+   * Groups the rows into separate stacks — the facet panel each belongs to.
+   *
+   * Panels share the position scales, so several of them hold the same `keyBy` value; without
+   * this the stacks collide and every panel draws whichever row was stacked last.
+   */
+  groupBy?: (d: TData) => string;
 };
 
 export class SeriesState<TData, TComponent extends Component> {
@@ -162,13 +172,13 @@ export class SeriesState<TData, TComponent extends Component> {
    * Computed stack data using InternMap for value-based lookup.
    * Outer map: categoryValue -> InternMap<seriesKey, [y0, y1]>
    */
-  #stackMap = $derived.by(() => {
+  #buildStack(rows?: TData[]) {
     const config = this.#stackConfig;
     if (!config || !config.layout.startsWith('stack')) return null;
 
     const visibleKeys = this.visibleSeries.map((s) => s.key);
     const hasSeparateData = this.visibleSeries.some((s) => s.data != null);
-    const data = hasSeparateData ? this.#alignSeriesData() : (config.data ?? []);
+    const data = rows ?? (hasSeparateData ? this.#alignSeriesData() : (config.data ?? []));
 
     if (visibleKeys.length === 0 || data.length === 0) return null;
 
@@ -211,6 +221,33 @@ export class SeriesState<TData, TComponent extends Component> {
     }
 
     return map;
+  }
+
+  /**
+   * Stacked `[y0, y1]` per row, as `groupKey -> categoryValue -> seriesKey`.
+   *
+   * One stack per group rather than one overall: the rows of a facet panel stack among
+   * themselves, and a category repeated across panels keeps a separate total in each.
+   */
+  #stackMap = $derived.by(() => {
+    const config = this.#stackConfig;
+    if (!config || !config.layout.startsWith('stack')) return null;
+
+    const groupBy = config.groupBy;
+    if (!groupBy) {
+      const single = this.#buildStack();
+      return single && new Map([[STACK_UNGROUPED, single]]);
+    }
+
+    const hasSeparateData = this.visibleSeries.some((s) => s.data != null);
+    const data = hasSeparateData ? this.#alignSeriesData() : (config.data ?? []);
+
+    const out = new Map<string, InternMap<any, Map<string, [number, number]>>>();
+    for (const [groupKey, rows] of group(data as TData[], groupBy)) {
+      const built = this.#buildStack(rows);
+      if (built) out.set(groupKey, built);
+    }
+    return out.size > 0 ? out : null;
   });
 
   /**
@@ -221,7 +258,8 @@ export class SeriesState<TData, TComponent extends Component> {
   get divergingEdgeKeys(): Set<string> | null {
     if (this.stackLayout !== 'stackDiverging' || !this.#stackMap) return null;
 
-    const firstEntry = this.#stackMap.values().next().value;
+    const firstGroup = this.#stackMap.values().next().value;
+    const firstEntry = firstGroup?.values().next().value;
     if (!firstEntry) return null;
 
     let maxPosY1 = -Infinity;
@@ -256,9 +294,10 @@ export class SeriesState<TData, TComponent extends Component> {
   getStackValue(seriesKey: string, d: TData): [number, number] | null {
     if (!this.#stackMap || !this.#stackConfig) return null;
 
-    const keyByAcc = accessor(this.#stackConfig.keyBy);
-    const catKey = keyByAcc(d);
-    return this.#stackMap.get(catKey)?.get(seriesKey) ?? null;
+    const config = this.#stackConfig;
+    const groupKey = config.groupBy ? config.groupBy(d) : STACK_UNGROUPED;
+    const catKey = accessor(config.keyBy)(d);
+    return this.#stackMap.get(groupKey)?.get(catKey)?.get(seriesKey) ?? null;
   }
 
   /**
@@ -274,11 +313,12 @@ export class SeriesState<TData, TComponent extends Component> {
     if (!stackMap || !config) return [];
 
     const keyByAcc = accessor(config.keyBy);
+    const groupBy = config.groupBy;
     const visibleKeys = this.visibleSeries.map((s) => s.key);
     const values: number[] = [];
 
     for (const d of rows) {
-      const seriesMap = stackMap.get(keyByAcc(d));
+      const seriesMap = stackMap.get(groupBy ? groupBy(d) : STACK_UNGROUPED)?.get(keyByAcc(d));
       if (!seriesMap) continue;
       for (const key of visibleKeys) {
         const stackValue = seriesMap.get(key);

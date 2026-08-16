@@ -557,6 +557,20 @@
       "line": "<Text"
     },
     {
+      "example": "facet-annotation",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-annotation",
+      "lineNumber": 54,
+      "line": "<Text"
+    },
+    {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 73,
+      "line": "<Text"
+    },
+    {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
@@ -1145,5 +1159,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-15T02:07:38.681Z"
+  "updatedAt": "2026-08-16T01:16:14.477Z"
 }

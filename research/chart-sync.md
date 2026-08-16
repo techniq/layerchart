@@ -62,7 +62,9 @@ has been overtaken in places by what actually shipped — trust the code and
    chart-side selection first.
 2. `transform={{ mode: 'domain' }}` charts publish their zoom but don't apply a shared one — the
    transform narrows the domain itself, so the two fight. Documented in the guide.
-3. Duplicate user-supplied `id`s are indistinguishable as `source`; no guard or warning.
+3. ~~Duplicate user-supplied `id`s are indistinguishable as `source`; no guard or warning.~~
+   `ChartGroupState.join()` now tracks member ids and `console.warn`s on a collision (`Logger`
+   stays silent unless enabled, so it's the wrong tool for something a user must see).
 4. Bundle cost **to charts** is unmeasured. `bundle-analyzer/bundle-reports/latest.json` is from
    2026-07-01, so comparing against it attributes six weeks of unrelated work to this. Needs a
    main-vs-branch run. (Verified structurally that the group can't reach non-chart components.)

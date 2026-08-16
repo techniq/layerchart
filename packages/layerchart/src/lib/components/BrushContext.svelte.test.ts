@@ -322,6 +322,81 @@ describe('BrushContext', () => {
     });
   });
 
+  describe('facets', () => {
+    const facetData = [
+      { g: 'a', x: 0, y: 10 },
+      { g: 'a', x: 9, y: 100 },
+      { g: 'b', x: 0, y: 10 },
+      { g: 'b', x: 9, y: 100 },
+    ];
+
+    /** Drag across the middle of a panel, from 20% to 80% of its width */
+    function dragPanel(
+      container: HTMLElement,
+      panel: { x: number; y: number; width: number; height: number }
+    ) {
+      // prettier-ignore
+      const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
+      const rect = brushEl.getBoundingClientRect();
+      const startX = rect.left + panel.x + panel.width * 0.2;
+      const endX = rect.left + panel.x + panel.width * 0.8;
+      const y = rect.top + panel.y + panel.height / 2;
+
+      for (const [type, clientX] of [
+        ['pointerdown', startX],
+        ['pointermove', endX],
+        ['pointerup', endX],
+      ] as const) {
+        brushEl.dispatchEvent(new PointerEvent(type, { clientX, clientY: y, bubbles: true }));
+      }
+    }
+
+    async function renderFaceted() {
+      let ctx: any;
+      const { container } = render(BrushTestHarness, {
+        chartProps: {
+          ...defaultChartProps,
+          data: facetData,
+          fx: 'g',
+          width: 400,
+          padding: 0,
+          brush: true,
+        },
+        oncontext: (c: any) => (ctx = c),
+      });
+      await awaitBrushReady(container);
+      return { container, ctx: () => ctx };
+    }
+
+    it('brushes the panel it started in, giving the same domain from either panel', async () => {
+      const { container, ctx } = await renderFaceted();
+      expect(ctx().facet.panels.length).toBe(2);
+
+      dragPanel(container, ctx().facet.panels[0]);
+      await tick();
+      const first = [...ctx().brush.x];
+
+      dragPanel(container, ctx().facet.panels[1]);
+      await tick();
+      const second = [...ctx().brush.x];
+
+      // 20%-80% of a panel is the same slice of the shared domain wherever it's dragged
+      expect(first[0]).toBeCloseTo(second[0] as number, 5);
+      expect(first[1]).toBeCloseTo(second[1] as number, 5);
+      expect(first[0]).toBeGreaterThan(0);
+      expect(first[1]).toBeLessThan(10);
+    });
+
+    it('draws the selection in every panel', async () => {
+      const { container, ctx } = await renderFaceted();
+
+      dragPanel(container, ctx().facet.panels[1]);
+      await tick();
+
+      expect(container.querySelectorAll('.lc-brush-range').length).toBe(2);
+    });
+  });
+
   describe('external sync (x/y props)', () => {
     it('should show brush when x prop is provided with a sub-domain', async () => {
       const { container } = render(Chart, {

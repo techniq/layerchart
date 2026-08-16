@@ -368,6 +368,13 @@
       "line": "<Grid y />"
     },
     {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 30,
+      "line": "<Grid x y />"
+    },
+    {
       "example": "band-scale-between",
       "component": "Grid",
       "path": "/docs/components/Grid/band-scale-between",
@@ -466,5 +473,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-08-15T15:47:54.146Z"
+  "updatedAt": "2026-08-16T00:54:31.907Z"
 }

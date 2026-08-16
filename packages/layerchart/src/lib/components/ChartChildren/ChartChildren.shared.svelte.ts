@@ -1,5 +1,6 @@
 import type { ComponentProps, Snippet } from 'svelte';
 
+import type { Facet } from '$lib/states/facet.svelte.js';
 import type { ChartState } from '$lib/contexts/chart.js';
 import type { AnyScale } from '$lib/utils/scales.svelte.js';
 
@@ -34,27 +35,32 @@ export type ChartChildrenProps<
   XScale extends AnyScale = AnyScale,
   YScale extends AnyScale = AnyScale,
   ChartSnippet = Snippet<[{ context: ChartState<TData, XScale, YScale> }]>,
+  /**
+   * Snippets rendered inside the layer also receive the facet panel they're drawing into — the
+   * layer repeats them once per panel.  Unfaceted charts pass the single full-size panel.
+   */
+  ChartLayerSnippet = Snippet<[{ context: ChartState<TData, XScale, YScale>; facet: Facet }]>,
 > = {
   /**
    * The axis to be used for the chart.
    *
    * @default true
    */
-  axis?: ComponentProps<typeof Axis> | 'x' | 'y' | boolean | ChartSnippet;
+  axis?: ComponentProps<typeof Axis> | 'x' | 'y' | boolean | ChartLayerSnippet;
 
   /**
    * The grid to be used for the chart.
    *
    * @default true
    */
-  grid?: ComponentProps<typeof Grid> | boolean | ChartSnippet;
+  grid?: ComponentProps<typeof Grid> | boolean | ChartLayerSnippet;
 
   /**
    * The labels to be used for the chart.
    *
    * @default false
    */
-  labels?: ComponentProps<typeof Labels<TData>> | boolean | ChartSnippet;
+  labels?: ComponentProps<typeof Labels<TData>> | boolean | ChartLayerSnippet;
 
   /**
    * The legend to be used for the chart.
@@ -68,14 +74,14 @@ export type ChartChildrenProps<
    *
    * @default false
    */
-  points?: ComponentProps<typeof Points> | boolean | ChartSnippet;
+  points?: ComponentProps<typeof Points> | boolean | ChartLayerSnippet;
 
   /**
    * The rule to be used for the chart.
    *
    * @default true
    */
-  rule?: ComponentProps<typeof Rule> | boolean | ChartSnippet;
+  rule?: ComponentProps<typeof Rule> | boolean | ChartLayerSnippet;
 
   /**
    * The tooltip snippet to be used for the chart.
@@ -87,7 +93,7 @@ export type ChartChildrenProps<
    */
   tooltipContext?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
-  highlight?: boolean | Partial<ComponentProps<typeof Highlight>> | ChartSnippet;
+  highlight?: boolean | Partial<ComponentProps<typeof Highlight>> | ChartLayerSnippet;
 
   /** Annotations to show on chart */
   annotations?: ChartAnnotationsType;
@@ -135,8 +141,8 @@ export type ChartChildrenProps<
   // Snippets
   children?: ChartSnippet;
   belowContext?: ChartSnippet;
-  belowMarks?: ChartSnippet;
-  marks?: ChartSnippet;
-  aboveMarks?: ChartSnippet;
+  belowMarks?: ChartLayerSnippet;
+  marks?: ChartLayerSnippet;
+  aboveMarks?: ChartLayerSnippet;
   aboveContext?: ChartSnippet;
 };

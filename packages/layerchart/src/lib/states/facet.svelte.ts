@@ -165,6 +165,34 @@ export class FacetState {
     }
     return out;
   });
+
+  /** Panels by `key`, for resolving the one a datum belongs to */
+  #byKey = $derived(new Map(this.panels.map((panel) => [panel.key, panel])));
+
+  /**
+   * The panel a datum belongs to, or `undefined` when its `fx` / `fy` fall outside the domains.
+   *
+   * Keyed rather than searched, so this stays O(1) as the grid grows — interactions resolve it
+   * per pointer event.
+   */
+  panelFor(d: any): Facet | undefined {
+    if (!this.enabled) return this.panels[0];
+    return this.#byKey.get(facetKey(this.x?.(d), this.y?.(d)));
+  }
+
+  /**
+   * The panel containing a point in plot-area coordinates, or `undefined` in the gap between
+   * panels — `scaleBand` has no `invert`, so the bands are tested directly.
+   *
+   * Points outside the plot area resolve to `undefined` as well, leaving the caller's own bounds
+   * check as the only place that decision is made.
+   */
+  panelAt(x: number, y: number): Facet | undefined {
+    return this.panels.find(
+      (panel) =>
+        x >= panel.x && x <= panel.x + panel.width && y >= panel.y && y <= panel.y + panel.height
+    );
+  }
 }
 
 /**

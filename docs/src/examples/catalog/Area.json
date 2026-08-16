@@ -1384,6 +1384,13 @@
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
     {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 61,
+      "line": "<Area"
+    },
+    {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
@@ -1566,5 +1573,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-14T21:25:31.441Z"
+  "updatedAt": "2026-08-16T01:06:32.214Z"
 }

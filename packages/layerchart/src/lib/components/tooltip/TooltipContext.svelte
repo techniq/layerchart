@@ -112,6 +112,7 @@
 <script lang="ts" generics="TData = any">
   import type { Snippet } from 'svelte';
   import { max, min } from 'd3-array';
+  import type { Facet } from '$lib/states/facet.svelte.js';
   // d3-quadtree (used only for quadtree* tooltip modes) is dynamically
   // imported inside the $effect below so non-quadtree users don't pay for it.
   import type { Quadtree } from 'd3-quadtree';
@@ -234,42 +235,92 @@
     );
   }
 
+  /**
+   * The rows a panel resolves its tooltip against.
+   *
+   * Only faceted charts scope to a panel — `flatData` also covers marks carrying their own data,
+   * which a facet partition (defined over the chart's `data`) has no rows for.
+   */
+  function panelData(panel: Facet | undefined) {
+    return ctx.facet.enabled && panel ? panel.data : ctx.flatData;
+  }
+
+  /**
+   * A container-relative point resolved into the panel it lands in, with the point restated in
+   * that panel's coordinates.
+   *
+   * Unfaceted charts land in the single full-size panel, so callers need no branch. Returns
+   * `undefined` in the gap between panels, where there's nothing to resolve against.
+   */
+  function resolvePanel(point: { x: number; y: number }) {
+    const x = point.x - ctx.padding.left;
+    const y = point.y - ctx.padding.top;
+    const panel = ctx.facet.panelAt(x, y);
+    return panel ? { panel, x: x - panel.x, y: y - panel.y } : undefined;
+  }
+
+  /**
+   * Where a row sits in container coordinates, including the offset of the panel it belongs to.
+   *
+   * The scales are panel-relative, so a row of a faceted chart would otherwise be positioned as
+   * if it were in the first panel — which is what a tooltip shown by value or by data (a group's
+   * shared pointer, `tooltip.show({ value })`) resolves to.
+   */
+  function dataCoordsInPanel(data: any) {
+    const coords = dataCoords(ctx, data);
+    const panel = ctx.facet.enabled ? ctx.facet.panelFor(data) : undefined;
+    return panel ? { x: coords.x + panel.x, y: coords.y + panel.y } : coords;
+  }
+
   /** Find the data point at a container-relative pixel coordinate, using the configured `mode` */
   function findDataAtPoint(point: { x: number; y: number }) {
+    const hit = resolvePanel(point);
+    if (!hit) return undefined;
+
+    const { panel } = hit;
+    // Scales are shared across panels, so inverting is panel-relative
+    const dataCtx = {
+      flatData: panelData(panel),
+      x: ctx.x,
+      y: ctx.y,
+      xScale: ctx.xScale,
+      yScale: ctx.yScale,
+    };
+
     switch (mode) {
       case 'bisect-x': {
         let xValueAtPoint: any;
         if (ctx.radial) {
           // Assume radial is always centered
-          const { radians } = cartesianToPolar(point.x - ctx.width / 2, point.y - ctx.height / 2);
+          const { radians } = cartesianToPolar(hit.x - ctx.width / 2, hit.y - ctx.height / 2);
           xValueAtPoint = scaleInvert(ctx.xScale, radians);
         } else {
-          xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
+          xValueAtPoint = scaleInvert(ctx.xScale, hit.x);
         }
 
-        return findDatumByValue(ctx, { x: xValueAtPoint }, { mode, findTooltipData });
+        return findDatumByValue(dataCtx, { x: xValueAtPoint }, { mode, findTooltipData });
       }
 
       case 'bisect-y': {
         // `y` value at pointer coordinate
-        const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
+        const yValueAtPoint = scaleInvert(ctx.yScale, hit.y);
 
-        return findDatumByValue(ctx, { y: yValueAtPoint }, { mode, findTooltipData });
+        return findDatumByValue(dataCtx, { y: yValueAtPoint }, { mode, findTooltipData });
       }
 
       case 'bisect-band': {
         // `x` and `y` values at pointer coordinate
-        const xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
-        const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
+        const xValueAtPoint = scaleInvert(ctx.xScale, hit.x);
+        const yValueAtPoint = scaleInvert(ctx.yScale, hit.y);
 
-        return findDatumByValue(ctx, { x: xValueAtPoint, y: yValueAtPoint }, { mode, findTooltipData }); // prettier-ignore
+        return findDatumByValue(dataCtx, { x: xValueAtPoint, y: yValueAtPoint }, { mode, findTooltipData }); // prettier-ignore
       }
 
       case 'quadtree-x':
       case 'quadtree-y':
       case 'quadtree': {
-        let qx = point.x - ctx.padding.left;
-        let qy = point.y - ctx.padding.top;
+        let qx = hit.x;
+        let qy = hit.y;
 
         // Apply inverse transform to convert screen coordinates to canvas coordinates
         if (ctx.transform.mode === 'canvas') {
@@ -277,7 +328,9 @@
           qy = (qy - ctx.transform.translate.y) / ctx.transform.scale;
         }
 
-        return quadtree?.find(qx, qy, radius);
+        // One tree per panel — panels share the scales, so their points would otherwise
+        // occupy the same coordinates and the nearest could come from any of them
+        return quadtrees.get(panel.key)?.find(qx, qy, radius);
       }
 
       default:
@@ -408,7 +461,7 @@
     }
 
     // Resolve *where* to show it — the given point, else the data point's own position
-    applyTooltip(point ?? dataCoords(ctx, tooltipData), tooltipData, { source, suppressed });
+    applyTooltip(point ?? dataCoordsInPanel(tooltipData), tooltipData, { source, suppressed });
   }
 
   function showTooltip(
@@ -450,13 +503,13 @@
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
 
-  let quadtree = $state<Quadtree<[number, number]> | undefined>();
+  let quadtrees = $state<Map<string, Quadtree<[number, number]>>>(new Map());
 
   $effect(() => {
     // Touch the dependencies the quadtree is built from so the effect re-runs
     // on changes (mode, accessors, scales, data, projection).
     if (!['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
-      quadtree = undefined;
+      quadtrees = new Map();
       return;
     }
 
@@ -470,211 +523,213 @@
     const xAccCtx = ctx.x;
     const yAccCtx = ctx.y;
     const projection = geo.projection;
-    const flatData = ctx.flatData;
+    const panels = ctx.facet.panels.map((panel) => [panel.key, panelData(panel)] as const);
 
     let cancelled = false;
     import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
       if (cancelled) return;
-      quadtree = d3Quadtree<[number, number]>()
-        .x((d) => {
-          if (m === 'quadtree-y') return 0;
-          if (xAcc) {
-            const scaled = xScale(xAcc(d));
-            return typeof scaled === 'number' ? scaled : 0;
-          }
-          if (projection) {
-            const lat = xAccCtx(d);
-            const long = yAccCtx(d);
-            const geoValue = projection([lat, long]) ?? [0, 0];
-            return geoValue[0];
-          }
-          const value = xGet(d);
-          if (Array.isArray(value)) {
-            // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
-            // Default to the max (typically the "target"/"end" endpoint); override
-            // via the `x` prop for explicit control.
-            return max(value);
-          }
-          return value;
-        })
-        .y((d) => {
-          if (m === 'quadtree-x') return 0;
-          if (yAcc) {
-            const scaled = yScale(yAcc(d));
-            return typeof scaled === 'number' ? scaled : 0;
-          }
-          if (projection) {
-            const lat = xAccCtx(d);
-            const long = yAccCtx(d);
-            const geoValue = projection([lat, long]) ?? [0, 0];
-            return geoValue[1];
-          }
-          const value = yGet(d);
-          if (Array.isArray(value)) {
-            // `y` accessor with multiple properties — default to max endpoint.
-            return max(value);
-          }
-          return value;
-        })
-        .addAll(flatData as [number, number][]);
+      const build = (flatData: any[]) =>
+        d3Quadtree<[number, number]>()
+          .x((d) => {
+            if (m === 'quadtree-y') return 0;
+            if (xAcc) {
+              const scaled = xScale(xAcc(d));
+              return typeof scaled === 'number' ? scaled : 0;
+            }
+            if (projection) {
+              const lat = xAccCtx(d);
+              const long = yAccCtx(d);
+              const geoValue = projection([lat, long]) ?? [0, 0];
+              return geoValue[0];
+            }
+            const value = xGet(d);
+            if (Array.isArray(value)) {
+              // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
+              // Default to the max (typically the "target"/"end" endpoint); override
+              // via the `x` prop for explicit control.
+              return max(value);
+            }
+            return value;
+          })
+          .y((d) => {
+            if (m === 'quadtree-x') return 0;
+            if (yAcc) {
+              const scaled = yScale(yAcc(d));
+              return typeof scaled === 'number' ? scaled : 0;
+            }
+            if (projection) {
+              const lat = xAccCtx(d);
+              const long = yAccCtx(d);
+              const geoValue = projection([lat, long]) ?? [0, 0];
+              return geoValue[1];
+            }
+            const value = yGet(d);
+            if (Array.isArray(value)) {
+              // `y` accessor with multiple properties — default to max endpoint.
+              return max(value);
+            }
+            return value;
+          })
+          .addAll(flatData as [number, number][]);
+
+      quadtrees = new Map(panels.map(([key, data]) => [key, build(data)]));
     });
     return () => {
       cancelled = true;
     };
   });
 
-  const rects: Array<{ x: number; y: number; width: number; height: number; data: any }> =
-    $derived.by(() => {
-      if (mode === 'bounds' || mode === 'band') {
-        return ctx.flatData
-          .map((d) => {
-            const xValue = ctx.xGet(d);
-            const yValue = ctx.yGet(d);
+  /**
+   * Hit rectangles for `bounds` / `band` modes, one per row.
+   *
+   * Takes its rows rather than reading `flatData`, because these render inside the layer — and so
+   * once per panel of a faceted chart, each covering only that panel's rows.
+   */
+  function rectsFor(
+    rows: any[]
+  ): Array<{ x: number; y: number; width: number; height: number; data: any }> {
+    if (mode === 'bounds' || mode === 'band') {
+      return rows
+        .map((d) => {
+          const xValue = ctx.xGet(d);
+          const yValue = ctx.yGet(d);
 
-            const x = Array.isArray(xValue) ? xValue[0] : xValue;
-            const y = Array.isArray(yValue) ? yValue[0] : yValue;
+          const x = Array.isArray(xValue) ? xValue[0] : xValue;
+          const y = Array.isArray(yValue) ? yValue[0] : yValue;
 
-            const xOffset = isScaleBand(ctx.xScale)
-              ? (ctx.xScale.padding() * ctx.xScale.step()) / 2
-              : 0;
-            const yOffset = isScaleBand(ctx.yScale)
-              ? (ctx.yScale.padding() * ctx.yScale.step()) / 2
-              : 0;
+          const xOffset = isScaleBand(ctx.xScale)
+            ? (ctx.xScale.padding() * ctx.xScale.step()) / 2
+            : 0;
+          const yOffset = isScaleBand(ctx.yScale)
+            ? (ctx.yScale.padding() * ctx.yScale.step()) / 2
+            : 0;
 
-            const fullWidth = max(ctx.xRange) - min(ctx.xRange);
-            const fullHeight = max(ctx.yRange) - min(ctx.yRange);
+          const fullWidth = max(ctx.xRange) - min(ctx.xRange);
+          const fullHeight = max(ctx.yRange) - min(ctx.yRange);
 
-            if (mode === 'band') {
-              if (isScaleBand(ctx.xScale)) {
-                // full band width/height regardless of value
-                return {
-                  x: x - xOffset,
-                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-                  width: ctx.xScale.step(),
-                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
-                  data: d,
-                };
-              } else if (isScaleBand(ctx.yScale)) {
-                return {
-                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-                  y: y - yOffset,
-                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-                  height: ctx.yScale.step(),
-                  data: d,
-                };
-              } else if (ctx.xInterval) {
-                // x-axis time scale with interval
-                const xVal = ctx.x(d);
-                const start = ctx.xInterval.floor(xVal);
-                const end = ctx.xInterval.offset(start);
-                const xStart = ctx.xScale(start);
-                const xEnd = ctx.xScale(end);
-
-                return {
-                  x: Math.min(xStart, xEnd),
-                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-                  width: Math.abs(xEnd - xStart),
-                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
-                  data: d,
-                };
-              } else if (ctx.yInterval) {
-                // y-axis time scale with interval
-                const yVal = ctx.y(d);
-                const start = ctx.yInterval.floor(yVal);
-                const end = ctx.yInterval.offset(start);
-                const yStart = ctx.yScale(start);
-                const yEnd = ctx.yScale(end);
-
-                return {
-                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-                  y: Math.min(yStart, yEnd),
-                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-                  height: Math.abs(yEnd - yStart),
-                  data: d,
-                };
-              } else if (Array.isArray(xValue)) {
-                return {
-                  x: Math.min(xValue[0], xValue[1]) - xOffset,
-                  y: Array.isArray(yValue)
-                    ? Math.min(yValue[0], yValue[1]) - yOffset
-                    : min(ctx.yRange),
-                  width: Math.abs(xValue[1] - xValue[0]),
-                  height: Array.isArray(yValue) ? Math.abs(yValue[1] - yValue[0]) : fullHeight,
-                  data: d,
-                };
-              } else if (Array.isArray(yValue)) {
-                return {
-                  x: min(ctx.xRange),
-                  y: Math.min(yValue[0], yValue[1]) - yOffset,
-                  width: fullWidth,
-                  height: Math.abs(yValue[1] - yValue[0]),
-                  data: d,
-                };
-              } else if (isScaleTime(ctx.xScale)) {
-                // Find width to next data point
-                const index = ctx.flatData.findIndex(
-                  (d2) => Number(ctx.x(d2)) === Number(ctx.x(d))
-                );
-                const isLastPoint = index + 1 === ctx.flatData.length;
-                const nextDataPoint = isLastPoint
-                  ? max(ctx.xDomain)
-                  : ctx.x(ctx.flatData[index + 1]);
-
-                return {
-                  x: x - xOffset,
-                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-                  width: (ctx.xScale(nextDataPoint) ?? 0) - (xValue ?? 0),
-                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
-                  data: d,
-                };
-              } else if (isScaleTime(ctx.yScale)) {
-                // Find height to next data point
-                const index = ctx.flatData.findIndex(
-                  (d2) => Number(ctx.y(d2)) === Number(ctx.y(d))
-                );
-                const isLastPoint = index + 1 === ctx.flatData.length;
-                const nextDataPoint = isLastPoint
-                  ? max(ctx.yDomain)
-                  : ctx.y(ctx.flatData[index + 1]);
-
-                return {
-                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-                  y: y - yOffset,
-                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-                  height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
-                  data: d,
-                };
-              } else {
-                console.warn(
-                  '[layerchart] TooltipContext band mode requires at least one scale to be band or time.'
-                );
-                return undefined;
-              }
-            } else if (mode === 'bounds') {
+          if (mode === 'band') {
+            if (isScaleBand(ctx.xScale)) {
+              // full band width/height regardless of value
               return {
-                x: isScaleBand(ctx.xScale) || Array.isArray(xValue) ? x - xOffset : min(ctx.xRange),
-                // y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
-                y: y - yOffset,
-
-                width: Array.isArray(xValue)
-                  ? xValue[1] - xValue[0]
-                  : isScaleBand(ctx.xScale)
-                    ? ctx.xScale.step()
-                    : min(ctx.xRange) + x,
-                height: Array.isArray(yValue)
-                  ? yValue[1] - yValue[0]
-                  : isScaleBand(ctx.yScale)
-                    ? ctx.yScale.step()
-                    : max(ctx.yRange) - y,
+                x: x - xOffset,
+                y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
+                width: ctx.xScale.step(),
+                height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                 data: d,
               };
+            } else if (isScaleBand(ctx.yScale)) {
+              return {
+                x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
+                y: y - yOffset,
+                width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
+                height: ctx.yScale.step(),
+                data: d,
+              };
+            } else if (ctx.xInterval) {
+              // x-axis time scale with interval
+              const xVal = ctx.x(d);
+              const start = ctx.xInterval.floor(xVal);
+              const end = ctx.xInterval.offset(start);
+              const xStart = ctx.xScale(start);
+              const xEnd = ctx.xScale(end);
+
+              return {
+                x: Math.min(xStart, xEnd),
+                y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
+                width: Math.abs(xEnd - xStart),
+                height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
+                data: d,
+              };
+            } else if (ctx.yInterval) {
+              // y-axis time scale with interval
+              const yVal = ctx.y(d);
+              const start = ctx.yInterval.floor(yVal);
+              const end = ctx.yInterval.offset(start);
+              const yStart = ctx.yScale(start);
+              const yEnd = ctx.yScale(end);
+
+              return {
+                x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
+                y: Math.min(yStart, yEnd),
+                width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
+                height: Math.abs(yEnd - yStart),
+                data: d,
+              };
+            } else if (Array.isArray(xValue)) {
+              return {
+                x: Math.min(xValue[0], xValue[1]) - xOffset,
+                y: Array.isArray(yValue)
+                  ? Math.min(yValue[0], yValue[1]) - yOffset
+                  : min(ctx.yRange),
+                width: Math.abs(xValue[1] - xValue[0]),
+                height: Array.isArray(yValue) ? Math.abs(yValue[1] - yValue[0]) : fullHeight,
+                data: d,
+              };
+            } else if (Array.isArray(yValue)) {
+              return {
+                x: min(ctx.xRange),
+                y: Math.min(yValue[0], yValue[1]) - yOffset,
+                width: fullWidth,
+                height: Math.abs(yValue[1] - yValue[0]),
+                data: d,
+              };
+            } else if (isScaleTime(ctx.xScale)) {
+              // Find width to next data point
+              const index = rows.findIndex((d2) => Number(ctx.x(d2)) === Number(ctx.x(d)));
+              const isLastPoint = index + 1 === rows.length;
+              const nextDataPoint = isLastPoint ? max(ctx.xDomain) : ctx.x(rows[index + 1]);
+
+              return {
+                x: x - xOffset,
+                y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
+                width: (ctx.xScale(nextDataPoint) ?? 0) - (xValue ?? 0),
+                height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
+                data: d,
+              };
+            } else if (isScaleTime(ctx.yScale)) {
+              // Find height to next data point
+              const index = rows.findIndex((d2) => Number(ctx.y(d2)) === Number(ctx.y(d)));
+              const isLastPoint = index + 1 === rows.length;
+              const nextDataPoint = isLastPoint ? max(ctx.yDomain) : ctx.y(rows[index + 1]);
+
+              return {
+                x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
+                y: y - yOffset,
+                width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
+                height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
+                data: d,
+              };
+            } else {
+              console.warn(
+                '[layerchart] TooltipContext band mode requires at least one scale to be band or time.'
+              );
+              return undefined;
             }
-          })
-          .filter((x) => x !== undefined) // make typescript happy
-          .sort(sortFunc('x'));
-      }
-      return [];
-    });
+          } else if (mode === 'bounds') {
+            return {
+              x: isScaleBand(ctx.xScale) || Array.isArray(xValue) ? x - xOffset : min(ctx.xRange),
+              // y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
+              y: y - yOffset,
+
+              width: Array.isArray(xValue)
+                ? xValue[1] - xValue[0]
+                : isScaleBand(ctx.xScale)
+                  ? ctx.xScale.step()
+                  : min(ctx.xRange) + x,
+              height: Array.isArray(yValue)
+                ? yValue[1] - yValue[0]
+                : isScaleBand(ctx.yScale)
+                  ? ctx.yScale.step()
+                  : max(ctx.yRange) - y,
+              data: d,
+            };
+          }
+        })
+        .filter((x) => x !== undefined) // make typescript happy
+        .sort(sortFunc('x'));
+    }
+    return [];
+  }
 
   const triggerPointerEvents = $derived(
     ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)
@@ -727,12 +782,16 @@
   }
 </script>
 
+<!--
+  Sized to the whole plot area rather than `ctx.width` / `ctx.height`, which are one panel's box
+  on a faceted chart — the pointer has to reach every panel.
+-->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   style:top="{ctx.padding.top}px"
   style:left="{ctx.padding.left}px"
-  style:width="{ctx.width}px"
-  style:height="{ctx.height}px"
+  style:width="{ctx.box.width}px"
+  style:height="{ctx.box.height}px"
   style:--touch-action={touchEvents}
   class="lc-tooltip-context"
   class:debug={debug && triggerPointerEvents}
@@ -762,43 +821,68 @@
     {#if mode === 'voronoi'}
       {#await import('../Voronoi/Voronoi.svelte') then { default: Voronoi }}
         <Svg>
-          <Voronoi
-            x={xProp}
-            y={yProp}
-            r={radius}
-            onpointerenter={(e, { data }) => {
-              showTooltip(e, data);
-            }}
-            onpointermove={(e, { data }) => {
-              showTooltip(e, data);
-            }}
-            onpointerleave={() => hideTooltip()}
-            onpointerdown={(e) => {
-              // @ts-expect-error
-              if (e.target?.hasPointerCapture(e.pointerId)) {
+          {#snippet children({ facet })}
+            <Voronoi
+              data={ctx.facet.enabled ? facet.data : undefined}
+              x={xProp}
+              y={yProp}
+              r={radius}
+              onpointerenter={(e, { data }) => {
+                showTooltip(e, data);
+              }}
+              onpointermove={(e, { data }) => {
+                showTooltip(e, data);
+              }}
+              onpointerleave={() => hideTooltip()}
+              onpointerdown={(e) => {
                 // @ts-expect-error
-                e.target.releasePointerCapture(e.pointerId);
-              }
-            }}
-            onclick={(e, { data }) => {
-              onclick(e, { data });
-            }}
-            classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
-          />
+                if (e.target?.hasPointerCapture(e.pointerId)) {
+                  // @ts-expect-error
+                  e.target.releasePointerCapture(e.pointerId);
+                }
+              }}
+              onclick={(e, { data }) => {
+                onclick(e, { data });
+              }}
+              classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
+            />
+          {/snippet}
         </Svg>
       {/await}
     {:else if mode === 'bounds' || mode === 'band'}
       <Svg center={ctx.radial}>
-        <g class="lc-tooltip-rects-g">
-          {#each rects as rect}
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            {#if ctx.radial}
-              {#await import('../Arc/Arc.svelte') then { default: Arc }}
-                <Arc
-                  innerRadius={rect.y}
-                  outerRadius={rect.y + rect.height}
-                  startAngle={rect.x}
-                  endAngle={rect.x + rect.width}
+        {#snippet children({ facet })}
+          <g class="lc-tooltip-rects-g">
+            {#each rectsFor(panelData(facet)) as rect}
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              {#if ctx.radial}
+                {#await import('../Arc/Arc.svelte') then { default: Arc }}
+                  <Arc
+                    innerRadius={rect.y}
+                    outerRadius={rect.y + rect.height}
+                    startAngle={rect.x}
+                    endAngle={rect.x + rect.width}
+                    class={cls('lc-tooltip-rect', debug && 'debug')}
+                    onpointerenter={(e) => showTooltip(e, rect?.data)}
+                    onpointermove={(e) => showTooltip(e, rect?.data)}
+                    onpointerleave={() => hideTooltip()}
+                    onpointerdown={(e) => {
+                      const target = e.target as Element;
+                      if (target?.hasPointerCapture(e.pointerId)) {
+                        target.releasePointerCapture(e.pointerId);
+                      }
+                    }}
+                    onclick={(e) => {
+                      onclick(e, { data: rect?.data });
+                    }}
+                  />
+                {/await}
+              {:else}
+                <rect
+                  x={rect?.x}
+                  y={rect?.y}
+                  width={rect?.width}
+                  height={rect?.height}
                   class={cls('lc-tooltip-rect', debug && 'debug')}
                   onpointerenter={(e) => showTooltip(e, rect?.data)}
                   onpointermove={(e) => showTooltip(e, rect?.data)}
@@ -813,37 +897,17 @@
                     onclick(e, { data: rect?.data });
                   }}
                 />
-              {/await}
-            {:else}
-              <rect
-                x={rect?.x}
-                y={rect?.y}
-                width={rect?.width}
-                height={rect?.height}
-                class={cls('lc-tooltip-rect', debug && 'debug')}
-                onpointerenter={(e) => showTooltip(e, rect?.data)}
-                onpointermove={(e) => showTooltip(e, rect?.data)}
-                onpointerleave={() => hideTooltip()}
-                onpointerdown={(e) => {
-                  const target = e.target as Element;
-                  if (target?.hasPointerCapture(e.pointerId)) {
-                    target.releasePointerCapture(e.pointerId);
-                  }
-                }}
-                onclick={(e) => {
-                  onclick(e, { data: rect?.data });
-                }}
-              />
-            {/if}
-          {/each}
-        </g>
+              {/if}
+            {/each}
+          </g>
+        {/snippet}
       </Svg>
     {:else if ['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode) && debug}
       <Svg pointerEvents={false}>
         <ChartClipPath>
           <g class="lc-tooltip-quadtree-g">
-            {#if quadtree}
-              {#each quadtreeRects(quadtree, false) as rect}
+            {#each quadtrees.values() as tree}
+              {#each quadtreeRects(tree, false) as rect}
                 <rect
                   x={rect.x}
                   y={rect.y}
@@ -852,7 +916,7 @@
                   class={cls('lc-tooltip-quadtree-rect', debug && 'debug')}
                 />
               {/each}
-            {/if}
+            {/each}
           </g>
         </ChartClipPath>
       </Svg>

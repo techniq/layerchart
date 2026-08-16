@@ -37,6 +37,8 @@ async function renderPair(
     useContext?: boolean;
     memberOptions?: Array<any>;
     dataFor?: Array<any[]>;
+    /** Extra `Chart` props, per member */
+    propsFor?: Array<Record<string, any>>;
   } = {}
 ) {
   const [a, b] = options.dataFor ?? [dataA, dataB];
@@ -49,8 +51,14 @@ async function renderPair(
     useContext: options.useContext,
     pointer: options.pointer,
     members: [
-      { chartProps: chartProps(a), groupOptions: options.memberOptions?.[0] },
-      { chartProps: chartProps(b), groupOptions: options.memberOptions?.[1] },
+      {
+        chartProps: { ...chartProps(a), ...options.propsFor?.[0] },
+        groupOptions: options.memberOptions?.[0],
+      },
+      {
+        chartProps: { ...chartProps(b), ...options.propsFor?.[1] },
+        groupOptions: options.memberOptions?.[1],
+      },
     ],
     oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
     ongroup: (g: any) => (contextGroup = g),
@@ -65,6 +73,28 @@ async function renderPair(
 }
 
 describe('ChartGroupState', () => {
+  describe('membership', () => {
+    it('warns when two charts join with the same id', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      await renderPair({ propsFor: [{ id: 'shared' }, { id: 'shared' }] });
+
+      await vi.waitFor(() => {
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('id "shared"'));
+      });
+      warn.mockRestore();
+    });
+
+    it('stays quiet when the ids differ', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      await renderPair({ propsFor: [{ id: 'a' }, { id: 'b' }] });
+
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
+    });
+  });
+
   describe('pointer sharing', () => {
     it('shows the matching data point on the other chart', async () => {
       const { chartA, chartB } = await renderPair();
@@ -74,6 +104,35 @@ describe('ChartGroupState', () => {
       await vi.waitFor(() => {
         // chart B resolves the same *date* against its own (shorter) data
         expect(chartB.tooltip.data).toEqual(dataB[2]);
+      });
+    });
+
+    it('lands in the right panel when the follower is faceted', async () => {
+      // §3.6 of the research: a faceted chart is one member with one id, so the group needs no
+      // facet awareness — but the follower has to place the shared row in its own panel
+      const faceted = [
+        { g: 'x', date: new Date('2024-01-01'), value: 100 },
+        { g: 'x', date: new Date('2024-01-04'), value: 200 },
+        { g: 'y', date: new Date('2024-01-01'), value: 300 },
+        { g: 'y', date: new Date('2024-01-04'), value: 400 },
+      ];
+      const { chartA, chartB } = await renderPair({
+        dataFor: [dataA, faceted],
+        propsFor: [{}, { fx: 'g' }],
+      });
+
+      expect(chartB.facet.panels.length).toBe(2);
+
+      chartA.tooltip.show({ data: dataA[3] }); // 2024-01-04
+
+      await vi.waitFor(() => {
+        // the nearest row by date, and positioned in whichever panel holds it
+        const panel = chartB.facet.panelFor(chartB.tooltip.data);
+        expect(panel).toBeDefined();
+        // `tooltip.x` is container-relative, so the panel's offset carries the chart's padding
+        const left = panel!.x + chartB.padding.left;
+        expect(chartB.tooltip.x).toBeGreaterThanOrEqual(left);
+        expect(chartB.tooltip.x).toBeLessThanOrEqual(left + panel!.width);
       });
     });
 

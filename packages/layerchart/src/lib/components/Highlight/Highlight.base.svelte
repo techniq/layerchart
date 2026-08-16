@@ -57,7 +57,7 @@
 </script>
 
 {#if c.highlightData}
-  {#if area}
+  {#if area && c.inPanel}
     {#if typeof area === 'function'}
       {@render area({ area: c.area })}
     {:else if c.ctx.radial}
@@ -82,7 +82,7 @@
     {/if}
   {/if}
 
-  {#if bar}
+  {#if bar && c.inPanel}
     {#if typeof bar === 'function'}
       {@render bar()}
     {:else}
@@ -117,7 +117,7 @@
     {/if}
   {/if}
 
-  {#if points}
+  {#if points && c.inPanel}
     {#if typeof points === 'function'}
       {@render points({ points: c.points })}
     {:else}

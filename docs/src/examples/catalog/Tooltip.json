@@ -3927,6 +3927,41 @@
       "line": "<Tooltip.Item"
     },
     {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 44,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 46,
+      "line": "<Tooltip.Header>{data.species} · {data.island}</Tooltip.Header>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 47,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 48,
+      "line": "<Tooltip.Item label=\"flipper\" value={data.flipper_length_mm} />"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
+    },
+    {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
@@ -7861,5 +7896,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-14T21:25:33.748Z"
+  "updatedAt": "2026-08-15T17:50:58.412Z"
 }

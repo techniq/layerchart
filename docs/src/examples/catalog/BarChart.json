@@ -548,6 +548,30 @@
       ]
     },
     {
+      "name": "group-stack-series",
+      "title": "group stack series",
+      "path": "/docs/components/BarChart/group-stack-series",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 24,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "group-stack-series-horizontal",
+      "title": "group stack series horizontal",
+      "path": "/docs/components/BarChart/group-stack-series-horizontal",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 21,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "highlight-below-marks",
       "title": "highlight below marks",
       "path": "/docs/components/BarChart/highlight-below-marks",
@@ -1849,6 +1873,20 @@
       "line": "<BarChart"
     },
     {
+      "example": "group-stack-series",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-stack-series",
+      "lineNumber": 24,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-stack-series-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-stack-series-horizontal",
+      "lineNumber": 21,
+      "line": "<BarChart"
+    },
+    {
       "example": "highlight-below-marks",
       "component": "BarChart",
       "path": "/docs/components/BarChart/highlight-below-marks",
@@ -2311,6 +2349,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "facet-annotation",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-annotation",
+      "lineNumber": 37,
+      "line": "<BarChart"
+    },
+    {
       "example": "truncate-axis-labels",
       "component": "Text",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -2325,5 +2370,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.157Z"
+  "updatedAt": "2026-08-16T01:46:53.398Z"
 }

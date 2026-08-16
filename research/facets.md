@@ -6,9 +6,11 @@ comparable.
 
 ---
 
-## 0. Status (as of 2026-08-14)
+## 0. Status (as of 2026-08-15)
 
-Not started. One decision is already made:
+**Phases 0–4 are built** (see §4 for what each took) — `fx` / `fy` faceting, per-panel axes with
+edge rules, facet-aware tooltips / `Highlight` / brushing. Zoom (`transform`) and Plot's
+`facet: 'exclude'` mode remain. The original framing, unchanged:
 
 **Facets are a single `<Chart>`**, subdividing one plot area with `fx` / `fy` band scales — not N
 charts wired together. This is what "facet" means to anyone arriving from ggplot2, Vega-Lite, Plot,
@@ -197,9 +199,10 @@ needed does not arise — inside one chart `flatData` spans every panel (§2).
 
 Two notes for whoever builds this:
 
-- A **group-driven pointer on a faceted chart should be crosshair-only**, since the crosshair lands
-  in every panel but the tooltip has no obvious home. `TooltipState.suppressed` already expresses
-  exactly this.
+- ~~A **group-driven pointer on a faceted chart should be crosshair-only**~~ — not needed. The
+  tooltip does have an obvious home: the panel holding the row it resolved to. `dataCoords` offsets
+  into that panel, and `Highlight.inPanel` puts the point there too, so a faceted follower behaves
+  like any other. `TooltipState.suppressed` stays for `pointer: { tooltip: false }`.
 - `ChartGroupPointer.source` identifies a **chart**, not a panel. If per-facet identity ever needs
   to reach the group, that's where it goes — but don't add it speculatively.
 
@@ -212,12 +215,34 @@ Two notes for whoever builds this:
 | **0** | Redefine `width`/`height` as the facet box; audit and fix full-plot consumers                                       | No — but unblocks everything, and is small   |
 | **1** | `fx`/`fy` accessors, band scales, `FacetContext`, facet `Group` layout, per-facet marks — **static faceted charts** | **Yes** — this is the feature for most users |
 | **2** | Per-facet axes with edge rules, facet labels / headers, empty-facet handling                                        | Yes                                          |
-| **3** | Tooltip + highlight facet-awareness (hit regions, scoped resolution, per-facet quadtrees)                           | Yes                                          |
-| **4** | Brush, zoom/transform, Plot's `facet: 'exclude'` mode                                                               | Yes                                          |
+| **3** | Tooltip + highlight facet-awareness (hit regions, scoped resolution, per-facet quadtrees)                           | Yes — **built**                              |
+| **4** | Brush **(built)**; zoom/transform and Plot's `facet: 'exclude'` mode remain                                         | Yes                                          |
 
 Phases 0–2 are the bulk of the _value_ and the minority of the _risk_, because the primitives
 exist. Phase 3 touches the two most interaction-heavy files in the library and is where the
 schedule will actually go.
+
+**What Phases 3–4 actually took** (all built):
+
+- `FacetState.panelAt(x, y)` (the point → panel lookup, testing panel rects since `scaleBand` has
+  no `invert`) and `panelFor(datum)` (keyed, O(1)). Both interactions resolve through these.
+- One hit region, not one per panel. `TooltipContext` and `BrushContext` each sized their overlay
+  to `ctx.width`/`height` — which Phase 0 redefined as *one panel* — so both were confined to the
+  first panel before this. They now span `ctx.box` and resolve the panel from the point.
+- **One quadtree per panel.** Panels share the scales, so their points occupy the same coordinates;
+  a single tree returns the nearest across all of them. Offsetting each point by its panel instead
+  was tried first and breaks `quadtree-x`/`-y`, where the flattened axis makes a neighbouring
+  panel's point closer than the hovered panel's.
+- `bounds`/`band` rects and the `voronoi` diagram render *inside* the layer, so they were already
+  repeating per panel — they just needed their rows narrowed to the panel.
+- `Highlight` splits by what a thing means: `lines` (the crosshair) draw in every panel, while
+  `points`/`area`/`bar` mark one row and draw only in its panel (`HighlightState.inPanel`).
+- Tooltips shown *by value or data* rather than by point — `tooltip.show({ value })`, and every
+  `ChartGroup` follower — needed `dataCoords` offset into the row's panel, or they positioned as
+  if every row were in the first panel. This is what §3.6's "no obvious home" concern turned out
+  to need; suppressing the follower's tooltip was not necessary.
+- The brush gesture belongs to the panel it *starts* in, and the selection it produces is a range
+  of the shared scales — so it applies to, and is drawn in, every panel.
 
 ---
 

@@ -53,6 +53,74 @@ A mark reads its panel's rows from context. Pass `data` explicitly to opt out, a
 
 :example{ component="Chart" name="facet-non-faceted-marks" }
 
+## Colouring by panel
+
+`fx` / `fy` are ordinary data properties, so a mark colours by one the same way it colours by anything else — `fill` (or `stroke`) naming the property, resolved through the chart's `c` scale:
+
+```svelte
+<Chart {data} fx="species" c="species" cRange={[...]}>
+	{#snippet marks()}
+		<Circle cx="flipper_length_mm" cy="body_mass_g" fill="species" />
+	{/snippet}
+</Chart>
+```
+
+:example{ component="Chart" name="facet-color" }
+
+The `c` domain is built from the whole dataset, so the colours are stable regardless of which rows land in which panel. A legend is usually redundant here — the panel headers already name each colour.
+
+To style the panel _itself_ rather than its rows — a tinted background, a rule, anything not per-row — take the panel from the layer and read `fx` / `fy` off it:
+
+```svelte
+{#snippet children({ context })}
+	<Svg>
+		{#snippet children({ facet })}
+			<Rect
+				width={facet.width}
+				height={facet.height}
+				fill={context.cScale?.(facet.fx)}
+				opacity={0.05}
+			/>
+		{/snippet}
+	</Svg>
+{/snippet}
+```
+
+## Wrapping into a grid
+
+A one-dimensional facet can be wrapped into a grid by making `fx` the column and `fy` the row — the index of the value divided by the number of columns, as [Observable Plot does](https://observablehq.com/@observablehq/plot-facet-wrap):
+
+```svelte
+<script>
+	const columns = 3;
+	const position = new Map(industries.map((industry, i) => [industry, i]));
+	const column = (d) => position.get(d.industry) % columns;
+	const row = (d) => Math.floor(position.get(d.industry) / columns);
+</script>
+
+<Chart {data} fx={column} fy={row} facet={{ axis: false }}>
+```
+
+:example{ component="Chart" name="facet-wrap" }
+
+The `fx` / `fy` headers are grid positions rather than names, so they're turned off and each panel labels itself from the panel it's given.
+
+## Annotating one panel
+
+The `marks` snippet (and the rest rendered inside the layer) is handed the panel it's drawing, so a mark can appear in a single panel — a note that belongs to one group rather than all of them:
+
+```svelte
+{#snippet aboveMarks({ context, facet })}
+	{#if facet.fy === 'Adelie'}
+		<Text value="Adelie penguins were observed on all three islands." x={context.width - 6} y={6} />
+	{/if}
+{/snippet}
+```
+
+:example{ component="Chart" name="facet-annotation" }
+
+Stacked series stack within their own panel, so a category that appears in several panels keeps a separate total in each.
+
 ## Panel order
 
 Panels follow the order the values appear in the data. Pass `fxDomain` / `fyDomain` to fix it — including which panels exist at all:
@@ -154,6 +222,35 @@ A panel itself carries:
 | `empty`                             | Whether the panel has no rows                            |
 | `left` / `right` / `top` / `bottom` | Whether the panel is on that outer edge                  |
 
+## Tooltips
+
+The pointer resolves the panel it's over, then finds the row within _that_ panel — so equal values in neighbouring panels stay distinct, in every mode (`bisect-*`, `quadtree*`, `bounds` / `band`, `voronoi`).
+
+`Highlight` follows the same split: the crosshair `lines` draw in every panel, since comparing the same position across panels is the point of small multiples, while `points`, `area`, and `bar` mark the one row the tooltip is showing and so only draw in its panel.
+
+`lines` draws one crosshair by default — on `x` for a value-per-category chart. Set `axis="both"` for both, as a scatter usually wants (`ScatterChart` does this for you).
+
+:example{ component="Chart" name="facet-tooltip" }
+
 ::note
-Tooltips and brushes are not facet-aware yet: they cover the whole plot area and resolve against the full dataset, so hovering a faceted chart can find a point from another panel.
+A faceted chart resolves tooltips against the rows the panels were partitioned from — the chart's `data`. Marks given their own `data` aren't part of that partition, so their points are not found by the pointer.
 ::
+
+## Brushing
+
+A brush gesture belongs to the panel it starts in, so the range it produces is read from that panel's coordinates. What it produces is a range of the _shared_ scales, though — so the selection applies to every panel, and is drawn in each of them.
+
+Zooming to a selection leaves rows outside the new domain positioned outside their panel, where they'd otherwise be drawn over the neighbouring one. `Chart`'s default layout clips its marks while brushing, and `ChartClipPath` sizes itself to the panel, so this is handled for you.
+
+A hand-composed chart clips what it chooses to — wrap the marks that should stay inside the panel, leaving axes and grids out of it:
+
+```svelte
+<Svg>
+	<Axis placement="left" />
+	<ChartClipPath>
+		<Circle cx="flipper_length_mm" cy="body_mass_g" />
+	</ChartClipPath>
+</Svg>
+```
+
+:example{ component="Chart" name="facet-brush" }
