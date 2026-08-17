@@ -2,6 +2,8 @@ import { loadExamplesFromMarkdown } from '$lib/content.js';
 
 export const load = async ({ url }) => {
 	let examples = {};
+	// Source file (relative to `/docs`) of standalone markdown pages, used for the "Edit this page" link
+	let markdownPath: string | null = null;
 
 	// Only load examples for standalone markdown pages (not component/example routes)
 	// Component/example routes handle their own example loading via their layout
@@ -36,6 +38,7 @@ export const load = async ({ url }) => {
 						'components',
 						pathname // for resolving relative paths
 					);
+					markdownPath = mdPath;
 					break;
 				} catch (e) {
 					console.warn(`Failed to load markdown at ${mdPath}:`, e);
@@ -45,6 +48,7 @@ export const load = async ({ url }) => {
 	}
 
 	return {
-		examples
+		examples,
+		markdownPath
 	};
 };
