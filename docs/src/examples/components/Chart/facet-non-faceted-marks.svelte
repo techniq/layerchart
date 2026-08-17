@@ -26,10 +26,6 @@
 	{#snippet marks()}
 		<Frame class="stroke-surface-content/20 fill-none" />
 
-		<!--
-			Marks read their panel's rows from context, so passing `data` explicitly opts out and
-			draws the whole population in every panel — a backdrop to compare each panel against.
-		-->
 		<Circle
 			{data}
 			cx="bill_length_mm"

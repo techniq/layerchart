@@ -575,17 +575,17 @@
         },
         {
           "component": "Chart",
-          "lineNumber": 63,
+          "lineNumber": 64,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 84,
+          "lineNumber": 85,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 85,
+          "lineNumber": 86,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -1228,7 +1228,7 @@
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/faceted-member",
       "lineNumber": 56,
-      "line": "<LineChart data={totals} x=\"date\" y=\"value\" height={100} padding={{ left: 40, bottom: 20 }} />"
+      "line": "<LineChart data={totals} x=\"date\" y=\"value\" height={120} padding={{ left: 40, bottom: 20 }} />"
     },
     {
       "example": "highlight-only",
@@ -1770,5 +1770,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:44.345Z"
+  "updatedAt": "2026-08-17T17:22:26.072Z"
 }

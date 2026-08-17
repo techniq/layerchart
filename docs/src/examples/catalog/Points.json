@@ -239,6 +239,13 @@
       "line": "<Points />"
     },
     {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 43,
+      "line": "<Points>"
+    },
+    {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
@@ -456,5 +463,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:53.891Z"
+  "updatedAt": "2026-08-17T11:58:49.575Z"
 }

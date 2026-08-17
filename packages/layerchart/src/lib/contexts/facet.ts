@@ -5,14 +5,6 @@ import { getChartContext } from '$lib/contexts/chart.js';
 import type { Facet } from '$lib/states/facet.svelte.js';
 
 /**
- * The panel a layer hands its children, and the options configuring the grid.
- *
- * The `<Facet>` component itself isn't exported — every layer renders one, so there's nothing to
- * reach for directly.
- */
-export type { Facet, FacetOptions } from '$lib/states/facet.svelte.js';
-
-/**
  * The panel a component is rendering into, or `undefined` outside a faceted chart.
  *
  * Read during init, as with any context.  Returns a getter so reads stay current as the panels

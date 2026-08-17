@@ -1210,6 +1210,41 @@
     },
     {
       "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 51,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 46,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 14,
@@ -1415,7 +1450,7 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 85,
+      "lineNumber": 86,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1573,5 +1608,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:56.105Z"
+  "updatedAt": "2026-08-17T17:22:24.599Z"
 }

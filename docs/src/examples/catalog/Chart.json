@@ -397,7 +397,7 @@
         },
         {
           "component": "Circle",
-          "lineNumber": 33,
+          "lineNumber": 29,
           "line": "<Circle"
         }
       ]
@@ -1718,6 +1718,48 @@
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/with-violin",
       "lineNumber": 50,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 40,
+      "line": "<Chart"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 34,
+      "line": "<Chart"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 30,
+      "line": "<Chart"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 32,
       "line": "<Chart"
     },
     {
@@ -3341,7 +3383,7 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 63,
+      "lineNumber": 64,
       "line": "<Chart"
     },
     {
@@ -4360,6 +4402,13 @@
       "line": "<Chart"
     },
     {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 66,
+      "line": "<Chart"
+    },
+    {
       "example": "parallel-coordinates-faceted",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates-faceted",
@@ -4934,5 +4983,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:56.398Z"
+  "updatedAt": "2026-08-17T17:22:24.981Z"
 }

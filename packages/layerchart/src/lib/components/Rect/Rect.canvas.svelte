@@ -10,7 +10,9 @@
   import { createKey } from '$lib/utils/key.svelte.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
-  let { ...rest }: RectProps = $props();
+  // Declared for parity with the svg/html variants, but never set — canvas draws the rect rather
+  // than creating an element for it
+  let { ref: _ref = $bindable(), ...rest }: RectProps = $props();
 
   const c = new RectState(() => rest as RectProps);
 
@@ -123,6 +125,7 @@
       events: {
         click: (rest as any).onclick,
         dblclick: (rest as any).ondblclick,
+        pointerdown: (rest as any).onpointerdown,
         pointerenter: (rest as any).onpointerenter,
         pointermove: (rest as any).onpointermove,
         pointerleave: (rest as any).onpointerleave,

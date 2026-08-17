@@ -1,8 +1,7 @@
 <script lang="ts" module>
   // aliased — `Facet` is the component rendering the panels
   import type { Facet as Panel } from '$lib/states/facet.svelte.js';
-  import type { ComponentNode } from '$lib/contexts/chart.js';
-  import type { ChartState } from '$lib/states/chart.svelte.js';
+  import type { ChartState, ComponentNode } from '$lib/states/chart.svelte.js';
 
   type SSRCaptureTarget = {
     chartState?: ChartState<any, any, any>;

@@ -129,11 +129,12 @@ export type RectPropsWithoutHTML = {
   key?: (d: any, index: number) => any;
 
   /**
-   * Underlying `<rect>` tag when using <Svg>. Useful for bindings (pixel mode only).
+   * Underlying `<rect>` (or `<div>` in an html layer) tag. Useful for bindings (pixel mode only).
+   * Never set in a canvas layer, which draws the rect rather than creating an element.
    *
    * @bindable
    */
-  ref?: SVGRectElement;
+  ref?: SVGRectElement | HTMLDivElement;
 
   /** Motion configuration (pixel mode only). */
   motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;

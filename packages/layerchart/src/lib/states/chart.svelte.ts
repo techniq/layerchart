@@ -101,6 +101,55 @@ function isEmptyMarkInfo(info: MarkInfo): boolean {
   return !info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label;
 }
 
+/** One axis of {@link transformForBrush}, as a fraction of the base domain */
+function zoomForAxis(domain: any[], from: any, to: any) {
+  if (from == null || to == null) return undefined;
+
+  if (typeof domain[0] === 'string') {
+    // Categorical: the selection is a run of the domain, measured in indices
+    const startIdx = (domain as string[]).indexOf(from as string);
+    const endIdx = (domain as string[]).indexOf(to as string) + 1;
+    const selected = endIdx - startIdx;
+    if (selected <= 0 || domain.length === 0) return undefined;
+    return { scale: domain.length / selected, offset: startIdx / domain.length };
+  }
+
+  const baseMin = +domain[0];
+  const baseRange = +domain[1] - baseMin;
+  const selectedRange = +to - +from;
+  if (selectedRange <= 0 || baseRange <= 0) return undefined;
+  return { scale: baseRange / selectedRange, offset: (+from - baseMin) / baseRange };
+}
+
+/**
+ * The scale/translate that brings `brush` into view, given the untransformed domains and plot size.
+ *
+ * Pure, so the same maths serves `zoomToBrush()` and the initial transform a chart renders with
+ * before `TransformContext` has loaded.
+ */
+export function transformForBrush(
+  brush: { x: BrushDomainType; y: BrushDomainType },
+  axis: 'x' | 'y' | 'both',
+  base: { xDomain: any[]; yDomain: any[]; width: number; height: number }
+) {
+  // Only an x (or both) selection sets the scale, as it always has
+  if (axis !== 'x' && axis !== 'both') return undefined;
+
+  const x = zoomForAxis(base.xDomain, brush.x[0], brush.x[1]);
+  if (!x) return undefined;
+
+  let translateY = 0;
+  if (axis === 'both') {
+    const y = zoomForAxis(base.yDomain, brush.y[0], brush.y[1]);
+    if (y) translateY = -y.offset * base.height * x.scale;
+  }
+
+  return {
+    scale: x.scale,
+    translate: { x: -x.offset * base.width * x.scale, y: translateY },
+  };
+}
+
 export class ChartState<
   TData = any,
   XScale extends AnyScale = AnyScale,
@@ -142,6 +191,10 @@ export class ChartState<
   // State / contexts
   geoState: GeoState;
   transformState = $state<TransformState>(null!);
+  /** A `zoomToBrush()` that arrived before `transformState` existed, standing in until it does */
+  #initialZoom = $state<
+    { brush: { x: BrushDomainType; y: BrushDomainType }; axis: 'x' | 'y' | 'both' } | undefined
+  >();
   tooltipState = $state<TooltipState>(null!);
   brushState = $state<BrushState>(null!);
   // TODO: handle TComponent
@@ -596,12 +649,12 @@ export class ChartState<
   /** Transform-aware range for band scales in domain mode (D3 range-rescaling pattern) */
   private _xScaleRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'x' || this.#transform.axis === 'both') &&
       isScaleBand(this._xScaleProp) &&
       this.width > 0
     ) {
-      const { scale, translate } = this.transformState;
+      const { scale, translate } = this.#transform;
       return [translate.x, translate.x + this.width * scale];
     }
     return this.xRangeProp;
@@ -609,12 +662,12 @@ export class ChartState<
 
   private _yScaleRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'y' || this.#transform.axis === 'both') &&
       isScaleBand(this._yScaleProp) &&
       this.height > 0
     ) {
-      const { scale, translate } = this.transformState;
+      const { scale, translate } = this.#transform;
       return [translate.y, translate.y + this.height * scale];
     }
     return this.yRangeProp;
@@ -969,17 +1022,65 @@ export class ChartState<
   _baseXDomain = $derived(calcDomain('x', this.extents, this._xDomain));
   _baseYDomain = $derived(calcDomain('y', this.extents, this._yDomain));
 
+  /**
+   * Where the transform starts, for a chart that opens zoomed — `transform.initialDomain`, or a
+   * `zoomToBrush()` that arrived before `TransformContext` had loaded.
+   *
+   * `TransformContext` takes this as its initial scale/translate, so the chart it mounts into is
+   * already where it should be.
+   */
+  _initialTransform = $derived.by(() => {
+    const zoom =
+      this.#initialZoom ??
+      (this.props.transform?.initialDomain
+        ? {
+            brush: {
+              x: this.props.transform.initialDomain.x ?? [null, null],
+              y: this.props.transform.initialDomain.y ?? [null, null],
+            },
+            axis: this.props.transform.axis ?? 'x',
+          }
+        : undefined);
+    if (!zoom) return undefined;
+
+    return transformForBrush(zoom.brush, zoom.axis, {
+      xDomain: this._baseXDomain,
+      yDomain: this._baseYDomain,
+      width: this.width,
+      height: this.height,
+    });
+  });
+
+  /**
+   * The live transform, or the initial one standing in while `TransformContext` loads — that
+   * import is async, so a chart opening zoomed would otherwise paint the full domain first.
+   */
+  #transform = $derived.by(() => {
+    if (this.transformState) return this.transformState;
+
+    const props = this.props.transform;
+    const initial = this._initialTransform;
+    if (!props || !initial) return undefined;
+
+    return {
+      mode: props.mode ?? 'none',
+      axis: props.axis ?? 'both',
+      scale: initial.scale,
+      translate: initial.translate,
+    };
+  });
+
   /** Target domain — narrowed by transform when mode is 'domain', but not yet animated */
   _rawXDomain = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'x' || this.#transform.axis === 'both') &&
       this.width > 0
     ) {
       return this._computeTransformDomain(
         this._baseXDomain,
-        this.transformState.translate.x,
-        this.transformState.scale,
+        this.#transform.translate.x,
+        this.#transform.scale,
         this.width
       );
     }
@@ -988,14 +1089,14 @@ export class ChartState<
 
   _rawYDomain = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'y' || this.#transform.axis === 'both') &&
       this.height > 0
     ) {
       return this._computeTransformDomain(
         this._baseYDomain,
-        this.transformState.translate.y,
-        this.transformState.scale,
+        this.#transform.translate.y,
+        this.#transform.scale,
         this.height
       );
     }
@@ -1257,8 +1358,8 @@ export class ChartState<
    *  so we return the base scale's range instead. */
   xRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'x' || this.#transform.axis === 'both') &&
       isScaleBand(this._xScaleProp)
     ) {
       return getRange(this.baseXScale);
@@ -1267,8 +1368,8 @@ export class ChartState<
   });
   yRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'y' || this.#transform.axis === 'both') &&
       isScaleBand(this._yScaleProp)
     ) {
       return getRange(this.baseYScale);
@@ -1432,68 +1533,28 @@ export class ChartState<
   }
 
   /**
-   * Convert a brush selection to transform scale/translate, zooming the chart to the brushed region.
+   * Zoom the chart to a brushed region, converting the selection to transform scale/translate.
    * Used by integrated brush mode when `transform.mode === 'domain'`.
    */
   zoomToBrush(brush: { x: BrushDomainType; y: BrushDomainType }, axis: 'x' | 'y' | 'both' = 'x') {
-    const brushX = brush.x;
-    const brushY = brush.y;
-
-    if ((axis === 'x' || axis === 'both') && brushX[0] != null && brushX[1] != null) {
-      const baseDomainX = this._baseXDomain;
-
-      if (typeof baseDomainX[0] === 'string') {
-        // Categorical: compute scale/translate from domain indices
-        const totalCount = baseDomainX.length;
-        const startIdx = (baseDomainX as unknown as string[]).indexOf(brushX[0] as string);
-        const endIdx = (baseDomainX as unknown as string[]).indexOf(brushX[1] as string) + 1;
-        const selectedCount = endIdx - startIdx;
-
-        if (selectedCount > 0 && totalCount > 0) {
-          const newScale = totalCount / selectedCount;
-          const newTranslateX = -(startIdx / totalCount) * this.width * newScale;
-
-          let newTranslateY = 0;
-          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
-            const baseDomainY = this._baseYDomain;
-            if (typeof baseDomainY[0] === 'string') {
-              const yTotal = baseDomainY.length;
-              const yStart = (baseDomainY as unknown as string[]).indexOf(brushY[0] as string);
-              const yEnd = (baseDomainY as unknown as string[]).indexOf(brushY[1] as string) + 1;
-              const ySelected = yEnd - yStart;
-              if (ySelected > 0) {
-                newTranslateY = -(yStart / yTotal) * this.height * newScale;
-              }
-            }
-          }
-
-          this.transform.setScale(newScale);
-          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
-        }
-      } else {
-        // Continuous: existing numeric logic
-        const baseMinX = +baseDomainX[0];
-        const baseRangeX = +baseDomainX[1] - baseMinX;
-        const brushMinX = +brushX[0];
-        const brushRangeX = +brushX[1] - brushMinX;
-
-        if (brushRangeX > 0 && baseRangeX > 0) {
-          const newScale = baseRangeX / brushRangeX;
-          const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
-
-          let newTranslateY = 0;
-          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
-            const baseMinY = +this._baseYDomain[0];
-            const baseRangeY = +this._baseYDomain[1] - baseMinY;
-            const brushMinY = +brushY[0];
-            newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
-          }
-
-          this.transform.setScale(newScale);
-          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
-        }
-      }
+    // `TransformContext` is imported lazily, so a zoom requested as the chart mounts (restoring a
+    // saved range, say) has nothing to drive yet.  Hold it as the initial transform instead, which
+    // the domain already renders with and `TransformContext` adopts when it arrives.
+    if (!this.transformState) {
+      this.#initialZoom = { brush, axis };
+      return;
     }
+
+    const transform = transformForBrush(brush, axis, {
+      xDomain: this._baseXDomain,
+      yDomain: this._baseYDomain,
+      width: this.width,
+      height: this.height,
+    });
+    if (!transform) return;
+
+    this.transform.setScale(transform.scale);
+    this.transform.setTranslate(transform.translate);
   }
 
   get config() {

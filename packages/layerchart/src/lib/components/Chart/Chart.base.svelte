@@ -25,6 +25,7 @@
   lang="ts"
   generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
 >
+  import { untrack } from 'svelte';
   import { setGeoContext } from '$lib/contexts/geo.js';
   import { getSettings } from '$lib/contexts/settings.js';
   import { setChartContext } from '$lib/contexts/chart.js';
@@ -154,6 +155,31 @@
     const t = fitted.translate();
     return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
   });
+
+  /**
+   * The zoom a chart opens at, read once `TransformContext` is here to take it.
+   *
+   * Deliberately untracked: `_initialTransform` follows the chart's width, and `TransformContext`
+   * resets whenever its initial values change — so tracking it would snap a panned chart back to
+   * where it started on the next resize.  Reading it at this point picks up the laid-out width.
+   */
+  const initialZoom = $derived.by(() => {
+    if (!TransformContext) return undefined;
+    return untrack(() => chartState._initialTransform);
+  });
+
+  /**
+   * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
+   * two are exclusive: one is `mode: 'projection'`, the other `mode: 'domain'`.
+   */
+  const resolvedInitialTransform = $derived(
+    transform?.mode === 'projection'
+      ? {
+          translate: resolvedApply.translate ? initialTransform?.translate : undefined,
+          scale: resolvedApply.scale ? initialTransform?.scale : undefined,
+        }
+      : { translate: initialZoom?.translate, scale: initialZoom?.scale }
+  );
 
   const processTranslate = $derived.by(() => {
     if (resolvedApply.rotation && chartState.geoState?.projection) {
@@ -507,8 +533,8 @@
         <TransformContext
           bind:state={chartState.transformState}
           mode={transform.mode ?? 'none'}
-          initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
-          initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
+          initialTranslate={resolvedInitialTransform.translate}
+          initialScale={resolvedInitialTransform.scale}
           {processTranslate}
           {...transformProps}
           scaleExtent={resolvedScaleExtent}

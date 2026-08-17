@@ -269,6 +269,13 @@
       "line": "<Circle"
     },
     {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 48,
+      "line": "<Circle"
+    },
+    {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
@@ -328,14 +335,14 @@
       "example": "facet-non-faceted-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-non-faceted-marks",
-      "lineNumber": 33,
+      "lineNumber": 29,
       "line": "<Circle"
     },
     {
       "example": "facet-non-faceted-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-non-faceted-marks",
-      "lineNumber": 42,
+      "lineNumber": 38,
       "line": "<Circle"
     },
     {
@@ -1186,5 +1193,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:56.556Z"
+  "updatedAt": "2026-08-17T16:27:46.547Z"
 }

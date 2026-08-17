@@ -193,6 +193,23 @@ Bind the main chart's `context` to read its `xDomain`, then pass it as the overv
 
 :example{ component="LineChart" name="pan-zoom-with-overview" }
 
+### Opening zoomed
+
+`initialDomain` starts the chart at a range rather than the full extent — restoring one saved between reloads, say:
+
+```svelte
+<LineChart
+	{data}
+	x="date"
+	y="value"
+	transform={{ mode: 'domain', axis: 'x', initialDomain: { x: savedRange } }}
+/>
+```
+
+Prefer it to calling `zoomToBrush()` once the chart has mounted. Transform support is loaded lazily, so a zoom applied afterwards can only land once the chart has already painted — the full domain would show first. `initialDomain` is part of the first render.
+
+:example{ component="LineChart" name="persist-brush-zoom" }
+
 ## Programmatic control
 
 Access the transform state via the chart context to control zoom/pan from code:

@@ -2860,6 +2860,90 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "flame-chart",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/flame-chart",
@@ -4673,6 +4757,13 @@
       "line": "<Axis"
     },
     {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 80,
+      "line": "<Axis"
+    },
+    {
       "example": "parallel-coordinates-faceted",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates-faceted",
@@ -5331,5 +5422,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:56.152Z"
+  "updatedAt": "2026-08-17T17:22:24.656Z"
 }

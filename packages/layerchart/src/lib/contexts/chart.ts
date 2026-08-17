@@ -3,11 +3,6 @@ import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { AnyScale } from '$lib/utils/scales.svelte.js';
 
 export type { ChartState };
-export type {
-  NodeKind,
-  ComponentNode,
-  RegisterComponentOptions,
-} from '$lib/states/chart.svelte.js';
 
 const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartContext');
 

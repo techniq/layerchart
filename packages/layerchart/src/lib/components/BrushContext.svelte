@@ -121,12 +121,10 @@
 
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { localPoint } from '@layerstack/utils';
+  import { brushable, type BrushMode } from '$lib/attachments/brushable.js';
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
-  import type { NonNullArray } from 'layerchart/utils/types.js';
 
-  import { scaleInvert } from '../utils/scales.svelte.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from '$lib/contexts/chart.js';
 
@@ -182,145 +180,37 @@
   const logger = new Logger('BrushContext');
   const RESET_THRESHOLD = 1; // size of pointer delta to ignore
 
-  function handler(
-    /** Callback on pointer move */
-    fn: (
-      start: {
-        x: NonNullArray<BrushDomainType>;
-        y: NonNullArray<BrushDomainType>;
-        value: { x: number; y: number };
-      },
-      value: { x: number; y: number }
-    ) => void
-  ) {
-    return (e: PointerEvent) => {
-      logger.debug('drag start');
-      e.stopPropagation();
-
-      const startPoint = localPoint(e, rootEl);
-
+  /**
+   * The gesture, from the `brushable` attachment — the same one a chart can attach to elements of
+   * its own.  Each part of the brush takes the mode it represents, so the handles keep their own
+   * cursors and hit areas, and the root creates a new selection.
+   */
+  function gesture(mode: BrushMode) {
+    return brushable({
+      state: brushState,
+      axis,
+      mode,
+      // Every part measures against the root, not against itself — a handle is only a few pixels
+      bounds: () => rootEl?.getBoundingClientRect(),
       // The gesture belongs to the panel it started in, and stays there — the scales are shared,
       // so the selection it produces applies to every panel.  Unfaceted charts resolve to the
-      // single full-size panel, and a point in the gap between panels to none.
-      const panel = startPoint
-        ? ctx.facet.panelAt(startPoint.x, startPoint.y)
-        : ctx.facet.panels[0];
-
-      if (!panel) {
-        logger.debug('ignoring click as outside of chart bounds', {
-          startPoint,
-          width: ctx.width,
-          height: ctx.height,
-        });
-        return;
-      }
-
-      /** A plot-area point in the gesture panel's own coordinates */
-      const inPanel = (point: { x: number; y: number } | null | undefined) => ({
-        x: (point?.x ?? 0) - panel.x,
-        y: (point?.y ?? 0) - panel.y,
-      });
-
-      const start = {
-        x: [
-          brushState.x[0] ?? brushState.xDomainMin,
-          brushState.x[1] ?? brushState.xDomainMax,
-        ] as Parameters<typeof fn>[0]['x'],
-        y: [
-          brushState.y[0] ?? brushState.yDomainMin,
-          brushState.y[1] ?? brushState.yDomainMax,
-        ] as Parameters<typeof fn>[0]['y'],
-        value: {
-          x: scaleInvert(ctx.xScale, inPanel(startPoint).x),
-          y: scaleInvert(ctx.yScale, inPanel(startPoint).y),
-        },
-      };
-
-      onBrushStart({ brush: brushState });
-
-      const onPointerMove = (e: PointerEvent) => {
-        const currentPoint = inPanel(localPoint(e, rootEl));
-        fn(start, {
-          x: scaleInvert(ctx.xScale, currentPoint.x),
-          y: scaleInvert(ctx.yScale, currentPoint.y),
-        });
-
-        onChange({ brush: brushState });
-      };
-
-      const onPointerUp = (e: PointerEvent) => {
-        const currentPoint = localPoint(e, rootEl);
-        const xPointDelta = Math.abs((startPoint?.x ?? 0) - (currentPoint?.x ?? 0));
-        const yPointDelta = Math.abs((startPoint?.y ?? 0) - (currentPoint?.y ?? 0));
-
-        // Is click on frame (i.e. not on the `.range` or `.handle`)
-        const isClickOutside = !Array.from((e.target as Element).classList).some((cls) =>
-          ['range', 'handle'].includes(cls)
-        );
-
-        if (
-          (isClickOutside && xPointDelta < RESET_THRESHOLD && yPointDelta < RESET_THRESHOLD) ||
-          brushState.range.width < RESET_THRESHOLD ||
-          brushState.range.height < RESET_THRESHOLD
-        ) {
-          // Clicked on frame, or pointer delta was less than threshold (default: 1px)
-          if (clickToReset) {
-            logger.debug('resetting due to frame click');
-            brushState.reset();
-            onChange({ brush: brushState });
-          } else {
-            logger.debug('ignoring frame click reset (clickToReset: false)');
-          }
-        } else {
-          logger.debug('drag end', {
-            target: e.target,
-            xPointDelta,
-            yPointDelta,
-            rangeWidth: brushState.range.width,
-            rangeHeight: brushState.range.height,
-          });
+      // single full-size panel, and a point in the gap between panels to none, which ignores it.
+      origin: (offset) => {
+        const panel = ctx.facet.panelAt(offset.x, offset.y);
+        if (!panel) {
+          logger.debug('ignoring drag as outside of chart bounds', { offset });
+          return null;
         }
-
-        onBrushEnd({ brush: brushState });
-
-        window.removeEventListener('pointermove', onPointerMove);
-        window.removeEventListener('pointerup', onPointerUp);
-      };
-
-      window.addEventListener('pointermove', onPointerMove);
-      window.addEventListener('pointerup', onPointerUp);
-    };
+        return { x: panel.x, y: panel.y };
+      },
+      clearThreshold: clickToReset ? RESET_THRESHOLD : 0,
+      onChange: ({ phase }) => {
+        if (phase === 'start') onBrushStart({ brush: brushState });
+        else if (phase === 'brush') onChange({ brush: brushState });
+        else onBrushEnd({ brush: brushState });
+      },
+    });
   }
-
-  const createRange = handler((start, value) => {
-    logger.debug('createRange');
-    brushState.setRange(start.value, value);
-  });
-
-  const adjustRange = handler((start, value) => {
-    logger.debug('adjustRange');
-    brushState.moveRange(start as any, value);
-  });
-
-  const adjustTop = handler((start, value) => {
-    logger.debug('adjustTop');
-    brushState.adjustEdge('top', start as any, value);
-  });
-
-  const adjustBottom = handler((start, value) => {
-    logger.debug('adjustBottom');
-    brushState.adjustEdge('bottom', start as any, value);
-  });
-
-  const adjustLeft = handler((start, value) => {
-    logger.debug('adjustLeft');
-    brushState.adjustEdge('left', start as any, value);
-  });
-
-  const adjustRight = handler((start, value) => {
-    logger.debug('adjustRight');
-    brushState.adjustEdge('right', start as any, value);
-  });
 
   // Sync external x/y props into brush state when provided
   $effect.pre(() => {
@@ -344,7 +234,7 @@
     style:width="{ctx.box.width}px"
     style:height="{ctx.box.height}px"
     class={cls('lc-brush-context')}
-    onpointerdown={createRange}
+    {@attach gesture('create')}
     ondblclick={(e) => {
       brushState.selectAll();
       e.stopPropagation();
@@ -374,7 +264,7 @@
             style:width="{brushState.range.width}px"
             style:height="{brushState.range.height}px"
             class={cls('lc-brush-range', classes.range, range?.class)}
-            onpointerdown={adjustRange}
+            {@attach gesture('move')}
             ondblclick={() => {
               brushState.reset();
               onChange({ brush: brushState });
@@ -390,7 +280,7 @@
               style:height="{handleSize}px"
               data-position="top"
               class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              onpointerdown={adjustTop}
+              {@attach gesture('top')}
               ondblclick={(e) => {
                 e.stopPropagation();
                 if (brushState.y[0]) {
@@ -408,7 +298,7 @@
               style:height="{handleSize}px"
               data-position="bottom"
               class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              onpointerdown={adjustBottom}
+              {@attach gesture('bottom')}
               ondblclick={(e) => {
                 e.stopPropagation();
                 if (brushState.y[1]) {
@@ -428,7 +318,7 @@
               style:height="{brushState.range.height}px"
               data-position="left"
               class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              onpointerdown={adjustLeft}
+              {@attach gesture('left')}
               ondblclick={(e) => {
                 e.stopPropagation();
                 if (brushState.x[0]) {
@@ -446,7 +336,7 @@
               style:height="{brushState.range.height}px"
               data-position="right"
               class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              onpointerdown={adjustRight}
+              {@attach gesture('right')}
               ondblclick={(e) => {
                 e.stopPropagation();
                 if (brushState.x[1]) {

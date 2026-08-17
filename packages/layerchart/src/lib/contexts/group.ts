@@ -1,18 +1,6 @@
 import { Context } from 'runed';
 import { ChartGroupState } from '$lib/states/group.svelte.js';
 
-export { ChartGroupState, resolvePointerData } from '$lib/states/group.svelte.js';
-export type {
-  ChartGroupPointer,
-  ChartGroupPointerOptions,
-  ChartGroupMemberOptions,
-  ChartGroupOptions,
-  ChartGroupSeries,
-  ChartGroupSeriesOptions,
-  ChartGroupSlice,
-  PointerMatch,
-} from '$lib/states/group.svelte.js';
-
 const _ChartGroupContext = new Context<ChartGroupState | undefined>('ChartGroupContext');
 
 /**

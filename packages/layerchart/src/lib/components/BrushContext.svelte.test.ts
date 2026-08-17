@@ -322,6 +322,72 @@ describe('BrushContext', () => {
     });
   });
 
+  describe('adjusting an existing selection', () => {
+    /** Drag from one client x to another, on whichever element is under the first point */
+    function dragFrom(el: Element, fromX: number, toX: number, y: number) {
+      for (const [type, clientX] of [
+        ['pointerdown', fromX],
+        ['pointermove', toX],
+        ['pointerup', toX],
+      ] as const) {
+        el.dispatchEvent(new PointerEvent(type, { clientX, clientY: y, bubbles: true }));
+      }
+    }
+
+    async function renderWithSelection() {
+      let ctx: any;
+      const { container } = render(BrushTestHarness, {
+        chartProps: { ...defaultChartProps, brush: true },
+        oncontext: (c: any) => (ctx = c),
+      });
+      await awaitBrushReady(container);
+
+      const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
+      const rect = brushEl.getBoundingClientRect();
+      const y = rect.top + rect.height / 2;
+      dragFrom(brushEl, rect.left + rect.width * 0.3, rect.left + rect.width * 0.6, y);
+      await tick();
+
+      return { container, ctx: () => ctx, rect, y };
+    }
+
+    it('moves the selection rather than starting a new one', async () => {
+      const { container, ctx, rect, y } = await renderWithSelection();
+      const before = [...ctx().brush.x];
+      const range = ctx().brush.range;
+
+      // grab the middle of the selection and drag right
+      const selection = container.querySelector('.lc-brush-range') as HTMLElement;
+      const middle = rect.left + range.x + range.width / 2;
+      dragFrom(selection, middle, middle + 60, y);
+      await tick();
+
+      const after = [...ctx().brush.x];
+      // shifted, keeping its width — a new selection would have started at the grab point
+      expect(after[0]).toBeGreaterThan(before[0] as number);
+      expect((after[1] as number) - (after[0] as number)).toBeCloseTo(
+        (before[1] as number) - (before[0] as number),
+        6
+      );
+    });
+
+    it('resizes from a handle, anchored to the opposite edge', async () => {
+      const { container, ctx, rect, y } = await renderWithSelection();
+      const before = [...ctx().brush.x];
+
+      // the handles are only a few pixels wide, so they measure against the root rather than
+      // against themselves
+      const right = container.querySelector('[data-position="right"]') as HTMLElement;
+      const handle = right.getBoundingClientRect();
+      dragFrom(right, handle.left + handle.width / 2, handle.left + handle.width / 2 + 60, y);
+      await tick();
+
+      const after = [...ctx().brush.x];
+      expect(after[0]).toBe(before[0]);
+      expect(after[1]).toBeGreaterThan(before[1] as number);
+    });
+  });
+
   describe('facets', () => {
     const facetData = [
       { g: 'a', x: 0, y: 10 },

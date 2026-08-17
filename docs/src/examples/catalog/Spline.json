@@ -559,6 +559,43 @@
       ]
     },
     {
+      "name": "parallel-coordinates-brush",
+      "title": "parallel coordinates brush",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "components": [
+        {
+          "component": "Brush",
+          "lineNumber": 33,
+          "line": "// One selection per dimension, each owned by its `<Brush>` below and read back here"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 66,
+          "line": "<Chart"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 79,
+          "line": "<Group x={context.xScale(key)}>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 80,
+          "line": "<Axis"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 86,
+          "line": "<Text"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 106,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
       "name": "parallel-coordinates-faceted",
       "title": "parallel coordinates faceted",
       "path": "/docs/components/Spline/parallel-coordinates-faceted",
@@ -1339,6 +1376,13 @@
       "line": "<Spline"
     },
     {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 106,
+      "line": "<Spline"
+    },
+    {
       "example": "parallel-coordinates-faceted",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates-faceted",
@@ -1486,5 +1530,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:44.994Z"
+  "updatedAt": "2026-08-17T11:19:20.967Z"
 }

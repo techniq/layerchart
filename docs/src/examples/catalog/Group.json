@@ -344,6 +344,13 @@
       "line": "<Group x={context.xScale(key)}>"
     },
     {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 79,
+      "line": "<Group x={context.xScale(key)}>"
+    },
+    {
       "example": "parallel-coordinates-faceted",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates-faceted",
@@ -428,5 +435,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-08-15T17:29:23.642Z"
+  "updatedAt": "2026-08-17T11:19:20.182Z"
 }

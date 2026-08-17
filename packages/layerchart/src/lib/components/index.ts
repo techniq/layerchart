@@ -25,6 +25,8 @@ export { default as BoxPlot } from './BoxPlot/BoxPlot.svelte';
 export * from './BoxPlot/BoxPlot.svelte';
 export { default as Bounds } from './Bounds.svelte';
 export * from './Bounds.svelte';
+export { default as Brush } from './Brush/Brush.svelte';
+export * from './Brush/Brush.svelte';
 export { default as BrushContext } from './BrushContext.svelte';
 export * from './BrushContext.svelte';
 export { default as Calendar } from './Calendar/Calendar.svelte';

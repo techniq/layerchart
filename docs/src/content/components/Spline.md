@@ -67,6 +67,18 @@ One line per row across an axis per dimension, from a single `Spline` grouped by
 
 :example{ name="parallel-coordinates" showCode }
 
+### Brushable parallel coordinates
+
+A chart's `brush` prop owns one selection over the whole plot area. For several — one per axis here — place a [`Brush`](/docs/components/Brush) over each, a narrow strip of its own. Each owns its selection and takes only the drags that start inside its region: drag to select, drag the middle to move, drag an edge to resize, click to clear.
+
+```svelte
+<Brush bind:state={brushes[key]} axis="y" x={-12} width={24} />
+```
+
+`contains()` then filters the lines — a row is kept when every brushed dimension contains it, so brushing several intersects them.
+
+:example{ name="parallel-coordinates-brush" showCode }
+
 ### Faceted parallel coordinates
 
 A line crosses every dimension, so the dimensions can't be panels — but `fy` gives one plot per group, sharing the dimension scales so the panels stay comparable. The per-dimension axes repeat in each panel with `facetAll`, while the dimension names, being an axis over the shared `x`, draw above the top panel only.

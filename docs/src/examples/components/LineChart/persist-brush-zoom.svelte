@@ -4,35 +4,35 @@
 </script>
 
 <script lang="ts">
-	import { untrack } from 'svelte';
-	import { LineChart, Chart, Area, Layer, defaultChartPadding, type ChartState } from 'layerchart';
+	import {
+		LineChart,
+		Chart,
+		Area,
+		Layer,
+		defaultChartPadding,
+		type BrushDomainType,
+		type ChartState
+	} from 'layerchart';
 	const STORAGE_KEY = 'layerchart:persist-brush-zoom:range';
 
 	let context = $state<ChartState>();
-	let loaded = false;
 
-	// load once when context is ready
-	$effect(() => {
-		if (!context?.isMounted) return;
-		untrack(() => {
-			const saved = localStorage.getItem(STORAGE_KEY);
-			if (saved) {
-				const parsed = JSON.parse(saved);
-				if (Array.isArray(parsed) && parsed.length === 2) {
-					context.zoomToBrush(
-						{ x: [new Date(parsed[0]), new Date(parsed[1])], y: [null, null] },
-						'x'
-					);
-				}
-			}
-			loaded = true;
-		});
-	});
+	// Read before the first render, so the chart opens at the saved range rather than zooming to it
+	// afterwards — `transform.initialDomain` is applied from the first frame.
+	function loadRange(): BrushDomainType | undefined {
+		const saved = localStorage.getItem(STORAGE_KEY);
+		if (!saved) return undefined;
+		const parsed = JSON.parse(saved);
+		if (!Array.isArray(parsed) || parsed.length !== 2) return undefined;
+		return [new Date(parsed[0]), new Date(parsed[1])];
+	}
 
-	// save whenever brush range changes (after initial load)
+	const initialDomain = loadRange();
+
+	// Save whenever the zoomed domain changes
 	$effect(() => {
 		const range = context?.xDomain;
-		if (loaded && range) {
+		if (range) {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(range));
 		}
 	});
@@ -51,6 +51,7 @@
 		mode: 'domain',
 		axis: 'x',
 		scaleExtent: [1, 50],
+		initialDomain: initialDomain ? { x: initialDomain } : undefined,
 		domainExtent: {
 			x: { min: 'data', max: 'data', minRange: 7 * 24 * 60 * 60 * 1000 }
 		}

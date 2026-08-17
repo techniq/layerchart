@@ -8,7 +8,12 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
-  let { children, ...rest }: RectProps = $props();
+  let { children, ref: refProp = $bindable(), ...rest }: RectProps = $props();
+
+  let ref = $state<HTMLDivElement>();
+  $effect.pre(() => {
+    refProp = ref as any;
+  });
 
   const c = new RectState(() => rest as RectProps);
 
@@ -71,6 +76,7 @@
     style:border-color={c.staticStroke}
     style:border-radius={c.borderRadiusStyle ?? `${c.rx}px`}
     class={cls('lc-rect', c.staticClassName)}
+    bind:this={ref}
   >
     {@render children?.()}
   </div>

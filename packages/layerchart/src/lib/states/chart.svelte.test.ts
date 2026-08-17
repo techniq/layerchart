@@ -1900,3 +1900,111 @@ describe('ChartState x1Domain/y1Domain without series', () => {
     }
   });
 });
+
+describe('ChartState zoomToBrush', () => {
+  type DateData = { date: Date; value: number };
+  const data: DateData[] = [
+    { date: new Date(2024, 0, 1), value: 10 },
+    { date: new Date(2024, 0, 31), value: 50 },
+  ];
+  const half = [new Date(2024, 0, 1), new Date(2024, 0, 16)] as any;
+  const brush = { x: half, y: [null, null] as any };
+
+  /** Stands in for the lazily-imported `TransformContext`'s state */
+  function transformStub() {
+    const scales: number[] = [];
+    const translates: { x: number; y: number }[] = [];
+    return {
+      scales,
+      translates,
+      state: {
+        mode: 'domain',
+        axis: 'x',
+        scale: 1,
+        translate: { x: 0, y: 0 },
+        setScale: (v: number) => scales.push(v),
+        setTranslate: (p: any) => translates.push(p),
+      },
+    };
+  }
+
+  it('should apply the zoom when transform state already exists', () => {
+    const { state, cleanup } = createChartState<DateData>({ data, x: 'date', y: 'value' });
+    const stub = transformStub();
+
+    try {
+      state.transformState = stub.state as any;
+      state.zoomToBrush(brush, 'x');
+
+      // Half the domain brushed, so twice the scale
+      expect(stub.scales).toEqual([2]);
+      expect(stub.translates).toHaveLength(1);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should narrow the domain from `transform.initialDomain` before transform state exists', () => {
+    // `TransformContext` is imported lazily, so a chart opening zoomed has to render from this
+    // rather than waiting — otherwise it paints the full domain first
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x', initialDomain: { x: half } },
+    });
+
+    try {
+      expect(state.transformState).toBeFalsy();
+      expect(state._initialTransform?.scale).toBe(2);
+
+      const domain = state.xDomain as Date[];
+      expect(+domain[0]).toBe(+half[0]);
+      expect(+domain[1]).toBe(+half[1]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should leave the domain alone without an initial domain', () => {
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x' },
+    });
+
+    try {
+      expect(state._initialTransform).toBeUndefined();
+
+      const domain = state.xDomain as Date[];
+      expect(+domain[0]).toBe(+data[0].date);
+      expect(+domain[1]).toBe(+data[1].date);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should hold a zoom requested before transform state exists as the initial transform', () => {
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x' },
+    });
+
+    try {
+      state.zoomToBrush(brush, 'x');
+      flushSync();
+
+      // `Chart` hands this to `TransformContext` as its initial scale/translate
+      expect(state._initialTransform?.scale).toBe(2);
+
+      const domain = state.xDomain as Date[];
+      expect(+domain[0]).toBe(+half[0]);
+      expect(+domain[1]).toBe(+half[1]);
+    } finally {
+      cleanup();
+    }
+  });
+});

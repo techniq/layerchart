@@ -2,10 +2,16 @@
 description: Interaction component providing an interactive brush context allowing selection, adjustment, and resetting of x/y domains with draggable handles and event callbacks.
 category: interactions
 layers: [svg, canvas]
-related: []
+related: [Brush]
 ---
 
 ## Usage
+
+One selection, spanning the plot area, wired into the chart — `transform` zooming, tooltip interop, and a selection drawn in every facet panel. Set it up with the chart's `brush` prop, or this component directly.
+
+::tip
+For several selections in one chart, or a brushable region smaller than the plot, see [Brush](/docs/components/Brush) — a mark you place yourself. Both drag through the same gesture; [Brush vs. BrushContext](/docs/components/Brush#brush-vs-brushcontext) compares them.
+::
 
 ### Basic
 

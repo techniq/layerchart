@@ -17,6 +17,7 @@ import type {
   YRangeWithScale,
 } from '$lib/utils/types.js';
 import type { GeoStateProps } from '$lib/states/geo.svelte.js';
+import type { BrushDomainType } from '$lib/states/brush.svelte.js';
 import type { StackLayout } from '$lib/states/series.svelte.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { ChartGroupMemberOptions, ChartGroupState } from '$lib/states/group.svelte.js';
@@ -241,6 +242,17 @@ export type ChartPropsWithoutHTML<
         max?: number | Date | 'data';
         minRange?: number;
       };
+    };
+
+    /**
+     * The domain to open zoomed to, with `mode: 'domain'` — restoring a saved range, for example.
+     *
+     * Applied from the first render, unlike calling `context.zoomToBrush()` once mounted, which
+     * can only take effect after the chart has painted.
+     */
+    initialDomain?: {
+      x?: BrushDomainType;
+      y?: BrushDomainType;
     };
   };
 

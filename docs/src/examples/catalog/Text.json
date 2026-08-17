@@ -956,6 +956,13 @@
       "line": "<Text"
     },
     {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 86,
+      "line": "<Text"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Text",
       "path": "/docs/components/Text/color-via-ordinal-scale",
@@ -1159,5 +1166,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:57.807Z"
+  "updatedAt": "2026-08-17T11:19:21.037Z"
 }

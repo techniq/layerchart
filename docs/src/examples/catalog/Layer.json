@@ -1215,6 +1215,55 @@
     },
     {
       "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 47,
+      "line": "<Layer type=\"html\">"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 48,
+      "line": "<Layer>"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 13,
@@ -2806,7 +2855,7 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 84,
+      "lineNumber": 85,
       "line": "<Layer>"
     },
     {
@@ -4315,5 +4364,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-14T21:13:43.955Z"
+  "updatedAt": "2026-08-17T17:22:26.000Z"
 }
