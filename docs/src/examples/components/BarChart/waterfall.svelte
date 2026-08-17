@@ -110,6 +110,7 @@
 			<Text
 				x={bandCenter}
 				y={context.yScale(d.end)}
+				dy={2 * (isNegative ? 1 : -1)}
 				verticalAnchor={isNegative ? 'start' : 'end'}
 				textAnchor="middle"
 				class="text-xs fill-current"
