@@ -441,9 +441,9 @@
       },
       onBrushEnd: (e: { brush: BrushState }) => {
         if (!zoomsOnBrush) {
+          // Nothing to publish — the gesture reports every change through `onChange`, clearing
+          // on a click included
           userOnBrushEnd?.(e);
-          // Covers click-to-reset, which never fires `onChange`
-          groupSync.publishBrush(e.brush);
           return;
         }
 

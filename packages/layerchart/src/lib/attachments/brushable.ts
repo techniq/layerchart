@@ -164,7 +164,12 @@ export function brushGesture(options: BrushableOptions) {
       // Clicking the region rather than dragging it clears the selection.  Only the region — a
       // click that lands on the selection or a handle is a grab the pointer never followed
       // through on, and throwing the selection away for it would be its own surprise.
-      if (clearThreshold > 0 && !dragged && mode === 'create') state.reset();
+      if (clearThreshold > 0 && !dragged && mode === 'create') {
+        state.reset();
+        // Clearing *is* a change, and a click produces no `pointermove` to report one — so say so
+        // here, or a listener watching the selection would never hear that it emptied
+        onChange?.({ state, phase: 'brush' });
+      }
 
       window.removeEventListener('pointermove', onPointerMove as EventListener);
       onChange?.({ state, phase: 'end' });

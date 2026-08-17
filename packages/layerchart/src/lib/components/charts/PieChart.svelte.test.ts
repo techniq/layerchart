@@ -59,8 +59,8 @@ describe('PieChart', () => {
     const arc = container.querySelector('.lc-arc-line') as SVGElement | null;
     await expect.element(arc).toBeInTheDocument();
 
-    expect(container.querySelectorAll('.lc-grid line, .lc-grid path, .lc-grid circle')).toHaveLength(
-      0
-    );
+    expect(
+      container.querySelectorAll('.lc-grid line, .lc-grid path, .lc-grid circle')
+    ).toHaveLength(0);
   });
 });

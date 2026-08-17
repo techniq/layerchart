@@ -505,6 +505,73 @@ describe('brush slice', () => {
     });
   });
 
+  /**
+   * The gesture path, rather than driving the group state directly — a chart publishes what its
+   * own brush reports, so a selection that only ever reaches `onBrushEnd` never reaches the group.
+   */
+  describe('publishing from a gesture', () => {
+    /** Drag across an element, or click it when `to` matches `from` */
+    function pointerRun(el: Element, from: number, to: number, y: number) {
+      const types: Array<[string, number]> =
+        from === to
+          ? [
+              ['pointerdown', from],
+              ['pointerup', to],
+            ]
+          : [
+              ['pointerdown', from],
+              ['pointermove', to],
+              ['pointerup', to],
+            ];
+      for (const [type, clientX] of types) {
+        el.dispatchEvent(new PointerEvent(type, { clientX, clientY: y, bubbles: true }));
+      }
+    }
+
+    async function firstBrushEl() {
+      let el: HTMLElement | null = null;
+      await vi.waitFor(() => {
+        el = document.querySelectorAll('.lc-brush-context')[0] as HTMLElement;
+        expect(el).toBeTruthy();
+      });
+      return el!;
+    }
+
+    it('shares a selection dragged in one chart', async () => {
+      const { chartA, chartB } = await renderBrushPair();
+      const el = await firstBrushEl();
+      const rect = el.getBoundingClientRect();
+      const y = rect.top + rect.height / 2;
+
+      pointerRun(el, rect.left + rect.width * 0.3, rect.left + rect.width * 0.6, y);
+
+      await vi.waitFor(() => {
+        expect(chartA.brush.active).toBe(true);
+        expect(chartB.brush.active).toBe(true);
+      });
+    });
+
+    it('shares the clearing when that chart is clicked', async () => {
+      const { chartA, chartB, group } = await renderBrushPair();
+      const el = await firstBrushEl();
+      const rect = el.getBoundingClientRect();
+      const y = rect.top + rect.height / 2;
+
+      pointerRun(el, rect.left + rect.width * 0.3, rect.left + rect.width * 0.6, y);
+      await vi.waitFor(() => expect(chartB.brush.active).toBe(true));
+
+      // A click never moves the pointer, so the clear is only reported because the gesture says so
+      const x = rect.left + rect.width * 0.05;
+      pointerRun(el, x, x, y);
+
+      await vi.waitFor(() => {
+        expect(chartA.brush.active).toBeFalsy();
+        expect(group.brush.active).toBe(false);
+        expect(chartB.brush.active).toBeFalsy();
+      });
+    });
+  });
+
   it('respects `subscribe: false`', async () => {
     const { chartB, group } = await renderBrushPair({
       memberOptions: [undefined, { subscribe: false }],

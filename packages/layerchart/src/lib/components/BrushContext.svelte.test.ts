@@ -407,6 +407,35 @@ describe('BrushContext', () => {
       expect(ctx().brush.active).toBeFalsy();
     });
 
+    it('reports the cleared selection to `onChange`, as double-clicking does', async () => {
+      const onChange = vi.fn();
+      let ctx: any;
+      const { container } = render(BrushTestHarness, {
+        chartProps: { ...defaultChartProps, brush: { onChange } },
+        oncontext: (c: any) => (ctx = c),
+      });
+      await awaitBrushReady(container);
+
+      const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
+      const rect = brushEl.getBoundingClientRect();
+      const y = rect.top + rect.height / 2;
+      dragFrom(brushEl, rect.left + rect.width * 0.3, rect.left + rect.width * 0.6, y);
+      await tick();
+      expect(ctx.brush.active).toBe(true);
+      onChange.mockClear();
+
+      // A click produces no `pointermove`, so nothing else would report the selection emptying
+      const x = rect.left + rect.width * 0.05;
+      for (const type of ['pointerdown', 'pointerup'] as const) {
+        brushEl.dispatchEvent(new PointerEvent(type, { clientX: x, clientY: y, bubbles: true }));
+      }
+      await tick();
+
+      expect(ctx.brush.active).toBeFalsy();
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange.mock.calls.at(-1)?.[0].brush.active).toBeFalsy();
+    });
+
     it('clears on clicking the region without dragging', async () => {
       const { container, ctx, rect, y } = await renderWithSelection();
       expect(ctx().brush.active).toBe(true);
