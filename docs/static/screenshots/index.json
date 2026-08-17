@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-06T14:50:38.005Z",
-  "totalComponents": 78,
-  "totalExamples": 929,
+  "generatedAt": "2026-08-17T23:13:32.185Z",
+  "totalComponents": 80,
+  "totalExamples": 962,
   "components": [
     {
       "component": "AnnotationLine",
@@ -900,6 +900,11 @@
           "name": "time-scale-explicit-multiline",
           "path": "/example/Axis/time-scale-explicit-multiline",
           "checksum": "f6d4edd0194a3733793dfdea2f54bb79"
+        },
+        {
+          "name": "utc-scale",
+          "path": "/example/Axis/utc-scale",
+          "checksum": "2abed3f7ee9c2709bd251e65f96fd314"
         }
       ]
     },
@@ -1070,6 +1075,16 @@
           "name": "group-series-series-long-data",
           "path": "/example/BarChart/group-series-series-long-data",
           "checksum": "e73f65c1ecbb15566bf4758c142bdeb4"
+        },
+        {
+          "name": "group-stack-series",
+          "path": "/example/BarChart/group-stack-series",
+          "checksum": "ad386ffd86cd7ed3b8211246654739d8"
+        },
+        {
+          "name": "group-stack-series-horizontal",
+          "path": "/example/BarChart/group-stack-series-horizontal",
+          "checksum": "823408b368c6c662afefdee23b081f00"
         },
         {
           "name": "highlight-below-marks",
@@ -1804,6 +1819,41 @@
       ]
     },
     {
+      "component": "Brush",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Brush/basic",
+          "checksum": "1cd61dcc0761dd3cd3957ba8122713d0"
+        },
+        {
+          "name": "html",
+          "path": "/example/Brush/html",
+          "checksum": "aef191b5586e17969d56eeb661c4d3a1"
+        },
+        {
+          "name": "programmatic",
+          "path": "/example/Brush/programmatic",
+          "checksum": "a1cd6a7cb88a892e74f0159e2cb7bc7d"
+        },
+        {
+          "name": "region",
+          "path": "/example/Brush/region",
+          "checksum": "24104ad86109d27148c041f66ed0e8fb"
+        },
+        {
+          "name": "two-dimensional",
+          "path": "/example/Brush/two-dimensional",
+          "checksum": "b1c26ed46bada5d5f197090868e07ad2"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Brush/vertical",
+          "checksum": "ef8e11d130f47e3eda6bc2dea8fcc26f"
+        }
+      ]
+    },
+    {
       "component": "BrushContext",
       "examples": [
         {
@@ -1859,7 +1909,7 @@
         {
           "name": "minimap",
           "path": "/example/BrushContext/minimap",
-          "checksum": "f4098f9cda019c94ee830e54558c388d"
+          "checksum": "e72dff88cf0736f368bbb57839e1db5f"
         },
         {
           "name": "programmatic-control",
@@ -1869,7 +1919,7 @@
         {
           "name": "selection",
           "path": "/example/BrushContext/selection",
-          "checksum": "f18294ca6628abade024b202cdddda5d"
+          "checksum": "8e402f921a3d400a3424f2f39854460b"
         },
         {
           "name": "separate-chart-(clip-data-y-axis)",
@@ -1884,7 +1934,7 @@
         {
           "name": "separate-chart-(filter-data)",
           "path": "/example/BrushContext/separate-chart-(filter-data)",
-          "checksum": "8a5179d8398eeb998e0963b2225844a0"
+          "checksum": "74505a768fad3e451cf8ab3f19e3f391"
         },
         {
           "name": "simple-styling",
@@ -2045,6 +2095,116 @@
           "name": "data-series-separate-data",
           "path": "/example/Chart/data-series-separate-data",
           "checksum": "52fb678001b7f600236b138391ab8459"
+        },
+        {
+          "name": "facet-annotation",
+          "path": "/example/Chart/facet-annotation",
+          "checksum": "c7f6466bf0c5564c7152bb9f9e86875e"
+        },
+        {
+          "name": "facet-brush",
+          "path": "/example/Chart/facet-brush",
+          "checksum": "0684e8d44c7eadc1274d7526e5fdf8c7"
+        },
+        {
+          "name": "facet-color",
+          "path": "/example/Chart/facet-color",
+          "checksum": "8aadfffeed684e652b0dd35538d650b5"
+        },
+        {
+          "name": "facet-composed",
+          "path": "/example/Chart/facet-composed",
+          "checksum": "4b799788ff4011f49b14647958c65c63"
+        },
+        {
+          "name": "facet-grid",
+          "path": "/example/Chart/facet-grid",
+          "checksum": "58252077eb28577ef35fb7808b8d7be6"
+        },
+        {
+          "name": "facet-lines",
+          "path": "/example/Chart/facet-lines",
+          "checksum": "e87d664bb6c1d12443384c88d7ef978d"
+        },
+        {
+          "name": "facet-non-faceted-marks",
+          "path": "/example/Chart/facet-non-faceted-marks",
+          "checksum": "3eb792945f5ba2521291230544ca61e3"
+        },
+        {
+          "name": "facet-spacing",
+          "path": "/example/Chart/facet-spacing",
+          "checksum": "9b771f1c52b1169939b0c08c4187edca"
+        },
+        {
+          "name": "facet-tooltip",
+          "path": "/example/Chart/facet-tooltip",
+          "checksum": "fdb77016ad479f5ef75e884231a6ffab"
+        },
+        {
+          "name": "facet-two-dimensional",
+          "path": "/example/Chart/facet-two-dimensional",
+          "checksum": "67b2707cea4563613827d908b5d00ead"
+        },
+        {
+          "name": "facet-wrap",
+          "path": "/example/Chart/facet-wrap",
+          "checksum": "9fb536646e4084ea94e3a1219c9d529f"
+        },
+        {
+          "name": "facet-x",
+          "path": "/example/Chart/facet-x",
+          "checksum": "d904bdf9019540528d8cf399d73a8509"
+        },
+        {
+          "name": "facet-y",
+          "path": "/example/Chart/facet-y",
+          "checksum": "19d81cdbf281d26360989b8713f0495e"
+        }
+      ]
+    },
+    {
+      "component": "ChartGroup",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ChartGroup/basic",
+          "checksum": "28b71aef9f71bafce5ad2d018e7798b6"
+        },
+        {
+          "name": "faceted-member",
+          "path": "/example/ChartGroup/faceted-member",
+          "checksum": "dcb4cb1afd44c09b084e941daff22e21"
+        },
+        {
+          "name": "highlight-only",
+          "path": "/example/ChartGroup/highlight-only",
+          "checksum": "058813ec4ed63dbca226945e177106c9"
+        },
+        {
+          "name": "minimap",
+          "path": "/example/ChartGroup/minimap",
+          "checksum": "e0c4b228747af8983259bb6eadf74761"
+        },
+        {
+          "name": "programmatic-control",
+          "path": "/example/ChartGroup/programmatic-control",
+          "checksum": "787d038bdabfbc057226b279dfc06c63"
+        },
+        {
+          "name": "synced-brushes",
+          "path": "/example/ChartGroup/synced-brushes",
+          "checksum": "f864c6059f938c17f0b9531941a9214a"
+        },
+        {
+          "name": "synced-legend",
+          "path": "/example/ChartGroup/synced-legend",
+          "checksum": "c245c2353bd2376f579510c46b3cae84"
+        },
+        {
+          "name": "synced-zoom",
+          "path": "/example/ChartGroup/synced-zoom",
+          "checksum": "239799a45aa84560dd962bbb2c643bf2"
         }
       ]
     },
@@ -3304,7 +3464,7 @@
         {
           "name": "persist-brush-zoom",
           "path": "/example/LineChart/persist-brush-zoom",
-          "checksum": "46c20c5237705872fbb4ee89b68f3c3b"
+          "checksum": "d873abe0b483541cfa63d98d62afb7d2"
         },
         {
           "name": "persist-series",
@@ -4549,7 +4709,22 @@
         {
           "name": "multiple-series-with-labels",
           "path": "/example/Spline/multiple-series-with-labels",
-          "checksum": "73756399058d03b152c38f56f56dcb29"
+          "checksum": "6d002022ef77acc2545323a4ca734d27"
+        },
+        {
+          "name": "parallel-coordinates",
+          "path": "/example/Spline/parallel-coordinates",
+          "checksum": "58ca2fb6190722d0f42ce1b2e4eb2e50"
+        },
+        {
+          "name": "parallel-coordinates-brush",
+          "path": "/example/Spline/parallel-coordinates-brush",
+          "checksum": "d527860c31956707459e7fdf634afa7d"
+        },
+        {
+          "name": "parallel-coordinates-faceted",
+          "path": "/example/Spline/parallel-coordinates-faceted",
+          "checksum": "ff366835c4701e9bf3237d11cc67793e"
         },
         {
           "name": "playground",
@@ -4564,7 +4739,7 @@
         {
           "name": "radial-multi-year-lines",
           "path": "/example/Spline/radial-multi-year-lines",
-          "checksum": "6ea2fc30eb6cf8c1bde981ec6c6bd6cf"
+          "checksum": "9b9611fc43c19c8db9ba27398a85e99d"
         },
         {
           "name": "radial-radar",
