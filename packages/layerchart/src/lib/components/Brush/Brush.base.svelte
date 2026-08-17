@@ -135,6 +135,15 @@
     right: part('right'),
   };
 
+  /**
+   * Clearing from the selection itself, as `BrushContext` does — a selection covering most of its
+   * region leaves little of it left to click, which a brush in a narrow band hits easily.
+   */
+  function clear() {
+    brushState.reset();
+    onChange?.({ state: brushState, phase: 'end' });
+  }
+
   function handleRect(edge: 'top' | 'bottom' | 'left' | 'right') {
     const { x: sx, y: sy, width: sw, height: sh } = selection;
     switch (edge) {
@@ -165,6 +174,7 @@
   <Rect
     {...selection}
     {...parts.move}
+    ondblclick={clear}
     class={cls('lc-brush-selection cursor-move', classes.selection)}
   />
 

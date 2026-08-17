@@ -265,7 +265,10 @@
             style:height="{brushState.range.height}px"
             class={cls('lc-brush-range', classes.range, range?.class)}
             {@attach gesture('move')}
-            ondblclick={() => {
+            ondblclick={(e) => {
+              // Stopped as the handles do — the root takes a double-click as "select all", which
+              // would otherwise land right back on top of the selection just cleared
+              e.stopPropagation();
               brushState.reset();
               onChange({ brush: brushState });
             }}

@@ -386,6 +386,41 @@ describe('BrushContext', () => {
       expect(after[0]).toBe(before[0]);
       expect(after[1]).toBeGreaterThan(before[1] as number);
     });
+
+    it('clears on double-clicking the selection', async () => {
+      const { container, ctx, rect, y } = await renderWithSelection();
+      expect(ctx().brush.active).toBe(true);
+
+      // The root takes a double-click as "select all", so the selection's own handler has to stop
+      // the event — otherwise the clear is immediately undone
+      const selection = container.querySelector('.lc-brush-range') as HTMLElement;
+      const range = ctx().brush.range;
+      selection.dispatchEvent(
+        new MouseEvent('dblclick', {
+          clientX: rect.left + range.x + range.width / 2,
+          clientY: y,
+          bubbles: true,
+        })
+      );
+      await tick();
+
+      expect(ctx().brush.active).toBeFalsy();
+    });
+
+    it('clears on clicking the region without dragging', async () => {
+      const { container, ctx, rect, y } = await renderWithSelection();
+      expect(ctx().brush.active).toBe(true);
+
+      // No `pointermove` at all — the selection is unchanged, so a size check would miss this
+      const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
+      const x = rect.left + rect.width * 0.05;
+      for (const type of ['pointerdown', 'pointerup'] as const) {
+        brushEl.dispatchEvent(new PointerEvent(type, { clientX: x, clientY: y, bubbles: true }));
+      }
+      await tick();
+
+      expect(ctx().brush.active).toBeFalsy();
+    });
   });
 
   describe('facets', () => {

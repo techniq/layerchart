@@ -2,12 +2,14 @@
 description: Marking component rendering a draggable selection over part of a chart, with its own state — so a chart can carry several independent brushes.
 category: interactions
 layers: [svg, canvas, html]
-related: [BrushContext, Chart]
+related: [BrushContext, Chart, Spline]
 ---
 
 ## Usage
 
-Drag to select, drag the middle to move the selection, drag an edge to resize it, and click to clear.
+Drag to select, drag the middle to move the selection, and drag an edge to resize it.
+
+To clear it, click anywhere in the brushable region, or double-click the selection itself — worth knowing when the selection covers most of its region, as it does for a brush in a narrow band.
 
 :example{name="basic" showCode}
 
@@ -33,7 +35,7 @@ They aren't interchangeable: `Brush` has no facet handling, no `transform` or to
 
 For the gesture with no markup at all — on an element you render yourself — use the [`brushable`](#brushable) attachment underneath both.
 
-## Reading the selection
+## Selection
 
 `bind:state` reads back the `BrushState` the component owns:
 
@@ -57,7 +59,7 @@ For the gesture with no markup at all — on an element you render yourself — 
 
 Pass your own instance as `state={...}` instead when you need it to outlive the component. Either way, the same state can be driven from your code — `move()`, `selectAll()`, and `reset()` all update the drawn selection.
 
-:example{name="programmatic" showCode}
+:example{name="programmatic" }
 
 `onChange` fires as the selection changes, with `phase` distinguishing `'start'`, `'brush'`, and `'end'` — use `'end'` to defer expensive work until the drag finishes.
 
@@ -65,19 +67,21 @@ Pass your own instance as `state={...}` instead when you need it to outlive the 
 
 `axis` sets which axis the selection spans, and which handles it carries: `'x'` (the default), `'y'`, or `'both'`.
 
-:example{name="vertical" showCode}
+:example{name="vertical" }
 
 `axis="both"` selects a rectangle, with handles on all four edges.
 
-:example{name="two-dimensional" showCode}
+:example{name="two-dimensional" }
 
 ## Region
 
 The brushable region defaults to the plot area. `x`, `y`, `width`, and `height` place it somewhere smaller — which is also what lets a chart carry several brushes, since each takes the drags that start within its own region.
 
-:example{name="region" showCode}
+:example{name="region" }
 
-[Parallel coordinates](/docs/components/Spline#brushable-parallel-coordinates) puts this to work: a `Brush` per dimension, each a narrow strip over its axis, intersected to filter the lines.
+Parallel coordinates puts this to work: a `Brush` per dimension, each a narrow strip over its own axis, with the selections intersected to filter the lines.
+
+:example{ component="Spline" name="parallel-coordinates-brush" }
 
 ## Layers
 
@@ -87,7 +91,7 @@ A canvas layer draws its marks rather than creating an element for each, so the 
 
 The brush doesn't have to share a layer with the marks. Here it sits in an html layer of its own, above an svg one:
 
-:example{name="html" showCode}
+:example{name="html" }
 
 ## Styling
 

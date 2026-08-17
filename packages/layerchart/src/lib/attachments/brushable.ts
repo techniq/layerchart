@@ -139,7 +139,19 @@ export function brushGesture(options: BrushableOptions) {
     }
     onChange?.({ state, phase: 'start' });
 
+    /**
+     * Whether this gesture is a drag rather than a click.
+     *
+     * Tracked as "moved at all", not as the distance between press and release — dragging a
+     * selection away and back again is still a drag, and must not clear it.
+     */
+    let dragged = false;
+
     function onPointerMove(e: PointerEvent) {
+      if (Math.hypot(e.clientX - event.clientX, e.clientY - event.clientY) >= clearThreshold) {
+        dragged = true;
+      }
+
       const value = valueAt(e);
       if (mode === 'create') state.setRange(start.value, value);
       else if (mode === 'move') state.moveRange(start, value);
@@ -149,9 +161,10 @@ export function brushGesture(options: BrushableOptions) {
     }
 
     function onPointerUp() {
-      // A click rather than a drag clears the selection
-      const size = axis === 'x' ? state.range.width : state.range.height;
-      if (clearThreshold > 0 && size < clearThreshold) state.reset();
+      // Clicking the region rather than dragging it clears the selection.  Only the region — a
+      // click that lands on the selection or a handle is a grab the pointer never followed
+      // through on, and throwing the selection away for it would be its own surprise.
+      if (clearThreshold > 0 && !dragged && mode === 'create') state.reset();
 
       window.removeEventListener('pointermove', onPointerMove as EventListener);
       onChange?.({ state, phase: 'end' });
