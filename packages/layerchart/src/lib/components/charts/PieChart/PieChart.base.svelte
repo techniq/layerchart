@@ -197,6 +197,7 @@
     bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
   }}
   axis={false}
+  grid={false}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false

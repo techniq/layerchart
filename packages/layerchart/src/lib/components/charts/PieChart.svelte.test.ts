@@ -41,4 +41,26 @@ describe('PieChart', () => {
       expect(tooltipValue?.textContent).toContain('275');
     });
   });
+
+  it('should not draw a cartesian grid behind the arcs', async () => {
+    // A pie has no cartesian axes to grid against.  With `series`, the scales gain a domain and
+    // the default grid starts drawing lines across the plot — `ArcChart` already opts out.
+    const { container } = render(PieChart, {
+      key: 'browser',
+      value: 'visitors',
+      series: [
+        { key: '2023', data },
+        { key: '2024', data },
+      ],
+      height: 300,
+      width: 300,
+    });
+
+    const arc = container.querySelector('.lc-arc-line') as SVGElement | null;
+    await expect.element(arc).toBeInTheDocument();
+
+    expect(container.querySelectorAll('.lc-grid line, .lc-grid path, .lc-grid circle')).toHaveLength(
+      0
+    );
+  });
 });
