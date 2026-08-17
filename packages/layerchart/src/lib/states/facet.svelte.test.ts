@@ -142,6 +142,22 @@ describe('facets', () => {
     });
   });
 
+  describe('headers', () => {
+    it('draws the panel headers from the default layout', async () => {
+      // `FacetAxis` lives outside `Facet` so that `Axis` stays out of every layer's bundle —
+      // `Chart`'s default layout renders it, and a composed chart adds `<FacetAxis />` itself
+      render(ScatterChart, {
+        props: { data, x: 'v', y: 'w', fx: 'g', width: 400, height: 300 },
+      } as any);
+
+      await expect.poll(() => document.querySelectorAll('.lc-facet-axis-x').length).toBe(1);
+      const labels = Array.from(document.querySelectorAll('.lc-facet-axis-x text')).map((t) =>
+        t.textContent?.trim()
+      );
+      expect(labels).toEqual(['a', 'b']);
+    });
+  });
+
   describe('interaction', () => {
     // Both panels hold the same values, so a lookup that isn't panel-scoped resolves to whichever
     // row it happens to reach first — the failure this guards against.

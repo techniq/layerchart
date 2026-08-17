@@ -370,7 +370,7 @@
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 35,
+      "lineNumber": 37,
       "line": "<Highlight lines points axis=\"both\" />"
     },
     {
@@ -668,5 +668,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:44.126Z"
+  "updatedAt": "2026-08-17T02:41:57.130Z"
 }

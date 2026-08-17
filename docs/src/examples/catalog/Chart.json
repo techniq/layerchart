@@ -320,23 +320,28 @@
           "line": "<Svg>"
         },
         {
+          "component": "FacetAxis",
+          "lineNumber": 25,
+          "line": "<FacetAxis />"
+        },
+        {
           "component": "Grid",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Grid y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Rule",
-          "lineNumber": 27,
+          "lineNumber": 29,
           "line": "<Rule y={0} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<Circle"
         }
       ]
@@ -430,28 +435,33 @@
           "line": "<Svg>"
         },
         {
+          "component": "FacetAxis",
+          "lineNumber": 26,
+          "line": "<FacetAxis />"
+        },
+        {
           "component": "Grid",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<Grid x y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 26,
+          "lineNumber": 28,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Circle",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<Circle"
         },
         {
           "component": "Highlight",
-          "lineNumber": 35,
+          "lineNumber": 37,
           "line": "<Highlight lines points axis=\"both\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 38,
+          "lineNumber": 40,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -490,17 +500,17 @@
         },
         {
           "component": "Frame",
-          "lineNumber": 65,
+          "lineNumber": 67,
           "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
         },
         {
           "component": "Area",
-          "lineNumber": 66,
+          "lineNumber": 68,
           "line": "<Area"
         },
         {
           "component": "Text",
-          "lineNumber": 78,
+          "lineNumber": 80,
           "line": "<Text"
         }
       ]
@@ -4924,5 +4934,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:43.032Z"
+  "updatedAt": "2026-08-17T02:41:56.398Z"
 }

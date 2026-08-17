@@ -364,14 +364,14 @@
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 24,
+      "lineNumber": 26,
       "line": "<Grid y />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<Grid x y />"
     },
     {
@@ -473,5 +473,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:44.082Z"
+  "updatedAt": "2026-08-17T02:41:57.098Z"
 }

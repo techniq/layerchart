@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Axis, Chart, Circle, Grid, Rule, Svg } from 'layerchart';
+	import { Axis, Chart, Circle, FacetAxis, Grid, Rule, Svg } from 'layerchart';
 
 	const data = penguins.filter((d) => d.flipper_length_mm !== 'NA' && d.body_mass_g !== 'NA');
 	export { data };
@@ -21,6 +21,8 @@
 	height={300}
 >
 	<Svg>
+		<!-- the grid`s headers — `Chart`'s default layout adds these for you -->
+		<FacetAxis />
 		<Grid y />
 		<Axis placement="left" />
 		<Axis placement="bottom" />

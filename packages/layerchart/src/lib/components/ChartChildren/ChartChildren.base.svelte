@@ -34,6 +34,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getSettings } from '$lib/contexts/settings.js';
   import type { Facet } from '$lib/states/facet.svelte.js';
+  import FacetAxis from '../FacetAxis.svelte';
   import { asAny } from '$lib/utils/types.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
 
@@ -88,6 +89,7 @@
     -->
     {#snippet children({ facet }: { facet: Facet })}
       {@const layerProps = { context, facet }}
+      <FacetAxis />
       {#if typeof grid === 'function'}
         {@render grid(layerProps)}
       {:else if grid}

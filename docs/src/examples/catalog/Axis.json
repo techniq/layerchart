@@ -3199,28 +3199,28 @@
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<Axis placement=\"left\" />"
     },
     {
       "example": "facet-composed",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-composed",
-      "lineNumber": 26,
+      "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 26,
+      "lineNumber": 28,
       "line": "<Axis placement=\"left\" />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 27,
+      "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -5331,5 +5331,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:42.626Z"
+  "updatedAt": "2026-08-17T02:41:56.152Z"
 }

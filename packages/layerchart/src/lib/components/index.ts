@@ -56,6 +56,7 @@ export { default as Dodge } from './Dodge/Dodge.svelte';
 export * from './Dodge/Dodge.svelte';
 export { default as Ellipse } from './Ellipse/Ellipse.svelte';
 export * from './Ellipse/Ellipse.svelte';
+export { default as FacetAxis } from './FacetAxis.svelte';
 export { default as Frame } from './Frame/Frame.svelte';
 export * from './Frame/Frame.svelte';
 export { default as Grid } from './Grid/Grid.svelte';

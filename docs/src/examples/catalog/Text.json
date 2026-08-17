@@ -567,7 +567,7 @@
       "example": "facet-wrap",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-wrap",
-      "lineNumber": 78,
+      "lineNumber": 80,
       "line": "<Text"
     },
     {
@@ -1159,5 +1159,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:45.076Z"
+  "updatedAt": "2026-08-17T02:41:57.807Z"
 }

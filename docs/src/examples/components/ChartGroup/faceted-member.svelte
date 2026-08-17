@@ -52,8 +52,8 @@
 		</div>
 
 		<div class="border rounded-sm p-2">
-			<div class="text-sm text-surface-content/70">Total</div>
-			<LineChart data={totals} x="date" y="value" height={100} padding={{ left: 40, bottom: 20 }} />
+			<div class="text-sm text-surface-content/70 mb-4">Total</div>
+			<LineChart data={totals} x="date" y="value" height={120} padding={{ left: 40, bottom: 20 }} />
 		</div>
 	</div>
 </ChartGroup>
