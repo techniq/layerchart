@@ -33,7 +33,18 @@ const config = defineConfig({
         // Must be a sibling of `test`, not inside it:
         // https://github.com/vitest-dev/vitest/issues/5477#issuecomment-3616351661
         optimizeDeps: {
-          include: ['d3-interpolate'],
+          // Pre-bundle the deps behind lazy `import()`s (Voronoi's geo stack, the quadtree, the
+          // path interpolator).  On a cold cache these are transformed on demand mid-run, and
+          // the stall delays other files' dynamic imports past their own teardown.
+          include: [
+            'd3-interpolate',
+            'd3-interpolate-path',
+            'd3-quadtree',
+            'd3-delaunay',
+            'd3-geo',
+            'd3-geo-voronoi',
+            'd3-polygon',
+          ],
         },
         test: {
           name: 'client',
