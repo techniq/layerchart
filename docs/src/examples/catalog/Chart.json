@@ -271,6 +271,18 @@
       ]
     },
     {
+      "name": "facet-bars",
+      "title": "facet bars",
+      "path": "/docs/components/Chart/facet-bars",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 36,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "facet-brush",
       "title": "facet brush",
       "path": "/docs/components/Chart/facet-brush",
@@ -2194,6 +2206,13 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
       "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 37,
       "line": "<Chart"
     },
     {
@@ -4990,5 +5009,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-18T03:04:04.032Z"
+  "updatedAt": "2026-08-18T13:13:56.874Z"
 }

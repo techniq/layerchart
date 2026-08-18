@@ -131,6 +131,30 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
+   * Whether a series draws the top segment of its stack for a row.
+   *
+   * The series stack in order, so the top is the last one drawing anything — which is *not* the
+   * last series in general: an `x1` sub-band or a gap in the data leaves later series out of a
+   * row, and then an earlier one is what the eye sees on top.
+   *
+   * Read off the stack rather than off the accessors, so this agrees with what was actually
+   * drawn: the stack already resolves a row to its group (sub-band, facet panel) and aligns
+   * series that carry their own `data`, neither of which a bare accessor could do.  A segment
+   * spanning nothing counts as absent, since it draws nothing.
+   */
+  isStackTop(key: string, d: TData): boolean {
+    const visible = this.visibleSeries;
+    const index = visible.findIndex((s) => s.key === key);
+    if (index === -1) return false;
+
+    return !visible.some((s, i) => {
+      if (i <= index) return false;
+      const span = this.getStackValue(s.key, d);
+      return span != null && span[0] !== span[1];
+    });
+  }
+
+  /**
    * Build wide-format data from per-series data arrays for d3 stack().
    * Each row has a category key and one property per series key with that series' value.
    */

@@ -6,6 +6,7 @@ import { geoAlbersUsa } from 'd3-geo';
 import { timeDay } from 'd3-time';
 
 import { ChartState } from './chart.svelte.js';
+import { TooltipState } from './tooltip.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 
@@ -1851,7 +1852,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
   });
 });
 
-describe('ChartState x1Domain/y1Domain without series', () => {
+describe('ChartState explicit x1Domain/y1Domain', () => {
   type LongData = { year: number; fruit: string; value: number };
   const longData: LongData[] = [
     { year: 2019, fruit: 'apples', value: 3840 },
@@ -1895,6 +1896,178 @@ describe('ChartState x1Domain/y1Domain without series', () => {
       expect(state.seriesState.series).toHaveLength(0);
       expect(state.y1Domain).toEqual(['apples', 'bananas']);
       expect(state.y1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through explicit x1Domain alongside the implicit `default` series', () => {
+    // `BarChart` always configures a series, so "no series" alone doesn't cover it
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+      series: [{ key: 'default', label: 'value', value: 'value' }],
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.x1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through sub-band values that do not name a series', () => {
+    // `x1` names a data property, so its values are unrelated to the series keys stacked in it
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+      seriesLayout: 'stack',
+      series: [{ key: 'north' }, { key: 'south' }],
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should drop explicit sub-bands that name a hidden series', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+      seriesLayout: 'group',
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.x1Domain).toEqual(['apples']);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState facetBand', () => {
+  type FacetData = { party: string; year: number; percent: number };
+  const facetData: FacetData[] = [
+    { party: 'AfD', year: 2021, percent: 10.3 },
+    { party: 'AfD', year: 2025, percent: 20.8 },
+    { party: 'SPD', year: 2021, percent: 25.7 },
+    { party: 'SPD', year: 2025, percent: 16.4 },
+  ];
+
+  function createFaceted(props: Partial<ChartPropsWithoutHTML<FacetData>>, mode = 'band') {
+    const created = createChartState<FacetData>({
+      data: facetData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'percent',
+      fx: 'party',
+      ...props,
+    });
+    created.state.tooltipState = new TooltipState(
+      mode as any,
+      () => {},
+      () => {}
+    );
+    flushSync();
+    return created;
+  }
+
+  it('should treat the panel as the band when faceting groups a band scale', () => {
+    const { state, cleanup } = createFaceted({});
+
+    try {
+      expect(state.facetBand).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band outside band mode', () => {
+    // `quadtree` resolves to one point, so the panel is never what the pointer covers
+    const { state, cleanup } = createFaceted({}, 'quadtree');
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band when series are configured', () => {
+    // Each row carries the whole series set, so a band is already a row
+    const { state, cleanup } = createFaceted({
+      series: [{ key: 'percent', value: 'percent' }],
+    });
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band when the chart is not faceted', () => {
+    const { state, cleanup } = createFaceted({ fx: undefined });
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState transform fallback', () => {
+  it('should answer every documented method before `TransformContext` loads', () => {
+    // `TransformContext` is imported lazily, so a chart driven from the outside reaches these
+    // first — one that is missing throws rather than doing nothing
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 1 }],
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      expect(state.transformState).toBeFalsy();
+
+      const transform = state.transform as any;
+      for (const method of [
+        'reset',
+        'zoomIn',
+        'zoomOut',
+        'zoomTo',
+        'scaleTo',
+        'setScale',
+        'setTranslate',
+        'setScrollMode',
+        'translateCenter',
+      ]) {
+        expect(typeof transform[method], method).toBe('function');
+        expect(() => transform[method](1, { x: 0, y: 0 })).not.toThrow();
+      }
     } finally {
       cleanup();
     }
@@ -1980,6 +2153,36 @@ describe('ChartState zoomToBrush', () => {
       const domain = state.xDomain as Date[];
       expect(+domain[0]).toBe(+data[0].date);
       expect(+domain[1]).toBe(+data[1].date);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep the range anchored when the scale clamps', () => {
+    // A selection narrower than `scaleExtent` allows can't be reached — but the part of it that
+    // can be shown has to start where the selection does, not somewhere further along
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x', scaleExtent: [1, 4] },
+    });
+    const stub = transformStub();
+
+    try {
+      // Nine days into a 30-day domain, asking for a 3-day window — 10x, past the 4x limit
+      state.transformState = { ...stub.state, targetScale: 4 } as any;
+      state.zoomToBrush(
+        { x: [new Date(2024, 0, 10), new Date(2024, 0, 13)] as any, y: [null, null] as any },
+        'x'
+      );
+
+      expect(stub.scales).toEqual([10]);
+
+      // Translate follows the scale that was applied (4), not the one asked for (10) — otherwise
+      // it carries the view far past the selection
+      const offset = 9 / 30;
+      expect(stub.translates[0].x).toBeCloseTo(-offset * state.width * 4, 6);
     } finally {
       cleanup();
     }

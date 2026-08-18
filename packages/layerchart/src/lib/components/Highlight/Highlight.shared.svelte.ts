@@ -269,6 +269,19 @@ export class HighlightState {
   area = $derived.by<HighlightArea>(() => {
     const tmpArea: HighlightArea = { x: 0, y: 0, width: 0, height: 0 };
     if (!this.highlightData) return tmpArea;
+
+    // The panel is the band when faceting groups a band scale, so the whole panel is marked
+    // rather than the one bar the pointer landed on.  `inPanel` already keeps this to the
+    // hovered panel.
+    if (this.ctx.facetBand) {
+      return {
+        x: min(this.ctx.xRange) as number,
+        y: min(this.ctx.yRange) as number,
+        width: (max(this.ctx.xRange) - min(this.ctx.xRange)) as number,
+        height: (max(this.ctx.yRange) - min(this.ctx.yRange)) as number,
+      };
+    }
+
     const axis = this.axis;
 
     if (axis === 'x' || axis === 'both') {

@@ -488,6 +488,18 @@
       ]
     },
     {
+      "name": "group-long-data",
+      "title": "group long data",
+      "path": "/docs/components/BarChart/group-long-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 13,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "group-series",
       "title": "group series",
       "path": "/docs/components/BarChart/group-series",
@@ -1838,6 +1850,13 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
     },
     {
+      "example": "group-long-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-long-data",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
       "example": "group-series",
       "component": "BarChart",
       "path": "/docs/components/BarChart/group-series",
@@ -2356,6 +2375,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "facet-bars",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-bars",
+      "lineNumber": 36,
+      "line": "<BarChart"
+    },
+    {
       "example": "truncate-axis-labels",
       "component": "Text",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -2370,5 +2396,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:42.702Z"
+  "updatedAt": "2026-08-18T16:24:07.536Z"
 }

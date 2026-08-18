@@ -511,7 +511,7 @@ export class ChartState<
       let yInit = false;
 
       $effect(() => {
-        const domain = this._rawXDomain;
+        const domain = this._targetXDomain;
         if (!domain || domain.length < 2) return;
         const isDate = (domain[0] as unknown) instanceof Date;
         this._xDomainIsDate = isDate;
@@ -532,7 +532,7 @@ export class ChartState<
       });
 
       $effect(() => {
-        const domain = this._rawYDomain;
+        const domain = this._targetYDomain;
         if (!domain || domain.length < 2) return;
         const isDate = (domain[0] as unknown) instanceof Date;
         this._yDomainIsDate = isDate;
@@ -807,6 +807,22 @@ export class ChartState<
     return this.facetState;
   }
 
+  /**
+   * Whether the facet panel is the band the tooltip resolves to.
+   *
+   * A band scale inside a panel groups the same way `x1` / `y1` do inside a band — the panel is
+   * the outer group and the scale inside it the sub-band.  So `band` mode covers the panel rather
+   * than one of its bars: the highlight marks the whole panel and the tooltip lists its rows.
+   *
+   * Configured series rule this out: each row then carries the whole set rather than one
+   * sub-band's share of it, so a band already *is* a row and the panel groups rows that each have
+   * their own values to show.
+   */
+  facetBand = $derived.by(
+    () =>
+      this.facetState.enabled && this.tooltip.mode === 'band' && this.seriesState.isDefaultSeries
+  );
+
   width = $derived(this.facetState.width);
   height = $derived(this.facetState.height);
 
@@ -1070,38 +1086,40 @@ export class ChartState<
     };
   });
 
-  /** Target domain — narrowed by transform when mode is 'domain', but not yet animated */
-  _rawXDomain = $derived.by(() => {
-    if (
-      this.#transform?.mode === 'domain' &&
-      (this.#transform.axis === 'x' || this.#transform.axis === 'both') &&
-      this.width > 0
-    ) {
-      return this._computeTransformDomain(
-        this._baseXDomain,
-        this.#transform.translate.x,
-        this.#transform.scale,
-        this.width
-      );
-    }
-    return this._baseXDomain;
-  });
+  /**
+   * The domain a `mode: 'domain'` transform narrows an axis to, at one of its two positions —
+   * where it sits now, and where it is heading.  Any other mode leaves the axis alone.
+   *
+   * The two only differ while the transform itself animates (`transform.motion`).  Drawing follows
+   * `'current'`, so the chart moves with the animation; anything sharing the domain follows
+   * `'target'`, or it would publish every frame the animation passes through and have whoever
+   * listens re-aim at each one.
+   */
+  #transformDomain(axis: 'x' | 'y', at: 'current' | 'target') {
+    const base = axis === 'x' ? this._baseXDomain : this._baseYDomain;
+    const size = axis === 'x' ? this.width : this.height;
 
-  _rawYDomain = $derived.by(() => {
-    if (
-      this.#transform?.mode === 'domain' &&
-      (this.#transform.axis === 'y' || this.#transform.axis === 'both') &&
-      this.height > 0
-    ) {
-      return this._computeTransformDomain(
-        this._baseYDomain,
-        this.#transform.translate.y,
-        this.#transform.scale,
-        this.height
-      );
-    }
-    return this._baseYDomain;
-  });
+    const transform = this.#transform;
+    if (transform?.mode !== 'domain') return base;
+    if (transform.axis !== axis && transform.axis !== 'both') return base;
+    if (!(size > 0)) return base;
+
+    // `targetScale` / `targetTranslate` live on `TransformState`; the fallback has neither, and
+    // isn't animating either, so its current position is also where it is heading
+    const target = at === 'target' && this.transformState ? this.transformState : null;
+    const scale = target ? target.targetScale : transform.scale;
+    const translate = target ? target.targetTranslate : transform.translate;
+
+    return this._computeTransformDomain(base, translate[axis], scale, size);
+  }
+
+  /** What `xDomain` / `yDomain` animate toward */
+  _targetXDomain = $derived(this.#transformDomain('x', 'current'));
+  _targetYDomain = $derived(this.#transformDomain('y', 'current'));
+
+  /** Where the transform is heading — what a chart shares with its group */
+  _transformTargetXDomain = $derived(this.#transformDomain('x', 'target'));
+  _transformTargetYDomain = $derived(this.#transformDomain('y', 'target'));
 
   /** Effective domain — animated via motion if configured */
   xDomain = $derived.by(() => {
@@ -1112,7 +1130,7 @@ export class ChartState<
       }
       return animated;
     }
-    return this._rawXDomain;
+    return this._targetXDomain;
   });
 
   yDomain = $derived.by(() => {
@@ -1123,47 +1141,72 @@ export class ChartState<
       }
       return animated;
     }
-    return this._rawYDomain;
+    return this._targetYDomain;
   });
 
   zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
+  /**
+   * The domain of an `x1` / `y1` sub-band taken from the data.
+   *
+   * Sub-bands are ordinal, so each distinct value needs a place of its own — an extent would keep
+   * only the first and last, leaving every sub-band between them without a position.  Numeric
+   * values keep the extent, since those can be laid out on a continuous scale.
+   */
+  #subBandDomain(value: (d: any) => any) {
+    const values = chartDataArray(this.data).map(value);
+    if (values.length > 0 && typeof values[0] === 'number') {
+      return extent(values) as [number, number];
+    }
+    return unique(values);
+  }
+
+  /**
+   * An explicit `x1Domain` / `y1Domain`, with the sub-bands of hidden series dropped.
+   *
+   * A sub-band belongs to a series only when it *names* one: `seriesLayout="group"` puts series
+   * keys in this domain, while `x1` / `y1` as a data accessor puts data values in it (and the
+   * implicit `default` series names nothing at all).  Filtering values that were never series
+   * keys empties the domain, leaving the sub-band scale with nothing to position bars against.
+   */
+  #visibleSubBandDomain(domain: DomainType) {
+    if (!Array.isArray(domain)) return domain;
+
+    const seriesKeys = new Set(this.seriesState.series.map((s) => s.key));
+    if (seriesKeys.size === 0) return domain;
+
+    const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+    return domain.filter((key: any) => !seriesKeys.has(key) || visibleKeys.has(key));
+  }
+
   x1Domain = $derived.by(() => {
     if (this.props.x1Domain) {
-      // Only filter by visible series when series are configured — otherwise the
-      // full x1Domain is used as-is (composable charts without series).
-      if (this.seriesState.series.length > 0) {
-        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-        return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
-      }
-      return this.props.x1Domain;
+      return this.#visibleSubBandDomain(this.props.x1Domain);
+    }
+    // `x1` names the sub-band dimension in the data; series keys only divide the band when
+    // nothing else does
+    if (this.x1) {
+      return this.#subBandDomain(this.x1);
     }
     // Auto-derive for grouped series when x is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
       return this.seriesState.visibleSeries.map((s) => s.key);
     }
-    if (this.x1) {
-      return extent(chartDataArray(this.data), this.x1);
-    }
     return undefined;
   });
   y1Domain = $derived.by(() => {
     if (this.props.y1Domain) {
-      // Only filter by visible series when series are configured — otherwise the
-      // full y1Domain is used as-is (composable charts without series).
-      if (this.seriesState.series.length > 0) {
-        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-        return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
-      }
-      return this.props.y1Domain;
+      return this.#visibleSubBandDomain(this.props.y1Domain);
+    }
+    // `y1` names the sub-band dimension in the data; series keys only divide the band when
+    // nothing else does
+    if (this.y1) {
+      return this.#subBandDomain(this.y1);
     }
     // Auto-derive for grouped series when y is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {
       return this.seriesState.visibleSeries.map((s) => s.key);
-    }
-    if (this.y1) {
-      return extent(chartDataArray(this.data), this.y1);
     }
     return undefined;
   });
@@ -1476,6 +1519,11 @@ export class ChartState<
     hide: () => {},
   };
 
+  /**
+   * Stands in for `TransformState` until `TransformContext` has loaded, so a chart driven from the
+   * outside doesn't have to wait for it.  Carries every method the transform documents — one that
+   * is missing throws rather than doing nothing, which is the opposite of the point.
+   */
   static readonly #fallbackTransform = {
     mode: 'none' as const,
     scale: 1,
@@ -1484,6 +1532,13 @@ export class ChartState<
     dragging: false,
     setScale: () => {},
     setTranslate: () => {},
+    setScrollMode: () => {},
+    reset: () => {},
+    zoomIn: () => {},
+    zoomOut: () => {},
+    zoomTo: () => {},
+    scaleTo: () => {},
+    translateCenter: () => {},
   };
 
   static readonly #fallbackSeries = {
@@ -1554,7 +1609,17 @@ export class ChartState<
     if (!transform) return;
 
     this.transform.setScale(transform.scale);
-    this.transform.setTranslate(transform.translate);
+
+    // `setScale` clamps to `scaleExtent`, and the translate was computed for the scale we asked
+    // for — it has to follow the one we got.  Both are proportional to the scale for a given left
+    // edge, so a translate left over from a larger scale pushes the view past where it belongs.
+    const applied = this.transform.targetScale ?? transform.scale;
+    const ratio = transform.scale === 0 ? 1 : applied / transform.scale;
+
+    this.transform.setTranslate({
+      x: transform.translate.x * ratio,
+      y: transform.translate.y * ratio,
+    });
   }
 
   get config() {

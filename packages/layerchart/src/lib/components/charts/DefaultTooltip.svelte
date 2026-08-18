@@ -26,8 +26,42 @@
 
   const context = getChartContext();
 
+  /**
+   * One row of the tooltip's list.  `seriesKey` is the series it highlights on hover, or `null`
+   * when the item is a sub-band of the data rather than a series.
+   */
+  type TooltipItem = {
+    key: string;
+    seriesKey: string | null;
+    label: any;
+    value: any;
+    color?: string;
+  };
+
   // Get visible series (already in correct order from TooltipContext)
   const visibleSeries = $derived(context.tooltip.series.filter((s) => s.visible));
+
+  /**
+   * The rows the hovered band covers.
+   *
+   * Data-driven sub-bands (`x1` / `y1`) split one band across a row each, holding only that
+   * sub-band's series — so the band's values live across the rows rather than in the single one
+   * the pointer resolved to, and a tooltip for the band has to read all of them.
+   *
+   * A facet panel groups the same way, with the scale inside it as the sub-band, so its rows are
+   * read back off the panel instead of matched on a value.
+   */
+  function bandData(data: any) {
+    if (context.facetBand) {
+      return context.facet.panels.find((panel) => panel.has(data))?.data ?? [data];
+    }
+
+    const banded = context.props.x1 != null ? context.x : context.props.y1 != null ? context.y : null; // prettier-ignore
+    if (!banded) return [data];
+
+    const value = banded(data);
+    return chartDataArray(context.data).filter((d: any) => isEqualValue(banded(d), value));
+  }
 
   /**
    * The series values for the row being shown.
@@ -36,26 +70,33 @@
    * the values resolved for the hovered row can't be reused — they're re-read with the same
    * accessor rule `TooltipContext` uses.
    */
-  /**
-   * The rows the hovered band covers.
-   *
-   * Data-driven sub-bands (`x1` / `y1`) split one band across a row each, holding only that
-   * sub-band's series — so the band's values live across the rows rather than in the single one
-   * the pointer resolved to, and a tooltip for the band has to read all of them.
-   */
-  function bandRows(data: any) {
-    const banded = context.props.x1 != null ? context.x : context.props.y1 != null ? context.y : null; // prettier-ignore
-    if (!banded) return [data];
+  function seriesFor(data: any): TooltipItem[] {
+    const d = bandData(data);
 
-    const value = banded(data);
-    return chartDataArray(context.data).filter((d: any) => isEqualValue(banded(d), value));
-  }
-
-  function seriesFor(data: any) {
-    const rows = bandRows(data);
+    // Nothing names the sub-bands when the series are implicit — so the band's rows are the items
+    // themselves, one per sub-band, labelled by the value that placed them there: `x1` / `y1`
+    // within a band, or the band scale itself within a facet panel.
+    if (d.length > 1 && context.series.isDefaultSeries) {
+      const value = context.valueAxis === 'y' ? context.y : context.x;
+      const subBand = context.facetBand
+        ? context.valueAxis === 'y'
+          ? context.x
+          : context.y
+        : context.props.x1 != null
+          ? context.x1
+          : context.y1;
+      return d.map((row: any) => ({
+        key: String(subBand(row)),
+        // The rows are sub-bands rather than series, so hovering one highlights nothing
+        seriesKey: null,
+        label: subBand(row),
+        value: value(row),
+        color: context.config.c ? context.cGet(row) : undefined,
+      }));
+    }
 
     const series =
-      rows.length === 1 && data === context.tooltip.data
+      d.length === 1 && data === context.tooltip.data
         ? visibleSeries
         : visibleSeries.map((s) => {
             const config: any = s.config;
@@ -64,13 +105,21 @@
             );
             // The first row of the band carrying this series — one row per sub-band, so only one
             // of them holds any given series
-            const row = rows.find((d: any) => valueAcc(d) != null);
-            return { ...s, value: row != null ? valueAcc(row) : undefined };
+            const match = d.find((row: any) => valueAcc(row) != null);
+            return { ...s, value: match != null ? valueAcc(match) : undefined };
           });
 
     // A series no row holds a value for would render as a label with nothing beside it, which
     // reads as broken rather than as absent.
-    return series.filter((s) => s.value != null);
+    return series
+      .filter((s) => s.value != null)
+      .map((s) => ({
+        key: s.key,
+        seriesKey: s.key,
+        label: s.label,
+        value: s.value,
+        color: s.color,
+      }));
   }
 
   // Single-point modes find one specific data point (by proximity in both x+y),
@@ -88,12 +137,40 @@
       : null
   );
 
-  // Header label comes from x-axis (or y-axis for horizontal/vertical charts)
-  const headerLabel = $derived(
-    context.tooltip.data
-      ? context.valueAxis === 'y'
-        ? context.x(context.tooltip.data)
-        : context.y(context.tooltip.data)
+  // Header label comes from x-axis (or y-axis for horizontal/vertical charts) — or from the facet
+  // when the panel is the band, since the scale inside it labels the items instead
+  const headerLabel = $derived.by(() => {
+    const data = context.tooltip.data;
+    if (!data) return undefined;
+    if (context.facetBand) {
+      return (context.facet.x ?? context.facet.y)?.(data);
+    }
+    return context.valueAxis === 'y' ? context.x(data) : context.y(data);
+  });
+
+  /**
+   * The panel the hovered row sits in, for charts where the panel *isn't* the band.
+   *
+   * The band value alone names a row in every panel — three panels each have a `Torgersen` — so it
+   * only identifies the row once the panel is in front of it.  Empty when the panel is the band,
+   * since `headerLabel` is already the facet value there.
+   */
+  const facetLabel = $derived.by(() => {
+    const data = context.tooltip.data;
+    if (!data || context.facetBand || !context.facet.enabled) return undefined;
+
+    const parts = [context.facet.x?.(data), context.facet.y?.(data)].filter((v) => v != null);
+    return parts.length ? parts.join(' · ') : undefined;
+  });
+
+  /**
+   * `headerLabel` with its facet in front, formatted here rather than by `Tooltip.Header` — the
+   * band value still needs its own format applied before anything is joined to it, or a date or a
+   * number would land in the header raw.
+   */
+  const facetHeaderLabel = $derived(
+    facetLabel != null
+      ? `${facetLabel} · ${format(headerLabel, tooltipProps?.header?.format as any)}`
       : undefined
   );
 
@@ -145,7 +222,12 @@
         {/if}
       </Tooltip.List>
     {:else}
-      <Tooltip.Header value={headerLabel} {format} {...tooltipProps?.header} />
+      {#if facetHeaderLabel != null}
+        <!-- Already formatted above, so `format` is dropped rather than applied a second time -->
+        <Tooltip.Header {...tooltipProps?.header} value={facetHeaderLabel} format={undefined} />
+      {:else}
+        <Tooltip.Header value={headerLabel} {format} {...tooltipProps?.header} />
+      {/if}
 
       <Tooltip.List {...tooltipProps?.list}>
         {#each seriesFor(data) as s, i (s.key ?? i)}
@@ -153,10 +235,12 @@
             label={s.label}
             value={s.value}
             color={s.color}
-            data-highlighted={context.series.isHighlighted(s.key, true)}
+            data-highlighted={s.seriesKey != null
+              ? context.series.isHighlighted(s.seriesKey, true)
+              : undefined}
             {format}
             valueAlign="right"
-            onpointerenter={() => (context.series.highlightKey = s.key)}
+            onpointerenter={() => (context.series.highlightKey = s.seriesKey)}
             onpointerleave={() => (context.series.highlightKey = null)}
             {...tooltipProps?.item}
           />

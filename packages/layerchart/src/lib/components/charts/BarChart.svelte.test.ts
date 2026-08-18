@@ -26,6 +26,207 @@ const simpleData = [
 ];
 
 describe('BarChart', () => {
+  describe('faceted tooltip header', () => {
+    function triggerTooltip(el: Element) {
+      const r = el.getBoundingClientRect();
+      const init = { bubbles: true, clientX: r.x + r.width / 2, clientY: r.y + r.height / 2 };
+      el.dispatchEvent(new PointerEvent('pointerenter', init));
+      el.dispatchEvent(new PointerEvent('pointermove', init));
+    }
+
+    async function headerAfterHover(container: HTMLElement) {
+      let header = '';
+      await vi.waitFor(() => {
+        const rect = container.querySelector('.lc-tooltip-rect');
+        expect(rect).not.toBeNull();
+        triggerTooltip(rect!);
+        const el = document.querySelector('.lc-tooltip-header');
+        expect(el).not.toBeNull();
+        header = el!.textContent?.trim() ?? '';
+      });
+      return header;
+    }
+
+    it('should name the panel in front of the band', async () => {
+      // The band value alone names a row in every panel, so it only identifies the row with the
+      // panel in front of it
+      const { container } = render(BarChart, {
+        props: {
+          data: [
+            { species: 'Adelie', island: 'Torgersen', count: 23, other: 5 },
+            { species: 'Gentoo', island: 'Torgersen', count: 61, other: 7 },
+          ],
+          y: 'island',
+          fy: 'species',
+          series: [{ key: 'count' }, { key: 'other' }],
+          seriesLayout: 'stack',
+          orientation: 'horizontal',
+          width: 400,
+          height: 300,
+        },
+      } as any);
+
+      expect(await headerAfterHover(container as HTMLElement)).toBe('Adelie · Torgersen');
+    });
+
+    it('should format the band value before joining the panel to it', async () => {
+      // Joining raw would put a `Date`'s full string in the header
+      const { container } = render(BarChart, {
+        props: {
+          data: [
+            { region: 'North', date: new Date('2024-01-15T00:00:00Z'), count: 10, other: 2 },
+            { region: 'South', date: new Date('2024-01-15T00:00:00Z'), count: 20, other: 3 },
+          ],
+          x: 'date',
+          fx: 'region',
+          series: [{ key: 'count' }, { key: 'other' }],
+          seriesLayout: 'stack',
+          width: 400,
+          height: 300,
+        },
+      } as any);
+
+      const header = await headerAfterHover(container as HTMLElement);
+      expect(header).toMatch(/^North · /);
+      expect(header).not.toMatch(/GMT|00:00:00/);
+    });
+  });
+
+  describe('stacked bar rounding', () => {
+    // A rounded corner renders as a `path` with an arc; a square one as a `rect`
+    const isRounded = (el: Element) =>
+      el.tagName === 'path' && /a[\d.]+,[\d.]+/.test(el.getAttribute('d') ?? '');
+
+    it('should round the top series of each stack, per row', async () => {
+      // `top` is absent from the second row, so `middle` is what the eye sees on top there
+      const { container } = render(BarChart, {
+        props: {
+          data: [
+            { year: '2024', bottom: 10, middle: 5, top: 3 },
+            { year: '2025', bottom: 10, middle: 5 },
+          ],
+          x: 'year',
+          series: [{ key: 'bottom' }, { key: 'middle' }, { key: 'top' }],
+          seriesLayout: 'stack',
+          width: 400,
+          height: 300,
+        },
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      // One per band: `top` for 2024 and `middle` for 2025
+      const rounded = [...container.querySelectorAll('.lc-bar')].filter(isRounded);
+      expect(rounded.length).toBe(2);
+    });
+
+    it('should leave the lower segments square', async () => {
+      const { container } = render(BarChart, {
+        props: {
+          data: [{ year: '2024', bottom: 10, middle: 5, top: 3 }],
+          x: 'year',
+          series: [{ key: 'bottom' }, { key: 'middle' }, { key: 'top' }],
+          seriesLayout: 'stack',
+          width: 400,
+          height: 300,
+        },
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      const bars = [...container.querySelectorAll('.lc-bar')];
+      expect(bars.filter(isRounded).length).toBe(1);
+    });
+  });
+
+  describe('faceted tooltip hit regions', () => {
+    const facetData = [
+      { party: 'AfD', year: 2021, votes: 10, other: 3 },
+      { party: 'AfD', year: 2025, votes: 20, other: 4 },
+      { party: 'SPD', year: 2021, votes: 25, other: 5 },
+      { party: 'SPD', year: 2025, votes: 16, other: 6 },
+    ];
+
+    it('should cover the whole panel when the panel is the band', async () => {
+      const { container } = render(BarChart, {
+        props: { data: facetData, x: 'year', y: 'votes', fx: 'party', width: 400, height: 300 },
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      // One per panel rather than one per bar — the tooltip lists the panel's rows
+      const rects = container.querySelectorAll('.lc-tooltip-rect');
+      expect(rects.length).toBe(2);
+    });
+
+    it('should stay per row when series rule the panel out as a band', async () => {
+      // Each row carries the whole series set, so a panel-wide rect would resolve every hover in
+      // the panel to its first row
+      const { container } = render(BarChart, {
+        props: {
+          data: facetData,
+          x: 'year',
+          fx: 'party',
+          series: [{ key: 'votes' }, { key: 'other' }],
+          seriesLayout: 'stack',
+          width: 400,
+          height: 300,
+        },
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      const rects = container.querySelectorAll('.lc-tooltip-rect');
+      expect(rects.length).toBe(4);
+    });
+  });
+
+  describe('per-row bar styles', () => {
+    it('should resolve a `fillOpacity` accessor against each row', async () => {
+      // The `Rect` a bar draws is handed computed dimensions, so it never sees the row itself —
+      // the accessor has to be resolved by `Bar`
+      // `BarChart` has a prop named `props`, which collides with the render option of that name
+      const { container } = render(BarChart, {
+        props: {
+          data: simpleData,
+          x: 'name',
+          y: 'value',
+          height: 300,
+          props: { bars: { fillOpacity: (d: any) => (d.value > 15 ? 1 : 0.25) } },
+        },
+      } as any);
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      const opacities = [...container.querySelectorAll('.lc-bar')].map((el) =>
+        el.getAttribute('fill-opacity')
+      );
+      expect(opacities).toEqual(['0.25', '1', '0.25', '1']);
+    });
+
+    it('should still accept a plain `fillOpacity` value', async () => {
+      // `BarChart` has a prop named `props`, which collides with the render option of that name
+      const { container } = render(BarChart, {
+        props: {
+          data: simpleData,
+          x: 'name',
+          y: 'value',
+          height: 300,
+          props: { bars: { fillOpacity: 0.5 } },
+        },
+      } as any);
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      const opacities = [...container.querySelectorAll('.lc-bar')].map((el) =>
+        el.getAttribute('fill-opacity')
+      );
+      expect(opacities).toEqual(['0.5', '0.5', '0.5', '0.5']);
+    });
+  });
+
   describe('basic', () => {
     it('should render with default series when no series prop provided', async () => {
       const { container } = render(BarChart, {

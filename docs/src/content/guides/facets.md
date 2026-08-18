@@ -139,6 +139,18 @@ To style the panel _itself_ rather than its rows — a tinted background, a rule
 {/snippet}
 ```
 
+## Grouped bars
+
+A band scale inside each panel makes a grouped bar chart, with the panel doing the grouping rather than an offset within a band — a column per group, a bar per value inside it:
+
+```svelte
+<BarChart {data} x="year" y="percent" fx="party" c="party" cRange={[...]} />
+```
+
+:example{ component="Chart" name="facet-bars" }
+
+`seriesLayout="group"` on a [`BarChart`](/docs/components/BarChart) does the same job from wide data, one column per key. Facet instead when the data is long, when the groups want their own labels, or when the inner bars are a scale of their own rather than a fixed set of series.
+
 ## Annotating one panel
 
 The `marks` snippet (and the rest rendered inside the layer) is handed the panel it's drawing, so a mark can appear in a single panel — a note that belongs to one group rather than all of them:

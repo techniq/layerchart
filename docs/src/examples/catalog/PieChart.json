@@ -175,6 +175,18 @@
       ]
     },
     {
+      "name": "legend-programmatic-control",
+      "title": "legend programmatic control",
+      "path": "/docs/components/PieChart/legend-programmatic-control",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 47,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
       "name": "legend-responsive",
       "title": "legend responsive",
       "path": "/docs/components/PieChart/legend-responsive",
@@ -477,6 +489,13 @@
       "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
     },
     {
+      "example": "legend-programmatic-control",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/legend-programmatic-control",
+      "lineNumber": 47,
+      "line": "<PieChart"
+    },
+    {
       "example": "legend-responsive",
       "component": "PieChart",
       "path": "/docs/components/PieChart/legend-responsive",
@@ -589,5 +608,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.202Z"
+  "updatedAt": "2026-08-18T12:11:07.805Z"
 }

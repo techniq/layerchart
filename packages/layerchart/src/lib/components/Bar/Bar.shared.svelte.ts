@@ -7,6 +7,11 @@ import { getChartContext } from '$lib/contexts/chart.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { type MotionProp } from '$lib/utils/motion.svelte.js';
 import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
+import {
+  resolveStyleProp,
+  type DataDrivenStyleProps,
+  type StyleProp,
+} from '$lib/utils/dataProp.js';
 
 export type BarPropsWithoutHTML = {
   /** Data to render the bar from */
@@ -33,7 +38,11 @@ export type BarPropsWithoutHTML = {
   width?: number;
   /** Fixed height in pixels. */
   height?: number;
-  rounded?:
+  /**
+   * Which corners to round.  Takes an accessor as well as a value — which corner is the stack's
+   * edge depends on the row, not just on the series.
+   */
+  rounded?: StyleProp<
     | 'all'
     | 'none'
     | 'edge'
@@ -44,11 +53,15 @@ export type BarPropsWithoutHTML = {
     | 'top-left'
     | 'top-right'
     | 'bottom-left'
-    | 'bottom-right';
+    | 'bottom-right'
+  >;
   motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
   /** Setup pointer events to show tooltip for related data. */
   tooltip?: boolean;
-} & CommonStyleProps;
+} & Omit<CommonStyleProps, 'fillOpacity' | 'strokeWidth' | 'opacity'> &
+  // A bar draws a single row, so these take a per-row accessor as well as a static value.
+  // `fill` / `stroke` stay static — a bar's color comes from `c` / the series.
+  Pick<DataDrivenStyleProps, 'fillOpacity' | 'strokeWidth' | 'opacity'>;
 
 export type BarProps = BarPropsWithoutHTML &
   Without<
@@ -189,7 +202,7 @@ export class BarState {
 
   /** Resolved `rounded="edge"` based on orientation and value */
   rounded = $derived.by(() => {
-    const roundedProp = this.#props.rounded ?? 'all';
+    const roundedProp = resolveStyleProp(this.#props.rounded, this.#props.data) ?? 'all';
     if (roundedProp !== 'edge') return roundedProp;
     if (this.ctx.valueAxis === 'y') {
       return this.resolvedValue >= 0 && this.ctx.yRange[0] > this.ctx.yRange[1] ? 'top' : 'bottom';

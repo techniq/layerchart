@@ -27,6 +27,97 @@ function createSeriesState(seriesData = series as any[], stackConfig: any = null
   return state!;
 }
 
+describe('SeriesState isStackTop', () => {
+  // A row the later series are absent from — the stack fills them in as zero
+  const partial = { date: '2024-04', apples: 10, bananas: 20 } as any;
+  const stacked = [...wideData, partial];
+
+  function createStacked(seriesData = series as any[], extra: any = {}) {
+    return createSeriesState(seriesData, {
+      layout: 'stack',
+      data: stacked,
+      keyBy: 'date',
+      ...extra,
+    });
+  }
+
+  it('should pick the last series drawing anything, not the last series', () => {
+    // A sub-band or a gap leaves the later series out of a row, so an earlier one is on top there
+    const state = createStacked();
+
+    expect(state.isStackTop('bananas', partial)).toBe(true);
+    expect(state.isStackTop('apples', partial)).toBe(false);
+  });
+
+  it('should keep the last series on top when every series draws', () => {
+    const state = createStacked();
+
+    expect(state.isStackTop('oranges', stacked[0])).toBe(true);
+    expect(state.isStackTop('bananas', stacked[0])).toBe(false);
+  });
+
+  it('should treat a zero-height segment as absent', () => {
+    const zeroTop = { date: '2024-05', apples: 10, bananas: 20, oranges: 0 } as any;
+    const state = createStacked(series as any[], { data: [...stacked, zeroTop] });
+
+    expect(state.isStackTop('bananas', zeroTop)).toBe(true);
+  });
+
+  it('should ignore a hidden series when picking the top', () => {
+    const state = createStacked();
+    // Selecting narrows the visible set, so this leaves `oranges` out
+    state.selectedKeys.toggle('apples');
+    state.selectedKeys.toggle('bananas');
+
+    expect(state.visibleSeries.map((s) => s.key)).toEqual(['apples', 'bananas']);
+    expect(state.isStackTop('bananas', stacked[0])).toBe(true);
+  });
+
+  it('should keep the stacks of separate groups apart', () => {
+    // `groupBy` is what an `x1` sub-band partitions the stack with — the same category appears in
+    // each group, and each keeps its own top
+    const grouped = [
+      { date: '2024-01', basket: 'a', apples: 10, bananas: 5 },
+      { date: '2024-01', basket: 'b', oranges: 7 },
+    ] as any[];
+    const state = createSeriesState(series as any[], {
+      layout: 'stack',
+      data: grouped,
+      keyBy: 'date',
+      groupBy: (d: any) => d.basket,
+    });
+
+    expect(state.isStackTop('bananas', grouped[0])).toBe(true);
+    expect(state.isStackTop('oranges', grouped[1])).toBe(true);
+  });
+
+  it('should align series that carry their own data', () => {
+    // Reading the accessors instead would apply `value` to whichever row was hovered and see the
+    // *other* series' number, so `apples` would never look like the top
+    const sepSeries = [
+      {
+        key: 'apples',
+        data: [
+          { date: '2024-01', value: 10 },
+          { date: '2024-02', value: 12 },
+        ],
+        value: 'value',
+      },
+      { key: 'bananas', data: [{ date: '2024-01', value: 5 }], value: 'value' },
+    ];
+    const state = createSeriesState(sepSeries as any[], { layout: 'stack', keyBy: 'date' });
+
+    // `bananas` covers 2024-01 but not 2024-02
+    expect(state.isStackTop('apples', sepSeries[0].data[0] as any)).toBe(false);
+    expect(state.isStackTop('apples', sepSeries[0].data[1] as any)).toBe(true);
+  });
+
+  it('should return false for a key that names no series', () => {
+    const state = createStacked();
+    expect(state.isStackTop('kiwis', stacked[0])).toBe(false);
+  });
+});
+
 describe('SeriesState', () => {
   describe('constructor and basic properties', () => {
     it('should initialize with provided series', () => {

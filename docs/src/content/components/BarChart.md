@@ -35,6 +35,16 @@ See also: [Axis](/docs/components/Axis) for examples of using time scale axes wi
 
 Each row carries its band value, its group, and a column per stacked series — so one row per `year` × `basket` here.
 
+### Grouping long data
+
+Without `series` to stack, `x1` groups on its own — one bar per `x1` value within each band, from rows that already carry their category. Nothing has to be pivoted into a column per series first, and the tooltip lists the band's rows:
+
+```svelte
+<BarChart {data} x="year" x1="fruit" y="value" seriesLayout="group" c="fruit" />
+```
+
+:example{ name="group-long-data" showCode }
+
 ## Fixed width
 
 Use `width` or `height` on bars to override the scale-derived size with a fixed pixel value. The bar is centered within its band.

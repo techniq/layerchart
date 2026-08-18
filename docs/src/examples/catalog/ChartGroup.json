@@ -19,6 +19,38 @@
       ]
     },
     {
+      "name": "coordinated-views",
+      "title": "coordinated views",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 16,
+          "line": "<ChartGroup domain={{ axis: 'x' }}>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 21,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 37,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 46,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
       "name": "faceted-member",
       "title": "faceted member",
       "path": "/docs/components/ChartGroup/faceted-member",
@@ -202,6 +234,13 @@
       "line": "<ChartGroup>"
     },
     {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 16,
+      "line": "<ChartGroup domain={{ axis: 'x' }}>"
+    },
+    {
       "example": "faceted-member",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/faceted-member",
@@ -244,5 +283,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:43.191Z"
+  "updatedAt": "2026-08-18T12:15:20.893Z"
 }

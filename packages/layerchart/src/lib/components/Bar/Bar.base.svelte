@@ -17,6 +17,7 @@
 <script lang="ts">
   import type { PointerEventHandler } from 'svelte/elements';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { resolveStyleProp } from '$lib/utils/dataProp.js';
   import { BarState } from './Bar.shared.svelte.js';
 
   let {
@@ -52,6 +53,18 @@
   }: BarBaseProps = $props();
 
   const stroke = $derived(strokeProp === null || strokeProp === undefined ? 'black' : strokeProp);
+
+  /**
+   * A bar draws one row, so its style props take an accessor the same way `Rect` and `Circle` do.
+   * Resolved here rather than passed down, because the `Rect` below is handed computed dimensions
+   * and so never sees the row itself.
+   *
+   * `fill` / `stroke` are left alone — a bar's color comes from `c` / the series, which already
+   * resolves per row.
+   */
+  const resolvedFillOpacity = $derived(resolveStyleProp(fillOpacity, data));
+  const resolvedStrokeWidth = $derived(resolveStyleProp(strokeWidth, data));
+  const resolvedOpacity = $derived(resolveStyleProp(opacity, data));
 
   const c = new BarState(
     () =>
@@ -100,10 +113,10 @@
     startAngle={c.dimensions.x}
     endAngle={c.dimensions.x + c.dimensions.width}
     {fill}
-    {fillOpacity}
+    fillOpacity={resolvedFillOpacity}
     {stroke}
-    {strokeWidth}
-    {opacity}
+    strokeWidth={resolvedStrokeWidth}
+    opacity={resolvedOpacity}
     cornerRadius={radius}
     onpointerenter={onPointerEnter}
     onpointermove={onPointerMove}
@@ -113,10 +126,10 @@
 {:else}
   <Rect
     {fill}
-    {fillOpacity}
+    fillOpacity={resolvedFillOpacity}
     {stroke}
-    {strokeWidth}
-    {opacity}
+    strokeWidth={resolvedStrokeWidth}
+    opacity={resolvedOpacity}
     corners={c.corners}
     {motion}
     initialX={c.resolvedInitialX}

@@ -299,6 +299,35 @@ This has to be asked for by name. The default is to share everything, and under 
 
 :example{ component="ChartGroup" name="minimap" }
 
+### Coordinated views
+
+A chart that zooms by [`transform`](/docs/guides/transform) shares the domain it lands on, the same as one zoomed by its brush — so an overview and a pan/zoom detail view coordinate through the group without either referencing the other.
+
+```svelte
+<ChartGroup domain={{ axis: 'x' }}>
+	{#snippet children({ group })}
+		{@const viewport = group.brush.active ? group.brush : group.domain}
+
+		<LineChart {data} x="date" y="value" transform={{ mode: 'domain', axis: 'x' }} clip />
+
+		<Chart
+			{data}
+			x="date"
+			y="value"
+			brush={{ x: viewport.x ?? [null, null] }}
+			groupOptions={{ publish: ['domain'], subscribe: ['pointer'] }}
+			height={40}
+		/>
+	{/snippet}
+</ChartGroup>
+```
+
+The domain is applied _through_ the transform on a chart that has one, rather than alongside it — a domain set next to a transform would narrow what the transform then scales again, and clearing it would drop the chart back to wherever its transform sat.
+
+What the overview publishes and subscribes to is worth reading twice: it sets the domain but doesn't take one, since an overview has to keep showing the full extent.
+
+:example{ component="ChartGroup" name="coordinated-views" }
+
 ## Publishing and subscribing
 
 Everything above is shared in both directions. Each chart can opt out of either one with `groupOptions` — an overview chart that drives others without being driven by them:

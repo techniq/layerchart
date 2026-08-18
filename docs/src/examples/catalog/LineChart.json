@@ -1217,6 +1217,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 21,
+      "line": "<LineChart"
+    },
+    {
       "example": "faceted-member",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/faceted-member",
@@ -1770,5 +1777,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-17T17:22:26.072Z"
+  "updatedAt": "2026-08-18T12:15:21.872Z"
 }

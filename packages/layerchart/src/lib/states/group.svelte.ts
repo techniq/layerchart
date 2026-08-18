@@ -736,6 +736,9 @@ export function connectToChartGroup(
     };
   });
 
+  /** Whether this chart's transform is currently showing a domain the group shared */
+  let following = false;
+
   // Subscribe — apply the group's visible domain to this chart.  Writes plain state that this
   // effect never reads back, so it cannot feed itself; publishing happens from the zoom
   // interaction via `publishDomain` instead.
@@ -756,8 +759,69 @@ export function connectToChartGroup(
       ctx.brushYDomain = undefined;
     });
 
+    // A chart that narrows its domain by `transform` has to be moved *through* it.  Setting a
+    // domain alongside would narrow what the transform then scales again, so the two would stack —
+    // and clearing the shared domain would drop the chart back to wherever its transform sat.
+    if (untrack(() => ctx.transformState?.mode === 'domain')) {
+      untrack(() => {
+        if (shared.active) {
+          following = true;
+          ctx.zoomToBrush(
+            { x: (shared.x ?? [null, null]) as any, y: (shared.y ?? [null, null]) as any },
+            domainOptions.axis
+          );
+        } else if (following) {
+          // Only when a shared domain this chart was following goes away.  Resetting whenever
+          // there isn't one would undo the chart's own zoom the moment it published it.
+          following = false;
+          ctx.transform.reset();
+        }
+      });
+      return;
+    }
+
     ctx.groupXDomain = domainOptions.axis !== 'y' ? (shared.x as BrushDomainType) : undefined;
     ctx.groupYDomain = domainOptions.axis !== 'x' ? (shared.y as BrushDomainType) : undefined;
+  });
+
+  /**
+   * Publish — a chart the user pans or zooms shares the domain it lands on, the way one zoomed by
+   * its brush does.
+   *
+   * Reads the domain the transform is *settling* toward rather than the animated one: applying a
+   * shared domain drives this chart's transform too, and that lands on the same value, so the
+   * comparison below ends the exchange rather than trading frames of two animations.
+   */
+  $effect(() => {
+    const group = getGroup();
+    const domainOptions = group?.domainOptions;
+    if (!group || !domainOptions) return;
+    if (!allows(getMemberOptions()?.publish, 'domain')) return;
+    if (ctx.transformState?.mode !== 'domain') return;
+
+    const x =
+      domainOptions.axis !== 'y' ? (ctx._transformTargetXDomain as BrushDomainType) : undefined;
+    const y =
+      domainOptions.axis !== 'x' ? (ctx._transformTargetYDomain as BrushDomainType) : undefined;
+
+    untrack(() => {
+      const shared = group.domain;
+
+      // Back to the full extent — no shared domain, rather than one covering everything
+      if (ctx.transform.targetScale === 1) {
+        if (shared.active && shared.source === ctx.id) group.clearDomain(ctx.id);
+        return;
+      }
+
+      const unchanged =
+        isEqualValue(x?.[0], shared.x?.[0]) &&
+        isEqualValue(x?.[1], shared.x?.[1]) &&
+        isEqualValue(y?.[0], shared.y?.[0]) &&
+        isEqualValue(y?.[1], shared.y?.[1]);
+      if (unchanged) return;
+
+      group.setDomain({ x, y, source: ctx.id });
+    });
   });
 
   // Subscribe — apply the group's brush selection to this chart.

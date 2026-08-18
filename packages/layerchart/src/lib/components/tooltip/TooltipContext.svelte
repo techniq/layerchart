@@ -575,6 +575,26 @@
   function rectsFor(
     rows: any[]
   ): Array<{ x: number; y: number; width: number; height: number; data: any }> {
+    // A band scale inside a facet panel groups the same way `x1` / `y1` do inside a band, so the
+    // panel is what the pointer resolves to — one rect over the whole panel rather than one per
+    // bar.  Any of its rows names the panel; `DefaultTooltip` reads the rest back from it.
+    //
+    // Gated on `facetBand` rather than on faceting alone: where the panel *isn't* the band, the
+    // highlight and the tooltip stay per row, and a panel-wide rect would resolve every hover in
+    // the panel to its first row.
+    if (ctx.facetBand && !ctx.radial) {
+      if (rows.length === 0) return [];
+      return [
+        {
+          x: min(ctx.xRange),
+          y: min(ctx.yRange),
+          width: max(ctx.xRange) - min(ctx.xRange),
+          height: max(ctx.yRange) - min(ctx.yRange),
+          data: rows[0],
+        },
+      ];
+    }
+
     if (mode === 'bounds' || mode === 'band') {
       return rows
         .map((d) => {

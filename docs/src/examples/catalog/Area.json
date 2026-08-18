@@ -1426,6 +1426,13 @@
       "line": "<Area"
     },
     {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 47,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
@@ -1608,5 +1615,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-17T17:22:24.599Z"
+  "updatedAt": "2026-08-18T12:15:20.246Z"
 }
