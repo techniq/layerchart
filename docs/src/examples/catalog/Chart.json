@@ -4416,6 +4416,13 @@
       "line": "<Chart"
     },
     {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 74,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/docs/components/Spline/playground",
@@ -4983,5 +4990,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-17T17:22:24.981Z"
+  "updatedAt": "2026-08-18T03:04:04.032Z"
 }

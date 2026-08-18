@@ -79,6 +79,14 @@ A chart's `brush` prop owns one selection over the whole plot area. For several 
 
 :example{ name="parallel-coordinates-brush" showCode }
 
+### Mixed dimension types
+
+A dimension doesn't have to be numeric. Give each one the scale its own data calls for — a point scale over the distinct values of a categorical column, a linear scale over the extent of a quantitative one — and they still share the chart's `y`, since each normalizes to `0–1`.
+
+Here `species` is an axis in its own right as well as the color, so brushing it narrows to those species and intersects with the numeric dimensions like any other.
+
+:example{name="parallel-coordinates-mixed" showCode}
+
 ### Faceted parallel coordinates
 
 A line crosses every dimension, so the dimensions can't be panels — but `fy` gives one plot per group, sharing the dimension scales so the panels stay comparable. The per-dimension axes repeat in each panel with `facetAll`, while the dimension names, being an axis over the shared `x`, draw above the top panel only.

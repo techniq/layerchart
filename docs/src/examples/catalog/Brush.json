@@ -255,7 +255,21 @@
       "path": "/docs/components/Spline/parallel-coordinates-brush",
       "lineNumber": 93,
       "line": "<Brush"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 44,
+      "line": "// One selection per dimension, each owned by its `<Brush>` below and read back here"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 101,
+      "line": "<Brush"
     }
   ],
-  "updatedAt": "2026-08-17T17:22:24.842Z"
+  "updatedAt": "2026-08-18T03:04:03.858Z"
 }

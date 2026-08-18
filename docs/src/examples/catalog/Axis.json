@@ -4778,6 +4778,20 @@
       "line": "<Axis"
     },
     {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 90,
+      "line": "<Axis placement=\"top\" format={(d) => dimensions[d as keyof typeof dimensions]} tickLength={0} />"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 94,
+      "line": "<Axis"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/docs/components/Spline/playground",
@@ -5422,5 +5436,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-17T17:22:24.656Z"
+  "updatedAt": "2026-08-18T03:04:03.629Z"
 }

@@ -7,6 +7,7 @@ import { prerender, getRequestEvent, query } from '$app/server';
 import { z } from 'zod';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
+import type { IrisData } from '$static/data/examples/iris.js';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
 import type { USSenatorsData } from '$static/data/examples/us-senators';
 import type { CivilizationTimeline } from '$static/data/examples/date/civilization-timeline.js';
@@ -116,6 +117,14 @@ export const getPenguins = prerender(async () => {
 	const data = (await fetch('/data/examples/penguins.csv').then(async (r) =>
 		csvParse(await r.text(), autoType)
 	)) as PenguinsData;
+	return data;
+});
+
+export const getIris = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/iris.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as IrisData;
 	return data;
 });
 
