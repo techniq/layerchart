@@ -15,7 +15,26 @@ See also: [Axis](/docs/components/Axis) for examples of using time scale axes wi
 
 ## Grouped and stacked
 
-`seriesLayout` picks one or the other, but a sub-band does both: `x1` (or `y1` when horizontal) puts each group in its own slot within the band, and the series stack within each group rather than sharing one running total.
+`series` names a column per series, and `seriesLayout` decides how they share the band.
+
+```svelte
+<BarChart
+	{data}
+	x="year"
+	series={[{ key: 'apples' }, { key: 'bananas' }, ...]}
+	seriesLayout="group"
+/>
+```
+
+`seriesLayout="group"` gives each series its own slot within the band, so they're compared side by side:
+
+:example{ name="group-series" }
+
+`seriesLayout="stack"` gives them one running total instead, so the band's full height is their sum:
+
+:example{ name="stack-series" }
+
+A sub-band does both: `x1` (or `y1` when horizontal) puts each group in its own slot within the band, and the series stack within each group rather than sharing one running total.
 
 ```svelte
 <BarChart
@@ -29,9 +48,11 @@ See also: [Axis](/docs/components/Axis) for examples of using time scale axes wi
 />
 ```
 
-:example{ name="group-stack-series" showCode }
+:example{ name="group-stack-series" }
 
-:example{ name="group-stack-series-horizontal" showCode }
+`orientation="horizontal"` swaps the axes, with `y1` as the sub-band and the series stacking to the right:
+
+:example{ name="group-stack-series-horizontal" }
 
 Each row carries its band value, its group, and a column per stacked series — so one row per `year` × `basket` here.
 
@@ -43,10 +64,10 @@ Without `series` to stack, `x1` groups on its own — one bar per `x1` value wit
 <BarChart {data} x="year" x1="fruit" y="value" seriesLayout="group" c="fruit" />
 ```
 
-:example{ name="group-long-data" showCode }
+:example{ name="group-long-data" }
 
 ## Fixed width
 
 Use `width` or `height` on bars to override the scale-derived size with a fixed pixel value. The bar is centered within its band.
 
-:example{ name="vertical-fixed-width" showCode }
+:example{ name="vertical-fixed-width" }
