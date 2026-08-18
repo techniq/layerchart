@@ -67,13 +67,23 @@ The gap is _between_ panels only — the grid spans the full plot area, so space
 
 ## Axes and labels
 
-Axes place themselves on the grid's **outer edge** — a `left` axis on the leftmost column, a `bottom` axis on the last row — so interior panels don't redraw the same ticks. Set `facetAll` on an `Axis` to draw one in every panel instead:
+A faceted chart carries two kinds of axis, and they behave differently.
+
+### Data axes
+
+The ones measuring `x` and `y` belong to the panels. They place themselves on the grid's **outer edge** — a `left` axis on the leftmost column, a `bottom` axis on the last row — so interior panels don't redraw the same ticks. On a 3 × 3 grid that's three of each, not nine.
+
+Set `facetAll` on an `Axis` to draw one in every panel instead — all nine:
 
 ```svelte
 <Axis placement="left" facetAll />
 ```
 
-`fx` and `fy` are scales, so the panel headers are **axes over them** — drawn once across the top and down the right, not once per panel. Configure them with `Axis` props, or remove them:
+### Panel headers
+
+The labels naming each column and row are a different thing. `fx` and `fy` are scales, so the headers are **axes over those scales** — one across the top and one down the right, for the whole grid. There is one of each however many panels there are, so `facetAll` doesn't apply to them.
+
+Configure them with `Axis` props, or remove them:
 
 ```svelte
 <Chart {data} fx="species" facet={{ axis: { format: (d) => d.toUpperCase() } }}>

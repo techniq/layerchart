@@ -2,7 +2,7 @@
   import Axis from './Axis/Axis.svelte';
   import Group from './Group/Group.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { getFacetPanel } from '$lib/contexts/facet.js';
+  import { getFacetPanel, setFacetPanel } from '$lib/contexts/facet.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
 
   const ctx = getChartContext();
@@ -14,6 +14,11 @@
     const current = panel?.();
     return current == null || (current.column === 0 && current.row === 0);
   });
+
+  // These headers belong to the grid, not to the panel they happen to be rendered from — so the
+  // panel is cleared for them, and `Axis` doesn't apply its per-panel edge rule.  Without this the
+  // `fy` header is hidden whenever the grid has more than one column.
+  setFacetPanel(undefined);
 
   const axis = $derived(ctx.props.facet?.axis ?? true);
   const axisProps = $derived(getObjectOrNull(axis));

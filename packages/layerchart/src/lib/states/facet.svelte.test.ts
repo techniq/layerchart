@@ -6,6 +6,7 @@ import TestHarness from '../components/tests/TestHarness.svelte';
 import Circle from '../components/Circle/Circle.svelte';
 import Highlight from '../components/Highlight/Highlight.svelte';
 import ScatterChart from '../components/charts/ScatterChart/ScatterChart.svelte';
+import Axis from '../components/Axis/Axis.svelte';
 import { panelDatum } from '../utils/tooltip.js';
 import type { ChartState } from './chart.svelte.js';
 
@@ -155,6 +156,48 @@ describe('facets', () => {
         t.textContent?.trim()
       );
       expect(labels).toEqual(['a', 'b']);
+    });
+
+    it('draws the row headers when faceting on `fy`', async () => {
+      render(ScatterChart, {
+        props: { data, x: 'v', y: 'w', fy: 'h', width: 400, height: 300 },
+      } as any);
+
+      await expect.poll(() => document.querySelectorAll('.lc-facet-axis-y').length).toBe(1);
+      const labels = Array.from(document.querySelectorAll('.lc-facet-axis-y text')).map((t) =>
+        t.textContent?.trim()
+      );
+      expect(labels).toEqual(['x', 'y']);
+    });
+
+    it('repeats a data axis in every panel with `facetAll`', async () => {
+      // Documented in the facets guide.  Without it an axis draws on the grid's outer edge only,
+      // so `fx` with two columns would place a single `left` axis
+      const chartProps = { data, x: 'v', y: 'w', fx: 'g', width: 400, height: 300, padding: 0 };
+
+      render(TestHarness, {
+        component: Axis,
+        chartProps,
+        componentProps: { placement: 'left', facetAll: true },
+      } as any);
+      await expect.poll(() => document.querySelectorAll('.lc-axis.placement-left').length).toBe(2);
+
+      document.body.innerHTML = '';
+      render(TestHarness, {
+        component: Axis,
+        chartProps,
+        componentProps: { placement: 'left' },
+      } as any);
+      await expect.poll(() => document.querySelectorAll('.lc-axis.placement-left').length).toBe(1);
+    });
+
+    it('draws both headers on a two-dimensional grid', async () => {
+      render(ScatterChart, {
+        props: { data, x: 'v', y: 'w', fx: 'g', fy: 'h', width: 400, height: 300 },
+      } as any);
+
+      await expect.poll(() => document.querySelectorAll('.lc-facet-axis-x').length).toBe(1);
+      expect(document.querySelectorAll('.lc-facet-axis-y').length).toBe(1);
     });
   });
 

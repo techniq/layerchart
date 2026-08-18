@@ -16,8 +16,12 @@ export function getFacetPanel(): (() => Facet) | undefined {
   return _FacetPanelContext.getOr(undefined as unknown as () => Facet) ?? undefined;
 }
 
-export function setFacetPanel(getPanel: () => Facet) {
-  return _FacetPanelContext.set(getPanel);
+/**
+ * Set the panel for a subtree, or clear it with `undefined` — which is what the grid's own
+ * furniture wants, since it belongs to the whole grid rather than to any one panel.
+ */
+export function setFacetPanel(getPanel: (() => Facet) | undefined) {
+  return _FacetPanelContext.set(getPanel as () => Facet);
 }
 
 /**

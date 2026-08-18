@@ -54,6 +54,7 @@
     classes = {},
     class: className,
     tickLabel,
+    facetAll,
     ...restProps
   }: AxisBaseProps<T> = $props();
 
@@ -78,6 +79,7 @@
         motion,
         scale,
         classes,
+        facetAll,
       }) as AxisProps
   );
 </script>
