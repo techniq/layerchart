@@ -212,6 +212,12 @@ export function resolveColorProp<T>(
   if (typeof value === 'function') {
     const rawValue = (value as Function)(d, ...args);
     if (rawValue === undefined || rawValue === null) return undefined;
+
+    // A returned CSS color is a color, as a literal one is — otherwise it would be read as a
+    // domain value, and an ordinal scale answers an unknown one by extending its domain and
+    // handing back the next color in its range
+    if (typeof rawValue === 'string' && isCSSColor(rawValue)) return rawValue;
+
     return scaled(rawValue, cScale);
   }
 

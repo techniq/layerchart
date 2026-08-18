@@ -103,7 +103,7 @@
 					axis="y"
 					x={-BRUSH_WIDTH / 2}
 					width={BRUSH_WIDTH}
-					classes={{ selection: 'fill-primary/15 stroke-primary/50' }}
+					classes={{ selection: 'stroke-surface-content/80' }}
 				/>
 			</Group>
 		{/each}
