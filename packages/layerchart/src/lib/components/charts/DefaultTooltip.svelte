@@ -6,7 +6,7 @@
   // bloat the lazy chunk and trip Vite dev-server compilation in CI).
   import { sum } from 'd3-array';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { accessor } from '$lib/utils/common.js';
+  import { accessor, chartDataArray, isEqualValue } from '$lib/utils/common.js';
   import Root from '../tooltip/Tooltip.svelte';
   import Header from '../tooltip/TooltipHeader.svelte';
   import List from '../tooltip/TooltipList.svelte';
@@ -36,16 +36,41 @@
    * the values resolved for the hovered row can't be reused — they're re-read with the same
    * accessor rule `TooltipContext` uses.
    */
-  function seriesFor(data: any) {
-    if (data === context.tooltip.data) return visibleSeries;
+  /**
+   * The rows the hovered band covers.
+   *
+   * Data-driven sub-bands (`x1` / `y1`) split one band across a row each, holding only that
+   * sub-band's series — so the band's values live across the rows rather than in the single one
+   * the pointer resolved to, and a tooltip for the band has to read all of them.
+   */
+  function bandRows(data: any) {
+    const banded = context.props.x1 != null ? context.x : context.props.y1 != null ? context.y : null; // prettier-ignore
+    if (!banded) return [data];
 
-    return visibleSeries.map((s) => {
-      const config: any = s.config;
-      const valueAcc = accessor(
-        config?.value ?? (config?.data ? (context.props.y ?? context.props.x) : config?.key)
-      );
-      return { ...s, value: valueAcc(data) };
-    });
+    const value = banded(data);
+    return chartDataArray(context.data).filter((d: any) => isEqualValue(banded(d), value));
+  }
+
+  function seriesFor(data: any) {
+    const rows = bandRows(data);
+
+    const series =
+      rows.length === 1 && data === context.tooltip.data
+        ? visibleSeries
+        : visibleSeries.map((s) => {
+            const config: any = s.config;
+            const valueAcc = accessor(
+              config?.value ?? (config?.data ? (context.props.y ?? context.props.x) : config?.key)
+            );
+            // The first row of the band carrying this series — one row per sub-band, so only one
+            // of them holds any given series
+            const row = rows.find((d: any) => valueAcc(d) != null);
+            return { ...s, value: row != null ? valueAcc(row) : undefined };
+          });
+
+    // A series no row holds a value for would render as a label with nothing beside it, which
+    // reads as broken rather than as absent.
+    return series.filter((s) => s.value != null);
   }
 
   // Single-point modes find one specific data point (by proximity in both x+y),
@@ -137,7 +162,7 @@
           />
         {/each}
 
-        {#if canHaveTotal && visibleSeries.length > 1 && !tooltipProps?.hideTotal}
+        {#if canHaveTotal && seriesFor(data).length > 1 && !tooltipProps?.hideTotal}
           <Tooltip.Separator {...tooltipProps?.separator} children={undefined} />
 
           <Tooltip.Item

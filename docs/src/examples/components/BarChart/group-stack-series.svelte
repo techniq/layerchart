@@ -37,6 +37,9 @@
 	]}
 	seriesLayout="stack"
 	legend
-	props={{ yAxis: { format: 'metric' } }}
+	props={{
+		yAxis: { format: 'metric' },
+		tooltip: { header: { format: 'none' } }
+	}}
 	height={300}
 />

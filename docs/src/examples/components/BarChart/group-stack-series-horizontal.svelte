@@ -34,7 +34,11 @@
 	]}
 	seriesLayout="stack"
 	legend
-	props={{ xAxis: { format: 'metric' }, yAxis: { format: 'none' } }}
+	props={{
+		xAxis: { format: 'metric' },
+		yAxis: { format: 'none' },
+		tooltip: { header: { format: 'none' } }
+	}}
 	padding={defaultChartPadding({ legend: true, left: 30 })}
 	height={300}
 />
