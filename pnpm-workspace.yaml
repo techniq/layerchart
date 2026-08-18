@@ -3,3 +3,6 @@ packages:
   - 'examples/*'
   - 'docs'
   - 'bundle-analyzer'
+
+onlyBuiltDependencies:
+  - esbuild

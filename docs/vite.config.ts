@@ -21,10 +21,11 @@ export default defineConfig({
 			// interaction reaches them (ex. hovering a `quadtree` tooltip). That triggers a
 			// re-optimization mid-interaction and the in-flight import fails, leaving the feature
 			// dead until reload — tooltips being the visible symptom.
-			'd3-quadtree',
-			'd3-chord',
+			// Referenced through `layerchart` since `docs` doesn't depend on them directly
+			'layerchart > d3-quadtree',
+			'layerchart > d3-chord',
 			'd3-shape',
-			'd3-interpolate-path'
+			'layerchart > d3-interpolate-path'
 		]
 	},
 	plugins: [
