@@ -87,8 +87,9 @@
           : context.y1;
       return d.map((row: any) => ({
         key: String(subBand(row)),
-        // The rows are sub-bands rather than series, so hovering one highlights nothing
-        seriesKey: null,
+        // The rows are sub-bands rather than series — hovering one highlights the `c` category
+        // it carries, when the legend names those, and nothing otherwise
+        seriesKey: context.cKey(row) ?? null,
         label: subBand(row),
         value: value(row),
         color: context.config.c ? context.cGet(row) : undefined,
@@ -177,6 +178,14 @@
   function isSeriesItemHighlighted(seriesKey: string | null | undefined) {
     return seriesKey ? context.series.isHighlighted(seriesKey, true) : undefined;
   }
+
+  /**
+   * What hovering the row's items highlights — its `c` category when the legend names those, and
+   * the series the point belongs to otherwise.
+   */
+  function activeKey(data: any) {
+    return context.cKey(data) ?? activeSeries?.key ?? null;
+  }
 </script>
 
 <Tooltip.Root {context} {...tooltipProps?.root}>
@@ -194,18 +203,18 @@
         <Tooltip.Item
           label={typeof context.config.x === 'string' ? context.config.x : 'x'}
           value={context.x(data)}
-          data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
+          data-highlighted={isSeriesItemHighlighted(activeKey(data))}
           {format}
-          onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+          onpointerenter={() => (context.series.highlightKey = activeKey(data))}
           onpointerleave={() => (context.series.highlightKey = null)}
           {...tooltipProps?.item}
         />
         <Tooltip.Item
           label={typeof context.config.y === 'string' ? context.config.y : 'y'}
           value={context.y(data)}
-          data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
+          data-highlighted={isSeriesItemHighlighted(activeKey(data))}
           {format}
-          onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+          onpointerenter={() => (context.series.highlightKey = activeKey(data))}
           onpointerleave={() => (context.series.highlightKey = null)}
           {...tooltipProps?.item}
         />
@@ -213,9 +222,9 @@
           <Tooltip.Item
             label={typeof context.config.r === 'string' ? context.config.r : 'r'}
             value={context.r(data)}
-            data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
+            data-highlighted={isSeriesItemHighlighted(activeKey(data))}
             {format}
-            onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+            onpointerenter={() => (context.series.highlightKey = activeKey(data))}
             onpointerleave={() => (context.series.highlightKey = null)}
             {...tooltipProps?.item}
           />

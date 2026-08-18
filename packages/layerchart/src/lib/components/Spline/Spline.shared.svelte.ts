@@ -229,6 +229,8 @@ export class SplineState {
     const out: SplineSegment[] = [];
 
     for (const lineData of this.lines) {
+      const lineOpacity = this.#lineOpacity(lineData);
+
       if (this.hasAnyStyleFn) {
         // Style functions split each line further, into one path per run of matching style
         const groups = groupConsecutive(lineData, (d, i, arr) => {
@@ -242,7 +244,11 @@ export class SplineState {
           };
         });
         for (const group of groups) {
-          out.push({ ...group.style, d: this.#buildPath(group.data) });
+          out.push({
+            ...group.style,
+            opacity: group.style.opacity ?? lineOpacity,
+            d: this.#buildPath(group.data),
+          });
         }
       } else {
         // One path for the whole line, styled from its first point — so `stroke="species"` picks
@@ -251,7 +257,7 @@ export class SplineState {
           stroke:
             resolveColorProp(props.stroke, lineData[0], this.ctx.cScale) ?? this.series?.color,
           fill: resolveColorProp(props.fill, lineData[0], this.ctx.cScale),
-          opacity: resolveStyleProp(props.opacity, lineData[0]),
+          opacity: resolveStyleProp(props.opacity, lineData[0]) ?? lineOpacity,
           class: resolveStyleProp(props.class, lineData[0]),
           d: this.#buildPath(lineData),
         });
@@ -260,6 +266,18 @@ export class SplineState {
 
     return out;
   });
+
+  /**
+   * Fade for one line when the legend names `c` categories, or `undefined` when it names series.
+   *
+   * `seriesOpacity` can't tell these apart — a single series draws every line here, so the whole
+   * mark would fade as one.  Read from the line's first point, the way its `stroke` is.
+   */
+  #lineOpacity(lineData: any[]) {
+    const key = this.ctx.cKey(lineData[0]);
+    if (key == null) return undefined;
+    return this.ctx.series.isHighlighted(key, true) ? 1 : 0.1;
+  }
 
   #defaultPathData(): string {
     const props = this.#props;

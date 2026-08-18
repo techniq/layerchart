@@ -2211,3 +2211,131 @@ describe('ChartState zoomToBrush', () => {
     }
   });
 });
+
+describe('ChartState `c` legend key', () => {
+  type LongData = { year: string; fruit: string; value: number };
+
+  const longData: LongData[] = [
+    { year: '2019', fruit: 'apples', value: 10 },
+    { year: '2019', fruit: 'bananas', value: 50 },
+    { year: '2020', fruit: 'apples', value: 20 },
+    { year: '2020', fruit: 'bananas', value: 80 },
+  ];
+
+  function createCategoryChart(props: Partial<ChartPropsWithoutHTML<LongData>> = {}) {
+    return createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      y: 'value',
+      x1: 'fruit',
+      c: 'fruit',
+      valueAxis: 'y',
+      series: [{ key: 'default' }],
+      ...props,
+    });
+  }
+
+  it('should key rows by their `c` value when the series are implicit', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      expect(state.cKey(longData[0])).toBe('apples');
+      expect(state.cKey(longData[1])).toBe('bananas');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should key rows by nothing when series name the legend items instead', () => {
+    const { state, cleanup } = createCategoryChart({
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      expect(state.cKey(longData[0])).toBe(null);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should key rows by nothing for a continuous `c`, which the legend draws as a ramp', () => {
+    const { state, cleanup } = createCategoryChart({ c: 'value' });
+
+    try {
+      expect(state.cDomain).toEqual([10, 80]);
+      expect(state.cKey(longData[0])).toBe(null);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should drop the rows of a hidden category and release its sub-band', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      expect(state.data).toHaveLength(4);
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.yDomain).toEqual([10, 80]);
+
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.data).toEqual([longData[0], longData[2]]);
+      // The sub-band bananas held is released, so the bars left widen into it
+      expect(state.x1Domain).toEqual(['apples']);
+      expect(state.yDomain).toEqual([10, 20]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep a hidden category in the color domain, so the rest keep their color', () => {
+    const { state, cleanup } = createCategoryChart({ cRange: ['red', 'yellow'] });
+
+    try {
+      expect(state.cGet(longData[0])).toBe('red');
+
+      state.seriesState.selectedKeys.toggle('bananas');
+      flushSync();
+
+      expect(state.cDomain).toEqual(['apples', 'bananas']);
+      expect(state.cGet(longData[1])).toBe('yellow');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep the implicit series visible while categories are selected', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      // Hiding the one series that draws every category would empty the chart
+      expect(state.seriesState.visibleSeries.map((s) => s.key)).toEqual(['default']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should read a highlight on the implicit series as no highlight', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      state.seriesState.highlightKey = 'default';
+      flushSync();
+
+      // `default` names nothing to tell apart — every mark would fade against it
+      expect(state.seriesState.highlightKey).toBe(null);
+
+      state.seriesState.highlightKey = 'apples';
+      flushSync();
+
+      expect(state.seriesState.isHighlighted('apples', true)).toBe(true);
+      expect(state.seriesState.isHighlighted('bananas', true)).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+});

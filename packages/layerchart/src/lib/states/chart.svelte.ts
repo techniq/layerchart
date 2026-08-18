@@ -557,13 +557,15 @@ export class ChartState<
   containerWidth = $derived(this.props.width ?? this._containerWidth);
   containerHeight = $derived(this.props.height ?? this._containerHeight);
 
+  // The chart's rows before a legend hides any of them — which is what `cDomain` is read from.
+  //
   // When `<Chart data>` is passed with a non-empty dataset, it's canonical —
   // marks with their own `data` (e.g. filtered label subsets) still contribute
   // to `flatData` for domain calculation but don't replace iteration data.
   // Otherwise fall back to `visibleSeriesData` so simplified charts that pass
   // data via series definitions still work, with reactive recomputation when
   // series are shown/hidden via legend.
-  data = $derived.by(() => {
+  #sourceData = $derived.by(() => {
     const propsData = this.props.data;
     if (propsData != null && (!Array.isArray(propsData) || propsData.length > 0)) {
       return propsData;
@@ -572,6 +574,47 @@ export class ChartState<
       return this.seriesState.visibleSeriesData;
     }
     return [];
+  });
+
+  /**
+   * Whether `c` names the legend's items — standing in as the series channel.
+   *
+   * An ordinal `c` scale with no configured series is a chart whose groups live in the data —
+   * `x1="fruit"` with `c="fruit"`, say — and the lone implicit series names none of them.  A
+   * continuous `c` is a ramp instead, which the legend draws with nothing to click.
+   */
+  #groupsFromColor = $derived.by(() => {
+    if (this.props.c == null || !(this.seriesState?.isDefaultSeries ?? true)) return false;
+    return typeof (Array.isArray(this.cDomain) ? this.cDomain[0] : undefined) !== 'number';
+  });
+
+  /**
+   * The row's key on the `c` channel — its legend swatch — or `null` when the chart's `series`
+   * name the legend's items instead.  The category beside `cGet`'s color.
+   *
+   * `c` doubles as the series channel when nothing else divides the data, the fallback Observable
+   * Plot and SveltePlot both make, where `z` "defaults to `stroke` if a channel, or `fill` if a
+   * channel".  Marks fade and the legend hides against this the way they do against a series key,
+   * so a legend backed by an ordinal `c` scale acts on what it names — as `PieChart` already does
+   * with its slices.
+   *
+   * Distinct from `z`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
+   * (`z="id"` with `c="group"`), and it's `c` the legend names.
+   */
+  cKey = $derived.by<(d: any) => any>(() =>
+    this.#groupsFromColor ? (d: any) => this.c(d) : () => null
+  );
+
+  data = $derived.by(() => {
+    const data = this.#sourceData;
+    // Rows of a `c` category the legend has hidden.  Dropped here rather than at the marks so the
+    // scales follow too — the sub-band the category held is released, and the bars left widen
+    // into it, the way hiding a series does.
+    const selected = this.seriesState?.selectedKeys;
+    if (!this.#groupsFromColor || !selected || selected.isEmpty() || !Array.isArray(data)) {
+      return data;
+    }
+    return data.filter((d: any) => selected.isSelected(this.c(d)));
   });
 
   flatData = $derived.by(() => {
@@ -1212,7 +1255,9 @@ export class ChartState<
   });
   cDomain = $derived.by(() => {
     if (this.props.cDomain) return this.props.cDomain;
-    const values = chartDataArray(this.data).map(this.c);
+    // Read from the unfiltered rows: a category the legend hid keeps its place in the domain, or
+    // the ordinal range would shift under the ones left and recolor them
+    const values = chartDataArray(this.#sourceData).map(this.c);
     // Use extent for numeric values (continuous scales), unique for categorical (ordinal scales)
     if (values.length > 0 && typeof values[0] === 'number') {
       return extent(values) as [number, number];

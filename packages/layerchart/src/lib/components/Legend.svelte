@@ -351,7 +351,18 @@
     }
   });
 
-  const variant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
+  /**
+   * An ordinal scale is the `else` of `scaleConfig` above — it interpolates nothing and inverts to
+   * no extent.
+   */
+  const isOrdinalScale = $derived(
+    !!scale && !scale.interpolate && !scale.interpolator && !scale.invertExtent
+  );
+
+  // A ramp reads as a gradient between two ends, which an ordinal scale has no notion of: its
+  // domain is a handful of unrelated categories, and a strip of unlabelled blocks names none of
+  // them.  Swatches are what a `c` channel without configured series wants.
+  const variant = $derived(variantProp ?? (seriesItems || isOrdinalScale ? 'swatches' : 'ramp'));
   const selected = $derived(selectedProp ?? ctx.series?.selectedKeys?.current ?? []);
 
   // Position indicator for the currently hovered value on the ramp. If `value`

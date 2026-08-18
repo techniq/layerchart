@@ -141,7 +141,8 @@
           radius={4}
           strokeWidth={1}
           {stackPadding}
-          opacity={context.series.isHighlighted(s.key, true) ? 1 : 0.1}
+          opacity={(d: any) =>
+            context.series.isHighlighted(context.cKey(d) ?? s.key, true) ? 1 : 0.1}
           onBarClick={(e: MouseEvent, detail: any) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}
           {...s.props}

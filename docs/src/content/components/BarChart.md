@@ -58,10 +58,10 @@ Each row carries its band value, its group, and a column per stacked series — 
 
 ### Grouping long data
 
-Without `series` to stack, `x1` groups on its own — one bar per `x1` value within each band, from rows that already carry their category. Nothing has to be pivoted into a column per series first, and the tooltip lists the band's rows:
+Without `series` to stack, `x1` groups on its own — one bar per `x1` value within each band, from rows that already carry their category. Nothing has to be pivoted into a column per series first, the tooltip lists the band's rows, and `legend` reads the categories off the `c` scale — hovering an item fades the rest, clicking one filters to it:
 
 ```svelte
-<BarChart {data} x="year" x1="fruit" y="value" seriesLayout="group" c="fruit" />
+<BarChart {data} x="year" x1="fruit" y="value" seriesLayout="group" c="fruit" legend />
 ```
 
 :example{ name="group-long-data" }

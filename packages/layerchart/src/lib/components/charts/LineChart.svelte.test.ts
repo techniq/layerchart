@@ -54,3 +54,74 @@ describe('LineChart', () => {
     });
   });
 });
+
+describe('legend `c` category toggle', () => {
+  // `z` splits the lines, `c` colors them — so the legend's items are the `c` categories, and a
+  // single implicit series draws every line
+  const longData = [
+    { date: 0, fruit: 'apples', value: 10 },
+    { date: 1, fruit: 'apples', value: 30 },
+    { date: 0, fruit: 'bananas', value: 20 },
+    { date: 1, fruit: 'bananas', value: 50 },
+  ];
+
+  const longDataProps = {
+    data: longData,
+    x: 'date',
+    y: 'value',
+    c: 'fruit',
+    cRange: ['red', 'yellow'],
+    // `stroke` naming a data property is what colors a line from the `c` scale, and splits the
+    // lines on its own — `Spline` infers `z` from it, as in Observable Plot
+    props: { spline: { stroke: 'fruit' } },
+    legend: true,
+    width: 400,
+    height: 300,
+  };
+
+  async function legendButtons(container: HTMLElement) {
+    // `Legend` is lazy-loaded inside `ChartChildren`
+    let buttons: NodeListOf<Element> = container.querySelectorAll('.lc-legend-swatch-button');
+    await vi.waitFor(() => {
+      buttons = container.querySelectorAll('.lc-legend-swatch-button');
+      expect(buttons.length).toBe(2);
+    });
+    return buttons;
+  }
+
+  const splines = (container: HTMLElement) =>
+    Array.from(container.querySelectorAll('.lc-path')).map((el) => ({
+      stroke: el.getAttribute('stroke'),
+      opacity: (el as SVGElement).style.opacity || el.getAttribute('opacity') || '1',
+    }));
+
+  it('should fade the other lines while a legend item is hovered', async () => {
+    const { container } = render(LineChart, { props: longDataProps } as any);
+
+    const buttons = await legendButtons(container);
+    await vi.waitFor(() => expect(splines(container).length).toBe(2));
+
+    buttons[0].dispatchEvent(new PointerEvent('pointerenter', { bubbles: false }));
+
+    // One series draws both lines, so a mark-wide fade would dim them together
+    await vi.waitFor(() => {
+      expect(splines(container)).toEqual([
+        { stroke: 'red', opacity: '1' },
+        { stroke: 'yellow', opacity: '0.1' },
+      ]);
+    });
+  });
+
+  it('should drop a line when its legend item is clicked', async () => {
+    const { container } = render(LineChart, { props: longDataProps } as any);
+
+    const buttons = await legendButtons(container);
+    await vi.waitFor(() => expect(splines(container).length).toBe(2));
+
+    (buttons[0] as HTMLElement).click();
+
+    await vi.waitFor(() => {
+      expect(splines(container)).toEqual([{ stroke: 'red', opacity: '1' }]);
+    });
+  });
+});

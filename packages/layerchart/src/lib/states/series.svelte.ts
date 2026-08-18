@@ -64,7 +64,11 @@ export class SeriesState<TData, TComponent extends Component> {
     key: SeriesData<TData, TComponent>['key'] | null,
     source: string | symbol | null = null
   ) {
-    this.#highlightKey = key;
+    // The implicit `default` series names nothing to tell apart, so highlighting it reads as no
+    // highlight at all.  A chart keyed by `c` instead holds those keys here — fading every mark
+    // against `default`, which none of them carry, is what this avoids.
+    this.#highlightKey =
+      this.isDefaultSeries && this.#series.some((s) => s.key === key) ? null : key;
     this.highlightSource = source;
     this.onHighlightChange?.();
   }
@@ -384,6 +388,10 @@ export class SeriesState<TData, TComponent extends Component> {
    * Check if series is visible
    */
   isVisible(seriesKey: SeriesData<TData, TComponent>['key']) {
+    // Implicit series name nothing a legend could select — what's selected there is `c`
+    // categories or data keys, and the rows carrying them are filtered instead.  Reading the
+    // selection here would hide the one series that draws them all.
+    if (this.isDefaultSeries) return true;
     return this.selectedKeys.isEmpty() || this.selectedKeys.isSelected(seriesKey);
   }
 

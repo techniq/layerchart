@@ -595,6 +595,81 @@ describe('BarChart', () => {
     });
   });
 
+  describe('legend `c` category toggle', () => {
+    // `x1` groups long data on its own, so the legend's items are the `c` categories rather than
+    // series — the lone implicit series names none of them
+    const longData = [
+      { year: '2019', fruit: 'apples', value: 30 },
+      { year: '2019', fruit: 'bananas', value: 20 },
+      { year: '2020', fruit: 'apples', value: 40 },
+      { year: '2020', fruit: 'bananas', value: 10 },
+    ];
+
+    const longDataProps = {
+      data: longData,
+      x: 'year',
+      x1: 'fruit',
+      y: 'value',
+      seriesLayout: 'group' as const,
+      c: 'fruit',
+      cRange: ['red', 'yellow'],
+      legend: true,
+      width: 400,
+      height: 300,
+    };
+
+    async function legendButtons(container: HTMLElement) {
+      // `Legend` is lazy-loaded inside `ChartChildren`
+      let buttons: NodeListOf<Element> = container.querySelectorAll('.lc-legend-swatch-button');
+      await vi.waitFor(() => {
+        buttons = container.querySelectorAll('.lc-legend-swatch-button');
+        expect(buttons.length).toBe(2);
+      });
+      return buttons;
+    }
+
+    const bars = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll('.lc-bar')).map((el) => ({
+        fill: el.getAttribute('fill'),
+        opacity: (el as SVGElement).style.opacity || el.getAttribute('opacity') || '1',
+      }));
+
+    it('should hide a category\u2019s bars when its legend item is clicked', async () => {
+      const { container } = render(BarChart, longDataProps as any);
+
+      const buttons = await legendButtons(container);
+      await vi.waitFor(() => expect(bars(container).length).toBe(4));
+
+      (buttons[0] as HTMLElement).click();
+
+      await vi.waitFor(() => {
+        // Only apples remain, and they keep the color the full domain gave them
+        expect(bars(container)).toEqual([
+          { fill: 'red', opacity: '1' },
+          { fill: 'red', opacity: '1' },
+        ]);
+      });
+    });
+
+    it('should fade the other categories while a legend item is hovered', async () => {
+      const { container } = render(BarChart, longDataProps as any);
+
+      const buttons = await legendButtons(container);
+      await vi.waitFor(() => expect(bars(container).length).toBe(4));
+
+      buttons[0].dispatchEvent(new PointerEvent('pointerenter', { bubbles: false }));
+
+      await vi.waitFor(() => {
+        expect(bars(container).map((b) => `${b.fill}:${b.opacity}`)).toEqual([
+          'red:1',
+          'yellow:0.1',
+          'red:1',
+          'yellow:0.1',
+        ]);
+      });
+    });
+  });
+
   describe('separate data per series', () => {
     const separateData = {
       apples: [

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 
 	const data = longData;
@@ -17,6 +17,7 @@
 	y="value"
 	seriesLayout="group"
 	c="fruit"
+	legend
 	cRange={[
 		'var(--color-apples)',
 		'var(--color-bananas)',
