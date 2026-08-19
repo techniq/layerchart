@@ -83,7 +83,9 @@ describe('DefaultTooltip', () => {
         const labels = document.querySelectorAll('.lc-tooltip-item-label');
         expect(labels.length).toBe(4);
         const labelTexts = Array.from(labels).map((l) => l.textContent?.trim());
-        expect(labelTexts).toEqual(['apples', 'bananas', 'oranges', 'total']);
+        // Multi-series areas stack under the `auto` default, and a stacked tooltip lists its
+        // items top-down to match the layers on screen — so the series read in reverse
+        expect(labelTexts).toEqual(['oranges', 'bananas', 'apples', 'total']);
       });
     });
 
@@ -106,7 +108,8 @@ describe('DefaultTooltip', () => {
         const colors = Array.from(colorDots).map((dot) =>
           (dot as HTMLElement).style.getPropertyValue('--color')
         );
-        expect(colors).toEqual(['rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(255, 165, 0)']);
+        // Reversed with the stack, as above
+        expect(colors).toEqual(['rgb(255, 165, 0)', 'rgb(0, 128, 0)', 'rgb(255, 0, 0)']);
       });
     });
 

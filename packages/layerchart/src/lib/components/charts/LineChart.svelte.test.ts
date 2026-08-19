@@ -56,8 +56,8 @@ describe('LineChart', () => {
 });
 
 describe('legend `c` category toggle', () => {
-  // `z` splits the lines, `c` colors them — so the legend's items are the `c` categories, and a
-  // single implicit series draws every line
+  // `c` names the legend's items when no `series` do, and a single implicit series draws every
+  // line — so the fade has to tell the lines apart by their `c` value
   const longData = [
     { date: 0, fruit: 'apples', value: 10 },
     { date: 1, fruit: 'apples', value: 30 },
@@ -69,11 +69,9 @@ describe('legend `c` category toggle', () => {
     data: longData,
     x: 'date',
     y: 'value',
+    // `c` alone splits and colors the lines — no `z`, no `stroke`, no `series`
     c: 'fruit',
     cRange: ['red', 'yellow'],
-    // `stroke` naming a data property is what colors a line from the `c` scale, and splits the
-    // lines on its own — `Spline` infers `z` from it, as in Observable Plot
-    props: { spline: { stroke: 'fruit' } },
     legend: true,
     width: 400,
     height: 300,
@@ -96,7 +94,7 @@ describe('legend `c` category toggle', () => {
     }));
 
   it('should fade the other lines while a legend item is hovered', async () => {
-    const { container } = render(LineChart, { props: longDataProps } as any);
+    const { container } = render(LineChart, longDataProps as any);
 
     const buttons = await legendButtons(container);
     await vi.waitFor(() => expect(splines(container).length).toBe(2));
@@ -113,7 +111,7 @@ describe('legend `c` category toggle', () => {
   });
 
   it('should drop a line when its legend item is clicked', async () => {
-    const { container } = render(LineChart, { props: longDataProps } as any);
+    const { container } = render(LineChart, longDataProps as any);
 
     const buttons = await legendButtons(container);
     await vi.waitFor(() => expect(splines(container).length).toBe(2));

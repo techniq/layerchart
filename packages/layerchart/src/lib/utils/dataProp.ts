@@ -190,8 +190,7 @@ function isCSSColor(value: string): boolean {
  * nothing in the data).
  *
  * Marks that draw one shape per series use this to infer their grouping from `stroke` / `fill`,
- * following Observable Plot: `stroke="fruit"` means one line per fruit, without also having to
- * say `z="fruit"`.
+ * without also having to also use `z="fruit"`.
  */
 export function colorPropDataKey<T>(
   value: ColorProp<T> | undefined | null,

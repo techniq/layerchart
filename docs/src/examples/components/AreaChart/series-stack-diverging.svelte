@@ -26,7 +26,6 @@
 			color: 'var(--color-oranges)'
 		}
 	]}
-	seriesLayout="stackDiverging"
 	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

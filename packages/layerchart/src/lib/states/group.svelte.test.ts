@@ -867,6 +867,54 @@ describe('series slice', () => {
     });
   });
 
+  describe('visibility keyed by `c`', () => {
+    // Long data, so the legend's items are `c` categories rather than series keys
+    const longData = [
+      { date: new Date('2024-01-01'), fruit: 'apples', value: 10 },
+      { date: new Date('2024-01-01'), fruit: 'bananas', value: 20 },
+      { date: new Date('2024-01-02'), fruit: 'apples', value: 30 },
+      { date: new Date('2024-01-02'), fruit: 'bananas', value: 40 },
+    ];
+
+    async function renderCategoryPair() {
+      const group = new ChartGroupState();
+      const contexts: ChartState<any, any, any>[] = [];
+      const props = { data: longData, x: 'date', y: 'value', c: 'fruit' };
+
+      render(ChartGroupTestHarness, {
+        group,
+        members: [{ chartProps: props }, { chartProps: props }],
+        oncontext: (ctx: any, i: number) => (contexts[i] = ctx),
+      } as any);
+
+      await vi.waitFor(() => {
+        expect(contexts[0]).toBeDefined();
+        expect(contexts[1]).toBeDefined();
+      });
+      return { chartA: contexts[0], chartB: contexts[1], group };
+    }
+
+    it('should share a hidden category with the other chart', async () => {
+      const { chartA, chartB, group } = await renderCategoryPair();
+
+      chartA.series.selectedKeys.current = ['apples']; // hides bananas
+
+      await vi.waitFor(() => expect(group.series.hiddenKeys).toEqual(['bananas']));
+      expect(chartB.series.selectedKeys.current).toEqual(['apples']);
+    });
+
+    it('should leave the selection alone when the group hides nothing', async () => {
+      const { chartA } = await renderCategoryPair();
+
+      chartA.series.selectedKeys.current = ['apples'];
+
+      // The subscribe effect reads the chart's own keys; with none of them hidden it must not
+      // read that as "everything visible" and clear what the legend selected
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(chartA.series.selectedKeys.current).toEqual(['apples']);
+    });
+  });
+
   describe('visibility', () => {
     it('hides the same series on the other chart', async () => {
       const { chartA, chartB, group } = await renderSeriesPair();

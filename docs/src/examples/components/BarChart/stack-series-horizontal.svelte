@@ -25,7 +25,6 @@
 			color: 'var(--color-grapes)'
 		}
 	]}
-	seriesLayout="stack"
 	props={{
 		xAxis: { format: 'metric' },
 		yAxis: { format: 'none' },

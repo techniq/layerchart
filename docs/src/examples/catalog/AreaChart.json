@@ -373,6 +373,18 @@
       ]
     },
     {
+      "name": "series-overlap",
+      "title": "series overlap",
+      "path": "/docs/components/AreaChart/series-overlap",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 19,
+          "line": "<AreaChart"
+        }
+      ]
+    },
+    {
       "name": "series-point-annotations",
       "title": "series point annotations",
       "path": "/docs/components/AreaChart/series-point-annotations",
@@ -843,6 +855,13 @@
       "line": "<AreaChart"
     },
     {
+      "example": "series-overlap",
+      "component": "AreaChart",
+      "path": "/docs/components/AreaChart/series-overlap",
+      "lineNumber": 19,
+      "line": "<AreaChart"
+    },
+    {
       "example": "series-point-annotations",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-point-annotations",
@@ -1011,5 +1030,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:52.168Z"
+  "updatedAt": "2026-08-19T11:15:13.656Z"
 }

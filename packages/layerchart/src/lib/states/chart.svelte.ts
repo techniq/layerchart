@@ -423,7 +423,7 @@ export class ChartState<
         return implicitSeries.length > 0 ? implicitSeries : EMPTY_SERIES;
       },
       () => {
-        const layout = this.props.seriesLayout;
+        const layout = this.seriesLayout;
         if (!layout || !layout.startsWith('stack')) return null;
 
         const series = this.props.series ?? [];
@@ -432,11 +432,19 @@ export class ChartState<
 
         return {
           layout: layout as StackLayout,
-          data: hasSeparateData ? undefined : chartDataArray(this.props.data),
+          // `this.data` rather than the raw prop, so a category the legend hid leaves the stack
+          data: hasSeparateData ? undefined : chartDataArray(this.data),
           keyBy: keyBy!,
           valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
           // Anything that subdivides the plot also subdivides the stack — see `StackConfig.groupBy`
           groupBy: this.#stackGroupBy,
+          // Long data stacks by the category its rows carry, since no series names the layers
+          ...(this.#groupsFromColor
+            ? {
+                seriesBy: this.cKey,
+                seriesKeys: Array.isArray(this.cDomain) ? this.cDomain : [],
+              }
+            : null),
         };
       }
     );
@@ -589,14 +597,38 @@ export class ChartState<
   });
 
   /**
+   * `seriesLayout` with `auto` resolved to what it means for this chart.
+   *
+   * A value given as an explicit interval is a pair of positions rather than a magnitude, so
+   * there is nothing to accumulate — a duration bar or a waterfall stays as drawn.
+   *
+   * Something also has to name the layers — configured `series`, or an ordinal `c` — or there is
+   * one thing per band and stacking it would change nothing.
+   *
+   * Stacking about zero (`stackDiverging`) rather than end to end (`stack`) is what lets a
+   * population pyramid keep its two sides, and costs nothing when every value has the same sign.
+   *
+   * `group` is deliberately not inferred: an `x1` sub-band has to be asked for.
+   */
+  seriesLayout = $derived.by<StackLayout | 'group'>(() => {
+    const layout = this.props.seriesLayout;
+    if (layout !== 'auto') return layout ?? 'overlap';
+
+    const value = this.valueAxis === 'y' ? this.props.y : this.props.x;
+    if (Array.isArray(value)) return 'overlap';
+
+    const namesLayers = (this.seriesState?.series.length ?? 0) > 1 || this.#groupsFromColor;
+    return namesLayers ? 'stackDiverging' : 'overlap';
+  });
+
+  /**
    * The row's key on the `c` channel — its legend swatch — or `null` when the chart's `series`
    * name the legend's items instead.  The category beside `cGet`'s color.
    *
-   * `c` doubles as the series channel when nothing else divides the data, the fallback Observable
-   * Plot and SveltePlot both make, where `z` "defaults to `stroke` if a channel, or `fill` if a
-   * channel".  Marks fade and the legend hides against this the way they do against a series key,
-   * so a legend backed by an ordinal `c` scale acts on what it names — as `PieChart` already does
-   * with its slices.
+   * `c` doubles as the series channel when nothing else divides the data — what colors the marks
+   * groups them.  Marks fade and the legend hides against this the way they do against a series
+   * key, so a legend backed by an ordinal `c` scale acts on what it names — as `PieChart` already
+   * does with its slices.
    *
    * Distinct from `z`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
    * (`z="id"` with `c="group"`), and it's `c` the legend names.
@@ -1233,7 +1265,7 @@ export class ChartState<
       return this.#subBandDomain(this.x1);
     }
     // Auto-derive for grouped series when x is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'y') {
       return this.seriesState.visibleSeries.map((s) => s.key);
     }
     return undefined;
@@ -1248,7 +1280,7 @@ export class ChartState<
       return this.#subBandDomain(this.y1);
     }
     // Auto-derive for grouped series when y is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'x') {
       return this.seriesState.visibleSeries.map((s) => s.key);
     }
     return undefined;
@@ -1378,7 +1410,7 @@ export class ChartState<
       );
     }
     // Auto-derive for grouped series when x is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'y' && this.x1Domain) {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'y' && this.x1Domain) {
       const groupPadding = this.props.groupPadding ?? 0;
       return createScale(
         scaleBand().padding(groupPadding),
@@ -1403,7 +1435,7 @@ export class ChartState<
       );
     }
     // Auto-derive for grouped series when y is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'x' && this.y1Domain) {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'x' && this.y1Domain) {
       const groupPadding = this.props.groupPadding ?? 0;
       return createScale(
         scaleBand().padding(groupPadding),

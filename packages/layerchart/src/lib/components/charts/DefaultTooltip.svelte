@@ -56,7 +56,16 @@
       return context.facet.panels.find((panel) => panel.has(data))?.data ?? [data];
     }
 
-    const banded = context.props.x1 != null ? context.x : context.props.y1 != null ? context.y : null; // prettier-ignore
+    // Long data stacked by `c` puts several rows in a band with no `x1` to name them — the band
+    // is then the category axis itself
+    const banded =
+      context.props.x1 != null
+        ? context.x
+        : context.props.y1 != null
+          ? context.y
+          : context.cKey(data) != null
+            ? (context.valueAxis === 'y' ? context.x : context.y)
+            : null;
     if (!banded) return [data];
 
     const value = banded(data);
@@ -84,7 +93,9 @@
           : context.y
         : context.props.x1 != null
           ? context.x1
-          : context.y1;
+          : context.props.y1 != null
+            ? context.y1
+            : context.c;
       return d.map((row: any) => ({
         key: String(subBand(row)),
         // The rows are sub-bands rather than series — hovering one highlights the `c` category

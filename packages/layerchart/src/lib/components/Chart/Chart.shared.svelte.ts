@@ -18,7 +18,7 @@ import type {
 } from '$lib/utils/types.js';
 import type { GeoStateProps } from '$lib/states/geo.svelte.js';
 import type { BrushDomainType } from '$lib/states/brush.svelte.js';
-import type { StackLayout } from '$lib/states/series.svelte.js';
+import type { SeriesLayout } from '$lib/states/series.svelte.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { ChartGroupMemberOptions, ChartGroupState } from '$lib/states/group.svelte.js';
 
@@ -280,7 +280,19 @@ export type ChartPropsWithoutHTML<
 
   series?: SeriesData<T, any>[];
 
-  seriesLayout?: StackLayout | 'group';
+  /**
+   * How multiple series are arranged.
+   *
+   * `'auto'` stacks when something names layers to stack — two or more `series`, or an ordinal
+   * `c` — and overlaps otherwise, including when the value is an explicit `[start, end]`
+   * interval, which is a pair of positions rather than a magnitude.  It stacks about zero, so
+   * negative values run the other way and a diverging chart keeps its two sides.
+   *
+   * `'group'` divides each band by the `x1` / `y1` sub-band, and is never inferred.
+   *
+   * @default 'auto' for `BarChart` / `AreaChart`, `'overlap'` for `Chart`
+   */
+  seriesLayout?: SeriesLayout;
 
   bandPadding?: number;
   groupPadding?: number;

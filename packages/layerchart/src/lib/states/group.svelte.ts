@@ -5,7 +5,7 @@ import type { ChartState } from './chart.svelte.js';
 import type { BrushDomainType } from './brush.svelte.js';
 import type { DomainType } from '$lib/utils/scales.svelte.js';
 import { findDatumByValue } from '$lib/utils/tooltip.js';
-import { isEqualValue } from '$lib/utils/common.js';
+import { chartDataArray, isEqualValue } from '$lib/utils/common.js';
 import { scaleInvert, type AnyScale } from '$lib/utils/scales.svelte.js';
 
 /** State slices that can be shared between charts in a group */
@@ -501,6 +501,25 @@ function optedInto(option: boolean | ChartGroupSlice[] | undefined, slice: Chart
 }
 
 /** Whether `slice` is enabled by a `publish` / `subscribe` option */
+/**
+ * The keys a chart's legend names, which are what its visibility is shared as.
+ *
+ * Usually the series keys — but a chart whose legend is backed by an ordinal `c` scale names
+ * that channel's categories instead, and its lone implicit series names none of them.
+ */
+function legendKeys(ctx: ChartState<any, any, any>): string[] {
+  const rows = chartDataArray(ctx.data);
+  const keyedByCategory = rows.length > 0 && ctx.cKey(rows[0]) != null;
+  if (keyedByCategory && Array.isArray(ctx.cDomain)) return ctx.cDomain as string[];
+  return ctx.series.series.map((s) => s.key);
+}
+
+/** Whether a key is currently shown — an empty selection means nothing is hidden */
+function shows(ctx: ChartState<any, any, any>, key: string) {
+  const selected = ctx.series.selectedKeys;
+  return selected.isEmpty() || selected.isSelected(key);
+}
+
 function allows(option: boolean | ChartGroupSlice[] | undefined, slice: ChartGroupSlice) {
   if (option == null || option === true) return true;
   if (option === false) return false;
@@ -680,8 +699,8 @@ export function connectToChartGroup(
     if (!group || !seriesOptions?.visibility) return;
     if (!allows(getMemberOptions()?.publish, 'series')) return;
 
-    const keys = ctx.series.series.map((s) => s.key);
-    const hidden = keys.filter((key) => !ctx.series.isVisible(key));
+    const keys = legendKeys(ctx);
+    const hidden = keys.filter((key) => !shows(ctx, key));
 
     untrack(() => {
       // Merge rather than replace, so a chart only ever speaks for its own series — see
@@ -702,7 +721,7 @@ export function connectToChartGroup(
     const shared = group.series;
     if (shared.visibilitySource === ctx.id) return; // this chart published it
 
-    const keys = ctx.series.series.map((s) => s.key);
+    const keys = legendKeys(ctx);
     const visible = keys.filter((key) => !shared.hiddenKeys.includes(key));
     // `SelectionState` reads an empty selection as "everything visible", so only narrow it when
     // something is actually hidden

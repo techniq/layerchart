@@ -33,6 +33,14 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 </Chart>
 ```
 
+**Long format (grouped by a channel)** — One row per observation, with the category in a column. [details →](#long-format)
+
+```svelte
+<Chart data={longData} x="year" y="value" c="fruit">
+	<Spline />
+</Chart>
+```
+
 **Series (unified data)** — Multiple series from the same data array (wide format) with legend/tooltip. [details →](#unified-data-with-per-series-values)
 
 ```svelte
@@ -153,6 +161,79 @@ Color props (`fill`, `stroke`) can also reference a data property that is mapped
 	<Circle cx="date" cy="value" r={5} fill="category" />
 </Chart>
 ```
+
+## Long format
+
+Long ("tidy") data carries the category in a column rather than a column per category — one row per observation:
+
+```js
+const data = [
+	{ year: 2019, fruit: 'apples', value: 3840 },
+	{ year: 2019, fruit: 'bananas', value: 1920 },
+	{ year: 2018, fruit: 'apples', value: 1600 }
+	// …
+];
+```
+
+Naming that column as the `c` channel is enough to draw it. There's no `series` to declare, and nothing to pivot into a column per fruit first:
+
+```svelte
+<LineChart {data} x="year" y="value" c="fruit" legend />
+```
+
+:example{ component="LineChart" name="long-data" }
+
+### How the split is resolved
+
+`Spline` and `Area` group their rows into one path per distinct value, resolving what to group by in this order — the first that's set wins:
+
+| Source            | Example                     | Notes                                       |
+| ----------------- | --------------------------- | ------------------------------------------- |
+| The mark's `z`    | `<Spline z="id" />`         | Most specific                               |
+| The chart's `z`   | `<Chart z="id">`            | Applies to every mark inside                |
+| `stroke` / `fill` | `<Spline stroke="fruit" />` | Names a data property, colored via `cScale` |
+| The chart's `c`   | `<Chart c="fruit">`         | Only when its values are categorical        |
+
+A continuous `c` (`c="value"` with a sequential scale) is a color ramp, not a set of categories, so it doesn't split anything. Neither does a mark handed its own rows via `data` — whoever grouped them already decided.
+
+Use `z` when the split and the color aren't the same thing. Here each line is one flower, colored by its species:
+
+```svelte
+<Chart {data} z="id" c="group">
+```
+
+### Legend
+
+With no `series` to name, the legend's items are the `c` categories. Hovering one fades the rest, and clicking one filters to it — the chart's domains recalculate from what's left, and the hidden categories keep their color:
+
+:example{ component="BarChart" name="group-long-data" }
+
+### Overlap, group, and stack
+
+`seriesLayout` behaves differently for long data, because the rows — not the series — carry the categories:
+
+| Layout    | Long data                                                                                 |
+| --------- | ----------------------------------------------------------------------------------------- |
+| `auto`    | Default for `BarChart` / `AreaChart`. Stacks by `c`, since `c` names layers to stack      |
+| `overlap` | Each mark drawn from the axis, compared against the others rather than summed             |
+| `group`   | Pair with `x1` (or `y1`) to divide each band — `x1` names the sub-band, `group` splits it |
+| `stack`   | `c` names the layers, bottom-first in `cDomain` order                                     |
+
+Bars need both `x1` and `seriesLayout="group"`: `x1` names the sub-band, and the group layout is what gives that sub-band a scale to sit on. With `x1` alone the bars share the full band and overlap.
+
+```svelte
+<BarChart {data} x="year" x1="fruit" y="value" seriesLayout="group" c="fruit" legend />
+```
+
+Stacking needs neither — the same `c` that colors the bars is what stacks them, and `auto` reaches for it without being asked:
+
+```svelte
+<BarChart {data} x="year" y="value" c="fruit" legend />
+```
+
+:example{ component="BarChart" name="stack-long-data" }
+
+`stackExpand` and `stackDiverging` work the same way, and the [Series guide](/docs/guides/series#layouts) covers stacking the wide format.
 
 ## Series
 

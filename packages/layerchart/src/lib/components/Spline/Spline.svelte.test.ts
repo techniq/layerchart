@@ -74,7 +74,6 @@ describe('Spline', () => {
     });
 
     it('is implied by a `stroke` naming a data property', async () => {
-      // Observable Plot's rule — `stroke="group"` alone means a line per group
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps({ c: 'group', cRange: ['red', 'blue'] }),

@@ -15,7 +15,7 @@ See also: [Axis](/docs/components/Axis) for examples of using time scale axes wi
 
 ## Grouped and stacked
 
-`series` names a column per series, and `seriesLayout` decides how they share the band.
+`series` names a column per series, and `seriesLayout` decides how they share the band. Two or more of them stack unless told otherwise — the default stacks about zero, so negative values run downward rather than continuing the total.
 
 ```svelte
 <BarChart
@@ -30,7 +30,7 @@ See also: [Axis](/docs/components/Axis) for examples of using time scale axes wi
 
 :example{ name="group-series" }
 
-`seriesLayout="stack"` gives them one running total instead, so the band's full height is their sum:
+`seriesLayout="stack"` gives them one running total instead, so the band's full height is their sum — what happens by default without a `seriesLayout`, except that it stacks every value in the same direction:
 
 :example{ name="stack-series" }
 
@@ -65,6 +65,14 @@ Without `series` to stack, `x1` groups on its own — one bar per `x1` value wit
 ```
 
 :example{ name="group-long-data" }
+
+Or stack it — `c` names the layers, so nothing has to be declared:
+
+```svelte
+<BarChart {data} x="year" y="value" c="fruit" legend />
+```
+
+:example{ name="stack-long-data" }
 
 ## Fixed width
 

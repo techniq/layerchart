@@ -148,8 +148,11 @@ export class SplineState {
   /**
    * Accessor grouping the data into one line per distinct value, or `null` for a single line.
    *
-   * Resolves in order: this mark's `z`, the chart's `z`, then the data property named by
-   * `stroke` / `fill` — so `stroke="fruit"` alone gives a line per fruit, as in Observable Plot.
+   * Resolves in order: this mark's `z`, the chart's `z`, the data property named by `stroke` /
+   * `fill`, then the chart's `c` — so `stroke="fruit"` alone gives a line per fruit,
+   * and so does `<Chart c="fruit">`: what colors the lines splits them.
+   *
+   * A mark carrying its own rows is left alone — whoever handed them over grouped them already.
    *
    * Falls back to the chart's `z` *prop* rather than `ctx.z`: `makeAccessor` returns `null` when
    * the prop is unset, but isn't typed that way, so the raw prop is the honest check.
@@ -161,7 +164,10 @@ export class SplineState {
 
     const first = this.resolvedData?.[0];
     const implied = colorPropDataKey(props.stroke, first) ?? colorPropDataKey(props.fill, first);
-    return implied != null ? accessor(implied) : null;
+    if (implied != null) return accessor(implied);
+
+    if (props.data != null || this.series?.data != null) return null;
+    return first != null && this.ctx.cKey(first) != null ? this.ctx.cKey : null;
   });
 
   /** The data this Spline draws, split into one array per line */
@@ -255,7 +261,9 @@ export class SplineState {
         // the line's color out of the data via the chart's color scale
         out.push({
           stroke:
-            resolveColorProp(props.stroke, lineData[0], this.ctx.cScale) ?? this.series?.color,
+            resolveColorProp(props.stroke, lineData[0], this.ctx.cScale) ??
+            this.#colorFromC(lineData[0]) ??
+            this.series?.color,
           fill: resolveColorProp(props.fill, lineData[0], this.ctx.cScale),
           opacity: resolveStyleProp(props.opacity, lineData[0]) ?? lineOpacity,
           class: resolveStyleProp(props.class, lineData[0]),
@@ -266,6 +274,14 @@ export class SplineState {
 
     return out;
   });
+
+  /**
+   * The chart's `c` channel as the colour, when `c` is what names the groups — the lines split by
+   * it would otherwise all come out in the series' one colour.
+   */
+  #colorFromC(d: any) {
+    return d != null && this.ctx.cKey(d) != null ? this.ctx.cGet(d) : undefined;
+  }
 
   /**
    * Fade for one line when the legend names `c` categories, or `undefined` when it names series.
@@ -312,7 +328,9 @@ export class SplineState {
    * literal CSS color.  Uniform across the path, so it resolves from the first point.
    */
   resolvedStroke = $derived(
-    resolveColorProp(this.#props.stroke, this.lines[0]?.[0], this.ctx.cScale) ?? this.series?.color
+    resolveColorProp(this.#props.stroke, this.lines[0]?.[0], this.ctx.cScale) ??
+      this.#colorFromC(this.lines[0]?.[0]) ??
+      this.series?.color
   );
   resolvedFill = $derived(resolveColorProp(this.#props.fill, this.lines[0]?.[0], this.ctx.cScale));
   // Annotated: the inferred type reaches into `clsx`'s internals, which can't be named in the

@@ -176,8 +176,19 @@ export class AreaState {
 
     const first = this.resolvedData?.[0];
     const implied = colorPropDataKey(props.fill, first) ?? colorPropDataKey(props.stroke, first);
-    return implied != null ? accessor(implied) : null;
+    if (implied != null) return accessor(implied);
+
+    if (props.data != null || this.seriesData != null) return null;
+    return first != null && this.ctx.cKey(first) != null ? this.ctx.cKey : null;
   });
+
+  /**
+   * The chart's `c` channel as the colour, when `c` is what names the groups — the areas split by
+   * it would otherwise all come out in the series' one colour.
+   */
+  #colorFromC(d: any) {
+    return d != null && this.ctx.cKey(d) != null ? this.ctx.cGet(d) : undefined;
+  }
 
   /**
    * One entry per area, with its own path and styles — or `null` when there's no grouping, which
@@ -191,7 +202,10 @@ export class AreaState {
       data,
       d: this.#buildPath(data),
       // Styles are uniform across an area, so they resolve from its first point
-      fill: resolveColorProp(props.fill, data[0], this.ctx.cScale) ?? this.series?.color,
+      fill:
+        resolveColorProp(props.fill, data[0], this.ctx.cScale) ??
+        this.#colorFromC(data[0]) ??
+        this.series?.color,
       stroke: resolveColorProp(props.stroke, data[0], this.ctx.cScale),
       opacity: resolveStyleProp(props.opacity, data[0]),
       class: resolveStyleProp(props.class, data[0]),
@@ -201,6 +215,7 @@ export class AreaState {
   /** `fill` / `stroke` / `class` for the ungrouped case, resolved the same way */
   resolvedFill = $derived(
     resolveColorProp(this.#props.fill, this.resolvedData?.[0], this.ctx.cScale) ??
+      this.#colorFromC(this.resolvedData?.[0]) ??
       this.series?.color
   );
   resolvedStroke = $derived(

@@ -1444,6 +1444,18 @@
       ]
     },
     {
+      "name": "stack-long-data",
+      "title": "stack long data",
+      "path": "/docs/components/BarChart/stack-long-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 13,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "stack-series",
       "title": "stack series",
       "path": "/docs/components/BarChart/stack-series",
@@ -2249,6 +2261,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "stack-long-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/stack-long-data",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
       "example": "stack-series",
       "component": "BarChart",
       "path": "/docs/components/BarChart/stack-series",
@@ -2396,5 +2415,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-18T16:24:07.536Z"
+  "updatedAt": "2026-08-18T21:44:14.040Z"
 }

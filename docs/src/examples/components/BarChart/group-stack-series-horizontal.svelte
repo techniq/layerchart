@@ -32,7 +32,6 @@
 		{ key: 'cherries', color: 'var(--color-cherries)' },
 		{ key: 'grapes', color: 'var(--color-grapes)' }
 	]}
-	seriesLayout="stack"
 	legend
 	props={{
 		xAxis: { format: 'metric' },

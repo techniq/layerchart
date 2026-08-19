@@ -169,7 +169,7 @@ Stacked series stack within their own panel too, so a category appearing in seve
 
 ## Wrapping into a grid
 
-A one-dimensional facet can be wrapped into a grid by making `fx` the column and `fy` the row — the index of the value divided by the number of columns, as [Observable Plot does](https://observablehq.com/@observablehq/plot-facet-wrap):
+A one-dimensional facet can be wrapped into a grid by making `fx` the column and `fy` the row — the index of the value divided by the number of columns:
 
 ```svelte
 <script>

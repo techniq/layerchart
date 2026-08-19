@@ -24,9 +24,8 @@ export type WafflePropsWithoutHTML = {
   /**
    * Axis the waffle extends along (the value axis).
    *
-   * - `'y'` (default): vertical waffle, like Plot's `waffleY`. Cells stack
-   *   upward from the value=0 baseline.
-   * - `'x'`: horizontal waffle, like Plot's `waffleX`. Cells extend rightward.
+   * - `'y'` (default): vertical waffle. Cells stack upward from the value=0 baseline.
+   * - `'x'`: horizontal waffle. Cells extend rightward.
    *
    * Falls back to the chart's `valueAxis`.
    */

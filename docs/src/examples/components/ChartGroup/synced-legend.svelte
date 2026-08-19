@@ -23,6 +23,6 @@
 <ChartGroup>
 	<div class="grid gap-2">
 		<LineChart {data} x="date" {series} {padding} height={200} />
-		<AreaChart {data} x="date" {series} seriesLayout="stack" {padding} height={200} legend />
+		<AreaChart {data} x="date" {series} {padding} height={200} legend />
 	</div>
 </ChartGroup>

@@ -30,7 +30,6 @@
 		{ key: 'female', label: 'female', color: 'var(--color-info)' },
 		{ key: 'male', label: 'male', color: 'var(--color-success)' }
 	]}
-	seriesLayout="stack"
 	legend
 	grid
 	padding={{ left: 72, bottom: 40, top: 8, right: 72 }}

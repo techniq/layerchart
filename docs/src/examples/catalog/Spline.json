@@ -1082,14 +1082,14 @@
       "example": "data-series-chart-data",
       "component": "Chart",
       "path": "/docs/components/Chart/data-series-chart-data",
-      "lineNumber": 24,
+      "lineNumber": 25,
       "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
     },
     {
       "example": "data-series-chart-data",
       "component": "Chart",
       "path": "/docs/components/Chart/data-series-chart-data",
-      "lineNumber": 25,
+      "lineNumber": 26,
       "line": "<Spline seriesKey=\"oranges\" stroke=\"var(--color-oranges)\" />"
     },
     {
@@ -1569,5 +1569,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-18T03:04:05.803Z"
+  "updatedAt": "2026-08-18T21:44:15.963Z"
 }

@@ -73,6 +73,21 @@ describe('SeriesState isStackTop', () => {
     expect(state.isStackTop('bananas', stacked[0])).toBe(true);
   });
 
+  it('should give a diverging stack a top on each side of the baseline', () => {
+    // Positives stack up from zero and negatives down, so the row has two outermost segments —
+    // picking one per series rather than per row rounded the wrong bars
+    const diverging = { date: '2024-06', apples: 10, bananas: -5, oranges: 20 } as any;
+    const state = createSeriesState(series as any[], {
+      layout: 'stackDiverging',
+      data: [diverging],
+      keyBy: 'date',
+    });
+
+    expect(state.isStackTop('oranges', diverging)).toBe(true); // outermost above
+    expect(state.isStackTop('bananas', diverging)).toBe(true); // outermost below
+    expect(state.isStackTop('apples', diverging)).toBe(false); // covered by oranges
+  });
+
   it('should keep the stacks of separate groups apart', () => {
     // `groupBy` is what an `x1` sub-band partitions the stack with — the same category appears in
     // each group, and each keeps its own top

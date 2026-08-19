@@ -23,7 +23,7 @@
     radial = false,
     orientation = 'vertical',
     series: seriesProp,
-    seriesLayout = 'overlap',
+    seriesLayout = 'auto',
     axis = true,
     brush = false,
     grid = true,
@@ -127,17 +127,13 @@
           y1={valueAxis === 'x' && isGroupSeries && restProps.y1 == null
             ? (d: any) => s.value ?? s.key
             : undefined}
-          rounded={context.series.divergingEdgeKeys
-            ? context.series.divergingEdgeKeys.has(s.key)
-              ? 'edge'
-              : 'none'
-            : context.series.isStacked
-              ? // Per row rather than per series: a sub-band or a gap in the data can leave the
-                // later series out, making an earlier one the top of *that* stack
-                (d: any) => (context.series.isStackTop(s.key, d) ? 'edge' : 'none')
-              : Array.isArray(xProp) || Array.isArray(yProp)
-                ? 'all'
-                : 'edge'}
+          rounded={context.series.isStacked
+            ? // Per row rather than per series: a sub-band or a gap in the data can leave the
+              // later series out, making an earlier one the top of *that* stack
+              (d: any) => (context.series.isStackTop(s.key, d) ? 'edge' : 'none')
+            : Array.isArray(xProp) || Array.isArray(yProp)
+              ? 'all'
+              : 'edge'}
           radius={4}
           strokeWidth={1}
           {stackPadding}

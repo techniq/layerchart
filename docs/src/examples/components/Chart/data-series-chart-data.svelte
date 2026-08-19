@@ -18,6 +18,7 @@
 		{ key: 'apples', color: 'var(--color-apples)' },
 		{ key: 'oranges', color: 'var(--color-oranges)' }
 	]}
+	legend
 	height={300}
 >
 	{#snippet marks()}

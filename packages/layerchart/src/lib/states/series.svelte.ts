@@ -11,6 +11,9 @@ const STACK_UNGROUPED = '';
 
 export type StackLayout = 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
 
+/** How multiple series are arranged, before `auto` is resolved — see `ChartState.seriesLayout` */
+export type SeriesLayout = StackLayout | 'group' | 'auto';
+
 export type StackConfig<TData> = {
   layout: StackLayout;
   data?: TData[];
@@ -23,6 +26,16 @@ export type StackConfig<TData> = {
    * this the stacks collide and every panel draws whichever row was stacked last.
    */
   groupBy?: (d: TData) => string;
+  /**
+   * The layer of the stack a row belongs to, when the rows carry their category rather than the
+   * columns — long data named by `c`, with no `series` to stack across.
+   *
+   * Set together with `seriesKeys`, which orders the layers.  Unset for the wide format, where
+   * the series keys are the layers.
+   */
+  seriesBy?: (d: TData) => any;
+  /** The layers `seriesBy` can name, bottom first — the `c` domain */
+  seriesKeys?: any[];
 };
 
 export class SeriesState<TData, TComponent extends Component> {
@@ -139,7 +152,8 @@ export class SeriesState<TData, TComponent extends Component> {
    *
    * The series stack in order, so the top is the last one drawing anything — which is *not* the
    * last series in general: an `x1` sub-band or a gap in the data leaves later series out of a
-   * row, and then an earlier one is what the eye sees on top.
+   * row, and then an earlier one is what the eye sees on top.  A diverging stack runs both ways
+   * from the baseline, so a row has a top on each side and both are edges.
    *
    * Read off the stack rather than off the accessors, so this agrees with what was actually
    * drawn: the stack already resolves a row to its group (sub-band, facet panel) and aligns
@@ -147,14 +161,25 @@ export class SeriesState<TData, TComponent extends Component> {
    * spanning nothing counts as absent, since it draws nothing.
    */
   isStackTop(key: string, d: TData): boolean {
-    const visible = this.visibleSeries;
-    const index = visible.findIndex((s) => s.key === key);
-    if (index === -1) return false;
+    const config = this.#stackConfig;
+    const keys = config?.seriesBy ? this.#categoryKeys : this.visibleSeries.map((s) => s.key);
+    const rowKey = config?.seriesBy ? config.seriesBy(d) : key;
 
-    return !visible.some((s, i) => {
-      if (i <= index) return false;
-      const span = this.getStackValue(s.key, d);
-      return span != null && span[0] !== span[1];
+    const span = this.#stackValueFor(rowKey, d);
+    if (span == null || span[0] === span[1]) return false;
+
+    /** The end farther from the baseline — which side of it the segment is stacked on, and how far */
+    const outerOf = (s: [number, number]) => (Math.abs(s[1]) >= Math.abs(s[0]) ? s[1] : s[0]);
+    const outer = outerOf(span);
+
+    return !keys.some((k) => {
+      if (k === rowKey) return false;
+      const other = this.#stackValueFor(k, d);
+      if (other == null || other[0] === other[1]) return false;
+      const otherOuter = outerOf(other);
+      // Only a segment stacked further along the *same* side covers this one — a diverging stack
+      // runs both ways from the baseline, so each direction has its own outermost segment
+      return Math.sign(otherOuter) === Math.sign(outer) && Math.abs(otherOuter) > Math.abs(outer);
     });
   }
 
@@ -197,6 +222,39 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
+   * The stack's layers when the rows name them, bottom first — hidden categories dropped so the
+   * ones left close the gap rather than stacking above an empty band.
+   */
+  #categoryKeys = $derived.by(() => {
+    const keys = this.#stackConfig?.seriesKeys;
+    if (!keys) return [];
+    return this.selectedKeys.isEmpty() ? keys : keys.filter((k) => this.selectedKeys.isSelected(k));
+  });
+
+  /**
+   * Long rows pivoted into the wide shape `stack()` wants — one row per `keyBy` value, with a
+   * column per category.
+   */
+  #alignCategoryData(rows: TData[]): Record<string, any>[] {
+    const config = this.#stackConfig!;
+    const keyByAcc = accessor(config.keyBy);
+    const valueAcc = accessor(config.valueAccessor!);
+    const seriesBy = config.seriesBy!;
+
+    const byCategory = new InternMap<any, Record<string, any>>();
+    for (const d of rows) {
+      const catKey = keyByAcc(d);
+      let row = byCategory.get(catKey);
+      if (!row) {
+        row = { __key: catKey };
+        byCategory.set(catKey, row);
+      }
+      row[seriesBy(d)] = valueAcc(d) ?? 0;
+    }
+    return Array.from(byCategory.values());
+  }
+
+  /**
    * Computed stack data using InternMap for value-based lookup.
    * Outer map: categoryValue -> InternMap<seriesKey, [y0, y1]>
    */
@@ -208,7 +266,8 @@ export class SeriesState<TData, TComponent extends Component> {
     const hasSeparateData = this.visibleSeries.some((s) => s.data != null);
     const data = rows ?? (hasSeparateData ? this.#alignSeriesData() : (config.data ?? []));
 
-    if (visibleKeys.length === 0 || data.length === 0) return null;
+    // `seriesBy` names the layers from the rows, so the series keys are beside the point there
+    if ((visibleKeys.length === 0 && !config.seriesBy) || data.length === 0) return null;
 
     const keyByAcc = accessor(config.keyBy);
 
@@ -218,6 +277,27 @@ export class SeriesState<TData, TComponent extends Component> {
         : config.layout === 'stackDiverging'
           ? stackOffsetDiverging
           : stackOffsetNone;
+
+    if (config.seriesBy) {
+      const keys = this.#categoryKeys;
+      if (keys.length === 0) return null;
+
+      const wide = this.#alignCategoryData(data as TData[]);
+      const stacked = stack()
+        .keys(keys as Iterable<string>)
+        .value((d, key) => (d as any)[key] ?? 0)
+        .offset(offset)(wide);
+
+      const byCategory = new InternMap<any, Map<string, [number, number]>>();
+      for (let i = 0; i < wide.length; i++) {
+        const layers = new Map<string, [number, number]>();
+        for (let k = 0; k < keys.length; k++) {
+          layers.set(keys[k], stacked[k][i] as unknown as [number, number]);
+        }
+        byCategory.set(wide[i].__key, layers);
+      }
+      return byCategory;
+    }
 
     const stackResult = stack()
       .keys(visibleKeys)
@@ -278,54 +358,26 @@ export class SeriesState<TData, TComponent extends Component> {
     return out.size > 0 ? out : null;
   });
 
-  /**
-   * For stackDiverging layout, returns the set of series keys that are "tips"
-   * (outermost in each direction) and should have rounded edges.
-   * Returns null for non-diverging layouts.
-   */
-  get divergingEdgeKeys(): Set<string> | null {
-    if (this.stackLayout !== 'stackDiverging' || !this.#stackMap) return null;
-
-    const firstGroup = this.#stackMap.values().next().value;
-    const firstEntry = firstGroup?.values().next().value;
-    if (!firstEntry) return null;
-
-    let maxPosY1 = -Infinity;
-    let minNegY0 = Infinity;
-    let posTipKey: string | null = null;
-    let negTipKey: string | null = null;
-
-    for (const s of this.visibleSeries) {
-      const stackVal = firstEntry.get(s.key);
-      if (!stackVal) continue;
-      const [y0, y1] = stackVal;
-      if (y1 > maxPosY1) {
-        maxPosY1 = y1;
-        posTipKey = s.key;
-      }
-      if (y0 < minNegY0) {
-        minNegY0 = y0;
-        negTipKey = s.key;
-      }
-    }
-
-    const tips = new Set<string>();
-    if (posTipKey != null && maxPosY1 > 0) tips.add(posTipKey);
-    if (negTipKey != null && minNegY0 < 0) tips.add(negTipKey);
-    return tips;
-  }
 
   /**
    * Get stack [y0, y1] values for a data point in a specific series.
    * Returns null if stacking is not enabled or series/data not found.
    */
   getStackValue(seriesKey: string, d: TData): [number, number] | null {
+    const config = this.#stackConfig;
+    // The row names its own layer when the categories live in the data, so the key a mark passes
+    // (its single implicit series) has nothing to say about which segment this is
+    return this.#stackValueFor(config?.seriesBy ? config.seriesBy(d) : seriesKey, d);
+  }
+
+  /** The span of a named layer for a row, whatever named it */
+  #stackValueFor(key: any, d: TData): [number, number] | null {
     if (!this.#stackMap || !this.#stackConfig) return null;
 
     const config = this.#stackConfig;
     const groupKey = config.groupBy ? config.groupBy(d) : STACK_UNGROUPED;
     const catKey = accessor(config.keyBy)(d);
-    return this.#stackMap.get(groupKey)?.get(catKey)?.get(seriesKey) ?? null;
+    return this.#stackMap.get(groupKey)?.get(catKey)?.get(key) ?? null;
   }
 
   /**
@@ -342,7 +394,9 @@ export class SeriesState<TData, TComponent extends Component> {
 
     const keyByAcc = accessor(config.keyBy);
     const groupBy = config.groupBy;
-    const visibleKeys = this.visibleSeries.map((s) => s.key);
+    const visibleKeys = config.seriesBy
+      ? this.#categoryKeys
+      : this.visibleSeries.map((s) => s.key);
     const values: number[] = [];
 
     for (const d of rows) {

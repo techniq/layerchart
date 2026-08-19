@@ -32,5 +32,6 @@
 			props: { insets: { x: 8 } }
 		}
 	]}
+	seriesLayout="overlap"
 	height={300}
 />

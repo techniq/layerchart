@@ -94,19 +94,28 @@ Separate data arrays can even have different lengths:
 
 The `seriesLayout` prop controls how multiple series are arranged:
 
-| Layout             | Effect                                               |
-| ------------------ | ---------------------------------------------------- |
-| `'overlap'`        | Series overlap (default). Later series render on top |
-| `'stack'`          | Series are stacked vertically                        |
-| `'stackExpand'`    | Stacked and normalized to 100%                       |
-| `'stackDiverging'` | Positive values stack up, negative values stack down |
-| `'group'`          | Side-by-side within each band (bar charts only)      |
+| Layout             | Effect                                                                      |
+| ------------------ | --------------------------------------------------------------------------- |
+| `'auto'`           | Stack when there are layers to stack (default for `BarChart` / `AreaChart`) |
+| `'overlap'`        | Series overlap. Later series render on top                                  |
+| `'stack'`          | Series are stacked vertically                                               |
+| `'stackExpand'`    | Stacked and normalized to 100%                                              |
+| `'stackDiverging'` | Positive values stack up, negative values stack down                        |
+| `'group'`          | Side-by-side within each band (bar charts only)                             |
 
-### Overlap (default)
+### Auto (default)
 
-Series render on top of each other. Useful for comparing trends:
+`BarChart` and `AreaChart` default to `'auto'`, which stacks when something names layers to stack — two or more `series`, or an ordinal `c` — and overlaps otherwise. A value given as an explicit `[start, end]` interval is a pair of positions rather than a magnitude, so duration bars and waterfalls are left alone.
+
+It stacks at zero rather than end to end, so negative values run the other way and a population pyramid keeps its two sides. `LineChart` is unaffected — lines are read against a shared baseline, so stacking them would change what they say.
+
+### Overlap
+
+Series render on top of each other, each drawn from the axis rather than from the one below it. Useful for comparing series against each other rather than reading them as a total:
 
 :example{ component="BarChart" name="series" }
+
+:example{ component="AreaChart" name="series-overlap" }
 
 ### Stack
 

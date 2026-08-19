@@ -3,6 +3,7 @@ import type { Component } from 'svelte';
 import type { ChartProps } from '../../Chart/Chart.shared.svelte.js';
 import type { BarsProps } from '../../Bars/Bars.shared.svelte.js';
 import type { SeriesData } from '../types.js';
+import type { SeriesLayout } from '$lib/states/series.svelte.js';
 
 // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
 export type BarChartProps<TData> = {
@@ -25,11 +26,11 @@ export type BarChartProps<TData> = {
     series?: SeriesData<TData, Component<BarsProps>>[];
 
     /**
-     * The layout of the series.
+     * How multiple series are arranged — see `Chart`'s `seriesLayout` for how `'auto'` resolves.
      *
-     * @default 'overlap'
+     * @default 'auto'
      */
-    seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' | 'group';
+    seriesLayout?: SeriesLayout;
 
     /**
      * Padding between primary x or y bands/bars, applied to scaleBand().padding()

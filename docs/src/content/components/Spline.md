@@ -15,7 +15,7 @@ See also: [LineChart](/docs/components/LineChart) for simplified examples
 
 ### Multiple lines (`z`)
 
-Set `z` to draw a separate line per distinct value, all from one mark — the same channel Observable Plot and SveltePlot use for series.
+Set `z` to draw a separate line per distinct value, all from one mark — one line per series, without a mark each.
 
 ```svelte
 <Chart {data} x="date" y="value" c="fruit" {cRange}>

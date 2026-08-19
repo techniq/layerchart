@@ -651,6 +651,62 @@ describe('BarChart', () => {
       });
     });
 
+    it('should stack the categories when `seriesLayout="stack"`', async () => {
+      // Nothing declares the layers — the rows carry them, so `c` names the stack the way
+      const { container } = render(BarChart, {
+        ...longDataProps,
+        x1: undefined,
+        seriesLayout: 'stack',
+      } as any);
+
+      await vi.waitFor(() => expect(bars(container).length).toBe(4));
+
+      const stacked = Array.from(container.querySelectorAll('.lc-bar')).map((el) => {
+        const box = (el as SVGGraphicsElement).getBBox();
+        return {
+          fill: el.getAttribute('fill'),
+          y: Math.round(box.y),
+          height: Math.round(box.height),
+        };
+      });
+
+      // Each band's segments meet — the lower one's top edge is the upper one's bottom
+      const [firstLower, firstUpper] = stacked;
+      expect(firstLower.fill).toBe('red');
+      expect(firstUpper.fill).toBe('yellow');
+      expect(firstUpper.y + firstUpper.height).toBe(firstLower.y);
+      // ...and together they fill the band, since the domain covers the total
+      expect(firstUpper.y).toBe(0);
+    });
+
+    it('should restack from what is left when a category is hidden', async () => {
+      const { container } = render(BarChart, {
+        ...longDataProps,
+        x1: undefined,
+        seriesLayout: 'stack',
+      } as any);
+
+      const baseOf = (el: Element) => {
+        const box = (el as SVGGraphicsElement).getBBox();
+        return Math.round(box.y + box.height);
+      };
+
+      const buttons = await legendButtons(container);
+      await vi.waitFor(() => expect(bars(container).length).toBe(4));
+      const baseline = Math.max(...Array.from(container.querySelectorAll('.lc-bar')).map(baseOf));
+
+      (buttons[0] as HTMLElement).click();
+
+      await vi.waitFor(() => {
+        const rest = Array.from(container.querySelectorAll('.lc-bar'));
+        expect(rest.length).toBe(2);
+        // The remaining category sits on the axis rather than floating where the other left it
+        for (const el of rest) {
+          expect(baseOf(el)).toBe(baseline);
+        }
+      });
+    });
+
     it('should fade the other categories while a legend item is hovered', async () => {
       const { container } = render(BarChart, longDataProps as any);
 
@@ -667,6 +723,115 @@ describe('BarChart', () => {
           'yellow:0.1',
         ]);
       });
+    });
+  });
+
+  describe('long data stacking', () => {
+    // One row per observation, with the category in a column — no `series` to name the layers
+    const stackedLongData = [
+      { year: '2019', panel: 'a', fruit: 'apples', value: 30 },
+      { year: '2019', panel: 'a', fruit: 'bananas', value: 10 },
+      { year: '2020', panel: 'b', fruit: 'apples', value: 20 },
+      { year: '2020', panel: 'b', fruit: 'bananas', value: 60 },
+    ];
+
+    const stackedProps = {
+      data: stackedLongData,
+      x: 'year',
+      y: 'value',
+      c: 'fruit',
+      cRange: ['red', 'yellow'],
+      width: 400,
+      height: 300,
+    };
+
+    async function segments(container: HTMLElement) {
+      await vi.waitFor(() => expect(container.querySelectorAll('.lc-bar').length).toBe(4));
+      return Array.from(container.querySelectorAll('.lc-bar')).map((el) => {
+        const box = (el as SVGGraphicsElement).getBBox();
+        return {
+          top: Math.round(box.y),
+          bottom: Math.round(box.y + box.height),
+          rounded: /[Aa]/.test(el.getAttribute('d') ?? ''),
+        };
+      });
+    }
+
+    /** The two segments of a band, outermost from the baseline first */
+    const band = (bars: Awaited<ReturnType<typeof segments>>, i: number) =>
+      bars.slice(i * 2, i * 2 + 2).sort((a, b) => a.top - b.top);
+
+    it('should normalize each band with `stackExpand`', async () => {
+      const { container } = render(BarChart, {
+        ...stackedProps,
+        seriesLayout: 'stackExpand',
+      } as any);
+      const bars = await segments(container);
+
+      // Both bands fill the plot, whatever their totals — 40 and 80 here
+      for (const i of [0, 1]) {
+        const [upper, lower] = band(bars, i);
+        expect(upper.top).toBe(0);
+        expect(upper.bottom).toBe(lower.top);
+      }
+      expect(band(bars, 0)[0].bottom).not.toBe(band(bars, 1)[0].bottom); // different splits
+    });
+
+    it('should round only the outermost segment under `stackExpand`', async () => {
+      // Normalized spans all sit in [0, 1], so `isStackTop` compares magnitudes that barely differ
+      const { container } = render(BarChart, {
+        ...stackedProps,
+        seriesLayout: 'stackExpand',
+      } as any);
+      const bars = await segments(container);
+
+      for (const i of [0, 1]) {
+        const [upper, lower] = band(bars, i);
+        expect(upper.rounded).toBe(true);
+        expect(lower.rounded).toBe(false);
+      }
+    });
+
+    it('should list the band\u2019s rows in the tooltip when `c` stacks them', async () => {
+      // Nothing subdivides the band here — without `x1`, the tooltip has to recognise that `c` is
+      // what put several rows in it, or it names only the row the pointer resolved to
+      const { container } = render(BarChart, stackedProps as any);
+      await segments(container);
+
+      // Band mode hit-tests against a rect per band, and `DefaultTooltip` is lazy — so keep
+      // dispatching at the first band until it has mounted
+      await vi.waitFor(() => {
+        const hit = container.querySelector('.lc-tooltip-rect');
+        expect(hit).not.toBeNull();
+        const rect = hit!.getBoundingClientRect();
+        const init = {
+          bubbles: true,
+          clientX: rect.x + rect.width / 2,
+          clientY: rect.y + rect.height / 2,
+        };
+        hit!.dispatchEvent(new PointerEvent('pointerenter', init));
+        hit!.dispatchEvent(new PointerEvent('pointermove', init));
+        expect(document.querySelector('.lc-tooltip-item-root')).not.toBeNull();
+      });
+
+      await vi.waitFor(() => {
+        const labels = Array.from(document.querySelectorAll('.lc-tooltip-item-label')).map((l) =>
+          l.textContent?.trim()
+        );
+        expect(labels).toEqual(['apples', 'bananas', 'total']);
+      });
+    });
+
+    it('should stack each facet panel against its own rows', async () => {
+      const { container } = render(BarChart, { ...stackedProps, fx: 'panel' } as any);
+      const bars = await segments(container);
+
+      // A panel's stack is built from that panel's rows — the segments meet within it rather
+      // than accumulating across panels
+      for (const i of [0, 1]) {
+        const [upper, lower] = band(bars, i);
+        expect(upper.bottom).toBe(lower.top);
+      }
     });
   });
 

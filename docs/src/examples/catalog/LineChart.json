@@ -332,6 +332,18 @@
       ]
     },
     {
+      "name": "long-data",
+      "title": "long data",
+      "path": "/docs/components/LineChart/long-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 16,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "motion-tween",
       "title": "motion tween",
       "path": "/docs/components/LineChart/motion-tween",
@@ -1399,6 +1411,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "long-data",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/long-data",
+      "lineNumber": 16,
+      "line": "<LineChart"
+    },
+    {
       "example": "motion-tween",
       "component": "LineChart",
       "path": "/docs/components/LineChart/motion-tween",
@@ -1777,5 +1796,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-18T12:15:21.872Z"
+  "updatedAt": "2026-08-18T21:14:19.397Z"
 }

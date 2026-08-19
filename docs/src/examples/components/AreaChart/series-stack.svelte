@@ -26,7 +26,6 @@
 			color: 'var(--color-oranges)'
 		}
 	]}
-	seriesLayout="stack"
 	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />
