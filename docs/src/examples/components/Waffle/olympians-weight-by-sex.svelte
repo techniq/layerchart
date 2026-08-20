@@ -31,7 +31,6 @@
 		{ key: 'female', color: 'var(--color-warning)' },
 		{ key: 'male', color: 'var(--color-info)' }
 	]}
-	seriesLayout="stack"
 	padding={{ left: 36, bottom: 24, top: 8, right: 8 }}
 	tooltipContext={{ mode: 'band' }}
 	height={400}

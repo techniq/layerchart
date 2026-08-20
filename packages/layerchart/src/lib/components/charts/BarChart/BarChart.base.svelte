@@ -23,7 +23,7 @@
     radial = false,
     orientation = 'vertical',
     series: seriesProp,
-    seriesLayout = 'overlap',
+    seriesLayout = 'auto',
     axis = true,
     brush = false,
     grid = true,
@@ -121,21 +121,24 @@
       {#each context.series.visibleSeries as s, i (s.key)}
         <Bars
           seriesKey={s.key}
-          x1={valueAxis === 'y' && isGroupSeries ? (d: any) => s.value ?? s.key : undefined}
-          y1={valueAxis === 'x' && isGroupSeries ? (d: any) => s.value ?? s.key : undefined}
-          rounded={context.series.divergingEdgeKeys
-            ? context.series.divergingEdgeKeys.has(s.key)
-              ? 'edge'
-              : 'none'
-            : context.series.isStacked && i !== context.series.visibleSeries.length - 1
-              ? 'none'
-              : Array.isArray(xProp) || Array.isArray(yProp)
-                ? 'all'
-                : 'edge'}
+          x1={valueAxis === 'y' && isGroupSeries && restProps.x1 == null
+            ? (d: any) => s.value ?? s.key
+            : undefined}
+          y1={valueAxis === 'x' && isGroupSeries && restProps.y1 == null
+            ? (d: any) => s.value ?? s.key
+            : undefined}
+          rounded={context.series.stackLayout != null
+            ? // Per row rather than per series: a sub-band or a gap in the data can leave the
+              // later series out, making an earlier one the top of *that* stack
+              (d: any) => (context.series.isStackTop(s.key, d) ? 'edge' : 'none')
+            : Array.isArray(xProp) || Array.isArray(yProp)
+              ? 'all'
+              : 'edge'}
           radius={4}
           strokeWidth={1}
           {stackPadding}
-          opacity={context.series.isHighlighted(s.key, true) ? 1 : 0.1}
+          opacity={(d: any) =>
+            context.series.isHighlighted(context.cKey(d) ?? s.key, true) ? 1 : 0.1}
           onBarClick={(e: MouseEvent, detail: any) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}
           {...s.props}

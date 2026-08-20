@@ -6,7 +6,7 @@
   "type": "module",
   "homepage": "https://layerchart.com",
   "scripts": {
-    "dev": "pnpm --parallel --filter layerchart --filter docs dev",
+    "dev": "pnpm --filter layerchart package && pnpm --parallel --filter layerchart --filter docs dev",
     "test:unit": "pnpm -r test:unit",
     "build:packages": "rimraf packages/*/dist && pnpm --filter './packages/*' build",
     "build:examples": "rimraf packages/*/dist && pnpm --filter './packages/*' package &&  pnpm --filter './examples/*' build",
@@ -32,10 +32,5 @@
     "rimraf": "6.1.3",
     "wrangler": "^4.97.0"
   },
-  "packageManager": "pnpm@10.18.2",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  }
+  "packageManager": "pnpm@10.18.2"
 }

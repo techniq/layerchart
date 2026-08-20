@@ -3,6 +3,20 @@
   "examples": [],
   "usage": [
     {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 23,
+      "line": "<Svg>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 25,
+      "line": "<Svg>"
+    },
+    {
       "example": "basic",
       "component": "ColorRamp",
       "path": "/docs/components/ColorRamp/basic",
@@ -34,9 +48,9 @@
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:15.913Z"
+  "updatedAt": "2026-08-20T12:48:40.472Z"
 }

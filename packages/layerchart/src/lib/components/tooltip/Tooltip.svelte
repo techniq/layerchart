@@ -14,6 +14,23 @@
      * @default 'pointer'
      */
     x?: 'pointer' | 'data' | number;
+
+    /**
+     * The row to show, instead of the one the chart's pointer resolved.
+     *
+     * Lets a chart show more than one tooltip at a time, which is what `facetAll` does.
+     */
+    data?: T;
+
+    /**
+     * In a faceted chart, show one tooltip per panel — each labelling *its* row at the hovered
+     * position, beside its own point.  Panels with nothing there show nothing.
+     *
+     * Pairs with `<Highlight facetAll />`, which marks those same rows.
+     *
+     * @default false
+     */
+    facetAll?: boolean;
     /**
      * `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an
      * explicit fixed position.
@@ -163,11 +180,14 @@
 
 <script lang="ts" generics="T = any">
   import { fade } from 'svelte/transition';
+  import { createSubscriber } from 'svelte/reactivity';
+  import { on } from 'svelte/events';
   import { cls } from '@layerstack/tailwind';
   import { portal as portalAction } from '@layerstack/svelte-actions/portal';
 
-  import { isScaleBand } from '../../utils/scales.svelte.js';
+  import { dataCoords } from '$lib/utils/tooltip.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { panelDatum } from '$lib/utils/tooltip.js';
   import type { ChartState } from '$lib/states/chart.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { type Snippet } from 'svelte';
@@ -181,10 +201,12 @@
     pointerEvents = false,
     portal: portalProp = true,
     variant = 'default',
+    data: dataProp,
+    facetAll = false,
     x = 'pointer',
-    xOffset = x === 'pointer' ? 10 : 0,
+    xOffset = x === 'pointer' || facetAll ? 10 : 0,
     y = 'pointer',
-    yOffset = y === 'pointer' ? 10 : 0,
+    yOffset = y === 'pointer' || facetAll ? 10 : 0,
     children,
     rootRef: rootRefProp = $bindable(),
     props = {
@@ -200,7 +222,13 @@
     rootRefProp = rootRef;
   });
 
+  // Imports itself to render the per-panel copies of `facetAll`
+  import Self from './Tooltip.svelte';
+
   const ctx = getChartContext();
+
+  /** The row this tooltip shows — its own when given, else whatever the pointer resolved */
+  const tooltipData = $derived(dataProp ?? ctx.tooltip.data);
 
   let tooltipWidth = $state<number | null>(null);
   let tooltipHeight = $state<number | null>(null);
@@ -214,34 +242,54 @@
     typeof portalProp === 'boolean' ? portalProp : portalProp?.enabled !== false
   );
 
+  /**
+   * Makes reading the container's viewport rect reactive to scrolling and resizing.
+   *
+   * A portaled tooltip is positioned from the chart container's *viewport* rect, and
+   * `getBoundingClientRect()` is not reactive — scrolling moves the chart out from under a
+   * tooltip that never re-measures.  Pointer-driven tooltips mostly dodge this (scrolling fires
+   * `pointercancel`, or a pointer event as content moves under the cursor), but one shown
+   * programmatically — keyboard navigation, a chart group, `locked` — has no pointer to cancel it
+   * and must follow the chart.
+   *
+   * `createSubscriber` ties the listeners to whether anything is actually reading: they attach
+   * when `positions` starts depending on this and detach when it stops, so an idle chart costs
+   * nothing.
+   *
+   * `capture` is what catches scrolling of any *ancestor* (ex. a dashboard inside a scrolling
+   * panel), not just the window — which is also why `scrollY` from `svelte/reactivity/window`
+   * isn't enough here, and why runed's `ScrollState` (bound to one element) doesn't fit either.
+   */
+  const subscribeToViewport = createSubscriber((update) => {
+    const offScroll = on(window, 'scroll', update, { capture: true, passive: true });
+    const offResize = on(window, 'resize', update, { passive: true });
+
+    return () => {
+      offScroll();
+      offResize();
+    };
+  });
+
   const positions = $derived.by(() => {
     // if no data or tooltip size is not known yet, return null
-    if (!ctx.tooltip.data || tooltipWidth === null || tooltipHeight === null) {
+    if (!tooltipData || tooltipWidth === null || tooltipHeight === null) {
       return { x: null, y: null };
     }
 
+    // Only track the viewport while there is a portaled tooltip to keep positioned
+    if (isPortaled) subscribeToViewport();
+
     // When portaled, we need the container's viewport rect to convert coordinates
     const containerRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
-    // If portaled but container rect not available yet, bail
+    // If portaled but the container rect is not available yet, bail
     if (isPortaled && !containerRect) {
       return { x: null, y: null };
     }
 
-    const xBandOffset = isScaleBand(ctx.xScale)
-      ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
-      : 0;
+    // Container-relative position of the tooltip data, used by the `'data'` placement
+    const coords = x === 'data' || y === 'data' ? dataCoords(ctx, tooltipData) : null;
 
-    const rawXGet = x === 'data' ? ctx.xGet(ctx.tooltip.data) : undefined;
-    const xFromData = Array.isArray(rawXGet)
-      ? (rawXGet[0] + rawXGet[rawXGet.length - 1]) / 2
-      : rawXGet;
-
-    const xValue: number =
-      typeof x === 'number'
-        ? x
-        : x === 'data'
-          ? xFromData + ctx.padding.left + xBandOffset
-          : ctx.tooltip.x;
+    const xValue: number = typeof x === 'number' ? x : x === 'data' ? coords!.x : ctx.tooltip.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -264,20 +312,7 @@
         break;
     }
 
-    const yBandOffset = isScaleBand(ctx.yScale)
-      ? ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2
-      : 0;
-    const rawYGet = y === 'data' ? ctx.yGet(ctx.tooltip.data) : undefined;
-    const yFromData = Array.isArray(rawYGet)
-      ? (rawYGet[0] + rawYGet[rawYGet.length - 1]) / 2
-      : rawYGet;
-
-    const yValue: number =
-      typeof y === 'number'
-        ? y
-        : y === 'data'
-          ? yFromData + ctx.padding.top + yBandOffset
-          : ctx.tooltip.y;
+    const yValue: number = typeof y === 'number' ? y : y === 'data' ? coords!.y : ctx.tooltip.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {
@@ -457,7 +492,37 @@
   });
 </script>
 
-{#if ctx.tooltip.data}
+<!-- `suppressed` keeps the data set (so `Highlight` still renders) while hiding the tooltip
+     content — used by chart groups sharing a highlight without tooltips -->
+<!--
+  `facetAll` renders one of these per panel instead — each with its own row and position, since
+  the size and placement below are per-instance state.
+-->
+{#if facetAll && ctx.facet.enabled && dataProp === undefined}
+  {#each ctx.facet.panels as panel (panel.key)}
+    {@const row = panelDatum(ctx, panel, ctx.tooltip.data)}
+    {#if row}
+      <Self
+        data={row}
+        x={x === 'pointer' ? 'data' : x}
+        y={y === 'pointer' ? 'data' : y}
+        {anchor}
+        {xOffset}
+        {yOffset}
+        {classes}
+        {contained}
+        {fadeDuration}
+        {motion}
+        {pointerEvents}
+        portal={portalProp}
+        {variant}
+        {props}
+        class={className}
+        {children}
+      />
+    {/if}
+  {/each}
+{:else if tooltipData && !ctx.tooltip.suppressed}
   <div
     {...props.root}
     use:portalAction={portalProp}
@@ -484,7 +549,7 @@
     >
       {#if children}
         <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
-          {@render children({ data: ctx.tooltip.data })}
+          {@render children({ data: tooltipData })}
         </div>
       {/if}
     </div>

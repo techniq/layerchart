@@ -17,18 +17,35 @@
     data,
     x,
     y,
+    z,
     seriesKey,
     defined,
     curve,
     stroke,
     fill,
     opacity,
+    // Pulled out of `restProps` so a function-valued `class` isn't spread onto the element
+    class: className,
     motion,
     ...restProps
   }: SplineBaseProps = $props();
 
   const c = new SplineState(
-    () => ({ data, x, y, seriesKey, defined, curve, stroke, fill, opacity, motion }) as SplineProps
+    () =>
+      ({
+        data,
+        x,
+        y,
+        z,
+        seriesKey,
+        defined,
+        curve,
+        stroke,
+        fill,
+        opacity,
+        class: className,
+        motion,
+      }) as SplineProps
   );
 </script>
 
@@ -39,6 +56,7 @@
       stroke={seg.stroke}
       fill={seg.fill}
       opacity={seg.opacity ?? (c.seriesOpacity === 1 ? undefined : c.seriesOpacity)}
+      class={seg.class}
       {...c.series?.props}
       {...restProps}
     />
@@ -46,10 +64,11 @@
 {:else}
   <Path
     pathData={c.isTweened ? c.tweenedPath : c.d}
-    stroke={(typeof stroke === 'string' ? stroke : undefined) ?? c.series?.color}
-    fill={typeof fill === 'string' ? fill : undefined}
+    stroke={c.resolvedStroke}
+    fill={c.resolvedFill}
     opacity={(typeof opacity === 'number' ? opacity : undefined) ??
       (c.seriesOpacity === 1 ? undefined : c.seriesOpacity)}
+    class={c.resolvedClass}
     {...c.series?.props}
     {...restProps}
   />

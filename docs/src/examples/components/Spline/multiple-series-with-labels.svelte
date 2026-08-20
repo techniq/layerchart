@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { flatGroup } from 'd3-array';
 	import { Axis, Chart, Highlight, Labels, Layer, Spline, Tooltip, pivotLonger } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -12,7 +11,6 @@
 		keys
 	});
 	const data = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
-	const dataByFruit = flatGroup(data, (d) => d.fruit);
 
 	const fruitColors = {
 		apples: 'var(--color-apples)',
@@ -32,28 +30,23 @@
 	c="fruit"
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
-	padding={25}
 	tooltipContext={{ mode: 'quadtree' }}
+	padding={25}
 	height={300}
 >
-	{#snippet children({ context })}
-		<Layer>
-			<Axis placement="left" grid rule />
-			<Axis placement="bottom" rule />
-			{#each dataByFruit as [fruit, data]}
-				{@const color = context.cScale?.(fruit)}
-				<Spline {data} class="stroke-2" stroke={color} />
-			{/each}
-			<Labels format="integer" />
-			<Highlight points lines />
-		</Layer>
-		<Tooltip.Root>
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
-				<Tooltip.List>
-					<Tooltip.Item label={data.fruit} value={data.value} />
-				</Tooltip.List>
-			{/snippet}
-		</Tooltip.Root>
-	{/snippet}
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Spline stroke="fruit" class="stroke-2" />
+		<Labels format="integer" />
+		<Highlight points lines />
+	</Layer>
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
+			<Tooltip.List>
+				<Tooltip.Item label={data.fruit} value={data.value} />
+			</Tooltip.List>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>

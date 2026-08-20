@@ -3,11 +3,6 @@ import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { AnyScale } from '$lib/utils/scales.svelte.js';
 
 export type { ChartState };
-export type {
-  NodeKind,
-  ComponentNode,
-  RegisterComponentOptions,
-} from '$lib/states/chart.svelte.js';
 
 const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartContext');
 
@@ -16,6 +11,7 @@ const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartCon
  * Provides safe defaults to prevent runtime errors.
  */
 const fallbackContext = {
+  id: Symbol('FallbackChart'),
   registerMark: () => () => {
     /* no-op */
   },
@@ -47,6 +43,8 @@ const fallbackContext = {
     isHoveringTooltipArea: false,
     isHoveringTooltipContent: false,
     mode: 'manual' as const,
+    source: null,
+    suppressed: false,
     show: () => {},
     hide: () => {},
   },

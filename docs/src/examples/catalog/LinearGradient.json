@@ -213,7 +213,7 @@
       "example": "series-stack-gradient",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-stack-gradient",
-      "lineNumber": 36,
+      "lineNumber": 35,
       "line": "<LinearGradient"
     },
     {
@@ -290,7 +290,7 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 37,
+      "lineNumber": 34,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -306,6 +306,13 @@
       "path": "/docs/components/BrushContext/tooltip-interop",
       "lineNumber": 47,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 64,
+      "line": "<LinearGradient"
     },
     {
       "example": "gradient",
@@ -574,5 +581,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:26.473Z"
+  "updatedAt": "2026-08-20T17:01:02.179Z"
 }

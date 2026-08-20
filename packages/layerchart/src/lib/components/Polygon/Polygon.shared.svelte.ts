@@ -5,7 +5,6 @@ import { interpolatePath } from 'd3-interpolate-path';
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import { polygon } from '$lib/utils/shape.js';
 import { roundedPolygonPath } from '$lib/utils/path.js';
 import {
@@ -16,6 +15,7 @@ import {
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -78,13 +78,13 @@ export class PolygonState {
   #getProps: () => PolygonProps = () => ({}) as PolygonProps;
 
   chartCtx: ChartState = getChartContext();
+
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   dataMode = $derived(hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r));
 
-  resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#getProps().data) : []);
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];

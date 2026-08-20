@@ -435,7 +435,7 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<Rule y={0} />"
     },
     {
@@ -562,6 +562,20 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 67,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 29,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 62,
       "line": "<Rule y={0} />"
     },
     {
@@ -698,5 +712,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.982Z"
+  "updatedAt": "2026-08-20T17:01:02.542Z"
 }

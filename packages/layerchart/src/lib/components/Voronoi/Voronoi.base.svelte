@@ -24,6 +24,7 @@
   // GeoPath lives in geo/ subpath; agnostic import (only used in geo charts).
   import GeoPath from '../geo/GeoPath/GeoPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getFacetPanel } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { accessor } from '$lib/utils/common.js';
   import type { VoronoiCell } from './Voronoi.shared.svelte.js';
@@ -47,13 +48,15 @@
   }: VoronoiBaseProps = $props();
 
   const ctx = getChartContext();
+  // `flatData` rather than the chart's `data`, so marks with their own rows are included
+  const facetPanel = getFacetPanel();
   const geo = getGeoContext();
 
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
 
   const points = $derived(
-    (data ?? ctx.flatData).map((d: any) => {
+    (data ?? facetPanel?.().data ?? ctx.flatData).map((d: any) => {
       const xValue = xAccessorOverride
         ? geo.projection
           ? xAccessorOverride(d)

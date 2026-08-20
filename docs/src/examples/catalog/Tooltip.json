@@ -641,6 +641,18 @@
       ]
     },
     {
+      "name": "programmatic-control",
+      "title": "programmatic control",
+      "path": "/docs/components/Tooltip/programmatic-control",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 70,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "scatter-plot",
       "title": "scatter plot",
       "path": "/docs/components/Tooltip/scatter-plot",
@@ -934,28 +946,28 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 48,
+      "lineNumber": 49,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Tooltip.List>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 50,
+      "lineNumber": 51,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
@@ -1088,28 +1100,28 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 52,
+      "lineNumber": 47,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 54,
+      "lineNumber": 49,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 55,
+      "lineNumber": 50,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 56,
+      "lineNumber": 51,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} />"
     },
     {
@@ -1124,7 +1136,7 @@
       "component": "Area",
       "path": "/docs/components/Area/stack",
       "lineNumber": 76,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+      "line": "<Tooltip.Header value={data.data.date} format=\"day\" />"
     },
     {
       "example": "stack",
@@ -3881,49 +3893,203 @@
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 84,
+      "lineNumber": 83,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 86,
+      "lineNumber": 85,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 87,
+      "lineNumber": 86,
       "line": "<Tooltip.List>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 88,
+      "lineNumber": 87,
       "line": "<Tooltip.Item label=\"rain\" color=\"hsl(200 100% 50%)\" value={data.rain} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 89,
+      "lineNumber": 88,
       "line": "<Tooltip.Item"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 94,
+      "lineNumber": 93,
       "line": "<Tooltip.Item label=\"dirtyh2o\" color=\"hsl(0, 84%, 60%)\" value={data.dirtyh2o} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 95,
+      "lineNumber": 94,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 35,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 37,
+      "line": "<Tooltip.Header>{data.species} · {data.island}</Tooltip.Header>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 38,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 39,
+      "line": "<Tooltip.Item label=\"flipper\" value={data.flipper_length_mm} />"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 40,
+      "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 57,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 59,
+      "line": "<Tooltip.Header>{data.month}</Tooltip.Header>"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 60,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 62,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 71,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 73,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 79,
+      "line": "<Tooltip.Item label=\"target\" value={data.target} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 76,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 79,
+      "line": "<Tooltip.Header>{hovered.month}</Tooltip.Header>"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 80,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 82,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 91,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 93,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 99,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 58,
+      "line": "<Tooltip.Root facetAll>"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 60,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 61,
       "line": "<Tooltip.Item"
     },
     {
@@ -4210,84 +4376,84 @@
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 67,
+      "lineNumber": 68,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 69,
+      "lineNumber": 70,
       "line": "<Tooltip.Header>{data.species}</Tooltip.Header>"
     },
     {
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 70,
+      "lineNumber": 71,
       "line": "<Tooltip.List>"
     },
     {
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 71,
-      "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
-    },
-    {
-      "example": "grouped-horizontal",
-      "component": "Dodge",
-      "path": "/docs/components/Dodge/grouped-horizontal",
       "lineNumber": 72,
-      "line": "<Tooltip.Item label=\"Sex\" value={data.sex} />"
+      "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
     },
     {
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
       "lineNumber": 73,
+      "line": "<Tooltip.Item label=\"Sex\" value={data.sex} />"
+    },
+    {
+      "example": "grouped-horizontal",
+      "component": "Dodge",
+      "path": "/docs/components/Dodge/grouped-horizontal",
+      "lineNumber": 74,
       "line": "<Tooltip.Item label=\"Island\" value={data.island} />"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 66,
+      "lineNumber": 67,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 68,
+      "lineNumber": 69,
       "line": "<Tooltip.Header>{data.species}</Tooltip.Header>"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 69,
+      "lineNumber": 70,
       "line": "<Tooltip.List>"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 70,
+      "lineNumber": 71,
       "line": "<Tooltip.Item label=\"Body mass\" value=\"{data.body_mass_g} g\" />"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 71,
+      "lineNumber": 72,
       "line": "<Tooltip.Item label=\"Sex\" value={data.sex} />"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 72,
+      "lineNumber": 73,
       "line": "<Tooltip.Item label=\"Island\" value={data.island} />"
     },
     {
@@ -6555,28 +6721,28 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 50,
+      "lineNumber": 44,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 52,
+      "lineNumber": 46,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 53,
+      "lineNumber": 47,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 54,
+      "lineNumber": 48,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} />"
     },
     {
@@ -7556,42 +7722,42 @@
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 64,
+      "lineNumber": 63,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 66,
+      "lineNumber": 65,
       "line": "<Tooltip.Header>{data.island}</Tooltip.Header>"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 67,
+      "lineNumber": 66,
       "line": "<Tooltip.List>"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 69,
+      "lineNumber": 68,
       "line": "<Tooltip.Item"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 77,
+      "lineNumber": 76,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 78,
+      "lineNumber": 77,
       "line": "<Tooltip.Item"
     },
     {
@@ -7710,126 +7876,126 @@
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Tooltip.Header>{data.weight}–{data.weight + 9} kg</Tooltip.Header>"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 55,
+      "lineNumber": 54,
       "line": "<Tooltip.List>"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Tooltip.Item"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 65,
+      "lineNumber": 64,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 66,
+      "lineNumber": 65,
       "line": "<Tooltip.Item"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 51,
+      "lineNumber": 50,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 53,
+      "lineNumber": 52,
       "line": "<Tooltip.Header>{data.island}</Tooltip.Header>"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Tooltip.List>"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 56,
+      "lineNumber": 55,
       "line": "<Tooltip.Item"
+    },
+    {
+      "example": "penguins",
+      "component": "Waffle",
+      "path": "/docs/components/Waffle/penguins",
+      "lineNumber": 63,
+      "line": "<Tooltip.Separator />"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
       "lineNumber": 64,
-      "line": "<Tooltip.Separator />"
-    },
-    {
-      "example": "penguins",
-      "component": "Waffle",
-      "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 65,
       "line": "<Tooltip.Item"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Tooltip.Header>{data.period}</Tooltip.Header>"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Tooltip.List>"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Tooltip.Item"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 58,
+      "lineNumber": 57,
       "line": "<Tooltip.Item"
     },
     {
@@ -7861,5 +8027,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-06T14:44:39.384Z"
+  "updatedAt": "2026-08-20T17:01:02.716Z"
 }

@@ -20,6 +20,7 @@
 		{ key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
 		{ key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } }
 	]}
+	seriesLayout="overlap"
 	labels={{ seriesKey: 'value', placement: 'inside', fill: 'white' }}
 	padding={defaultChartPadding({ left: 30, right: 25 })}
 	height={200}

@@ -94,19 +94,34 @@ Separate data arrays can even have different lengths:
 
 The `seriesLayout` prop controls how multiple series are arranged:
 
-| Layout             | Effect                                               |
-| ------------------ | ---------------------------------------------------- |
-| `'overlap'`        | Series overlap (default). Later series render on top |
-| `'stack'`          | Series are stacked vertically                        |
-| `'stackExpand'`    | Stacked and normalized to 100%                       |
-| `'stackDiverging'` | Positive values stack up, negative values stack down |
-| `'group'`          | Side-by-side within each band (bar charts only)      |
+| Layout             | Effect                                                                      |
+| ------------------ | --------------------------------------------------------------------------- |
+| `'auto'`           | Stack when there are layers to stack (default for `BarChart` / `AreaChart`) |
+| `'overlap'`        | Series overlap. Later series render on top                                  |
+| `'stack'`          | Series are stacked vertically                                               |
+| `'stackExpand'`    | Stacked and normalized to 100%                                              |
+| `'stackDiverging'` | Positive values stack up, negative values stack down                        |
+| `'group'`          | Side-by-side within each band (bar charts only)                             |
 
-### Overlap (default)
+### Auto (default)
 
-Series render on top of each other. Useful for comparing trends:
+Charts default to `'auto'`, which stacks when something names layers to stack — two or more `series`, or an ordinal `c` — and overlaps otherwise.
+
+Three things are left alone, because none of them is a set of layers:
+
+- A value that resolves to an interval. `[start, end]` is a pair of positions rather than a magnitude, whether it comes from the accessor (`x={['start', 'end']}`) or from the data, so duration bars and waterfalls keep their shape.
+- A mark handed its own `data`. Whoever handed the rows over has already grouped them.
+- Lines and points. A `Spline` is read against a shared baseline and a scatter's series are positions to compare, so neither joins a stack it wasn't explicitly asked to join.
+
+It stacks at zero rather than end to end, so negative values run the other way and a population pyramid keeps its two sides. `LineChart` is unaffected — lines are read against a shared baseline, so stacking them would change what they say.
+
+### Overlap
+
+Series render on top of each other, each drawn from the axis rather than from the one below it. Useful for comparing series against each other rather than reading them as a total:
 
 :example{ component="BarChart" name="series" }
+
+:example{ component="AreaChart" name="series-overlap" }
 
 ### Stack
 
@@ -176,6 +191,8 @@ You can also read the highlight state in custom mark snippets:
 
 :example{ component="LineChart" name="series-labels-hover" }
 
+Highlighting and visibility are shared between charts in a [chart group](/docs/guides/chart-group#series), so one legend can drive a whole dashboard.
+
 ## Programmatic control
 
 Access the series state via `bind:context` to build your own series toggle UI, set initial visibility, or control series from external components. See the [persist-series example](/docs/components/LineChart/persist-series) for an example using localStorage to persist series selection.
@@ -241,6 +258,7 @@ You can also access series state inside a Chart's `children` snippet without `bi
 | `visibleSeries`     | `SeriesData[]`                 | Only visible (non-filtered) series                      |
 | `selectedKeys`      | `SelectionState<string>`       | Selection state managing which series are visible       |
 | `highlightKey`      | `string \| null`               | Currently highlighted series key                        |
+| `highlightSource`   | `string \| symbol \| null`     | What set the highlight — `null` for this chart's own    |
 | `isStacked`         | `boolean`                      | Whether a stacking layout is active                     |
 | `stackLayout`       | `StackLayout`                  | Current layout mode                                     |
 | `isDefaultSeries`   | `boolean`                      | True when no series prop was provided                   |
@@ -250,12 +268,13 @@ You can also access series state inside a Chart's `children` snippet without `bi
 
 ### Methods
 
-| Method                                    | Description                                                               |
-| ----------------------------------------- | ------------------------------------------------------------------------- |
-| `isVisible(seriesKey)`                    | Whether a series is visible (all visible when none are selected)          |
-| `isHighlighted(seriesKey, defaultValue?)` | Whether a series is highlighted. Default `false` when no highlight active |
-| `getStackValue(seriesKey, d)`             | Get stack `[y0, y1]` values for a data point                              |
-| `getStackAccessors(seriesKey)`            | Create `{ y0, y1, value }` accessor functions for stacked layouts         |
+| Method                                    | Description                                                                                |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `isVisible(seriesKey)`                    | Whether a series is visible (all visible when none are selected)                           |
+| `isHighlighted(seriesKey, defaultValue?)` | Whether a series is highlighted. Default `false` when no highlight active                  |
+| `setHighlight(seriesKey, source?)`        | Highlight a series, recording what drove it (see [chart groups](/docs/guides/chart-group)) |
+| `getStackValue(seriesKey, d)`             | Get stack `[y0, y1]` values for a data point                                               |
+| `getStackAccessors(seriesKey)`            | Create `{ y0, y1, value }` accessor functions for stacked layouts                          |
 
 ## Per-series component props
 

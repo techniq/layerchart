@@ -12,6 +12,13 @@ export type AnnotationPointPropsWithoutHTML = {
   x?: SingleDomainType;
   /** y value of the point */
   y?: SingleDomainType;
+  /**
+   * The series this annotation belongs to.
+   *
+   * `ChartAnnotations` hides it while another series is highlighted, and a value on the chart's
+   * value axis is read against that series' stacked segment rather than taken as-is.
+   */
+  seriesKey?: string;
   /** Radius of the circle */
   r?: number;
   /** Label to display on circle */

@@ -1,0 +1,21 @@
+{
+  "component": "FacetAxis",
+  "examples": [],
+  "usage": [
+    {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 25,
+      "line": "<FacetAxis />"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 27,
+      "line": "<FacetAxis />"
+    }
+  ],
+  "updatedAt": "2026-08-20T12:48:38.992Z"
+}

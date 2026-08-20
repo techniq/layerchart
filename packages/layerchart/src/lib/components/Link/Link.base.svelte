@@ -18,6 +18,7 @@
     getLinkRadialPresetPath,
   } from '$lib/utils/linkUtils.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';
   import { cls } from '@layerstack/tailwind';
   import {
@@ -29,6 +30,7 @@
   import { LINK_FALLBACK_COORDS, isAccessorAccessor } from './Link.shared.svelte.js';
 
   const ctx = getChartContext();
+  const markData = getMarkData();
 
   let {
     Path,
@@ -217,7 +219,7 @@
   // inside `<Path>`'s own template — the parent stays stable.
   const getPathData = () => motionPath.current;
 
-  const arrayRows = $derived(isArrayMode ? (data ?? ctx.data ?? []) : []);
+  const arrayRows = $derived(isArrayMode ? markData(data) : []);
 
   function resolvePerDatum<T>(value: T | ((d: any) => T) | undefined, d: any): T | undefined {
     return typeof value === 'function' ? (value as (d: any) => T)(d) : (value as T | undefined);

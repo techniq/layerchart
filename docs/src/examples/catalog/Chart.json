@@ -131,12 +131,12 @@
         },
         {
           "component": "Axis",
-          "lineNumber": 69,
+          "lineNumber": 68,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 84,
+          "lineNumber": 83,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -226,7 +226,7 @@
         },
         {
           "component": "Spline",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
         }
       ]
@@ -245,6 +245,511 @@
           "component": "Spline",
           "lineNumber": 33,
           "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
+        }
+      ]
+    },
+    {
+      "name": "facet-annotation",
+      "title": "facet annotation",
+      "path": "/docs/components/Chart/facet-annotation",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 24,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 39,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 41,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "facet-bars",
+      "title": "facet bars",
+      "path": "/docs/components/Chart/facet-bars",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 36,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush",
+      "title": "facet brush",
+      "path": "/docs/components/Chart/facet-brush",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 36,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 44,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-band",
+      "title": "facet brush band",
+      "path": "/docs/components/Chart/facet-brush-band",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 37,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-overview",
+      "title": "facet brush overview",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 45,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 51,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 66,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 75,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 76,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-summary",
+      "title": "facet brush summary",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 34,
+          "line": "<ChartGroup brush={{ axis: 'both' }}>"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 57,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 65,
+          "line": "<Circle"
+        },
+        {
+          "component": "BarChart",
+          "lineNumber": 84,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-zoom",
+      "title": "facet brush zoom",
+      "path": "/docs/components/Chart/facet-brush-zoom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 32,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-color",
+      "title": "facet color",
+      "path": "/docs/components/Chart/facet-color",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 27,
+          "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
+        }
+      ]
+    },
+    {
+      "name": "facet-composed",
+      "title": "facet composed",
+      "path": "/docs/components/Chart/facet-composed",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Svg",
+          "lineNumber": 23,
+          "line": "<Svg>"
+        },
+        {
+          "component": "FacetAxis",
+          "lineNumber": 25,
+          "line": "<FacetAxis />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 26,
+          "line": "<Grid y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"left\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 29,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 30,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-grid",
+      "title": "facet grid",
+      "path": "/docs/components/Chart/facet-grid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 25,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-lines",
+      "title": "facet lines",
+      "path": "/docs/components/Chart/facet-lines",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 26,
+          "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "facet-non-faceted-marks",
+      "title": "facet non faceted marks",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 27,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 29,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-spacing",
+      "title": "facet spacing",
+      "path": "/docs/components/Chart/facet-spacing",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 35,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-tooltip",
+      "title": "facet tooltip",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Svg",
+          "lineNumber": 25,
+          "line": "<Svg>"
+        },
+        {
+          "component": "FacetAxis",
+          "lineNumber": 27,
+          "line": "<FacetAxis />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 28,
+          "line": "<Grid x y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"left\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 31,
+          "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"island\" fillOpacity={0.6} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 32,
+          "line": "<Highlight lines points axis=\"both\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 35,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "facet-two-dimensional",
+      "title": "facet two dimensional",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 29,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 30,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-wrap",
+      "title": "facet wrap",
+      "path": "/docs/components/Chart/facet-wrap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 67,
+          "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 68,
+          "line": "<Area"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 80,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "facet-x",
+      "title": "facet x",
+      "path": "/docs/components/Chart/facet-x",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 24,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-y",
+      "title": "facet y",
+      "path": "/docs/components/Chart/facet-y",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 24,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "mixed-marks-with-stack",
+      "title": "mixed marks with stack",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 42,
+          "line": "<Bars seriesKey={s.key} radius={2} rounded=\"edge\" strokeWidth={1} />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 46,
+          "line": "<Spline"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 52,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 55,
+          "line": "<Legend placement=\"top-right\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 57,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "mixed-marks-with-stack-long-data",
+      "title": "mixed marks with stack long data",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 57,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 58,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 61,
+          "line": "<Bars radius={2} rounded=\"edge\" strokeWidth={1} />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 64,
+          "line": "<Spline"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 71,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 74,
+          "line": "<Legend placement=\"top-right\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 76,
+          "line": "<Tooltip.Root>"
         }
       ]
     }
@@ -436,7 +941,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 27,
+      "lineNumber": 25,
       "line": "<Chart"
     },
     {
@@ -816,6 +1321,20 @@
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "lineNumber": 110,
       "line": "<Chart"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 18,
+      "line": "<Chart xScale={scaleUtc()} {xDomain} padding={24} height={48}>"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 31,
+      "line": "<Chart {xDomain} padding={24} height={48}>"
     },
     {
       "example": "company-race",
@@ -1407,6 +1926,48 @@
     },
     {
       "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 40,
+      "line": "<Chart"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 34,
+      "line": "<Chart"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 30,
+      "line": "<Chart"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 12,
@@ -1514,7 +2075,7 @@
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 23,
+      "lineNumber": 12,
       "line": "<Chart"
     },
     {
@@ -1549,15 +2110,15 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 52,
-      "line": "<Chart"
+      "lineNumber": 49,
+      "line": "<Chart bind:context={brushChart} {data} x=\"date\" y=\"value\" padding={{ left: 16 }} brush height={40}>"
     },
     {
       "example": "simple-styling",
@@ -1754,6 +2315,160 @@
       "path": "/docs/components/Chart/data-series-separate-data",
       "lineNumber": 23,
       "line": "<Chart"
+    },
+    {
+      "example": "facet-brush",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 66,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 44,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-brush-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-zoom",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-color",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-color",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-grid",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-grid",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-lines",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-lines",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-spacing",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-spacing",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-two-dimensional",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 50,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-x",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-x",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-y",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-y",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 44,
+      "line": "<Chart"
+    },
+    {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 37,
+      "line": "<Chart"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 55,
+      "line": "<Chart"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 50,
+      "line": "<Chart"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 76,
+      "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 16 }} brush height={20}>"
     },
     {
       "example": "basic",
@@ -2914,7 +3629,7 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 63,
+      "lineNumber": 64,
       "line": "<Chart"
     },
     {
@@ -3922,7 +4637,35 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 26,
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 44,
+      "line": "<Chart"
+    },
+    {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 66,
+      "line": "<Chart"
+    },
+    {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 47,
+      "line": "<Chart"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 74,
       "line": "<Chart"
     },
     {
@@ -3943,7 +4686,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 16,
+      "lineNumber": 14,
       "line": "<Chart"
     },
     {
@@ -3959,6 +4702,13 @@
       "path": "/docs/components/Spline/stroke-grouping",
       "lineNumber": 17,
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={25} height={300}>"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 26,
+      "line": "<Chart"
     },
     {
       "example": "tween-on-mount",
@@ -4493,5 +5243,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-06T14:50:43.928Z"
+  "updatedAt": "2026-08-20T17:01:01.328Z"
 }

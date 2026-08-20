@@ -4,6 +4,7 @@ import type { ChartProps } from '../../Chart/Chart.shared.svelte.js';
 import type { HighlightPoint } from '../../Highlight/Highlight.shared.svelte.js';
 import type { AreaProps } from '../../Area/Area.shared.svelte.js';
 import type { SeriesData } from '../types.js';
+import type { SeriesLayout } from '$lib/states/series.svelte.js';
 
 // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
 export type AreaChartProps<TData> = {
@@ -19,10 +20,12 @@ export type AreaChartProps<TData> = {
     series?: SeriesData<TData, Component<AreaProps>>[];
 
     /**
-     * The layout of the series.
-     * @default 'overlap'
+     * How multiple series are arranged — see `Chart`'s `seriesLayout` for how `'auto'` resolves.
+     * `'group'` divides a band, so it's bar-only and isn't offered here.
+     *
+     * @default 'auto'
      */
-    seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
+    seriesLayout?: Exclude<SeriesLayout, 'group'>;
 
     /**
      * A callback function called when a point in the chart is clicked.

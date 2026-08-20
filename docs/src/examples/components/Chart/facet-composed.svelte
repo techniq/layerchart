@@ -1,0 +1,38 @@
+<script module lang="ts">
+	import { getPenguins } from '$lib/data.remote';
+	const penguins = await getPenguins();
+</script>
+
+<script lang="ts">
+	import { Axis, Chart, Circle, FacetAxis, Grid, Rule, Svg } from 'layerchart';
+
+	const data = penguins.filter((d) => d.flipper_length_mm !== 'NA' && d.body_mass_g !== 'NA');
+	export { data };
+</script>
+
+<Chart
+	{data}
+	x="flipper_length_mm"
+	y="body_mass_g"
+	fx="species"
+	xNice
+	yNice
+	padding={{ left: 52, bottom: 32, top: 24, right: 8 }}
+	height={300}
+>
+	<Svg>
+		<!-- the grid`s headers — `Chart`'s default layout adds these for you -->
+		<FacetAxis />
+		<Grid y />
+		<Axis placement="left" />
+		<Axis placement="bottom" />
+		<Rule y={0} />
+		<Circle
+			cx="flipper_length_mm"
+			cy="body_mass_g"
+			r={2.5}
+			fill="var(--color-secondary)"
+			fillOpacity={0.6}
+		/>
+	</Svg>
+</Chart>

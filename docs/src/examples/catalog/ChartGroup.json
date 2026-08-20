@@ -1,0 +1,306 @@
+{
+  "component": "ChartGroup",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/ChartGroup/basic",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 26,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 31,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "coordinated-views",
+      "title": "coordinated views",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 16,
+          "line": "<ChartGroup domain={{ axis: 'x' }}>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 21,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 37,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 46,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "faceted-group",
+      "title": "faceted group",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 42,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 46,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 58,
+          "line": "<Tooltip.Root facetAll>"
+        }
+      ]
+    },
+    {
+      "name": "highlight-only",
+      "title": "highlight only",
+      "path": "/docs/components/ChartGroup/highlight-only",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 29,
+          "line": "<ChartGroup pointer={{ tooltip: false }}>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 36,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "minimap",
+      "title": "minimap",
+      "path": "/docs/components/ChartGroup/minimap",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 24,
+          "line": "<ChartGroup domain={{ axis: 'both' }}>"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 45,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 46,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 48,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 49,
+          "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 70,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "programmatic-control",
+      "title": "programmatic control",
+      "path": "/docs/components/ChartGroup/programmatic-control",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 87,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "synced-brushes",
+      "title": "synced brushes",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 44,
+          "line": "<ChartGroup brush={{ x: initialRange }}>"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 59,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 60,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 62,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 63,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 64,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 69,
+          "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "synced-legend",
+      "title": "synced legend",
+      "path": "/docs/components/ChartGroup/synced-legend",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 23,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 25,
+          "line": "<LineChart {data} x=\"date\" {series} {padding} height={200} />"
+        },
+        {
+          "component": "AreaChart",
+          "lineNumber": 26,
+          "line": "<AreaChart {data} x=\"date\" {series} {padding} height={200} legend />"
+        }
+      ]
+    },
+    {
+      "name": "synced-zoom",
+      "title": "synced zoom",
+      "path": "/docs/components/ChartGroup/synced-zoom",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 27,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 32,
+          "line": "<LineChart"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 45,
+      "line": "<ChartGroup>"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 34,
+      "line": "<ChartGroup brush={{ axis: 'both' }}>"
+    },
+    {
+      "example": "basic",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/basic",
+      "lineNumber": 26,
+      "line": "<ChartGroup>"
+    },
+    {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 16,
+      "line": "<ChartGroup domain={{ axis: 'x' }}>"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 42,
+      "line": "<ChartGroup>"
+    },
+    {
+      "example": "highlight-only",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/highlight-only",
+      "lineNumber": 29,
+      "line": "<ChartGroup pointer={{ tooltip: false }}>"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 24,
+      "line": "<ChartGroup domain={{ axis: 'both' }}>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 44,
+      "line": "<ChartGroup brush={{ x: initialRange }}>"
+    },
+    {
+      "example": "synced-legend",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-legend",
+      "lineNumber": 23,
+      "line": "<ChartGroup>"
+    },
+    {
+      "example": "synced-zoom",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-zoom",
+      "lineNumber": 27,
+      "line": "<ChartGroup>"
+    }
+  ],
+  "updatedAt": "2026-08-20T17:01:01.416Z"
+}

@@ -29,7 +29,6 @@
 		}
 	]}
 	legend
-	seriesLayout="stack"
 	padding={defaultChartPadding({ legend: true, right: 10 })}
 	height={300}
 />

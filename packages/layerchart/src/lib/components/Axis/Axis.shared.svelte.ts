@@ -13,6 +13,7 @@ import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { type MotionProp } from '$lib/utils/motion.svelte.js';
 import {
@@ -126,6 +127,12 @@ export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
   transitionInParams?: TransitionParams<In>;
 
   /**
+   * Draw in every panel of a faceted chart, rather than only on the grid's outer edge.
+   * @default false
+   */
+  facetAll?: boolean;
+
+  /**
    * Override scale for the axis
    */
   scale?: any;
@@ -186,6 +193,31 @@ export class AxisState {
   #props: AxisProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+  #facetPanel = getFacetPanel();
+
+  /**
+   * Whether to draw at all.  In a faceted chart an axis belongs on the grid's outer edge — a
+   * left/radius axis on the leftmost column, a bottom/angle axis on the last row — so interior
+   * panels don't redraw the same ticks.  `facetAll` opts back into one per panel.
+   */
+  visible = $derived.by(() => {
+    const facet = this.#facetPanel?.();
+    if (!facet || this.#props.facetAll) return true;
+
+    switch (this.#props.placement) {
+      case 'left':
+      case 'radius':
+        return facet.left;
+      case 'right':
+        return facet.right;
+      case 'top':
+        return facet.top;
+      case 'bottom':
+      case 'angle':
+        return facet.bottom;
+    }
+    return true;
+  });
 
   constructor(getProps: () => AxisProps) {
     this.#getProps = getProps;

@@ -4,10 +4,10 @@ import type { SVGAttributes } from 'svelte/elements';
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import { parseDashArray } from '$lib/utils/path.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -141,6 +141,7 @@ export class LineState {
 
   // Contexts
   chartCtx: ChartState = getChartContext();
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   // Data mode detection
@@ -148,9 +149,7 @@ export class LineState {
     hasAnyDataProp(this.#props.x1, this.#props.y1, this.#props.x2, this.#props.y2)
   );
 
-  #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];

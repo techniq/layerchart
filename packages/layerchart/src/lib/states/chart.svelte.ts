@@ -22,11 +22,13 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 
+import { getFacetPanel } from '$lib/contexts/facet.js';
 import { GeoState } from './geo.svelte.js';
+import { FacetState, facetKey } from './facet.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
-import { SeriesState, type StackLayout } from './series.svelte.js';
+import { SeriesState, type SeriesLayout, type StackLayout } from './series.svelte.js';
 import type { SeriesData } from '$lib/components/charts/types.js';
 import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
@@ -54,6 +56,16 @@ export interface MarkInfo {
   color?: string;
   /** Label for legend/tooltip */
   label?: string;
+  /**
+   * Whether this mark reads `SeriesState.getStackAccessors()` rather than the raw accessor — a
+   * stack-aware mark type with no explicit value accessor overriding it.  A `Points` placing
+   * labels at its own `y` says `false`.
+   *
+   * Only what this covers *and* names a layer belongs in a stacked domain, which is the rest of
+   * the mark's own guard and depends on chart state — see `#drawsStack`.  A `Spline` drawn over
+   * stacked bars keeps its own values and has to fit beside them.
+   */
+  stacks?: boolean;
 }
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
@@ -90,8 +102,70 @@ const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParen
 /** Mark info is "empty" when none of the fields the chart uses for series /
  * domain inference are populated. Pixel-mode primitives produce empty info
  * since they have no string/function accessors and no own data. */
+/** The grid's first panel — the one that registers marks on every panel's behalf */
+function isFirstPanel(facet: { column: number; row: number }) {
+  return facet.column === 0 && facet.row === 0;
+}
+
 function isEmptyMarkInfo(info: MarkInfo): boolean {
-  return !info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label;
+  // Every field rather than a list to keep in sync — setting any of them is a mark telling the
+  // chart something about its series or domain, and a field added to `MarkInfo` later counts
+  // without having to remember this function.  `stacks` is the one that caught us out: a bare
+  // `<Bars />` reading the chart's own data and colour names none of the other fields, but the
+  // domain still has to know something on the chart draws the stack.
+  //
+  // Falsy rather than `!= null`, so `stacks: false` reads as "nothing to say" — which also means
+  // a meaningful `0` would need its own case here.
+  return Object.values(info).every((value) => !value);
+}
+
+/** One axis of {@link transformForBrush}, as a fraction of the base domain */
+function zoomForAxis(domain: any[], from: any, to: any) {
+  if (from == null || to == null) return undefined;
+
+  if (typeof domain[0] === 'string') {
+    // Categorical: the selection is a run of the domain, measured in indices
+    const startIdx = (domain as string[]).indexOf(from as string);
+    const endIdx = (domain as string[]).indexOf(to as string) + 1;
+    const selected = endIdx - startIdx;
+    if (selected <= 0 || domain.length === 0) return undefined;
+    return { scale: domain.length / selected, offset: startIdx / domain.length };
+  }
+
+  const baseMin = +domain[0];
+  const baseRange = +domain[1] - baseMin;
+  const selectedRange = +to - +from;
+  if (selectedRange <= 0 || baseRange <= 0) return undefined;
+  return { scale: baseRange / selectedRange, offset: (+from - baseMin) / baseRange };
+}
+
+/**
+ * The scale/translate that brings `brush` into view, given the untransformed domains and plot size.
+ *
+ * Pure, so the same maths serves `zoomToBrush()` and the initial transform a chart renders with
+ * before `TransformContext` has loaded.
+ */
+export function transformForBrush(
+  brush: { x: BrushDomainType; y: BrushDomainType },
+  axis: 'x' | 'y' | 'both',
+  base: { xDomain: any[]; yDomain: any[]; width: number; height: number }
+) {
+  // Only an x (or both) selection sets the scale, as it always has
+  if (axis !== 'x' && axis !== 'both') return undefined;
+
+  const x = zoomForAxis(base.xDomain, brush.x[0], brush.x[1]);
+  if (!x) return undefined;
+
+  let translateY = 0;
+  if (axis === 'both') {
+    const y = zoomForAxis(base.yDomain, brush.y[0], brush.y[1]);
+    if (y) translateY = -y.offset * base.height * x.scale;
+  }
+
+  return {
+    scale: x.scale,
+    translate: { x: -x.offset * base.width * x.scale, y: translateY },
+  };
 }
 
 export class ChartState<
@@ -99,20 +173,46 @@ export class ChartState<
   XScale extends AnyScale = AnyScale,
   YScale extends AnyScale = AnyScale,
 > {
+  /**
+   * Stable identity for this chart instance.  Used to attribute state changes to their
+   * originating chart (ex. so a chart can ignore the echo of its own update when synchronized
+   * with others).
+   *
+   * Defaults to an opaque symbol.  Pass `id` to `Chart` to supply your own, which makes the
+   * identity comparable from outside — ex. `group.pointer.source === 'requests'` to tell which
+   * chart in a group is currently driving it.
+   */
+  readonly id: string | symbol;
+
   // The `$props()` proxy from the host component. Reads on `this.props.X` go
   // straight through to the underlying reactive prop — no spread / no derived
   // wrapper needed.
   props!: ChartPropsWithoutHTML<TData, XScale, YScale>;
 
-  // Brush-domain overrides. The host component owns the brush state as local
-  // `$state` and supplies these getters so brush selections take precedence
-  // over `props.xDomain` / `props.yDomain` when reading the effective domain.
-  #brushXDomain!: () => BrushDomainType | undefined;
-  #brushYDomain!: () => BrushDomainType | undefined;
+  /**
+   * Domain this chart zoomed to from its own brush (`zoomOnBrush`), which takes precedence over
+   * `props.xDomain` / `props.yDomain`.  Set by `Chart` on brush end.
+   */
+  brushXDomain = $state<BrushDomainType | undefined>();
+  brushYDomain = $state<BrushDomainType | undefined>();
+
+  /**
+   * Domain shared by a chart group, applied only when nothing more specific is set.  This chart's
+   * own brush zoom wins (it is direct interaction), and so does an explicitly supplied
+   * `props.xDomain` — a sibling chart must not silently override a domain the app controls.
+   *
+   * Written by `connectToChartGroup`; not intended to be set directly.
+   */
+  groupXDomain = $state<BrushDomainType | undefined>();
+  groupYDomain = $state<BrushDomainType | undefined>();
 
   // State / contexts
   geoState: GeoState;
   transformState = $state<TransformState>(null!);
+  /** A `zoomToBrush()` that arrived before `transformState` existed, standing in until it does */
+  #initialZoom = $state<
+    { brush: { x: BrushDomainType; y: BrushDomainType }; axis: 'x' | 'y' | 'both' } | undefined
+  >();
   tooltipState = $state<TooltipState>(null!);
   brushState = $state<BrushState>(null!);
   // TODO: handle TComponent
@@ -233,7 +333,13 @@ export class ChartState<
       };
     });
 
-    if (markInfo && !insideCompositeMark) {
+    // Every panel of a faceted chart renders the same marks with the same accessors, so only the
+    // first registers.  Registering per panel bumped `_markInfosVersion` once each, and every bump
+    // invalidates `flatData` → `extents` → domains → scales → every mark's positions.
+    const facetPanel = getFacetPanel();
+    const isRepeatedPanel = facetPanel != null && !isFirstPanel(facetPanel());
+
+    if (markInfo && !insideCompositeMark && !isRepeatedPanel) {
       // Probe once at construction: if mark info is initially empty
       // (pixel-mode primitives where cx/cy/r are numbers), skip the
       // tracking $effect entirely. This is the common case for
@@ -277,16 +383,10 @@ export class ChartState<
   // Meta data - reactive to props.meta changes
   meta = $derived(this.props.meta ?? {});
 
-  constructor(
-    props: ChartPropsWithoutHTML<TData, XScale, YScale>,
-    overrides?: {
-      brushXDomain?: () => BrushDomainType | undefined;
-      brushYDomain?: () => BrushDomainType | undefined;
-    }
-  ) {
+  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this.props = props;
-    this.#brushXDomain = overrides?.brushXDomain ?? (() => undefined);
-    this.#brushYDomain = overrides?.brushYDomain ?? (() => undefined);
+    // Read once — identity must stay stable for the life of the chart
+    this.id = props.id ?? Symbol('Chart');
 
     // Create GeoState instance — pass a dimensions getter so projection
     // is available during SSR (where $effect doesn't run)
@@ -294,6 +394,8 @@ export class ChartState<
       () => this.props.geo ?? {},
       () => ({ width: this.width, height: this.height })
     );
+
+    this.facetState = new FacetState(() => this);
 
     // Create SeriesState internally from series/seriesLayout props.
     // When no explicit series are provided, derive implicit series from mark registrations.
@@ -339,7 +441,7 @@ export class ChartState<
         return implicitSeries.length > 0 ? implicitSeries : EMPTY_SERIES;
       },
       () => {
-        const layout = this.props.seriesLayout;
+        const layout = this.seriesLayout;
         if (!layout || !layout.startsWith('stack')) return null;
 
         const series = this.props.series ?? [];
@@ -348,9 +450,23 @@ export class ChartState<
 
         return {
           layout: layout as StackLayout,
+          // The raw prop rather than `this.data`: reading the filtered data here would make the
+          // stack config depend on the mark registry (through `cGroups`), and a mark
+          // registering mid-render then mutates state this derived is reading.  A hidden
+          // category drops out via `#categoryKeys` instead — `stack()` ignores columns whose
+          // key it wasn't given.
           data: hasSeparateData ? undefined : chartDataArray(this.props.data),
           keyBy: keyBy!,
           valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
+          // Anything that subdivides the plot also subdivides the stack — see `StackConfig.groupBy`
+          groupBy: this.#stackGroupBy,
+          // Long data stacks by the category its rows carry, since no series names the layers
+          ...(this.cGroups
+            ? {
+                seriesBy: this.cKey,
+                seriesKeys: this.cGroups ?? [],
+              }
+            : null),
         };
       }
     );
@@ -425,7 +541,7 @@ export class ChartState<
       let yInit = false;
 
       $effect(() => {
-        const domain = this._rawXDomain;
+        const domain = this._targetXDomain;
         if (!domain || domain.length < 2) return;
         const isDate = (domain[0] as unknown) instanceof Date;
         this._xDomainIsDate = isDate;
@@ -446,7 +562,7 @@ export class ChartState<
       });
 
       $effect(() => {
-        const domain = this._rawYDomain;
+        const domain = this._targetYDomain;
         if (!domain || domain.length < 2) return;
         const isDate = (domain[0] as unknown) instanceof Date;
         this._yDomainIsDate = isDate;
@@ -471,13 +587,15 @@ export class ChartState<
   containerWidth = $derived(this.props.width ?? this._containerWidth);
   containerHeight = $derived(this.props.height ?? this._containerHeight);
 
+  // The chart's rows before a legend hides any of them — which is what `cDomain` is read from.
+  //
   // When `<Chart data>` is passed with a non-empty dataset, it's canonical —
   // marks with their own `data` (e.g. filtered label subsets) still contribute
   // to `flatData` for domain calculation but don't replace iteration data.
   // Otherwise fall back to `visibleSeriesData` so simplified charts that pass
   // data via series definitions still work, with reactive recomputation when
   // series are shown/hidden via legend.
-  data = $derived.by(() => {
+  #sourceData = $derived.by(() => {
     const propsData = this.props.data;
     if (propsData != null && (!Array.isArray(propsData) || propsData.length > 0)) {
       return propsData;
@@ -488,14 +606,196 @@ export class ChartState<
     return [];
   });
 
+  /**
+   * The groups `c` names, or `null` when the chart's `series` name them instead.
+   *
+   * An ordinal `c` scale with no configured series is a chart whose groups live in the data —
+   * `x1="fruit"` with `c="fruit"`, say — and the lone implicit series names none of them.  A
+   * continuous `c` is a ramp instead, which the legend draws with nothing to click.
+   *
+   * What a legend lists, what stacks, and what `cKey` reads a row's group from.
+   */
+  cGroups = $derived.by<any[] | null>(() => {
+    if (this.props.c == null) return null;
+
+    // Read from the `series` prop rather than `SeriesState.isDefaultSeries`, which also counts
+    // the series inferred from registered marks.  `ChartState.data` depends on this, and marks
+    // register while deriveds are being read — so reaching into the mark registry from here
+    // makes registering a mark mutate state something is mid-read of.  Series inferred from
+    // marks name nothing a legend could select anyway.
+    const configured = this.props.series ?? [];
+    const seriesNameThem =
+      configured.length > 1 || (configured.length === 1 && configured[0].key !== 'default');
+    if (seriesNameThem) return null;
+
+    // Naming a column (`c="fruit"`) says that column holds the category.  A computed accessor
+    // (`c={(d) => (d.value < 0 ? 'under' : 'over')}`) is a colour per row instead — grouping on it
+    // would cut one series into a path per colour, joining points that aren't adjacent.
+    if (typeof this.props.c !== 'string') return null;
+
+    // Categories are labels rather than measurements.  A numeric domain is a ramp, and an array
+    // or object is the chart reading `c` off another channel — `BarChart` passes its value
+    // accessor, so a `y={['start', 'end']}` interval arrives here as a pair per row.
+    const domain = Array.isArray(this.cDomain) ? this.cDomain : null;
+    const first = domain?.[0];
+    return typeof first === 'string' || typeof first === 'boolean' ? domain : null;
+  });
+
+  /**
+   * `seriesLayout` with `auto` resolved to what it means for this chart.
+   *
+   * A value given as an explicit interval is a pair of positions rather than a magnitude, so
+   * there is nothing to accumulate — a duration bar or a waterfall stays as drawn.
+   *
+   * Something also has to name the layers — two or more configured `series`, or an ordinal `c` —
+   * or there is one thing per band and stacking it would change nothing.
+   *
+   * Stacking about zero (`stackDiverging`) rather than end to end (`stack`) is what lets a
+   * population pyramid keep its two sides, and costs nothing when every value has the same sign.
+   *
+   * `group` is deliberately not inferred: an `x1` sub-band has to be asked for.
+   */
+  seriesLayout = $derived.by<Exclude<SeriesLayout, 'auto'>>(() => {
+    const layout = this.props.seriesLayout ?? 'auto';
+    if (layout !== 'auto') return layout;
+
+    // Either axis: a mark can draw along the one the chart doesn't call its value axis — a
+    // horizontal `Waffle` reads an interval from `x` while `valueAxis` is still `y`.
+    //
+    // The interval can also be in the data rather than the accessor — `groupStackData` puts a
+    // `[y0, y1]` pair on each row, which the chart then reads with a single `y="values"`.
+    const first = chartDataArray(this.#sourceData)[0];
+    for (const value of [this.props.y, this.props.x]) {
+      if (Array.isArray(value)) return 'overlap';
+      if (value != null && first != null && Array.isArray(accessor(value)(first))) return 'overlap';
+    }
+
+    // There has to be a magnitude to accumulate.  A chart that positions its marks itself — a
+    // beeswarm placing points along one axis with no accessor on the other — has nothing to
+    // stack, and inferring one would give that axis a domain, and so ticks and gridlines.
+    const configured = this.props.series ?? [];
+    const valueOf = this.valueAxis === 'y' ? this.props.y : this.props.x;
+    if (valueOf == null && configured.length === 0) return 'overlap';
+
+    // Only layers the chart was *configured* with count.  `SeriesState.series` also holds the
+    // series inferred from registered marks, and two marks drawn for comparison name nothing to
+    // stack — they'd just be scaled to a total neither of them draws.
+    const namesLayers = configured.length > 1 || this.cGroups != null;
+    return namesLayers ? 'stackDiverging' : 'overlap';
+  });
+
+  /**
+   * Whether the chart is stacked — the layout resolved to a stack *and* some mark draws it.
+   *
+   * An inferred layout leaves lines, points and hand-grouped marks reading raw values, so a
+   * chart can resolve to a stack that nothing on it draws.  Ask this when positioning against
+   * the stack — the value domain, a `Highlight`, an annotation.  `series.stackLayout` is the
+   * narrower question of how the stack accumulates, which a mark asks about itself.
+   */
+  isStacked = $derived.by(() => {
+    if (this.seriesState.stackLayout == null) return false;
+    const marks = this._markInfos;
+    // A stack that was asked for stands before its marks mount.  An inferred one has to be earned
+    // by a mark that draws it — otherwise a chart of lines, which registers nothing that stacks,
+    // is scaled to a total nothing on it shows.
+    if (marks.length === 0) return !this.seriesLayoutAuto;
+    return marks.some(({ info }) => this.#drawsStack(info));
+  });
+
+  /**
+   * The rest of a mark's own stacking guard, from what it registered: it draws the stack only if
+   * it also names a layer — a series key, or the row itself when the categories live in the data
+   * — and isn't a mark that brought its own rows to an inferred stack.
+   */
+  #drawsStack(info: MarkInfo) {
+    return (
+      !!info.stacks &&
+      (info.seriesKey != null || this.seriesState.stacksByCategory) &&
+      !(this.seriesLayoutAuto && info.data != null)
+    );
+  }
+
+  /** Whether the resolved `seriesLayout` was inferred rather than asked for */
+  seriesLayoutAuto = $derived((this.props.seriesLayout ?? 'auto') === 'auto');
+
+  /**
+   * The stacked accessors a mark should draw with, or `null` to draw its raw values.
+   *
+   * `stacksImplicitly` is the mark opting in: bars, areas and waffles are layers by nature, while
+   * lines and points are read against a shared baseline and only stack when a chart asks for it.
+   * So an inferred layout recruits the first group and leaves the second alone.
+   *
+   * `ownData` is a mark handed its own rows, already grouped by whoever handed them over — an
+   * inferred layout leaves those alone too.
+   *
+   * A `seriesKey` isn't required when the layers are named by the rows: long data says which
+   * layer it is, so the key has nothing to add.
+   */
+  stackAccessorsFor(options: {
+    seriesKey?: string;
+    ownData?: boolean;
+    stacksImplicitly?: boolean;
+  }) {
+    const { seriesKey, ownData = false, stacksImplicitly = false } = options;
+
+    if (this.series.stackLayout == null) return null;
+    if (this.seriesLayoutAuto && (!stacksImplicitly || ownData)) return null;
+    if (!seriesKey && !this.series.stacksByCategory) return null;
+
+    return this.series.getStackAccessors(seriesKey);
+  }
+
+  /**
+   * A value re-read against the stack — the top of `seriesKey`'s segment at `keyValue`.
+   *
+   * An annotation naming a series carries that series' own value, which is only where it's drawn
+   * when nothing stacks.  Returns the value unchanged when no series is named, when the chart
+   * isn't stacked, or when the stack holds nothing at that category — a facet panel or sub-band,
+   * where the category alone can't say which stack is meant.
+   */
+  stackedValue(seriesKey: string | undefined, keyValue: any, value: any) {
+    if (seriesKey == null || !this.isStacked) return value;
+    return this.series.getStackValueAt(seriesKey, keyValue)?.[1] ?? value;
+  }
+
+  /**
+   * The row's key on the `c` channel — its legend swatch — or `null` when the chart's `series`
+   * name the legend's items instead.  The category beside `cGet`'s color.
+   *
+   * `c` doubles as the series channel when nothing else divides the data — what colors the marks
+   * groups them.  Marks fade and the legend hides against this the way they do against a series
+   * key, so a legend backed by an ordinal `c` scale acts on what it names — as `PieChart` already
+   * does with its slices.
+   *
+   * Distinct from `z`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
+   * (`z="id"` with `c="group"`), and it's `c` the legend names.
+   */
+  cKey = $derived.by<(d: any) => any>(() => (this.cGroups ? (d: any) => this.c(d) : () => null));
+
+  data = $derived.by(() => {
+    const data = this.#sourceData;
+    // Rows of a `c` category the legend has hidden.  Dropped here rather than at the marks so the
+    // scales follow too — the sub-band the category held is released, and the bars left widen
+    // into it, the way hiding a series does.
+    const selected = this.seriesState?.selectedKeys;
+    if (!this.cGroups || !selected || selected.isEmpty() || !Array.isArray(data)) {
+      return data;
+    }
+    return data.filter((d: any) => selected.isSelected(this.c(d)));
+  });
+
   flatData = $derived.by(() => {
     const base = (this.props.flatData ?? this.data) as TData[];
 
-    // Include data from marks that have their own data but aren't already in a series.
     // Include data from marks that have their own data but aren't already in a series
     const extra: TData[] = [];
+    // Appending the same array twice can't widen a domain, and a mark repeated across facet
+    // panels registers its data once per panel — which grew `flatData` (and every domain
+    // recalculation over it) by a factor of the panel count.
+    const seen = new Set<unknown>();
     for (const { info } of this._markInfos) {
-      if (!info.data) continue;
+      if (!info.data || seen.has(info.data)) continue;
+      seen.add(info.data);
       // If this mark's exact data array is already included via a series, skip it.
       // Use reference equality (===) so marks sharing the same accessor key but
       // different data arrays (e.g. two Circle marks with separate datasets) are
@@ -519,7 +819,11 @@ export class ChartState<
     if (this.props.bandPadding != null && this.valueAxis === 'y') {
       return scaleBand().padding(this.props.bandPadding);
     }
-    return autoScale(this.#brushXDomain() ?? this.props.xDomain, this.flatData, this.x);
+    return autoScale(
+      this.brushXDomain ?? this.props.xDomain ?? this.groupXDomain,
+      this.flatData,
+      this.x
+    );
   });
 
   _yScaleProp = $derived.by(() => {
@@ -530,7 +834,11 @@ export class ChartState<
     if (this.props.bandPadding != null && this.valueAxis === 'x') {
       return scaleBand().padding(this.props.bandPadding);
     }
-    return autoScale(this.#brushYDomain() ?? this.props.yDomain, this.flatData, this.y);
+    return autoScale(
+      this.brushYDomain ?? this.props.yDomain ?? this.groupYDomain,
+      this.flatData,
+      this.y
+    );
   });
 
   _zScaleProp = $derived.by(() => {
@@ -551,12 +859,12 @@ export class ChartState<
   /** Transform-aware range for band scales in domain mode (D3 range-rescaling pattern) */
   private _xScaleRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'x' || this.#transform.axis === 'both') &&
       isScaleBand(this._xScaleProp) &&
       this.width > 0
     ) {
-      const { scale, translate } = this.transformState;
+      const { scale, translate } = this.#transform;
       return [translate.x, translate.x + this.width * scale];
     }
     return this.xRangeProp;
@@ -564,12 +872,12 @@ export class ChartState<
 
   private _yScaleRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'y' || this.#transform.axis === 'both') &&
       isScaleBand(this._yScaleProp) &&
       this.height > 0
     ) {
-      const { scale, translate } = this.transformState;
+      const { scale, translate } = this.#transform;
       return [translate.y, translate.y + this.height * scale];
     }
     return this.yRangeProp;
@@ -611,6 +919,25 @@ export class ChartState<
   c = $derived(accessor(this.props.c));
   x1 = $derived(makeAccessor(this.props.x1));
   y1 = $derived(makeAccessor(this.props.y1));
+
+  /**
+   * Partitions rows into separate stacks, or `undefined` when there's a single stack per category.
+   *
+   * A stack belongs to whatever subdivides the plot around it: the facet panel it's drawn in, and
+   * the `x1` / `y1` sub-band it's positioned within (grouped *and* stacked bars).  Without this
+   * the stacks of every panel and group collide, since they share a `keyBy` value.
+   */
+  #stackGroupBy = $derived.by<((d: any) => string) | undefined>(() => {
+    const facet = this.facetState.enabled ? this.facetState : null;
+    const subBand = this.props.x1 != null ? this.x1 : this.props.y1 != null ? this.y1 : null;
+    if (!facet && !subBand) return undefined;
+
+    return (d: any) =>
+      JSON.stringify([
+        facet ? facetKey(facet.x?.(d), facet.y?.(d)) : null,
+        subBand ? (subBand(d) ?? null) : null,
+      ]);
+  });
 
   filteredExtents = $derived(filterObject($state.snapshot(this.props.extents ?? {})));
 
@@ -679,8 +1006,37 @@ export class ChartState<
     };
   });
 
-  width = $derived(this.box.width);
-  height = $derived(this.box.height);
+  /**
+   * Panel layout when `fx` / `fy` partition the chart.  `width` / `height` below are one panel's
+   * box rather than the whole plot area, so every scale, mark, and axis computes against a single
+   * panel and the enclosing `<Facet>` translate places it.
+   */
+  facetState!: FacetState;
+
+  get facet() {
+    return this.facetState;
+  }
+
+  /**
+   * Whether the facet panel is the band the tooltip resolves to — `facet` mode, asked for.
+   *
+   * A band scale inside a panel groups the same way `x1` / `y1` do inside a band, so it can be
+   * read either way: `band` resolves to a bar, and `facet` to the panel around it — the highlight
+   * marking the whole panel and the tooltip listing its rows, which is what a group of a few bars
+   * wants.  Asked for rather than inferred from the presence of `fx`, so that faceting a chart
+   * doesn't quietly change what its tooltip points at.
+   *
+   * Configured series rule it back out: each row then carries the whole set rather than one
+   * sub-band's share of it, so a band already *is* a row, and one rect over the panel would
+   * resolve every hover in it to the panel's first row.
+   */
+  facetBand = $derived.by(
+    () =>
+      this.facetState.enabled && this.tooltip.mode === 'facet' && this.seriesState.isDefaultSeries
+  );
+
+  width = $derived(this.facetState.width);
+  height = $derived(this.facetState.height);
 
   extents = $derived.by((): Extents => {
     const scaleLookup: Record<string, ScaleEntry> = {
@@ -808,10 +1164,13 @@ export class ChartState<
   #ySeriesValues: any[] = $derived(this.#getAxisSeriesValues('y'));
 
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
-    const domain =
-      axis === 'x'
-        ? (this.#brushXDomain() ?? this.props.xDomain)
-        : (this.#brushYDomain() ?? this.props.yDomain);
+    // `null` is a meaningful value for these props — "take the extent from the data, without a
+    // baseline" — so it has to survive the fallback to a chart group's shared domain, which `??`
+    // would step over the same way it steps over `undefined`.
+    const brushDomain = axis === 'x' ? this.brushXDomain : this.brushYDomain;
+    const propDomain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
+    const groupDomain = axis === 'x' ? this.groupXDomain : this.groupYDomain;
+    const domain = brushDomain ?? (propDomain !== undefined ? propDomain : groupDomain);
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
     const explicitBaseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
     // Use explicit baseline if provided (null means "no baseline"), otherwise auto-derive
@@ -823,11 +1182,31 @@ export class ChartState<
 
     // Series-specific domain calculation (only applies if the value axis)
     if (this.valueAxis === axis && this.seriesState) {
-      // For stacked series, collect all y0/y1 values for domain calculation
-      if (this.seriesState.isStacked) {
+      // For stacked series, collect all y0/y1 values for domain calculation.  Only when some
+      // mark actually draws the stack — a chart of marks that read the raw accessor (two
+      // `Spline`s compared against each other, say) would otherwise be scaled to totals nothing
+      // on it draws.  No registered marks at all means the chart hasn't been composed by hand,
+      // so the stack stands.
+      const marks = this._markInfos;
+
+      if (this.isStacked) {
         // Collect in a single pass — see `getStackedValues`, which hoists the
         // `keyBy` accessor and stack derived reads out of the per-row loop.
-        return extent(this.seriesState.getStackedValues(chartDataArray(this.data)));
+        const stacked = this.seriesState.getStackedValues(chartDataArray(this.data));
+
+        // Marks that sit beside the stack rather than in it — a target line over stacked bars —
+        // still have to fit, so their values are pooled with the stack's rather than replaced.
+        const beside: any[] = [];
+        for (const { info } of marks) {
+          if (this.#drawsStack(info)) continue;
+          const markAccessor = axis === 'y' ? info.y : info.x;
+          if (!markAccessor) continue;
+          const rows = info.data ?? chartDataArray(this.data);
+          beside.push(...rows.flatMap(accessor(markAccessor)));
+        }
+
+        const values = beside.length ? [...stacked, ...beside].filter((v) => v != null) : stacked;
+        if (values.length > 0) return extent(values);
       }
 
       // For non-default series, calculate domain from all visible series values
@@ -894,38 +1273,88 @@ export class ChartState<
   _baseXDomain = $derived(calcDomain('x', this.extents, this._xDomain));
   _baseYDomain = $derived(calcDomain('y', this.extents, this._yDomain));
 
-  /** Target domain — narrowed by transform when mode is 'domain', but not yet animated */
-  _rawXDomain = $derived.by(() => {
-    if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
-      this.width > 0
-    ) {
-      return this._computeTransformDomain(
-        this._baseXDomain,
-        this.transformState.translate.x,
-        this.transformState.scale,
-        this.width
-      );
-    }
-    return this._baseXDomain;
+  /**
+   * Where the transform starts, for a chart that opens zoomed — `transform.initialDomain`, or a
+   * `zoomToBrush()` that arrived before `TransformContext` had loaded.
+   *
+   * `TransformContext` takes this as its initial scale/translate, so the chart it mounts into is
+   * already where it should be.
+   */
+  _initialTransform = $derived.by(() => {
+    const zoom =
+      this.#initialZoom ??
+      (this.props.transform?.initialDomain
+        ? {
+            brush: {
+              x: this.props.transform.initialDomain.x ?? [null, null],
+              y: this.props.transform.initialDomain.y ?? [null, null],
+            },
+            axis: this.props.transform.axis ?? 'x',
+          }
+        : undefined);
+    if (!zoom) return undefined;
+
+    return transformForBrush(zoom.brush, zoom.axis, {
+      xDomain: this._baseXDomain,
+      yDomain: this._baseYDomain,
+      width: this.width,
+      height: this.height,
+    });
   });
 
-  _rawYDomain = $derived.by(() => {
-    if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
-      this.height > 0
-    ) {
-      return this._computeTransformDomain(
-        this._baseYDomain,
-        this.transformState.translate.y,
-        this.transformState.scale,
-        this.height
-      );
-    }
-    return this._baseYDomain;
+  /**
+   * The live transform, or the initial one standing in while `TransformContext` loads — that
+   * import is async, so a chart opening zoomed would otherwise paint the full domain first.
+   */
+  #transform = $derived.by(() => {
+    if (this.transformState) return this.transformState;
+
+    const props = this.props.transform;
+    const initial = this._initialTransform;
+    if (!props || !initial) return undefined;
+
+    return {
+      mode: props.mode ?? 'none',
+      axis: props.axis ?? 'both',
+      scale: initial.scale,
+      translate: initial.translate,
+    };
   });
+
+  /**
+   * The domain a `mode: 'domain'` transform narrows an axis to, at one of its two positions —
+   * where it sits now, and where it is heading.  Any other mode leaves the axis alone.
+   *
+   * The two only differ while the transform itself animates (`transform.motion`).  Drawing follows
+   * `'current'`, so the chart moves with the animation; anything sharing the domain follows
+   * `'target'`, or it would publish every frame the animation passes through and have whoever
+   * listens re-aim at each one.
+   */
+  #transformDomain(axis: 'x' | 'y', at: 'current' | 'target') {
+    const base = axis === 'x' ? this._baseXDomain : this._baseYDomain;
+    const size = axis === 'x' ? this.width : this.height;
+
+    const transform = this.#transform;
+    if (transform?.mode !== 'domain') return base;
+    if (transform.axis !== axis && transform.axis !== 'both') return base;
+    if (!(size > 0)) return base;
+
+    // `targetScale` / `targetTranslate` live on `TransformState`; the fallback has neither, and
+    // isn't animating either, so its current position is also where it is heading
+    const target = at === 'target' && this.transformState ? this.transformState : null;
+    const scale = target ? target.targetScale : transform.scale;
+    const translate = target ? target.targetTranslate : transform.translate;
+
+    return this._computeTransformDomain(base, translate[axis], scale, size);
+  }
+
+  /** What `xDomain` / `yDomain` animate toward */
+  _targetXDomain = $derived(this.#transformDomain('x', 'current'));
+  _targetYDomain = $derived(this.#transformDomain('y', 'current'));
+
+  /** Where the transform is heading — what a chart shares with its group */
+  _transformTargetXDomain = $derived(this.#transformDomain('x', 'target'));
+  _transformTargetYDomain = $derived(this.#transformDomain('y', 'target'));
 
   /** Effective domain — animated via motion if configured */
   xDomain = $derived.by(() => {
@@ -936,7 +1365,7 @@ export class ChartState<
       }
       return animated;
     }
-    return this._rawXDomain;
+    return this._targetXDomain;
   });
 
   yDomain = $derived.by(() => {
@@ -947,53 +1376,80 @@ export class ChartState<
       }
       return animated;
     }
-    return this._rawYDomain;
+    return this._targetYDomain;
   });
 
   zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
+  /**
+   * The domain of an `x1` / `y1` sub-band taken from the data.
+   *
+   * Sub-bands are ordinal, so each distinct value needs a place of its own — an extent would keep
+   * only the first and last, leaving every sub-band between them without a position.  Numeric
+   * values keep the extent, since those can be laid out on a continuous scale.
+   */
+  #subBandDomain(value: (d: any) => any) {
+    const values = chartDataArray(this.data).map(value);
+    if (values.length > 0 && typeof values[0] === 'number') {
+      return extent(values) as [number, number];
+    }
+    return unique(values);
+  }
+
+  /**
+   * An explicit `x1Domain` / `y1Domain`, with the sub-bands of hidden series dropped.
+   *
+   * A sub-band belongs to a series only when it *names* one: `seriesLayout="group"` puts series
+   * keys in this domain, while `x1` / `y1` as a data accessor puts data values in it (and the
+   * implicit `default` series names nothing at all).  Filtering values that were never series
+   * keys empties the domain, leaving the sub-band scale with nothing to position bars against.
+   */
+  #visibleSubBandDomain(domain: DomainType) {
+    if (!Array.isArray(domain)) return domain;
+
+    const seriesKeys = new Set(this.seriesState.series.map((s) => s.key));
+    if (seriesKeys.size === 0) return domain;
+
+    const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+    return domain.filter((key: any) => !seriesKeys.has(key) || visibleKeys.has(key));
+  }
+
   x1Domain = $derived.by(() => {
     if (this.props.x1Domain) {
-      // Only filter by visible series when series are configured — otherwise the
-      // full x1Domain is used as-is (composable charts without series).
-      if (this.seriesState.series.length > 0) {
-        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-        return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
-      }
-      return this.props.x1Domain;
+      return this.#visibleSubBandDomain(this.props.x1Domain);
+    }
+    // `x1` names the sub-band dimension in the data; series keys only divide the band when
+    // nothing else does
+    if (this.x1) {
+      return this.#subBandDomain(this.x1);
     }
     // Auto-derive for grouped series when x is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'y') {
       return this.seriesState.visibleSeries.map((s) => s.key);
-    }
-    if (this.x1) {
-      return extent(chartDataArray(this.data), this.x1);
     }
     return undefined;
   });
   y1Domain = $derived.by(() => {
     if (this.props.y1Domain) {
-      // Only filter by visible series when series are configured — otherwise the
-      // full y1Domain is used as-is (composable charts without series).
-      if (this.seriesState.series.length > 0) {
-        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-        return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
-      }
-      return this.props.y1Domain;
+      return this.#visibleSubBandDomain(this.props.y1Domain);
+    }
+    // `y1` names the sub-band dimension in the data; series keys only divide the band when
+    // nothing else does
+    if (this.y1) {
+      return this.#subBandDomain(this.y1);
     }
     // Auto-derive for grouped series when y is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'x') {
       return this.seriesState.visibleSeries.map((s) => s.key);
-    }
-    if (this.y1) {
-      return extent(chartDataArray(this.data), this.y1);
     }
     return undefined;
   });
   cDomain = $derived.by(() => {
     if (this.props.cDomain) return this.props.cDomain;
-    const values = chartDataArray(this.data).map(this.c);
+    // Read from the unfiltered rows: a category the legend hid keeps its place in the domain, or
+    // the ordinal range would shift under the ones left and recolor them
+    const values = chartDataArray(this.#sourceData).map(this.c);
     // Use extent for numeric values (continuous scales), unique for categorical (ordinal scales)
     if (values.length > 0 && typeof values[0] === 'number') {
       return extent(values) as [number, number];
@@ -1114,7 +1570,7 @@ export class ChartState<
       );
     }
     // Auto-derive for grouped series when x is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'y' && this.x1Domain) {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'y' && this.x1Domain) {
       const groupPadding = this.props.groupPadding ?? 0;
       return createScale(
         scaleBand().padding(groupPadding),
@@ -1139,7 +1595,7 @@ export class ChartState<
       );
     }
     // Auto-derive for grouped series when y is the category axis
-    if (this.props.seriesLayout === 'group' && this.valueAxis === 'x' && this.y1Domain) {
+    if (this.seriesLayout === 'group' && this.valueAxis === 'x' && this.y1Domain) {
       const groupPadding = this.props.groupPadding ?? 0;
       return createScale(
         scaleBand().padding(groupPadding),
@@ -1153,14 +1609,22 @@ export class ChartState<
 
   y1Get = $derived(this.y1 ? createGetter(this.y1, this.y1Scale) : null);
 
-  cScale = $derived(
-    this.props.cScale || this.props.cRange
-      ? createScale(this.props.cScale ?? scaleOrdinal(), this.cDomain, this.props.cRange, {
-          width: this.width,
-          height: this.height,
-        })
-      : null
-  );
+  /**
+   * Color scale marks resolve a categorical `fill` / `stroke` through: `cScale` / `cRange` when
+   * configured, else the colors declared on `series`.
+   *
+   * Marks that instead treat this as a continuous ramp (`Contour`, `Density`, `Raster`) copy and
+   * re-domain it — they skip an ordinal scale, since the series fallback means nothing re-domained.
+   */
+  cScale = $derived.by<AnyScale | null>(() => {
+    if (this.props.cScale || this.props.cRange) {
+      return createScale(this.props.cScale ?? scaleOrdinal(), this.cDomain, this.props.cRange, {
+        width: this.width,
+        height: this.height,
+      });
+    }
+    return (this.seriesState?.cScale as AnyScale | null) ?? null;
+  });
 
   cGet = $derived((d: any) => this.cScale?.(this.c(d)));
 
@@ -1174,8 +1638,8 @@ export class ChartState<
    *  so we return the base scale's range instead. */
   xRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'x' || this.#transform.axis === 'both') &&
       isScaleBand(this._xScaleProp)
     ) {
       return getRange(this.baseXScale);
@@ -1184,8 +1648,8 @@ export class ChartState<
   });
   yRange = $derived.by(() => {
     if (
-      this.transformState?.mode === 'domain' &&
-      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      this.#transform?.mode === 'domain' &&
+      (this.#transform.axis === 'y' || this.#transform.axis === 'both') &&
       isScaleBand(this._yScaleProp)
     ) {
       return getRange(this.baseYScale);
@@ -1292,6 +1756,11 @@ export class ChartState<
     hide: () => {},
   };
 
+  /**
+   * Stands in for `TransformState` until `TransformContext` has loaded, so a chart driven from the
+   * outside doesn't have to wait for it.  Carries every method the transform documents — one that
+   * is missing throws rather than doing nothing, which is the opposite of the point.
+   */
   static readonly #fallbackTransform = {
     mode: 'none' as const,
     scale: 1,
@@ -1300,18 +1769,28 @@ export class ChartState<
     dragging: false,
     setScale: () => {},
     setTranslate: () => {},
+    setScrollMode: () => {},
+    reset: () => {},
+    zoomIn: () => {},
+    zoomOut: () => {},
+    zoomTo: () => {},
+    scaleTo: () => {},
+    translateCenter: () => {},
   };
 
   static readonly #fallbackSeries = {
     series: [],
     visibleSeries: [],
     highlightKey: null,
+    highlightSource: null,
+    setHighlight: () => {},
     isVisible: () => true,
     isHighlighted: () => false,
     isDefaultSeries: true,
     allSeriesData: [],
     allSeriesColors: [],
-    selectedKeys: { isEmpty: () => true, isSelected: () => false },
+    cScale: null,
+    selectedKeys: { current: [], isEmpty: () => true, isSelected: () => false },
   };
 
   static readonly #fallbackBrush = {
@@ -1324,6 +1803,8 @@ export class ChartState<
     reset: () => {},
     selectAll: () => {},
     move: () => {},
+    // No selection yet, so nothing is excluded — matches an inactive brush
+    contains: () => true,
   };
 
   // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).
@@ -1344,68 +1825,38 @@ export class ChartState<
   }
 
   /**
-   * Convert a brush selection to transform scale/translate, zooming the chart to the brushed region.
+   * Zoom the chart to a brushed region, converting the selection to transform scale/translate.
    * Used by integrated brush mode when `transform.mode === 'domain'`.
    */
   zoomToBrush(brush: { x: BrushDomainType; y: BrushDomainType }, axis: 'x' | 'y' | 'both' = 'x') {
-    const brushX = brush.x;
-    const brushY = brush.y;
-
-    if ((axis === 'x' || axis === 'both') && brushX[0] != null && brushX[1] != null) {
-      const baseDomainX = this._baseXDomain;
-
-      if (typeof baseDomainX[0] === 'string') {
-        // Categorical: compute scale/translate from domain indices
-        const totalCount = baseDomainX.length;
-        const startIdx = (baseDomainX as unknown as string[]).indexOf(brushX[0] as string);
-        const endIdx = (baseDomainX as unknown as string[]).indexOf(brushX[1] as string) + 1;
-        const selectedCount = endIdx - startIdx;
-
-        if (selectedCount > 0 && totalCount > 0) {
-          const newScale = totalCount / selectedCount;
-          const newTranslateX = -(startIdx / totalCount) * this.width * newScale;
-
-          let newTranslateY = 0;
-          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
-            const baseDomainY = this._baseYDomain;
-            if (typeof baseDomainY[0] === 'string') {
-              const yTotal = baseDomainY.length;
-              const yStart = (baseDomainY as unknown as string[]).indexOf(brushY[0] as string);
-              const yEnd = (baseDomainY as unknown as string[]).indexOf(brushY[1] as string) + 1;
-              const ySelected = yEnd - yStart;
-              if (ySelected > 0) {
-                newTranslateY = -(yStart / yTotal) * this.height * newScale;
-              }
-            }
-          }
-
-          this.transform.setScale(newScale);
-          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
-        }
-      } else {
-        // Continuous: existing numeric logic
-        const baseMinX = +baseDomainX[0];
-        const baseRangeX = +baseDomainX[1] - baseMinX;
-        const brushMinX = +brushX[0];
-        const brushRangeX = +brushX[1] - brushMinX;
-
-        if (brushRangeX > 0 && baseRangeX > 0) {
-          const newScale = baseRangeX / brushRangeX;
-          const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
-
-          let newTranslateY = 0;
-          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
-            const baseMinY = +this._baseYDomain[0];
-            const baseRangeY = +this._baseYDomain[1] - baseMinY;
-            const brushMinY = +brushY[0];
-            newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
-          }
-
-          this.transform.setScale(newScale);
-          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
-        }
-      }
+    // `TransformContext` is imported lazily, so a zoom requested as the chart mounts (restoring a
+    // saved range, say) has nothing to drive yet.  Hold it as the initial transform instead, which
+    // the domain already renders with and `TransformContext` adopts when it arrives.
+    if (!this.transformState) {
+      this.#initialZoom = { brush, axis };
+      return;
     }
+
+    const transform = transformForBrush(brush, axis, {
+      xDomain: this._baseXDomain,
+      yDomain: this._baseYDomain,
+      width: this.width,
+      height: this.height,
+    });
+    if (!transform) return;
+
+    this.transform.setScale(transform.scale);
+
+    // `setScale` clamps to `scaleExtent`, and the translate was computed for the scale we asked
+    // for — it has to follow the one we got.  Both are proportional to the scale for a given left
+    // edge, so a translate left over from a larger scale pushes the view past where it belongs.
+    const applied = this.transform.targetScale ?? transform.scale;
+    const ratio = transform.scale === 0 ? 1 : applied / transform.scale;
+
+    this.transform.setTranslate({
+      x: transform.translate.x * ratio,
+      y: transform.translate.y * ratio,
+    });
   }
 
   get config() {

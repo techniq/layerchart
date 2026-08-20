@@ -61,7 +61,6 @@
 				}
 			}
 		]}
-		seriesLayout="stack"
 		padding={defaultChartPadding({ top: 20, bottom: 30, right: 32, left: 32 })}
 		height={300}
 	>

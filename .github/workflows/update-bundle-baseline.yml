@@ -3,7 +3,7 @@ name: Update Bundle Baseline
 on:
   push:
     branches:
-      - next
+      - main
     paths:
       - packages/layerchart/**
       - bundle-analyzer/**

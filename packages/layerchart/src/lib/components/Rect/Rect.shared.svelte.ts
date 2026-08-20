@@ -5,7 +5,6 @@ import type { SVGAttributes } from 'svelte/elements';
 import type { CommonEvents, Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import {
   resolveCorners,
   cornersUniform,
@@ -22,6 +21,7 @@ import {
   type MotionOptions,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -129,11 +129,12 @@ export type RectPropsWithoutHTML = {
   key?: (d: any, index: number) => any;
 
   /**
-   * Underlying `<rect>` tag when using <Svg>. Useful for bindings (pixel mode only).
+   * Underlying `<rect>` (or `<div>` in an html layer) tag. Useful for bindings (pixel mode only).
+   * Never set in a canvas layer, which draws the rect rather than creating an element.
    *
    * @bindable
    */
-  ref?: SVGRectElement;
+  ref?: SVGRectElement | HTMLDivElement;
 
   /** Motion configuration (pixel mode only). */
   motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
@@ -192,6 +193,7 @@ export class RectState {
 
   // Contexts
   chartCtx: ChartState = getChartContext();
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   // Data mode detection
@@ -204,9 +206,7 @@ export class RectState {
   );
 
   // Data resolution
-  #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];

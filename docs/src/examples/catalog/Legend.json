@@ -242,6 +242,20 @@
   ],
   "usage": [
     {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 55,
+      "line": "<Legend placement=\"top-right\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 74,
+      "line": "<Legend placement=\"top-right\" />"
+    },
+    {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
@@ -385,7 +399,7 @@
       "example": "ordinal",
       "component": "Legend",
       "path": "/docs/components/Legend/ordinal",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<Legend"
     },
     {
@@ -557,26 +571,40 @@
       "line": "<Legend"
     },
     {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 57,
+      "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 42,
+      "line": "<Legend placement=\"bottom\" />"
+    },
+    {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:15.193Z"
+  "updatedAt": "2026-08-20T07:29:18.939Z"
 }

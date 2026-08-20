@@ -34,7 +34,6 @@
 			color: 'var(--color-grapes)'
 		}
 	]}
-	seriesLayout="stack"
 	props={{
 		xAxis: { format: 'none' },
 		yAxis: { format: 'metric' },

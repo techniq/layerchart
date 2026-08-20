@@ -96,32 +96,32 @@
         },
         {
           "component": "Legend",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
         },
         {
           "component": "Waffle",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<Waffle seriesKey={s.key} unit={1} round tooltip>"
         },
         {
           "component": "Svg",
-          "lineNumber": 48,
+          "lineNumber": 47,
           "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
         },
         {
           "component": "Path",
-          "lineNumber": 49,
+          "lineNumber": 48,
           "line": "<path"
         },
         {
           "component": "Ellipse",
-          "lineNumber": 53,
+          "lineNumber": 52,
           "line": "<ellipse cx=\"39\" cy=\"16.969\" fill=\"currentColor\" rx=\"2\" ry=\"3\" /><path"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 64,
+          "lineNumber": 63,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -226,17 +226,17 @@
         },
         {
           "component": "Legend",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
         },
         {
           "component": "Waffle",
-          "lineNumber": 47,
+          "lineNumber": 46,
           "line": "<Waffle seriesKey={s.key} unit={10} tooltip />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 52,
+          "lineNumber": 51,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -253,17 +253,17 @@
         },
         {
           "component": "Legend",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
         },
         {
           "component": "Waffle",
-          "lineNumber": 46,
+          "lineNumber": 45,
           "line": "<Waffle seriesKey={s.key} unit={1} round tooltip />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 51,
+          "lineNumber": 50,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -280,12 +280,12 @@
         },
         {
           "component": "Waffle",
-          "lineNumber": 39,
+          "lineNumber": 38,
           "line": "<Waffle seriesKey={s.key} unit={50} tooltip />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -373,7 +373,7 @@
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Waffle seriesKey={s.key} unit={1} round tooltip>"
     },
     {
@@ -408,21 +408,21 @@
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Waffle seriesKey={s.key} unit={10} tooltip />"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Waffle seriesKey={s.key} unit={1} round tooltip />"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 39,
+      "lineNumber": 38,
       "line": "<Waffle seriesKey={s.key} unit={50} tooltip />"
     },
     {
@@ -447,5 +447,5 @@
       "line": "<Waffle fill=\"var(--color-info)\" {unit} {multiple} {round} tooltip />"
     }
   ],
-  "updatedAt": "2026-05-08T16:24:16.409Z"
+  "updatedAt": "2026-08-19T19:59:27.525Z"
 }

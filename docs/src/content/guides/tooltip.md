@@ -45,6 +45,7 @@ The `mode` prop on `tooltipContext` controls how the nearest data point is found
 | `bisect-x`    | Binary search along x-axis (requires sorted data)      | Time series, line/area charts                   |
 | `bisect-y`    | Binary search along y-axis (requires sorted data)      | Horizontal charts                               |
 | `band`        | Full-bandwidth hit targets using transparent paths     | Bar charts, categorical axes                    |
+| `facet`       | The `fx` / `fy` panel as the band, listing its rows    | A few bars grouped into each panel              |
 | `bisect-band` | Bisect + band combined                                 | Bar charts with sorted time axis                |
 | `bounds`      | Hit detection based on data element bounds             | Duration bars, overlapping ranges               |
 | `voronoi`     | Geometric partitioning via Voronoi diagram             | Scatter plots, irregular point layouts          |
@@ -56,7 +57,7 @@ The `mode` prop on `tooltipContext` controls how the nearest data point is found
 ### Choosing a mode
 
 - **Line / area charts** — use `bisect-x` or `quadtree-x`. Both find the closest point along the x-axis. `bisect-x` is simpler; `quadtree-x` works with unsorted data.
-- **Bar charts** — use `band` or `bisect-band`. These create full-width hit targets so the user doesn't need to hover precisely on the bar.
+- **Bar charts** — use `band` or `bisect-band`. These create full-width hit targets so the user doesn't need to hover precisely on the bar. `facet` widens that target again to the whole [panel](/docs/guides/facets), for bars grouped by faceting rather than by an offset within a band.
 - **Scatter plots** — use `voronoi` or `quadtree`. Both find the nearest point in 2D space. `quadtree` is faster for large datasets.
 - **Geographic / radial charts** — use `manual` and trigger from `onpointerenter` / `onpointerleave` on your shapes.
 

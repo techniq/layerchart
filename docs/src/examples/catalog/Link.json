@@ -246,7 +246,7 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 79,
+      "lineNumber": 78,
       "line": "<Link"
     },
     {
@@ -257,5 +257,5 @@
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:02.925Z"
+  "updatedAt": "2026-08-20T07:29:19.050Z"
 }

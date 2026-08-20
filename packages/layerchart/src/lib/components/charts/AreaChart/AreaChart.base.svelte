@@ -23,7 +23,7 @@
     xDomain,
     radial = false,
     series: seriesProp,
-    seriesLayout = 'overlap',
+    seriesLayout = 'auto',
     axis = true,
     brush = false,
     grid = true,

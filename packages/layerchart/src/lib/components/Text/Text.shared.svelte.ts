@@ -4,12 +4,12 @@ import type { SVGAttributes } from 'svelte/elements';
 import type { Without } from '$lib/utils/types.js';
 import type { DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 import { resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { get } from '@layerstack/utils';
 import { format as formatValue, type FormatType, type FormatConfig } from '@layerstack/utils';
 import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -334,6 +334,7 @@ export class TextState {
 
   // Contexts
   chartCtx: ChartState = getChartContext();
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   // Path measurement (only meaningful for SVG layer where the textPath element exists)
@@ -345,9 +346,7 @@ export class TextState {
   );
 
   // Data resolution
-  #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];

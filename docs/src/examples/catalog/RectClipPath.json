@@ -13,14 +13,14 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<RectClipPath"
     },
     {
@@ -150,5 +150,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:03.501Z"
+  "updatedAt": "2026-08-19T19:59:27.055Z"
 }

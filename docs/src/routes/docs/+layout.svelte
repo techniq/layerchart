@@ -33,6 +33,27 @@
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
 	let showSidebar = $state(true);
+
+	const GITHUB_BLOB_URL = 'https://github.com/techniq/layerchart/blob/main/docs';
+
+	/** Source markdown of the current page, if it has one (`null` for pages such as `/docs/releases`) */
+	let editUrl = $derived.by(() => {
+		if (page.data.meta?.hideEditLink) return null;
+
+		// Content collection pages (`/docs/{components,guides,utils}/...` sourced from `src/content`)
+		const collection = page.url.pathname.split('/')[2];
+		const filePath = page.data.metadata?._meta?.filePath;
+		if (filePath && ['components', 'guides', 'utils'].includes(collection)) {
+			return `${GITHUB_BLOB_URL}/src/content/${collection}/${filePath}`;
+		}
+
+		// Standalone markdown pages colocated with their route (e.g. `/docs/getting-started`)
+		if (page.data.markdownPath) {
+			return `${GITHUB_BLOB_URL}${page.data.markdownPath}`;
+		}
+
+		return null;
+	});
 </script>
 
 <div class="absolute top-0 w-screen h-screen background-gradient pointer-events-none"></div>
@@ -200,10 +221,10 @@
 
 		{@render children()}
 
-		{#if !page.data.meta?.hideEditLink}
+		{#if editUrl}
 			<div>
 				<a
-					href="https://github.com/techniq/layerchart/blob/main/docs{page.url.pathname}.md"
+					href={editUrl}
 					class="text-surface-content/50 hover:text-surface-content mb-4 mt-16 inline-flex items-center gap-1 text-sm"
 					target="_blank"
 				>

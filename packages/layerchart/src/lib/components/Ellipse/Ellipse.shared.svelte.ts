@@ -4,9 +4,9 @@ import type { SVGAttributes } from 'svelte/elements';
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -69,15 +69,15 @@ export class EllipseState {
   #props: EllipseProps = $derived(this.#getProps());
 
   chartCtx: ChartState = getChartContext();
+
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   dataMode = $derived(
     hasAnyDataProp(this.#props.cx, this.#props.cy, this.#props.rx, this.#props.ry)
   );
 
-  #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];

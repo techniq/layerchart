@@ -5,7 +5,6 @@ import { get } from '@layerstack/utils';
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp } from '$lib/utils/dataProp.js';
 import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import {
   createMotion,
   createDataMotionMap,
@@ -14,6 +13,7 @@ import {
   type MotionOptions,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -78,6 +78,8 @@ export class ImageState {
   #props: ImageProps = $derived(this.#getProps());
 
   chartCtx: ChartState = getChartContext();
+
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   dataMode = $derived(
@@ -90,9 +92,7 @@ export class ImageState {
     ) || typeof this.#props.href === 'function'
   );
 
-  #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#props.data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
   resolveImage(d: any) {
     const props = this.#props;

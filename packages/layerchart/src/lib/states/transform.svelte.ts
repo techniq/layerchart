@@ -281,6 +281,21 @@ export class TransformState {
     return this.dragging || this.pinching || this._translating.current || this._scaling.current;
   }
 
+  /**
+   * Where the transform is settling, rather than where it is.
+   *
+   * `scale` / `translate` follow the animation, which is what rendering wants — but anything
+   * *sharing* the position wants the value it will come to rest at, or it shares every frame the
+   * animation passes through.
+   */
+  get targetScale() {
+    return this._scale.target;
+  }
+
+  get targetTranslate() {
+    return this._translate.target;
+  }
+
   // Public getters and setters for scale and translate
   get scale() {
     return this._scale.current;

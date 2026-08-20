@@ -2,8 +2,9 @@ import type { Snippet } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 
 import type { ChartState } from '$lib/states/chart.svelte.js';
-import { accessor, chartDataArray, type Accessor } from '$lib/utils/common.js';
+import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { createDimensionGetter, type Insets } from '$lib/utils/rect.svelte.js';
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -23,9 +24,8 @@ export type WafflePropsWithoutHTML = {
   /**
    * Axis the waffle extends along (the value axis).
    *
-   * - `'y'` (default): vertical waffle, like Plot's `waffleY`. Cells stack
-   *   upward from the value=0 baseline.
-   * - `'x'`: horizontal waffle, like Plot's `waffleX`. Cells extend rightward.
+   * - `'x'`: horizontal waffle. Cells extend rightward.
+   * - `'y'`: vertical waffle. Cells stack upward from the value=0 baseline.
    *
    * Falls back to the chart's `valueAxis`.
    */
@@ -149,6 +149,8 @@ export class WaffleState {
 
   ctx: ChartState = getChartContext();
 
+  markData = getMarkData();
+
   constructor(getProps: () => WaffleProps) {
     this.#getProps = getProps;
     this.ctx.registerComponent({
@@ -160,6 +162,7 @@ export class WaffleState {
           data: p.data,
           seriesKey: p.seriesKey,
           color: p.fill as string | undefined,
+          stacks: true,
         };
       },
     });
@@ -194,17 +197,18 @@ export class WaffleState {
       : undefined
   );
 
-  stackAccessors = $derived.by(() => {
-    const seriesKey = this.#props.seriesKey;
-    return seriesKey && this.ctx.series.isStacked
-      ? this.ctx.series.getStackAccessors(seriesKey)
-      : null;
-  });
+  stackAccessors = $derived.by(() =>
+    this.ctx.stackAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+      stacksImplicitly: true,
+    })
+  );
 
   data = $derived.by(() => {
     const dataProp = this.#props.data;
     if (dataProp) return dataProp;
-    return this.series?.data ?? chartDataArray(this.ctx.data);
+    return this.markData(this.series?.data);
   });
 
   x = $derived.by<Accessor>(() => {

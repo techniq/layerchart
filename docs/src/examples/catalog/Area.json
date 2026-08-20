@@ -215,37 +215,37 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 29,
+          "lineNumber": 30,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Rule y={0} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
         },
         {
           "component": "Area",
-          "lineNumber": 33,
+          "lineNumber": 34,
           "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Highlight lines points />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 46,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -445,37 +445,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 27,
+          "lineNumber": 25,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 39,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 42,
+          "lineNumber": 40,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 46,
-          "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+          "lineNumber": 42,
+          "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} />"
         },
         {
           "component": "Labels",
-          "lineNumber": 48,
+          "lineNumber": 43,
           "line": "<Labels format=\"integer\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 49,
+          "lineNumber": 44,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 52,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -981,14 +981,14 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
@@ -1044,8 +1044,8 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 46,
-      "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+      "lineNumber": 42,
+      "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} />"
     },
     {
       "example": "oscilloscope-ridgeline",
@@ -1184,7 +1184,7 @@
       "example": "series-stack-gradient",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-stack-gradient",
-      "lineNumber": 43,
+      "lineNumber": 42,
       "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
     },
     {
@@ -1207,6 +1207,41 @@
       "path": "/docs/components/AreaChart/threshold-gradient",
       "lineNumber": 36,
       "line": "<Area"
+    },
+    {
+      "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 51,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 46,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "basic",
@@ -1324,14 +1359,14 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 39,
+      "lineNumber": 36,
       "line": "<Area"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 65,
+      "lineNumber": 51,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1384,6 +1419,41 @@
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
     {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 76,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 68,
+      "line": "<Area"
+    },
+    {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 47,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 69,
+      "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 78,
+      "line": "<Area"
+    },
+    {
       "example": "pan-zoom-with-overview",
       "component": "LineChart",
       "path": "/docs/components/LineChart/pan-zoom-with-overview",
@@ -1394,7 +1464,7 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 85,
+      "lineNumber": 86,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1552,5 +1622,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:00.714Z"
+  "updatedAt": "2026-08-20T17:01:00.930Z"
 }

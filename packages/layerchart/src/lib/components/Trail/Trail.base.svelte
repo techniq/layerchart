@@ -18,10 +18,12 @@
   import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
   import { accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { computeTrailPath } from '$lib/utils/trail.js';
   import { createMotion, extractTweenConfig } from '$lib/utils/motion.svelte.js';
 
   const ctx = getChartContext();
+  const markData = getMarkData();
 
   let {
     Path,
@@ -70,7 +72,7 @@
   const resolvedR = $derived(r ?? (ctx.config.r as DataProp | undefined));
 
   const trailPath = $derived.by(() => {
-    const resolvedData = data ?? series?.data ?? ctx.data;
+    const resolvedData = markData(data ?? series?.data);
     const definedFn = defined ?? ((d: any) => xAccessor(d) != null && yAccessor(d) != null);
 
     const points = resolvedData
@@ -96,7 +98,7 @@
     if (!extractTweenConfig(motion)) return '';
 
     if (ctx.config.x) {
-      const resolvedData = data ?? series?.data ?? ctx.data;
+      const resolvedData = markData(data ?? series?.data);
       const definedFn = defined ?? ((d: any) => xAccessor(d) != null && yAccessor(d) != null);
       const baseline = Math.min(ctx.yScale(0) ?? ctx.yRange[0], ctx.yRange[0]);
 

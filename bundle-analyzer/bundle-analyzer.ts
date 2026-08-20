@@ -302,6 +302,8 @@ const refs = [
 							"svelte/motion",
 							"svelte/transition",
 							"svelte/compiler",
+							"svelte/events",
+							"svelte/reactivity",
 						],
 						output: {
 							minifyInternalExports: true,

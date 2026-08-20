@@ -18,11 +18,14 @@
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max } from 'd3-array';
 
-  import { accessor as resolveAccessor, chartDataArray } from '$lib/utils/common.js';
+  import { accessor as resolveAccessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getMarkData } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
+  import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
 
   const ctx = getChartContext();
+  const markData = getMarkData();
   const geo = getGeoContext();
 
   let {
@@ -49,7 +52,7 @@
   const yAccessor = $derived(yProp ? resolveAccessor(yProp) : ctx.y);
   const weightAccessor = $derived(weightProp ? resolveAccessor(weightProp) : null);
 
-  const data = $derived(dataProp ?? chartDataArray(ctx.data));
+  const data = $derived(markData(dataProp));
 
   const contours = $derived.by(() => {
     if (!data || data.length === 0 || !ctx.width || !ctx.height) return [];
@@ -91,7 +94,8 @@
   const colorScale = $derived.by(() => {
     if (fill) return null;
     const maxValue = max(contours, (d) => d.value) ?? 1;
-    if (ctx.cScale) {
+    // Not an ordinal scale — `cScale` defaults to a `series` color lookup, which can't ramp
+    if (ctx.cScale && !isScaleOrdinal(ctx.cScale)) {
       return ctx.cScale.copy().domain([0, maxValue]);
     }
     return scaleSequential([0, maxValue], interpolateYlGnBu);

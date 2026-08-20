@@ -25,10 +25,13 @@
   lang="ts"
   generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
 >
+  import { untrack } from 'svelte';
   import { setGeoContext } from '$lib/contexts/geo.js';
   import { getSettings } from '$lib/contexts/settings.js';
   import { setChartContext } from '$lib/contexts/chart.js';
+  import { getChartGroup } from '$lib/contexts/group.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
+  import { connectToChartGroup } from '$lib/states/group.svelte.js';
   import type { ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
@@ -61,6 +64,8 @@
     ondragend,
     ondragstart,
     brush,
+    group,
+    groupOptions,
     motion,
     debug = false,
     clip = false,
@@ -69,20 +74,13 @@
     ...restProps
   } = $derived(props);
 
-  let brushXDomain = $state<BrushDomainType>();
-  let brushYDomain = $state<BrushDomainType>();
-
   // Pass the `$props()` proxy directly — `props.X` reads stay reactive and
   // don't pay the cost of an `{...props}` spread (recursive `ownKeys` across
   // nested rest/spread proxies). Brush selections are supplied as getters so
   // the chart's domain calculation can layer them on top of `props.xDomain`
   // / `props.yDomain` at the read sites.
   const chartState = new ChartState<TData, XScale, YScale>(
-    props as ChartPropsWithoutHTML<TData, XScale, YScale>,
-    {
-      brushXDomain: () => brushXDomain,
-      brushYDomain: () => brushYDomain,
-    }
+    props as ChartPropsWithoutHTML<TData, XScale, YScale>
   );
 
   let ref = $state<HTMLElement>();
@@ -96,6 +94,15 @@
 
   setChartContext(chartState);
   setGeoContext(chartState.geoState);
+
+  // Join a chart group — an explicit `group` prop, else one provided by an ancestor `<ChartGroup>`
+  const inheritedGroup = getChartGroup();
+  const resolvedGroup = $derived(group ?? inheritedGroup);
+  const groupSync = connectToChartGroup(
+    chartState,
+    () => resolvedGroup,
+    () => groupOptions
+  );
 
   const settings = getSettings();
   $effect(() => {
@@ -148,6 +155,31 @@
     const t = fitted.translate();
     return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
   });
+
+  /**
+   * The zoom a chart opens at, read once `TransformContext` is here to take it.
+   *
+   * Deliberately untracked: `_initialTransform` follows the chart's width, and `TransformContext`
+   * resets whenever its initial values change — so tracking it would snap a panned chart back to
+   * where it started on the next resize.  Reading it at this point picks up the laid-out width.
+   */
+  const initialZoom = $derived.by(() => {
+    if (!TransformContext) return undefined;
+    return untrack(() => chartState._initialTransform);
+  });
+
+  /**
+   * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
+   * two are exclusive: one is `mode: 'projection'`, the other `mode: 'domain'`.
+   */
+  const resolvedInitialTransform = $derived(
+    transform?.mode === 'projection'
+      ? {
+          translate: resolvedApply.translate ? initialTransform?.translate : undefined,
+          scale: resolvedApply.scale ? initialTransform?.scale : undefined,
+        }
+      : { translate: initialZoom?.translate, scale: initialZoom?.scale }
+  );
 
   const processTranslate = $derived.by(() => {
     if (resolvedApply.rotation && chartState.geoState?.projection) {
@@ -391,25 +423,42 @@
     if (!brush) return { disabled: true };
     const userProps = typeof brush === 'object' ? brush : {};
 
+    const userOnChange = userProps.onChange;
     const userOnBrushEnd = userProps.onBrushEnd;
     const zoomOnBrush = 'zoomOnBrush' in userProps ? userProps.zoomOnBrush : false;
-    const needsEnhancement = transform?.mode === 'domain' || zoomOnBrush;
-    if (!needsEnhancement) return userProps;
+    // Brush-to-zoom consumes the selection (it becomes the domain) and resets it afterwards.
+    // Sharing must not opt a plain brush into that — it would wipe the selection on release.
+    const zoomsOnBrush = transform?.mode === 'domain' || zoomOnBrush;
+    const sharesBrush = resolvedGroup?.brushOptions != null;
+    if (!zoomsOnBrush && !sharesBrush) return userProps;
 
     return {
       ...userProps,
+      // Publish live so followers track the drag, not just its result
+      onChange: (e: { brush: BrushState }) => {
+        groupSync.publishBrush(e.brush);
+        userOnChange?.(e);
+      },
       onBrushEnd: (e: { brush: BrushState }) => {
+        if (!zoomsOnBrush) {
+          // Nothing to publish — the gesture reports every change through `onChange`, clearing
+          // on a click included
+          userOnBrushEnd?.(e);
+          return;
+        }
+
         if (e.brush.active) {
           if (transform?.mode === 'domain') {
             chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
           } else if (zoomOnBrush) {
             const axis = userProps.axis ?? 'x';
             if (axis === 'x' || axis === 'both') {
-              brushXDomain = expandBandBrushDomain(e.brush.x, chartState._baseXDomain);
+              chartState.brushXDomain = expandBandBrushDomain(e.brush.x, chartState._baseXDomain);
             }
             if (axis === 'y' || axis === 'both') {
-              brushYDomain = expandBandBrushDomain(e.brush.y, chartState._baseYDomain);
+              chartState.brushYDomain = expandBandBrushDomain(e.brush.y, chartState._baseYDomain);
             }
+            groupSync.publishDomain(chartState.brushXDomain, chartState.brushYDomain);
           }
           userOnBrushEnd?.(e);
           e.brush.reset();
@@ -417,11 +466,15 @@
           if (transform?.mode === 'domain') {
             chartState.transform.reset();
           } else if (zoomOnBrush) {
-            brushXDomain = undefined;
-            brushYDomain = undefined;
+            chartState.brushXDomain = undefined;
+            chartState.brushYDomain = undefined;
+            groupSync.publishDomain(undefined, undefined);
           }
           userOnBrushEnd?.(e);
         }
+
+        // the selection was just reset above, so this publishes the cleared state
+        groupSync.publishBrush(e.brush);
       },
     };
   });
@@ -480,8 +533,8 @@
         <TransformContext
           bind:state={chartState.transformState}
           mode={transform.mode ?? 'none'}
-          initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
-          initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
+          initialTranslate={resolvedInitialTransform.translate}
+          initialScale={resolvedInitialTransform.scale}
           {processTranslate}
           {...transformProps}
           scaleExtent={resolvedScaleExtent}

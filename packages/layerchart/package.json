@@ -10,7 +10,7 @@
     "dev": "pnpm package:watch",
     "build": "svelte-package",
     "package": "svelte-package",
-    "package:watch": "svelte-package --watch",
+    "package:watch": "svelte-package --watch --preserve-output",
     "prepublishOnly": "svelte-package",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",

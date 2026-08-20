@@ -11,6 +11,7 @@
 			schemeSpectral[10]
 		)}
 		title="Age (years)"
+		variant="ramp"
 		tickLength={0}
 	/>
 	<Legend

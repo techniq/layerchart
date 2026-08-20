@@ -216,7 +216,7 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Layer>"
     },
     {
@@ -251,7 +251,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 41,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -644,6 +644,20 @@
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "lineNumber": 114,
+      "line": "<Layer>"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 19,
+      "line": "<Layer>"
+    },
+    {
+      "example": "utc-scale",
+      "component": "Axis",
+      "path": "/docs/components/Axis/utc-scale",
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
@@ -1201,6 +1215,55 @@
     },
     {
       "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 47,
+      "line": "<Layer type=\"html\">"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 48,
+      "line": "<Layer>"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 13,
@@ -1294,7 +1357,7 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 82,
+      "lineNumber": 83,
       "line": "<Layer>"
     },
     {
@@ -1308,7 +1371,7 @@
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 39,
+      "lineNumber": 23,
       "line": "<Layer>"
     },
     {
@@ -1343,14 +1406,14 @@
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 34,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 64,
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -1505,6 +1568,62 @@
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 46,
+      "line": "<Layer>"
+    },
+    {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 75,
+      "line": "<Layer>"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 57,
+      "line": "<Layer>"
+    },
+    {
+      "example": "coordinated-views",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/coordinated-views",
+      "lineNumber": 46,
+      "line": "<Layer>"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 45,
+      "line": "<Layer>"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 64,
+      "line": "<Layer>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 59,
+      "line": "<Layer>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-brushes",
+      "lineNumber": 77,
       "line": "<Layer>"
     },
     {
@@ -2085,14 +2204,14 @@
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Layer>"
     },
     {
@@ -2764,7 +2883,7 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 84,
+      "lineNumber": 85,
       "line": "<Layer>"
     },
     {
@@ -3786,7 +3905,7 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 40,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -3807,7 +3926,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Layer center>"
     },
     {
@@ -3822,6 +3941,13 @@
       "component": "Spline",
       "path": "/docs/components/Spline/stroke-grouping",
       "lineNumber": 18,
+      "line": "<Layer>"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 36,
       "line": "<Layer>"
     },
     {
@@ -4129,14 +4255,14 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 77,
+      "lineNumber": 76,
       "line": "<Layer>"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 92,
+      "lineNumber": 91,
       "line": "<Layer type=\"html\">"
     },
     {
@@ -4273,5 +4399,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-06T14:50:46.981Z"
+  "updatedAt": "2026-08-20T17:01:02.069Z"
 }

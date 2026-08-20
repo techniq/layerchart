@@ -5,10 +5,10 @@ import type { SVGAttributes } from 'svelte/elements';
 import type { Without } from '$lib/utils/types.js';
 import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
-import { chartDataArray } from '$lib/utils/common.js';
 import { parseDashArray } from '$lib/utils/path.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -169,6 +169,7 @@ export class CircleState {
   // Contexts (must be read inside a Svelte component setup, which is where
   // CircleState is instantiated).
   chartCtx = getChartContext();
+  markData = getMarkData();
   geo = getGeoContext();
 
   // Reactive derivations
@@ -178,9 +179,7 @@ export class CircleState {
     this.#getProps().data != null ||
       hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r)
   );
-  #resolvedData: any[] = $derived(
-    this.dataMode ? (this.#getProps().data ?? chartDataArray(this.chartCtx.data)) : []
-  );
+  #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#getProps().data) : []);
 
   // Per-key motion tracking (only created when motion is configured)
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;

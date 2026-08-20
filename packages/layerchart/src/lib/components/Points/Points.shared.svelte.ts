@@ -5,6 +5,7 @@ import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -59,6 +60,8 @@ export class PointsState {
   #props: PointsProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+
+  markData = getMarkData();
   geo: GeoState = getGeoContext();
 
   constructor(getProps: () => PointsProps) {
@@ -84,12 +87,12 @@ export class PointsState {
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
 
-  stackAccessors = $derived.by(() => {
-    const seriesKey = this.#props.seriesKey;
-    return seriesKey && this.ctx.series.isStacked
-      ? this.ctx.series.getStackAccessors(seriesKey)
-      : null;
-  });
+  stackAccessors = $derived.by(() =>
+    this.ctx.stackAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+    })
+  );
 
   xAccessor = $derived(
     accessor(
@@ -107,7 +110,7 @@ export class PointsState {
     return accessor((this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ?? this.ctx.y);
   });
 
-  pointsData = $derived(this.#props.data ?? this.series?.data ?? this.ctx.data);
+  pointsData = $derived(this.markData(this.#props.data ?? this.series?.data));
 
   #getOffset(value: any, offset: Offset, scale: AnyScale, subScale?: AnyScale): number {
     const seriesKey = this.#props.seriesKey;

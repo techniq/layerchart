@@ -269,17 +269,24 @@
       "line": "<Circle"
     },
     {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 48,
+      "line": "<Circle"
+    },
+    {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 92,
+      "lineNumber": 89,
       "line": "<Circle"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/selection",
-      "lineNumber": 52,
+      "lineNumber": 32,
       "line": "<Circle"
     },
     {
@@ -295,6 +302,104 @@
       "path": "/docs/components/Chart/data-primitive-data",
       "lineNumber": 28,
       "line": "<Circle cx=\"date\" cy=\"value\" data={humidityData} r={5} fill=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "facet-brush",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush",
+      "lineNumber": 44,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 65,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-brush-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-zoom",
+      "lineNumber": 32,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-color",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-color",
+      "lineNumber": 27,
+      "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
+    },
+    {
+      "example": "facet-composed",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-composed",
+      "lineNumber": 30,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-grid",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-grid",
+      "lineNumber": 25,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 29,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 38,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-spacing",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-spacing",
+      "lineNumber": 35,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-tooltip",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-tooltip",
+      "lineNumber": 31,
+      "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"island\" fillOpacity={0.6} />"
+    },
+    {
+      "example": "facet-two-dimensional",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "lineNumber": 30,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-x",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-x",
+      "lineNumber": 24,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-y",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-y",
+      "lineNumber": 24,
+      "line": "<Circle"
+    },
+    {
+      "example": "minimap",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/minimap",
+      "lineNumber": 70,
+      "line": "<Circle"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -461,14 +566,14 @@
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 50,
+      "lineNumber": 51,
       "line": "<Circle"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Circle"
     },
     {
@@ -1102,5 +1207,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:32.076Z"
+  "updatedAt": "2026-08-20T12:48:38.692Z"
 }

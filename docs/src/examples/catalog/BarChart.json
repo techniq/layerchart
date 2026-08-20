@@ -488,6 +488,18 @@
       ]
     },
     {
+      "name": "group-long-data",
+      "title": "group long data",
+      "path": "/docs/components/BarChart/group-long-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 13,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "group-series",
       "title": "group series",
       "path": "/docs/components/BarChart/group-series",
@@ -543,6 +555,30 @@
         {
           "component": "BarChart",
           "lineNumber": 11,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "group-stack-series",
+      "title": "group stack series",
+      "path": "/docs/components/BarChart/group-stack-series",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 25,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "group-stack-series-horizontal",
+      "title": "group stack series horizontal",
+      "path": "/docs/components/BarChart/group-stack-series-horizontal",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 21,
           "line": "<BarChart"
         }
       ]
@@ -1408,6 +1444,18 @@
       ]
     },
     {
+      "name": "stack-long-data",
+      "title": "stack long data",
+      "path": "/docs/components/BarChart/stack-long-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 9,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "stack-series",
       "title": "stack series",
       "path": "/docs/components/BarChart/stack-series",
@@ -1814,6 +1862,13 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
     },
     {
+      "example": "group-long-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-long-data",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
       "example": "group-series",
       "component": "BarChart",
       "path": "/docs/components/BarChart/group-series",
@@ -1846,6 +1901,20 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/group-series-series-long-data",
       "lineNumber": 11,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-stack-series",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-stack-series",
+      "lineNumber": 25,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-stack-series-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-stack-series-horizontal",
+      "lineNumber": 21,
       "line": "<BarChart"
     },
     {
@@ -2192,6 +2261,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "stack-long-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/stack-long-data",
+      "lineNumber": 9,
+      "line": "<BarChart"
+    },
+    {
       "example": "stack-series",
       "component": "BarChart",
       "path": "/docs/components/BarChart/stack-series",
@@ -2311,6 +2387,34 @@
       "line": "<BarChart"
     },
     {
+      "example": "facet-annotation",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-annotation",
+      "lineNumber": 24,
+      "line": "<BarChart"
+    },
+    {
+      "example": "facet-bars",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-bars",
+      "lineNumber": 36,
+      "line": "<BarChart"
+    },
+    {
+      "example": "facet-brush-band",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-band",
+      "lineNumber": 37,
+      "line": "<BarChart"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 84,
+      "line": "<BarChart"
+    },
+    {
       "example": "truncate-axis-labels",
       "component": "Text",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -2325,5 +2429,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.157Z"
+  "updatedAt": "2026-08-20T11:19:19.052Z"
 }

@@ -6,6 +6,7 @@ import { geoAlbersUsa } from 'd3-geo';
 import { timeDay } from 'd3-time';
 
 import { ChartState } from './chart.svelte.js';
+import { TooltipState } from './tooltip.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 
@@ -121,6 +122,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         yBaseline: 0,
@@ -142,6 +144,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         yBaseline: 0,
@@ -164,6 +167,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         yBaseline: 0,
@@ -185,6 +189,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         y: 'date',
         xBaseline: 0,
@@ -206,6 +211,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         valueAxis: 'y',
@@ -352,6 +358,7 @@ describe('ChartState mark registration', () => {
     const data: MultiSeriesData[] = [{ date: '2024-01', apples: 10, bananas: 15 }];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       series: [{ key: 'apples' }, { key: 'bananas' }],
@@ -652,6 +659,7 @@ describe('ChartState data vs visibleSeriesData', () => {
     ];
 
     const { state, cleanup } = createChartState<TestData>({
+      seriesLayout: 'overlap',
       x: 'date',
       y: 'value',
       series: [
@@ -804,6 +812,7 @@ describe('ChartState data vs visibleSeriesData', () => {
     const bananasData: TestData[] = [{ date: '2024-01', value: 15 }];
 
     const { state, cleanup } = createChartState<TestData>({
+      seriesLayout: 'overlap',
       data: [],
       x: 'date',
       y: 'value',
@@ -1000,6 +1009,7 @@ describe('ChartState implicit series domain update on visibility toggle', () => 
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1034,6 +1044,7 @@ describe('ChartState metadata-only series', () => {
     ];
 
     const { state, cleanup } = createChartState<CategoryEvent>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1058,6 +1069,7 @@ describe('ChartState metadata-only series', () => {
     ];
 
     const { state, cleanup } = createChartState<CategoryEvent>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1475,6 +1487,7 @@ describe('ChartState yReverse with band scales', () => {
     ];
 
     const { state, cleanup } = createChartState<AgeData>({
+      seriesLayout: 'overlap',
       data,
       y: 'age',
       valueAxis: 'x',
@@ -1535,6 +1548,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1557,6 +1571,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       y: 'date',
       valueAxis: 'x',
@@ -1578,6 +1593,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1599,6 +1615,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1851,7 +1868,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
   });
 });
 
-describe('ChartState x1Domain/y1Domain without series', () => {
+describe('ChartState explicit x1Domain/y1Domain', () => {
   type LongData = { year: number; fruit: string; value: number };
   const longData: LongData[] = [
     { year: 2019, fruit: 'apples', value: 3840 },
@@ -1895,6 +1912,686 @@ describe('ChartState x1Domain/y1Domain without series', () => {
       expect(state.seriesState.series).toHaveLength(0);
       expect(state.y1Domain).toEqual(['apples', 'bananas']);
       expect(state.y1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through explicit x1Domain alongside the implicit `default` series', () => {
+    // `BarChart` always configures a series, so "no series" alone doesn't cover it
+    const { state, cleanup } = createChartState<LongData>({
+      seriesLayout: 'overlap',
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+      series: [{ key: 'default', label: 'value', value: 'value' }],
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.x1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through sub-band values that do not name a series', () => {
+    // `x1` names a data property, so its values are unrelated to the series keys stacked in it
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+      seriesLayout: 'stack',
+      series: [{ key: 'north' }, { key: 'south' }],
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should drop explicit sub-bands that name a hidden series', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+      seriesLayout: 'group',
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.x1Domain).toEqual(['apples']);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState facetBand', () => {
+  type FacetData = { party: string; year: number; percent: number };
+  const facetData: FacetData[] = [
+    { party: 'AfD', year: 2021, percent: 10.3 },
+    { party: 'AfD', year: 2025, percent: 20.8 },
+    { party: 'SPD', year: 2021, percent: 25.7 },
+    { party: 'SPD', year: 2025, percent: 16.4 },
+  ];
+
+  function createFaceted(props: Partial<ChartPropsWithoutHTML<FacetData>>, mode = 'facet') {
+    const created = createChartState<FacetData>({
+      data: facetData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'percent',
+      fx: 'party',
+      ...props,
+    });
+    created.state.tooltipState = new TooltipState(
+      mode as any,
+      () => {},
+      () => {}
+    );
+    flushSync();
+    return created;
+  }
+
+  it('should treat the panel as the band in `facet` mode', () => {
+    const { state, cleanup } = createFaceted({});
+
+    try {
+      expect(state.facetBand).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should leave `band` mode resolving to the bar', () => {
+    // Faceting a chart doesn't change what its tooltip points at — `facet` is asked for
+    const { state, cleanup } = createFaceted({}, 'band');
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band outside band modes', () => {
+    // `quadtree` resolves to one point, so the panel is never what the pointer covers
+    const { state, cleanup } = createFaceted({}, 'quadtree');
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band when series are configured', () => {
+    // Each row carries the whole series set, so a band is already a row
+    const { state, cleanup } = createFaceted({
+      series: [{ key: 'percent', value: 'percent' }],
+    });
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band when the chart is not faceted', () => {
+    const { state, cleanup } = createFaceted({ fx: undefined });
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState transform fallback', () => {
+  it('should answer every documented method before `TransformContext` loads', () => {
+    // `TransformContext` is imported lazily, so a chart driven from the outside reaches these
+    // first — one that is missing throws rather than doing nothing
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 1 }],
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      expect(state.transformState).toBeFalsy();
+
+      const transform = state.transform as any;
+      for (const method of [
+        'reset',
+        'zoomIn',
+        'zoomOut',
+        'zoomTo',
+        'scaleTo',
+        'setScale',
+        'setTranslate',
+        'setScrollMode',
+        'translateCenter',
+      ]) {
+        expect(typeof transform[method], method).toBe('function');
+        expect(() => transform[method](1, { x: 0, y: 0 })).not.toThrow();
+      }
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState zoomToBrush', () => {
+  type DateData = { date: Date; value: number };
+  const data: DateData[] = [
+    { date: new Date(2024, 0, 1), value: 10 },
+    { date: new Date(2024, 0, 31), value: 50 },
+  ];
+  const half = [new Date(2024, 0, 1), new Date(2024, 0, 16)] as any;
+  const brush = { x: half, y: [null, null] as any };
+
+  /** Stands in for the lazily-imported `TransformContext`'s state */
+  function transformStub() {
+    const scales: number[] = [];
+    const translates: { x: number; y: number }[] = [];
+    return {
+      scales,
+      translates,
+      state: {
+        mode: 'domain',
+        axis: 'x',
+        scale: 1,
+        translate: { x: 0, y: 0 },
+        setScale: (v: number) => scales.push(v),
+        setTranslate: (p: any) => translates.push(p),
+      },
+    };
+  }
+
+  it('should apply the zoom when transform state already exists', () => {
+    const { state, cleanup } = createChartState<DateData>({ data, x: 'date', y: 'value' });
+    const stub = transformStub();
+
+    try {
+      state.transformState = stub.state as any;
+      state.zoomToBrush(brush, 'x');
+
+      // Half the domain brushed, so twice the scale
+      expect(stub.scales).toEqual([2]);
+      expect(stub.translates).toHaveLength(1);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should narrow the domain from `transform.initialDomain` before transform state exists', () => {
+    // `TransformContext` is imported lazily, so a chart opening zoomed has to render from this
+    // rather than waiting — otherwise it paints the full domain first
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x', initialDomain: { x: half } },
+    });
+
+    try {
+      expect(state.transformState).toBeFalsy();
+      expect(state._initialTransform?.scale).toBe(2);
+
+      const domain = state.xDomain as Date[];
+      expect(+domain[0]).toBe(+half[0]);
+      expect(+domain[1]).toBe(+half[1]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should leave the domain alone without an initial domain', () => {
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x' },
+    });
+
+    try {
+      expect(state._initialTransform).toBeUndefined();
+
+      const domain = state.xDomain as Date[];
+      expect(+domain[0]).toBe(+data[0].date);
+      expect(+domain[1]).toBe(+data[1].date);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep the range anchored when the scale clamps', () => {
+    // A selection narrower than `scaleExtent` allows can't be reached — but the part of it that
+    // can be shown has to start where the selection does, not somewhere further along
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x', scaleExtent: [1, 4] },
+    });
+    const stub = transformStub();
+
+    try {
+      // Nine days into a 30-day domain, asking for a 3-day window — 10x, past the 4x limit
+      state.transformState = { ...stub.state, targetScale: 4 } as any;
+      state.zoomToBrush(
+        { x: [new Date(2024, 0, 10), new Date(2024, 0, 13)] as any, y: [null, null] as any },
+        'x'
+      );
+
+      expect(stub.scales).toEqual([10]);
+
+      // Translate follows the scale that was applied (4), not the one asked for (10) — otherwise
+      // it carries the view far past the selection
+      const offset = 9 / 30;
+      expect(stub.translates[0].x).toBeCloseTo(-offset * state.width * 4, 6);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should hold a zoom requested before transform state exists as the initial transform', () => {
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      transform: { mode: 'domain', axis: 'x' },
+    });
+
+    try {
+      state.zoomToBrush(brush, 'x');
+      flushSync();
+
+      // `Chart` hands this to `TransformContext` as its initial scale/translate
+      expect(state._initialTransform?.scale).toBe(2);
+
+      const domain = state.xDomain as Date[];
+      expect(+domain[0]).toBe(+half[0]);
+      expect(+domain[1]).toBe(+half[1]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState `c` legend key', () => {
+  type LongData = { year: string; fruit: string; value: number };
+
+  const longData: LongData[] = [
+    { year: '2019', fruit: 'apples', value: 10 },
+    { year: '2019', fruit: 'bananas', value: 50 },
+    { year: '2020', fruit: 'apples', value: 20 },
+    { year: '2020', fruit: 'bananas', value: 80 },
+  ];
+
+  function createCategoryChart(props: Partial<ChartPropsWithoutHTML<LongData>> = {}) {
+    return createChartState<LongData>({
+      seriesLayout: 'overlap',
+      data: longData,
+      x: 'year',
+      y: 'value',
+      x1: 'fruit',
+      c: 'fruit',
+      valueAxis: 'y',
+      series: [{ key: 'default' }],
+      ...props,
+    });
+  }
+
+  it('should key rows by their `c` value when the series are implicit', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      expect(state.cKey(longData[0])).toBe('apples');
+      expect(state.cKey(longData[1])).toBe('bananas');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should key rows by nothing when series name the legend items instead', () => {
+    const { state, cleanup } = createCategoryChart({
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      expect(state.cKey(longData[0])).toBe(null);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should key rows by nothing for a continuous `c`, which the legend draws as a ramp', () => {
+    const { state, cleanup } = createCategoryChart({ c: 'value' });
+
+    try {
+      expect(state.cDomain).toEqual([10, 80]);
+      expect(state.cKey(longData[0])).toBe(null);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should drop the rows of a hidden category and release its sub-band', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      expect(state.data).toHaveLength(4);
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.yDomain).toEqual([10, 80]);
+
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.data).toEqual([longData[0], longData[2]]);
+      // The sub-band bananas held is released, so the bars left widen into it
+      expect(state.x1Domain).toEqual(['apples']);
+      expect(state.yDomain).toEqual([10, 20]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep a hidden category in the color domain, so the rest keep their color', () => {
+    const { state, cleanup } = createCategoryChart({ cRange: ['red', 'yellow'] });
+
+    try {
+      expect(state.cGet(longData[0])).toBe('red');
+
+      state.seriesState.selectedKeys.toggle('bananas');
+      flushSync();
+
+      expect(state.cDomain).toEqual(['apples', 'bananas']);
+      expect(state.cGet(longData[1])).toBe('yellow');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep the implicit series visible while categories are selected', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      // Hiding the one series that draws every category would empty the chart
+      expect(state.seriesState.visibleSeries.map((s) => s.key)).toEqual(['default']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should read a highlight on the implicit series as no highlight', () => {
+    const { state, cleanup } = createCategoryChart();
+
+    try {
+      state.seriesState.highlightKey = 'default';
+      flushSync();
+
+      // `default` names nothing to tell apart — every mark would fade against it
+      expect(state.seriesState.highlightKey).toBe(null);
+
+      state.seriesState.highlightKey = 'apples';
+      flushSync();
+
+      expect(state.seriesState.isHighlighted('apples', true)).toBe(true);
+      expect(state.seriesState.isHighlighted('bananas', true)).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState stacked domain with mixed marks', () => {
+  type MixedData = { date: string; apples: number; bananas: number; target: number };
+
+  const mixed: MixedData[] = [
+    { date: '2024-01', apples: 10, bananas: 20, target: 90 },
+    { date: '2024-02', apples: 15, bananas: 25, target: 80 },
+  ];
+
+  function createStacked(props: Partial<ChartPropsWithoutHTML<MixedData>> = {}) {
+    return createChartState<MixedData>({
+      data: mixed,
+      x: 'date',
+      valueAxis: 'y',
+      seriesLayout: 'stack',
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+      ...props,
+    });
+  }
+
+  it('should cover a mark drawn beside the stack rather than in it', () => {
+    const { state, cleanup } = createStacked();
+
+    try {
+      // A `Spline y="target"` over stacked bars: the bars total 40, the line reaches 90
+      state.registerMark({ y: 'apples', seriesKey: 'apples', stacks: true });
+      state.registerMark({ y: 'bananas', seriesKey: 'bananas', stacks: true });
+      state.registerMark({ y: 'target' });
+      flushSync();
+
+      expect(state.yDomain).toEqual([0, 90]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should scale to the stack when every mark draws it', () => {
+    const { state, cleanup } = createStacked();
+
+    try {
+      state.registerMark({ y: 'apples', seriesKey: 'apples', stacks: true });
+      state.registerMark({ y: 'bananas', seriesKey: 'bananas', stacks: true });
+      flushSync();
+
+      expect(state.yDomain).toEqual([0, 40]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should leave the domain alone when no mark draws the stack', () => {
+    // Two marks compared against each other read the raw accessor, so scaling to a total none of
+    // them draws would squash both into the lower half
+    const { state, cleanup } = createStacked();
+
+    try {
+      state.registerMark({ y: 'apples' });
+      state.registerMark({ y: 'bananas' });
+      flushSync();
+
+      expect(state.yDomain).toEqual([10, 25]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should still stack when no mark has registered', () => {
+    const { state, cleanup } = createStacked();
+
+    try {
+      expect(state.yDomain).toEqual([0, 40]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState c as a grouping channel', () => {
+  type FruitRow = { year: string; fruit: string; value: number };
+  const longData: FruitRow[] = [
+    { year: '2024', fruit: 'apples', value: 10 },
+    { year: '2024', fruit: 'bananas', value: 20 },
+    { year: '2025', fruit: 'apples', value: 30 },
+    { year: '2025', fruit: 'bananas', value: 40 },
+  ];
+
+  it('names groups when `c` names a column', () => {
+    const { state, cleanup } = createChartState<FruitRow>({
+      data: longData,
+      x: 'year',
+      y: 'value',
+      c: 'fruit',
+    });
+
+    try {
+      expect(state.cGroups).toEqual(['apples', 'bananas']);
+      expect(state.cKey(longData[0])).toBe('apples');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('names nothing when `c` computes a colour per row', () => {
+    // Grouping on a computed colour would cut one series into a path per colour, joining points
+    // that are not adjacent
+    const { state, cleanup } = createChartState<TestData>({
+      data: [
+        { date: '2024-01', value: -10 },
+        { date: '2024-02', value: 20 },
+      ],
+      x: 'date',
+      y: 'value',
+      c: (d: TestData) => (d.value < 0 ? 'under' : 'over'),
+      cDomain: ['over', 'under'],
+    });
+
+    try {
+      expect(state.cGroups).toBeNull();
+      expect(state.cKey({ date: '2024-01', value: -10 })).toBeNull();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('names nothing when `c` resolves to an interval', () => {
+    // `BarChart` passes its value accessor as `c`, so a `y={['start', 'end']}` chart hands a pair
+    // per row to the colour channel — pairs are not category names
+    const data = [
+      { date: '2024-01', start: 5, end: 10 },
+      { date: '2024-02', start: 8, end: 16 },
+    ];
+
+    const { state, cleanup } = createChartState<any>({
+      data,
+      x: 'date',
+      y: ['start', 'end'],
+      c: ['start', 'end'],
+    });
+
+    try {
+      expect(state.cGroups).toBeNull();
+      expect(state.cKey(data[0])).toBeNull();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('does not infer a stack without a value accessor', () => {
+    // A chart that places its own marks — a beeswarm dodging along one axis — has no magnitude to
+    // accumulate, and inferring a stack would give the other axis a domain, ticks and gridlines
+    const { state, cleanup } = createChartState<FruitRow>({
+      data: longData,
+      x: 'year',
+      c: 'fruit',
+    });
+
+    try {
+      expect(state.seriesLayout).toBe('overlap');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('infers a stack once there is a value accessor to stack', () => {
+    const { state, cleanup } = createChartState<FruitRow>({
+      data: longData,
+      x: 'year',
+      y: 'value',
+      c: 'fruit',
+    });
+
+    try {
+      expect(state.seriesLayout).toBe('stackDiverging');
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState explicit null domain', () => {
+  it('takes the extent from the data rather than adding a baseline', () => {
+    // `yDomain={null}` asks for the data's own extent.  `valueAxis` + `bandPadding` are what turn
+    // on the auto-baseline the null is refusing, so a sparkline stays filled rather than being
+    // squashed against zero
+    const data: TestData[] = [
+      { date: '2024-01', value: 45 },
+      { date: '2024-02', value: 65 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+      yDomain: null,
+      valueAxis: 'y',
+      bandPadding: 0.4,
+    });
+
+    try {
+      // The `null` survives as the resolved domain, leaving the scale to take the extent from the
+      // data — what matters is that nothing pinned it to zero
+      expect(state._yDomain).toBeNull();
+      expect(state.yScale.domain()[0]).toBeGreaterThan(0);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('still auto-derives a baseline when no domain is given', () => {
+    const data: TestData[] = [
+      { date: '2024-01', value: 45 },
+      { date: '2024-02', value: 65 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+    });
+
+    try {
+      expect(state._yDomain).toEqual([0, 65]);
     } finally {
       cleanup();
     }

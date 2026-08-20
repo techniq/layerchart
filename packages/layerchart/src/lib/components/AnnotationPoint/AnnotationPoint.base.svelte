@@ -37,6 +37,7 @@
     labelYOffset = 0,
     labelX,
     labelY,
+    seriesKey,
     fontSize = 12,
     labelGap = 2,
     link,
@@ -47,15 +48,21 @@
   const ctx = getChartContext();
   const geo = getGeoContext();
 
+  // Over a stack the point sits on its series' running total, not on the series' own value
+  const stackedX = $derived(ctx.valueAxis === 'x' ? ctx.stackedValue(seriesKey, y, x) : x);
+  const stackedY = $derived(ctx.valueAxis === 'y' ? ctx.stackedValue(seriesKey, x, y) : y);
+
   const point = $derived.by(() => {
     if (geo.projection && typeof x === 'number' && typeof y === 'number') {
       const [px, py] = geo.projection([x, y]) ?? [0, 0];
       return { x: px, y: py };
     }
     return {
-      x: x ? ctx.xScale(x) + (isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0) : 0,
-      y: y
-        ? ctx.yScale(y) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0)
+      x: stackedX
+        ? ctx.xScale(stackedX) + (isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0)
+        : 0,
+      y: stackedY
+        ? ctx.yScale(stackedY) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0)
         : ctx.height,
     };
   });

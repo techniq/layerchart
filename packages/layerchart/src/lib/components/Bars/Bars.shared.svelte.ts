@@ -1,7 +1,8 @@
 import type { Snippet } from 'svelte';
 import type { BarProps, BarPropsWithoutHTML } from '../Bar/Bar.shared.svelte.js';
-import { chartDataArray } from '$lib/utils/common.js';
+import {} from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 export type BarsPropsWithoutHTML = {
@@ -28,6 +29,7 @@ export type BarsProps = BarsPropsWithoutHTML & Omit<BarProps, 'data'>;
 export class BarsState {
   #getProps: () => BarsProps = () => ({}) as BarsProps;
   ctx: ChartState = getChartContext();
+  markData = getMarkData();
 
   constructor(getProps: () => BarsProps) {
     this.#getProps = getProps;
@@ -40,6 +42,7 @@ export class BarsState {
           data: p.data,
           seriesKey: p.seriesKey,
           color: p.fill as string | undefined,
+          stacks: true,
         };
       },
     });
@@ -50,5 +53,5 @@ export class BarsState {
     return seriesKey ? this.ctx.series.series.find((s) => s.key === seriesKey) : undefined;
   });
   seriesData = $derived(this.series?.data);
-  data = $derived(chartDataArray(this.#getProps().data ?? this.seriesData ?? this.ctx.data));
+  data = $derived(this.markData(this.#getProps().data ?? this.seriesData));
 }

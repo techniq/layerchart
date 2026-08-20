@@ -95,14 +95,14 @@
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -239,5 +239,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-08-06T14:44:37.980Z"
+  "updatedAt": "2026-08-20T07:29:18.736Z"
 }

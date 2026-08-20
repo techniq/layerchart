@@ -1,0 +1,113 @@
+name: Visual Regression
+
+on:
+  pull_request:
+    paths:
+      - packages/layerchart/**
+      - docs/src/examples/**
+      - docs/scripts/visual-snapshot.mjs
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  visual-regression:
+    name: Example Rendering
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm --filter docs exec playwright install --with-deps chromium
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      # Fingerprints depend on the rendering environment, so the baseline has to have been
+      # recorded on a runner too — see update-visual-baseline.yml
+      - name: Read the baseline from the target branch
+        id: baseline
+        run: |
+          mkdir -p /tmp/visual
+          if git show origin/${{ github.base_ref }}:docs/snapshots/baseline.json > /tmp/visual/baseline.json 2>/dev/null; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No baseline on ${{ github.base_ref }} — run the Update Visual Baseline workflow." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Start the docs server
+        if: steps.baseline.outputs.found == 'true'
+        run: |
+          pnpm --filter docs exec vite dev --port 3002 > /tmp/visual/server.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:3002/ && exit 0
+            sleep 2
+          done
+          echo "docs server did not start"; cat /tmp/visual/server.log; exit 1
+
+      - name: Capture this branch
+        if: steps.baseline.outputs.found == 'true'
+        working-directory: docs
+        run: node scripts/visual-snapshot.mjs capture /tmp/visual/current.json --repeat 1
+
+      # No before/after images: rendering the base revision would mean building it too. The
+      # example names plus the element counts are enough to know what to open locally.
+      - name: Compare
+        if: steps.baseline.outputs.found == 'true'
+        id: compare
+        working-directory: docs
+        run: |
+          set +e
+          node scripts/visual-snapshot.mjs compare /tmp/visual/baseline.json /tmp/visual/current.json | tee /tmp/visual/report.txt
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Summarize
+        if: steps.baseline.outputs.found == 'true'
+        run: |
+          {
+            echo "## Visual regression"
+            echo
+            echo "Examples whose rendered geometry differs from \`${{ github.base_ref }}\`."
+            echo "Open any of them locally with \`pnpm dev\` and compare, or run:"
+            echo
+            echo '```sh'
+            echo 'pnpm --filter docs exec node scripts/visual-snapshot.mjs diff <Component/example> --head http://localhost:3002'
+            echo '```'
+            echo
+            echo '```'
+            cat /tmp/visual/report.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload snapshots
+        if: always() && steps.baseline.outputs.found == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-snapshots
+          path: /tmp/visual/*.json
+          retention-days: 7
+
+      - name: Fail if anything changed
+        if: steps.baseline.outputs.found == 'true' && steps.compare.outputs.exit != '0'
+        run: |
+          echo "Rendered output changed — review the job summary."
+          echo "If the changes are intended, run the Update Visual Baseline workflow after merging."
+          exit 1

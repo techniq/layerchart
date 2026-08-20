@@ -73,7 +73,7 @@
 
 		<Tooltip.Root>
 			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
+				<Tooltip.Header value={data.data.date} format="day" />
 				<Tooltip.List>
 					{#each keys as key}
 						<Tooltip.Item label={key} value={data.data[key]} color={context.cScale?.(key)} />

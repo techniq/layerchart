@@ -1,5 +1,6 @@
 export * from './chart.js';
 export * from './geo.js';
+export * from './group.js';
 export * from './layer.js';
 export * from './legendPayload.js';
 export * from './settings.js';

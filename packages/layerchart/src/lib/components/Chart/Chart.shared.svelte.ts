@@ -6,6 +6,7 @@ import type { SankeyGraph } from 'd3-sankey';
 
 import type { Accessor } from '$lib/utils/common.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
+import type { FacetOptions } from '$lib/states/facet.svelte.js';
 import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
 import type {
   BaseRange,
@@ -16,8 +17,10 @@ import type {
   YRangeWithScale,
 } from '$lib/utils/types.js';
 import type { GeoStateProps } from '$lib/states/geo.svelte.js';
-import type { StackLayout } from '$lib/states/series.svelte.js';
+import type { BrushDomainType } from '$lib/states/brush.svelte.js';
+import type { SeriesLayout } from '$lib/states/series.svelte.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
+import type { ChartGroupMemberOptions, ChartGroupState } from '$lib/states/group.svelte.js';
 
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type TransformContext from '../TransformContext.svelte';
@@ -135,6 +138,22 @@ export type ChartPropsWithoutHTML<
   y1?: Accessor<T>;
   c?: Accessor<T>;
 
+  /**
+   * Partition the data into a column of panels ("small multiples"), one per distinct value.
+   * The `x` / `y` scales stay shared across every panel, so they remain comparable.
+   */
+  fx?: Accessor<T>;
+  /** Partition the data into a row of panels.  Combines with `fx` to form a grid. */
+  fy?: Accessor<T>;
+
+  /** Panel order.  Defaults to the distinct `fx` values in the order they appear in the data. */
+  fxDomain?: DomainType;
+  /** Panel order for `fy`. */
+  fyDomain?: DomainType;
+
+  /** Facet layout options */
+  facet?: FacetOptions;
+
   xDomain?: DomainType;
   yDomain?: DomainType;
   zDomain?: DomainType;
@@ -224,6 +243,17 @@ export type ChartPropsWithoutHTML<
         minRange?: number;
       };
     };
+
+    /**
+     * The domain to open zoomed to, with `mode: 'domain'` — restoring a saved range, for example.
+     *
+     * Applied from the first render, unlike calling `context.zoomToBrush()` once mounted, which
+     * can only take effect after the chart has painted.
+     */
+    initialDomain?: {
+      x?: BrushDomainType;
+      y?: BrushDomainType;
+    };
   };
 
   brush?:
@@ -232,9 +262,37 @@ export type ChartPropsWithoutHTML<
       })
     | boolean;
 
+  /**
+   * Stable identity for this chart, also applied to the root element.  Defaults to an opaque
+   * symbol.  Supply one to make the chart comparable from outside — ex. checking
+   * `group.pointer.source === 'requests'` to see which chart is driving a `ChartGroup`.
+   */
+  id?: string;
+
+  /**
+   * Synchronize state (ex. the hovered data point) with other charts sharing this group.
+   * Defaults to the group provided by an ancestor `<ChartGroup>`, when there is one.
+   */
+  group?: ChartGroupState;
+
+  /** Per-chart control over which slices this chart publishes to / subscribes from `group` */
+  groupOptions?: ChartGroupMemberOptions;
+
   series?: SeriesData<T, any>[];
 
-  seriesLayout?: StackLayout | 'group';
+  /**
+   * How multiple series are arranged.
+   *
+   * `'auto'` stacks when something names layers to stack — two or more `series`, or an ordinal
+   * `c` — and overlaps otherwise, including when the value is an explicit `[start, end]`
+   * interval, which is a pair of positions rather than a magnitude.  It stacks about zero, so
+   * negative values run the other way and a diverging chart keeps its two sides.
+   *
+   * `'group'` divides each band by the `x1` / `y1` sub-band, and is never inferred.
+   *
+   * @default 'auto'
+   */
+  seriesLayout?: SeriesLayout;
 
   bandPadding?: number;
   groupPadding?: number;

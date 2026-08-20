@@ -57,68 +57,66 @@
 <TreeControls bind:config />
 
 <Chart
-	padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
 	transform={{
 		mode: 'canvas',
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
 	}}
-	clip
+	padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
 	height={800}
+	clip
 >
-	{#snippet children()}
-		<TransformContextControls orientation="horizontal" class="-m-2" />
+	<TransformContextControls orientation="horizontal" class="-m-2" />
 
-		<Tree
-			{hierarchy}
-			orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
-			nodeSize={config.layout === 'node' ? nodeSize : undefined}
-		>
-			{#snippet children({ nodes, links })}
-				<Layer>
-					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-						<Link
-							data={link}
-							orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
-							curve={config.curve}
-							type={config.type}
-							sweep={config.sweep}
-							radius={config.radius}
-							motion="tween"
-							class="stroke-surface-content opacity-20"
-						/>
-					{/each}
-				</Layer>
+	<Tree
+		{hierarchy}
+		orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
+		nodeSize={config.layout === 'node' ? nodeSize : undefined}
+	>
+		{#snippet children({ nodes, links })}
+			<Layer>
+				{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+					<Link
+						data={link}
+						orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
+						curve={config.curve}
+						type={config.type}
+						sweep={config.sweep}
+						radius={config.radius}
+						motion="tween"
+						class="stroke-surface-content opacity-20"
+					/>
+				{/each}
+			</Layer>
 
-				<Layer type="html">
-					{#each nodes as node}
-						{@const x = (config.orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
-						{@const y = (config.orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
-						<Group
-							{x}
-							{y}
-							motion="tween"
-							style="width: {nodeWidth}px; height: {nodeHeight}px;"
-							class={cls(
-								'bg-surface-100 rounded-full outline',
-								'text-xs text-center',
-								node.data.children
-									? 'outline-primary hover:outline-2 text-primary cursor-pointer'
-									: 'outline-secondary text-secondary outline-dashed'
-							)}
-							onclick={() => {
-								if (expandedNodeNames.includes(node.data.name)) {
-									expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
-								} else {
-									expandedNodeNames = [...expandedNodeNames, node.data.name];
-								}
-								selected = node;
-							}}
-						>
-							{node.data.name}
-						</Group>
-					{/each}
-				</Layer>
-			{/snippet}
-		</Tree>
-	{/snippet}
+			<Layer type="html">
+				{#each nodes as node}
+					{@const x = (config.orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
+					{@const y = (config.orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
+					<Group
+						{x}
+						{y}
+						motion="tween"
+						style="width: {nodeWidth}px; height: {nodeHeight}px;"
+						class={cls(
+							'bg-surface-100 rounded-full outline',
+							'text-xs text-center',
+							node.data.children
+								? 'outline-primary hover:outline-2 text-primary cursor-pointer'
+								: 'outline-secondary text-secondary outline-dashed'
+						)}
+						onclick={() => {
+							if (expandedNodeNames.includes(node.data.name)) {
+								expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
+							} else {
+								expandedNodeNames = [...expandedNodeNames, node.data.name];
+							}
+							selected = node;
+						}}
+					>
+						{node.data.name}
+					</Group>
+				{/each}
+			</Layer>
+		{/snippet}
+	</Tree>
 </Chart>

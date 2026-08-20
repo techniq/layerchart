@@ -557,6 +557,20 @@
       "line": "<Text"
     },
     {
+      "example": "facet-annotation",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-annotation",
+      "lineNumber": 41,
+      "line": "<Text"
+    },
+    {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 80,
+      "line": "<Text"
+    },
+    {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
@@ -935,6 +949,20 @@
       "line": "<Text"
     },
     {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 69,
+      "line": "<Text"
+    },
+    {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 86,
+      "line": "<Text"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Text",
       "path": "/docs/components/Text/color-via-ordinal-scale",
@@ -1138,5 +1166,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:36.132Z"
+  "updatedAt": "2026-08-19T14:28:20.072Z"
 }

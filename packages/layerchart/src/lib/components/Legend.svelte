@@ -176,6 +176,9 @@
   const hasSeriesWithColors = $derived.by(() => {
     if (!ctx.series) return false;
     const allSeries = ctx.series.series ?? [];
+    // An ordinal `c` names the chart's own groups, so it wins over series — which may just be
+    // what a mark's accessor was called
+    if (ctx.cGroups) return false;
     // Check if we have multiple series OR a non-default series with colors
     return allSeries.length > 0 && !ctx.series.isDefaultSeries && allSeries.some((s) => s.color);
   });
@@ -351,7 +354,18 @@
     }
   });
 
-  const variant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
+  /**
+   * An ordinal scale is the `else` of `scaleConfig` above — it interpolates nothing and inverts to
+   * no extent.
+   */
+  const isOrdinalScale = $derived(
+    !!scale && !scale.interpolate && !scale.interpolator && !scale.invertExtent
+  );
+
+  // A ramp reads as a gradient between two ends, which an ordinal scale has no notion of: its
+  // domain is a handful of unrelated categories, and a strip of unlabelled blocks names none of
+  // them.  Swatches are what a `c` channel without configured series wants.
+  const variant = $derived(variantProp ?? (seriesItems || isOrdinalScale ? 'swatches' : 'ramp'));
   const selected = $derived(selectedProp ?? ctx.series?.selectedKeys?.current ?? []);
 
   // Position indicator for the currently hovered value on the ramp. If `value`

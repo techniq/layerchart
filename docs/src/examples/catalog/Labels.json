@@ -71,7 +71,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 48,
+      "lineNumber": 43,
       "line": "<Labels format=\"integer\" />"
     },
     {
@@ -155,7 +155,7 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 47,
+      "lineNumber": 41,
       "line": "<Labels format=\"integer\" />"
     },
     {
@@ -166,5 +166,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:34.276Z"
+  "updatedAt": "2026-08-20T07:29:18.899Z"
 }

@@ -1,0 +1,275 @@
+{
+  "component": "Brush",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Brush/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 41,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 43,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Brush",
+          "lineNumber": 44,
+          "line": "<Brush bind:state={brush} />"
+        }
+      ]
+    },
+    {
+      "name": "html",
+      "title": "html",
+      "path": "/docs/components/Brush/html",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 41,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 43,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Brush",
+          "lineNumber": 48,
+          "line": "<Brush bind:state={brush} />"
+        }
+      ]
+    },
+    {
+      "name": "programmatic",
+      "title": "programmatic",
+      "path": "/docs/components/Brush/programmatic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 48,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 49,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 51,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Brush",
+          "lineNumber": 52,
+          "line": "<Brush bind:state={brush} />"
+        }
+      ]
+    },
+    {
+      "name": "region",
+      "title": "region",
+      "path": "/docs/components/Brush/region",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 44,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 46,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Brush",
+          "lineNumber": 53,
+          "line": "<Brush"
+        }
+      ]
+    },
+    {
+      "name": "two-dimensional",
+      "title": "two dimensional",
+      "path": "/docs/components/Brush/two-dimensional",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 43,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 48,
+          "line": "<Circle"
+        },
+        {
+          "component": "Brush",
+          "lineNumber": 61,
+          "line": "<Brush bind:state={brush} axis=\"both\" />"
+        }
+      ]
+    },
+    {
+      "name": "vertical",
+      "title": "vertical",
+      "path": "/docs/components/Brush/vertical",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 41,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 43,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        },
+        {
+          "component": "Brush",
+          "lineNumber": 44,
+          "line": "<Brush bind:state={brush} axis=\"y\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/basic",
+      "lineNumber": 44,
+      "line": "<Brush bind:state={brush} />"
+    },
+    {
+      "example": "html",
+      "component": "Brush",
+      "path": "/docs/components/Brush/html",
+      "lineNumber": 48,
+      "line": "<Brush bind:state={brush} />"
+    },
+    {
+      "example": "programmatic",
+      "component": "Brush",
+      "path": "/docs/components/Brush/programmatic",
+      "lineNumber": 52,
+      "line": "<Brush bind:state={brush} />"
+    },
+    {
+      "example": "region",
+      "component": "Brush",
+      "path": "/docs/components/Brush/region",
+      "lineNumber": 53,
+      "line": "<Brush"
+    },
+    {
+      "example": "two-dimensional",
+      "component": "Brush",
+      "path": "/docs/components/Brush/two-dimensional",
+      "lineNumber": 61,
+      "line": "<Brush bind:state={brush} axis=\"both\" />"
+    },
+    {
+      "example": "vertical",
+      "component": "Brush",
+      "path": "/docs/components/Brush/vertical",
+      "lineNumber": 44,
+      "line": "<Brush bind:state={brush} axis=\"y\" />"
+    },
+    {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 33,
+      "line": "// One selection per dimension, each owned by its `<Brush>` below and read back here"
+    },
+    {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 93,
+      "line": "<Brush"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 44,
+      "line": "// One selection per dimension, each owned by its `<Brush>` below and read back here"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 101,
+      "line": "<Brush"
+    }
+  ],
+  "updatedAt": "2026-08-18T03:04:03.858Z"
+}

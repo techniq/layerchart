@@ -185,6 +185,21 @@ function isCSSColor(value: string): boolean {
   return value.startsWith('#') || value.includes('(');
 }
 
+/**
+ * The data property a color prop names, or `undefined` when it's a CSS color literal (or names
+ * nothing in the data).
+ *
+ * Marks that draw one shape per series use this to infer their grouping from `stroke` / `fill`,
+ * without also having to also use `z="fruit"`.
+ */
+export function colorPropDataKey<T>(
+  value: ColorProp<T> | undefined | null,
+  d: T
+): string | undefined {
+  if (typeof value !== 'string' || isCSSColor(value)) return undefined;
+  return d != null && get(d, value) !== undefined ? value : undefined;
+}
+
 export function resolveColorProp<T>(
   value: ColorProp<T> | undefined | null,
   d: T,
@@ -196,7 +211,13 @@ export function resolveColorProp<T>(
   if (typeof value === 'function') {
     const rawValue = (value as Function)(d, ...args);
     if (rawValue === undefined || rawValue === null) return undefined;
-    return cScale ? String(cScale(rawValue)) : String(rawValue);
+
+    // A returned CSS color is a color, as a literal one is — otherwise it would be read as a
+    // domain value, and an ordinal scale answers an unknown one by extending its domain and
+    // handing back the next color in its range
+    if (typeof rawValue === 'string' && isCSSColor(rawValue)) return rawValue;
+
+    return scaled(rawValue, cScale);
   }
 
   if (typeof value === 'string') {
@@ -206,13 +227,23 @@ export function resolveColorProp<T>(
     const dataValue = get(d, value);
     if (dataValue !== undefined) {
       // Data property — resolve through cScale
-      return cScale ? String(cScale(dataValue)) : String(dataValue);
+      return scaled(dataValue, cScale);
     }
     // Not a data property — treat as literal CSS color (e.g. named colors like 'red')
     return value;
   }
 
   return undefined;
+}
+
+/**
+ * Put a value through the color scale, keeping the value itself when the scale has nothing for it.
+ * A scale derived from `series` colors only covers the series keys, so anything else — a value the
+ * chart happens to colour by, say — behaves as it would with no scale at all.
+ */
+function scaled(value: any, cScale: AnyScale | null | undefined): string | undefined {
+  const result = cScale ? cScale(value) : undefined;
+  return result != null ? String(result) : String(value);
 }
 
 /**

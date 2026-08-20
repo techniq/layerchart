@@ -373,6 +373,18 @@
       ]
     },
     {
+      "name": "series-overlap",
+      "title": "series overlap",
+      "path": "/docs/components/AreaChart/series-overlap",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 15,
+          "line": "<AreaChart"
+        }
+      ]
+    },
+    {
       "name": "series-point-annotations",
       "title": "series point annotations",
       "path": "/docs/components/AreaChart/series-point-annotations",
@@ -456,12 +468,12 @@
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 36,
+          "lineNumber": 35,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 43,
+          "lineNumber": 42,
           "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
         }
       ]
@@ -843,6 +855,13 @@
       "line": "<AreaChart"
     },
     {
+      "example": "series-overlap",
+      "component": "AreaChart",
+      "path": "/docs/components/AreaChart/series-overlap",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
       "example": "series-point-annotations",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-point-annotations",
@@ -983,6 +1002,13 @@
       "line": "<AreaChart"
     },
     {
+      "example": "synced-legend",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/synced-legend",
+      "lineNumber": 26,
+      "line": "<AreaChart {data} x=\"date\" {series} {padding} height={200} legend />"
+    },
+    {
       "example": "basic",
       "component": "Threshold",
       "path": "/docs/components/Threshold/basic",
@@ -1004,5 +1030,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:22.186Z"
+  "updatedAt": "2026-08-20T07:29:17.701Z"
 }

@@ -486,38 +486,171 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 26,
+          "lineNumber": 24,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 41,
+          "lineNumber": 38,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 45,
-          "line": "<Spline {data} class=\"stroke-2\" stroke={color} />"
+          "lineNumber": 40,
+          "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
         },
         {
           "component": "Labels",
-          "lineNumber": 47,
+          "lineNumber": 41,
           "line": "<Labels format=\"integer\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 48,
+          "lineNumber": 42,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 50,
+          "lineNumber": 44,
           "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "parallel-coordinates",
+      "title": "parallel coordinates",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 57,
+          "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 62,
+          "line": "<Group x={context.xScale(key)}>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 63,
+          "line": "<Axis"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 69,
+          "line": "<Text"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 81,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "parallel-coordinates-brush",
+      "title": "parallel coordinates brush",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "components": [
+        {
+          "component": "Brush",
+          "lineNumber": 33,
+          "line": "// One selection per dimension, each owned by its `<Brush>` below and read back here"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 66,
+          "line": "<Chart"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 79,
+          "line": "<Group x={context.xScale(key)}>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 80,
+          "line": "<Axis"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 86,
+          "line": "<Text"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 106,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "parallel-coordinates-faceted",
+      "title": "parallel coordinates faceted",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 47,
+          "line": "<Chart"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 62,
+          "line": "<Axis placement=\"top\" format={(d) => dimensions[d as keyof typeof dimensions]} tickLength={0} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 65,
+          "line": "<Group x={context.xScale(key)}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 80,
+          "line": "<Spline stroke=\"species\" strokeWidth={1} opacity={0.4} />"
+        }
+      ]
+    },
+    {
+      "name": "parallel-coordinates-mixed",
+      "title": "parallel coordinates mixed",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "components": [
+        {
+          "component": "Brush",
+          "lineNumber": 44,
+          "line": "// One selection per dimension, each owned by its `<Brush>` below and read back here"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 74,
+          "line": "<Chart"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 90,
+          "line": "<Axis placement=\"top\" format={(d) => dimensions[d as keyof typeof dimensions]} tickLength={0} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 93,
+          "line": "<Group x={context.xScale(key)}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 114,
+          "line": "<Spline"
         }
       ]
     },
@@ -592,22 +725,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 14,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 30,
+          "lineNumber": 29,
           "line": "<Layer center>"
         },
         {
           "component": "Spline",
-          "lineNumber": 32,
+          "lineNumber": 30,
           "line": "<Spline"
         },
         {
           "component": "Axis",
-          "lineNumber": 45,
+          "lineNumber": 40,
           "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
         }
       ]
@@ -668,6 +801,38 @@
           "component": "Spline",
           "lineNumber": 21,
           "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "stroke-grouping-with-legend",
+      "title": "stroke grouping with legend",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 37,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 39,
+          "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 42,
+          "line": "<Legend placement=\"bottom\" />"
         }
       ]
     },
@@ -949,14 +1114,14 @@
       "example": "data-series-chart-data",
       "component": "Chart",
       "path": "/docs/components/Chart/data-series-chart-data",
-      "lineNumber": 24,
+      "lineNumber": 25,
       "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
     },
     {
       "example": "data-series-chart-data",
       "component": "Chart",
       "path": "/docs/components/Chart/data-series-chart-data",
-      "lineNumber": 25,
+      "lineNumber": 26,
       "line": "<Spline seriesKey=\"oranges\" stroke=\"var(--color-oranges)\" />"
     },
     {
@@ -972,6 +1137,27 @@
       "path": "/docs/components/Chart/data-series-separate-data",
       "lineNumber": 34,
       "line": "<Spline seriesKey=\"oranges\" stroke=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "facet-lines",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-lines",
+      "lineNumber": 26,
+      "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 46,
+      "line": "<Spline"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 64,
+      "line": "<Spline"
     },
     {
       "example": "basic",
@@ -1257,8 +1443,36 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 45,
-      "line": "<Spline {data} class=\"stroke-2\" stroke={color} />"
+      "lineNumber": 40,
+      "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+    },
+    {
+      "example": "parallel-coordinates",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates",
+      "lineNumber": 81,
+      "line": "<Spline"
+    },
+    {
+      "example": "parallel-coordinates-brush",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-brush",
+      "lineNumber": 106,
+      "line": "<Spline"
+    },
+    {
+      "example": "parallel-coordinates-faceted",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-faceted",
+      "lineNumber": 80,
+      "line": "<Spline stroke=\"species\" strokeWidth={1} opacity={0.4} />"
+    },
+    {
+      "example": "parallel-coordinates-mixed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/parallel-coordinates-mixed",
+      "lineNumber": 114,
+      "line": "<Spline"
     },
     {
       "example": "playground",
@@ -1278,7 +1492,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 32,
+      "lineNumber": 30,
       "line": "<Spline"
     },
     {
@@ -1294,6 +1508,13 @@
       "path": "/docs/components/Spline/stroke-grouping",
       "lineNumber": 21,
       "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 39,
+      "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
     },
     {
       "example": "tween-on-mount",
@@ -1401,5 +1622,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.237Z"
+  "updatedAt": "2026-08-20T07:29:19.579Z"
 }

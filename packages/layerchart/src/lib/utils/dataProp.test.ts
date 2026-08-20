@@ -145,6 +145,20 @@ describe('resolveColorProp', () => {
     expect(mockCScale).toHaveBeenCalledWith('A');
   });
 
+  it('returns a CSS color a function gives back, rather than scaling it', () => {
+    // An ordinal scale answers an unknown value by extending its domain and handing back the next
+    // color in its range, so a color read as a domain value comes back as the wrong color
+    for (const color of ['var(--color-surface-content)', '#00ff00', 'rgb(1, 2, 3)']) {
+      expect(resolveColorProp(() => color, data, mockCScale as any)).toBe(color);
+    }
+    expect(mockCScale).not.toHaveBeenCalled();
+  });
+
+  it('still resolves a domain value a function gives back', () => {
+    expect(resolveColorProp((d: any) => d.category, data, mockCScale as any)).toBe('steelblue');
+    expect(mockCScale).toHaveBeenCalledWith('A');
+  });
+
   it('returns stringified data value when no cScale', () => {
     expect(resolveColorProp('category', data, null)).toBe('A');
   });

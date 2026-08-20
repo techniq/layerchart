@@ -55,22 +55,22 @@
         },
         {
           "component": "Tree",
-          "lineNumber": 71,
+          "lineNumber": 70,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 77,
+          "lineNumber": 76,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 79,
+          "lineNumber": 78,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 96,
+          "lineNumber": 95,
           "line": "<Group"
         }
       ]
@@ -130,7 +130,7 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Tree"
     },
     {
@@ -141,5 +141,5 @@
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.933Z"
+  "updatedAt": "2026-08-20T07:29:19.944Z"
 }

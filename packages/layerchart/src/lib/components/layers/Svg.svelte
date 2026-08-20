@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  // aliased — `Facet` is the component rendering the panels
+  import type { Facet as Panel } from '$lib/states/facet.svelte.js';
   import type { Snippet } from 'svelte';
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
@@ -63,7 +65,7 @@
      */
     clip?: boolean;
 
-    children?: Snippet<[{ ref: SVGElement }]>;
+    children?: Snippet<[{ ref: SVGElement; facet: Panel }]>;
   };
 
   export type SVGProps = SVGPropsWithoutHTML &
@@ -71,6 +73,7 @@
 </script>
 
 <script lang="ts">
+  import Facet from '../Facet.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
 
@@ -86,7 +89,7 @@
     class: className,
     title,
     defs,
-    children,
+    children: childrenProp,
     ...restProps
   }: SVGProps = $props();
 
@@ -142,10 +145,18 @@
   >
     {#if transform}
       <g {transform} class="lc-layout-svg-g-transform">
-        {@render children?.({ ref })}
+        <Facet>
+          {#snippet children({ facet })}
+            {@render childrenProp?.({ ref: ref!, facet })}
+          {/snippet}
+        </Facet>
       </g>
     {:else}
-      {@render children?.({ ref })}
+      <Facet>
+        {#snippet children({ facet })}
+          {@render childrenProp?.({ ref: ref!, facet })}
+        {/snippet}
+      </Facet>
     {/if}
   </g>
 </svg>

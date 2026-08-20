@@ -459,17 +459,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 38,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 39,
+          "lineNumber": 38,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
       ]
@@ -486,17 +486,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 52,
+          "lineNumber": 51,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 53,
+          "lineNumber": 52,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 54,
+          "lineNumber": 53,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
       ]
@@ -1114,28 +1114,28 @@
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 39,
+      "lineNumber": 38,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
     },
     {
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<GeoPath geojson={feature} class=\"stroke-surface-100/30 fill-surface-content/70\" />"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 53,
+      "lineNumber": 52,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 56,
+      "lineNumber": 55,
       "line": "<GeoPath geojson={feature} class=\"stroke-surface-100/30 fill-surface-content/70\" />"
     },
     {
@@ -1608,5 +1608,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-08-06T14:50:45.720Z"
+  "updatedAt": "2026-08-20T07:29:18.599Z"
 }

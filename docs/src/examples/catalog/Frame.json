@@ -117,6 +117,34 @@
   ],
   "usage": [
     {
+      "example": "facet-annotation",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-annotation",
+      "lineNumber": 39,
+      "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+    },
+    {
+      "example": "facet-non-faceted-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-non-faceted-marks",
+      "lineNumber": 27,
+      "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+    },
+    {
+      "example": "facet-two-dimensional",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-two-dimensional",
+      "lineNumber": 29,
+      "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+    },
+    {
+      "example": "facet-wrap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-wrap",
+      "lineNumber": 67,
+      "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
+    },
+    {
       "example": "basic",
       "component": "ClipPath",
       "path": "/docs/components/ClipPath/basic",
@@ -173,5 +201,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-04-16T17:46:59.073Z"
+  "updatedAt": "2026-08-19T14:28:18.858Z"
 }
