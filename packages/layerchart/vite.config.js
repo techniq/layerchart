@@ -48,7 +48,13 @@ const config = defineConfig({
         },
         test: {
           name: 'client',
-          testTimeout: 5000,
+          // Generous because these are real browser renders: under CPU contention (a parallel
+          // docs sweep, or a small CI runner) a chart can take well past a second to settle, and
+          // a `vi.waitFor` capped by a tight test timeout reports that as a failure.
+          testTimeout: 20000,
+          // Same reasoning as `vi.waitFor` in the setup file — the suite's ~130 `expect.poll`
+          // calls never pass a timeout, and 1s is not enough under load
+          expect: { poll: { timeout: 5000 } },
           retry: 1,
           browser: {
             enabled: true,

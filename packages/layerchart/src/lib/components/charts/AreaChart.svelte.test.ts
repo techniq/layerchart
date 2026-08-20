@@ -192,11 +192,14 @@ describe(`AreaChart`, () => {
 
       await expect.element(container.querySelector('svg')).toBeInTheDocument();
 
+      // `.lc-annotation-point` rather than every `circle`: a cursor left over this chart by
+      // another test file renders highlight points, which are circles too — and interleaved with
+      // these in document order
       await vi.waitFor(() => {
-        const circles = [...container.querySelectorAll('circle')].map((el) =>
+        const circles = [...container.querySelectorAll('.lc-annotation-point')].map((el) =>
           Math.round(Number(el.getAttribute('cy')))
         );
-        expect(circles.length).toBeGreaterThanOrEqual(2);
+        expect(circles).toHaveLength(2);
 
         // `one` is 18 and `two` is 22, so stacked they sit at 18 and 40 — different heights,
         // and the upper one above the lower (smaller `cy`)
@@ -219,10 +222,10 @@ describe(`AreaChart`, () => {
 
       // Without a `seriesKey` there's no segment to read against, stacked or not
       await vi.waitFor(() => {
-        const cy = [...container.querySelectorAll('circle')].map((el) =>
+        const cy = [...container.querySelectorAll('.lc-annotation-point')].map((el) =>
           Math.round(Number(el.getAttribute('cy')))
         );
-        expect(cy.length).toBeGreaterThanOrEqual(1);
+        expect(cy).toHaveLength(1);
       });
     });
   });
