@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render } from 'vitest-browser-svelte';
+import { cleanup, render } from 'vitest-browser-svelte';
+import { page } from 'vitest/browser';
 
 import TooltipTestHarness from '../tests/TooltipTestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -187,6 +188,38 @@ describe('TooltipState', () => {
       await vi.waitFor(() => {
         expect(ctx.tooltip.data).toBeNull();
       });
+    });
+
+    it('is not re-shown by a chart mounting under a parked cursor', async () => {
+      // Vitest's browser mode tiles every test file's iframe into one page sharing a single
+      // cursor, so a `hover()` elsewhere can leave it wherever this chart later mounts.  Park it
+      // first, then mount underneath it: the browser fires a boundary event at the element that
+      // appears under a stationary cursor, which would otherwise show data never asked for.
+      const parked = await renderChart({ tooltipContext: { mode: 'bisect-x' } });
+      const rect = parked.containerRef!.getBoundingClientRect();
+      await page
+        .elementLocator(document.body)
+        .hover({ position: { x: rect.x + 25, y: rect.y + 50 } });
+
+      cleanup();
+      const ctx = await renderChart({ tooltipContext: { mode: 'bisect-x' } });
+
+      ctx.tooltip.show({ value: { x: new Date('2024-01-02') } });
+      expect(ctx.tooltip.data).toEqual(data[1]);
+
+      ctx.tooltip.hide();
+
+      await vi.waitFor(() => {
+        expect(ctx.tooltip.data).toBeNull();
+      });
+
+      // give a boundary event from the parked cursor a chance to land
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(ctx.tooltip.data).toBeNull();
+
+      // Put the cursor back where it started.  Files sharing the page render charts directly
+      // rather than through this harness, so leaving it parked would hand them the same hazard.
+      await page.elementLocator(document.body).hover({ position: { x: 0, y: 0 } });
     });
   });
 });
