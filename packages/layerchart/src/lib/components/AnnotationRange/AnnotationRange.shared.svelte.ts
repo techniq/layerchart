@@ -12,10 +12,11 @@ export type AnnotationRangePropsWithoutHTML = {
   x?: [SingleDomainType, SingleDomainType] | SingleDomainType[];
   y?: [SingleDomainType, SingleDomainType] | SingleDomainType[];
   /**
-   * The series this annotation belongs to.
+   * The series this annotation belongs to.  `ChartAnnotations` hides it while another series is
+   * highlighted.
    *
-   * `ChartAnnotations` hides it while another series is highlighted, and a value on the chart's
-   * value axis is read against that series' stacked segment rather than taken as-is.
+   * Unlike `AnnotationPoint` / `AnnotationLine`, the bounds are left as given over a stack: a
+   * range spans two values, and which segment each end belongs to is ambiguous.
    */
   seriesKey?: string;
   label?: string;

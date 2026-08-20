@@ -652,7 +652,8 @@ describe('BarChart', () => {
     });
 
     it('should stack the categories when `seriesLayout="stack"`', async () => {
-      // Nothing declares the layers — the rows carry them, so `c` names the stack the way
+      // No `series` declares the layers and `x1` doesn't subdivide the band — the rows carry the
+      // categories, so `c` is what names the stack's segments
       const { container } = render(BarChart, {
         ...longDataProps,
         x1: undefined,

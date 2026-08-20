@@ -640,8 +640,8 @@ export class ChartState<
    * A value given as an explicit interval is a pair of positions rather than a magnitude, so
    * there is nothing to accumulate — a duration bar or a waterfall stays as drawn.
    *
-   * Something also has to name the layers — configured `series`, or an ordinal `c` — or there is
-   * one thing per band and stacking it would change nothing.
+   * Something also has to name the layers — two or more configured `series`, or an ordinal `c` —
+   * or there is one thing per band and stacking it would change nothing.
    *
    * Stacking about zero (`stackDiverging`) rather than end to end (`stack`) is what lets a
    * population pyramid keep its two sides, and costs nothing when every value has the same sign.
@@ -708,8 +708,8 @@ export class ChartState<
    * lines and points are read against a shared baseline and only stack when a chart asks for it.
    * So an inferred layout recruits the first group and leaves the second alone.
    *
-   * `ownData` marks a mark handed its own rows, which whoever handed them over has already
-   * grouped — an inferred layout leaves those alone too.
+   * `ownData` is a mark handed its own rows, already grouped by whoever handed them over — an
+   * inferred layout leaves those alone too.
    *
    * A `seriesKey` isn't required when the layers are named by the rows: long data says which
    * layer it is, so the key has nothing to add.

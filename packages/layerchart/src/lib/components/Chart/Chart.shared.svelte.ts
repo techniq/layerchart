@@ -290,7 +290,7 @@ export type ChartPropsWithoutHTML<
    *
    * `'group'` divides each band by the `x1` / `y1` sub-band, and is never inferred.
    *
-   * @default 'auto' for `BarChart` / `AreaChart`, `'overlap'` for `Chart`
+   * @default 'auto'
    */
   seriesLayout?: SeriesLayout;
 
