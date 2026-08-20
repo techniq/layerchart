@@ -630,8 +630,17 @@ export class ChartState<
       configured.length > 1 || (configured.length === 1 && configured[0].key !== 'default');
     if (seriesNameThem) return null;
 
+    // Naming a column (`c="fruit"`) says that column holds the category.  A computed accessor
+    // (`c={(d) => (d.value < 0 ? 'under' : 'over')}`) is a colour per row instead — grouping on it
+    // would cut one series into a path per colour, joining points that aren't adjacent.
+    if (typeof this.props.c !== 'string') return null;
+
+    // Categories are labels rather than measurements.  A numeric domain is a ramp, and an array
+    // or object is the chart reading `c` off another channel — `BarChart` passes its value
+    // accessor, so a `y={['start', 'end']}` interval arrives here as a pair per row.
     const domain = Array.isArray(this.cDomain) ? this.cDomain : null;
-    return domain && typeof domain[0] !== 'number' ? domain : null;
+    const first = domain?.[0];
+    return typeof first === 'string' || typeof first === 'boolean' ? domain : null;
   });
 
   /**
@@ -663,10 +672,16 @@ export class ChartState<
       if (value != null && first != null && Array.isArray(accessor(value)(first))) return 'overlap';
     }
 
+    // There has to be a magnitude to accumulate.  A chart that positions its marks itself — a
+    // beeswarm placing points along one axis with no accessor on the other — has nothing to
+    // stack, and inferring one would give that axis a domain, and so ticks and gridlines.
+    const configured = this.props.series ?? [];
+    const valueOf = this.valueAxis === 'y' ? this.props.y : this.props.x;
+    if (valueOf == null && configured.length === 0) return 'overlap';
+
     // Only layers the chart was *configured* with count.  `SeriesState.series` also holds the
     // series inferred from registered marks, and two marks drawn for comparison name nothing to
     // stack — they'd just be scaled to a total neither of them draws.
-    const configured = this.props.series ?? [];
     const namesLayers = configured.length > 1 || this.cGroups != null;
     return namesLayers ? 'stackDiverging' : 'overlap';
   });
@@ -682,7 +697,11 @@ export class ChartState<
   isStacked = $derived.by(() => {
     if (this.seriesState.stackLayout == null) return false;
     const marks = this._markInfos;
-    return marks.length === 0 || marks.some(({ info }) => this.#drawsStack(info));
+    // A stack that was asked for stands before its marks mount.  An inferred one has to be earned
+    // by a mark that draws it — otherwise a chart of lines, which registers nothing that stacks,
+    // is scaled to a total nothing on it shows.
+    if (marks.length === 0) return !this.seriesLayoutAuto;
+    return marks.some(({ info }) => this.#drawsStack(info));
   });
 
   /**
@@ -1145,10 +1164,13 @@ export class ChartState<
   #ySeriesValues: any[] = $derived(this.#getAxisSeriesValues('y'));
 
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
-    const domain =
-      axis === 'x'
-        ? (this.brushXDomain ?? this.props.xDomain ?? this.groupXDomain)
-        : (this.brushYDomain ?? this.props.yDomain ?? this.groupYDomain);
+    // `null` is a meaningful value for these props — "take the extent from the data, without a
+    // baseline" — so it has to survive the fallback to a chart group's shared domain, which `??`
+    // would step over the same way it steps over `undefined`.
+    const brushDomain = axis === 'x' ? this.brushXDomain : this.brushYDomain;
+    const propDomain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
+    const groupDomain = axis === 'x' ? this.groupXDomain : this.groupYDomain;
+    const domain = brushDomain ?? (propDomain !== undefined ? propDomain : groupDomain);
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
     const explicitBaseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
     // Use explicit baseline if provided (null means "no baseline"), otherwise auto-derive

@@ -4,6 +4,8 @@ import { scaleSequential } from 'd3-scale';
 import { interpolateTurbo } from 'd3-scale-chromatic';
 
 import LineChart from './LineChart/LineChart.svelte';
+import LineChartCustomMarks from './__fixtures__/LineChartCustomMarks.svelte';
+import ScatterChart from './ScatterChart/ScatterChart.svelte';
 
 const data = [
   { date: 0, value: 10 },
@@ -15,7 +17,7 @@ const data = [
 
 describe('LineChart', () => {
   it('tooltip should prefer cScale color over default series color when cScale is explicitly provided', async () => {
-    const { container } = render(LineChart, {
+    const { container } = render(LineChartCustomMarks, {
       data,
       x: 'date',
       y: 'value',
@@ -121,5 +123,64 @@ describe('legend `c` category toggle', () => {
     await vi.waitFor(() => {
       expect(splines(container)).toEqual([{ stroke: 'red', opacity: '1' }]);
     });
+  });
+});
+
+describe('LineChart seriesLayout', () => {
+  const svelteRows = [
+    { date: 0, cumsum: 100 },
+    { date: 1, cumsum: 586 },
+  ];
+  const kitRows = [
+    { date: 0, cumsum: 40 },
+    { date: 1, cumsum: 212 },
+  ];
+  const seriesProps = {
+    x: 'date',
+    y: 'cumsum',
+    series: [
+      { key: 'svelte', data: svelteRows },
+      { key: 'sveltekit', data: kitRows },
+    ],
+    height: 300,
+    width: 400,
+  };
+
+  it('overlaps several series rather than inferring a stack', async () => {
+    // Lines sit on a shared baseline rather than on each other.  Left to infer, several series
+    // resolve to a stack that no line draws — and the value axis is then scaled to a total
+    // nothing on the chart shows, squashing every line.
+    let ctx: any;
+    render(LineChartCustomMarks, { ...seriesProps, oncontext: (c: any) => (ctx = c) } as any);
+
+    await vi.waitFor(() => expect(ctx?.width).toBeGreaterThan(0));
+    expect(ctx.isStacked).toBe(false);
+    // 586 + 212 = 798, so a stacked domain would push the axis past 600
+    expect(ctx.yScale.domain()[1]).toBeLessThanOrEqual(600);
+  });
+
+  it('overlaps for `ScatterChart` too — points share a baseline the same way', async () => {
+    let ctx: any;
+    render(LineChartCustomMarks, {
+      ...seriesProps,
+      component: ScatterChart,
+      oncontext: (c: any) => (ctx = c),
+    } as any);
+
+    await vi.waitFor(() => expect(ctx?.width).toBeGreaterThan(0));
+    expect(ctx.isStacked).toBe(false);
+  });
+
+  it('still stacks when asked to', async () => {
+    let ctx: any;
+    render(LineChartCustomMarks, {
+      ...seriesProps,
+      seriesLayout: 'stack',
+      oncontext: (c: any) => (ctx = c),
+    } as any);
+
+    await vi.waitFor(() => expect(ctx?.width).toBeGreaterThan(0));
+    // Only that the prop is honoured — whether lines *draw* the stack is the marks' own guard
+    expect(ctx.seriesLayout).toBe('stack');
   });
 });

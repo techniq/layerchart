@@ -51,6 +51,32 @@ describe('Spline', () => {
       expect(single.split('L')).toHaveLength(data.length); // every point, one path
     });
 
+    it('falls back to the chart`s `c` when it names a column', async () => {
+      render(TestHarness, {
+        component: Spline,
+        chartProps: chartProps({ c: 'group' }),
+        componentProps: {},
+      });
+
+      await expect.poll(() => paths().length).toBe(2);
+    });
+
+    it('is not split by a `c` that computes a colour per row', async () => {
+      // A colour derived from the value encodes each point, it does not name a series — grouping
+      // on it would draw one path through the low points and another through the high ones
+      render(TestHarness, {
+        component: Spline,
+        chartProps: chartProps({
+          c: (d: (typeof data)[number]) => (d.value < 40 ? 'low' : 'high'),
+          cDomain: ['low', 'high'],
+        }),
+        componentProps: {},
+      });
+
+      await expect.poll(() => paths().length).toBe(1);
+      expect(paths()[0].getAttribute('d')!.split('L')).toHaveLength(data.length);
+    });
+
     it('falls back to the chart`s `z` accessor', async () => {
       render(TestHarness, {
         component: Spline,

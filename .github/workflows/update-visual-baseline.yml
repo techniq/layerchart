@@ -1,0 +1,80 @@
+name: Update Visual Baseline
+
+# Fingerprints depend on the rendering environment, so the baseline PRs compare against has to be
+# recorded on a runner rather than a contributor's machine. Runs on demand, and after any push to
+# main that could change what the examples draw.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/layerchart/**
+      - docs/src/examples/**
+      - docs/scripts/visual-snapshot.mjs
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-baseline:
+    name: Update Visual Baseline
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm --filter docs exec playwright install --with-deps chromium
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Start the docs server
+        run: |
+          pnpm --filter docs exec vite dev --port 3002 > /tmp/server.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:3002/ && exit 0
+            sleep 2
+          done
+          echo "docs server did not start"; cat /tmp/server.log; exit 1
+
+      # Two passes so examples that are still nondeterministic are recorded as such and skipped
+      # by later comparisons rather than reported as regressions
+      - name: Capture baseline
+        working-directory: docs
+        run: node scripts/visual-snapshot.mjs capture snapshots/baseline.json --repeat 2
+
+      - name: Create or update visual baseline PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/update-visual-baseline
+          title: 'chore: update visual regression baseline'
+          body: |
+            ## Visual Baseline Update
+
+            Re-recorded `docs/snapshots/baseline.json` from `main` on a runner, so PR comparisons
+            have something to diff against in the same rendering environment.
+
+            ### How to review
+
+            The diff lists one line per example. Lines that changed mean the example draws
+            something different than the last baseline — check those were intended.
+          commit-message: 'chore: update visual regression baseline'
+          add-paths: docs/snapshots/baseline.json

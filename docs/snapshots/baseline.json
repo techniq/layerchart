@@ -1,0 +1,3735 @@
+{
+  "seed": 20260815,
+  "examples": {
+    "AnnotationLine/bar-chart": {
+      "hash": "fa8363b1d3e4db84",
+      "elements": 86
+    },
+    "AnnotationLine/horizontal": {
+      "hash": "b205c3aa708ab7ef",
+      "elements": 53
+    },
+    "AnnotationLine/horizontal-placement": {
+      "hash": "855d490f48f3dd42",
+      "elements": 57
+    },
+    "AnnotationLine/horizontal-with-range": {
+      "hash": "5f3021a0a34480fe",
+      "elements": 55
+    },
+    "AnnotationLine/playground": {
+      "hash": "c3bfc717e8ac548d",
+      "elements": 59
+    },
+    "AnnotationLine/sloped": {
+      "hash": "d3c850589da360c7",
+      "elements": 57
+    },
+    "AnnotationLine/vertical": {
+      "hash": "c2d1f137b8907774",
+      "elements": 53
+    },
+    "AnnotationLine/vertical-placement": {
+      "hash": "7dacb1a3dbf3e511",
+      "elements": 57
+    },
+    "AnnotationLine/vertical-with-rotation": {
+      "hash": "05c37c07ea35e9b5",
+      "elements": 56
+    },
+    "AnnotationPoint/band-scale-on-axis": {
+      "hash": "92f7e1e44924e83f",
+      "elements": 86
+    },
+    "AnnotationPoint/band-scale-on-value": {
+      "hash": "179fa4e2232611d9",
+      "elements": 86
+    },
+    "AnnotationPoint/line-to-point": {
+      "hash": "4efd355c1f73283d",
+      "elements": 80
+    },
+    "AnnotationPoint/link-callouts": {
+      "hash": "fef1b37ab4cc9927",
+      "elements": 62
+    },
+    "AnnotationPoint/on-axis-with-tooltip": {
+      "hash": "8fcb56baebd03fe5",
+      "elements": 65
+    },
+    "AnnotationPoint/on-series-with-line-and-tooltip": {
+      "hash": "d06915e850e0e5a5",
+      "elements": 70
+    },
+    "AnnotationPoint/on-series-with-tooltip": {
+      "hash": "3bf80425b6223a92",
+      "elements": 65
+    },
+    "AnnotationPoint/playground": {
+      "hash": "5749750ec7762ee9",
+      "elements": 210
+    },
+    "AnnotationPoint/series-annotation": {
+      "hash": "881f4d912c0bbad0",
+      "elements": 53
+    },
+    "AnnotationPoint/us-cities": {
+      "hash": "484f54ceba5d9375",
+      "elements": 31
+    },
+    "AnnotationPoint/world-landmarks": {
+      "hash": "80d96b124b78500f",
+      "elements": 211
+    },
+    "AnnotationRange/bar-chart-(multiple)": {
+      "hash": "d988ebc2b53c1c84",
+      "elements": 85
+    },
+    "AnnotationRange/bar-chart-(single)": {
+      "hash": "f38ff9e29f8ac7c8",
+      "elements": 85
+    },
+    "AnnotationRange/bar-chart-(value)": {
+      "hash": "fe28babda4965ec8",
+      "elements": 85
+    },
+    "AnnotationRange/hide-tooltip": {
+      "hash": "89d531fedb50d77a",
+      "elements": 52
+    },
+    "AnnotationRange/horizontal-with-fill-multiple": {
+      "hash": "c12dd0584fbcb139",
+      "elements": 53
+    },
+    "AnnotationRange/horizontal-with-pattern-lower-bound": {
+      "hash": "26108578669ddd86",
+      "elements": 52
+    },
+    "AnnotationRange/horizontal-with-pattern-range": {
+      "hash": "9c6934b745894749",
+      "elements": 52
+    },
+    "AnnotationRange/horizontal-with-pattern-upper-bound": {
+      "hash": "d154caaeaa6a4774",
+      "elements": 52
+    },
+    "AnnotationRange/label-placement": {
+      "hash": "2b1e2f63f19c1aa0",
+      "elements": 58
+    },
+    "AnnotationRange/vertical-with-gradient-range": {
+      "hash": "0d46c99b4ee70317",
+      "elements": 51
+    },
+    "AnnotationRange/vertical-with-pattern-lower-bound": {
+      "hash": "a838da03d276d8b1",
+      "elements": 52
+    },
+    "AnnotationRange/vertical-with-pattern-range": {
+      "hash": "2b694623254f03e1",
+      "elements": 52
+    },
+    "AnnotationRange/vertical-with-pattern-upper-bound": {
+      "hash": "fde0847c3084e833",
+      "elements": 52
+    },
+    "Arc/clock": {
+      "hash": "9b7b83d75ddc894c",
+      "elements": 96
+    },
+    "Arc/color-wheel": {
+      "hash": "2ecf3d142c22ef88",
+      "elements": 78
+    },
+    "Arc/concentric": {
+      "hash": "2bdbe6f76ad457e8",
+      "elements": 12
+    },
+    "Arc/draggable-arc": {
+      "hash": "922f2fcb50b4e18a",
+      "elements": 10
+    },
+    "Arc/gauge": {
+      "hash": "46127827ff955385",
+      "elements": 29
+    },
+    "Arc/gauge-gradient": {
+      "hash": "668462baf1e41728",
+      "elements": 193
+    },
+    "Arc/label-direction": {
+      "hash": "93b0776deb052205",
+      "elements": 151
+    },
+    "Arc/partial-arc": {
+      "hash": "7d331095c4ea4f79",
+      "elements": 12
+    },
+    "Arc/playground": {
+      "hash": "d787cf8a92085d9b",
+      "elements": 26
+    },
+    "Arc/segmented-arc": {
+      "hash": "0dcb1958780f78e1",
+      "elements": 72
+    },
+    "Arc/segmented-arc-clip-mask": {
+      "hash": "87fd48604fa69795",
+      "elements": 74
+    },
+    "Arc/speedometer": {
+      "hash": "e99051cefbb9c666",
+      "elements": 69
+    },
+    "Arc/tween-value-on-mount": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "ArcChart/basic": {
+      "hash": "fc10031ec7d1b14d",
+      "elements": 10
+    },
+    "ArcChart/color": {
+      "hash": "4c9062ca1d2f20b7",
+      "elements": 10
+    },
+    "ArcChart/gradient-with-text": {
+      "hash": "40fbebb9511f9bdb",
+      "elements": 12
+    },
+    "ArcChart/radius-fixed": {
+      "hash": "798319e0a763c08b",
+      "elements": 10
+    },
+    "ArcChart/radius-offset": {
+      "hash": "798319e0a763c08b",
+      "elements": 10
+    },
+    "ArcChart/radius-percent": {
+      "hash": "69e74f7d3c750358",
+      "elements": 10
+    },
+    "ArcChart/series": {
+      "hash": "b4a5764c92c1999d",
+      "elements": 16
+    },
+    "ArcChart/series-arc": {
+      "hash": "7dd2c9bbc596546b",
+      "elements": 16
+    },
+    "ArcChart/series-individual": {
+      "hash": "691b4053f7702a5e",
+      "elements": 14
+    },
+    "ArcChart/series-labels": {
+      "hash": "96dac94e24fff7f6",
+      "elements": 27
+    },
+    "ArcChart/series-motion-spring": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "ArcChart/series-motion-tween": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "ArcChart/series-start-180": {
+      "hash": "3b4684bf3645df3a",
+      "elements": 16
+    },
+    "ArcChart/series-start-90": {
+      "hash": "1aa9985caed2c469",
+      "elements": 16
+    },
+    "ArcChart/series-track-color": {
+      "hash": "f2579107b7e2271f",
+      "elements": 16
+    },
+    "ArcChart/track-size": {
+      "hash": "798319e0a763c08b",
+      "elements": 10
+    },
+    "Area/basic": {
+      "hash": "db65b0d78f417e76",
+      "elements": 79
+    },
+    "Area/clip-tween-on-mount": {
+      "hash": "f6f783891cfc1e33",
+      "elements": 77
+    },
+    "Area/clipped-area-on-tooltip": {
+      "hash": "b9c20660d7d07dd8",
+      "elements": 26
+    },
+    "Area/explicit-axis-ticks-min-max": {
+      "hash": "462d0c3a8b3eb281",
+      "elements": 40
+    },
+    "Area/gradient": {
+      "hash": "36f552cf2736afc2",
+      "elements": 79
+    },
+    "Area/gradient-separate-stroke": {
+      "hash": "bd1745db32986d56",
+      "elements": 79
+    },
+    "Area/highlight-color-based-on-value-using-color-scale": {
+      "hash": "c08330f8422fba88",
+      "elements": 91
+    },
+    "Area/highlight-color-based-on-value-using-tooltip-slot-prop": {
+      "hash": "c08330f8422fba88",
+      "elements": 91
+    },
+    "Area/multiple-series": {
+      "hash": "2437aa6a0ac04678",
+      "elements": 92
+    },
+    "Area/multiple-series-highlight-on-hover": {
+      "hash": "b703efca687db401",
+      "elements": 92
+    },
+    "Area/multiple-series-using-overrides": {
+      "hash": "5b717d4e6ade2cd5",
+      "elements": 83
+    },
+    "Area/multiple-series-with-labels": {
+      "hash": "f9af4b5e322314ed",
+      "elements": 263
+    },
+    "Area/oscilloscope-ridgeline": {
+      "hash": "6eae21214e76b7bf",
+      "elements": 38
+    },
+    "Area/playground": {
+      "hash": "7e929ce1b317a080",
+      "elements": 68
+    },
+    "Area/ridgeline": {
+      "hash": "52058704b9384209",
+      "elements": 69
+    },
+    "Area/ridgeline-kde": {
+      "hash": "8eb21d52c76938af",
+      "elements": 112
+    },
+    "Area/stack": {
+      "hash": "5f7cee2a0bfcdc02",
+      "elements": 83
+    },
+    "Area/stack-with-gradient": {
+      "hash": "45306f165db4b244",
+      "elements": 83
+    },
+    "Area/threshold-with-lineargradient": {
+      "hash": "a1520170d95ebcf8",
+      "elements": 87
+    },
+    "Area/threshold-with-lineargradient-over-under": {
+      "hash": "c70dc38c329663f5",
+      "elements": 87
+    },
+    "Area/threshold-with-rectclippath": {
+      "hash": "962bb54200da5d59",
+      "elements": 91
+    },
+    "Area/threshold-with-rectclippath-over-under": {
+      "hash": "8335d257a59c6f6f",
+      "elements": 91
+    },
+    "Area/tween-on-mount": {
+      "hash": "f6f783891cfc1e33",
+      "elements": 77
+    },
+    "Area/with-labels": {
+      "hash": "b5b96558969e02f0",
+      "elements": 139
+    },
+    "Area/with-tooltip-and-highlight": {
+      "hash": "db65b0d78f417e76",
+      "elements": 79
+    },
+    "AreaChart/all-zero": {
+      "hash": "9db52cec47624750",
+      "elements": 83
+    },
+    "AreaChart/band-scale": {
+      "hash": "0c962c96993f80fe",
+      "elements": 59
+    },
+    "AreaChart/basic": {
+      "hash": "baef40c226ba375c",
+      "elements": 80
+    },
+    "AreaChart/brush": {
+      "hash": "fa3dc4f7908117cb",
+      "elements": 51
+    },
+    "AreaChart/brush-sync": {
+      "hash": "0544171ab05a8602",
+      "elements": 126
+    },
+    "AreaChart/curve": {
+      "hash": "3863f650a89deeb6",
+      "elements": 80
+    },
+    "AreaChart/custom": {
+      "hash": "2dd359fa624e2246",
+      "elements": 79
+    },
+    "AreaChart/custom-tooltip": {
+      "hash": "baef40c226ba375c",
+      "elements": 80
+    },
+    "AreaChart/default-series-label": {
+      "hash": "baef40c226ba375c",
+      "elements": 80
+    },
+    "AreaChart/funnel": {
+      "hash": "647fa1d8e7f8d4eb",
+      "elements": 24
+    },
+    "AreaChart/gradient": {
+      "hash": "a6fb5acfd7c08515",
+      "elements": 80
+    },
+    "AreaChart/labels": {
+      "hash": "cdabaff7be62f2af",
+      "elements": 140
+    },
+    "AreaChart/line-annotation": {
+      "hash": "6571f34fc1b1b17e",
+      "elements": 54
+    },
+    "AreaChart/markers": {
+      "hash": "baef40c226ba375c",
+      "elements": 80
+    },
+    "AreaChart/motion-tween": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "AreaChart/null-gaps": {
+      "hash": "09712848ad15e59e",
+      "elements": 103
+    },
+    "AreaChart/point-annotations": {
+      "hash": "8c14c5bd4b69bf91",
+      "elements": 66
+    },
+    "AreaChart/point-scale": {
+      "hash": "dfd46012a1e37968",
+      "elements": 55
+    },
+    "AreaChart/points": {
+      "hash": "6abf688271a508cf",
+      "elements": 110
+    },
+    "AreaChart/radial": {
+      "hash": "d3bebd74ee7c0c01",
+      "elements": 68
+    },
+    "AreaChart/range-annotation": {
+      "hash": "2e3eaaf13b9effc4",
+      "elements": 55
+    },
+    "AreaChart/series": {
+      "hash": "68ef6ec31ae4332e",
+      "elements": 84
+    },
+    "AreaChart/series-individual-tooltip": {
+      "hash": "a8854d43d98a8760",
+      "elements": 84
+    },
+    "AreaChart/series-point-annotations": {
+      "hash": "c27caf90f5b9192f",
+      "elements": 93
+    },
+    "AreaChart/series-point-click": {
+      "hash": "68ef6ec31ae4332e",
+      "elements": 84
+    },
+    "AreaChart/series-separate-data": {
+      "hash": "68ef6ec31ae4332e",
+      "elements": 84
+    },
+    "AreaChart/series-stack": {
+      "hash": "970fe1565653c8ca",
+      "elements": 84
+    },
+    "AreaChart/series-stack-diverging": {
+      "hash": "7ffba06d50eb125e",
+      "elements": 85
+    },
+    "AreaChart/series-stack-expand": {
+      "hash": "029622ef84141be4",
+      "elements": 84
+    },
+    "AreaChart/series-stack-gradient": {
+      "hash": "57d27fb7efba4a82",
+      "elements": 84
+    },
+    "AreaChart/series-stack-legend": {
+      "hash": "7e55274110fd766f",
+      "elements": 84
+    },
+    "AreaChart/series-stack-legend-labels": {
+      "hash": "7e55274110fd766f",
+      "elements": 84
+    },
+    "AreaChart/series-stack-legend-placement": {
+      "hash": "970fe1565653c8ca",
+      "elements": 84
+    },
+    "AreaChart/series-stack-separate-data": {
+      "hash": "970fe1565653c8ca",
+      "elements": 84
+    },
+    "AreaChart/series-tooltip-click": {
+      "hash": "baef40c226ba375c",
+      "elements": 80
+    },
+    "AreaChart/single-axis-x": {
+      "hash": "59eafdb89dfd98a7",
+      "elements": 62
+    },
+    "AreaChart/single-axis-y": {
+      "hash": "a10b5a857ac52e8f",
+      "elements": 35
+    },
+    "AreaChart/sparkline": {
+      "hash": "213845626cac7f56",
+      "elements": 10
+    },
+    "AreaChart/threshold": {
+      "hash": "aaa1749934dd339f",
+      "elements": 87
+    },
+    "AreaChart/threshold-gradient": {
+      "hash": "5f33bc791f96e500",
+      "elements": 84
+    },
+    "AreaChart/tooltip-external": {
+      "hash": "cd09c9f4a050076b",
+      "elements": 64
+    },
+    "AreaChart/tooltip-fixed-with-hide-delay": {
+      "hash": "68ef6ec31ae4332e",
+      "elements": 84
+    },
+    "AreaChart/tooltip-locking": {
+      "hash": "68ef6ec31ae4332e",
+      "elements": 84
+    },
+    "Axis/arrow-markers": {
+      "hash": "d0f7c89b0585e1ef",
+      "elements": 78
+    },
+    "Axis/axis-label-placement-left-right": {
+      "hash": "7f4585d5385cca93",
+      "elements": 132
+    },
+    "Axis/axis-label-placement-top-bottom": {
+      "hash": "ea0e0fd304103000",
+      "elements": 222
+    },
+    "Axis/barchart-tickspacing": {
+      "hash": "1a72a5263372fdd5",
+      "elements": 163
+    },
+    "Axis/barchart-xinterval-xinset": {
+      "hash": "ca819efecc6dd3a9",
+      "elements": 102
+    },
+    "Axis/explicit-ticks": {
+      "hash": "5b0b11a3c0ed5cc5",
+      "elements": 16
+    },
+    "Axis/extent-ticks-only": {
+      "hash": "af2e26812b0fea14",
+      "elements": 20
+    },
+    "Axis/grid": {
+      "hash": "fffcbe75cf6688cd",
+      "elements": 74
+    },
+    "Axis/grid-dashed": {
+      "hash": "7a090eafd33fae03",
+      "elements": 63
+    },
+    "Axis/hide-zero-filter": {
+      "hash": "b4b10e413c4219c9",
+      "elements": 37
+    },
+    "Axis/hide-zero-format": {
+      "hash": "db5b54ddf5f08958",
+      "elements": 40
+    },
+    "Axis/inject-ticks": {
+      "hash": "3e032c20e6e50452",
+      "elements": 43
+    },
+    "Axis/integer-only-filter": {
+      "hash": "44bb638d671f2c7c",
+      "elements": 16
+    },
+    "Axis/integer-only-format": {
+      "hash": "c5e9eec9c6d8119a",
+      "elements": 16
+    },
+    "Axis/labels-next-hash": {
+      "hash": "1921db69622b906b",
+      "elements": 37
+    },
+    "Axis/linechart-tickspacing": {
+      "hash": "22285fce556e4c69",
+      "elements": 46
+    },
+    "Axis/log-scale": {
+      "hash": "be938ff0607ecc57",
+      "elements": 64
+    },
+    "Axis/multiline-tick-labels": {
+      "hash": "3dc6f8d120cf05a0",
+      "elements": 31
+    },
+    "Axis/multiple-axis-grid-and-rules": {
+      "hash": "73c4e485b8dbac34",
+      "elements": 76
+    },
+    "Axis/multiple-axis-grid-and-rules-separate-grid": {
+      "hash": "4b327678b4a21d89",
+      "elements": 76
+    },
+    "Axis/multiple-axis-grid-with-single-rule": {
+      "hash": "768a9cf9e927b40a",
+      "elements": 75
+    },
+    "Axis/multiple-axis-same-placement-bottom": {
+      "hash": "a0056a79ee8bdec9",
+      "elements": 37
+    },
+    "Axis/multiple-axis-same-placement-right": {
+      "hash": "e1031db2b95b1bc1",
+      "elements": 63
+    },
+    "Axis/override-axis-ticks-scale": {
+      "hash": "3d68f66236d0c055",
+      "elements": 49
+    },
+    "Axis/placement-bottom-left": {
+      "hash": "3959b77d55263f43",
+      "elements": 57
+    },
+    "Axis/placement-bottom-left-rule": {
+      "hash": "fc3651070e74e94b",
+      "elements": 59
+    },
+    "Axis/placement-top-right": {
+      "hash": "bc632219b14004b1",
+      "elements": 57
+    },
+    "Axis/placement-top-right-rule": {
+      "hash": "22fd4e54c6f5b413",
+      "elements": 59
+    },
+    "Axis/radial-grid": {
+      "hash": "8800fb848a0718bc",
+      "elements": 55
+    },
+    "Axis/radial-rule": {
+      "hash": "d8ff12b58b15a30f",
+      "elements": 44
+    },
+    "Axis/remove-tick-marks": {
+      "hash": "75bc7d77377fe7d2",
+      "elements": 29
+    },
+    "Axis/rotate-labels": {
+      "hash": "cbb90aa2c9ed23b1",
+      "elements": 40
+    },
+    "Axis/tick-count": {
+      "hash": "14bf8a1d2c9deec0",
+      "elements": 70
+    },
+    "Axis/tick-label-styling": {
+      "hash": "a827eabc13f18283",
+      "elements": 40
+    },
+    "Axis/tick-spacing": {
+      "hash": "24f76faadf812ecf",
+      "elements": 22
+    },
+    "Axis/time-scale-auto": {
+      "hash": "41a70bde1771dc93",
+      "elements": 593
+    },
+    "Axis/time-scale-auto-format-filtering": {
+      "hash": "34a3307e1b5a5915",
+      "elements": 557
+    },
+    "Axis/time-scale-auto-multiline": {
+      "hash": "c4cb37812a5accff",
+      "elements": 1178
+    },
+    "Axis/time-scale-brush": {
+      "hash": "cf7f6f26c7adaf56",
+      "elements": 99
+    },
+    "Axis/time-scale-brush-multiline": {
+      "hash": "5c1cbd040d1259a6",
+      "elements": 99
+    },
+    "Axis/time-scale-explicit": {
+      "hash": "220ad024ba662250",
+      "elements": 723
+    },
+    "Axis/time-scale-explicit-multiline": {
+      "hash": "5a2443cf8d1cb082",
+      "elements": 723
+    },
+    "BarChart/axis-labels-inside-bars": {
+      "hash": "2b9536a00f2fe5cf",
+      "elements": 89
+    },
+    "BarChart/axis-labels-inside-bars-using-labels": {
+      "hash": "9fbdf39b04677027",
+      "elements": 79
+    },
+    "BarChart/both-axis-grid": {
+      "hash": "9043d98a8065bcd6",
+      "elements": 93
+    },
+    "BarChart/both-axis-grid-align-between": {
+      "hash": "84ac5d07c404bf60",
+      "elements": 94
+    },
+    "BarChart/brush": {
+      "hash": "826a95c7594d14f6",
+      "elements": 272
+    },
+    "BarChart/brush-band": {
+      "hash": "6893e27f67e72f09",
+      "elements": 283
+    },
+    "BarChart/brush-pan-zoom": {
+      "hash": "826a95c7594d14f6",
+      "elements": 272
+    },
+    "BarChart/brush-pan-zoom-band": {
+      "hash": "6893e27f67e72f09",
+      "elements": 283
+    },
+    "BarChart/color-bars-class": {
+      "hash": "327c131be9549b94",
+      "elements": 83
+    },
+    "BarChart/color-per-value": {
+      "hash": "7c0bf0265e78c7e7",
+      "elements": 61
+    },
+    "BarChart/color-threshold": {
+      "hash": "d89732643a5d69bc",
+      "elements": 87
+    },
+    "BarChart/color-using-scale": {
+      "hash": "51c705de2cfa4457",
+      "elements": 83
+    },
+    "BarChart/company-race": {
+      "hash": "1ca70830b25f14c6",
+      "elements": 164
+    },
+    "BarChart/custom-chart": {
+      "hash": "4f4c6dddce6e4642",
+      "elements": 82
+    },
+    "BarChart/custom-tooltip": {
+      "hash": "327c131be9549b94",
+      "elements": 83
+    },
+    "BarChart/duration": {
+      "hash": "4ce114af01fbe992",
+      "elements": 95
+    },
+    "BarChart/duration-bars": {
+      "hash": "7cc801c8eeed737a",
+      "elements": 102
+    },
+    "BarChart/duration-bars-color": {
+      "hash": "57253e04423258a1",
+      "elements": 102
+    },
+    "BarChart/duration-bars-dense": {
+      "hash": "f1aa77aeeb3dcb1f",
+      "elements": 164
+    },
+    "BarChart/duration-bars-dense-lanes": {
+      "hash": "ba068fc6d07f47ea",
+      "elements": 164
+    },
+    "BarChart/duration-bars-lanes": {
+      "hash": "47e85ac33947fb29",
+      "elements": 72
+    },
+    "BarChart/duration-civilization-timeline": {
+      "hash": "877099364b73e6f3",
+      "elements": 295
+    },
+    "BarChart/duration-civilization-timeline-dense": {
+      "hash": "60a3cee8a6d365c2",
+      "elements": 162
+    },
+    "BarChart/duration-labels": {
+      "hash": "f703dce49ed0a6e3",
+      "elements": 131
+    },
+    "BarChart/duration-points": {
+      "hash": "de2fe14a002710d1",
+      "elements": 122
+    },
+    "BarChart/duration-points-color": {
+      "hash": "4c2529bb5de61e71",
+      "elements": 122
+    },
+    "BarChart/dynamic-height": {
+      "hash": "a04b614c555a369a",
+      "elements": 65
+    },
+    "BarChart/gradient": {
+      "hash": "75fda16f29307ce3",
+      "elements": 83
+    },
+    "BarChart/group-series": {
+      "hash": "a1e76f3ef9be40ac",
+      "elements": 73
+    },
+    "BarChart/group-series-bar-click": {
+      "hash": "ff1457b0888bb269",
+      "elements": 69
+    },
+    "BarChart/group-series-horizontal": {
+      "hash": "d634a27ab9bc3f16",
+      "elements": 77
+    },
+    "BarChart/group-series-labels": {
+      "hash": "df39af61fc2263f0",
+      "elements": 105
+    },
+    "BarChart/group-series-series-long-data": {
+      "hash": "4d590ae69ff81507",
+      "elements": 85
+    },
+    "BarChart/highlight-below-marks": {
+      "hash": "327c131be9549b94",
+      "elements": 83
+    },
+    "BarChart/histogram-date-time-count": {
+      "hash": "f780b8dd8b679010",
+      "elements": 81
+    },
+    "BarChart/histogram-date-time-interval": {
+      "hash": "452898d1c05de376",
+      "elements": 82
+    },
+    "BarChart/histogram-horizontal": {
+      "hash": "d1ba72eeea5ef36b",
+      "elements": 102
+    },
+    "BarChart/histogram-random-distribution": {
+      "hash": "46495f92180aafc0",
+      "elements": 78
+    },
+    "BarChart/histogram-vertical": {
+      "hash": "b06fd17d5f638a2d",
+      "elements": 81
+    },
+    "BarChart/horizontal": {
+      "hash": "640149962973a631",
+      "elements": 103
+    },
+    "BarChart/labels": {
+      "hash": "c7bb34523ad006af",
+      "elements": 103
+    },
+    "BarChart/labels-inside-placement": {
+      "hash": "1a6c85067e12b907",
+      "elements": 103
+    },
+    "BarChart/labels-placement": {
+      "hash": "2653a0eaef805af4",
+      "elements": 106
+    },
+    "BarChart/language-race": {
+      "hash": "e988b64d462bde10",
+      "elements": 148
+    },
+    "BarChart/legend-custom-labels": {
+      "hash": "7eefe6565a39b174",
+      "elements": 61
+    },
+    "BarChart/legend-group-series": {
+      "hash": "7eefe6565a39b174",
+      "elements": 61
+    },
+    "BarChart/legend-placement": {
+      "hash": "7eefe6565a39b174",
+      "elements": 61
+    },
+    "BarChart/legend-stack-series": {
+      "hash": "7364c687ccb37c52",
+      "elements": 61
+    },
+    "BarChart/line-annotation": {
+      "hash": "1e10bfc8b048e96b",
+      "elements": 86
+    },
+    "BarChart/motion-tween": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "BarChart/oscilloscope-frequency": {
+      "hash": "0c3c00a28f313c4b",
+      "elements": 124
+    },
+    "BarChart/override-axis-ticks-with-custom-scale": {
+      "hash": "5b544ac5434f2424",
+      "elements": 275
+    },
+    "BarChart/pan-zoom": {
+      "hash": "826a95c7594d14f6",
+      "elements": 272
+    },
+    "BarChart/pan-zoom-band": {
+      "hash": "5dc647cd635f2367",
+      "elements": 208
+    },
+    "BarChart/pan-zoom-domain-extent": {
+      "hash": "826a95c7594d14f6",
+      "elements": 272
+    },
+    "BarChart/pan-zoom-scale-extent": {
+      "hash": "9c7e76bc807bd7f2",
+      "elements": 272
+    },
+    "BarChart/point-annotation": {
+      "hash": "f866cd6610734303",
+      "elements": 86
+    },
+    "BarChart/radial-horizontal": {
+      "hash": "27a8f4c6ebda204b",
+      "elements": 103
+    },
+    "BarChart/radial-horizontal-color-per-value": {
+      "hash": "f90054d4c0f78cce",
+      "elements": 78
+    },
+    "BarChart/radial-horizontal-duration": {
+      "hash": "0a8ab132757cd3d1",
+      "elements": 89
+    },
+    "BarChart/radial-horizontal-grid-between": {
+      "hash": "f2e375ae2a861851",
+      "elements": 79
+    },
+    "BarChart/radial-vertical": {
+      "hash": "e1bdb8e991027fe6",
+      "elements": 87
+    },
+    "BarChart/radial-vertical-arcpadding": {
+      "hash": "a2fcd4455e840690",
+      "elements": 87
+    },
+    "BarChart/radial-vertical-yrange": {
+      "hash": "abf02b9f80c41d61",
+      "elements": 87
+    },
+    "BarChart/radial-weather": {
+      "hash": "39ae73b35e52d7d2",
+      "elements": 768
+    },
+    "BarChart/range-annotation-multiple": {
+      "hash": "02b281f9042f96f3",
+      "elements": 85
+    },
+    "BarChart/range-annotation-single": {
+      "hash": "f9d876eee8e1498a",
+      "elements": 85
+    },
+    "BarChart/range-annotation-value": {
+      "hash": "b87801a9790c87fc",
+      "elements": 88
+    },
+    "BarChart/remove-rounding": {
+      "hash": "4c25ed7f74787454",
+      "elements": 83
+    },
+    "BarChart/scale-override": {
+      "hash": "ec43f936ad410df2",
+      "elements": 110
+    },
+    "BarChart/series": {
+      "hash": "12745c1884c1bb93",
+      "elements": 93
+    },
+    "BarChart/series-data": {
+      "hash": "bb49674207e2fd54",
+      "elements": 103
+    },
+    "BarChart/series-diverging": {
+      "hash": "eddad6c3d819072e",
+      "elements": 89
+    },
+    "BarChart/series-horizontal": {
+      "hash": "23bedd62406dd87a",
+      "elements": 113
+    },
+    "BarChart/series-horizontal-diverging": {
+      "hash": "d50dfefe34912b95",
+      "elements": 229
+    },
+    "BarChart/series-horizontal-diverging-as-percent": {
+      "hash": "e3dc82f30e90e83e",
+      "elements": 224
+    },
+    "BarChart/series-horizontal-diverging-label-gap": {
+      "hash": "7808bfac1adc4de6",
+      "elements": 190
+    },
+    "BarChart/series-horizontal-diverging-split-scale": {
+      "hash": "8ec2827c2890eb59",
+      "elements": 172
+    },
+    "BarChart/series-horizontal-labels": {
+      "hash": "c9c629547e4e3870",
+      "elements": 69
+    },
+    "BarChart/series-stack-separate-data": {
+      "hash": "b5b6132b6c05818f",
+      "elements": 85
+    },
+    "BarChart/single-axis-x": {
+      "hash": "a7a68a878acb24d6",
+      "elements": 65
+    },
+    "BarChart/single-axis-y": {
+      "hash": "8e08428f7f62355b",
+      "elements": 53
+    },
+    "BarChart/single-dimension": {
+      "hash": "875e64b1ad823d0c",
+      "elements": 179
+    },
+    "BarChart/single-stack-with-indicator": {
+      "hash": "5e4000fece3021cc",
+      "elements": 55
+    },
+    "BarChart/sparkbar": {
+      "hash": "1396a0d0dbe40c6f",
+      "elements": 68
+    },
+    "BarChart/sparkbar-fixed-position-tooltip": {
+      "hash": "1396a0d0dbe40c6f",
+      "elements": 68
+    },
+    "BarChart/sparkbar-negative-data": {
+      "hash": "b3f5e8f5606dfa34",
+      "elements": 68
+    },
+    "BarChart/sparkbar-within-a-paragraph": {
+      "hash": "1396a0d0dbe40c6f",
+      "elements": 68
+    },
+    "BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight": {
+      "hash": "1396a0d0dbe40c6f",
+      "elements": 68
+    },
+    "BarChart/stack-series": {
+      "hash": "409623fceaae34e1",
+      "elements": 73
+    },
+    "BarChart/stack-series-diverging": {
+      "hash": "7de6d3a5e5911fe9",
+      "elements": 62
+    },
+    "BarChart/stack-series-expand": {
+      "hash": "e807d586dea71330",
+      "elements": 65
+    },
+    "BarChart/stack-series-horizontal": {
+      "hash": "b9f42ba6de2b05d8",
+      "elements": 77
+    },
+    "BarChart/stack-series-padded": {
+      "hash": "e581eccd42833ed0",
+      "elements": 73
+    },
+    "BarChart/time-scale-interval": {
+      "hash": "83f8a72912960de8",
+      "elements": 90
+    },
+    "BarChart/time-scale-interval-horizontal": {
+      "hash": "a5b7e3da1716b8f1",
+      "elements": 88
+    },
+    "BarChart/time-scale-interval-with-inset": {
+      "hash": "8b919fd95d49a0ee",
+      "elements": 83
+    },
+    "BarChart/tooltip-click": {
+      "hash": "327c131be9549b94",
+      "elements": 83
+    },
+    "BarChart/vertical-default": {
+      "hash": "327c131be9549b94",
+      "elements": 83
+    },
+    "BarChart/vertical-fixed-width": {
+      "hash": "d40650447bb2f6c6",
+      "elements": 83
+    },
+    "BarChart/waterfall": {
+      "hash": "325711b5eac093ef",
+      "elements": 73
+    },
+    "Bars/horizontal-average-annotation-rule": {
+      "hash": "3e3e35abc788cce7",
+      "elements": 95
+    },
+    "Bars/horizontal-basic": {
+      "hash": "a3e4272acf3d32ce",
+      "elements": 92
+    },
+    "Bars/horizontal-calculated-value-domain-negative": {
+      "hash": "641fe01bd8ad69cc",
+      "elements": 92
+    },
+    "Bars/horizontal-calculated-value-domain-positive": {
+      "hash": "b06f3dcdffaeaf3e",
+      "elements": 92
+    },
+    "Bars/horizontal-candlestick-bars": {
+      "hash": "4baeff3fd16df433",
+      "elements": 323
+    },
+    "Bars/horizontal-click-handler": {
+      "hash": "196c90fac49ee049",
+      "elements": 102
+    },
+    "Bars/horizontal-customize-individual-styles": {
+      "hash": "a3e4272acf3d32ce",
+      "elements": 92
+    },
+    "Bars/horizontal-gradient": {
+      "hash": "c44a4004b1de9edd",
+      "elements": 92
+    },
+    "Bars/horizontal-grouped": {
+      "hash": "402b3f2c3d7d0e67",
+      "elements": 88
+    },
+    "Bars/horizontal-grouped-and-stacked": {
+      "hash": "3600f088eda424b3",
+      "elements": 104
+    },
+    "Bars/horizontal-grouped-stacked-or-both-transition": {
+      "hash": "efd760ddb9dabf9d",
+      "elements": 88
+    },
+    "Bars/horizontal-highlight-individual-bar": {
+      "hash": "27c479079d946683",
+      "elements": 95
+    },
+    "Bars/horizontal-highlight-individual-bar-line": {
+      "hash": "b7b0deecf4f97f8d",
+      "elements": 93
+    },
+    "Bars/horizontal-inside-labels": {
+      "hash": "4f53f4781f72eafb",
+      "elements": 101
+    },
+    "Bars/horizontal-limit-ticks-count": {
+      "hash": "b1e2a76e186b434e",
+      "elements": 74
+    },
+    "Bars/horizontal-limit-ticks-second-scale": {
+      "hash": "891e29d6e80c7369",
+      "elements": 77
+    },
+    "Bars/horizontal-multiple-diverging": {
+      "hash": "c6326e077dec2734",
+      "elements": 112
+    },
+    "Bars/horizontal-multiple-overlapping": {
+      "hash": "4a572d073a95f533",
+      "elements": 112
+    },
+    "Bars/horizontal-outside-labels-default": {
+      "hash": "74cd2fab164acef4",
+      "elements": 109
+    },
+    "Bars/horizontal-rounded-right-only": {
+      "hash": "774ed98cadd0e514",
+      "elements": 92
+    },
+    "Bars/horizontal-stacked": {
+      "hash": "50dc48830be80a39",
+      "elements": 88
+    },
+    "Bars/horizontal-stacked-percent": {
+      "hash": "af084118ad9531e9",
+      "elements": 96
+    },
+    "Bars/horizontal-stagger-tween-on-mount": {
+      "hash": "d5e933903c312867",
+      "elements": 82
+    },
+    "Bars/horizontal-time-scale-with-inset": {
+      "hash": "4dada0c70096eb8c",
+      "elements": 77
+    },
+    "Bars/horizontal-time-scale-with-interval": {
+      "hash": "44e199bd52a89fb7",
+      "elements": 77
+    },
+    "Bars/horizontal-time-scale-with-missing-data": {
+      "hash": "2a9fcc60ad0e10e3",
+      "elements": 70
+    },
+    "Bars/horizontal-tooltip-and-bar-highlight": {
+      "hash": "196c90fac49ee049",
+      "elements": 102
+    },
+    "Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar": {
+      "hash": "5e578b43c3dd4c81",
+      "elements": 72
+    },
+    "Bars/horizontal-tooltip-and-clipped-highlight": {
+      "hash": "196c90fac49ee049",
+      "elements": 102
+    },
+    "Bars/horizontal-tooltip-and-highlight": {
+      "hash": "196c90fac49ee049",
+      "elements": 102
+    },
+    "Bars/horizontal-tween-on-mount": {
+      "hash": "d5e933903c312867",
+      "elements": 82
+    },
+    "Bars/horizontal-with-grid-on-top": {
+      "hash": "ea336c0fad114e77",
+      "elements": 92
+    },
+    "Bars/horizontal-with-grid-on-top-mix-blend": {
+      "hash": "ea336c0fad114e77",
+      "elements": 92
+    },
+    "Bars/vertical-average-annotation-rule": {
+      "hash": "c36043a6e919cbd7",
+      "elements": 115
+    },
+    "Bars/vertical-basic": {
+      "hash": "b2a89d9bb075faac",
+      "elements": 112
+    },
+    "Bars/vertical-calculated-value-domain-negative": {
+      "hash": "51735235ae60bc4c",
+      "elements": 111
+    },
+    "Bars/vertical-calculated-value-domain-positive": {
+      "hash": "f39d34ad04960318",
+      "elements": 111
+    },
+    "Bars/vertical-click-handler": {
+      "hash": "a675905683397eff",
+      "elements": 132
+    },
+    "Bars/vertical-customize-individual-styles": {
+      "hash": "b2a89d9bb075faac",
+      "elements": 112
+    },
+    "Bars/vertical-fixed-width": {
+      "hash": "fa27b6f0069fdd63",
+      "elements": 112
+    },
+    "Bars/vertical-gradient": {
+      "hash": "dd6c02ea4efad4fe",
+      "elements": 112
+    },
+    "Bars/vertical-grouped": {
+      "hash": "91346a44a7dd0fab",
+      "elements": 72
+    },
+    "Bars/vertical-grouped-and-stacked": {
+      "hash": "05a86bc3cd0045c2",
+      "elements": 80
+    },
+    "Bars/vertical-grouped-stacked-or-both-transition": {
+      "hash": "67ca4d5687b3c945",
+      "elements": 72
+    },
+    "Bars/vertical-highlight-individual-bar": {
+      "hash": "23516000f490ff96",
+      "elements": 115
+    },
+    "Bars/vertical-highlight-individual-bar-line": {
+      "hash": "8402cccf345fa51f",
+      "elements": 113
+    },
+    "Bars/vertical-inside-labels": {
+      "hash": "173be0e6fbd25659",
+      "elements": 161
+    },
+    "Bars/vertical-limit-ticks-count": {
+      "hash": "976bac28007921e6",
+      "elements": 64
+    },
+    "Bars/vertical-limit-ticks-second-scale": {
+      "hash": "10a5eabfac6eee42",
+      "elements": 61
+    },
+    "Bars/vertical-multiple-diverging": {
+      "hash": "e10cff8690cf25bc",
+      "elements": 128
+    },
+    "Bars/vertical-multiple-diverging-rounded-specific": {
+      "hash": "5062243f50a8b6ab",
+      "elements": 178
+    },
+    "Bars/vertical-multiple-overlapping": {
+      "hash": "3a73e4b297c68391",
+      "elements": 128
+    },
+    "Bars/vertical-outside-labels-default": {
+      "hash": "0afd808aca6507d5",
+      "elements": 149
+    },
+    "Bars/vertical-rounded-top-only": {
+      "hash": "d3c3f1d155be4e66",
+      "elements": 112
+    },
+    "Bars/vertical-stacked": {
+      "hash": "ca21464e13ce8774",
+      "elements": 72
+    },
+    "Bars/vertical-stacked-percent": {
+      "hash": "7653a96e19213c87",
+      "elements": 76
+    },
+    "Bars/vertical-stagger-tween-on-mount": {
+      "hash": "a33462c26c984779",
+      "elements": 92
+    },
+    "Bars/vertical-stagger-tween-on-mount-rounded-edge": {
+      "hash": "a33462c26c984779",
+      "elements": 92
+    },
+    "Bars/vertical-time-scale-with-inset": {
+      "hash": "e2737313a8d3271a",
+      "elements": 82
+    },
+    "Bars/vertical-time-scale-with-interval": {
+      "hash": "231749c24d467aa1",
+      "elements": 82
+    },
+    "Bars/vertical-time-scale-with-interval-months": {
+      "hash": "231749c24d467aa1",
+      "elements": 82
+    },
+    "Bars/vertical-time-scale-with-missing-data": {
+      "hash": "7044068ae32aa5a1",
+      "elements": 77
+    },
+    "Bars/vertical-tooltip-and-bar-highlight": {
+      "hash": "a675905683397eff",
+      "elements": 132
+    },
+    "Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar": {
+      "hash": "40dffb2893824809",
+      "elements": 56
+    },
+    "Bars/vertical-tooltip-and-clipped-highlight": {
+      "hash": "e11c941327952e63",
+      "elements": 132
+    },
+    "Bars/vertical-tooltip-and-highlight": {
+      "hash": "a675905683397eff",
+      "elements": 132
+    },
+    "Bars/vertical-tween-on-mount": {
+      "hash": "a33462c26c984779",
+      "elements": 92
+    },
+    "Bars/vertical-tween-on-mount-rounded-edge": {
+      "hash": "a33462c26c984779",
+      "elements": 92
+    },
+    "Bars/vertical-with-grid-on-top": {
+      "hash": "42089de91cf0fcfd",
+      "elements": 108
+    },
+    "Bars/vertical-with-grid-on-top-mix-blend": {
+      "hash": "42089de91cf0fcfd",
+      "elements": 108
+    },
+    "BoxPlot/basic": {
+      "hash": "bd560991c673e257",
+      "elements": 70
+    },
+    "BoxPlot/horizontal": {
+      "hash": "8da6f3a04d4ccdec",
+      "elements": 90
+    },
+    "BoxPlot/pre-computed": {
+      "hash": "f6c95b1c0d106427",
+      "elements": 60
+    },
+    "BoxPlot/styled": {
+      "hash": "9a653a2654d6a1db",
+      "elements": 70
+    },
+    "BoxPlot/with-tooltip": {
+      "hash": "c84fd0d344a08c04",
+      "elements": 74
+    },
+    "BoxPlot/with-violin": {
+      "hash": "f80d004181e9716f",
+      "elements": 96
+    },
+    "BrushContext/basic": {
+      "hash": "190d7c5465efd27e",
+      "elements": 8
+    },
+    "BrushContext/constant-labels": {
+      "hash": "7e2b4a11fce41631",
+      "elements": 8
+    },
+    "BrushContext/flame-chart": {
+      "hash": "5ebc011c8ccd8c8a",
+      "elements": 133
+    },
+    "BrushContext/handle-arrows": {
+      "hash": "190d7c5465efd27e",
+      "elements": 8
+    },
+    "BrushContext/handle-labels": {
+      "hash": "190d7c5465efd27e",
+      "elements": 8
+    },
+    "BrushContext/integrated-brush-(both-axis-area)": {
+      "hash": "16a1157575d37e44",
+      "elements": 50
+    },
+    "BrushContext/integrated-brush-(x-axis)": {
+      "hash": "1d04c8915a20260c",
+      "elements": 54
+    },
+    "BrushContext/integrated-brush-(y-axis)": {
+      "hash": "16a1157575d37e44",
+      "elements": 50
+    },
+    "BrushContext/max-window": {
+      "hash": "cbf0fd16c0a8cd76",
+      "elements": 59
+    },
+    "BrushContext/min-max-extent": {
+      "hash": "f64a3f00f91fa9df",
+      "elements": 53
+    },
+    "BrushContext/minimap": {
+      "hash": "d7c3f68c53635622",
+      "elements": 463
+    },
+    "BrushContext/programmatic-control": {
+      "hash": "cdf00cd3201847c7",
+      "elements": 53
+    },
+    "BrushContext/selection": {
+      "hash": "1fc033b722d9f26e",
+      "elements": 262
+    },
+    "BrushContext/separate-chart-(clip-data-y-axis)": {
+      "hash": "a915075902afd8c4",
+      "elements": 52
+    },
+    "BrushContext/separate-chart-(clip-data)": {
+      "hash": "9578330f6d2ed053",
+      "elements": 56
+    },
+    "BrushContext/separate-chart-(filter-data)": {
+      "hash": "b405f4d08c786112",
+      "elements": 55
+    },
+    "BrushContext/simple-styling": {
+      "hash": "190d7c5465efd27e",
+      "elements": 8
+    },
+    "BrushContext/snap-to-month": {
+      "hash": "f64a3f00f91fa9df",
+      "elements": 53
+    },
+    "BrushContext/striped-background": {
+      "hash": "190d7c5465efd27e",
+      "elements": 8
+    },
+    "BrushContext/synced-brushes": {
+      "hash": "34c54b93377b303f",
+      "elements": 118
+    },
+    "BrushContext/tooltip-interop": {
+      "hash": "1d04c8915a20260c",
+      "elements": 54
+    },
+    "Calendar/90-days": {
+      "hash": "1e5f6804eb94c732",
+      "elements": 105
+    },
+    "Calendar/basic": {
+      "hash": "69fcaf67597b628a",
+      "elements": 407
+    },
+    "Calendar/fixed-cell-size": {
+      "hash": "62cf2a530e45d809",
+      "elements": 407
+    },
+    "Calendar/html-with-padding": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Calendar/last-month": {
+      "hash": "47176e983cde04f6",
+      "elements": 40
+    },
+    "Calendar/multiple-years": {
+      "hash": "5c72037ebb3a0d43",
+      "elements": 1215
+    },
+    "Calendar/responsive-cell-size-default": {
+      "hash": "69fcaf67597b628a",
+      "elements": 407
+    },
+    "Calendar/rounded-cells": {
+      "hash": "02ba85486bb13c96",
+      "elements": 395
+    },
+    "Cell/basic": {
+      "hash": "e7c7090c79b59773",
+      "elements": 63
+    },
+    "Cell/circle": {
+      "hash": "76ce2ef225342907",
+      "elements": 63
+    },
+    "Cell/color-scale": {
+      "hash": "3f97b71823747713",
+      "elements": 95
+    },
+    "Cell/punchcard": {
+      "hash": "a1563598c525a1c2",
+      "elements": 127
+    },
+    "Cell/rounded-insets": {
+      "hash": "dfcccba98fd0f9b5",
+      "elements": 71
+    },
+    "Chart/compound-common-scale-with-extra-marks": {
+      "hash": "b458cb753231d553",
+      "elements": 185
+    },
+    "Chart/compound-dual-axis-with-single-chart-using-remapped-scale": {
+      "hash": "56abdcf5554c571f",
+      "elements": 78
+    },
+    "Chart/compound-dual-axis-with-stacked-charts": {
+      "hash": "bcb08a891e69761d",
+      "elements": 78
+    },
+    "Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks": {
+      "hash": "97cf67c923d40579",
+      "elements": 453
+    },
+    "Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down": {
+      "hash": "37487090d1a82aba",
+      "elements": 1378
+    },
+    "Chart/data-chart-multi": {
+      "hash": "b48fe8783c1733c8",
+      "elements": 48
+    },
+    "Chart/data-chart-single": {
+      "hash": "66a338fcf19933e4",
+      "elements": 47
+    },
+    "Chart/data-mark-data": {
+      "hash": "56b776c1a8bab9ce",
+      "elements": 60
+    },
+    "Chart/data-primitive-data": {
+      "hash": "84bb3b600f12ac69",
+      "elements": 70
+    },
+    "Chart/data-series-chart-data": {
+      "hash": "b48fe8783c1733c8",
+      "elements": 48
+    },
+    "Chart/data-series-separate-data": {
+      "hash": "b48fe8783c1733c8",
+      "elements": 48
+    },
+    "Chord/basic": {
+      "hash": "ee40e9acf24bd0f6",
+      "elements": 36
+    },
+    "Chord/directed": {
+      "hash": "1fb9ec97531b3c4b",
+      "elements": 46
+    },
+    "Chord/gradient": {
+      "hash": "fd9565c1e3ca73a7",
+      "elements": 36
+    },
+    "Chord/hover": {
+      "hash": "ba9ef2380dd93d2c",
+      "elements": 36
+    },
+    "Chord/ticks": {
+      "hash": "4be7c9651600c7a6",
+      "elements": 264
+    },
+    "Circle/color-via-ordinal-scale": {
+      "hash": "955cdc4bd0e5d8b2",
+      "elements": 58
+    },
+    "Circle/color-via-threshold-scale": {
+      "hash": "a322b7a093ff8380",
+      "elements": 57
+    },
+    "Circle/data-mode": {
+      "hash": "a2bc8fe8f2c880d0",
+      "elements": 58
+    },
+    "Circle/styling-using-attributes": {
+      "hash": "ac432ebb15bb1dc4",
+      "elements": 63
+    },
+    "Circle/styling-using-classes": {
+      "hash": "fd2f332d21134002",
+      "elements": 63
+    },
+    "Circle/styling-using-css-variables": {
+      "hash": "4e3763337578e98c",
+      "elements": 63
+    },
+    "CircleLegend/basic": {
+      "hash": "c4014e0b159de9ca",
+      "elements": 19
+    },
+    "CircleLegend/label-placement": {
+      "hash": "db0745eebf751c9e",
+      "elements": 41
+    },
+    "CircleLegend/scale-types": {
+      "hash": "f7ddbf0a0b6bb341",
+      "elements": 58
+    },
+    "ClipPath/basic": {
+      "hash": "5d87baf04b8f1690",
+      "elements": 10
+    },
+    "ClipPath/clip-snippet": {
+      "hash": "3763d1ea4fca3f64",
+      "elements": 12
+    },
+    "ClipPath/inverted": {
+      "hash": "4344157e132f8f88",
+      "elements": 10
+    },
+    "ClipPath/use-id": {
+      "hash": "549592ae3fafdc66",
+      "elements": 11
+    },
+    "ColorRamp/basic": {
+      "hash": "48957735ebee49fb",
+      "elements": 47
+    },
+    "ColorRamp/pixelated": {
+      "hash": "512db5867cbbaaf6",
+      "elements": 50
+    },
+    "ColorRamp/schemes": {
+      "hash": "970cb74499262146",
+      "elements": 224
+    },
+    "Contour/sampled": {
+      "hash": "5b80195a1ec25c7b",
+      "elements": 86
+    },
+    "Contour/sampled-interactive": {
+      "hash": "a458b02be96d62e9",
+      "elements": 90
+    },
+    "Contour/volcano-filled": {
+      "hash": "90ea71aeea4ac121",
+      "elements": 77
+    },
+    "Contour/volcano-filled-interactive": {
+      "hash": "040b17d9f93cc223",
+      "elements": 81
+    },
+    "Contour/volcano-lines": {
+      "hash": "df2243825e1f57a7",
+      "elements": 77
+    },
+    "Dagre/basic": {
+      "hash": "cb4e63dfc118b12f",
+      "elements": 78
+    },
+    "Dagre/playground": {
+      "hash": "538b9b0b7d8c0202",
+      "elements": 81
+    },
+    "Dagre/software-user-flow": {
+      "hash": "41596e9d12a44862",
+      "elements": 70
+    },
+    "Dagre/tcp-state-diagram": {
+      "hash": "1fab39181c5de47c",
+      "elements": 121
+    },
+    "Density/bandwidth": {
+      "hash": "7ae03c0689513c30",
+      "elements": 190
+    },
+    "Density/basic": {
+      "hash": "d648379e86c7a098",
+      "elements": 179
+    },
+    "Density/stroke-only": {
+      "hash": "34a1e7d495fd62bc",
+      "elements": 179
+    },
+    "Density/thresholds": {
+      "hash": "962525e079675e6c",
+      "elements": 181
+    },
+    "Density/walmart": {
+      "hash": "637108979f634cee",
+      "elements": 3284
+    },
+    "Density/weighted": {
+      "hash": "6e3214c11dd7623e",
+      "elements": 405
+    },
+    "Dodge/anchor": {
+      "hash": "ef86485215c8fc7b",
+      "elements": 735
+    },
+    "Dodge/bank-failures": {
+      "hash": "674c51be8798876a",
+      "elements": 4056
+    },
+    "Dodge/beeswarm": {
+      "hash": "3671a5fb041ec865",
+      "elements": 141
+    },
+    "Dodge/duration-bars-dense-lanes": {
+      "hash": "b5549b86c421eb01",
+      "elements": 114
+    },
+    "Dodge/grouped-horizontal": {
+      "hash": "0b00f19d9a1b866b",
+      "elements": 386
+    },
+    "Dodge/grouped-vertical": {
+      "hash": "006bcc107f7bd926",
+      "elements": 381
+    },
+    "Dodge/image-beeswarm": {
+      "hash": "1336f5318b1c373d",
+      "elements": 140
+    },
+    "Dodge/penguins": {
+      "hash": "72f90c307ae452f4",
+      "elements": 388
+    },
+    "Dodge/tech-layoffs": {
+      "hash": "bd7faef23a0409ed",
+      "elements": 2923
+    },
+    "Dodge/text-beeswarm": {
+      "hash": "d6d37f317c37e438",
+      "elements": 544
+    },
+    "Dodge/timeline": {
+      "hash": "3a4f17f5839662f4",
+      "elements": 212
+    },
+    "Dodge/timeline-bidirectional": {
+      "hash": "5152052af610ca72",
+      "elements": 173
+    },
+    "Dodge/variable-radius": {
+      "hash": "42b83fff3c91ec93",
+      "elements": 309
+    },
+    "Ellipse/color-via-ordinal-scale": {
+      "hash": "4506043f3af1635b",
+      "elements": 58
+    },
+    "Ellipse/color-via-threshold-scale": {
+      "hash": "9f0c2b2a98d6bd91",
+      "elements": 57
+    },
+    "Ellipse/data-mode": {
+      "hash": "2a7d874d3fe2f0ad",
+      "elements": 58
+    },
+    "Ellipse/styling-using-attributes": {
+      "hash": "923321be04871b0d",
+      "elements": 63
+    },
+    "Ellipse/styling-using-classes": {
+      "hash": "83c6716fc61e0306",
+      "elements": 63
+    },
+    "Ellipse/styling-using-css-variables": {
+      "hash": "1ba4d4958d751aea",
+      "elements": 63
+    },
+    "ForceSimulation/beeswarm": {
+      "hash": "154ddf2b897d9512",
+      "elements": 151
+    },
+    "ForceSimulation/collision-detection": {
+      "hash": "1da844447f395f3e",
+      "elements": 205,
+      "settled": false,
+      "unstable": true
+    },
+    "ForceSimulation/disjoint-graph": {
+      "hash": "ec7d79df1c17b73b",
+      "elements": 617,
+      "settled": false,
+      "unstable": true
+    },
+    "ForceSimulation/games-industry-layoffs": {
+      "hash": "96be7c23c4d5f866",
+      "elements": 500,
+      "settled": false,
+      "unstable": true
+    },
+    "ForceSimulation/graph-drag": {
+      "hash": "db67ca404c239a3f",
+      "elements": 37
+    },
+    "ForceSimulation/graph-playground": {
+      "hash": "e9ebb2a14f962d3c",
+      "elements": 370,
+      "settled": false
+    },
+    "ForceSimulation/group": {
+      "hash": "03b00fb7548748a0",
+      "elements": 39
+    },
+    "ForceSimulation/lattice": {
+      "hash": "888b6d95553c4158",
+      "elements": 1166,
+      "settled": false
+    },
+    "ForceSimulation/layoffs-by-industry": {
+      "hash": "a237c265cf01d18a",
+      "elements": 1733,
+      "settled": false,
+      "unstable": true
+    },
+    "ForceSimulation/text": {
+      "error": "page.evaluate: Execution context was destroyed, most likely because of a navigation",
+      "unstable": true
+    },
+    "ForceSimulation/tree": {
+      "hash": "6e09cc91f93aad87",
+      "elements": 509,
+      "settled": false,
+      "unstable": true
+    },
+    "Frame/basic": {
+      "hash": "2b06813faef653c0",
+      "elements": 60
+    },
+    "Frame/border": {
+      "hash": "2b06813faef653c0",
+      "elements": 60
+    },
+    "Frame/full": {
+      "hash": "3aa64ed6fc01c220",
+      "elements": 60
+    },
+    "Frame/gradient": {
+      "hash": "73a726c551fc26a8",
+      "elements": 58
+    },
+    "GeoCircle/earthquake-globe": {
+      "hash": "21fdbe7ec67caf0e",
+      "elements": 465
+    },
+    "GeoCircle/playground": {
+      "hash": "21ddcc8ba69486bf",
+      "elements": 196
+    },
+    "GeoClipPath/basic": {
+      "hash": "d58a91af972442cb",
+      "elements": 65
+    },
+    "GeoLegend/basic": {
+      "hash": "900e05ba082f1336",
+      "elements": 24
+    },
+    "GeoLegend/canvas-mode": {
+      "hash": "e0cd40363493feda",
+      "elements": 23
+    },
+    "GeoLegend/stacked-units": {
+      "hash": "81510fc9576c4c73",
+      "elements": 19
+    },
+    "GeoLegend/tick-format": {
+      "hash": "2c84505d65912778",
+      "elements": 13
+    },
+    "GeoLegend/ticks": {
+      "hash": "10b6977a6d74063c",
+      "elements": 10
+    },
+    "GeoLegend/variants": {
+      "hash": "8fc6bb9635e4080c",
+      "elements": 22
+    },
+    "GeoPath/animated-globe": {
+      "hash": "c08dfcf743e4080f",
+      "elements": 187
+    },
+    "GeoPath/bubble-map": {
+      "hash": "bcc6bebe2af159fe",
+      "elements": 6337
+    },
+    "GeoPath/choropleth": {
+      "hash": "f10e2926e3e07217",
+      "elements": 3178
+    },
+    "GeoPath/eclipses-globe": {
+      "hash": "8414e5542a0a65f7",
+      "elements": 84
+    },
+    "GeoPath/interpolating-projections": {
+      "hash": "d877aa398dedae3c",
+      "elements": 17,
+      "settled": false,
+      "unstable": true
+    },
+    "GeoPath/paint-brush-selection": {
+      "hash": "fd317b53fb83d686",
+      "elements": 3169
+    },
+    "GeoPath/sketchy-globe": {
+      "hash": "0cee918bce1559b9",
+      "elements": 16
+    },
+    "GeoPath/spike-map": {
+      "hash": "e795f3e34daada43",
+      "elements": 6301
+    },
+    "GeoPath/submarine-cables-globe": {
+      "hash": "8a28d24184ea160e",
+      "elements": 1317
+    },
+    "GeoPath/timezones": {
+      "hash": "7573dc3ddc63f94e",
+      "elements": 363
+    },
+    "GeoPath/tooltip": {
+      "hash": "29c626722359a9d8",
+      "elements": 63
+    },
+    "GeoPath/transform-canvas": {
+      "hash": "883db0a555f0b66b",
+      "elements": 73
+    },
+    "GeoPath/transform-canvas-scale-extent": {
+      "hash": "74022f6dc75efd4f",
+      "elements": 72
+    },
+    "GeoPath/transform-globe-constrain": {
+      "hash": "4dfb0c5ead6bfe56",
+      "elements": 185
+    },
+    "GeoPath/transform-globe-inertia": {
+      "hash": "2b2170054621362d",
+      "elements": 189
+    },
+    "GeoPath/transform-projection": {
+      "hash": "96ae8e418476b6ea",
+      "elements": 73
+    },
+    "GeoPath/transform-world-canvas": {
+      "hash": "17618fb18ab7d3d6",
+      "elements": 197
+    },
+    "GeoPath/transform-world-projection": {
+      "hash": "8463cd36e518afb5",
+      "elements": 197
+    },
+    "GeoPath/translucent-globe": {
+      "hash": "cb546d9f829d1fc8",
+      "elements": 365
+    },
+    "GeoPath/us-country-map": {
+      "hash": "3951a1a86cdb4aea",
+      "elements": 62
+    },
+    "GeoPath/us-state": {
+      "hash": "d2d1d20e4bf83c1e",
+      "elements": 11
+    },
+    "GeoPath/us-state-with-counties": {
+      "hash": "c526611ad82fd9bd",
+      "elements": 66
+    },
+    "GeoPath/us-state-with-surrounding-states": {
+      "hash": "a2266b478e9282fc",
+      "elements": 3299
+    },
+    "GeoPoint/icons": {
+      "hash": "13f53ce4bef852ec",
+      "elements": 312
+    },
+    "GeoPoint/us-airports": {
+      "hash": "4f21330827a8491e",
+      "elements": 3440
+    },
+    "GeoPoint/us-state-capitals": {
+      "hash": "5b1dd396de868e57",
+      "elements": 212
+    },
+    "GeoPoint/world-airports": {
+      "hash": "6ab2cf50fca9b9a4",
+      "elements": 3165
+    },
+    "GeoPoint/world-capitals": {
+      "hash": "f2910a0f6deace53",
+      "elements": 350
+    },
+    "GeoProjection/geojson-preview": {
+      "hash": "3890c3fa48b03703",
+      "elements": 11
+    },
+    "GeoProjection/projection-playground": {
+      "hash": "611cbafecde99150",
+      "elements": 195
+    },
+    "GeoProjection/satellite": {
+      "hash": "51eb2031ef0b72fe",
+      "elements": 21
+    },
+    "GeoProjection/shapefile-preview": {
+      "hash": "285f751d755815ad",
+      "elements": 9
+    },
+    "GeoProjection/topojson-preview": {
+      "hash": "3890c3fa48b03703",
+      "elements": 11
+    },
+    "GeoProjection/true-size": {
+      "hash": "005765de8d175592",
+      "elements": 187
+    },
+    "GeoProjection/true-size-globe": {
+      "hash": "0a92b9cae695f590",
+      "elements": 731
+    },
+    "GeoRaster/globe": {
+      "hash": "56bd6e1563a6a08d",
+      "elements": 187
+    },
+    "GeoRaster/planets": {
+      "hash": "919ba0eaf8cffea6",
+      "elements": 14
+    },
+    "GeoRaster/projections": {
+      "hash": "c4d28a0ba5b227b9",
+      "elements": 189
+    },
+    "GeoRaster/textures": {
+      "hash": "40c04ae1ee89a696",
+      "elements": 12
+    },
+    "GeoRaster/tiles-globe": {
+      "hash": "4406a9d4f91fbfa2",
+      "elements": 191
+    },
+    "GeoSpline/draggable-globe": {
+      "hash": "b8f9b4d6cc73a530",
+      "elements": 1145
+    },
+    "GeoSpline/world-map": {
+      "hash": "b073aa1d5698ef4f",
+      "elements": 249
+    },
+    "GeoTile/basic": {
+      "hash": "c25298b4dc44c3d5",
+      "elements": 81
+    },
+    "GeoTile/clipped": {
+      "hash": "6d7da407833fdac6",
+      "elements": 82
+    },
+    "GeoTile/zoomable": {
+      "hash": "e6bf372d6519bee1",
+      "elements": 91
+    },
+    "GeoTile/zoomable-seamless-layers": {
+      "hash": "879dbb93aa4f3be8",
+      "elements": 103
+    },
+    "GeoTile/zoomable-with-padding": {
+      "hash": "bc82acec3a3e7142",
+      "elements": 99
+    },
+    "Graticule/basic": {
+      "hash": "de13005013fae419",
+      "elements": 20
+    },
+    "Grid/band-scale-between": {
+      "hash": "daf5967caa5252f6",
+      "elements": 28
+    },
+    "Grid/band-scale-default": {
+      "hash": "ea2fc13be0c8f1ad",
+      "elements": 27
+    },
+    "Grid/basic": {
+      "hash": "1c048ab1e93d2ed2",
+      "elements": 23
+    },
+    "Grid/dashed-lines": {
+      "hash": "c8a4c78ae6d03378",
+      "elements": 12
+    },
+    "Grid/explicit-ticks": {
+      "hash": "09a60f3870a16b3a",
+      "elements": 21
+    },
+    "Grid/inject-tick-value": {
+      "hash": "c522e1eac2f41edb",
+      "elements": 55
+    },
+    "Grid/integer-only": {
+      "hash": "5a612e244548adee",
+      "elements": 19
+    },
+    "Grid/padding": {
+      "hash": "8056d3ddd85c82f6",
+      "elements": 23
+    },
+    "Grid/radial": {
+      "hash": "6eec63022872c429",
+      "elements": 22
+    },
+    "Grid/radial-linear": {
+      "hash": "d1459b88f1a7a6a4",
+      "elements": 22
+    },
+    "Grid/tick-count": {
+      "hash": "842ee329ef5d01ad",
+      "elements": 61
+    },
+    "Grid/tick-count-null": {
+      "hash": "84fc67321f4a0268",
+      "elements": 31
+    },
+    "Grid/x-only": {
+      "hash": "8a09871636357f37",
+      "elements": 17
+    },
+    "Grid/y-only": {
+      "hash": "c8a4c78ae6d03378",
+      "elements": 12
+    },
+    "Group/basic": {
+      "hash": "edce7f008934cfc6",
+      "elements": 63
+    },
+    "Group/data-mode": {
+      "hash": "18091f927606da3c",
+      "elements": 71
+    },
+    "Hull/geo": {
+      "hash": "95693090d83976ed",
+      "elements": 161
+    },
+    "Hull/scatter": {
+      "hash": "0e2332495f16d537",
+      "elements": 97
+    },
+    "Image/college-football-map": {
+      "hash": "e47f4a2d9893f7a4",
+      "elements": 474
+    },
+    "Image/country-flags": {
+      "hash": "b12360bccd3b008a",
+      "elements": 77
+    },
+    "Image/pixel-mode": {
+      "hash": "35fa9058085d8605",
+      "elements": 8
+    },
+    "Image/planets": {
+      "hash": "ca5e1306399f6728",
+      "elements": 68
+    },
+    "Image/sports-logos": {
+      "hash": "091830f1cc5922e7",
+      "elements": 70
+    },
+    "Image/us-presidents": {
+      "hash": "e366bd773d96f6ec",
+      "elements": 159
+    },
+    "Labels/voronoi": {
+      "hash": "ca572cb2a56dc3f0",
+      "elements": 412
+    },
+    "Labels/voronoi-geo": {
+      "hash": "e3f4fd4174bf6368",
+      "elements": 655
+    },
+    "Layer/all-3-layers": {
+      "hash": "181e826378ed0dcf",
+      "elements": 10
+    },
+    "Legend/chart-integration": {
+      "hash": "de999f1e0716acfc",
+      "elements": 9
+    },
+    "Legend/chart-placement": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Legend/children-override": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Legend/click-handler": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Legend/diverging": {
+      "hash": "3c3e941a35f81263",
+      "elements": 17
+    },
+    "Legend/diverging-sqrt": {
+      "hash": "f5411676104e6b7d",
+      "elements": 17
+    },
+    "Legend/ordinal": {
+      "hash": "269ba6e432670ecb",
+      "elements": 15
+    },
+    "Legend/quantile": {
+      "hash": "de8e625f5e373631",
+      "elements": 25
+    },
+    "Legend/quantize": {
+      "hash": "e179a702b42c788b",
+      "elements": 25
+    },
+    "Legend/responsive-swatches": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Legend/sequential": {
+      "hash": "4f797b9ac3296666",
+      "elements": 19
+    },
+    "Legend/sequential-log": {
+      "hash": "fba657275159b338",
+      "elements": 45
+    },
+    "Legend/sequential-quantile": {
+      "hash": "91b81ce614eea545",
+      "elements": 7
+    },
+    "Legend/sequential-sqrt": {
+      "hash": "cb3524c207de3e08",
+      "elements": 19
+    },
+    "Legend/sqrt": {
+      "hash": "3b08e7e7d1761722",
+      "elements": 17
+    },
+    "Legend/square-swatch": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Legend/styling": {
+      "hash": "d45ca31ea8b22477",
+      "elements": 29
+    },
+    "Legend/threshold": {
+      "hash": "d53e059953c43e46",
+      "elements": 25
+    },
+    "Legend/vertical-orientation": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "Line/color-via-ordinal-scale": {
+      "hash": "c26f2ad2840c8873",
+      "elements": 69
+    },
+    "Line/color-via-threshold-scale": {
+      "hash": "29652ef10601524a",
+      "elements": 65
+    },
+    "Line/data-mode": {
+      "hash": "58c2313ee1c3e83d",
+      "elements": 69
+    },
+    "Line/styling-using-attributes": {
+      "hash": "f99aa5a1761b4aed",
+      "elements": 64
+    },
+    "Line/styling-using-classes": {
+      "hash": "86002c87fd92b175",
+      "elements": 64
+    },
+    "Line/styling-using-css-variables": {
+      "hash": "de9a32eeb38d4ff1",
+      "elements": 64
+    },
+    "LinearGradient/direction-with-custom-colors": {
+      "hash": "c7a7efe26ad7ac70",
+      "elements": 9
+    },
+    "LinearGradient/explicit-offsets": {
+      "hash": "c7a7efe26ad7ac70",
+      "elements": 9
+    },
+    "LinearGradient/tailwind-colors": {
+      "hash": "7366f59e937606f7",
+      "elements": 15
+    },
+    "LinearGradient/units": {
+      "hash": "cf88e3052e8eb9df",
+      "elements": 18
+    },
+    "LineChart/axis-labels-inside": {
+      "hash": "64b36bcc27dcd809",
+      "elements": 86
+    },
+    "LineChart/basic": {
+      "hash": "96f79bae4abdabc3",
+      "elements": 79
+    },
+    "LineChart/brush": {
+      "hash": "aca889f20cce4da3",
+      "elements": 50
+    },
+    "LineChart/brush-pan-zoom": {
+      "hash": "aca889f20cce4da3",
+      "elements": 50
+    },
+    "LineChart/bump-state-population-ranks": {
+      "hash": "7d7a9d3c66e07ecd",
+      "elements": 1499
+    },
+    "LineChart/curve": {
+      "hash": "cff1c3d63648bbb5",
+      "elements": 79
+    },
+    "LineChart/custom": {
+      "hash": "a93121bb205944bb",
+      "elements": 78
+    },
+    "LineChart/custom-tooltip": {
+      "hash": "96f79bae4abdabc3",
+      "elements": 79
+    },
+    "LineChart/default-series-label": {
+      "hash": "96f79bae4abdabc3",
+      "elements": 79
+    },
+    "LineChart/draw": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "LineChart/dynamic-data": {
+      "hash": "d92a524315a535c5",
+      "elements": 63
+    },
+    "LineChart/gradient-encoding": {
+      "hash": "b9681b16a9f24750",
+      "elements": 76
+    },
+    "LineChart/gradient-threshold": {
+      "hash": "2f13d6643f83676e",
+      "elements": 65
+    },
+    "LineChart/labels": {
+      "hash": "66295d557631da9d",
+      "elements": 139
+    },
+    "LineChart/labels-with-points": {
+      "hash": "a9966a93fa1dcf42",
+      "elements": 175
+    },
+    "LineChart/labels-within-points": {
+      "hash": "c9442aee51f382a0",
+      "elements": 175
+    },
+    "LineChart/large-radial-series": {
+      "hash": "878671844d0ca676",
+      "elements": 148
+    },
+    "LineChart/large-series": {
+      "hash": "79acd6d2472bd2fa",
+      "elements": 153
+    },
+    "LineChart/legend": {
+      "hash": "b9d995967e6d43e5",
+      "elements": 81
+    },
+    "LineChart/line-annotation": {
+      "hash": "82db833b29162cde",
+      "elements": 53
+    },
+    "LineChart/motion-tween": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "LineChart/null-dashed-gaps": {
+      "hash": "e8b01315aa0b5624",
+      "elements": 79
+    },
+    "LineChart/null-gaps": {
+      "hash": "5396e83495de5597",
+      "elements": 102
+    },
+    "LineChart/oscilloscope-time": {
+      "hash": "3b24564833f65c4c",
+      "elements": 27
+    },
+    "LineChart/override-color": {
+      "hash": "a1c14663aa73b779",
+      "elements": 79
+    },
+    "LineChart/pan-zoom": {
+      "hash": "aca889f20cce4da3",
+      "elements": 50
+    },
+    "LineChart/pan-zoom-custom-constrain": {
+      "hash": "80d73564b0340202",
+      "elements": 76
+    },
+    "LineChart/pan-zoom-domain-extent": {
+      "hash": "1db14bdc6ce8bf0f",
+      "elements": 70
+    },
+    "LineChart/pan-zoom-dynamic-data": {
+      "hash": "dfb8b6abb31903ab",
+      "elements": 45
+    },
+    "LineChart/pan-zoom-with-overview": {
+      "hash": "d30eb188653a75cf",
+      "elements": 52
+    },
+    "LineChart/perf-dimension-arrays": {
+      "hash": "9812520156cc0b56",
+      "elements": 66
+    },
+    "LineChart/perf-dimension-arrays-processed": {
+      "hash": "9812520156cc0b56",
+      "elements": 66
+    },
+    "LineChart/perf-series-arrays": {
+      "hash": "9812520156cc0b56",
+      "elements": 66
+    },
+    "LineChart/perf-streaming": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "LineChart/perf-wide-data": {
+      "hash": "1141859accf2a113",
+      "elements": 78
+    },
+    "LineChart/perf-wide-data-processed": {
+      "hash": "16a30f87e6fba3a3",
+      "elements": 63
+    },
+    "LineChart/persist-brush-zoom": {
+      "hash": "d30eb188653a75cf",
+      "elements": 52
+    },
+    "LineChart/persist-series": {
+      "hash": "b9d995967e6d43e5",
+      "elements": 81
+    },
+    "LineChart/point-annotations": {
+      "hash": "da6215a148f56295",
+      "elements": 65
+    },
+    "LineChart/points": {
+      "hash": "a7adf2bc30a232bc",
+      "elements": 115
+    },
+    "LineChart/radar": {
+      "hash": "c2442f7ca9a0a325",
+      "elements": 54
+    },
+    "LineChart/radar-rounded": {
+      "hash": "246b0cdd96baf564",
+      "elements": 54
+    },
+    "LineChart/radar-series": {
+      "hash": "85ca13db554f38bf",
+      "elements": 65
+    },
+    "LineChart/range-annotation": {
+      "hash": "e9535d8992d58216",
+      "elements": 54
+    },
+    "LineChart/series": {
+      "hash": "de426b26334e9ee1",
+      "elements": 81
+    },
+    "LineChart/series-brush": {
+      "hash": "de426b26334e9ee1",
+      "elements": 81
+    },
+    "LineChart/series-custom-highlight-point": {
+      "hash": "de426b26334e9ee1",
+      "elements": 81
+    },
+    "LineChart/series-individual-tooltip": {
+      "hash": "b9d995967e6d43e5",
+      "elements": 81
+    },
+    "LineChart/series-labels-hover": {
+      "hash": "6d1bda627509e3c1",
+      "elements": 81
+    },
+    "LineChart/series-point-annotations": {
+      "hash": "cb7fa1099a70f5a7",
+      "elements": 90
+    },
+    "LineChart/series-point-click": {
+      "hash": "de426b26334e9ee1",
+      "elements": 81
+    },
+    "LineChart/series-programmatic-control": {
+      "hash": "d22f4e847da43d61",
+      "elements": 80
+    },
+    "LineChart/series-separate-data": {
+      "hash": "727dc32dc05b3ddc",
+      "elements": 81
+    },
+    "LineChart/series-separate-data-diff-length": {
+      "hash": "3c83533c8a3ffae6",
+      "elements": 81
+    },
+    "LineChart/series-vertical": {
+      "hash": "87747c3a7ce942a0",
+      "elements": 86
+    },
+    "LineChart/series-with-nulls": {
+      "hash": "58685ffbfc9adede",
+      "elements": 84
+    },
+    "LineChart/single-axis-x": {
+      "hash": "1c7e6c252579ce85",
+      "elements": 61
+    },
+    "LineChart/single-axis-y": {
+      "hash": "a22c63b4462702ca",
+      "elements": 34
+    },
+    "LineChart/smart-labels-with-points": {
+      "hash": "e9a16b27949880d8",
+      "elements": 175
+    },
+    "LineChart/sparkline": {
+      "hash": "57a481bb332f9744",
+      "elements": 9
+    },
+    "LineChart/sparkline-fixed-position-tooltip": {
+      "hash": "1abc7c0ee3dc36f0",
+      "elements": 9
+    },
+    "LineChart/sparkline-within-a-paragraph": {
+      "hash": "57a481bb332f9744",
+      "elements": 9
+    },
+    "LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight": {
+      "hash": "57a481bb332f9744",
+      "elements": 9
+    },
+    "LineChart/sparkline-zero-axis": {
+      "hash": "e254705972e9a2fc",
+      "elements": 9
+    },
+    "LineChart/svelte-milestones": {
+      "hash": "39630b62497e1e63",
+      "elements": 231
+    },
+    "LineChart/threshold": {
+      "hash": "38c7e6df0830a726",
+      "elements": 116
+    },
+    "LineChart/tooltip-click": {
+      "hash": "96f79bae4abdabc3",
+      "elements": 79
+    },
+    "LineChart/vertical": {
+      "hash": "a76cf13e42cdb9aa",
+      "elements": 84
+    },
+    "Link/bended-arrows": {
+      "hash": "b5a4c34bfc089608",
+      "elements": 551
+    },
+    "Link/curves": {
+      "hash": "0a940172d6b75b44",
+      "elements": 66
+    },
+    "Link/playground": {
+      "hash": "c38d95480ae6a20c",
+      "elements": 21
+    },
+    "Link/types": {
+      "hash": "f26e74d5f41d3e5c",
+      "elements": 42
+    },
+    "Marker/line": {
+      "hash": "dbcf10bdb995b7b4",
+      "elements": 30
+    },
+    "Marker/orientation": {
+      "hash": "f14b03e25bfcec8e",
+      "elements": 14
+    },
+    "Marker/spline": {
+      "hash": "eafdf43bc37447a0",
+      "elements": 38
+    },
+    "Marker/spline-w-thicker-stroke": {
+      "hash": "95bde4d26a9a320d",
+      "elements": 32
+    },
+    "Marker/styling": {
+      "hash": "35fb3641156017ff",
+      "elements": 18
+    },
+    "Month/90-days": {
+      "hash": "deb2fdadb115dc52",
+      "elements": 284
+    },
+    "Month/basic": {
+      "hash": "dc78c024b78799ac",
+      "elements": 1125
+    },
+    "Month/custom-cell-size": {
+      "hash": "4267b7ac61cd1d92",
+      "elements": 1125
+    },
+    "Month/multiple-years": {
+      "hash": "f2db7fe5761c49fe",
+      "elements": 3368
+    },
+    "Month/without-day-numbers": {
+      "hash": "e329ff32d152cf31",
+      "elements": 23
+    },
+    "Month/without-month-labels": {
+      "hash": "4f37f3bb692491f0",
+      "elements": 21
+    },
+    "MotionPath/repeat-indefinitely": {
+      "hash": "65dbfe83a6c29055",
+      "elements": 66
+    },
+    "MotionPath/rotate-object-with-path": {
+      "hash": "65dbfe83a6c29055",
+      "elements": 66
+    },
+    "MotionPath/sync-with-draw": {
+      "hash": "65dbfe83a6c29055",
+      "elements": 66
+    },
+    "Pack/basic": {
+      "hash": "128f86d09824b023",
+      "elements": 280
+    },
+    "Partition/filterable": {
+      "hash": "c30a449fb87db3ef",
+      "elements": 1149
+    },
+    "Partition/flame-graph": {
+      "hash": "7322bb8dca25e8da",
+      "elements": 138
+    },
+    "Partition/horizontal": {
+      "hash": "bca1d1d9221e5984",
+      "elements": 1017
+    },
+    "Partition/sunburst": {
+      "hash": "69d14c2a2d01ab7a",
+      "elements": 465
+    },
+    "Partition/vertical": {
+      "hash": "5f6262e72c1050cc",
+      "elements": 1521
+    },
+    "Path/basic": {
+      "hash": "bb2e336843b49d46",
+      "elements": 7
+    },
+    "Pattern/circles": {
+      "hash": "ee39a1106333b140",
+      "elements": 20
+    },
+    "Pattern/circles-custom-pattern-svg-only": {
+      "hash": "19d99cfbdb8afe56",
+      "elements": 26
+    },
+    "Pattern/lineargradient-as-pattern": {
+      "hash": "3af19b7bfb1adb8d",
+      "elements": 16
+    },
+    "Pattern/lines": {
+      "hash": "0e2bdb627e8fd48e",
+      "elements": 20
+    },
+    "Pattern/lines-custom-pattern-svg-only": {
+      "hash": "5f3bc2024367a0bd",
+      "elements": 20
+    },
+    "Pattern/rects": {
+      "hash": "a711d60ce3aaf1a5",
+      "elements": 19
+    },
+    "Pattern/with-fill-color": {
+      "hash": "82fa4416429c5624",
+      "elements": 27
+    },
+    "Pattern/with-lineargradient": {
+      "hash": "a763d44471d6e321",
+      "elements": 27
+    },
+    "Pie/basic": {
+      "hash": "76c8dd9336c1bd62",
+      "elements": 10
+    },
+    "Pie/default-slot-render-each-arc": {
+      "hash": "ad8bda6c8d302954",
+      "elements": 10
+    },
+    "Pie/disable-sorting": {
+      "hash": "a964f4183571ec66",
+      "elements": 10
+    },
+    "Pie/inner-radius-negative": {
+      "hash": "80ac1955b150c749",
+      "elements": 10
+    },
+    "Pie/inner-radius-positive": {
+      "hash": "f504b9d9579507f2",
+      "elements": 10
+    },
+    "Pie/inner-radius-zero-one": {
+      "hash": "f504b9d9579507f2",
+      "elements": 10
+    },
+    "Pie/labels": {
+      "hash": "a8b93f805a1bff93",
+      "elements": 18
+    },
+    "Pie/labels-centroid": {
+      "hash": "a8b93f805a1bff93",
+      "elements": 18
+    },
+    "Pie/labels-centroid-multiple": {
+      "hash": "5107aecb6cfa8b5a",
+      "elements": 26
+    },
+    "Pie/labels-outer": {
+      "hash": "5c270c864ab1835e",
+      "elements": 27
+    },
+    "Pie/labels-outer-radial": {
+      "hash": "d46c79bbef34b9bf",
+      "elements": 18
+    },
+    "Pie/labels-outer-with-padding": {
+      "hash": "c4191632a980fb3d",
+      "elements": 27
+    },
+    "Pie/multiple-data-prop": {
+      "hash": "13924c938e16d236",
+      "elements": 14
+    },
+    "Pie/offset": {
+      "hash": "c9a8c675bb0d1265",
+      "elements": 10
+    },
+    "Pie/outer-radius": {
+      "hash": "3f0bff024903d6a7",
+      "elements": 10
+    },
+    "Pie/pad-angle": {
+      "hash": "5750f053126757e6",
+      "elements": 10
+    },
+    "Pie/pad-angle-with-inner-radius": {
+      "hash": "2524b26dd893db02",
+      "elements": 10
+    },
+    "Pie/partial-range-chart-xrange": {
+      "hash": "61444a1ec88a76cf",
+      "elements": 10
+    },
+    "Pie/partial-range-range-prop": {
+      "hash": "61444a1ec88a76cf",
+      "elements": 10
+    },
+    "Pie/placement": {
+      "hash": "30924ccadaf1371d",
+      "elements": 10
+    },
+    "Pie/placement-center": {
+      "hash": "30924ccadaf1371d",
+      "elements": 10
+    },
+    "Pie/placement-left": {
+      "hash": "30924ccadaf1371d",
+      "elements": 10
+    },
+    "Pie/placement-right": {
+      "hash": "30924ccadaf1371d",
+      "elements": 10
+    },
+    "Pie/tooltip": {
+      "hash": "30924ccadaf1371d",
+      "elements": 10
+    },
+    "Pie/tooltip-with-arcs-slot": {
+      "hash": "28590daba1a67cf1",
+      "elements": 18
+    },
+    "Pie/tweened": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "PieChart/arc": {
+      "hash": "854e8716064480f3",
+      "elements": 12
+    },
+    "PieChart/arc-props": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/basic": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/colors-data-prop": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/colors-interpolator": {
+      "hash": "de2ec48f3c9b2830",
+      "elements": 12
+    },
+    "PieChart/colors-scheme": {
+      "hash": "c0a852f624bce4e5",
+      "elements": 12
+    },
+    "PieChart/colors-variables": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/donut": {
+      "hash": "c3b691a753a1bb3c",
+      "elements": 12
+    },
+    "PieChart/donut-with-text": {
+      "hash": "ae2affe9124af1f5",
+      "elements": 16
+    },
+    "PieChart/labels": {
+      "hash": "e9bb6b695a443b23",
+      "elements": 29
+    },
+    "PieChart/labels-callout": {
+      "hash": "e6000d07c2359176",
+      "elements": 30
+    },
+    "PieChart/legend": {
+      "hash": "1d2ec3b6e53e8504",
+      "elements": 12
+    },
+    "PieChart/legend-custom-label": {
+      "hash": "1d2ec3b6e53e8504",
+      "elements": 12
+    },
+    "PieChart/legend-placement": {
+      "hash": "1d2ec3b6e53e8504",
+      "elements": 12
+    },
+    "PieChart/legend-responsive": {
+      "hash": "1d2ec3b6e53e8504",
+      "elements": 12
+    },
+    "PieChart/legend-with-padding": {
+      "hash": "fbba3c64bbc11fc3",
+      "elements": 12
+    },
+    "PieChart/motion-spring": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "PieChart/motion-tween": {
+      "hash": "fc37a47a5f9ebe67",
+      "elements": 6
+    },
+    "PieChart/offset-slice": {
+      "hash": "b734fb7bddd4dd35",
+      "elements": 12
+    },
+    "PieChart/placement-custom": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/placement-left": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/placement-right": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "PieChart/radius-fixed": {
+      "hash": "28df561bb847a7ce",
+      "elements": 12
+    },
+    "PieChart/radius-offset": {
+      "hash": "7e97c6f46a75f883",
+      "elements": 12
+    },
+    "PieChart/radius-percent": {
+      "hash": "b7bdee8678674d30",
+      "elements": 12
+    },
+    "PieChart/segments": {
+      "hash": "80f41b3827028a04",
+      "elements": 74
+    },
+    "PieChart/series": {
+      "hash": "0929ecaaa540f5d6",
+      "elements": 30
+    },
+    "PieChart/series-click": {
+      "hash": "0929ecaaa540f5d6",
+      "elements": 30
+    },
+    "PieChart/series-props": {
+      "hash": "a67723a6d9d08217",
+      "elements": 22
+    },
+    "PieChart/tooltip-click": {
+      "hash": "e7f63834a9de1616",
+      "elements": 12
+    },
+    "Point/basic": {
+      "hash": "f99f3fd46a00a441",
+      "elements": 61
+    },
+    "Points/basic": {
+      "hash": "28645dc5d23ab896",
+      "elements": 72
+    },
+    "Points/color-via-class": {
+      "hash": "28645dc5d23ab896",
+      "elements": 72
+    },
+    "Points/color-via-fill": {
+      "hash": "5cab96f5d0b88f6f",
+      "elements": 72
+    },
+    "Points/color-via-ordinal-scale": {
+      "hash": "5f00dce2e662a7a2",
+      "elements": 73
+    },
+    "Points/color-via-threshold-scale": {
+      "hash": "32e93ce69ffeb133",
+      "elements": 74
+    },
+    "Points/with-labels": {
+      "hash": "639167a447a0ac31",
+      "elements": 92
+    },
+    "Points/with-tooltip-and-highlight": {
+      "hash": "28645dc5d23ab896",
+      "elements": 72
+    },
+    "Polygon/10-point-star": {
+      "hash": "096f091128e0d687",
+      "elements": 13
+    },
+    "Polygon/12-point-star": {
+      "hash": "0006159d13c8cad0",
+      "elements": 13
+    },
+    "Polygon/14-point-star": {
+      "hash": "5dc89648e2420f48",
+      "elements": 13
+    },
+    "Polygon/16-point-star": {
+      "hash": "e01097305a1ecf2b",
+      "elements": 13
+    },
+    "Polygon/18-point-star": {
+      "hash": "2d93618d108c250d",
+      "elements": 13
+    },
+    "Polygon/20-point-star": {
+      "hash": "1a635f8181cc60c6",
+      "elements": 13
+    },
+    "Polygon/6-point-star": {
+      "hash": "660ee21dce1d3ae2",
+      "elements": 13
+    },
+    "Polygon/8-point-star": {
+      "hash": "cd8443e5ed54ef6c",
+      "elements": 13
+    },
+    "Polygon/arrow": {
+      "hash": "059e4931687db477",
+      "elements": 9
+    },
+    "Polygon/color-via-ordinal-scale": {
+      "hash": "37b734c9166c946a",
+      "elements": 59
+    },
+    "Polygon/color-via-threshold-scale": {
+      "hash": "31d4a1946771322d",
+      "elements": 64
+    },
+    "Polygon/cross": {
+      "hash": "1c88df2c428b730d",
+      "elements": 9
+    },
+    "Polygon/data-mode": {
+      "hash": "6a3defc047c19147",
+      "elements": 59
+    },
+    "Polygon/diamond": {
+      "hash": "32f436391987d1ed",
+      "elements": 11
+    },
+    "Polygon/hexagon": {
+      "hash": "651013d13d66acd0",
+      "elements": 11
+    },
+    "Polygon/octagon": {
+      "hash": "930cbd9931a95df1",
+      "elements": 11
+    },
+    "Polygon/parallelogram": {
+      "hash": "8ca532d58772a5d9",
+      "elements": 11
+    },
+    "Polygon/pentagon": {
+      "hash": "02ad343f884d627f",
+      "elements": 11
+    },
+    "Polygon/playground": {
+      "hash": "53a8046b4b160d3a",
+      "elements": 27
+    },
+    "Polygon/rectangle": {
+      "hash": "20359b525b80cddd",
+      "elements": 11
+    },
+    "Polygon/rhombus": {
+      "hash": "863cdef00dcecd93",
+      "elements": 11
+    },
+    "Polygon/square": {
+      "hash": "0d61c5d327892b54",
+      "elements": 11
+    },
+    "Polygon/trapezoid": {
+      "hash": "7c211554680661d7",
+      "elements": 11
+    },
+    "Polygon/triangle": {
+      "hash": "65521f62900e326f",
+      "elements": 11
+    },
+    "RadialGradient/focal-location-and-radius-with-custom-colors": {
+      "hash": "5acb1659a56da5ab",
+      "elements": 9
+    },
+    "RadialGradient/spreadmethod": {
+      "hash": "5acb1659a56da5ab",
+      "elements": 9
+    },
+    "RadialGradient/tailwind-colors": {
+      "hash": "40f70664f19ca0f2",
+      "elements": 15
+    },
+    "RadialGradient/units": {
+      "hash": "8a058c817e02530d",
+      "elements": 18
+    },
+    "Raster/mandelbrot": {
+      "hash": "28da9f169f6005d9",
+      "elements": 63
+    },
+    "Raster/math-functions": {
+      "hash": "d92eb48c6164cf57",
+      "elements": 92
+    },
+    "Raster/sampled": {
+      "hash": "73b3492f589802c2",
+      "elements": 67
+    },
+    "Raster/us-water-vapor": {
+      "hash": "2bb4c04ce1c6062d",
+      "elements": 55
+    },
+    "Raster/volcano": {
+      "hash": "2672056adb8046f7",
+      "elements": 57
+    },
+    "Raster/with-contour-overlay": {
+      "hash": "7cfa9ef84168b086",
+      "elements": 78
+    },
+    "Rect/color-via-ordinal-scale": {
+      "hash": "8feb90e23339a15b",
+      "elements": 60
+    },
+    "Rect/color-via-threshold-scale": {
+      "hash": "f67c1bae191ef002",
+      "elements": 62
+    },
+    "Rect/data-mode-edge": {
+      "hash": "67ca7c4b40f04332",
+      "elements": 60
+    },
+    "Rect/playground": {
+      "hash": "39f9ce7b118a89d8",
+      "elements": 79
+    },
+    "Rect/styling-using-attributes": {
+      "hash": "0fe0acd17430dd76",
+      "elements": 62
+    },
+    "Rect/styling-using-classes": {
+      "hash": "bdf4cc733099c792",
+      "elements": 62
+    },
+    "Rect/styling-using-css-variables": {
+      "hash": "8a2d2c83feb35d8f",
+      "elements": 62
+    },
+    "Rule/annotation-x": {
+      "hash": "3d61b4dd3ae67a9a",
+      "elements": 60
+    },
+    "Rule/annotation-y": {
+      "hash": "4278adf3230b2b0c",
+      "elements": 60
+    },
+    "Rule/baseline-top-right": {
+      "hash": "280db1e70ccadd07",
+      "elements": 59
+    },
+    "Rule/baseline-x-negative": {
+      "hash": "c15849961d0a96fd",
+      "elements": 64
+    },
+    "Rule/baseline-x-y": {
+      "hash": "7af60168e8325507",
+      "elements": 59
+    },
+    "Rule/baseline-y-negative": {
+      "hash": "26dd9aab8489873d",
+      "elements": 61
+    },
+    "Rule/candlestick": {
+      "hash": "a8115e38c9570819",
+      "elements": 326
+    },
+    "Rule/candlestick-open-close-line-color": {
+      "hash": "a8115e38c9570819",
+      "elements": 326
+    },
+    "Rule/candlestick-with-brushing": {
+      "hash": "fc90fa5ec3c152eb",
+      "elements": 456
+    },
+    "Rule/data-x-band": {
+      "hash": "7134d47aaa508df7",
+      "elements": 132
+    },
+    "Rule/data-x-date": {
+      "hash": "f04e5ea1a7a7acbd",
+      "elements": 75
+    },
+    "Rule/data-x-range": {
+      "hash": "614722ea8dd665d4",
+      "elements": 71
+    },
+    "Rule/data-y-range": {
+      "hash": "b93b07ee65bf5024",
+      "elements": 75
+    },
+    "Rule/lollipop": {
+      "hash": "3e095297c3d2e61c",
+      "elements": 192
+    },
+    "Sankey/complex": {
+      "hash": "e4f466a97792bdc2",
+      "elements": 225
+    },
+    "Sankey/hierarchy": {
+      "hash": "9e07fb76a3274429",
+      "elements": 1020
+    },
+    "Sankey/node-select": {
+      "hash": "cf08c55bb36e5958",
+      "elements": 211
+    },
+    "Sankey/simple": {
+      "hash": "6efed1c7c8b5da11",
+      "elements": 55
+    },
+    "Sankey/tooltip": {
+      "hash": "6505a683c8b6a794",
+      "elements": 211
+    },
+    "ScatterChart/basic": {
+      "hash": "b2835cd1d674a3fe",
+      "elements": 189
+    },
+    "ScatterChart/brush": {
+      "hash": "b2835cd1d674a3fe",
+      "elements": 189
+    },
+    "ScatterChart/custom": {
+      "hash": "7cfb6b25e657ed69",
+      "elements": 196
+    },
+    "ScatterChart/custom-tooltip": {
+      "hash": "b2835cd1d674a3fe",
+      "elements": 189
+    },
+    "ScatterChart/date-series-color-scale": {
+      "hash": "d863917ca21920f9",
+      "elements": 127
+    },
+    "ScatterChart/domain-baseline": {
+      "hash": "44e0bb1d5808b90a",
+      "elements": 163
+    },
+    "ScatterChart/domain-nice": {
+      "hash": "f05182c3b6d77869",
+      "elements": 197
+    },
+    "ScatterChart/domain-padding": {
+      "hash": "dbe098a645e1b640",
+      "elements": 172
+    },
+    "ScatterChart/labels": {
+      "hash": "4972d1261ac883f7",
+      "elements": 389
+    },
+    "ScatterChart/line-annotation": {
+      "hash": "5eb11b8e4afd5310",
+      "elements": 192
+    },
+    "ScatterChart/point-annotations": {
+      "hash": "df22a31a57dabbf6",
+      "elements": 195
+    },
+    "ScatterChart/punchcard": {
+      "hash": "2e87d1a0e4acb8b5",
+      "elements": 188
+    },
+    "ScatterChart/radius-scale": {
+      "hash": "6754c6ed52a01cf6",
+      "elements": 197
+    },
+    "ScatterChart/range-annotation-both": {
+      "hash": "e83b53b986193545",
+      "elements": 193
+    },
+    "ScatterChart/range-annotation-horizontal": {
+      "hash": "67624f6799527f20",
+      "elements": 193
+    },
+    "ScatterChart/range-annotation-vertical": {
+      "hash": "abce447debaaaac4",
+      "elements": 193
+    },
+    "ScatterChart/series": {
+      "hash": "2ea3a16ebd3884f7",
+      "elements": 405
+    },
+    "ScatterChart/series-custom-labels": {
+      "hash": "993b8055cb8c29e1",
+      "elements": 405
+    },
+    "ScatterChart/series-legend": {
+      "hash": "993b8055cb8c29e1",
+      "elements": 405
+    },
+    "ScatterChart/series-tween": {
+      "hash": "993b8055cb8c29e1",
+      "elements": 405
+    },
+    "ScatterChart/series-with-radius": {
+      "hash": "c5e7f711f1d4e9d2",
+      "elements": 405
+    },
+    "ScatterChart/single-axis-x": {
+      "hash": "3ff8937c9a726dc4",
+      "elements": 151
+    },
+    "ScatterChart/single-axis-y": {
+      "hash": "2263350f7553418c",
+      "elements": 153
+    },
+    "ScatterChart/single-dimension": {
+      "hash": "3d6c9cbc6b03390e",
+      "elements": 108
+    },
+    "ScatterChart/tooltip-click": {
+      "hash": "b2835cd1d674a3fe",
+      "elements": 189
+    },
+    "ScatterChart/zoomable-bubble": {
+      "hash": "55b4b5a37b46e710",
+      "elements": 236
+    },
+    "Spline/basic": {
+      "hash": "9fef33d0cdd7352d",
+      "elements": 78
+    },
+    "Spline/basic-start-and-end-snippets": {
+      "hash": "153da423fa0c1f5a",
+      "elements": 64
+    },
+    "Spline/draw": {
+      "hash": "153da423fa0c1f5a",
+      "elements": 64
+    },
+    "Spline/end-slot-with-draw-with-value": {
+      "hash": "f7bf5a4a6ddb5744",
+      "elements": 64
+    },
+    "Spline/end-snippet-with-draw": {
+      "hash": "153da423fa0c1f5a",
+      "elements": 64
+    },
+    "Spline/geo-routes": {
+      "hash": "20b4b39abe61a729",
+      "elements": 186
+    },
+    "Spline/gradient-encoding": {
+      "hash": "b0a72d5a2eaea02d",
+      "elements": 76
+    },
+    "Spline/gradient-threshold": {
+      "hash": "d8636d52c181592e",
+      "elements": 65
+    },
+    "Spline/label-using-start-end-snippets": {
+      "hash": "5e9381495970d080",
+      "elements": 68
+    },
+    "Spline/markers-arrows": {
+      "hash": "153da423fa0c1f5a",
+      "elements": 64
+    },
+    "Spline/math-formula": {
+      "hash": "ab0f514077a79096",
+      "elements": 74
+    },
+    "Spline/multiple-series": {
+      "hash": "bc7f96f34da80c73",
+      "elements": 80
+    },
+    "Spline/multiple-series-highlight-on-hover": {
+      "hash": "bc7f96f34da80c73",
+      "elements": 80
+    },
+    "Spline/multiple-series-using-overrides": {
+      "hash": "97c8ea8e341d86c1",
+      "elements": 57
+    },
+    "Spline/multiple-series-with-labels": {
+      "hash": "7298ed6b9e03a657",
+      "elements": 260
+    },
+    "Spline/playground": {
+      "hash": "b7354ec2444954f0",
+      "elements": 66
+    },
+    "Spline/radial-line-with-areas": {
+      "hash": "dcb60c20dc252416",
+      "elements": 70
+    },
+    "Spline/radial-multi-year-lines": {
+      "hash": "7747e09d836cd49e",
+      "elements": 158
+    },
+    "Spline/radial-radar": {
+      "hash": "0bb2358106ca5eea",
+      "elements": 41
+    },
+    "Spline/stroke-grouping": {
+      "hash": "7a07ae5ea168a12b",
+      "elements": 53
+    },
+    "Spline/tween-on-mount": {
+      "hash": "f6f783891cfc1e33",
+      "elements": 77
+    },
+    "Spline/tweened": {
+      "hash": "153da423fa0c1f5a",
+      "elements": 64
+    },
+    "Spline/vertical": {
+      "hash": "4eaed5dc38cf8c41",
+      "elements": 87
+    },
+    "Spline/with-labels": {
+      "hash": "1da1fa58c5284962",
+      "elements": 138
+    },
+    "Spline/with-tooltip-and-highlight": {
+      "hash": "9fef33d0cdd7352d",
+      "elements": 78
+    },
+    "Text/color-via-ordinal-scale": {
+      "hash": "473acd933931769b",
+      "elements": 71
+    },
+    "Text/color-via-threshold-scale": {
+      "hash": "107a0cd1048bfb61",
+      "elements": 76
+    },
+    "Text/data-mode": {
+      "hash": "d373c1315f5fb872",
+      "elements": 71
+    },
+    "Text/playground": {
+      "hash": "ab0502dc9023ddd8",
+      "elements": 20
+    },
+    "Text/segments": {
+      "hash": "dd1d06d079a6065c",
+      "elements": 10
+    },
+    "Text/truncate-axis-labels": {
+      "hash": "230b84fd3c158f1a",
+      "elements": 70
+    },
+    "Text/word-wrap-axis-labels": {
+      "hash": "90efc8572ba05a15",
+      "elements": 74
+    },
+    "Text/word-wrap-with-explicit-newline": {
+      "hash": "c9a294d5f892eabd",
+      "elements": 8
+    },
+    "Threshold/basic": {
+      "hash": "a067f4a1287ff2cd",
+      "elements": 87
+    },
+    "Threshold/with-labels": {
+      "hash": "2c6cee2f235c971e",
+      "elements": 147
+    },
+    "Threshold/with-tooltip-and-highlight": {
+      "hash": "a067f4a1287ff2cd",
+      "elements": 87
+    },
+    "Tooltip/anchor-location": {
+      "hash": "843af0e4b64c21de",
+      "elements": 81
+    },
+    "Tooltip/area": {
+      "hash": "1e3ddeaa09d8a237",
+      "elements": 84
+    },
+    "Tooltip/basic": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/color-swatch": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/color-swatch-using-theme": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/custom-content": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/data-snapping": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/default-mouse-position-with-offset": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/disable-motion": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/duration": {
+      "hash": "c8b438cf22282a7a",
+      "elements": 119
+    },
+    "Tooltip/externally-access-tooltip-data": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/invert-variant": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/multiple-overlapping-bars": {
+      "hash": "ce58dc0466ccc073",
+      "elements": 172
+    },
+    "Tooltip/multiple-overlapping-durations": {
+      "hash": "0a8cc5d8953ed3c1",
+      "elements": 168
+    },
+    "Tooltip/multiple-tooltips-with-fixed-single-axis": {
+      "hash": "b08cb8cf1f24dffc",
+      "elements": 79
+    },
+    "Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband": {
+      "hash": "d3ef166b9a60e0dc",
+      "elements": 137
+    },
+    "Tooltip/portal-overflow": {
+      "hash": "2575d210bc33157b",
+      "elements": 67
+    },
+    "Tooltip/scatter-plot": {
+      "hash": "e4c1f3c10d9a5a5c",
+      "elements": 181
+    },
+    "Tooltip/simple-bars": {
+      "hash": "eba317ce18469a2e",
+      "elements": 142
+    },
+    "Tooltip/single-date-time": {
+      "hash": "500521189f772f72",
+      "elements": 86
+    },
+    "Tooltip/stacked-area": {
+      "hash": "4dfaa4a7b6af4be0",
+      "elements": 88
+    },
+    "Trail/basic": {
+      "hash": "e96103d46a8cb160",
+      "elements": 78
+    },
+    "Trail/curves": {
+      "hash": "4186888510aeb41b",
+      "elements": 30
+    },
+    "Trail/playground": {
+      "hash": "90448444d1aed5aa",
+      "elements": 57
+    },
+    "Trail/tdf-stage": {
+      "hash": "b09cb65f2d2e9c9e",
+      "elements": 77
+    },
+    "TransformContext/pan-zoom-axes": {
+      "hash": "786f15ebcc1d45ae",
+      "elements": 83
+    },
+    "TransformContext/pan-zoom-html-image": {
+      "hash": "17eaba663f60054a",
+      "elements": 16
+    },
+    "TransformContext/pan-zoom-svg-image": {
+      "hash": "6d8dfd5a644c143f",
+      "elements": 17
+    },
+    "TransformContext/planet-distances": {
+      "hash": "a6fb2727b66e61e6",
+      "elements": 84
+    },
+    "TransformContext/playground": {
+      "hash": "9290d0e242081488",
+      "elements": 523
+    },
+    "TransformContext/scroll-activation-key": {
+      "hash": "6d8dfd5a644c143f",
+      "elements": 17
+    },
+    "Tree/basic": {
+      "hash": "c1431254bd5c2d81",
+      "elements": 41
+    },
+    "Tree/html-nodes": {
+      "hash": "6cd97a55bb0aee5d",
+      "elements": 38
+    },
+    "Tree/playground": {
+      "hash": "de1bb0f11991babd",
+      "elements": 74
+    },
+    "Treemap/basic": {
+      "hash": "c5dce8a4a3772f17",
+      "elements": 39
+    },
+    "Treemap/complex": {
+      "hash": "4530d99ca9d2356d",
+      "elements": 1466
+    },
+    "Treemap/nested-filter": {
+      "hash": "00b184dc390ef845",
+      "elements": 1712
+    },
+    "Treemap/nested-zoom": {
+      "hash": "436552eabf9ffbb6",
+      "elements": 1467
+    },
+    "Treemap/playground": {
+      "hash": "8b02eaf97a8be0bb",
+      "elements": 154
+    },
+    "Treemap/stacked-zoom": {
+      "hash": "d8a2a368c72a3602",
+      "elements": 321
+    },
+    "Vector/anchor": {
+      "hash": "bbfc0c9b6bdfe134",
+      "elements": 67
+    },
+    "Vector/basic": {
+      "hash": "177b6ca7c1a7f8ce",
+      "elements": 30
+    },
+    "Vector/data-mode": {
+      "hash": "2dd3ce84ea45f1a5",
+      "elements": 60
+    },
+    "Vector/election-wind-map": {
+      "hash": "be3642f2880e1967",
+      "elements": 3119
+    },
+    "Vector/shapes": {
+      "hash": "83b6a06dde170e05",
+      "elements": 34
+    },
+    "Vector/wind-map": {
+      "hash": "6cd060e139ed984a",
+      "elements": 4854
+    },
+    "Violin/bandwidth": {
+      "hash": "b4f57cce35598698",
+      "elements": 58
+    },
+    "Violin/basic": {
+      "hash": "2ad932db56cfb51a",
+      "elements": 48
+    },
+    "Violin/horizontal": {
+      "hash": "7c7d0ad6e6b9db55",
+      "elements": 76
+    },
+    "Violin/with-box-median": {
+      "hash": "1f61c34a614786fe",
+      "elements": 56
+    },
+    "Voronoi/radius": {
+      "hash": "9e35f1f3c06c3844",
+      "elements": 312
+    },
+    "Waffle/auto-multiple": {
+      "hash": "35c7c04052c250d4",
+      "elements": 49
+    },
+    "Waffle/band-padding": {
+      "hash": "d2e6761d00650aaf",
+      "elements": 59
+    },
+    "Waffle/basic": {
+      "hash": "1bff43541fa173e4",
+      "elements": 57
+    },
+    "Waffle/circular-cells": {
+      "hash": "2eed3dff273c5e4e",
+      "elements": 124
+    },
+    "Waffle/custom-symbol": {
+      "hash": "95b084ca9305473e",
+      "elements": 90
+    },
+    "Waffle/horizontal": {
+      "hash": "f891b5863155c3d5",
+      "elements": 61
+    },
+    "Waffle/months": {
+      "hash": "9c75a2cceb720c21",
+      "elements": 85
+    },
+    "Waffle/olympians-by-birth-year": {
+      "hash": "0f7d0766d2d512c9",
+      "elements": 88
+    },
+    "Waffle/olympians-by-sex": {
+      "hash": "93289a2913bf50d8",
+      "elements": 44
+    },
+    "Waffle/olympians-weight-by-sex": {
+      "hash": "c2185ba5be13916c",
+      "elements": 150
+    },
+    "Waffle/penguins": {
+      "hash": "76dda2f9891b7a63",
+      "elements": 65
+    },
+    "Waffle/stacked": {
+      "hash": "a5ddca7f92946275",
+      "elements": 113
+    },
+    "Waffle/survey": {
+      "hash": "e2e1fba4f4fa6402",
+      "elements": 46
+    },
+    "Waffle/unit-multiple": {
+      "hash": "2d4a5e646a10099c",
+      "elements": 57
+    }
+  }
+}

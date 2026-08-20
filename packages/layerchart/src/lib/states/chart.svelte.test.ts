@@ -2433,3 +2433,156 @@ describe('ChartState stacked domain with mixed marks', () => {
     }
   });
 });
+
+describe('ChartState c as a grouping channel', () => {
+  type FruitRow = { year: string; fruit: string; value: number };
+  const longData: FruitRow[] = [
+    { year: '2024', fruit: 'apples', value: 10 },
+    { year: '2024', fruit: 'bananas', value: 20 },
+    { year: '2025', fruit: 'apples', value: 30 },
+    { year: '2025', fruit: 'bananas', value: 40 },
+  ];
+
+  it('names groups when `c` names a column', () => {
+    const { state, cleanup } = createChartState<FruitRow>({
+      data: longData,
+      x: 'year',
+      y: 'value',
+      c: 'fruit',
+    });
+
+    try {
+      expect(state.cGroups).toEqual(['apples', 'bananas']);
+      expect(state.cKey(longData[0])).toBe('apples');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('names nothing when `c` computes a colour per row', () => {
+    // Grouping on a computed colour would cut one series into a path per colour, joining points
+    // that are not adjacent
+    const { state, cleanup } = createChartState<TestData>({
+      data: [
+        { date: '2024-01', value: -10 },
+        { date: '2024-02', value: 20 },
+      ],
+      x: 'date',
+      y: 'value',
+      c: (d: TestData) => (d.value < 0 ? 'under' : 'over'),
+      cDomain: ['over', 'under'],
+    });
+
+    try {
+      expect(state.cGroups).toBeNull();
+      expect(state.cKey({ date: '2024-01', value: -10 })).toBeNull();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('names nothing when `c` resolves to an interval', () => {
+    // `BarChart` passes its value accessor as `c`, so a `y={['start', 'end']}` chart hands a pair
+    // per row to the colour channel — pairs are not category names
+    const data = [
+      { date: '2024-01', start: 5, end: 10 },
+      { date: '2024-02', start: 8, end: 16 },
+    ];
+
+    const { state, cleanup } = createChartState<any>({
+      data,
+      x: 'date',
+      y: ['start', 'end'],
+      c: ['start', 'end'],
+    });
+
+    try {
+      expect(state.cGroups).toBeNull();
+      expect(state.cKey(data[0])).toBeNull();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('does not infer a stack without a value accessor', () => {
+    // A chart that places its own marks — a beeswarm dodging along one axis — has no magnitude to
+    // accumulate, and inferring a stack would give the other axis a domain, ticks and gridlines
+    const { state, cleanup } = createChartState<FruitRow>({
+      data: longData,
+      x: 'year',
+      c: 'fruit',
+    });
+
+    try {
+      expect(state.seriesLayout).toBe('overlap');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('infers a stack once there is a value accessor to stack', () => {
+    const { state, cleanup } = createChartState<FruitRow>({
+      data: longData,
+      x: 'year',
+      y: 'value',
+      c: 'fruit',
+    });
+
+    try {
+      expect(state.seriesLayout).toBe('stackDiverging');
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState explicit null domain', () => {
+  it('takes the extent from the data rather than adding a baseline', () => {
+    // `yDomain={null}` asks for the data's own extent.  `valueAxis` + `bandPadding` are what turn
+    // on the auto-baseline the null is refusing, so a sparkline stays filled rather than being
+    // squashed against zero
+    const data: TestData[] = [
+      { date: '2024-01', value: 45 },
+      { date: '2024-02', value: 65 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+      yDomain: null,
+      valueAxis: 'y',
+      bandPadding: 0.4,
+    });
+
+    try {
+      // The `null` survives as the resolved domain, leaving the scale to take the extent from the
+      // data — what matters is that nothing pinned it to zero
+      expect(state._yDomain).toBeNull();
+      expect(state.yScale.domain()[0]).toBeGreaterThan(0);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('still auto-derives a baseline when no domain is given', () => {
+    const data: TestData[] = [
+      { date: '2024-01', value: 45 },
+      { date: '2024-02', value: 65 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+    });
+
+    try {
+      expect(state._yDomain).toEqual([0, 65]);
+    } finally {
+      cleanup();
+    }
+  });
+});
