@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Brush): Add `<Brush>`, a selection you place yourself, so one chart can carry several independent brushes with `bind:state` reading each back.
+feat: New Brush component to manually position, useful for multiple / independent brushes (ex. parallel coordinates). Also includes new `brushable` attachment and `brushGesture` handler for even more granular control of `BrushState`

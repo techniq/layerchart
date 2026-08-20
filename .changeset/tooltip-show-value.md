@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Tooltip): Add value-addressed `tooltip.show({ point, value, data })`, so tooltips can be driven programmatically, from the keyboard, or from another chart rather than only by a pointer event.
+feat(Tooltip): Add `tooltip.show({ point, value, data })` to control tooltip programmatically (buttons, keyboard events, etc.)

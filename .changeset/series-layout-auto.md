@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(BarChart|AreaChart): Default `seriesLayout` to `'auto'`, stacking when `series` or an ordinal `c` name layers to stack and overlapping otherwise. Use explicit `seriesLayout="overlap"` to restore previous behavior.
+feat(Chart): Add `seriesLayout="auto"` (default) with automatic stacking when applicable (ex. Area, Bars). Can still pass explicit `seriesLayout` (ex. `overlap`, `group`, `stack`) when needed

@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(AnnotationPoint|AnnotationLine|AnnotationRange): Accept a `seriesKey`, and read a value on the chart's value axis against that series' stacked segment, so an annotation sits on the chart rather than at the share its series contributed.
+feat(AnnotationPoint|AnnotationLine|AnnotationRange): Support `seriesKey` prop to associate an annotation with a series, positioning points and lines on its stacked segment
