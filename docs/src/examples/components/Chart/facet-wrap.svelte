@@ -54,7 +54,7 @@
 	yDomain={[0, 1]}
 	fx={column}
 	fy={row}
-	facet={{ padding: 0.05, axis: false }}
+	facet={{ padding: 0.05, axis: false, tooltip: (d) => d.industry }}
 	axis={false}
 	series={[{ key: 'share', label: 'share of peak', color: 'var(--color-primary)' }]}
 	tooltipContext={{ mode: 'bisect-x' }}

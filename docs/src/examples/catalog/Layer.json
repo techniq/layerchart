@@ -251,7 +251,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1571,6 +1571,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 75,
+      "line": "<Layer>"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -2197,14 +2204,14 @@
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Layer>"
     },
     {
@@ -3898,7 +3905,7 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -3934,6 +3941,13 @@
       "component": "Spline",
       "path": "/docs/components/Spline/stroke-grouping",
       "lineNumber": 18,
+      "line": "<Layer>"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 36,
       "line": "<Layer>"
     },
     {
@@ -4241,14 +4255,14 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 77,
+      "lineNumber": 76,
       "line": "<Layer>"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 92,
+      "lineNumber": 91,
       "line": "<Layer type=\"html\">"
     },
     {
@@ -4385,5 +4399,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:26.645Z"
+  "updatedAt": "2026-08-20T07:29:18.919Z"
 }

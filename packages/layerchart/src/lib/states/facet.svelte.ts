@@ -23,6 +23,17 @@ export type FacetOptions = {
    * @default true
    */
   axis?: boolean | Partial<AxisProps>;
+
+  /**
+   * How the panel names itself in the tooltip header, in front of the hovered value.
+   *
+   * `false` removes it, and a function replaces it — for a grid whose `fx` / `fy` are positions
+   * rather than names, where the panel's own `0 · 2` says nothing and the name it stands for is
+   * somewhere on the row.
+   *
+   * @default true
+   */
+  tooltip?: boolean | ((data: any) => any);
 };
 
 /** A single panel of a faceted chart */
@@ -109,6 +120,27 @@ export class FacetState {
 
   /** Whether the chart is partitioned into panels at all */
   enabled = $derived(this.xDomain.length > 0 || this.yDomain.length > 0);
+
+  /**
+   * What names the hovered row's panel in a tooltip header, or `undefined` for nothing to show.
+   * Distinct from the panel headers (`facet.axis`), which label the panels themselves.
+   *
+   * The `fx` / `fy` values by default, the same as those headers show.  They aren't always the
+   * panel's name though — a wrapped grid facets on position and carries the name on the row — so
+   * `facet.tooltip` takes a function to read it from there instead, or `false` to leave the
+   * header to the value alone.
+   */
+  tooltipLabel(data: any) {
+    const option = this.#ctx.props.facet?.tooltip ?? true;
+    if (option === false) return undefined;
+    if (typeof option === 'function') return option(data) ?? undefined;
+
+    const parts = [this.x?.(data), this.y?.(data)].filter((v) => v != null);
+    if (!parts.length) return undefined;
+    // A lone value is handed back as it came, so a header that formats it still can — only a
+    // crossed grid has to join, and a joined pair is already a string
+    return parts.length === 1 ? parts[0] : parts.join(' · ');
+  }
 
   /** Band scales laying the panels out across the full plot area */
   xScale = $derived(

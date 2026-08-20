@@ -6,6 +6,7 @@ import TestHarness from '../components/tests/TestHarness.svelte';
 import Circle from '../components/Circle/Circle.svelte';
 import Highlight from '../components/Highlight/Highlight.svelte';
 import ScatterChart from '../components/charts/ScatterChart/ScatterChart.svelte';
+import BarChart from '../components/charts/BarChart/BarChart.svelte';
 import Axis from '../components/Axis/Axis.svelte';
 import { panelDatum } from '../utils/tooltip.js';
 import type { ChartState } from './chart.svelte.js';
@@ -442,6 +443,131 @@ describe('facets', () => {
         expect(text.length).toBe(2);
         expect(text.some((v) => v?.includes('11'))).toBe(true);
         expect(text.some((v) => v?.includes('33'))).toBe(true);
+      });
+    });
+
+    describe('panel name', () => {
+      const named = [
+        { g: 0, name: 'North', m: 'Jan', v: 1, w: 11 },
+        { g: 1, name: 'South', m: 'Jan', v: 1, w: 33 },
+      ];
+
+      /** What `DefaultTooltip` puts in front of the hovered value */
+      function label(facet?: Record<string, any>) {
+        const ctx = renderChart({ data: named, fx: 'g', ...(facet ? { facet } : null) });
+        return (row: any) => ctx().facet.tooltipLabel(row);
+      }
+
+      it('is the panel`s `fx` / `fy` values', () => {
+        expect(label()(named[0])).toBe(0);
+      });
+
+      it('joins both when the grid is crossed', () => {
+        expect(label({})(named[0])).toBe(0);
+        const crossed = renderChart({ data: named, fx: 'g', fy: 'name' });
+        expect(crossed().facet.tooltipLabel(named[0])).toBe('0 · North');
+      });
+
+      it('is empty with `tooltip: false`', () => {
+        expect(label({ tooltip: false })(named[0])).toBeUndefined();
+      });
+
+      it('comes off the row with a `tooltip` function', () => {
+        // what a wrapped grid needs: `fx` is a position, and the name is on the row
+        expect(label({ tooltip: (d: any) => d.name })(named[0])).toBe('North');
+      });
+
+      it('is empty when the `tooltip` function has nothing to give', () => {
+        expect(label({ tooltip: () => null })(named[0])).toBeUndefined();
+      });
+
+      /**
+       * The rendered tooltip header for the first panel's bar.
+       *
+       * A `BarChart` rather than the scatter above: `quadtree` / `voronoi` tooltips head their
+       * list with the series instead, so the panel has nowhere to go there.
+       */
+      async function headerText(facet?: Record<string, any>) {
+        render(BarChart, {
+          props: {
+            data: named,
+            x: 'm',
+            y: 'w',
+            fx: 'g',
+            series: [{ key: 'w' }],
+            width: 400,
+            height: 300,
+            padding: 0,
+            ...(facet ? { facet } : null),
+          },
+        } as any);
+
+        // one hit rect per bar, since configured series rule out the panel being the band
+        await expect.poll(() => document.querySelectorAll('.lc-tooltip-rect').length).toBe(2);
+        const rect = document.querySelectorAll('.lc-tooltip-rect')[0];
+
+        let text: string | undefined;
+        await vi.waitFor(() => {
+          rect.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+          rect.dispatchEvent(new PointerEvent('pointermove', { bubbles: true }));
+
+          text = document.querySelector('.lc-tooltip-root')?.textContent?.replace(/\s+/g, ' ');
+          expect(text).toBeTruthy();
+        });
+        return text!;
+      }
+
+      it('reaches the tooltip header', async () => {
+        expect(await headerText()).toContain('0 · Jan');
+      });
+
+      it('reaches the tooltip header through a `tooltip` function', async () => {
+        expect(await headerText({ tooltip: (d: any) => d.name })).toContain('North · Jan');
+      });
+
+      it('names each panel in its own tooltip with `facetAll`', async () => {
+        // One tooltip per panel, each for a different row — a header read off the hovered row
+        // would name the hovered panel in all of them
+        render(ScatterChart, {
+          props: {
+            data: [
+              { g: 'a', v: 1, w: 11 },
+              { g: 'b', v: 1, w: 33 },
+            ],
+            x: 'v',
+            y: 'w',
+            fx: 'g',
+            xDomain: [0, 5],
+            yDomain: [0, 50],
+            width: 400,
+            height: 300,
+            padding: 0,
+            tooltipContext: { mode: 'bisect-x' },
+            props: { tooltip: { root: { facetAll: true } } },
+          },
+        } as any);
+
+        const hitArea = (await vi.waitUntil(() =>
+          document.querySelector('.lc-tooltip-context')
+        )) as HTMLElement;
+
+        await vi.waitFor(() => {
+          const rect = hitArea.getBoundingClientRect();
+          const eventInit = {
+            bubbles: true,
+            clientX: rect.x + rect.width * 0.05,
+            clientY: rect.y + rect.height * 0.5,
+          };
+          hitArea.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+          hitArea.dispatchEvent(new PointerEvent('pointermove', eventInit));
+
+          const headers = Array.from(document.querySelectorAll('.lc-tooltip-header')).map((h) =>
+            h.textContent?.replace(/\s+/g, ' ').trim()
+          );
+          expect(headers.length).toBe(2);
+          expect(headers.some((h) => h?.startsWith('a'))).toBe(true);
+          expect(headers.some((h) => h?.startsWith('b'))).toBe(true);
+        });
       });
     });
 

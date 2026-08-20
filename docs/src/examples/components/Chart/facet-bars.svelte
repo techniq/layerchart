@@ -44,6 +44,7 @@
 	{cDomain}
 	{cRange}
 	grid
+	tooltipContext={{ mode: 'facet' }}
 	facet={{
 		axis: {
 			placement: 'bottom',

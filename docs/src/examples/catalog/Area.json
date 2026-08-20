@@ -450,32 +450,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 43,
+          "lineNumber": 42,
           "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} />"
         },
         {
           "component": "Labels",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Labels format=\"integer\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 48,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1044,7 +1044,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 43,
+      "lineNumber": 42,
       "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} />"
     },
     {
@@ -1419,6 +1419,13 @@
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
     {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 76,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
       "example": "facet-wrap",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-wrap",
@@ -1615,5 +1622,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:25.187Z"
+  "updatedAt": "2026-08-20T07:29:17.674Z"
 }

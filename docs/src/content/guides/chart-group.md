@@ -41,7 +41,7 @@ The question to ask is whether the panels measure **the same thing**:
 
 They compose: a faceted chart is a single group member, with one id, so a group of them syncs as any other chart does.
 
-:example{ component="ChartGroup" name="faceted-member" }
+:example{ component="ChartGroup" name="faceted-group" }
 
 Hovering a panel moves the crosshair on the chart below, and vice versa. This example also sets [`facetAll`](/docs/guides/facets#one-tooltip-per-panel), so every panel marks and labels the hovered date with its own value; without it the highlight stays in the panel being hovered.
 
@@ -238,11 +238,30 @@ Use `axis` to share `'y'` / `'both'` instead of the default `'x'`:
 <ChartGroup brush={{ axis: 'both' }}>
 ```
 
-| Member               | Description                                             |
-| -------------------- | ------------------------------------------------------- |
-| `brush`              | Current shared selection — `x`, `y`, `active`, `source` |
-| `setBrush({ x, y })` | Publish a selection to the group                        |
-| `clearBrush()`       | Clear the shared selection                              |
+A chart that shares no axis with the selection reads it as a _membership test_ instead of as a range. `group.brush.contains({ x, y })` takes domain values — the publisher's, not the reader's — so a summary drawn on entirely different scales can still say which rows the selection holds:
+
+```svelte
+<ChartGroup>
+	{#snippet children({ group })}
+		{@const selected = data.filter((d) => group.brush.contains({ x: d.date, y: d.value }))}
+	{/snippet}
+</ChartGroup>
+```
+
+An axis with no selection is unconstrained, so an inactive brush contains everything — a summary starts at full strength rather than empty. It's the counterpart of [`context.brush.contains()`](/docs/guides/brush), for a chart that reads a selection it doesn't own.
+
+::note
+Categorical (band/point) values compare lexicographically here, which is rarely what you want — `Apr` sorts before `Jan`. Compare positions in the domain instead.
+::
+
+:example{ component="Chart" name="facet-brush-summary" }
+
+| Member               | Description                                                  |
+| -------------------- | ------------------------------------------------------------ |
+| `brush`              | Current shared selection — `x`, `y`, `active`, `source`      |
+| `brush.contains()`   | Whether a point in the publisher's domain values is selected |
+| `setBrush({ x, y })` | Publish a selection to the group                             |
+| `clearBrush()`       | Clear the shared selection                                   |
 
 ## Domain
 

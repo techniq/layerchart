@@ -352,6 +352,21 @@ export class HighlightState {
   });
 
   /**
+   * The colour for a point on `seriesInfo`'s series.
+   *
+   * A series carries its own colour, and that's what the point takes.  The exception is the
+   * default series, which stands in for a chart that has none — there `c` is what colours the
+   * marks, so a point taking the series colour would sit on a line of a different colour.  It's
+   * the rule the `facetAll` copies and the series-less path already follow.
+   */
+  #pointFill(seriesInfo: { color?: string | null }) {
+    if (this.ctx.config.c && this.ctx.series.isDefaultSeries) {
+      return (this.ctx.cGet(this.highlightData) as string) ?? seriesInfo.color ?? '';
+    }
+    return seriesInfo.color ?? '';
+  }
+
+  /**
    * The row this panel marks when the hovered one belongs to another — `facetAll` only.
    *
    * Resolved by position rather than copied, so each panel shows *its* value there, and a panel
@@ -428,7 +443,7 @@ export class HighlightState {
                 return seriesValue.map((sv) => ({
                   x: this.ctx.xScale(sv) + this.xOffset,
                   y: (this.yCoordScalar as number) + this.yOffset,
-                  fill: seriesInfo.color ?? '',
+                  fill: this.#pointFill(seriesInfo),
                   data: { x: sv, y: this.yValue },
                   seriesKey: seriesInfo.key,
                 }));
@@ -436,7 +451,7 @@ export class HighlightState {
                 return seriesValue.map((sv) => ({
                   x: (this.xCoordScalar as number) + this.xOffset,
                   y: this.ctx.yScale(sv) + this.yOffset,
-                  fill: seriesInfo.color ?? '',
+                  fill: this.#pointFill(seriesInfo),
                   data: { x: this.xValue, y: sv },
                   seriesKey: seriesInfo.key,
                 }));
@@ -459,7 +474,7 @@ export class HighlightState {
           return {
             x: pointX,
             y: pointY,
-            fill: seriesInfo.color ?? '',
+            fill: this.#pointFill(seriesInfo),
             data: { x: dataX, y: dataY },
             seriesKey: seriesInfo.key,
           };

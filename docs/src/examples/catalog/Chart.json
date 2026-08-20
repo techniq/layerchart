@@ -289,12 +289,110 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 13,
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 36,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 44,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-band",
+      "title": "facet brush band",
+      "path": "/docs/components/Chart/facet-brush-band",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 37,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-overview",
+      "title": "facet brush overview",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 45,
+          "line": "<ChartGroup>"
+        },
+        {
+          "component": "LineChart",
+          "lineNumber": 51,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 66,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 75,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 76,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-summary",
+      "title": "facet brush summary",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "components": [
+        {
+          "component": "ChartGroup",
+          "lineNumber": 34,
+          "line": "<ChartGroup brush={{ axis: 'both' }}>"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 57,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 65,
+          "line": "<Circle"
+        },
+        {
+          "component": "BarChart",
+          "lineNumber": 84,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "facet-brush-zoom",
+      "title": "facet brush zoom",
+      "path": "/docs/components/Chart/facet-brush-zoom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
           "line": "<Chart"
         },
         {
           "component": "Circle",
-          "lineNumber": 27,
+          "lineNumber": 32,
           "line": "<Circle"
         }
       ]
@@ -2222,7 +2320,28 @@
       "example": "facet-brush",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-brush",
-      "lineNumber": 13,
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 66,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 44,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-brush-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-zoom",
+      "lineNumber": 18,
       "line": "<Chart"
     },
     {
@@ -4585,6 +4704,13 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={25} height={300}>"
     },
     {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
       "example": "tween-on-mount",
       "component": "Spline",
       "path": "/docs/components/Spline/tween-on-mount",
@@ -5117,5 +5243,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:25.746Z"
+  "updatedAt": "2026-08-20T11:19:19.338Z"
 }

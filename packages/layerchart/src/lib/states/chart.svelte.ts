@@ -1018,19 +1018,21 @@ export class ChartState<
   }
 
   /**
-   * Whether the facet panel is the band the tooltip resolves to.
+   * Whether the facet panel is the band the tooltip resolves to — `facet` mode, asked for.
    *
-   * A band scale inside a panel groups the same way `x1` / `y1` do inside a band — the panel is
-   * the outer group and the scale inside it the sub-band.  So `band` mode covers the panel rather
-   * than one of its bars: the highlight marks the whole panel and the tooltip lists its rows.
+   * A band scale inside a panel groups the same way `x1` / `y1` do inside a band, so it can be
+   * read either way: `band` resolves to a bar, and `facet` to the panel around it — the highlight
+   * marking the whole panel and the tooltip listing its rows, which is what a group of a few bars
+   * wants.  Asked for rather than inferred from the presence of `fx`, so that faceting a chart
+   * doesn't quietly change what its tooltip points at.
    *
-   * Configured series rule this out: each row then carries the whole set rather than one
-   * sub-band's share of it, so a band already *is* a row and the panel groups rows that each have
-   * their own values to show.
+   * Configured series rule it back out: each row then carries the whole set rather than one
+   * sub-band's share of it, so a band already *is* a row, and one rect over the panel would
+   * resolve every hover in it to the panel's first row.
    */
   facetBand = $derived.by(
     () =>
-      this.facetState.enabled && this.tooltip.mode === 'band' && this.seriesState.isDefaultSeries
+      this.facetState.enabled && this.tooltip.mode === 'facet' && this.seriesState.isDefaultSeries
   );
 
   width = $derived(this.facetState.width);

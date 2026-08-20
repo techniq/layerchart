@@ -1222,6 +1222,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 51,
+      "line": "<LineChart"
+    },
+    {
       "example": "basic",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/basic",
@@ -1796,5 +1803,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-18T21:14:19.397Z"
+  "updatedAt": "2026-08-20T07:29:18.992Z"
 }

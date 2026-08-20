@@ -149,6 +149,8 @@ A band scale inside each panel makes a grouped bar chart, with the panel doing t
 
 :example{ component="Chart" name="facet-bars" }
 
+Hovering a panel gives one bar by default. `tooltipContext={{ mode: 'facet' }}` gives the group instead — see [bands inside panels](#bands-inside-panels).
+
 `seriesLayout="group"` on a [`BarChart`](/docs/components/BarChart) does the same job from wide data, one column per key. Facet instead when the data is long, when the groups want their own labels, or when the inner bars are a scale of their own rather than a fixed set of series.
 
 ## Annotating one panel
@@ -193,6 +195,50 @@ The pointer resolves the panel it's over, then finds the row within _that_ panel
 
 :example{ component="Chart" name="facet-tooltip" }
 
+### Bands inside panels
+
+A band scale inside a panel can be read two ways, and `mode` says which.
+
+`band`, what the bar charts default to, resolves to a bar — a full-height target over its column, so the pointer doesn't have to find a short bar. `facet` widens that to the panel around it: the highlight marks the whole panel and the tooltip lists its rows. The panel groups the way `x1` / `y1` do inside a band, with the scale inside it as the sub-band.
+
+```svelte
+<!-- a bar per hover: its own value, beside the panel's name -->
+<BarChart {data} x="month" fx="region" />
+
+<!-- the panel per hover: every row it holds -->
+<BarChart {data} x="year" fx="party" tooltipContext={{ mode: 'facet' }} />
+```
+
+A few bars to a panel is what `facet` is for — [grouped bars](#grouped-bars) read as groups when hovering a party gives both its years at once:
+
+:example{ component="Chart" name="facet-bars" }
+
+A dozen bars to a panel is what it isn't:
+
+:example{ component="Chart" name="facet-brush-band" }
+
+Configured `series` rule the grouping out even in `facet` mode — each row then carries the whole set rather than one sub-band's share of it, so a band already _is_ a row, and one target over the panel would resolve every hover in it to the panel's first row.
+
+### Naming the panel
+
+A band value alone names a row in every panel — three panels each have a `Torgersen` — so the tooltip puts the panel in front of it: `Adelie · Torgersen`.
+
+Where the panel _is_ what the pointer resolves to, that name is the header on its own. Either way `facet.tooltip` is what says it:
+
+```svelte
+<!-- the panel facets on position, and carries its name on the row -->
+<Chart {data} fx={column} fy={row} facet={{ tooltip: (d) => d.industry }}>
+
+<!-- or leave the header to the value alone -->
+<Chart {data} fx={column} fy={row} facet={{ tooltip: false }}>
+```
+
+Panel headers are `facet.axis`'s to draw, separately — a wrapped grid usually turns those off and labels its panels itself, and this is the same question asked of the tooltip.
+
+::note
+`quadtree` and `voronoi` tooltips head their list with the series rather than a value, so there's nowhere for the panel to go — `ScatterChart` and hand-composed point charts are unaffected by this option.
+::
+
 ### One tooltip per panel
 
 `facetAll` on the highlight and the tooltip marks and labels the hovered _position_ in every panel, each resolving its own value there:
@@ -206,7 +252,7 @@ The pointer resolves the panel it's over, then finds the row within _that_ panel
 />
 ```
 
-:example{ component="ChartGroup" name="faceted-member" }
+:example{ component="ChartGroup" name="faceted-group" }
 
 Panels with nothing at that position draw no point and no tooltip — the crosshair still marks the position, since that's a place rather than a row. A hand-composed chart sets it on the tooltip directly: `<Tooltip.Root facetAll />`.
 
@@ -222,7 +268,21 @@ A faceted chart resolves tooltips against the rows the panels were partitioned f
 
 A brush gesture belongs to the panel it starts in, so the range it produces is read from that panel's coordinates. What it produces is a range of the _shared_ scales, though — so the selection applies to every panel, and is drawn in each of them.
 
-Zooming to a selection leaves rows outside the new domain positioned outside their panel, where they'd otherwise be drawn over the neighbouring one. `Chart`'s default layout clips its marks while brushing, and `ChartClipPath` sizes itself to the panel, so this is handled for you.
+That shared range is what makes a faceted brush worth having: it lets the panels answer one question together. `contains()` asks whether a point falls inside the selection, and a gesture drawn over one panel picks out the matching rows in all of them:
+
+```svelte
+{@const isSelected = context.brush.contains({ x: d.flipper_length_mm, y: d.body_mass_g })}
+```
+
+:example{ component="Chart" name="facet-brush" }
+
+It takes domain values rather than the row itself, so each point is asked about with the same accessors the chart was given. An axis with no selection is unconstrained — an inactive brush contains everything, so nothing is singled out until a gesture is made.
+
+### Zooming to the selection
+
+`zoomOnBrush` applies the selection instead of leaving it to be read: the range becomes the panels' new domain, and the brush clears.
+
+That leaves the rows outside the new domain positioned outside their panel, where they'd otherwise be drawn over the neighbouring one. `Chart`'s default layout clips its marks while brushing, and `ChartClipPath` sizes itself to the panel, so this is handled for you.
 
 A hand-composed chart clips what it chooses to — wrap the marks that should stay inside the panel, leaving axes and grids out of it:
 
@@ -235,10 +295,45 @@ A hand-composed chart clips what it chooses to — wrap the marks that should st
 </Svg>
 ```
 
-:example{ component="Chart" name="facet-brush" }
+:example{ component="Chart" name="facet-brush-zoom" }
 
 ::note
 Zooming with `transform` isn't facet-aware yet — a pan or pinch moves the whole plot rather than the panel under the pointer. Brushing with `zoomOnBrush` is the way to zoom a faceted chart today.
+::
+
+### Summarising the selection
+
+A [`ChartGroup`](/docs/guides/chart-group) carries the same test to a chart drawn on other scales. The group publishes the selection in the _publisher's_ domain values, so a summary asks about its rows with the faceted chart's accessors rather than with its own:
+
+```svelte
+{@const selected = data.filter((d) =>
+	group.brush.contains({ x: d.flipper_length_mm, y: d.body_mass_g })
+)}
+```
+
+:example{ component="Chart" name="facet-brush-summary" }
+
+### Categories
+
+Brushing a band scale snaps to whole categories, and the run it selects is the same run in every panel.
+
+Which categories those are is a question about _positions_: `brush.x` holds the first and last of them, and the ones between are the ones the domain puts between — not the ones that sort between, which is what `contains()` would compare.
+
+```ts
+const [first, last] = brush.x.map((month) => months.indexOf(month));
+const selected = months.slice(Math.min(first, last), Math.max(first, last) + 1);
+```
+
+:example{ component="Chart" name="facet-brush-band" }
+
+### Driving the panels from elsewhere
+
+The brush needn't live in a panel at all. An overview beside the facets can own it, with the panels narrowing to what it selects:
+
+:example{ component="Chart" name="facet-brush-overview" }
+
+::note
+Narrow the panels by filtering the rows rather than by `xDomain` alone. A domain narrower than the data leaves the rows outside it positioned outside their panel, drawn over the neighbouring one — the panel clip that prevents this is on while a chart is brushing or transforming, and a chart driven from elsewhere is doing neither.
 ::
 
 ## Composed charts

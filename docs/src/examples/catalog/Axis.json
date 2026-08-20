@@ -1085,14 +1085,14 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4767,14 +4767,14 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 39,
+      "lineNumber": 38,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4888,6 +4888,20 @@
       "path": "/docs/components/Spline/stroke-grouping",
       "lineNumber": 20,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"bottom\" rule format=\"none\" />"
     },
     {
       "example": "tween-on-mount",
@@ -5464,5 +5478,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:25.258Z"
+  "updatedAt": "2026-08-20T07:29:17.726Z"
 }

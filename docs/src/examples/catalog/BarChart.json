@@ -2401,6 +2401,20 @@
       "line": "<BarChart"
     },
     {
+      "example": "facet-brush-band",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-band",
+      "lineNumber": 37,
+      "line": "<BarChart"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 84,
+      "line": "<BarChart"
+    },
+    {
       "example": "truncate-axis-labels",
       "component": "Text",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -2415,5 +2429,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-19T14:28:17.909Z"
+  "updatedAt": "2026-08-20T11:19:19.052Z"
 }

@@ -307,7 +307,21 @@
       "example": "facet-brush",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-brush",
-      "lineNumber": 27,
+      "lineNumber": 44,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 65,
+      "line": "<Circle"
+    },
+    {
+      "example": "facet-brush-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-zoom",
+      "lineNumber": 32,
       "line": "<Circle"
     },
     {
@@ -1193,5 +1207,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:25.906Z"
+  "updatedAt": "2026-08-20T11:19:19.529Z"
 }

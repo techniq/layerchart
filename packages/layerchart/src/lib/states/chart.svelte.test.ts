@@ -1994,7 +1994,7 @@ describe('ChartState facetBand', () => {
     { party: 'SPD', year: 2025, percent: 16.4 },
   ];
 
-  function createFaceted(props: Partial<ChartPropsWithoutHTML<FacetData>>, mode = 'band') {
+  function createFaceted(props: Partial<ChartPropsWithoutHTML<FacetData>>, mode = 'facet') {
     const created = createChartState<FacetData>({
       data: facetData,
       x: 'year',
@@ -2012,7 +2012,7 @@ describe('ChartState facetBand', () => {
     return created;
   }
 
-  it('should treat the panel as the band when faceting groups a band scale', () => {
+  it('should treat the panel as the band in `facet` mode', () => {
     const { state, cleanup } = createFaceted({});
 
     try {
@@ -2022,7 +2022,18 @@ describe('ChartState facetBand', () => {
     }
   });
 
-  it('should not treat the panel as the band outside band mode', () => {
+  it('should leave `band` mode resolving to the bar', () => {
+    // Faceting a chart doesn't change what its tooltip points at — `facet` is asked for
+    const { state, cleanup } = createFaceted({}, 'band');
+
+    try {
+      expect(state.facetBand).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not treat the panel as the band outside band modes', () => {
     // `quadtree` resolves to one point, so the panel is never what the pointer covers
     const { state, cleanup } = createFaceted({}, 'quadtree');
 

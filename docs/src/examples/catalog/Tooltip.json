@@ -1088,28 +1088,28 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 50,
+      "lineNumber": 49,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 51,
+      "lineNumber": 50,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} />"
     },
     {
@@ -1124,7 +1124,7 @@
       "component": "Area",
       "path": "/docs/components/Area/stack",
       "lineNumber": 76,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+      "line": "<Tooltip.Header value={data.data.date} format=\"day\" />"
     },
     {
       "example": "stack",
@@ -6688,28 +6688,28 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} />"
     },
     {
@@ -7994,5 +7994,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:27.247Z"
+  "updatedAt": "2026-08-20T07:29:19.700Z"
 }

@@ -64,7 +64,9 @@
         : context.props.y1 != null
           ? context.y
           : context.cKey(data) != null
-            ? (context.valueAxis === 'y' ? context.x : context.y)
+            ? context.valueAxis === 'y'
+              ? context.x
+              : context.y
             : null;
     if (!banded) return [data];
 
@@ -149,42 +151,49 @@
       : null
   );
 
-  // Header label comes from x-axis (or y-axis for horizontal/vertical charts) — or from the facet
-  // when the panel is the band, since the scale inside it labels the items instead
-  const headerLabel = $derived.by(() => {
-    const data = context.tooltip.data;
+  /**
+   * The header for the row being shown — the x-axis value (or the y-axis one for horizontal and
+   * vertical charts), or the facet when the panel is the band, since the scale inside it labels
+   * the items instead.
+   *
+   * Taken from the row it's passed for the same reason `seriesFor` is: with `facetAll` each panel
+   * shows a *different* row, and a header read off the hovered one would name that panel in all of
+   * them.
+   */
+  function headerLabelFor(data: any) {
     if (!data) return undefined;
     if (context.facetBand) {
-      return (context.facet.x ?? context.facet.y)?.(data);
+      return context.facet.tooltipLabel(data);
     }
     return context.valueAxis === 'y' ? context.x(data) : context.y(data);
-  });
+  }
 
   /**
-   * The panel the hovered row sits in, for charts where the panel *isn't* the band.
+   * The panel the row sits in, for charts where the panel *isn't* the band.
    *
    * The band value alone names a row in every panel — three panels each have a `Torgersen` — so it
    * only identifies the row once the panel is in front of it.  Empty when the panel is the band,
-   * since `headerLabel` is already the facet value there.
+   * since the header is already the facet value there.
+   *
+   * What the panel is called is `facet.tooltip`'s to say, so both paths ask it.
    */
-  const facetLabel = $derived.by(() => {
-    const data = context.tooltip.data;
+  function facetLabelFor(data: any) {
     if (!data || context.facetBand || !context.facet.enabled) return undefined;
 
-    const parts = [context.facet.x?.(data), context.facet.y?.(data)].filter((v) => v != null);
-    return parts.length ? parts.join(' · ') : undefined;
-  });
+    return context.facet.tooltipLabel(data);
+  }
 
   /**
-   * `headerLabel` with its facet in front, formatted here rather than by `Tooltip.Header` — the
-   * band value still needs its own format applied before anything is joined to it, or a date or a
+   * The header with its facet in front, formatted here rather than by `Tooltip.Header` — the band
+   * value still needs its own format applied before anything is joined to it, or a date or a
    * number would land in the header raw.
    */
-  const facetHeaderLabel = $derived(
-    facetLabel != null
-      ? `${facetLabel} · ${format(headerLabel, tooltipProps?.header?.format as any)}`
-      : undefined
-  );
+  function facetHeaderLabelFor(data: any) {
+    const facetLabel = facetLabelFor(data);
+    return facetLabel != null
+      ? `${facetLabel} · ${format(headerLabelFor(data), tooltipProps?.header?.format as any)}`
+      : undefined;
+  }
 
   function isSeriesItemHighlighted(seriesKey: string | null | undefined) {
     return seriesKey ? context.series.isHighlighted(seriesKey, true) : undefined;
@@ -242,11 +251,12 @@
         {/if}
       </Tooltip.List>
     {:else}
+      {@const facetHeaderLabel = facetHeaderLabelFor(data)}
       {#if facetHeaderLabel != null}
         <!-- Already formatted above, so `format` is dropped rather than applied a second time -->
         <Tooltip.Header {...tooltipProps?.header} value={facetHeaderLabel} format={undefined} />
       {:else}
-        <Tooltip.Header value={headerLabel} {format} {...tooltipProps?.header} />
+        <Tooltip.Header value={headerLabelFor(data)} {format} {...tooltipProps?.header} />
       {/if}
 
       <Tooltip.List {...tooltipProps?.list}>

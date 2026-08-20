@@ -591,6 +591,46 @@ describe('brush slice', () => {
     await new Promise((resolve) => setTimeout(resolve, 100));
     expect(chartB.brush.active).toBeFalsy();
   });
+
+  describe('contains', () => {
+    it('answers for the current selection, for a chart reading it without a brush', () => {
+      const group = new ChartGroupState();
+      group.setBrush({ x: range });
+
+      expect(group.brush.contains({ x: new Date('2024-01-03') })).toBe(true);
+      expect(group.brush.contains({ x: new Date('2024-01-05') })).toBe(false);
+    });
+
+    it('constrains only the axes with a selection', () => {
+      const group = new ChartGroupState();
+      group.setBrush({ x: range });
+
+      // `y` was never selected, so it can't exclude a point that is within `x`
+      expect(group.brush.contains({ x: new Date('2024-01-03'), y: 1_000_000 })).toBe(true);
+    });
+
+    it('contains everything before a selection is made, and again once cleared', () => {
+      const group = new ChartGroupState();
+      expect(group.brush.contains({ x: new Date('2024-01-05') })).toBe(true);
+
+      group.setBrush({ x: range });
+      expect(group.brush.contains({ x: new Date('2024-01-05') })).toBe(false);
+
+      group.clearBrush();
+      expect(group.brush.contains({ x: new Date('2024-01-05') })).toBe(true);
+    });
+
+    it('is bound to its own selection rather than to whatever object it is called on', () => {
+      const group = new ChartGroupState();
+      group.setBrush({ x: range });
+
+      // Consumers destructure and spread the slice; either would silently answer for the wrong
+      // selection if `contains` resolved `this`
+      const { contains } = group.brush;
+      expect(contains({ x: new Date('2024-01-03') })).toBe(true);
+      expect(contains({ x: new Date('2024-01-05') })).toBe(false);
+    });
+  });
 });
 
 describe('domain slice', () => {

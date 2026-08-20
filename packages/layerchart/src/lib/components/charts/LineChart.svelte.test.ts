@@ -55,6 +55,51 @@ describe('LineChart', () => {
       expect(color).toMatch(/^rgb/);
     });
   });
+
+  it('should colour the highlight point from `c`, like the line it sits on', async () => {
+    // The default series stands in for a chart that has none, so its colour can't win over the one
+    // `c` gave the mark — the point would sit on a line of a different colour.  `facetAll` makes
+    // that visible: its copies resolve `c` already, so the hovered panel's point was the odd one.
+    const faceted = [
+      { region: 'North', date: 0, value: 10 },
+      { region: 'North', date: 1, value: 30 },
+      { region: 'South', date: 0, value: 20 },
+      { region: 'South', date: 1, value: 50 },
+    ];
+    const { container } = render(LineChart, {
+      data: faceted,
+      x: 'date',
+      y: 'value',
+      c: 'region',
+      cRange: ['rgb(1, 1, 1)', 'rgb(2, 2, 2)'],
+      fx: 'region',
+      highlight: { points: true, facetAll: true },
+      height: 300,
+      width: 400,
+    } as any);
+
+    const tooltipRect = container.querySelector('.lc-tooltip-context') as SVGElement | null;
+    await expect.element(tooltipRect).toBeInTheDocument();
+
+    const rect = tooltipRect!.getBoundingClientRect();
+    const eventInit = {
+      bubbles: true,
+      clientX: rect.x + rect.width * 0.1,
+      clientY: rect.y + rect.height / 2,
+    };
+
+    await vi.waitFor(() => {
+      tooltipRect!.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+      tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
+
+      const fills = Array.from(document.querySelectorAll('.lc-highlight-point')).map((p) =>
+        p.getAttribute('fill')
+      );
+      expect(fills.length).toBe(2);
+      // the hovered panel's point included — not the default series colour
+      expect(fills.every((f) => f?.startsWith('rgb('))).toBe(true);
+    });
+  });
 });
 
 describe('legend `c` category toggle', () => {

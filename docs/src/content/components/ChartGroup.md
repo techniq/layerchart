@@ -12,7 +12,7 @@ related: [Chart, Tooltip, Highlight]
 
 ### Faceted member
 
-:example{name="faceted-member"}
+:example{name="faceted-group"}
 
 ### Highlight without tooltips
 

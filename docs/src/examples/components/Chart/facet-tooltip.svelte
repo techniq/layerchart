@@ -15,6 +15,7 @@
 	x="flipper_length_mm"
 	y="body_mass_g"
 	fx="species"
+	cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
 	xNice
 	yNice
 	tooltipContext={{ mode: 'quadtree' }}
@@ -27,13 +28,7 @@
 		<Grid x y />
 		<Axis placement="left" />
 		<Axis placement="bottom" />
-		<Circle
-			cx="flipper_length_mm"
-			cy="body_mass_g"
-			r={2.5}
-			fill="var(--color-primary)"
-			fillOpacity={0.6}
-		/>
+		<Circle cx="flipper_length_mm" cy="body_mass_g" r={2.5} fill="island" fillOpacity={0.6} />
 		<Highlight lines points axis="both" />
 	</Svg>
 

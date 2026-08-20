@@ -379,7 +379,7 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 19,
+          "lineNumber": 15,
           "line": "<AreaChart"
         }
       ]
@@ -858,7 +858,7 @@
       "example": "series-overlap",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-overlap",
-      "lineNumber": 19,
+      "lineNumber": 15,
       "line": "<AreaChart"
     },
     {
@@ -1030,5 +1030,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-08-19T14:28:17.796Z"
+  "updatedAt": "2026-08-20T07:29:17.701Z"
 }

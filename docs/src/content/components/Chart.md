@@ -100,3 +100,7 @@ An individual selectable region can also just set `user-select: text` on itself 
 ### Facet brushing
 
 :example{ name="facet-brush" }
+
+### Facet brush-to-zoom
+
+:example{ name="facet-brush-zoom" }

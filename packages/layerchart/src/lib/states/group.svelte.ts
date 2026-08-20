@@ -6,6 +6,7 @@ import type { BrushDomainType } from './brush.svelte.js';
 import type { DomainType } from '$lib/utils/scales.svelte.js';
 import { findDatumByValue } from '$lib/utils/tooltip.js';
 import { isEqualValue } from '$lib/utils/common.js';
+import { isWithinSelection } from '$lib/utils/brush.js';
 import { scaleInvert, type AnyScale } from '$lib/utils/scales.svelte.js';
 
 /** State slices that can be shared between charts in a group */
@@ -127,14 +128,41 @@ export type ChartGroupBrush = {
   active: boolean;
   /** Identity of the chart that made the selection */
   source: string | symbol | null;
+  /**
+   * Whether a point falls within the selection, in domain values — the group's counterpart of
+   * `context.brush.contains()`, for a chart that reads the selection without owning a brush.
+   *
+   * ```svelte
+   * {@const isSelected = group.brush.contains({ x: d.date, y: d.value })}
+   * ```
+   *
+   * An axis with no selection is unconstrained, so an inactive brush contains everything.  The
+   * comparison is `<` / `>`, so categorical (band/point) values compare lexicographically —
+   * compare positions in the domain instead.
+   */
+  contains(point: { x?: any; y?: any }): boolean;
 };
 
-const emptyBrush = (): ChartGroupBrush => ({
-  x: [null, null],
-  y: [null, null],
-  active: false,
-  source: null,
-});
+/**
+ * Builds a selection with `contains` closed over the values it carries rather than resolving
+ * `this`, so it survives being pulled out of the object — `const { contains } = group.brush`.
+ *
+ * Every selection is built here rather than spread from another: spreading copies the previous
+ * `contains` along with the fields, and it would still answer for the selection it was built
+ * with.
+ */
+function makeBrush(brush: Partial<Omit<ChartGroupBrush, 'contains'>> = {}): ChartGroupBrush {
+  const selection = {
+    x: [null, null] as BrushDomainType,
+    y: [null, null] as BrushDomainType,
+    active: false,
+    source: null as string | symbol | null,
+    ...brush,
+  };
+  return { ...selection, contains: (point) => isWithinSelection(selection, point) };
+}
+
+const emptyBrush = (): ChartGroupBrush => makeBrush();
 
 /**
  * The shared series state.
@@ -392,8 +420,8 @@ export class ChartGroupState {
    * group.setBrush({ x: [start, end] });
    * ```
    */
-  setBrush(brush: Partial<Omit<ChartGroupBrush, 'active'>>) {
-    const next = { ...emptyBrush(), ...brush, active: true };
+  setBrush(brush: Partial<Omit<ChartGroupBrush, 'active' | 'contains'>>) {
+    const next = makeBrush({ ...brush, active: true });
     if (this.brush.active && sameSelection(this.brush, next)) return;
     this.brush = next;
   }
@@ -407,7 +435,7 @@ export class ChartGroupState {
    */
   clearBrush(source: string | symbol | null = null) {
     if (!this.brush.active) return;
-    this.brush = { ...emptyBrush(), source };
+    this.brush = makeBrush({ source });
   }
 
   /**

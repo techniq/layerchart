@@ -227,6 +227,20 @@
   ],
   "usage": [
     {
+      "example": "facet-brush-overview",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-overview",
+      "lineNumber": 45,
+      "line": "<ChartGroup>"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 34,
+      "line": "<ChartGroup brush={{ axis: 'both' }}>"
+    },
+    {
       "example": "basic",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/basic",
@@ -283,5 +297,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-08-19T14:28:18.417Z"
+  "updatedAt": "2026-08-20T07:29:18.128Z"
 }

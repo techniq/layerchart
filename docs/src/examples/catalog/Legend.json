@@ -399,7 +399,7 @@
       "example": "ordinal",
       "component": "Legend",
       "path": "/docs/components/Legend/ordinal",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<Legend"
     },
     {
@@ -578,6 +578,13 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-left\" orientation=\"horizontal\" />"
     },
     {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 42,
+      "line": "<Legend placement=\"bottom\" />"
+    },
+    {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
@@ -599,5 +606,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:26.667Z"
+  "updatedAt": "2026-08-20T07:29:18.939Z"
 }

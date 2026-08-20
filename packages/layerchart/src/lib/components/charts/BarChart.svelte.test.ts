@@ -147,9 +147,17 @@ describe('BarChart', () => {
       { party: 'SPD', year: 2025, votes: 16, other: 6 },
     ];
 
-    it('should cover the whole panel when the panel is the band', async () => {
+    it('should cover the whole panel in `facet` mode', async () => {
       const { container } = render(BarChart, {
-        props: { data: facetData, x: 'year', y: 'votes', fx: 'party', width: 400, height: 300 },
+        props: {
+          data: facetData,
+          x: 'year',
+          y: 'votes',
+          fx: 'party',
+          tooltipContext: { mode: 'facet' },
+          width: 400,
+          height: 300,
+        },
       } as any);
 
       await expect.element(container.querySelector('svg')).toBeInTheDocument();
@@ -157,6 +165,18 @@ describe('BarChart', () => {
       // One per panel rather than one per bar — the tooltip lists the panel's rows
       const rects = container.querySelectorAll('.lc-tooltip-rect');
       expect(rects.length).toBe(2);
+    });
+
+    it('should cover each bar in the default `band` mode, faceted or not', async () => {
+      // Faceting alone doesn't widen the target — `facet` mode is what does
+      const { container } = render(BarChart, {
+        props: { data: facetData, x: 'year', y: 'votes', fx: 'party', width: 400, height: 300 },
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      const rects = container.querySelectorAll('.lc-tooltip-rect');
+      expect(rects.length).toBe(4);
     });
 
     it('should stay per row when series rule the panel out as a band', async () => {

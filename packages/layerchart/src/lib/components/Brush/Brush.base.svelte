@@ -190,6 +190,17 @@
 
 <style>
   @layer components {
+    /*
+      Without this a touch drag is claimed by the browser as a scroll: the page pans and the
+      pointer stream is cancelled part-way, so the brush never completes.  `BrushContext` sets the
+      same on its container — this is the equivalent for the parts that take a drag here.
+    */
+    :global(:where(.lc-brush-root)),
+    :global(:where(.lc-brush-selection)),
+    :global(:where(.lc-brush-handle)) {
+      touch-action: none;
+    }
+
     :global(:where(.lc-brush-selection)) {
       fill: color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent);
     }

@@ -1,6 +1,7 @@
-// Internal helpers behind `BrushState.contains()`.  Kept unexported from the package: the
-// method is the public surface, and d3-brush offers no equivalent to mirror (its `brushSelection`
-// is in pixel space, so every d3 example converts through scales by hand).
+// Internal helpers behind `BrushState.contains()` and `group.brush.contains()`.  Kept unexported
+// from the package: those methods are the public surface, and d3-brush offers no equivalent to
+// mirror (its `brushSelection` is in pixel space, so every d3 example converts through scales by
+// hand).
 
 /**
  * An inclusive `[min, max]` range.  A `null` end is open — it does not constrain that side.

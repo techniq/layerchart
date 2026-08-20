@@ -267,6 +267,20 @@
       "line": "<Points>"
     },
     {
+      "example": "facet-brush",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush",
+      "lineNumber": 36,
+      "line": "<Points>"
+    },
+    {
+      "example": "facet-brush-summary",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-brush-summary",
+      "lineNumber": 57,
+      "line": "<Points>"
+    },
+    {
       "example": "minimap",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/minimap",
@@ -463,5 +477,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-17T11:58:49.575Z"
+  "updatedAt": "2026-08-20T11:19:20.743Z"
 }

@@ -491,32 +491,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 38,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 39,
+          "lineNumber": 38,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
         },
         {
           "component": "Labels",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<Labels format=\"integer\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 43,
+          "lineNumber": 42,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -801,6 +801,38 @@
           "component": "Spline",
           "lineNumber": 21,
           "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "stroke-grouping-with-legend",
+      "title": "stroke grouping with legend",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 37,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 39,
+          "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 42,
+          "line": "<Legend placement=\"bottom\" />"
         }
       ]
     },
@@ -1411,7 +1443,7 @@
       "example": "multiple-series-with-labels",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-with-labels",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
     },
     {
@@ -1476,6 +1508,13 @@
       "path": "/docs/components/Spline/stroke-grouping",
       "lineNumber": 21,
       "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
+    },
+    {
+      "example": "stroke-grouping-with-legend",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping-with-legend",
+      "lineNumber": 39,
+      "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
     },
     {
       "example": "tween-on-mount",
@@ -1583,5 +1622,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:27.146Z"
+  "updatedAt": "2026-08-20T07:29:19.579Z"
 }

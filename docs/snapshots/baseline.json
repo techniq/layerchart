@@ -1577,6 +1577,26 @@
       "hash": "b48fe8783c1733c8",
       "elements": 48
     },
+    "Chart/facet-brush": {
+      "hash": "7a1b730d31657dd6",
+      "elements": 411
+    },
+    "Chart/facet-brush-band": {
+      "hash": "0b5831d230a7a06c",
+      "elements": 171
+    },
+    "Chart/facet-brush-overview": {
+      "hash": "551973f248015629",
+      "elements": 83
+    },
+    "Chart/facet-brush-summary": {
+      "hash": "9c55d31d3b55851f",
+      "elements": 477
+    },
+    "Chart/facet-brush-zoom": {
+      "hash": "6b07ee1ad5c967d6",
+      "elements": 411
+    },
     "Chord/basic": {
       "hash": "ee40e9acf24bd0f6",
       "elements": 36

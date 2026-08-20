@@ -8,6 +8,7 @@
     | 'bisect-x' // requires values to be sorted
     | 'bisect-y' // requires values to be sorted
     | 'band'
+    | 'facet' // the panel as the band, for a band scale grouped by `fx` / `fy`
     | 'bisect-band' // requires values to be sorted
     | 'bounds'
     | 'voronoi'
@@ -165,6 +166,13 @@
 
   const tooltipState = new TooltipState<TData>(mode, showTooltip, hideTooltip);
   stateProp = tooltipState;
+
+  /**
+   * Both modes resolve through a hit rect over the band.  They differ only in what that rect
+   * covers — `facetBand` decides that — so everything else here treats them alike, and `facet`
+   * falls back to a rect per bar wherever the panel isn't the band.
+   */
+  const isBandMode = mode === 'band' || mode === 'facet';
 
   const debug = $derived(debugProp ?? settings.debug);
 
@@ -597,7 +605,7 @@
       ];
     }
 
-    if (mode === 'bounds' || mode === 'band') {
+    if (mode === 'bounds' || isBandMode) {
       return rows
         .map((d) => {
           const xValue = ctx.xGet(d);
@@ -616,7 +624,7 @@
           const fullWidth = max(ctx.xRange) - min(ctx.xRange);
           const fullHeight = max(ctx.yRange) - min(ctx.yRange);
 
-          if (mode === 'band') {
+          if (isBandMode) {
             if (isScaleBand(ctx.xScale)) {
               // full band width/height regardless of value
               return {
@@ -856,7 +864,7 @@
           />
         </Svg>
       {/await}
-    {:else if mode === 'bounds' || mode === 'band'}
+    {:else if mode === 'bounds' || isBandMode}
       <Svg center={ctx.radial}>
         {#snippet children({ facet })}
           <g class="lc-tooltip-rects-g">

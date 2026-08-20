@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ChartGroup, LineChart } from 'layerchart';
+	import { ChartGroup, LineChart, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { rollup, sum } from 'd3-array';
 
@@ -34,6 +34,10 @@
 
 	`facetAll` marks the hovered date in *every* region and gives each panel its own tooltip beside
 	its own point — the same shape as a group giving every chart one.
+
+	Three tooltips at once want less in them than one does: the date is the same in all of them and
+	the total below already says it, so each panel shows only its region and value, and takes its
+	swatch from the `c` scale that colours its line.
 -->
 <ChartGroup>
 	<div class="grid gap-2">
@@ -43,12 +47,28 @@
 				{data}
 				x="date"
 				y="value"
+				c="region"
+				cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
 				fx="region"
 				highlight={{ lines: true, points: true, facetAll: true }}
-				props={{ tooltip: { root: { facetAll: true } } }}
 				height={140}
 				padding={{ left: 40, bottom: 20, top: 20 }}
-			/>
+			>
+				{#snippet tooltip({ context })}
+					<Tooltip.Root facetAll>
+						{#snippet children({ data })}
+							<Tooltip.List>
+								<Tooltip.Item
+									label={data.region}
+									value={data.value}
+									color={context.cScale?.(context.c(data))}
+									valueAlign="right"
+								/>
+							</Tooltip.List>
+						{/snippet}
+					</Tooltip.Root>
+				{/snippet}
+			</LineChart>
 		</div>
 
 		<div class="border rounded-sm p-2">
