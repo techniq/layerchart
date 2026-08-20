@@ -541,37 +541,37 @@
         },
         {
           "component": "Svg",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<Svg>"
         },
         {
           "component": "FacetAxis",
-          "lineNumber": 26,
+          "lineNumber": 27,
           "line": "<FacetAxis />"
         },
         {
           "component": "Grid",
-          "lineNumber": 27,
+          "lineNumber": 28,
           "line": "<Grid x y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Circle",
-          "lineNumber": 30,
-          "line": "<Circle"
+          "lineNumber": 31,
+          "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"island\" fillOpacity={0.6} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 37,
+          "lineNumber": 32,
           "line": "<Highlight lines points axis=\"both\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 40,
+          "lineNumber": 35,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -5243,5 +5243,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-20T11:19:19.338Z"
+  "updatedAt": "2026-08-20T12:48:38.455Z"
 }

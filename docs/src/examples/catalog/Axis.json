@@ -3297,14 +3297,14 @@
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Axis placement=\"left\" />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 29,
+      "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -5478,5 +5478,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:17.726Z"
+  "updatedAt": "2026-08-20T12:48:38.007Z"
 }

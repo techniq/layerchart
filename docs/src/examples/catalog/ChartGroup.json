@@ -51,19 +51,24 @@
       ]
     },
     {
-      "name": "faceted-member",
-      "title": "faceted member",
-      "path": "/docs/components/ChartGroup/faceted-member",
+      "name": "faceted-group",
+      "title": "faceted group",
+      "path": "/docs/components/ChartGroup/faceted-group",
       "components": [
         {
           "component": "ChartGroup",
-          "lineNumber": 38,
+          "lineNumber": 42,
           "line": "<ChartGroup>"
         },
         {
           "component": "LineChart",
-          "lineNumber": 42,
+          "lineNumber": 46,
           "line": "<LineChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 58,
+          "line": "<Tooltip.Root facetAll>"
         }
       ]
     },
@@ -255,10 +260,10 @@
       "line": "<ChartGroup domain={{ axis: 'x' }}>"
     },
     {
-      "example": "faceted-member",
+      "example": "faceted-group",
       "component": "ChartGroup",
-      "path": "/docs/components/ChartGroup/faceted-member",
-      "lineNumber": 38,
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 42,
       "line": "<ChartGroup>"
     },
     {
@@ -297,5 +302,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.128Z"
+  "updatedAt": "2026-08-20T12:48:38.614Z"
 }

@@ -3930,35 +3930,35 @@
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 40,
+      "lineNumber": 35,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 42,
+      "lineNumber": 37,
       "line": "<Tooltip.Header>{data.species} · {data.island}</Tooltip.Header>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 43,
+      "lineNumber": 38,
       "line": "<Tooltip.List>"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 44,
+      "lineNumber": 39,
       "line": "<Tooltip.Item label=\"flipper\" value={data.flipper_length_mm} />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 45,
+      "lineNumber": 40,
       "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
     },
     {
@@ -4057,6 +4057,27 @@
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
       "lineNumber": 99,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 58,
+      "line": "<Tooltip.Root facetAll>"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 60,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "faceted-group",
+      "component": "ChartGroup",
+      "path": "/docs/components/ChartGroup/faceted-group",
+      "lineNumber": 61,
       "line": "<Tooltip.Item"
     },
     {
@@ -7994,5 +8015,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:19.700Z"
+  "updatedAt": "2026-08-20T12:48:40.574Z"
 }
