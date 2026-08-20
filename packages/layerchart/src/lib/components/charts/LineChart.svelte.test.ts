@@ -171,6 +171,55 @@ describe('legend `c` category toggle', () => {
   });
 });
 
+describe('LineChart highlight over `c` groups', () => {
+  // One implicit series draws every line here, so the tooltip's series list names only the row the
+  // pointer resolved to — a single point, on whichever category happened to be last
+  const longData = [
+    { year: 2016, fruit: 'apples', value: 100 },
+    { year: 2016, fruit: 'bananas', value: 200 },
+    { year: 2016, fruit: 'cherries', value: 300 },
+    { year: 2017, fruit: 'apples', value: 400 },
+    { year: 2017, fruit: 'bananas', value: 500 },
+    { year: 2017, fruit: 'cherries', value: 600 },
+  ];
+
+  it('points every line, not just the last category', async () => {
+    const { container } = render(LineChart, {
+      data: longData,
+      x: 'year',
+      y: 'value',
+      c: 'fruit',
+      cRange: ['rgb(1, 1, 1)', 'rgb(2, 2, 2)', 'rgb(3, 3, 3)'],
+      height: 300,
+      width: 400,
+    } as any);
+
+    const tooltipRect = container.querySelector('.lc-tooltip-context') as SVGElement | null;
+    await expect.element(tooltipRect).toBeInTheDocument();
+
+    const rect = tooltipRect!.getBoundingClientRect();
+    const eventInit = {
+      bubbles: true,
+      clientX: rect.x + rect.width * 0.9,
+      clientY: rect.y + rect.height / 2,
+    };
+
+    await vi.waitFor(() => {
+      tooltipRect!.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+      tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
+
+      const points = Array.from(document.querySelectorAll('.lc-highlight-point'));
+      expect(points).toHaveLength(3);
+
+      // one per line, each in its own colour and at its own height
+      const fills = points.map((p) => p.getAttribute('fill'));
+      expect(new Set(fills).size).toBe(3);
+      const ys = points.map((p) => Math.round(Number(p.getAttribute('cy'))));
+      expect(new Set(ys).size).toBe(3);
+    });
+  });
+});
+
 describe('LineChart seriesLayout', () => {
   const svelteRows = [
     { date: 0, cumsum: 100 },
