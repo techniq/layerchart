@@ -56,6 +56,16 @@ export type ChartGroupBrushOptions = {
    * @default 'x'
    */
   axis?: 'x' | 'y' | 'both';
+
+  /**
+   * The selection to start with, in domain values — the group's answer to a `Chart`'s
+   * `brush={{ x }}`.
+   *
+   * Members take their selection from the group, so a member's own initial brush is overwritten
+   * by the group's (empty) one; seeding it here is what opens a synced set already brushed.
+   */
+  x?: BrushDomainType;
+  y?: BrushDomainType;
 };
 
 export type ChartGroupDomainOptions = {
@@ -315,6 +325,15 @@ export class ChartGroupState {
 
   constructor(options: ChartGroupOptions = {}) {
     this.options = options;
+
+    const brush = this.brushOptions;
+    if (brush && (brush.x || brush.y)) {
+      this.brush = makeBrush({
+        x: brush.x ?? [null, null],
+        y: brush.y ?? [null, null],
+        active: true,
+      });
+    }
   }
 
   /** Ids of the charts currently joined, to catch two members answering to the same one */
@@ -350,10 +369,13 @@ export class ChartGroupState {
   }
 
   /** Resolved brush options, or `null` when brush sharing is disabled */
-  get brushOptions(): Required<ChartGroupBrushOptions> | null {
+  get brushOptions():
+    | (Required<Pick<ChartGroupBrushOptions, 'axis'>> & Pick<ChartGroupBrushOptions, 'x' | 'y'>)
+    | null {
     const brush = this.options.brush ?? true;
     if (brush === false) return null;
-    return { axis: (brush === true ? undefined : brush.axis) ?? 'x' };
+    const options = brush === true ? {} : brush;
+    return { axis: options.axis ?? 'x', x: options.x, y: options.y };
   }
 
   /** Resolved series options, or `null` when series sharing is disabled */

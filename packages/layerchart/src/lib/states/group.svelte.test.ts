@@ -1116,6 +1116,39 @@ describe('<ChartGroup> options', () => {
     expect(group.domainOptions?.axis).toBe('both');
     expect(group.seriesOptions).toEqual({ highlight: false, visibility: true });
   });
+
+  it('opens with the selection the group was given', async () => {
+    // A member's own initial brush is overwritten by the group's, so seeding it here is what
+    // opens a synced set already brushed
+    let group: any;
+    render(ChartGroupTestHarness, {
+      useContext: true,
+      brush: { x: [new Date('2024-01-02'), new Date('2024-01-04')] },
+      members: [{ chartProps: chartProps(dataA) }],
+      ongroup: (g: any) => (group = g),
+    });
+
+    await vi.waitFor(() => expect(group).toBeTruthy());
+
+    expect(group.brush.active).toBe(true);
+    expect(group.brush.x).toEqual([new Date('2024-01-02'), new Date('2024-01-04')]);
+    // and the selection is what members read to narrow their domain
+    expect(group.brush.contains({ x: new Date('2024-01-03') })).toBe(true);
+    expect(group.brush.contains({ x: new Date('2024-01-09') })).toBe(false);
+  });
+
+  it('stays inactive when the group is given no selection', async () => {
+    let group: any;
+    render(ChartGroupTestHarness, {
+      useContext: true,
+      brush: { axis: 'x' },
+      members: [{ chartProps: chartProps(dataA) }],
+      ongroup: (g: any) => (group = g),
+    });
+
+    await vi.waitFor(() => expect(group).toBeTruthy());
+    expect(group.brush.active).toBe(false);
+  });
 });
 
 describe('layers', () => {

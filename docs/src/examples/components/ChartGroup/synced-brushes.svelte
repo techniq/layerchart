@@ -15,6 +15,9 @@
 
 	const now = new Date();
 
+	// The range the group opens brushed to
+	const initialRange = [timeDay.offset(now, -60), timeDay.offset(now, -30)] as [Date, Date];
+
 	const seriesData = Array.from({ length: 4 }, () =>
 		randomWalk({ count: 100 }).map((value, i) => ({
 			date: timeDay.offset(now, -i),
@@ -34,9 +37,11 @@
 
 <!--
 	The overview charts share one brush through the group, and each detail chart takes its domain
-	straight from `group.brush` — no shared `$state` and no `onChange` plumbing.
+	straight from `group.brush` — no shared `$state` and no `onChange` plumbing.  Seeding the
+	group's brush is what opens them already zoomed: a member's own initial selection would be
+	overwritten by the group's.
 -->
-<ChartGroup>
+<ChartGroup brush={{ x: initialRange }}>
 	{#snippet children({ group })}
 		{@const selection = group.brush.active ? (group.brush.x as any) : undefined}
 		<div class="grid grid-cols-2 gap-4">
