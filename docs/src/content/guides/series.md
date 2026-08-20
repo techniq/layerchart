@@ -105,7 +105,13 @@ The `seriesLayout` prop controls how multiple series are arranged:
 
 ### Auto (default)
 
-`BarChart` and `AreaChart` default to `'auto'`, which stacks when something names layers to stack — two or more `series`, or an ordinal `c` — and overlaps otherwise. A value given as an explicit `[start, end]` interval is a pair of positions rather than a magnitude, so duration bars and waterfalls are left alone.
+Charts default to `'auto'`, which stacks when something names layers to stack — two or more `series`, or an ordinal `c` — and overlaps otherwise.
+
+Three things are left alone, because none of them is a set of layers:
+
+- A value that resolves to an interval. `[start, end]` is a pair of positions rather than a magnitude, whether it comes from the accessor (`x={['start', 'end']}`) or from the data, so duration bars and waterfalls keep their shape.
+- A mark handed its own `data`. Whoever handed the rows over has already grouped them.
+- Lines and points. A `Spline` is read against a shared baseline and a scatter's series are positions to compare, so neither joins a stack it wasn't explicitly asked to join.
 
 It stacks at zero rather than end to end, so negative values run the other way and a population pyramid keeps its two sides. `LineChart` is unaffected — lines are read against a shared baseline, so stacking them would change what they say.
 

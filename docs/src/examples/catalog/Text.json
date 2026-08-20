@@ -560,7 +560,7 @@
       "example": "facet-annotation",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-annotation",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Text"
     },
     {
@@ -1166,5 +1166,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-18T03:04:05.913Z"
+  "updatedAt": "2026-08-19T14:28:20.072Z"
 }

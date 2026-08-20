@@ -215,37 +215,37 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 29,
+          "lineNumber": 30,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Rule y={0} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
         },
         {
           "component": "Area",
-          "lineNumber": 33,
+          "lineNumber": 34,
           "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Highlight lines points />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 46,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -450,32 +450,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 39,
+          "lineNumber": 40,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 40,
+          "lineNumber": 41,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 42,
+          "lineNumber": 43,
           "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} />"
         },
         {
           "component": "Labels",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Labels format=\"integer\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 44,
+          "lineNumber": 45,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 47,
+          "lineNumber": 48,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -981,14 +981,14 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
@@ -1044,7 +1044,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} />"
     },
     {
@@ -1184,7 +1184,7 @@
       "example": "series-stack-gradient",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-stack-gradient",
-      "lineNumber": 43,
+      "lineNumber": 42,
       "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
     },
     {
@@ -1615,5 +1615,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-18T12:15:20.246Z"
+  "updatedAt": "2026-08-19T19:59:25.187Z"
 }

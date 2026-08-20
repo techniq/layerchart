@@ -392,7 +392,9 @@ export class HighlightState {
           let dataX: any;
           let dataY: any;
 
-          if (this.ctx.series.isStacked) {
+          // Follow what the marks drew, not what the layout resolved to — an inferred stack the
+          // marks declined would put the point somewhere nothing is drawn
+          if (this.ctx.isStacked) {
             const matchingData = this.ctx.flatData.find((d) => this.x(d) === this.xValue);
             const stackValue = matchingData
               ? this.ctx.series.getStackValue(seriesInfo.key, matchingData)

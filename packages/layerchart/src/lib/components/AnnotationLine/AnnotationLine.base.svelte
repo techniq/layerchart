@@ -23,6 +23,7 @@
     y1: y1Prop,
     x2: x2Prop,
     y2: y2Prop,
+    seriesKey,
     label,
     labelPlacement = 'top-right',
     labelXOffset = 0,
@@ -34,12 +35,39 @@
 
   const isVertical = $derived(x != null || (x1Prop != null && x2Prop != null && x1Prop === x2Prop));
 
+  /**
+   * Each end read against its series' stacked segment, at the category that end sits on.
+   *
+   * A rule spanning the plot (a `y` with no `x`) has no single category to read against, so it
+   * is left where it was asked for.
+   */
+  const stacked = $derived.by(() => {
+    if (seriesKey == null || !ctx.isStacked) return { x1: x1Prop, y1: y1Prop, x2: x2Prop, y2: y2Prop, x, y }; // prettier-ignore
+
+    const at = (value: any, keyValue: any) =>
+      keyValue == null ? value : ctx.stackedValue(seriesKey, keyValue, value);
+
+    return ctx.valueAxis === 'y'
+      ? {
+          x1: x1Prop, x2: x2Prop, x,
+          y1: at(y1Prop, x1Prop ?? x), y2: at(y2Prop, x2Prop ?? x), y: at(y, x),
+        } // prettier-ignore
+      : {
+          y1: y1Prop, y2: y2Prop, y,
+          x1: at(x1Prop, y1Prop ?? y), x2: at(x2Prop, y2Prop ?? y), x: at(x, y),
+        }; // prettier-ignore
+  });
+
   const line = $derived({
-    x1: x1Prop != null ? ctx.xScale(x1Prop) : x != null ? ctx.xScale(x) : ctx.xRange[0],
+    x1: stacked.x1 != null ? ctx.xScale(stacked.x1) : stacked.x != null ? ctx.xScale(stacked.x) : ctx.xRange[0], // prettier-ignore
     y1:
-      y1Prop != null ? ctx.yScale(y1Prop) : y != null && x == null ? ctx.yScale(y) : ctx.yRange[0],
-    x2: x2Prop != null ? ctx.xScale(x2Prop) : x != null ? ctx.xScale(x) : ctx.xRange[1],
-    y2: y2Prop != null ? ctx.yScale(y2Prop) : y != null ? ctx.yScale(y) : ctx.yRange[1],
+      stacked.y1 != null
+        ? ctx.yScale(stacked.y1)
+        : stacked.y != null && stacked.x == null
+          ? ctx.yScale(stacked.y)
+          : ctx.yRange[0],
+    x2: stacked.x2 != null ? ctx.xScale(stacked.x2) : stacked.x != null ? ctx.xScale(stacked.x) : ctx.xRange[1], // prettier-ignore
+    y2: stacked.y2 != null ? ctx.yScale(stacked.y2) : stacked.y != null ? ctx.yScale(stacked.y) : ctx.yRange[1], // prettier-ignore
   });
 
   const isSloped = $derived(!isVertical && line.x1 !== line.x2 && line.y1 !== line.y2);

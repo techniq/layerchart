@@ -9,10 +9,11 @@ import { SelectionState } from '@layerstack/svelte-state';
 /** Key for the single stack of an unfaceted chart */
 const STACK_UNGROUPED = '';
 
-export type StackLayout = 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
+/** How a stack accumulates.  `'overlap'` isn't one of these — nothing is stacked there */
+export type StackLayout = 'stack' | 'stackExpand' | 'stackDiverging';
 
 /** How multiple series are arranged, before `auto` is resolved — see `ChartState.seriesLayout` */
-export type SeriesLayout = StackLayout | 'group' | 'auto';
+export type SeriesLayout = StackLayout | 'overlap' | 'group' | 'auto';
 
 export type StackConfig<TData> = {
   layout: StackLayout;
@@ -134,17 +135,23 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
-   * Whether stacking is enabled
+   * Whether the stack's layers are named by the rows (an ordinal `c`) rather than by series.
+   *
+   * A mark then needn't name a series to draw the stack — the row it's drawing already says
+   * which layer it is.
    */
-  get isStacked() {
-    return this.#stackConfig?.layout?.startsWith('stack') ?? false;
+  get stacksByCategory() {
+    return this.#stackConfig?.seriesBy != null;
   }
 
   /**
-   * Current stack layout mode
+   * How the stack accumulates, or `null` when nothing is stacked — which is the question
+   * `stackLayout != null` asks.
+   *
+   * Narrower than `ChartState.isStacked`, which also asks whether a mark draws the stack.
    */
-  get stackLayout(): StackLayout {
-    return this.#stackConfig?.layout ?? 'overlap';
+  get stackLayout(): StackLayout | null {
+    return this.#stackConfig?.layout ?? null;
   }
 
   /**
@@ -260,16 +267,7 @@ export class SeriesState<TData, TComponent extends Component> {
    */
   #buildStack(rows?: TData[]) {
     const config = this.#stackConfig;
-    if (!config || !config.layout.startsWith('stack')) return null;
-
-    const visibleKeys = this.visibleSeries.map((s) => s.key);
-    const hasSeparateData = this.visibleSeries.some((s) => s.data != null);
-    const data = rows ?? (hasSeparateData ? this.#alignSeriesData() : (config.data ?? []));
-
-    // `seriesBy` names the layers from the rows, so the series keys are beside the point there
-    if ((visibleKeys.length === 0 && !config.seriesBy) || data.length === 0) return null;
-
-    const keyByAcc = accessor(config.keyBy);
+    if (!config) return null;
 
     const offset =
       config.layout === 'stackExpand'
@@ -278,11 +276,14 @@ export class SeriesState<TData, TComponent extends Component> {
           ? stackOffsetDiverging
           : stackOffsetNone;
 
+    // `seriesBy` names the layers from the rows, so the series are beside the point — including
+    // `#alignSeriesData`, which pivots by series key and would be reading a mark's own data
     if (config.seriesBy) {
       const keys = this.#categoryKeys;
-      if (keys.length === 0) return null;
+      const categoryRows = rows ?? config.data ?? [];
+      if (keys.length === 0 || categoryRows.length === 0) return null;
 
-      const wide = this.#alignCategoryData(data as TData[]);
+      const wide = this.#alignCategoryData(categoryRows as TData[]);
       const stacked = stack()
         .keys(keys as Iterable<string>)
         .value((d, key) => (d as any)[key] ?? 0)
@@ -298,6 +299,13 @@ export class SeriesState<TData, TComponent extends Component> {
       }
       return byCategory;
     }
+
+    const visibleKeys = this.visibleSeries.map((s) => s.key);
+    const hasSeparateData = this.visibleSeries.some((s) => s.data != null);
+    const data = rows ?? (hasSeparateData ? this.#alignSeriesData() : (config.data ?? []));
+    if (visibleKeys.length === 0 || data.length === 0) return null;
+
+    const keyByAcc = accessor(config.keyBy);
 
     const stackResult = stack()
       .keys(visibleKeys)
@@ -339,7 +347,7 @@ export class SeriesState<TData, TComponent extends Component> {
    */
   #stackMap = $derived.by(() => {
     const config = this.#stackConfig;
-    if (!config || !config.layout.startsWith('stack')) return null;
+    if (!config) return null;
 
     const groupBy = config.groupBy;
     if (!groupBy) {
@@ -358,16 +366,25 @@ export class SeriesState<TData, TComponent extends Component> {
     return out.size > 0 ? out : null;
   });
 
-
   /**
    * Get stack [y0, y1] values for a data point in a specific series.
    * Returns null if stacking is not enabled or series/data not found.
    */
-  getStackValue(seriesKey: string, d: TData): [number, number] | null {
+  getStackValue(seriesKey: string | undefined, d: TData): [number, number] | null {
     const config = this.#stackConfig;
     // The row names its own layer when the categories live in the data, so the key a mark passes
     // (its single implicit series) has nothing to say about which segment this is
     return this.#stackValueFor(config?.seriesBy ? config.seriesBy(d) : seriesKey, d);
+  }
+
+  /**
+   * The stacked span for a series at a category value, for callers holding the value rather than
+   * the row it came from — an annotation placed at `x: someDate`, say.
+   *
+   * Only reaches the ungrouped stack: a facet panel or sub-band needs the row to say which one.
+   */
+  getStackValueAt(seriesKey: string, keyValue: any): [number, number] | null {
+    return this.#stackMap?.get(STACK_UNGROUPED)?.get(keyValue)?.get(seriesKey) ?? null;
   }
 
   /** The span of a named layer for a row, whatever named it */
@@ -394,9 +411,7 @@ export class SeriesState<TData, TComponent extends Component> {
 
     const keyByAcc = accessor(config.keyBy);
     const groupBy = config.groupBy;
-    const visibleKeys = config.seriesBy
-      ? this.#categoryKeys
-      : this.visibleSeries.map((s) => s.key);
+    const visibleKeys = config.seriesBy ? this.#categoryKeys : this.visibleSeries.map((s) => s.key);
     const values: number[] = [];
 
     for (const d of rows) {
@@ -415,7 +430,8 @@ export class SeriesState<TData, TComponent extends Component> {
    * Create stack-aware y0/y1 accessor functions for a series.
    * Use these in Area, Bars, etc. when stacking is enabled.
    */
-  getStackAccessors(seriesKey: string) {
+  /** `seriesKey` is optional — with the layers named by the rows, it's the row that decides */
+  getStackAccessors(seriesKey?: string) {
     return {
       y0: (d: TData) => this.getStackValue(seriesKey, d)?.[0] ?? 0,
       y1: (d: TData) => this.getStackValue(seriesKey, d)?.[1] ?? 0,

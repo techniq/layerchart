@@ -15,14 +15,15 @@
 	bandPadding={0.2}
 	x="body_mass_g"
 	xNice
+	valueAxis="x"
 	series={[
 		{ key: 'female', label: 'Female', color: 'var(--color-warning)' },
 		{ key: 'male', label: 'Male', color: 'var(--color-info)' }
 	]}
+	seriesLayout="overlap"
+	legend={{ placement: 'top', variant: 'swatches' }}
 	padding={{ top: 12, bottom: 32, left: 80, right: 12 }}
 	height={400}
-	valueAxis="x"
-	legend={{ placement: 'top', variant: 'swatches' }}
 >
 	{#snippet marks({ context })}
 		{@const bandwidth = context.yScale.bandwidth?.() ?? 0}

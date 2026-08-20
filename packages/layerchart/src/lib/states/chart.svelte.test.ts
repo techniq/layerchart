@@ -122,6 +122,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         yBaseline: 0,
@@ -143,6 +144,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         yBaseline: 0,
@@ -165,6 +167,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         yBaseline: 0,
@@ -186,6 +189,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         y: 'date',
         xBaseline: 0,
@@ -207,6 +211,7 @@ describe('ChartState baseline domain', () => {
       ];
 
       const { state, cleanup } = createChartState<MultiSeriesData>({
+        seriesLayout: 'overlap',
         data,
         x: 'date',
         valueAxis: 'y',
@@ -353,6 +358,7 @@ describe('ChartState mark registration', () => {
     const data: MultiSeriesData[] = [{ date: '2024-01', apples: 10, bananas: 15 }];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       series: [{ key: 'apples' }, { key: 'bananas' }],
@@ -653,6 +659,7 @@ describe('ChartState data vs visibleSeriesData', () => {
     ];
 
     const { state, cleanup } = createChartState<TestData>({
+      seriesLayout: 'overlap',
       x: 'date',
       y: 'value',
       series: [
@@ -805,6 +812,7 @@ describe('ChartState data vs visibleSeriesData', () => {
     const bananasData: TestData[] = [{ date: '2024-01', value: 15 }];
 
     const { state, cleanup } = createChartState<TestData>({
+      seriesLayout: 'overlap',
       data: [],
       x: 'date',
       y: 'value',
@@ -1001,6 +1009,7 @@ describe('ChartState implicit series domain update on visibility toggle', () => 
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1035,6 +1044,7 @@ describe('ChartState metadata-only series', () => {
     ];
 
     const { state, cleanup } = createChartState<CategoryEvent>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1059,6 +1069,7 @@ describe('ChartState metadata-only series', () => {
     ];
 
     const { state, cleanup } = createChartState<CategoryEvent>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1476,6 +1487,7 @@ describe('ChartState yReverse with band scales', () => {
     ];
 
     const { state, cleanup } = createChartState<AgeData>({
+      seriesLayout: 'overlap',
       data,
       y: 'age',
       valueAxis: 'x',
@@ -1536,6 +1548,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1558,6 +1571,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       y: 'date',
       valueAxis: 'x',
@@ -1579,6 +1593,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1600,6 +1615,7 @@ describe('ChartState auto-baseline from bandPadding', () => {
     ];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
       data,
       x: 'date',
       valueAxis: 'y',
@@ -1904,6 +1920,7 @@ describe('ChartState explicit x1Domain/y1Domain', () => {
   it('should pass through explicit x1Domain alongside the implicit `default` series', () => {
     // `BarChart` always configures a series, so "no series" alone doesn't cover it
     const { state, cleanup } = createChartState<LongData>({
+      seriesLayout: 'overlap',
       data: longData,
       x: 'year',
       xScale: scaleBand(),
@@ -2224,6 +2241,7 @@ describe('ChartState `c` legend key', () => {
 
   function createCategoryChart(props: Partial<ChartPropsWithoutHTML<LongData>> = {}) {
     return createChartState<LongData>({
+      seriesLayout: 'overlap',
       data: longData,
       x: 'year',
       y: 'value',
@@ -2334,6 +2352,82 @@ describe('ChartState `c` legend key', () => {
 
       expect(state.seriesState.isHighlighted('apples', true)).toBe(true);
       expect(state.seriesState.isHighlighted('bananas', true)).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState stacked domain with mixed marks', () => {
+  type MixedData = { date: string; apples: number; bananas: number; target: number };
+
+  const mixed: MixedData[] = [
+    { date: '2024-01', apples: 10, bananas: 20, target: 90 },
+    { date: '2024-02', apples: 15, bananas: 25, target: 80 },
+  ];
+
+  function createStacked(props: Partial<ChartPropsWithoutHTML<MixedData>> = {}) {
+    return createChartState<MixedData>({
+      data: mixed,
+      x: 'date',
+      valueAxis: 'y',
+      seriesLayout: 'stack',
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+      ...props,
+    });
+  }
+
+  it('should cover a mark drawn beside the stack rather than in it', () => {
+    const { state, cleanup } = createStacked();
+
+    try {
+      // A `Spline y="target"` over stacked bars: the bars total 40, the line reaches 90
+      state.registerMark({ y: 'apples', seriesKey: 'apples', stacks: true });
+      state.registerMark({ y: 'bananas', seriesKey: 'bananas', stacks: true });
+      state.registerMark({ y: 'target' });
+      flushSync();
+
+      expect(state.yDomain).toEqual([0, 90]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should scale to the stack when every mark draws it', () => {
+    const { state, cleanup } = createStacked();
+
+    try {
+      state.registerMark({ y: 'apples', seriesKey: 'apples', stacks: true });
+      state.registerMark({ y: 'bananas', seriesKey: 'bananas', stacks: true });
+      flushSync();
+
+      expect(state.yDomain).toEqual([0, 40]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should leave the domain alone when no mark draws the stack', () => {
+    // Two marks compared against each other read the raw accessor, so scaling to a total none of
+    // them draws would squash both into the lower half
+    const { state, cleanup } = createStacked();
+
+    try {
+      state.registerMark({ y: 'apples' });
+      state.registerMark({ y: 'bananas' });
+      flushSync();
+
+      expect(state.yDomain).toEqual([10, 25]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should still stack when no mark has registered', () => {
+    const { state, cleanup } = createStacked();
+
+    try {
+      expect(state.yDomain).toEqual([0, 40]);
     } finally {
       cleanup();
     }

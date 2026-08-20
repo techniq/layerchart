@@ -131,12 +131,12 @@
         },
         {
           "component": "Axis",
-          "lineNumber": 69,
+          "lineNumber": 68,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 84,
+          "lineNumber": 83,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -260,12 +260,12 @@
         },
         {
           "component": "Frame",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<Text"
         }
       ]
@@ -558,6 +558,100 @@
           "component": "Circle",
           "lineNumber": 24,
           "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "mixed-marks-with-stack",
+      "title": "mixed marks with stack",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 42,
+          "line": "<Bars seriesKey={s.key} radius={2} rounded=\"edge\" strokeWidth={1} />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 46,
+          "line": "<Spline"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 52,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 55,
+          "line": "<Legend placement=\"top-right\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 57,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "mixed-marks-with-stack-long-data",
+      "title": "mixed marks with stack long data",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 57,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 58,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 61,
+          "line": "<Bars radius={2} rounded=\"edge\" strokeWidth={1} />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 64,
+          "line": "<Spline"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 71,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 74,
+          "line": "<Legend placement=\"top-right\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 76,
+          "line": "<Tooltip.Root>"
         }
       ]
     }
@@ -2206,6 +2300,20 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
       "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 44,
       "line": "<Chart"
     },
     {
@@ -5009,5 +5117,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-18T21:44:14.341Z"
+  "updatedAt": "2026-08-19T19:59:25.746Z"
 }

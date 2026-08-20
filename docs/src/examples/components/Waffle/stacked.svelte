@@ -26,7 +26,6 @@
 		{ key: 'cherries', color: 'var(--color-cherries)' },
 		{ key: 'grapes', color: 'var(--color-grapes)' }
 	]}
-	seriesLayout="stack"
 	padding={{ left: 36, bottom: 40, top: 8, right: 8 }}
 	tooltipContext={{ mode: 'band' }}
 	height={400}

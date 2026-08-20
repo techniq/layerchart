@@ -127,7 +127,7 @@
           y1={valueAxis === 'x' && isGroupSeries && restProps.y1 == null
             ? (d: any) => s.value ?? s.key
             : undefined}
-          rounded={context.series.isStacked
+          rounded={context.series.stackLayout != null
             ? // Per row rather than per series: a sub-band or a gap in the data can leave the
               // later series out, making an earlier one the top of *that* stack
               (d: any) => (context.series.isStackTop(s.key, d) ? 'edge' : 'none')

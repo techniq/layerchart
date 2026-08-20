@@ -211,6 +211,30 @@ describe('DefaultTooltip', () => {
         expect(labelTexts).toEqual(['apples', 'bananas', 'oranges', 'total']);
       });
     });
+
+    it('should keep the declared order when a resolved stack is drawn by nothing', async () => {
+      // Several configured series resolve the layout to a stack, but lines decline an inferred
+      // one — so nothing is stacked, and there's no visual bottom-to-top order to match
+      const { container } = render(LineChart, {
+        data: timeSeriesData,
+        x: 'date',
+        y: 'apples',
+        series,
+        height: 300,
+        width: 400,
+      } as any);
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      await dispatchAndWaitForTooltip(tooltipCtx);
+
+      await vi.waitFor(() => {
+        const labels = Array.from(document.querySelectorAll('.lc-tooltip-item-label')).map((l) =>
+          l.textContent?.trim()
+        );
+        expect(labels.slice(0, 3)).toEqual(['apples', 'bananas', 'oranges']);
+      });
+    });
   });
 
   describe('ScatterChart (single-point, quadtree mode)', () => {

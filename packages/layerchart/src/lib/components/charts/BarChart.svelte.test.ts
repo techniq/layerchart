@@ -824,12 +824,23 @@ describe('BarChart', () => {
 
     it('should stack each facet panel against its own rows', async () => {
       const { container } = render(BarChart, { ...stackedProps, fx: 'panel' } as any);
-      const bars = await segments(container);
+      await vi.waitFor(() => expect(container.querySelectorAll('.lc-bar').length).toBe(4));
 
+      // Group by column rather than by document order — faceting lays the panels out side by
+      // side, so which bar comes first isn't the reading order
+      const byColumn = new Map<number, { top: number; bottom: number }[]>();
+      for (const el of container.querySelectorAll('.lc-bar')) {
+        const box = (el as SVGGraphicsElement).getBBox();
+        const column = Math.round(box.x);
+        const entry = { top: Math.round(box.y), bottom: Math.round(box.y + box.height) };
+        byColumn.set(column, [...(byColumn.get(column) ?? []), entry]);
+      }
+
+      expect(byColumn.size).toBe(2); // one bar per panel
       // A panel's stack is built from that panel's rows — the segments meet within it rather
       // than accumulating across panels
-      for (const i of [0, 1]) {
-        const [upper, lower] = band(bars, i);
+      for (const stack of byColumn.values()) {
+        const [upper, lower] = stack.sort((a, b) => a.top - b.top);
         expect(upper.bottom).toBe(lower.top);
       }
     });

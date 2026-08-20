@@ -42,6 +42,7 @@ export class BarsState {
           data: p.data,
           seriesKey: p.seriesKey,
           color: p.fill as string | undefined,
+          stacks: true,
         };
       },
     });

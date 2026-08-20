@@ -1450,7 +1450,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 13,
+          "lineNumber": 9,
           "line": "<BarChart"
         }
       ]
@@ -2264,7 +2264,7 @@
       "example": "stack-long-data",
       "component": "BarChart",
       "path": "/docs/components/BarChart/stack-long-data",
-      "lineNumber": 13,
+      "lineNumber": 9,
       "line": "<BarChart"
     },
     {
@@ -2415,5 +2415,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-18T21:44:14.040Z"
+  "updatedAt": "2026-08-19T14:28:17.909Z"
 }

@@ -87,12 +87,12 @@ export class PointsState {
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
 
-  stackAccessors = $derived.by(() => {
-    const seriesKey = this.#props.seriesKey;
-    return seriesKey && this.ctx.series.isStacked
-      ? this.ctx.series.getStackAccessors(seriesKey)
-      : null;
-  });
+  stackAccessors = $derived.by(() =>
+    this.ctx.stackAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+    })
+  );
 
   xAccessor = $derived(
     accessor(

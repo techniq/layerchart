@@ -552,14 +552,14 @@
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 50,
+      "lineNumber": 51,
       "line": "<Circle"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Circle"
     },
     {
@@ -1193,5 +1193,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-17T16:27:46.547Z"
+  "updatedAt": "2026-08-19T19:59:25.906Z"
 }

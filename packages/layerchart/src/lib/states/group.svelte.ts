@@ -5,7 +5,7 @@ import type { ChartState } from './chart.svelte.js';
 import type { BrushDomainType } from './brush.svelte.js';
 import type { DomainType } from '$lib/utils/scales.svelte.js';
 import { findDatumByValue } from '$lib/utils/tooltip.js';
-import { chartDataArray, isEqualValue } from '$lib/utils/common.js';
+import { isEqualValue } from '$lib/utils/common.js';
 import { scaleInvert, type AnyScale } from '$lib/utils/scales.svelte.js';
 
 /** State slices that can be shared between charts in a group */
@@ -508,10 +508,7 @@ function optedInto(option: boolean | ChartGroupSlice[] | undefined, slice: Chart
  * that channel's categories instead, and its lone implicit series names none of them.
  */
 function legendKeys(ctx: ChartState<any, any, any>): string[] {
-  const rows = chartDataArray(ctx.data);
-  const keyedByCategory = rows.length > 0 && ctx.cKey(rows[0]) != null;
-  if (keyedByCategory && Array.isArray(ctx.cDomain)) return ctx.cDomain as string[];
-  return ctx.series.series.map((s) => s.key);
+  return (ctx.cGroups as string[] | null) ?? ctx.series.series.map((s) => s.key);
 }
 
 /** Whether a key is currently shown — an empty selection means nothing is hidden */

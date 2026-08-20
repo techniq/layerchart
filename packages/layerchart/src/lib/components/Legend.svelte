@@ -176,6 +176,9 @@
   const hasSeriesWithColors = $derived.by(() => {
     if (!ctx.series) return false;
     const allSeries = ctx.series.series ?? [];
+    // An ordinal `c` names the chart's own groups, so it wins over series — which may just be
+    // what a mark's accessor was called
+    if (ctx.cGroups) return false;
     // Check if we have multiple series OR a non-default series with colors
     return allSeries.length > 0 && !ctx.series.isDefaultSeries && allSeries.some((s) => s.color);
   });

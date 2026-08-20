@@ -30,25 +30,23 @@
 	c="fruit"
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
-	padding={25}
 	tooltipContext={{ mode: 'quadtree' }}
+	padding={25}
 	height={300}
 >
-	{#snippet children()}
-		<Layer>
-			<Axis placement="left" grid rule />
-			<Axis placement="bottom" rule />
-			<Spline stroke="fruit" class="stroke-2" />
-			<Labels format="integer" />
-			<Highlight points lines />
-		</Layer>
-		<Tooltip.Root>
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
-				<Tooltip.List>
-					<Tooltip.Item label={data.fruit} value={data.value} />
-				</Tooltip.List>
-			{/snippet}
-		</Tooltip.Root>
-	{/snippet}
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Spline stroke="fruit" class="stroke-2" />
+		<Labels format="integer" />
+		<Highlight points lines />
+	</Layer>
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
+			<Tooltip.List>
+				<Tooltip.Item label={data.fruit} value={data.value} />
+			</Tooltip.List>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>

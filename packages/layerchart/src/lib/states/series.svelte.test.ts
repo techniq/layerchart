@@ -141,10 +141,9 @@ describe('SeriesState', () => {
       expect(state.series[0].key).toBe('apples');
     });
 
-    it('should default to overlap layout when no stack config', () => {
+    it('should report no stack layout without a stack config', () => {
       const state = createSeriesState();
-      expect(state.stackLayout).toBe('overlap');
-      expect(state.isStacked).toBe(false);
+      expect(state.stackLayout).toBe(null);
     });
 
     it('should report isDefaultSeries for empty series', () => {
@@ -340,7 +339,6 @@ describe('SeriesState', () => {
         data: wideData,
         keyBy: 'date',
       });
-      expect(state.isStacked).toBe(true);
       expect(state.stackLayout).toBe('stack');
     });
 
@@ -350,7 +348,6 @@ describe('SeriesState', () => {
         data: wideData,
         keyBy: 'date',
       });
-      expect(state.isStacked).toBe(true);
       expect(state.stackLayout).toBe('stackExpand');
     });
 
@@ -360,17 +357,14 @@ describe('SeriesState', () => {
         data: wideData,
         keyBy: 'date',
       });
-      expect(state.isStacked).toBe(true);
       expect(state.stackLayout).toBe('stackDiverging');
     });
 
-    it('should not detect overlap as stacked', () => {
-      const state = createSeriesState(series as any[], {
-        layout: 'overlap',
-        data: wideData,
-        keyBy: 'date',
-      });
-      expect(state.isStacked).toBe(false);
+    it('should report no stack layout when nothing is stacked', () => {
+      // `ChartState` only builds a stack config for a stacking layout, so an unstacked chart
+      // arrives here with none at all
+      const state = createSeriesState(series as any[], null);
+      expect(state.stackLayout).toBe(null);
     });
 
     it('should return stack values for a data point', () => {

@@ -395,8 +395,10 @@
     tooltipState.source = options.source ?? ctx.id;
     tooltipState.suppressed = options.suppressed ?? false;
     tooltipState.onChange?.();
-    // Reverse series order for stacked charts to match visual stack order (bottom to top)
-    tooltipState.series = ctx.series.isStacked ? [...series].reverse() : series;
+    // Reverse series order for stacked charts to match visual stack order (bottom to top).
+    // `ctx.isStacked` rather than the layout: an inferred stack that the marks declined draws
+    // nothing stacked, so there's no visual order to match and the series read as declared.
+    tooltipState.series = ctx.isStacked ? [...series].reverse() : series;
   }
 
   /** Distinguish the `show(e, data)` overload from `show({ point, value, data })` */
@@ -828,32 +830,30 @@
     {#if mode === 'voronoi'}
       {#await import('../Voronoi/Voronoi.svelte') then { default: Voronoi }}
         <Svg>
-          {#snippet children()}
-            <!-- `Voronoi` resolves its own panel's rows, so there's nothing to narrow here -->
-            <Voronoi
-              x={xProp}
-              y={yProp}
-              r={radius}
-              onpointerenter={(e, { data }) => {
-                showTooltip(e, data);
-              }}
-              onpointermove={(e, { data }) => {
-                showTooltip(e, data);
-              }}
-              onpointerleave={() => hideTooltip()}
-              onpointerdown={(e) => {
+          <!-- `Voronoi` resolves its own panel's rows, so there's nothing to narrow here -->
+          <Voronoi
+            x={xProp}
+            y={yProp}
+            r={radius}
+            onpointerenter={(e, { data }) => {
+              showTooltip(e, data);
+            }}
+            onpointermove={(e, { data }) => {
+              showTooltip(e, data);
+            }}
+            onpointerleave={() => hideTooltip()}
+            onpointerdown={(e) => {
+              // @ts-expect-error
+              if (e.target?.hasPointerCapture(e.pointerId)) {
                 // @ts-expect-error
-                if (e.target?.hasPointerCapture(e.pointerId)) {
-                  // @ts-expect-error
-                  e.target.releasePointerCapture(e.pointerId);
-                }
-              }}
-              onclick={(e, { data }) => {
-                onclick(e, { data });
-              }}
-              classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
-            />
-          {/snippet}
+                e.target.releasePointerCapture(e.pointerId);
+              }
+            }}
+            onclick={(e, { data }) => {
+              onclick(e, { data });
+            }}
+            classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
+          />
         </Svg>
       {/await}
     {:else if mode === 'bounds' || mode === 'band'}

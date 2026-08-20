@@ -468,12 +468,12 @@
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 36,
+          "lineNumber": 35,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 43,
+          "lineNumber": 42,
           "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
         }
       ]
@@ -1006,7 +1006,7 @@
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-legend",
       "lineNumber": 26,
-      "line": "<AreaChart {data} x=\"date\" {series} seriesLayout=\"stack\" {padding} height={200} legend />"
+      "line": "<AreaChart {data} x=\"date\" {series} {padding} height={200} legend />"
     },
     {
       "example": "basic",
@@ -1030,5 +1030,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-08-19T11:15:13.656Z"
+  "updatedAt": "2026-08-19T14:28:17.796Z"
 }

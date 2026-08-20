@@ -242,6 +242,20 @@
   ],
   "usage": [
     {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 55,
+      "line": "<Legend placement=\"top-right\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 74,
+      "line": "<Legend placement=\"top-right\" />"
+    },
+    {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
@@ -567,23 +581,23 @@
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-08-16T00:46:14.560Z"
+  "updatedAt": "2026-08-19T19:59:26.667Z"
 }

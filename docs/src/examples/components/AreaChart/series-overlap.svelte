@@ -12,10 +12,6 @@
 	export { data };
 </script>
 
-<!--
-	Each area is drawn from the axis rather than from the one below it, so the series are compared
-	against each other rather than read as a total. The fills are translucent so the overlaps show.
--->
 <AreaChart
 	{data}
 	x="date"

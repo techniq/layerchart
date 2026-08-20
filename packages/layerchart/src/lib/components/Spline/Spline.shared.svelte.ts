@@ -136,11 +136,29 @@ export class SplineState {
       this.#props.x ?? (this.ctx.valueAxis === 'x' ? this.seriesAccessor : undefined) ?? this.ctx.x
     )
   );
-  yAccessor = $derived(
-    accessor(
-      this.#props.y ?? (this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ?? this.ctx.y
-    )
+  /**
+   * The stacked span this line belongs to, or `null` when it draws raw values.
+   *
+   * A line over a stacked area has to follow the area's top rather than the series' own values —
+   * which `Area`'s built-in `line` gets by passing its `y1`, and a hand-composed `Spline` beside
+   * an `Area` needs too.  Mirrors the guard the other stacking marks use.
+   */
+  stackAccessors = $derived.by(() =>
+    this.ctx.stackAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+    })
   );
+
+  yAccessor = $derived.by(() => {
+    const props = this.#props;
+    if (props.y) return accessor(props.y);
+    if (this.ctx.valueAxis === 'y') {
+      if (this.stackAccessors) return this.stackAccessors.y1;
+      if (this.seriesAccessor) return accessor(this.seriesAccessor);
+    }
+    return accessor(this.ctx.y);
+  });
 
   /** Kept separate from `lines` so `zAccessor` can read it without a cycle */
   resolvedData = $derived(this.markData(this.#props.data ?? this.series?.data));

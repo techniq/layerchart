@@ -13,7 +13,7 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Highlight lines points />"
     },
     {
@@ -69,7 +69,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Highlight points lines />"
     },
     {
@@ -374,6 +374,20 @@
       "line": "<Highlight lines points axis=\"both\" />"
     },
     {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 52,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 71,
+      "line": "<Highlight area />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -668,5 +682,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:57.130Z"
+  "updatedAt": "2026-08-19T19:59:26.550Z"
 }

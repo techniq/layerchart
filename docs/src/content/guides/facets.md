@@ -247,14 +247,12 @@ Faceting is applied by the layer, not by the default layout, so a hand-composed 
 
 ```svelte
 <Chart {data} x="bill_length_mm" y="body_mass_g" fx="species">
-	{#snippet children()}
-		<Svg>
-			<Grid y />
-			<Axis placement="left" />
-			<Axis placement="bottom" />
-			<Circle cx="bill_length_mm" cy="body_mass_g" r={2.5} />
-		</Svg>
-	{/snippet}
+	<Svg>
+		<Grid y />
+		<Axis placement="left" />
+		<Axis placement="bottom" />
+		<Circle cx="bill_length_mm" cy="body_mass_g" r={2.5} />
+	</Svg>
 </Chart>
 ```
 

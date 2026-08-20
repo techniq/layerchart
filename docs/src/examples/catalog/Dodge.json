@@ -126,17 +126,17 @@
         },
         {
           "component": "Dodge",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Dodge"
         },
         {
           "component": "Circle",
-          "lineNumber": 50,
+          "lineNumber": 51,
           "line": "<Circle"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 67,
+          "lineNumber": 68,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -153,17 +153,17 @@
         },
         {
           "component": "Dodge",
-          "lineNumber": 36,
+          "lineNumber": 37,
           "line": "<Dodge"
         },
         {
           "component": "Circle",
-          "lineNumber": 49,
+          "lineNumber": 50,
           "line": "<Circle"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 66,
+          "lineNumber": 67,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -411,14 +411,14 @@
       "example": "grouped-horizontal",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-horizontal",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Dodge"
     },
     {
       "example": "grouped-vertical",
       "component": "Dodge",
       "path": "/docs/components/Dodge/grouped-vertical",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Dodge"
     },
     {
@@ -478,5 +478,5 @@
       "line": "<Dodge axis=\"y\" anchor=\"bottom\" padding={0}>"
     }
   ],
-  "updatedAt": "2026-05-05T17:35:59.733Z"
+  "updatedAt": "2026-08-19T19:59:26.098Z"
 }

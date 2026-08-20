@@ -237,4 +237,64 @@ describe('Spline', () => {
       await expect.poll(() => paths()[0]?.getAttribute('stroke')).toBe('rebeccapurple');
     });
   });
+
+  describe('stacked series', () => {
+    /** Wide rows, so the series stack across columns */
+    const stackedData = [
+      { date: new Date('2024-01-01'), apples: 30, bananas: 20 },
+      { date: new Date('2024-02-01'), apples: 40, bananas: 10 },
+    ];
+
+    const stackedProps = {
+      data: stackedData,
+      x: 'date',
+      valueAxis: 'y',
+      yDomain: [0, 100],
+      height: 100,
+      width: 200,
+      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+      seriesLayout: 'stack',
+    };
+
+    /** The y pixel of the path's first point, as `M x,y` */
+    const firstY = () => {
+      const d = paths()[0]?.getAttribute('d') ?? '';
+      const m = d.match(/^M-?[\d.]+,(-?[\d.]+)/);
+      return m ? Math.round(Number(m[1])) : null;
+    };
+
+    it('should follow its series\u2019 stacked top', async () => {
+      // `bananas` is 20 on its own but sits on top of `apples` at 30 — a line drawn along the
+      // edge of a stacked area has to be at 50, not 20
+      render(TestHarness, {
+        component: Spline,
+        chartProps: stackedProps,
+        componentProps: { seriesKey: 'bananas' },
+      });
+
+      // yDomain [0, 100] over 100px, so a value of 50 lands at y=50
+      await expect.poll(firstY).toBe(50);
+    });
+
+    it('should draw its own values when given an explicit `y`', async () => {
+      render(TestHarness, {
+        component: Spline,
+        chartProps: stackedProps,
+        componentProps: { seriesKey: 'bananas', y: 'bananas' },
+      });
+
+      await expect.poll(firstY).toBe(80); // 20 from the baseline
+    });
+
+    it('should draw raw values without a `seriesKey`', async () => {
+      render(TestHarness, {
+        component: Spline,
+        chartProps: { ...stackedProps, y: 'apples' },
+        componentProps: {},
+      });
+
+      await expect.poll(firstY).toBe(70); // 30 from the baseline
+    });
+  });
 });

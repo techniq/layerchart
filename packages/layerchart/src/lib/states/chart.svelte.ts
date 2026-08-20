@@ -28,7 +28,7 @@ import { FacetState, facetKey } from './facet.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
-import { SeriesState, type StackLayout } from './series.svelte.js';
+import { SeriesState, type SeriesLayout, type StackLayout } from './series.svelte.js';
 import type { SeriesData } from '$lib/components/charts/types.js';
 import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
@@ -56,6 +56,16 @@ export interface MarkInfo {
   color?: string;
   /** Label for legend/tooltip */
   label?: string;
+  /**
+   * Whether this mark reads `SeriesState.getStackAccessors()` rather than the raw accessor — a
+   * stack-aware mark type with no explicit value accessor overriding it.  A `Points` placing
+   * labels at its own `y` says `false`.
+   *
+   * Only what this covers *and* names a layer belongs in a stacked domain, which is the rest of
+   * the mark's own guard and depends on chart state — see `#drawsStack`.  A `Spline` drawn over
+   * stacked bars keeps its own values and has to fit beside them.
+   */
+  stacks?: boolean;
 }
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
@@ -98,7 +108,17 @@ function isFirstPanel(facet: { column: number; row: number }) {
 }
 
 function isEmptyMarkInfo(info: MarkInfo): boolean {
-  return !info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label;
+  // `stacks` counts: a bare `<Bars />` reading the chart's own data and colour names none of the
+  // other fields, but the domain still has to know something on the chart draws the stack
+  return (
+    !info.x &&
+    !info.y &&
+    !info.data &&
+    !info.color &&
+    !info.seriesKey &&
+    !info.label &&
+    !info.stacks
+  );
 }
 
 /** One axis of {@link transformForBrush}, as a fraction of the base domain */
@@ -432,17 +452,21 @@ export class ChartState<
 
         return {
           layout: layout as StackLayout,
-          // `this.data` rather than the raw prop, so a category the legend hid leaves the stack
-          data: hasSeparateData ? undefined : chartDataArray(this.data),
+          // The raw prop rather than `this.data`: reading the filtered data here would make the
+          // stack config depend on the mark registry (through `cGroups`), and a mark
+          // registering mid-render then mutates state this derived is reading.  A hidden
+          // category drops out via `#categoryKeys` instead — `stack()` ignores columns whose
+          // key it wasn't given.
+          data: hasSeparateData ? undefined : chartDataArray(this.props.data),
           keyBy: keyBy!,
           valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
           // Anything that subdivides the plot also subdivides the stack — see `StackConfig.groupBy`
           groupBy: this.#stackGroupBy,
           // Long data stacks by the category its rows carry, since no series names the layers
-          ...(this.#groupsFromColor
+          ...(this.cGroups
             ? {
                 seriesBy: this.cKey,
-                seriesKeys: Array.isArray(this.cDomain) ? this.cDomain : [],
+                seriesKeys: this.cGroups ?? [],
               }
             : null),
         };
@@ -585,15 +609,29 @@ export class ChartState<
   });
 
   /**
-   * Whether `c` names the legend's items — standing in as the series channel.
+   * The groups `c` names, or `null` when the chart's `series` name them instead.
    *
    * An ordinal `c` scale with no configured series is a chart whose groups live in the data —
    * `x1="fruit"` with `c="fruit"`, say — and the lone implicit series names none of them.  A
    * continuous `c` is a ramp instead, which the legend draws with nothing to click.
+   *
+   * What a legend lists, what stacks, and what `cKey` reads a row's group from.
    */
-  #groupsFromColor = $derived.by(() => {
-    if (this.props.c == null || !(this.seriesState?.isDefaultSeries ?? true)) return false;
-    return typeof (Array.isArray(this.cDomain) ? this.cDomain[0] : undefined) !== 'number';
+  cGroups = $derived.by<any[] | null>(() => {
+    if (this.props.c == null) return null;
+
+    // Read from the `series` prop rather than `SeriesState.isDefaultSeries`, which also counts
+    // the series inferred from registered marks.  `ChartState.data` depends on this, and marks
+    // register while deriveds are being read — so reaching into the mark registry from here
+    // makes registering a mark mutate state something is mid-read of.  Series inferred from
+    // marks name nothing a legend could select anyway.
+    const configured = this.props.series ?? [];
+    const seriesNameThem =
+      configured.length > 1 || (configured.length === 1 && configured[0].key !== 'default');
+    if (seriesNameThem) return null;
+
+    const domain = Array.isArray(this.cDomain) ? this.cDomain : null;
+    return domain && typeof domain[0] !== 'number' ? domain : null;
   });
 
   /**
@@ -610,16 +648,98 @@ export class ChartState<
    *
    * `group` is deliberately not inferred: an `x1` sub-band has to be asked for.
    */
-  seriesLayout = $derived.by<StackLayout | 'group'>(() => {
-    const layout = this.props.seriesLayout;
-    if (layout !== 'auto') return layout ?? 'overlap';
+  seriesLayout = $derived.by<Exclude<SeriesLayout, 'auto'>>(() => {
+    const layout = this.props.seriesLayout ?? 'auto';
+    if (layout !== 'auto') return layout;
 
-    const value = this.valueAxis === 'y' ? this.props.y : this.props.x;
-    if (Array.isArray(value)) return 'overlap';
+    // Either axis: a mark can draw along the one the chart doesn't call its value axis — a
+    // horizontal `Waffle` reads an interval from `x` while `valueAxis` is still `y`.
+    //
+    // The interval can also be in the data rather than the accessor — `groupStackData` puts a
+    // `[y0, y1]` pair on each row, which the chart then reads with a single `y="values"`.
+    const first = chartDataArray(this.#sourceData)[0];
+    for (const value of [this.props.y, this.props.x]) {
+      if (Array.isArray(value)) return 'overlap';
+      if (value != null && first != null && Array.isArray(accessor(value)(first))) return 'overlap';
+    }
 
-    const namesLayers = (this.seriesState?.series.length ?? 0) > 1 || this.#groupsFromColor;
+    // Only layers the chart was *configured* with count.  `SeriesState.series` also holds the
+    // series inferred from registered marks, and two marks drawn for comparison name nothing to
+    // stack — they'd just be scaled to a total neither of them draws.
+    const configured = this.props.series ?? [];
+    const namesLayers = configured.length > 1 || this.cGroups != null;
     return namesLayers ? 'stackDiverging' : 'overlap';
   });
+
+  /**
+   * Whether the chart is stacked — the layout resolved to a stack *and* some mark draws it.
+   *
+   * An inferred layout leaves lines, points and hand-grouped marks reading raw values, so a
+   * chart can resolve to a stack that nothing on it draws.  Ask this when positioning against
+   * the stack — the value domain, a `Highlight`, an annotation.  `series.stackLayout` is the
+   * narrower question of how the stack accumulates, which a mark asks about itself.
+   */
+  isStacked = $derived.by(() => {
+    if (this.seriesState.stackLayout == null) return false;
+    const marks = this._markInfos;
+    return marks.length === 0 || marks.some(({ info }) => this.#drawsStack(info));
+  });
+
+  /**
+   * The rest of a mark's own stacking guard, from what it registered: it draws the stack only if
+   * it also names a layer — a series key, or the row itself when the categories live in the data
+   * — and isn't a mark that brought its own rows to an inferred stack.
+   */
+  #drawsStack(info: MarkInfo) {
+    return (
+      !!info.stacks &&
+      (info.seriesKey != null || this.seriesState.stacksByCategory) &&
+      !(this.seriesLayoutAuto && info.data != null)
+    );
+  }
+
+  /** Whether the resolved `seriesLayout` was inferred rather than asked for */
+  seriesLayoutAuto = $derived((this.props.seriesLayout ?? 'auto') === 'auto');
+
+  /**
+   * The stacked accessors a mark should draw with, or `null` to draw its raw values.
+   *
+   * `stacksImplicitly` is the mark opting in: bars, areas and waffles are layers by nature, while
+   * lines and points are read against a shared baseline and only stack when a chart asks for it.
+   * So an inferred layout recruits the first group and leaves the second alone.
+   *
+   * `ownData` marks a mark handed its own rows, which whoever handed them over has already
+   * grouped — an inferred layout leaves those alone too.
+   *
+   * A `seriesKey` isn't required when the layers are named by the rows: long data says which
+   * layer it is, so the key has nothing to add.
+   */
+  stackAccessorsFor(options: {
+    seriesKey?: string;
+    ownData?: boolean;
+    stacksImplicitly?: boolean;
+  }) {
+    const { seriesKey, ownData = false, stacksImplicitly = false } = options;
+
+    if (this.series.stackLayout == null) return null;
+    if (this.seriesLayoutAuto && (!stacksImplicitly || ownData)) return null;
+    if (!seriesKey && !this.series.stacksByCategory) return null;
+
+    return this.series.getStackAccessors(seriesKey);
+  }
+
+  /**
+   * A value re-read against the stack — the top of `seriesKey`'s segment at `keyValue`.
+   *
+   * An annotation naming a series carries that series' own value, which is only where it's drawn
+   * when nothing stacks.  Returns the value unchanged when no series is named, when the chart
+   * isn't stacked, or when the stack holds nothing at that category — a facet panel or sub-band,
+   * where the category alone can't say which stack is meant.
+   */
+  stackedValue(seriesKey: string | undefined, keyValue: any, value: any) {
+    if (seriesKey == null || !this.isStacked) return value;
+    return this.series.getStackValueAt(seriesKey, keyValue)?.[1] ?? value;
+  }
 
   /**
    * The row's key on the `c` channel — its legend swatch — or `null` when the chart's `series`
@@ -633,9 +753,7 @@ export class ChartState<
    * Distinct from `z`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
    * (`z="id"` with `c="group"`), and it's `c` the legend names.
    */
-  cKey = $derived.by<(d: any) => any>(() =>
-    this.#groupsFromColor ? (d: any) => this.c(d) : () => null
-  );
+  cKey = $derived.by<(d: any) => any>(() => (this.cGroups ? (d: any) => this.c(d) : () => null));
 
   data = $derived.by(() => {
     const data = this.#sourceData;
@@ -643,7 +761,7 @@ export class ChartState<
     // scales follow too — the sub-band the category held is released, and the bars left widen
     // into it, the way hiding a series does.
     const selected = this.seriesState?.selectedKeys;
-    if (!this.#groupsFromColor || !selected || selected.isEmpty() || !Array.isArray(data)) {
+    if (!this.cGroups || !selected || selected.isEmpty() || !Array.isArray(data)) {
       return data;
     }
     return data.filter((d: any) => selected.isSelected(this.c(d)));
@@ -1042,11 +1160,31 @@ export class ChartState<
 
     // Series-specific domain calculation (only applies if the value axis)
     if (this.valueAxis === axis && this.seriesState) {
-      // For stacked series, collect all y0/y1 values for domain calculation
-      if (this.seriesState.isStacked) {
+      // For stacked series, collect all y0/y1 values for domain calculation.  Only when some
+      // mark actually draws the stack — a chart of marks that read the raw accessor (two
+      // `Spline`s compared against each other, say) would otherwise be scaled to totals nothing
+      // on it draws.  No registered marks at all means the chart hasn't been composed by hand,
+      // so the stack stands.
+      const marks = this._markInfos;
+
+      if (this.isStacked) {
         // Collect in a single pass — see `getStackedValues`, which hoists the
         // `keyBy` accessor and stack derived reads out of the per-row loop.
-        return extent(this.seriesState.getStackedValues(chartDataArray(this.data)));
+        const stacked = this.seriesState.getStackedValues(chartDataArray(this.data));
+
+        // Marks that sit beside the stack rather than in it — a target line over stacked bars —
+        // still have to fit, so their values are pooled with the stack's rather than replaced.
+        const beside: any[] = [];
+        for (const { info } of marks) {
+          if (this.#drawsStack(info)) continue;
+          const markAccessor = axis === 'y' ? info.y : info.x;
+          if (!markAccessor) continue;
+          const rows = info.data ?? chartDataArray(this.data);
+          beside.push(...rows.flatMap(accessor(markAccessor)));
+        }
+
+        const values = beside.length ? [...stacked, ...beside].filter((v) => v != null) : stacked;
+        if (values.length > 0) return extent(values);
       }
 
       // For non-default series, calculate domain from all visible series values

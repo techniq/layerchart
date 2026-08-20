@@ -5,6 +5,7 @@ import { interpolateTurbo } from 'd3-scale-chromatic';
 
 import BarChart from './charts/BarChart/BarChart.svelte';
 import LineChart from './charts/LineChart/LineChart.svelte';
+import ChartWithMarkSeries from './tests/ChartWithMarkSeries.svelte';
 
 const longData = [
   { year: 2019, fruit: 'apples', value: 30 },
@@ -59,5 +60,18 @@ describe('Legend variant', () => {
       expect(container.querySelector('.lc-legend-ramp-svg')).not.toBeNull();
     });
     expect(container.querySelectorAll('.lc-legend-swatch-label').length).toBe(0);
+  });
+
+  it('should let an ordinal `c` name the items over series inferred from marks', async () => {
+    // A mark carrying its own data registers as a series named after its accessor — which names
+    // the mark, not the chart's groups, so the colour scale wins
+    const { container } = render(ChartWithMarkSeries, {} as any);
+
+    await vi.waitFor(() => {
+      const labels = [...container.querySelectorAll('.lc-legend-swatch-label')].map((el) =>
+        el.textContent?.trim()
+      );
+      expect(labels).toEqual(['apples', 'bananas']);
+    });
   });
 });

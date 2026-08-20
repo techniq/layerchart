@@ -213,7 +213,7 @@
       "example": "series-stack-gradient",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-stack-gradient",
-      "lineNumber": 36,
+      "lineNumber": 35,
       "line": "<LinearGradient"
     },
     {
@@ -581,5 +581,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-08-14T18:32:53.591Z"
+  "updatedAt": "2026-08-19T14:28:19.507Z"
 }

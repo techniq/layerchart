@@ -101,12 +101,12 @@ export class BarState {
       : undefined
   );
 
-  stackAccessors = $derived.by(() => {
-    const seriesKey = this.#props.seriesKey;
-    return seriesKey && this.ctx.series.isStacked
-      ? this.ctx.series.getStackAccessors(seriesKey)
-      : null;
-  });
+  stackAccessors = $derived.by(() =>
+    this.ctx.stackAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      stacksImplicitly: true,
+    })
+  );
 
   x = $derived.by(() => {
     const xProp = this.#props.x;
@@ -141,7 +141,7 @@ export class BarState {
 
   stackInsets = $derived.by<Insets | undefined>(() => {
     const stackPadding = this.#props.stackPadding ?? 0;
-    if (!this.ctx.series.isStacked || stackPadding === 0 || this.seriesIndex === undefined) {
+    if (this.ctx.series.stackLayout == null || stackPadding === 0 || this.seriesIndex === undefined) {
       return undefined;
     }
 

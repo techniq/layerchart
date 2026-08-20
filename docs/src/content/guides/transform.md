@@ -513,10 +513,8 @@ The `TransformContextControls` component provides a UI overlay with zoom/pan but
 
 ```svelte
 <Chart transform={{ mode: 'canvas', scrollMode: 'scale' }}>
-	{#snippet children()}
-		<TransformContextControls />
-		<!-- chart content -->
-	{/snippet}
+	<TransformContextControls />
+	<!-- chart content -->
 </Chart>
 ```
 

@@ -17,11 +17,12 @@
 	x="date"
 	y="value"
 	yNice
-	padding={20}
-	tooltipContext={{ mode: 'quadtree-x' }}
 	c={(d) => (d.value < 0 ? 'under' : 'over')}
 	cDomain={['over', 'under']}
 	cRange={['var(--color-success)', 'var(--color-danger)']}
+	seriesLayout="overlap"
+	tooltipContext={{ mode: 'quadtree-x' }}
+	padding={20}
 	height={300}
 >
 	{#snippet children({ context })}

@@ -15,9 +15,8 @@
 	x="year"
 	x1="fruit"
 	y="value"
-	seriesLayout="group"
 	c="fruit"
-	legend
+	seriesLayout="group"
 	cRange={[
 		'var(--color-apples)',
 		'var(--color-bananas)',
@@ -31,5 +30,6 @@
 			header: { format: 'none' }
 		}
 	}}
+	legend
 	height={300}
 />

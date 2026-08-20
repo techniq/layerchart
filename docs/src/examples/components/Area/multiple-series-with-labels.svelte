@@ -31,26 +31,25 @@
 	c="fruit"
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
-	padding={20}
+	seriesLayout="overlap"
 	tooltipContext={{ mode: 'quadtree' }}
+	padding={20}
 	height={300}
 >
-	{#snippet children()}
-		<Layer>
-			<Axis placement="left" grid rule />
-			<Axis placement="bottom" rule />
-			<Area fill="fruit" fillOpacity={0.3} line={{ class: 'stroke-2' }} />
-			<Labels format="integer" />
-			<Highlight points lines />
-		</Layer>
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Area fill="fruit" fillOpacity={0.3} line={{ class: 'stroke-2' }} />
+		<Labels format="integer" />
+		<Highlight points lines />
+	</Layer>
 
-		<Tooltip.Root>
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
-				<Tooltip.List>
-					<Tooltip.Item label={data.fruit} value={data.value} />
-				</Tooltip.List>
-			{/snippet}
-		</Tooltip.Root>
-	{/snippet}
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
+			<Tooltip.List>
+				<Tooltip.Item label={data.fruit} value={data.value} />
+			</Tooltip.List>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>

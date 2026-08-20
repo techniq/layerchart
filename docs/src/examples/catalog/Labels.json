@@ -71,7 +71,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Labels format=\"integer\" />"
     },
     {
@@ -166,5 +166,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-14T21:25:32.909Z"
+  "updatedAt": "2026-08-19T19:59:26.627Z"
 }

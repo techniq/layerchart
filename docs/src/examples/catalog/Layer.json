@@ -216,7 +216,7 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Layer>"
     },
     {
@@ -251,7 +251,7 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Layer>"
     },
     {
@@ -1568,6 +1568,20 @@
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 46,
+      "line": "<Layer>"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 57,
       "line": "<Layer>"
     },
     {
@@ -4371,5 +4385,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-18T12:15:21.801Z"
+  "updatedAt": "2026-08-19T19:59:26.645Z"
 }

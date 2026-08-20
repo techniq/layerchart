@@ -435,7 +435,7 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<Rule y={0} />"
     },
     {
@@ -712,5 +712,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-08-17T02:41:57.694Z"
+  "updatedAt": "2026-08-19T19:59:27.089Z"
 }

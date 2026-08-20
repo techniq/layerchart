@@ -1114,6 +1114,20 @@
       "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
     },
     {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 46,
+      "line": "<Spline"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 64,
+      "line": "<Spline"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -1569,5 +1583,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-18T21:44:15.963Z"
+  "updatedAt": "2026-08-19T19:59:27.146Z"
 }

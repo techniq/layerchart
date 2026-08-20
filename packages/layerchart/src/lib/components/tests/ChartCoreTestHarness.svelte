@@ -25,7 +25,5 @@
 </script>
 
 <ChartCore {...mergedChartProps} bind:context={chartContext}>
-  {#snippet children()}
-    <div data-testid="children-content">ChartCore children</div>
-  {/snippet}
+  <div data-testid="children-content">ChartCore children</div>
 </ChartCore>

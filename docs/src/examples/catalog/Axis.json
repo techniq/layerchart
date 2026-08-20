@@ -1015,14 +1015,14 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 29,
+      "lineNumber": 30,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -1085,14 +1085,14 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-with-labels",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3269,14 +3269,14 @@
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 69,
+      "lineNumber": 68,
       "line": "<Axis placement=\"left\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Axis"
     },
     {
@@ -3306,6 +3306,34 @@
       "path": "/docs/components/Chart/facet-tooltip",
       "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 58,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "mixed-marks-with-stack-long-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
+      "lineNumber": 59,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "minimap",
@@ -5436,5 +5464,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-18T03:04:03.629Z"
+  "updatedAt": "2026-08-19T19:59:25.258Z"
 }

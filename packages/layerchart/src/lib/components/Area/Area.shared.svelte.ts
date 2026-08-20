@@ -102,6 +102,7 @@ export class AreaState {
           y: p.y1 ?? p.y0,
           seriesKey: p.seriesKey,
           color: p.fill as string | undefined,
+          stacks: p.y1 == null && p.y0 == null,
         };
       },
     });
@@ -127,12 +128,13 @@ export class AreaState {
     this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
   );
 
-  stackAccessors = $derived.by(() => {
-    const seriesKey = this.#props.seriesKey;
-    return seriesKey && this.ctx.series.isStacked
-      ? this.ctx.series.getStackAccessors(seriesKey)
-      : null;
-  });
+  stackAccessors = $derived.by(() =>
+    this.ctx.stackAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+      stacksImplicitly: true,
+    })
+  );
 
   xAccessor = $derived.by(() => {
     const x = this.#props.x;

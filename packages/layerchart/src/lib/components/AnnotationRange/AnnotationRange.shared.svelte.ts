@@ -11,6 +11,13 @@ import type { Placement } from '../types.js';
 export type AnnotationRangePropsWithoutHTML = {
   x?: [SingleDomainType, SingleDomainType] | SingleDomainType[];
   y?: [SingleDomainType, SingleDomainType] | SingleDomainType[];
+  /**
+   * The series this annotation belongs to.
+   *
+   * `ChartAnnotations` hides it while another series is highlighted, and a value on the chart's
+   * value axis is read against that series' stacked segment rather than taken as-is.
+   */
+  seriesKey?: string;
   label?: string;
   labelPlacement?: Placement;
   labelXOffset?: number;

@@ -48,9 +48,9 @@
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<svg {width} {height} viewBox=\"0 0 64 64\">"
     }
   ],
-  "updatedAt": "2026-08-16T16:11:45.020Z"
+  "updatedAt": "2026-08-19T19:59:27.162Z"
 }

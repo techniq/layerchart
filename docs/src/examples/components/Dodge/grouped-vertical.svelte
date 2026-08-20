@@ -19,6 +19,7 @@
 		{ key: 'female', label: 'Female', color: 'var(--color-warning)' },
 		{ key: 'male', label: 'Male', color: 'var(--color-info)' }
 	]}
+	seriesLayout="overlap"
 	padding={{ top: 12, bottom: 24, left: 40, right: 12 }}
 	height={400}
 	legend={{ placement: 'top', variant: 'swatches' }}

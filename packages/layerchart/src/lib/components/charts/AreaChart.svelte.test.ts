@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import AreaChart from './AreaChart/AreaChart.svelte';
@@ -171,6 +171,59 @@ describe(`AreaChart`, () => {
 
       const svg = container.querySelector('svg');
       await expect.element(svg).toBeInTheDocument();
+    });
+  });
+
+  describe('annotations over a stack', () => {
+    it('should place a point naming a series on that series\u2019 stacked top', async () => {
+      // The annotation carries the series' own value, which is only where it's drawn when
+      // nothing stacks — over a stack it belongs on the running total
+      const { container } = render(AreaChart, {
+        data: seriesData,
+        x: 'date',
+        series: [{ key: 'one' }, { key: 'two' }],
+        annotations: [
+          { type: 'point', seriesKey: 'one', x: seriesData[4].date, y: seriesData[4].one },
+          { type: 'point', seriesKey: 'two', x: seriesData[4].date, y: seriesData[4].two },
+        ],
+        width: 400,
+        height: 300,
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      await vi.waitFor(() => {
+        const circles = [...container.querySelectorAll('circle')].map((el) =>
+          Math.round(Number(el.getAttribute('cy')))
+        );
+        expect(circles.length).toBeGreaterThanOrEqual(2);
+
+        // `one` is 18 and `two` is 22, so stacked they sit at 18 and 40 — different heights,
+        // and the upper one above the lower (smaller `cy`)
+        const [lower, upper] = circles.slice(0, 2).sort((a, b) => b - a);
+        expect(upper).toBeLessThan(lower);
+      });
+    });
+
+    it('should leave an annotation naming no series where it was put', async () => {
+      const { container } = render(AreaChart, {
+        data: seriesData,
+        x: 'date',
+        series: [{ key: 'one' }, { key: 'two' }],
+        annotations: [{ type: 'point', x: seriesData[4].date, y: seriesData[4].one }],
+        width: 400,
+        height: 300,
+      } as any);
+
+      await expect.element(container.querySelector('svg')).toBeInTheDocument();
+
+      // Without a `seriesKey` there's no segment to read against, stacked or not
+      await vi.waitFor(() => {
+        const cy = [...container.querySelectorAll('circle')].map((el) =>
+          Math.round(Number(el.getAttribute('cy')))
+        );
+        expect(cy.length).toBeGreaterThanOrEqual(1);
+      });
     });
   });
 });
