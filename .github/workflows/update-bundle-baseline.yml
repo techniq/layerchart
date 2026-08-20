@@ -81,7 +81,7 @@ jobs:
           body: |
             ## Bundle Size Baseline Update
 
-            This PR updates the bundle size baseline after recent changes to the `next` branch.
+            This PR updates the bundle size baseline after recent changes to the `main` branch.
 
             ### What changed?
             - Updated `bundle-analyzer/bundle-reports/latest.json` with current scenario sizes
@@ -99,4 +99,3 @@ jobs:
           delete-branch: true
           author: "github-actions[bot] <action@github.com>"
           committer: "github-actions[bot] <action@github.com>"
-          base: next
