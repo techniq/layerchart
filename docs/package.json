@@ -16,7 +16,7 @@
 		"test:unit": "vitest",
 		"test": "pnpm test:unit -- --run",
 		"test:visual": "node scripts/visual-snapshot.mjs capture snapshots/current.json --repeat 1 && node scripts/visual-snapshot.mjs compare snapshots/baseline.json snapshots/current.json",
-		"test:visual:update": "node scripts/visual-snapshot.mjs capture snapshots/baseline.json",
+		"test:visual:update": "node scripts/visual-snapshot.mjs capture snapshots/baseline.json --repeat 3",
 		"generate:api": "layerstack-docs generate-api ../packages/layerchart/src/lib/components generated/api",
 		"generate:screenshots": "layerstack-docs generate-screenshots src/examples/components static/screenshots",
 		"generate:catalog": "layerstack-docs generate-catalog ../packages/layerchart/src/lib/components src/examples/components src/examples/catalog",

@@ -108,17 +108,15 @@ function isFirstPanel(facet: { column: number; row: number }) {
 }
 
 function isEmptyMarkInfo(info: MarkInfo): boolean {
-  // `stacks` counts: a bare `<Bars />` reading the chart's own data and colour names none of the
-  // other fields, but the domain still has to know something on the chart draws the stack
-  return (
-    !info.x &&
-    !info.y &&
-    !info.data &&
-    !info.color &&
-    !info.seriesKey &&
-    !info.label &&
-    !info.stacks
-  );
+  // Every field rather than a list to keep in sync — setting any of them is a mark telling the
+  // chart something about its series or domain, and a field added to `MarkInfo` later counts
+  // without having to remember this function.  `stacks` is the one that caught us out: a bare
+  // `<Bars />` reading the chart's own data and colour names none of the other fields, but the
+  // domain still has to know something on the chart draws the stack.
+  //
+  // Falsy rather than `!= null`, so `stacks: false` reads as "nothing to say" — which also means
+  // a meaningful `0` would need its own case here.
+  return Object.values(info).every((value) => !value);
 }
 
 /** One axis of {@link transformForBrush}, as a fraction of the base domain */

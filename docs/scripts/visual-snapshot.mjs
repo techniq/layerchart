@@ -75,10 +75,45 @@ function extractFingerprint() {
 	};
 	const PAINT = ['fill', 'stroke', 'stroke-width', 'opacity', 'fill-opacity', 'stroke-opacity'];
 
+	/**
+	 * Whether an element draws nothing at all.  A zero-height bar, a one-point path or an empty
+	 * label is in the DOM but not on the screen, so moving one is not a visual change — and letting
+	 * them count buries real differences in noise.  Read from attributes rather than computed style,
+	 * which would cost a layout read per element across ~1000 elements per example.
+	 */
+	const drawsNothing = (el, tag) => {
+		const num = (name) => Number.parseFloat(el.getAttribute(name) ?? 'NaN');
+		if (el.getAttribute('opacity') === '0' || el.getAttribute('display') === 'none') return true;
+		switch (tag) {
+			case 'rect':
+			case 'image':
+				return num('width') === 0 || num('height') === 0;
+			case 'circle':
+				return num('r') === 0;
+			case 'ellipse':
+				return num('rx') === 0 || num('ry') === 0;
+			case 'line':
+				return num('x1') === num('x2') && num('y1') === num('y2');
+			case 'text':
+				return !el.textContent?.trim();
+			case 'path': {
+				const d = el.getAttribute('d') ?? '';
+				// One draw command is a single point — nothing joins it to anything
+				return !d || (d.match(/[MLHVCSQTA]/gi) ?? []).length <= 1;
+			}
+			case 'polygon':
+			case 'polyline':
+				return (el.getAttribute('points') ?? '').trim().split(/\s+/).length <= 1;
+			default:
+				return false;
+		}
+	};
+
 	const parts = [];
 	for (const svg of document.querySelectorAll('svg')) {
 		for (const el of svg.querySelectorAll(Object.keys(GEOMETRY).join(','))) {
 			const tag = el.tagName.toLowerCase();
+			if (drawsNothing(el, tag)) continue;
 			const attrs = GEOMETRY[tag]
 				.map((a) => {
 					const v = el.getAttribute(a);
