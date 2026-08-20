@@ -249,6 +249,39 @@ Stacking needs neither — the same `c` that colors the bars is what stacks them
 
 `stackExpand` and `stackDiverging` work the same way, and the [Series guide](/docs/guides/series#layouts) covers stacking the wide format.
 
+### Two dimensions at once
+
+Charts often carry a second grouping on top of the stack — here fruit stacked within a basket, per year. There are two independent choices: **how the data is shaped**, and **where the second group goes**.
+
+|                            | Wide rows + `series`          | Long rows + `c`                  |
+| -------------------------- | ----------------------------- | -------------------------------- |
+| **Sub-band** (`x1` / `y1`) | `BarChart/group-stack-series` | `BarChart/group-stack-long-data` |
+| **Panel** (`fx` / `fy`)    | `Chart/facet-annotation`      | `BarChart/facet-stack-long-data` |
+
+**Shape.** Long rows go straight in — `c` names the layers and nothing is reshaped. `series` needs a column per layer, so long rows have to be pivoted first:
+
+```js
+const data = flatGroup(
+	longData,
+	(d) => d.year,
+	(d) => d.basket
+).map(([year, basket, rows]) => ({
+	year,
+	basket,
+	...Object.fromEntries(rows.map((d) => [d.fruit, d.value]))
+}));
+```
+
+That's worth doing when you want per-series control the rows can't express — a label, a color, an explicit order, per-series `props`, or a series with [its own data](#per-series-data). Reach for `c` otherwise.
+
+**Placement.** A sub-band keeps everything in one plot: the baskets sit side by side under a shared axis, which is what you want when the comparison between them is the point.
+
+:example{ component="BarChart" name="group-stack-long-data" }
+
+A facet gives each group its own panel and axes, sharing the scales so the panels stay comparable. Pair it with the [`facet` tooltip mode](/docs/guides/tooltip#modes) to read the same way as the sub-banded version — the panel becomes the hit area, so hovering a year shows that whole year rather than the one basket under the pointer. It costs horizontal room per panel, so it suits more groups than fit in a band, and it gives you somewhere to put per-panel content — `Chart/facet-annotation` writes a note into one panel. Notice these are the same rows and the same nesting as above:
+
+:example{ component="BarChart" name="facet-stack-long-data" }
+
 ## Series
 
 For multi-series charts with full tooltip, legend, and stacking support, use the `series` prop. See the [Series guide](/docs/guides/series) for complete documentation.

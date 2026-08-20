@@ -71,7 +71,13 @@
     if (!banded) return [data];
 
     const value = banded(data);
-    return chartDataArray(context.data).filter((d: any) => isEqualValue(banded(d), value));
+    // Within a facet, only that panel's rows — the same band exists in every panel, so filtering
+    // the whole dataset would list the other panels' values here, and total across them
+    const source = context.facet.enabled
+      ? (context.facet.panels.find((panel) => panel.has(data))?.data ??
+        chartDataArray(context.data))
+      : chartDataArray(context.data);
+    return source.filter((d: any) => isEqualValue(banded(d), value));
   }
 
   /**
@@ -98,12 +104,17 @@
           : context.props.y1 != null
             ? context.y1
             : context.c;
-      return d.map((row: any) => ({
-        key: String(subBand(row)),
+      return d.map((row: any, i: number) => ({
+        // The sub-band alone doesn't identify a row when `c` names layers stacked within it —
+        // `x1="basket"` with `c="fruit"` puts several fruit in each basket.  Only the `{#each}`
+        // key; what's shown comes from `label` / `value` / `color`.
+        key: [subBand(row), context.cKey(row) ?? i].join('\u0000'),
         // The rows are sub-bands rather than series — hovering one highlights the `c` category
         // it carries, when the legend names those, and nothing otherwise
         seriesKey: context.cKey(row) ?? null,
-        label: subBand(row),
+        // The category when `c` names one — it's what the colour and the legend already say, and
+        // what the equivalent `series` chart lists.  The sub-band otherwise.
+        label: context.cKey(row) ?? subBand(row),
         value: value(row),
         color: context.config.c ? context.cGet(row) : undefined,
       }));

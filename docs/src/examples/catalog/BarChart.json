@@ -466,6 +466,18 @@
       ]
     },
     {
+      "name": "facet-stack-long-data",
+      "title": "facet stack long data",
+      "path": "/docs/components/BarChart/facet-stack-long-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 9,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "gradient",
       "title": "gradient",
       "path": "/docs/components/BarChart/gradient",
@@ -555,6 +567,18 @@
         {
           "component": "BarChart",
           "lineNumber": 11,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "group-stack-long-data",
+      "title": "group stack long data",
+      "path": "/docs/components/BarChart/group-stack-long-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 10,
           "line": "<BarChart"
         }
       ]
@@ -1855,6 +1879,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "facet-stack-long-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/facet-stack-long-data",
+      "lineNumber": 9,
+      "line": "<BarChart"
+    },
+    {
       "example": "gradient",
       "component": "BarChart",
       "path": "/docs/components/BarChart/gradient",
@@ -1901,6 +1932,13 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/group-series-series-long-data",
       "lineNumber": 11,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-stack-long-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-stack-long-data",
+      "lineNumber": 10,
       "line": "<BarChart"
     },
     {
@@ -2429,5 +2467,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-20T11:19:19.052Z"
+  "updatedAt": "2026-08-20T18:45:22.168Z"
 }

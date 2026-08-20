@@ -232,6 +232,12 @@ Charts in a group share their [brush](/docs/guides/brush) selection — dragging
 
 :example{ component="ChartGroup" name="synced-brushes" }
 
+Seed the group's brush to open already selected. It belongs on the group rather than on a member: members take their selection _from_ the group, so a chart's own initial `brush={{ x }}` is overwritten by the group's empty one.
+
+```svelte
+<ChartGroup brush={{ x: [start, end] }}>
+```
+
 Use `axis` to share `'y'` / `'both'` instead of the default `'x'`:
 
 ```svelte

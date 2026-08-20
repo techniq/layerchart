@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-20T17:04:37.492Z",
+  "generatedAt": "2026-08-20T18:45:21.306Z",
   "totalComponents": 80,
-  "totalExamples": 978,
+  "totalExamples": 980,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1052,6 +1052,11 @@
           "checksum": "736d91a57431ef084f3fad6cc2cb45e7"
         },
         {
+          "name": "facet-stack-long-data",
+          "path": "/example/BarChart/facet-stack-long-data",
+          "checksum": ""
+        },
+        {
           "name": "gradient",
           "path": "/example/BarChart/gradient",
           "checksum": "4ffa0f07e3ba14490969c3be8c822ac6"
@@ -1085,6 +1090,11 @@
           "name": "group-series-series-long-data",
           "path": "/example/BarChart/group-series-series-long-data",
           "checksum": "e73f65c1ecbb15566bf4758c142bdeb4"
+        },
+        {
+          "name": "group-stack-long-data",
+          "path": "/example/BarChart/group-stack-long-data",
+          "checksum": "5330c9b1e7f6e823befd759436c2ef54"
         },
         {
           "name": "group-stack-series",
