@@ -87,6 +87,20 @@ The `x` and `y` props on `<Chart>` define how values are extracted from your dat
 
 When omitted, the chart infers accessors from the marks that register inside it.
 
+An array is also how you express an **interval** — `y={['start', 'end']}` is a pair of positions rather than a magnitude, so there's nothing to accumulate and `seriesLayout="auto"` leaves it as drawn. A duration bar or a waterfall stays where you put it.
+
+### Faceting and sub-bands
+
+Two more channels partition rather than position: `fx` / `fy` repeat the whole chart per distinct value (see the [Facets guide](/docs/guides/facets)), and `x1` / `y1` divide a band into sub-bands. Both take the same string or function accessors as `x` / `y`.
+
+### Non-flat data
+
+`data` doesn't have to be a flat array — it can be a hierarchy, a Sankey graph, or an array of series from `d3-shape`'s `stack()`. The scales need something flat to read, so pass one via `flatData`:
+
+```svelte
+<Chart data={stackData} flatData={flatten(stackData)} x={(d) => d.data.date} y={[0, 1]}>
+```
+
 ### Mark-level position props (DataProp)
 
 Position props on primitive marks (`cx`, `cy`, `r` on Circle; `x`, `y`, `width`, `height` on Rect; etc.) accept a `DataProp`:
@@ -192,9 +206,9 @@ Naming that column as the `c` channel is enough to draw it. There's no `series` 
 | The mark's `z`    | `<Spline z="id" />`         | Most specific                               |
 | The chart's `z`   | `<Chart z="id">`            | Applies to every mark inside                |
 | `stroke` / `fill` | `<Spline stroke="fruit" />` | Names a data property, colored via `cScale` |
-| The chart's `c`   | `<Chart c="fruit">`         | Only when its values are categorical        |
+| The chart's `c`   | `<Chart c="fruit">`         | Only when it names a column (see below)     |
 
-A continuous `c` (`c="value"` with a sequential scale) is a color ramp, not a set of categories, so it doesn't split anything. Neither does a mark handed its own rows via `data` — whoever grouped them already decided.
+`c` only splits when it **names a column**. `c="fruit"` says that column holds the category; a computed accessor like `c={(d) => (d.value < 0 ? 'under' : 'over')}` is a color per row, and grouping on it would cut one series into a path per color, joining points that aren't next to each other. A continuous `c` (`c="value"` with a sequential scale) is a color ramp for the same reason — measurements aren't category names. Neither does a mark handed its own rows via `data` split — whoever grouped them already decided.
 
 Use `z` when the split and the color aren't the same thing. Here each line is one flower, colored by its species:
 
