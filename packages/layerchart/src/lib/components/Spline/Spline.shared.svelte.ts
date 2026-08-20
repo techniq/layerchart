@@ -191,7 +191,11 @@ export class SplineState {
   /** The data this Spline draws, split into one array per line */
   lines = $derived.by<any[][]>(() => {
     if (!this.zAccessor) return [this.resolvedData];
-    return Array.from(d3Group(this.resolvedData, this.zAccessor).values());
+    const grouped = Array.from(d3Group(this.resolvedData, this.zAccessor).values());
+    // A line the legend names and has hidden should go with it.  Rows of a hidden `c` category
+    // are already gone by here — `ChartState.data` drops those so the scales follow — so this is
+    // only about lines this mark split by itself.
+    return grouped.filter((lineData) => this.#isShown(lineData[0]));
   });
 
   xOffset = $derived(isScaleBand(this.ctx.xScale) ? this.ctx.xScale.bandwidth() / 2 : 0);
@@ -308,9 +312,37 @@ export class SplineState {
    * mark would fade as one.  Read from the line's first point, the way its `stroke` is.
    */
   #lineOpacity(lineData: any[]) {
-    const key = this.ctx.cKey(lineData[0]);
+    const key = this.#groupKey(lineData[0]);
     if (key == null) return undefined;
     return this.ctx.series.isHighlighted(key, true) ? 1 : 0.1;
+  }
+
+  /**
+   * What the legend calls this line, or `null` when nothing names it.
+   *
+   * The chart's `c` first, since that is the chart's own channel.  Otherwise the mark's own
+   * grouping — `stroke="fruit"` splits the lines, and where a series is declared per fruit the
+   * legend is already listing exactly those names, so hovering one should single that line out.
+   * A `z` the legend knows nothing about stays anonymous rather than reacting to unrelated keys.
+   */
+  #groupKey(d: any): any {
+    const category = this.ctx.cKey(d);
+    if (category != null) return category;
+    if (!this.zAccessor || d == null) return null;
+    const key = this.zAccessor(d);
+    return this.#namesSeries(key) ? key : null;
+  }
+
+  #namesSeries(key: any) {
+    return key != null && this.ctx.series.series.some((s) => s.key === key);
+  }
+
+  /** Whether a line's group is currently shown, for groups the legend names */
+  #isShown(d: any) {
+    if (d == null || !this.zAccessor) return true;
+    const key = this.zAccessor(d);
+    if (!this.#namesSeries(key)) return true;
+    return this.ctx.series.visibleSeries.some((s) => s.key === key);
   }
 
   #defaultPathData(): string {

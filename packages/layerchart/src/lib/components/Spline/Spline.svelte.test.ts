@@ -195,6 +195,73 @@ describe('Spline', () => {
     });
   });
 
+  describe('legend interaction for lines it split itself', () => {
+    // `stroke="group"` draws a line per group from one mark, and a series is declared per group —
+    // so the legend is already naming exactly those lines and should be able to single one out
+    const seriesProps = () =>
+      chartProps({
+        series: [
+          { key: 'a', color: 'rgb(255, 0, 0)' },
+          { key: 'b', color: 'rgb(0, 0, 255)' },
+        ],
+      });
+
+    function opacities() {
+      return paths().map((p) => p.getAttribute('opacity'));
+    }
+
+    it('fades the other lines when one is highlighted', async () => {
+      let ctx: any;
+      render(TestHarness, {
+        component: Spline,
+        chartProps: seriesProps(),
+        componentProps: { stroke: 'group' },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      await expect.poll(() => paths().length).toBe(2);
+
+      ctx.series.setHighlight('a');
+      await expect.poll(opacities).toEqual(['1', '0.1']);
+
+      ctx.series.setHighlight(null);
+      await expect.poll(() => opacities().every((o) => o == null || o === '1')).toBe(true);
+    });
+
+    it('drops a line the legend has hidden', async () => {
+      let ctx: any;
+      render(TestHarness, {
+        component: Spline,
+        chartProps: seriesProps(),
+        componentProps: { stroke: 'group' },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      await expect.poll(() => paths().length).toBe(2);
+
+      ctx.series.selectedKeys.toggle('a');
+      await expect.poll(() => paths().length).toBe(1);
+      await expect.poll(() => paths()[0]?.getAttribute('stroke')).toBe('rgb(255, 0, 0)');
+    });
+
+    it('leaves a `z` the legend does not name alone', async () => {
+      // Nothing on the legend corresponds to these groups, so they must not react to its keys
+      let ctx: any;
+      render(TestHarness, {
+        component: Spline,
+        chartProps: chartProps({ series: [{ key: 'unrelated', color: 'red' }] }),
+        componentProps: { z: 'group' },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      await expect.poll(() => paths().length).toBe(2);
+
+      ctx.series.setHighlight('unrelated');
+      await expect.poll(() => paths().length).toBe(2);
+      expect(opacities().every((o) => o == null || o === '1')).toBe(true);
+    });
+  });
+
   describe('stroke', () => {
     it('resolves a data property through the chart`s color scale', async () => {
       render(TestHarness, {
