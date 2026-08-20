@@ -1443,14 +1443,14 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 64,
+      "lineNumber": 69,
       "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
     },
     {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 73,
+      "lineNumber": 78,
       "line": "<Area"
     },
     {
@@ -1622,5 +1622,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:17.674Z"
+  "updatedAt": "2026-08-20T17:01:00.930Z"
 }

@@ -3353,14 +3353,14 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 55,
+      "lineNumber": 60,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 56,
+      "lineNumber": 61,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -5478,5 +5478,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-20T12:48:38.007Z"
+  "updatedAt": "2026-08-20T17:01:00.975Z"
 }

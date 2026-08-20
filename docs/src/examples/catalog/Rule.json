@@ -575,7 +575,7 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 57,
+      "lineNumber": 62,
       "line": "<Rule y={0} />"
     },
     {
@@ -712,5 +712,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:27.089Z"
+  "updatedAt": "2026-08-20T17:01:02.542Z"
 }

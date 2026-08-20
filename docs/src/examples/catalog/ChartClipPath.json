@@ -90,7 +90,7 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 58,
+      "lineNumber": 63,
       "line": "<ChartClipPath>"
     },
     {
@@ -157,5 +157,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-08-16T00:54:31.094Z"
+  "updatedAt": "2026-08-20T17:01:01.371Z"
 }

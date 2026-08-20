@@ -1616,14 +1616,14 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 54,
+      "lineNumber": 59,
       "line": "<Layer>"
     },
     {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 72,
+      "lineNumber": 77,
       "line": "<Layer>"
     },
     {
@@ -4399,5 +4399,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.919Z"
+  "updatedAt": "2026-08-20T17:01:02.069Z"
 }

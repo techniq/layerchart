@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-20T13:39:18.249Z",
+  "generatedAt": "2026-08-20T17:04:37.492Z",
   "totalComponents": 80,
-  "totalExamples": 977,
+  "totalExamples": 978,
   "components": [
     {
       "component": "AnnotationLine",
@@ -5005,6 +5005,11 @@
           "name": "portal-overflow",
           "path": "/example/Tooltip/portal-overflow",
           "checksum": "e5edffde1c2e358da7272edfa7fe0046"
+        },
+        {
+          "name": "programmatic-control",
+          "path": "/example/Tooltip/programmatic-control",
+          "checksum": "409c53c682916df0b7337eb46abedd4d"
         },
         {
           "name": "scatter-plot",

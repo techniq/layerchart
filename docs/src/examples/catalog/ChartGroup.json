@@ -150,42 +150,42 @@
       "components": [
         {
           "component": "ChartGroup",
-          "lineNumber": 39,
-          "line": "<ChartGroup>"
+          "lineNumber": 44,
+          "line": "<ChartGroup brush={{ x: initialRange }}>"
         },
         {
           "component": "Chart",
-          "lineNumber": 45,
+          "lineNumber": 50,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 54,
+          "lineNumber": 59,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 55,
+          "lineNumber": 60,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 57,
+          "lineNumber": 62,
           "line": "<Rule y={0} />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 58,
+          "lineNumber": 63,
           "line": "<ChartClipPath>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 59,
+          "lineNumber": 64,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 64,
+          "lineNumber": 69,
           "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
         }
       ]
@@ -284,8 +284,8 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 39,
-      "line": "<ChartGroup>"
+      "lineNumber": 44,
+      "line": "<ChartGroup brush={{ x: initialRange }}>"
     },
     {
       "example": "synced-legend",
@@ -302,5 +302,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-08-20T12:48:38.614Z"
+  "updatedAt": "2026-08-20T17:01:01.416Z"
 }

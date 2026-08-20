@@ -311,7 +311,7 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 59,
+      "lineNumber": 64,
       "line": "<LinearGradient"
     },
     {
@@ -581,5 +581,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-08-19T14:28:19.507Z"
+  "updatedAt": "2026-08-20T17:01:02.179Z"
 }

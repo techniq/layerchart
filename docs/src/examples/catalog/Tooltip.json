@@ -641,6 +641,18 @@
       ]
     },
     {
+      "name": "programmatic-control",
+      "title": "programmatic control",
+      "path": "/docs/components/Tooltip/programmatic-control",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 70,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "scatter-plot",
       "title": "scatter plot",
       "path": "/docs/components/Tooltip/scatter-plot",
@@ -8015,5 +8027,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-20T12:48:40.574Z"
+  "updatedAt": "2026-08-20T17:01:02.716Z"
 }

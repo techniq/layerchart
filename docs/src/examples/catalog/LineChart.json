@@ -1801,7 +1801,14 @@
       "path": "/docs/components/Spline/math-formula",
       "lineNumber": 143,
       "line": "<LineChart"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/programmatic-control",
+      "lineNumber": 70,
+      "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-20T12:48:39.829Z"
+  "updatedAt": "2026-08-20T17:01:02.140Z"
 }

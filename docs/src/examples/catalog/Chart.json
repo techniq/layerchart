@@ -2460,14 +2460,14 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 45,
+      "lineNumber": 50,
       "line": "<Chart"
     },
     {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 71,
+      "lineNumber": 76,
       "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 16 }} brush height={20}>"
     },
     {
@@ -5243,5 +5243,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-20T12:48:38.455Z"
+  "updatedAt": "2026-08-20T17:01:01.328Z"
 }
