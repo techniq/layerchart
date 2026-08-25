@@ -52,6 +52,13 @@ jobs:
             echo "No baseline on ${{ github.base_ref }} — run the Update Visual Baseline workflow." >> "$GITHUB_STEP_SUMMARY"
           fi
 
+      # `stackblitz-files.json` is generated and gitignored, so a fresh checkout has none — and
+      # every example route imports it transitively, through `Example`'s "open in StackBlitz".
+      # `prebuild` covers this for a real build; a bare `vite dev` doesn't.
+      - name: Generate the docs server's inputs
+        if: steps.baseline.outputs.found == 'true'
+        run: pnpm --filter docs generate:stackblitz
+
       - name: Start the docs server
         if: steps.baseline.outputs.found == 'true'
         run: |

@@ -45,6 +45,12 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
 
+      # `stackblitz-files.json` is generated and gitignored, so a fresh checkout has none — and
+      # every example route imports it transitively, through `Example`'s "open in StackBlitz".
+      # `prebuild` covers this for a real build; a bare `vite dev` doesn't.
+      - name: Generate the docs server's inputs
+        run: pnpm --filter docs generate:stackblitz
+
       - name: Start the docs server
         run: |
           pnpm --filter docs exec vite dev --port 3002 > /tmp/server.log 2>&1 &
