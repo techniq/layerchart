@@ -404,30 +404,39 @@ export class HighlightState {
     if (props.data === undefined && this.ctx.cGroups && this.ctx.series.isDefaultSeries) {
       const value = this.ctx.valueAxis === 'y' ? this.ctx.y : this.ctx.x;
       // Within a facet, only that panel's rows — the same category appears in every panel, and
-      // pointing all of them would put the other panels' values in this one
-      const source = this.#facetPanel?.().data ?? chartDataArray(this.ctx.data);
+      // pointing all of them would put the other panels' values in this one.  Outside one it's
+      // `flatData`, which is what the tooltip resolves against and what the accessors are written
+      // for: a chart whose `data` is nested (a `stack()`, say) passes its rows as `flatData`, and
+      // iterating `data` there would hand the accessors a series rather than a row.
+      const source = this.#facetPanel?.().data ?? chartDataArray(this.ctx.flatData);
       const rows = source.filter((d: any) => isEqualValue(this.x(d), this.xValue));
+
+      // A multi-value accessor (`y={[0, 1]}`, as a stack's bands use) gives a category a span
+      // rather than a position, so there is no single point to put on it.  Those belong to the
+      // series path below, which points each of the values.
+      const spans = rows.some((row: any) => Array.isArray(value(row)));
 
       // No visibility filter needed — rows of a `c` category the legend has hidden are already
       // gone from `ctx.data`, which is what keeps the scales in step with the legend
-      return rows
-        .map((row: any) => {
-          const seriesValue = value(row);
-          return {
-            x:
-              this.ctx.valueAxis === 'x'
-                ? this.ctx.xScale(seriesValue) + this.xOffset
-                : (this.xCoordScalar as number) + this.xOffset,
-            y:
-              this.ctx.valueAxis === 'x'
-                ? (this.yCoordScalar as number) + this.yOffset
-                : this.ctx.yScale(seriesValue) + this.yOffset,
-            fill: this.ctx.config.c ? this.ctx.cGet(row) : null,
-            data: { x: this.xValue, y: seriesValue },
-            seriesKey: this.ctx.cKey(row) ?? undefined,
-          };
-        })
-        .filter(notNull) as HighlightPoint[];
+      if (!spans)
+        return rows
+          .map((row: any) => {
+            const seriesValue = value(row);
+            return {
+              x:
+                this.ctx.valueAxis === 'x'
+                  ? this.ctx.xScale(seriesValue) + this.xOffset
+                  : (this.xCoordScalar as number) + this.xOffset,
+              y:
+                this.ctx.valueAxis === 'x'
+                  ? (this.yCoordScalar as number) + this.yOffset
+                  : this.ctx.yScale(seriesValue) + this.yOffset,
+              fill: this.ctx.config.c ? this.ctx.cGet(row) : null,
+              data: { x: this.xValue, y: seriesValue },
+              seriesKey: this.ctx.cKey(row) ?? undefined,
+            };
+          })
+          .filter(notNull) as HighlightPoint[];
     }
 
     if (props.data === undefined && this.ctx.tooltip.series.length > 0) {
