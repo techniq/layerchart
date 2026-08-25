@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { scaleBand, scaleLinear } from 'd3-scale';
+import { scaleBand, scaleLinear, scaleUtc } from 'd3-scale';
+import { utcDay } from 'd3-time';
 
 import { bisectData, dataCoords, findDatumByValue, pickNearest } from './tooltip.js';
 
@@ -183,5 +184,77 @@ describe('dataCoords', () => {
     } as any;
 
     expect(dataCoords(coordCtx, {})).toEqual({ x: 150, y: 50 });
+  });
+
+  describe('with an interval', () => {
+    // Ten days across 300px, so a day is 30px wide and its center sits 15px in
+    const timeScale = scaleUtc()
+      .domain([new Date('2024-01-01'), new Date('2024-01-11')])
+      .range([0, 300]);
+
+    it('positions to the center of the interval rather than its leading edge', () => {
+      const coordCtx = {
+        xGet: (d: any) => timeScale(d.date),
+        yGet: (d: any) => yScale(d.y),
+        x: (d: any) => d.date,
+        y: (d: any) => d.y,
+        xScale: timeScale,
+        yScale,
+        xInterval: utcDay,
+        padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      } as any;
+
+      expect(dataCoords(coordCtx, { date: new Date('2024-01-01'), y: 0 }).x).toBe(15);
+      expect(dataCoords(coordCtx, { date: new Date('2024-01-03'), y: 0 }).x).toBe(75);
+    });
+
+    it('centers on the interval a value falls in, not on the value', () => {
+      const coordCtx = {
+        xGet: (d: any) => timeScale(d.date),
+        yGet: () => 0,
+        x: (d: any) => d.date,
+        y: () => 0,
+        xScale: timeScale,
+        yScale,
+        xInterval: utcDay,
+        padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      } as any;
+
+      // Midday on the 1st still belongs to the 1st, so it lands where the boundary does
+      expect(dataCoords(coordCtx, { date: new Date('2024-01-01T12:00:00Z') }).x).toBe(15);
+    });
+
+    it('applies to the y axis too, as a horizontal chart uses it', () => {
+      const yTimeScale = scaleUtc()
+        .domain([new Date('2024-01-01'), new Date('2024-01-11')])
+        .range([0, 200]);
+      const coordCtx = {
+        xGet: () => 0,
+        yGet: (d: any) => yTimeScale(d.date),
+        x: () => 0,
+        y: (d: any) => d.date,
+        xScale,
+        yScale: yTimeScale,
+        yInterval: utcDay,
+        padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      } as any;
+
+      expect(dataCoords(coordCtx, { date: new Date('2024-01-01') }).y).toBe(10);
+    });
+
+    it('leaves a multi-value accessor alone, which already spans the mark', () => {
+      const coordCtx = {
+        xGet: () => [100, 200],
+        yGet: () => 0,
+        x: (d: any) => d.date,
+        y: () => 0,
+        xScale: timeScale,
+        yScale,
+        xInterval: utcDay,
+        padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      } as any;
+
+      expect(dataCoords(coordCtx, { date: new Date('2024-01-01') }).x).toBe(150);
+    });
   });
 });
