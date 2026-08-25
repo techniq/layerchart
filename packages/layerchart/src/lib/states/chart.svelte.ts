@@ -402,7 +402,10 @@ export class ChartState<
     this.seriesState = new SeriesState(
       () => {
         const explicit = this.props.series;
-        if (explicit && explicit.length > 0) return explicit;
+        // An explicitly-provided array is authoritative even when empty. Falling through to the
+        // implicit path on `[]` deadlocks: implicit series are derived from registered marks, but
+        // charts render their marks from the series, so the two oscillate and never settle.
+        if (explicit) return explicit;
 
         // Generate implicit series from registered marks.
         // Use the value axis accessor (y for horizontal charts, x for vertical).

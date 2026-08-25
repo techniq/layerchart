@@ -378,6 +378,31 @@ describe('ChartState mark registration', () => {
     }
   });
 
+  it('should treat an empty explicit series array as authoritative', () => {
+    // Charts render their marks from the series, so deriving the series back from those marks
+    // leaves the two oscillating with no fixed point — a chart whose data emptied out mid-flight
+    // (a refetch, say) would hang the tab rather than render as empty.
+    const data: MultiSeriesData[] = [{ date: '2024-01', apples: 10, bananas: 15 }];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      seriesLayout: 'overlap',
+      data,
+      x: 'date',
+      series: [],
+    });
+
+    try {
+      // Marks left over from the previous, non-empty series
+      state.registerMark({ y: 'apples', color: 'red' });
+      state.registerMark({ y: 'bananas', color: 'yellow' });
+      flushSync();
+
+      expect(state.seriesState.series).toHaveLength(0);
+    } finally {
+      cleanup();
+    }
+  });
+
   it('should deduplicate implicit series with the same key', () => {
     const { state, cleanup } = createChartState<TestData>({
       data: [{ date: '2024-01', value: 10 }],
