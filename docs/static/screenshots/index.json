@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T18:45:21.306Z",
+  "generatedAt": "2026-08-25T17:59:23.475Z",
   "totalComponents": 80,
   "totalExamples": 980,
   "components": [
@@ -684,12 +684,12 @@
         {
           "name": "tooltip-fixed-with-hide-delay",
           "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
-          "checksum": "6eb0bfff9bffb6f7c21cd0b2c8808102"
+          "checksum": "95120b8297e3a6c762b8cd8be972469e"
         },
         {
           "name": "tooltip-locking",
           "path": "/example/AreaChart/tooltip-locking",
-          "checksum": "f5e240f2e05b96a8986f7647ed05d307"
+          "checksum": "d38c62564f3fb61bb21d122b5e8a5c65"
         }
       ]
     },
@@ -1054,7 +1054,7 @@
         {
           "name": "facet-stack-long-data",
           "path": "/example/BarChart/facet-stack-long-data",
-          "checksum": ""
+          "checksum": "e3999220700f23bc50eb44521bda35e0"
         },
         {
           "name": "gradient",
@@ -1314,7 +1314,7 @@
         {
           "name": "series-horizontal-diverging",
           "path": "/example/BarChart/series-horizontal-diverging",
-          "checksum": "25a296da40c0e694ebb6a19b25a48b10"
+          "checksum": "5b3084d1f66cb11ce39d8c9c89c15aa9"
         },
         {
           "name": "series-horizontal-diverging-as-percent",
@@ -2929,7 +2929,7 @@
         {
           "name": "true-size-globe",
           "path": "/example/GeoProjection/true-size-globe",
-          "checksum": "51e3d08a51caea0e5bf109d9d094d4ba"
+          "checksum": "746799980991d5bf11af9cbee71cc854"
         }
       ]
     },
@@ -3459,7 +3459,7 @@
         {
           "name": "null-dashed-gaps",
           "path": "/example/LineChart/null-dashed-gaps",
-          "checksum": "264bef9de13b096e6f25dc6c64096c3e"
+          "checksum": "0439ba4eab1aff35a1e8ab518acd6df7"
         },
         {
           "name": "null-gaps",
