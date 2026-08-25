@@ -34,7 +34,7 @@
 	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 >
-	{#snippet tooltip({ context, setHighlightKey, series })}
+	{#snippet tooltip({ context })}
 		<Tooltip.Root pointerEvents>
 			{#snippet children({ data })}
 				<Tooltip.Header>
@@ -42,14 +42,14 @@
 				</Tooltip.Header>
 
 				<Tooltip.List>
-					{#each series as s}
+					{#each context.series.visibleSeries as s}
 						{@const valueAccessor = accessor(s.value ?? s.key)}
 						{@const value = Math.abs(valueAccessor(data))}
 						<Tooltip.Item
 							label={s.key}
 							color={s.color}
-							onpointerenter={() => setHighlightKey(s.key)}
-							onpointerleave={() => setHighlightKey(null)}
+							onpointerenter={() => (context.series.highlightKey = s.key)}
+							onpointerleave={() => (context.series.highlightKey = null)}
 						>
 							{format(value)}
 

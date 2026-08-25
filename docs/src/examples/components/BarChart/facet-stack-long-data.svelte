@@ -25,7 +25,6 @@
 	]}
 	legend
 	props={{
-		facetAxis: { format: 'none' },
 		yAxis: { format: 'metric' },
 		tooltip: { header: { format: 'none' } }
 	}}

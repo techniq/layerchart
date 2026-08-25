@@ -12,8 +12,8 @@
 </script>
 
 <LineChart {data} x="date" y="value" padding={defaultChartPadding({ right: 10 })} height={300}>
-	{#snippet belowMarks({ series })}
-		{#each series as s}
+	{#snippet belowMarks({ context })}
+		{#each context.series.visibleSeries as s}
 			<Spline
 				data={data.filter((d) => d.value !== null)}
 				y={s.value}

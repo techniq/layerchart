@@ -2443,14 +2443,14 @@
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size-globe",
       "lineNumber": 421,
-      "line": "<Layer>"
+      "line": "<Layer ignoreTransform>"
     },
     {
       "example": "true-size-globe",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size-globe",
       "lineNumber": 440,
-      "line": "<Layer>"
+      "line": "<Layer ignoreTransform>"
     },
     {
       "example": "globe",
@@ -4399,5 +4399,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:02.069Z"
+  "updatedAt": "2026-08-25T17:59:25.225Z"
 }
