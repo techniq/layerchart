@@ -402,7 +402,7 @@
 						fitGeojson: { type: 'Sphere' }
 					}}
 					transform={{
-						mode: 'manual',
+						mode: 'canvas',
 						scrollMode: 'scale',
 						initialScale: 3,
 						scaleExtent: [zoomMin, zoomMax],
@@ -418,7 +418,7 @@
 						{@const cy = context.height / 2}
 
 						<!-- Region A -->
-						<Layer>
+						<Layer ignoreTransform>
 							<GeoProjection
 								projection={() => geoAzimuthalEqualArea().clipAngle(150)}
 								rotate={{ yaw: rotateA[0], pitch: rotateA[1], roll: rotateA[2] }}
@@ -437,7 +437,7 @@
 						</Layer>
 
 						<!-- Region B - blended -->
-						<Layer>
+						<Layer ignoreTransform>
 							<GeoProjection
 								projection={() => geoAzimuthalEqualArea().clipAngle(150)}
 								rotate={{ yaw: rotateB[0], pitch: rotateB[1], roll: rotateB[2] }}
