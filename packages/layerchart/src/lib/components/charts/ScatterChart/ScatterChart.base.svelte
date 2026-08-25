@@ -85,9 +85,9 @@
   tooltip={tooltipProp}
   {props}
 >
-  {#snippet marks({ context }: { context: any })}
+  {#snippet marks({ context, facet }: { context: any; facet: any })}
     {#if typeof marks === 'function'}
-      {@render marks({ context })}
+      {@render marks({ context, facet })}
     {:else}
       {#each context.series.visibleSeries as s, i (s.key)}
         <Points seriesKey={s.key} {...props.points} />

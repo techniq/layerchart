@@ -2453,6 +2453,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "facet-click",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-click",
+      "lineNumber": 37,
+      "line": "<BarChart"
+    },
+    {
       "example": "truncate-axis-labels",
       "component": "Text",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -2467,5 +2474,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-20T18:45:22.168Z"
+  "updatedAt": "2026-08-23T18:52:24.929Z"
 }
