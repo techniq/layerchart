@@ -49,10 +49,16 @@ jobs:
         run: |
           pnpm --filter docs exec vite dev --port 3002 > /tmp/server.log 2>&1 &
           for i in $(seq 1 60); do
-            curl -sf -o /dev/null http://localhost:3002/ && exit 0
+            curl -sf -o /dev/null "http://localhost:3002/docs/screenshot/AnnotationLine/horizontal" && exit 0
             sleep 2
           done
           echo "docs server did not start"; cat /tmp/server.log; exit 1
+
+      # A full capture takes ~40 minutes, so prove the app renders at all before spending them.
+      # `capture` exits non-zero once more than a few examples draw nothing.
+      - name: Smoke test the docs server
+        working-directory: docs
+        run: node scripts/visual-snapshot.mjs capture /tmp/smoke.json --filter AnnotationLine --repeat 1
 
       # Two passes so examples that are still nondeterministic are recorded as such and skipped
       # by later comparisons rather than reported as regressions
