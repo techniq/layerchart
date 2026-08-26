@@ -19,7 +19,12 @@ export function accessor<TData = any>(prop: Accessor<TData>): (d: TData) => any 
     // function
     return prop;
   } else if (typeof prop === 'string' || typeof prop === 'number') {
-    // path string or number (array index)
+    // A plain key needs no path resolution, and `get` re-parses the string on every call — which
+    // is once per row per channel, so a 5,000-point chart parses `"date"` 5,000 times per pass
+    if (typeof prop === 'number' || (!prop.includes('.') && !prop.includes('['))) {
+      return (d: TData) => (d == null ? undefined : (d as any)[prop]);
+    }
+    // path string (dot / bracket notation)
     return (d: TData) => get(d, prop);
   } else {
     // return full object

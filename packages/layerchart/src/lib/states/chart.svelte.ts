@@ -1230,9 +1230,13 @@ export class ChartState<
       // `Spline`s compared against each other, say) would otherwise be scaled to totals nothing
       // on it draws.  No registered marks at all means the chart hasn't been composed by hand,
       // so the stack stands.
-      const marks = this._markInfos;
-
       if (this.isStacked) {
+        // Read inside the guard.  This is the value domain — every scale hangs off it, and every
+        // mark off those — so subscribing it to the mark registry meant each mark registering
+        // during mount invalidated the domain, rebuilt the scales, and redrew every path from
+        // them.  Measured on a 5,000-point `LineChart`: 4 path builds per mount instead of 2.
+        const marks = this._markInfos;
+
         // Collect in a single pass — see `getStackedValues`, which hoists the
         // `keyBy` accessor and stack derived reads out of the per-row loop.
         const stacked = this.seriesState.getStackedValues(chartDataArray(this.data));
