@@ -2622,3 +2622,153 @@ describe('ChartState explicit null domain', () => {
     }
   });
 });
+
+describe('ChartState implied colour channel', () => {
+  type Row = { date: string; value: number; island: string };
+  const data: Row[] = [
+    { date: '2024-01', value: 10, island: 'Torgersen' },
+    { date: '2024-02', value: 20, island: 'Biscoe' },
+    { date: '2024-03', value: 30, island: 'Dream' },
+  ];
+
+  const cRange = ['red', 'green', 'blue'];
+
+  it('takes the colour column from a mark that named one', () => {
+    // `<Circle fill="island">` names the column without the chart declaring `c="island"`
+    const { state, cleanup } = createChartState<Row>({ data, x: 'date', y: 'value', cRange });
+    try {
+      state.registerMark({ x: 'date', y: 'value', color: 'island' });
+      flushSync();
+
+      expect(state.cChannel).toBe('island');
+      expect(state.cDomain).toEqual(['Torgersen', 'Biscoe', 'Dream']);
+      expect(state.cGet(data[0])).toBe('red');
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('leaves the declared `c` alone', () => {
+    const { state, cleanup } = createChartState<Row>({
+      data,
+      x: 'date',
+      y: 'value',
+      c: 'date',
+      cRange,
+    });
+    try {
+      state.registerMark({ x: 'date', y: 'value', color: 'island' });
+      flushSync();
+
+      // The chart said `c="date"`; a mark can't overrule it
+      expect(state.cChannel).toBe('date');
+      expect(state.cDomain).toEqual(['2024-01', '2024-02', '2024-03']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('ignores a CSS colour, which names no column', () => {
+    const { state, cleanup } = createChartState<Row>({ data, x: 'date', y: 'value', cRange });
+    try {
+      state.registerMark({ x: 'date', y: 'value', color: 'var(--color-primary)' });
+      state.registerMark({ x: 'date', y: 'value', color: '#ff0000' });
+      flushSync();
+
+      expect(state.cChannel).toBeUndefined();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('ignores a string that names nothing in the data', () => {
+    const { state, cleanup } = createChartState<Row>({ data, x: 'date', y: 'value', cRange });
+    try {
+      state.registerMark({ x: 'date', y: 'value', color: 'rebeccapurple' });
+      flushSync();
+
+      expect(state.cChannel).toBeUndefined();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('stays out of it when marks name different columns', () => {
+    // Nothing makes one of them the chart's colour channel, and picking either would be a guess
+    const { state, cleanup } = createChartState<Row>({ data, x: 'date', y: 'value', cRange });
+    try {
+      state.registerMark({ x: 'date', y: 'value', color: 'island' });
+      state.registerMark({ x: 'date', y: 'value', color: 'date' });
+      flushSync();
+
+      expect(state.cChannel).toBeUndefined();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('colours without grouping — no legend selection, row filtering, or stack splitting', () => {
+    // `cGroups` drives all three, and `ChartState.data` is built from it.  `data` is upstream of
+    // every scale, so letting it depend on the mark registry closes a loop: a scale change re-runs
+    // each mark's registration effect, which re-registers, which invalidates `data`.  Measured on
+    // the stacked-waffle shape: drawn in 13s on the declared prop, blank after 254s on the implied
+    // channel.  `Waffle.svelte.test.ts` guards the shape; this pins the boundary.
+    const { state, cleanup } = createChartState<Row>({ data, x: 'date', y: 'value', cRange });
+    try {
+      state.registerMark({ x: 'date', y: 'value', color: 'island' });
+      flushSync();
+
+      expect(state.cChannel).toBe('island');
+      expect(state.cGroups).toBeNull();
+      expect(state.cKey(data[0])).toBeNull();
+      expect(state.data).toEqual(data);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('groups nothing when a computed accessor gives a colour per row', () => {
+    // Naming a column says that column holds the category.  A mark colouring by a function is a
+    // colour per row, which would cut one series into a path per colour
+    const { state, cleanup } = createChartState<Row>({
+      data,
+      x: 'date',
+      y: 'value',
+      c: (d: Row) => (d.value > 15 ? 'high' : 'low'),
+      cRange,
+    });
+    try {
+      flushSync();
+      expect(state.cGroups).toBeNull();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('keeps a category on the same colour whatever else is in the data', () => {
+    // Without a channel the domain is the rows themselves, so an ordinal scale meets each category
+    // as an unknown value and answers with whatever the row count left next in the range — which
+    // moved every colour when a single row came or went
+    // Looked up by value, the way a mark's own `fill="island"` resolves it
+    const colourOf = (rows: Row[], island: string, withMark: boolean) => {
+      const { state, cleanup } = createChartState<Row>({ data: rows, x: 'date', y: 'value', cRange }); // prettier-ignore
+      try {
+        if (withMark) state.registerMark({ x: 'date', y: 'value', color: 'island' });
+        flushSync();
+        return state.cScale?.(island);
+      } finally {
+        cleanup();
+      }
+    };
+
+    const extra = [...data, { date: '2024-04', value: 40, island: 'Biscoe' }];
+
+    // implied channel: 'Dream' is the third category either way
+    expect(colourOf(data, 'Dream', true)).toBe('blue');
+    expect(colourOf(extra, 'Dream', true)).toBe('blue');
+
+    // without one, the domain is the rows, so the category is an unknown value the scale answers
+    // by extending — and one more row moves it to a different colour
+    expect(colourOf(data, 'Dream', false)).not.toBe(colourOf(extra, 'Dream', false));
+  });
+});

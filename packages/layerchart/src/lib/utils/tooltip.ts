@@ -8,6 +8,14 @@ import { isScaleBand, type AnyScale } from './scales.svelte.js';
 import type { TooltipMode } from '$lib/components/tooltip/TooltipContext.svelte';
 
 /**
+ * Whether a mode resolves to one specific row, by proximity in both axes, rather than to every
+ * series at a position on one — which is what decides whether a hover marks a point or a column.
+ */
+export function isSinglePointMode(mode: TooltipMode) {
+  return mode === 'quadtree' || mode === 'voronoi';
+}
+
+/**
  * Strategy for picking between the two data points surrounding a value.
  * - `closest` — whichever of the two is nearer the value
  * - `left` — the data point before the value

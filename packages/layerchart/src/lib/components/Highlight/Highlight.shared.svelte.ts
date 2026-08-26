@@ -9,7 +9,7 @@ import type Line from '../Line/Line.svelte';
 import type Rect from '../Rect/Rect.svelte';
 import { accessor, chartDataArray, isEqualValue, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
-import { panelDatum } from '$lib/utils/tooltip.js';
+import { isSinglePointMode, panelDatum } from '$lib/utils/tooltip.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -360,7 +360,7 @@ export class HighlightState {
    * the rule the `facetAll` copies and the series-less path already follow.
    */
   #pointFill(seriesInfo: { color?: string | null }) {
-    if (this.ctx.config.c && this.ctx.series.isDefaultSeries) {
+    if (this.ctx.cChannel && this.ctx.series.isDefaultSeries) {
       return (this.ctx.cGet(this.highlightData) as string) ?? seriesInfo.color ?? '';
     }
     return seriesInfo.color ?? '';
@@ -385,7 +385,7 @@ export class HighlightState {
     return {
       x: (this.ctx.xScale(x) as number) + this.xOffset,
       y: (this.ctx.yScale(y) as number) + this.yOffset,
-      fill: (this.ctx.config.c ? this.ctx.cGet(match) : null) as string,
+      fill: (this.ctx.cChannel ? this.ctx.cGet(match) : null) as string,
       data: { x, y },
       seriesKey: undefined,
     } satisfies HighlightPoint;
@@ -401,7 +401,17 @@ export class HighlightState {
     // series list names only the row the pointer resolved to — one point, on whichever category
     // happened to be last.  Point every category at this position instead, as the tooltip lists
     // them.
-    if (props.data === undefined && this.ctx.cGroups && this.ctx.series.isDefaultSeries) {
+    //
+    // Only where the pointer resolved to a *position*, though.  `quadtree` and `voronoi` resolve
+    // to one row by proximity in both axes — a scatter, where the rows sharing an x are unrelated
+    // points rather than a category's line, and pointing all of them marks places nothing was
+    // hovered.
+    if (
+      props.data === undefined &&
+      this.ctx.cGroups &&
+      this.ctx.series.isDefaultSeries &&
+      !isSinglePointMode(this.ctx.tooltip.mode)
+    ) {
       const value = this.ctx.valueAxis === 'y' ? this.ctx.y : this.ctx.x;
       // Within a facet, only that panel's rows — the same category appears in every panel, and
       // pointing all of them would put the other panels' values in this one.  Outside one it's
@@ -431,7 +441,7 @@ export class HighlightState {
                 this.ctx.valueAxis === 'x'
                   ? (this.yCoordScalar as number) + this.yOffset
                   : this.ctx.yScale(seriesValue) + this.yOffset,
-              fill: this.ctx.config.c ? this.ctx.cGet(row) : null,
+              fill: this.ctx.cChannel ? this.ctx.cGet(row) : null,
               data: { x: this.xValue, y: seriesValue },
               seriesKey: this.ctx.cKey(row) ?? undefined,
             };
@@ -535,7 +545,7 @@ export class HighlightState {
 
           tmpPoints = seriesPointsData
             .map((seriesPoint) => {
-              const fill = this.ctx.config.c ? this.ctx.cGet(seriesPoint.series) : null;
+              const fill = this.ctx.cChannel ? this.ctx.cGet(seriesPoint.series) : null;
               return {
                 x: this.ctx.xScale(seriesPoint.point[1]) + this.xOffset,
                 y: (this.yCoordScalar as number) + this.yOffset,
@@ -553,7 +563,7 @@ export class HighlightState {
             // @ts-expect-error - TODO: fix type
             const _key = this.ctx.config.x?.[i];
 
-            const fill = this.ctx.config.c
+            const fill = this.ctx.cChannel
               ? this.ctx.cGet({ ...this.highlightData, $key: _key })
               : null;
 
@@ -580,7 +590,7 @@ export class HighlightState {
 
           tmpPoints = seriesPointsData
             .map((seriesPoint) => {
-              const fill = this.ctx.config.c ? this.ctx.cGet(seriesPoint.series) : null;
+              const fill = this.ctx.cChannel ? this.ctx.cGet(seriesPoint.series) : null;
               return {
                 x: (this.xCoord as number) + this.xOffset,
                 y: this.ctx.yScale(seriesPoint.point[1]) + this.yOffset,
@@ -598,7 +608,7 @@ export class HighlightState {
             // @ts-expect-error - TODO: fix type
             const _key = this.ctx.config.y[i];
 
-            const fill = this.ctx.config.c
+            const fill = this.ctx.cChannel
               ? this.ctx.cGet({ ...this.highlightData, $key: _key })
               : null;
 
@@ -613,7 +623,7 @@ export class HighlightState {
           .filter(notNull) as HighlightPoint[];
       }
     } else if (this.xCoord != null && this.yCoord != null) {
-      const fill = this.ctx.config.c ? this.ctx.cGet(this.highlightData) : null;
+      const fill = this.ctx.cChannel ? this.ctx.cGet(this.highlightData) : null;
       tmpPoints = [
         {
           x: (this.xCoord as number) + this.xOffset,

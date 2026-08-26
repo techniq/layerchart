@@ -23,7 +23,6 @@
 	height={300}
 >
 	<Svg>
-		<!-- the grid`s headers — `Chart`'s default layout adds these for you -->
 		<FacetAxis />
 		<Grid x y />
 		<Axis placement="left" />
