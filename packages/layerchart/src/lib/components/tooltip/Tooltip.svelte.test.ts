@@ -366,4 +366,39 @@ describe('Tooltip', () => {
       );
     });
   });
+
+  describe('pointerEvents', () => {
+    /**
+     * With `pointerEvents` enabled the tooltip can be hovered, which sets
+     * `isHoveringTooltipContent` and makes the hide timer `TooltipContext` already scheduled a
+     * no-op.  Nothing else re-arms that timer, so leaving the tooltip anywhere other than back
+     * over the hit area used to strand it on screen indefinitely.
+     */
+    it('should hide after the pointer leaves an interactive tooltip', async () => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { pointerEvents: true } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      await waitForTooltip(tooltipCtx, undefined, () => {
+        expect(getTooltipRoot()).not.toBeNull();
+      });
+
+      const tooltipRoot = getTooltipRoot()!;
+
+      // Move off the plot and onto the tooltip, which blocks the pending hide
+      tooltipCtx.dispatchEvent(new PointerEvent('pointerleave', { bubbles: true }));
+      tooltipRoot.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(getTooltipRoot(), 'should stay visible while hovered').not.toBeNull();
+
+      // Leaving the tooltip has to re-arm it
+      tooltipRoot.dispatchEvent(new PointerEvent('pointerleave', { bubbles: true }));
+      await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
+    });
+  });
 });

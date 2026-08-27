@@ -262,7 +262,7 @@
 			<div
 				class={cls(
 					'relative max-w-full',
-					variant === 'default' && 'p-4 rounded bg-surface-200 shadow-lg'
+					variant === 'default' && 'p-4 rounded bg-surface-100 dark:bg-surface-200 shadow-lg'
 				)}
 				bind:this={containerEl}
 				style:width={containerWidth ? `${containerWidth}px` : undefined}

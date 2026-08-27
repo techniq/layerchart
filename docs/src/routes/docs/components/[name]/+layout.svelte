@@ -117,6 +117,9 @@
 					inset
 					rounded="full"
 					size="sm"
+					classes={{
+						options: 'bg-surface-100'
+					}}
 				>
 					{#each layers as layer}
 						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>

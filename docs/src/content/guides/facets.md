@@ -264,6 +264,64 @@ To build the rows yourself — a single tooltip listing every panel, say — `pa
 A faceted chart resolves tooltips against the rows the panels were partitioned from — the chart's `data`. Marks given their own `data` aren't part of that partition, so their points are not found by the pointer.
 ::
 
+## Clicks
+
+The panel is a property of the row, so a click that resolves to one already carries it. Read it back with the chart's own `fx` / `fy` accessors rather than the key you passed, and it keeps working when `fx` is a function:
+
+```svelte
+<BarChart
+	bind:context
+	{data}
+	fx="party"
+	onTooltipClick={(e, { data }) => {
+		const party = context.facet.x?.(data);
+	}}
+/>
+```
+
+:example{ component="Chart" name="facet-click" }
+
+`onTooltipClick` is what a chart with a tooltip wants. The modes that draw hit targets — `bounds`, `band`, `facet` and `voronoi` — put them above the marks, so a mark's own `onclick` (and `Bars`' `onBarClick`) never sees the click. A hand-composed chart passes the same handler as `tooltipContext={{ onclick }}`.
+
+The `bisect-*` and `quadtree*` modes draw nothing over the marks, so there the mark keeps its click — and the panel comes from the snippet it's drawn in:
+
+```svelte
+{#snippet marks({ facet })}
+	<Circle cx="year" cy="percent" onclick={() => select(facet.fx)} />
+{/snippet}
+```
+
+### Clicking the panel itself
+
+A click on something that _isn't_ a row — the panel's background, an annotation, a panel with nothing in it — has no row to read from, so take the panel from the snippet. A `Frame` fills the panel it's rendered in, which makes it the target:
+
+```svelte
+{#snippet belowMarks({ facet })}
+	<Frame
+		class={selected === facet.fx ? 'fill-primary/10' : 'fill-transparent'}
+		onclick={() => (selected = facet.fx)}
+	/>
+{/snippet}
+```
+
+:example{ component="Chart" name="facet-click-panel" }
+
+Below the marks rather than above, so the rows stay clickable in their own right. A crossed grid keys on the pair — `[facet.fx, facet.fy]` — and `facet.empty` says whether the panel holds anything.
+
+### From a pixel
+
+Where the click is neither a row nor inside a panel's snippet — a handler on the container, a drop target — `panelAt` resolves plot-area coordinates to the panel covering them, and gives `undefined` in the gap between panels:
+
+```svelte
+onclick={(e) => {
+	const rect = e.currentTarget.getBoundingClientRect();
+	const panel = context.facet.panelAt(
+		e.clientX - rect.left - context.padding.left,
+		e.clientY - rect.top - context.padding.top
+	);
+}}
+```
+
 ## Brushing
 
 A brush gesture belongs to the panel it starts in, so the range it produces is read from that panel's coordinates. What it produces is a range of the _shared_ scales, though — so the selection applies to every panel, and is drawn in each of them.
@@ -379,6 +437,7 @@ The layout itself lives on the chart state as `context.facet`:
 | `context.facet.panels`            | Every panel, with offsets, rows, and edge flags |
 | `context.facet.xScale` / `yScale` | Band scales laying the panels out               |
 | `context.facet.width` / `height`  | One panel's dimensions                          |
+| `context.facet.panelAt(x, y)`     | The panel covering a plot-area point            |
 
 `context.width` / `height` are that same panel box — `context.box` stays the whole plot area.
 

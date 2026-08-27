@@ -52,15 +52,29 @@ jobs:
             echo "No baseline on ${{ github.base_ref }} — run the Update Visual Baseline workflow." >> "$GITHUB_STEP_SUMMARY"
           fi
 
+      # `stackblitz-files.json` is generated and gitignored, so a fresh checkout has none — and
+      # every example route imports it transitively, through `Example`'s "open in StackBlitz".
+      # `prebuild` covers this for a real build; a bare `vite dev` doesn't.
+      - name: Generate the docs server's inputs
+        if: steps.baseline.outputs.found == 'true'
+        run: pnpm --filter docs generate:stackblitz
+
       - name: Start the docs server
         if: steps.baseline.outputs.found == 'true'
         run: |
           pnpm --filter docs exec vite dev --port 3002 > /tmp/visual/server.log 2>&1 &
           for i in $(seq 1 60); do
-            curl -sf -o /dev/null http://localhost:3002/ && exit 0
+            curl -sf -o /dev/null "http://localhost:3002/docs/screenshot/AnnotationLine/horizontal" && exit 0
             sleep 2
           done
           echo "docs server did not start"; cat /tmp/visual/server.log; exit 1
+
+      # Fails in seconds if the app is not rendering, so a broken docs server reads as a broken
+      # job rather than as 978 examples that "have no baseline" and silently pass
+      - name: Smoke test the docs server
+        if: steps.baseline.outputs.found == 'true'
+        working-directory: docs
+        run: node scripts/visual-snapshot.mjs capture /tmp/visual/smoke.json --filter AnnotationLine --repeat 1
 
       - name: Capture this branch
         if: steps.baseline.outputs.found == 'true'

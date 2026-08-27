@@ -171,6 +171,64 @@ describe('legend `c` category toggle', () => {
   });
 });
 
+describe('legend over a colour a mark implied', () => {
+  // The same chart as above with no `c` — `stroke="fruit"` on the mark names the column instead.
+  // Mounting this at all is half the test: the colour channel is derived from the mark registry,
+  // and marks register as they mount, so a bad edge here would loop rather than settle.
+  const longData = [
+    { date: 0, fruit: 'apples', value: 10 },
+    { date: 1, fruit: 'apples', value: 30 },
+    { date: 0, fruit: 'bananas', value: 20 },
+    { date: 1, fruit: 'bananas', value: 50 },
+  ];
+
+  const impliedProps = {
+    data: longData,
+    x: 'date',
+    y: 'value',
+    cRange: ['red', 'yellow'],
+    props: { spline: { stroke: 'fruit' } },
+    legend: true,
+    width: 400,
+    height: 300,
+  };
+
+  const splines = (container: HTMLElement) =>
+    Array.from(container.querySelectorAll('.lc-path')).map((el) => ({
+      stroke: el.getAttribute('stroke'),
+      opacity: (el as SVGElement).style.opacity || el.getAttribute('opacity') || '1',
+    }));
+
+  it('lists the categories, not the rows', async () => {
+    const { container } = render(LineChart, { props: impliedProps } as any);
+
+    await vi.waitFor(() => {
+      const labels = Array.from(container.querySelectorAll('.lc-legend-swatch-label')).map((el) =>
+        el.textContent?.trim()
+      );
+      expect(labels).toEqual(['apples', 'bananas']);
+    });
+  });
+
+  it('does not filter on click — selection still needs a declared `c`', async () => {
+    // The swatches come from the colour scale, but hiding a category is `cGroups`' job and that
+    // stays on the declared prop.  Pinned so the gap is deliberate rather than discovered
+    const { container } = render(LineChart, { props: impliedProps } as any);
+
+    let buttons: NodeListOf<Element> = container.querySelectorAll('.lc-legend-swatch-button');
+    await vi.waitFor(() => {
+      buttons = container.querySelectorAll('.lc-legend-swatch-button');
+      expect(buttons.length).toBe(2);
+    });
+    await vi.waitFor(() => expect(splines(container).length).toBe(2));
+
+    (buttons[0] as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 50));
+
+    expect(splines(container).length).toBe(2);
+  });
+});
+
 describe('LineChart highlight over `c` groups', () => {
   // One implicit series draws every line here, so the tooltip's series list names only the row the
   // pointer resolved to — a single point, on whichever category happened to be last

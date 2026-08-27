@@ -319,7 +319,7 @@ Many components support data-driven colors via the `c` (color) prop on `Chart`, 
 :::tabs{key="color-enhancements"}
 
     ::tab{label="Linear gradient"}
-    :example{ component="AreaChart" name="gradient" noResize showCode highlight="11-15" }
+    :example{ component="AreaChart" name="gradient" noResize showCode highlight="10-14" }
     ::
 
     ::tab{label="Radial gradient"}
@@ -341,7 +341,7 @@ Many components support data-driven colors via the `c` (color) prop on `Chart`, 
     ::
 
     ::tab{label="Pattern"}
-      :example{ component="AnnotationRange" name="vertical-with-pattern-range" noResize showCode highlight="14-20" }
+      :example{ component="AnnotationRange" name="vertical-with-pattern-range" noResize showCode highlight="20-25" }
     ::
 
 :::

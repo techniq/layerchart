@@ -1,10 +1,19 @@
 import { bisector } from 'd3-array';
+import type { TimeInterval } from 'd3-time';
 import { sortFunc } from '@layerstack/utils';
 
 import { isEqualValue } from './common.js';
 
 import { isScaleBand, type AnyScale } from './scales.svelte.js';
 import type { TooltipMode } from '$lib/components/tooltip/TooltipContext.svelte';
+
+/**
+ * Whether a mode resolves to one specific row, by proximity in both axes, rather than to every
+ * series at a position on one — which is what decides whether a hover marks a point or a column.
+ */
+export function isSinglePointMode(mode: TooltipMode) {
+  return mode === 'quadtree' || mode === 'voronoi';
+}
 
 /**
  * Strategy for picking between the two data points surrounding a value.
@@ -33,6 +42,12 @@ export type TooltipCoordContext = {
   xScale: AnyScale;
   yScale: AnyScale;
   padding: { top: number; right: number; bottom: number; left: number };
+  /** Domain accessors, needed to find the interval a value falls in */
+  x?: (d: any) => any;
+  y?: (d: any) => any;
+  /** Interval giving a non-band scale a band-like width, as `xInterval` / `yInterval` do */
+  xInterval?: TimeInterval | null;
+  yInterval?: TimeInterval | null;
   /** Present on a real `ChartState`; used to offset into the panel a row belongs to */
   facet?: { enabled: boolean; panels: Array<{ x: number; y: number; has(row: any): boolean }> };
 };
@@ -168,6 +183,33 @@ function coordCenter(value: any) {
 }
 
 /**
+ * Center of the span a data point occupies along one axis, in that axis' pixel space.
+ *
+ * Three ways a value can occupy a span rather than a point, in the order they take precedence:
+ * a band scale, a multi-value accessor (ex. `x={['start', 'end']}`), and an interval — which gives
+ * a time scale a band-like width, the same span `Rect` draws a bar across. All three place the
+ * value at the leading edge, so a tooltip anchored to the raw coordinate sits off to one side.
+ */
+function axisCenter(
+  scale: AnyScale,
+  interval: TimeInterval | null | undefined,
+  scaled: any,
+  value: any
+) {
+  if (isScaleBand(scale)) return coordCenter(scaled) + bandCenterOffset(scale);
+  if (Array.isArray(scaled)) return coordCenter(scaled);
+
+  if (interval && value != null) {
+    const start = interval.floor(value);
+    // The midpoint of the interval the value falls in, rather than of the value itself — the two
+    // differ for data that isn't already on an interval boundary
+    return (scale(start) + scale(interval.offset(start))) / 2;
+  }
+
+  return coordCenter(scaled);
+}
+
+/**
  * Container-relative pixel coordinates of a data point, derived from the chart's own scales.
  *
  * Band scales resolve to the center of the band, and multi-value accessors
@@ -179,8 +221,8 @@ export function dataCoords(ctx: TooltipCoordContext, data: any) {
   const panel = ctx.facet?.enabled ? ctx.facet.panels.find((p) => p.has(data)) : undefined;
 
   return {
-    x: coordCenter(ctx.xGet(data)) + ctx.padding.left + bandCenterOffset(ctx.xScale) + (panel?.x ?? 0), // prettier-ignore
-    y: coordCenter(ctx.yGet(data)) + ctx.padding.top + bandCenterOffset(ctx.yScale) + (panel?.y ?? 0), // prettier-ignore
+    x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + ctx.padding.left + (panel?.x ?? 0), // prettier-ignore
+    y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + ctx.padding.top + (panel?.y ?? 0), // prettier-ignore
   };
 }
 

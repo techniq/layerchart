@@ -23,6 +23,9 @@ import { dirname, join } from 'node:path';
 const CATALOG_DIR = 'src/examples/catalog';
 const DEFAULT_URL = 'http://localhost:3002';
 
+// Above this share of examples failing, the run says more about the environment than the charts
+const MAX_FAILURE_RATE = 0.05;
+
 // Fixed so a chart built from `new Date()` lands on the same dates every run
 const FROZEN_NOW = Date.UTC(2026, 0, 15, 12, 0, 0);
 
@@ -163,8 +166,28 @@ function listExamples(filter) {
 async function captureOne(page, baseUrl, item, attempt = 0) {
 	const { component, example } = item;
 	const url = `${baseUrl}/docs/screenshot/${component}/${example}`;
+	// A dev server 500, a module that failed to load and a chart that genuinely draws nothing are
+	// indistinguishable from the outside — all three end up as an empty page.  Record what the
+	// browser reported so a failure on a runner can be diagnosed from the job log alone.
+	const problems = [];
+	const onConsole = (msg) => {
+		if (msg.type() === 'error')
+			problems.push(`console: ${msg.text().split('\n')[0].slice(0, 200)}`);
+	};
+	const onPageError = (err) => {
+		problems.push(
+			`pageerror: ${String(err?.message ?? err)
+				.split('\n')[0]
+				.slice(0, 200)}`
+		);
+	};
+	page.on('console', onConsole);
+	page.on('pageerror', onPageError);
+	const why = (reason) => (problems.length ? `${reason} — ${problems[0]}` : reason);
 	try {
-		await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+		const response = await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+		const status = response?.status() ?? 0;
+		if (status >= 400) problems.unshift(`http ${status}`);
 		// Marks tween in; wait for the drawing to stop changing rather than guessing a delay
 		let previous = null;
 		for (let i = 0; i < (attempt ? 40 : 12); i++) {
@@ -180,7 +203,7 @@ async function captureOne(page, baseUrl, item, attempt = 0) {
 		}
 		// An example fetching its data can outlast the settle window; give it one slower go
 		if (attempt === 0) return captureOne(page, baseUrl, item, 1);
-		return { error: 'nothing drawn' };
+		return { error: why('nothing drawn') };
 	} catch (e) {
 		// A dev server under load aborts navigations — that says nothing about the chart
 		if (attempt < 2) {
@@ -188,10 +211,15 @@ async function captureOne(page, baseUrl, item, attempt = 0) {
 			return captureOne(page, baseUrl, item, attempt + 1);
 		}
 		return {
-			error: String(e.message ?? e)
-				.split('\n')[0]
-				.slice(0, 120)
+			error: why(
+				String(e.message ?? e)
+					.split('\n')[0]
+					.slice(0, 120)
+			)
 		};
+	} finally {
+		page.off('console', onConsole);
+		page.off('pageerror', onPageError);
 	}
 }
 
@@ -224,7 +252,11 @@ async function capture(outPath, { url, filter, concurrency, repeat, seed }) {
 					const existing = results.get(key);
 					if (pass === 0) {
 						results.set(key, result);
-					} else if (existing && existing.hash !== result.hash) {
+					} else if (existing?.error && !result.error) {
+						// Rendering on a later pass means the first pass hit a flake, not a broken
+						// example — keep the drawing rather than recording the failure
+						results.set(key, result);
+					} else if (existing && !existing.error && existing.hash !== result.hash) {
 						results.set(key, { ...existing, unstable: true });
 					}
 					if (++done % 100 === 0) console.log(`  pass ${pass + 1}: ${done}/${examples.length}`);
@@ -238,13 +270,32 @@ async function capture(outPath, { url, filter, concurrency, repeat, seed }) {
 	const entries = Object.fromEntries([...results].sort(([a], [b]) => a.localeCompare(b)));
 	const unstable = Object.values(entries).filter((r) => r.unstable).length;
 	const failed = Object.values(entries).filter((r) => r.error).length;
+	const seconds = Math.round((Date.now() - started) / 1000);
+	if (failed) {
+		console.log(`\n${failed} of ${Object.keys(entries).length} examples failed to render`);
+		for (const [key, r] of Object.entries(entries)
+			.filter(([, r]) => r.error)
+			.slice(0, 10)) {
+			console.log(`  ${key} — ${r.error}`);
+		}
+	}
+
+	// A run where most examples drew nothing says the docs server was broken, not that the charts
+	// changed.  Recording it would be worse than recording nothing: `compare` has no baseline to
+	// diff an errored entry against, so every one of them would turn into a silent pass from then
+	// on.  Bail before writing so a run this broken cannot be picked up as a baseline.
+	if (failed > Object.keys(entries).length * MAX_FAILURE_RATE) {
+		throw new Error(
+			`${failed}/${Object.keys(entries).length} examples failed to render — refusing to write a snapshot this broken. ` +
+				`Check that the docs server is serving /docs/screenshot/<Component>/<example>.`
+		);
+	}
+
 	mkdirSync(dirname(outPath), { recursive: true });
 	writeFileSync(outPath, JSON.stringify({ seed, examples: entries }, null, 2) + '\n');
 
-	const seconds = Math.round((Date.now() - started) / 1000);
 	console.log(`\nwrote ${outPath} — ${Object.keys(entries).length} examples in ${seconds}s`);
 	if (unstable) console.log(`  ${unstable} unstable (excluded from comparison)`);
-	if (failed) console.log(`  ${failed} failed to render`);
 }
 
 /** Screenshot one example from a running server. */
@@ -364,7 +415,18 @@ function compare(baselinePath, currentPath) {
 	console.log(
 		`\n${changed.length} changed, ${broke.length} broken, ${added.length} added, ${removed.length} removed, ${incomparable.length} without a baseline, ${skipped.length} skipped as unstable`
 	);
-	return { keys: [...changed, ...broke].map((line) => line.split(/\s+/)[0]), differences: broke.length + changed.length }; // prettier-ignore
+
+	// Entries the baseline failed to capture are unreviewable, not unchanged.  A handful is the
+	// cost of a flaky example; a large share means the baseline itself needs re-recording, and
+	// staying quiet about it would report a check that never actually ran as a pass.
+	const unusable = incomparable.length > Object.keys(baseline).length * MAX_FAILURE_RATE;
+	if (unusable) {
+		console.log(
+			`\n${incomparable.length} of ${Object.keys(baseline).length} baseline entries are errors — the baseline is unusable. ` +
+				`Re-record it with the Update Visual Baseline workflow.`
+		);
+	}
+	return { keys: [...changed, ...broke].map((line) => line.split(/\s+/)[0]), differences: broke.length + changed.length + (unusable ? 1 : 0) }; // prettier-ignore
 }
 
 /** Re-render one example against two servers and print the drawing attributes that differ. */

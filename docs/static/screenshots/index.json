@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-25T17:59:23.475Z",
+  "generatedAt": "2026-08-23T18:54:59.937Z",
   "totalComponents": 80,
-  "totalExamples": 980,
+  "totalExamples": 982,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2155,6 +2155,16 @@
           "name": "facet-brush-zoom",
           "path": "/example/Chart/facet-brush-zoom",
           "checksum": "2e16a5ad96c47b72e01f8f1ac61c53c6"
+        },
+        {
+          "name": "facet-click",
+          "path": "/example/Chart/facet-click",
+          "checksum": "ea6c3e1b40e02112839d1cb5212d308f"
+        },
+        {
+          "name": "facet-click-panel",
+          "path": "/example/Chart/facet-click-panel",
+          "checksum": "f7cd534e38cef18bc42bddd749ee5584"
         },
         {
           "name": "facet-color",

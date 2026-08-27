@@ -538,8 +538,12 @@
     onpointerenter={() => {
       ctx.tooltip.isHoveringTooltipContent = true;
     }}
-    onpointerleave={() => {
+    onpointerleave={(e) => {
       ctx.tooltip.isHoveringTooltipContent = false;
+      // `TooltipContext` is the only thing that schedules a hide, and its timer has already fired
+      // and been blocked by the flag above while the pointer was in here.  Without re-arming it,
+      // leaving the tooltip anywhere other than back over the hit area strands it on screen.
+      ctx.tooltip.hide(e);
     }}
   >
     <div

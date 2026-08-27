@@ -124,6 +124,13 @@
       "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
     },
     {
+      "example": "facet-click-panel",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-click-panel",
+      "lineNumber": 36,
+      "line": "<Frame"
+    },
+    {
       "example": "facet-non-faceted-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-non-faceted-marks",
@@ -201,5 +208,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-08-19T14:28:18.858Z"
+  "updatedAt": "2026-08-23T18:52:25.602Z"
 }

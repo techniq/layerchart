@@ -7,6 +7,7 @@
   import { sum } from 'd3-array';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { accessor, chartDataArray, isEqualValue } from '$lib/utils/common.js';
+  import { isSinglePointMode } from '$lib/utils/tooltip.js';
   import Root from '../tooltip/Tooltip.svelte';
   import Header from '../tooltip/TooltipHeader.svelte';
   import List from '../tooltip/TooltipList.svelte';
@@ -116,7 +117,7 @@
         // what the equivalent `series` chart lists.  The sub-band otherwise.
         label: context.cKey(row) ?? subBand(row),
         value: value(row),
-        color: context.config.c ? context.cGet(row) : undefined,
+        color: context.cChannel ? context.cGet(row) : undefined,
       }));
     }
 
@@ -150,13 +151,11 @@
   // Single-point modes find one specific data point (by proximity in both x+y),
   // so the tooltip shows dimensional info (x, y, r) for that point.
   // Multi-series modes find data at a single axis position, showing all series values.
-  const isSinglePointMode = $derived(
-    context.tooltip.mode === 'quadtree' || context.tooltip.mode === 'voronoi'
-  );
+  const singlePointMode = $derived(isSinglePointMode(context.tooltip.mode));
 
   // For single-point mode: find the active series for the hovered data point
   const activeSeries = $derived(
-    isSinglePointMode
+    singlePointMode
       ? (context.tooltip.series.find((s) => s.key === context.tooltip.data?.seriesKey) ??
           context.tooltip.series[0])
       : null
@@ -221,7 +220,7 @@
 
 <Tooltip.Root {context} {...tooltipProps?.root}>
   {#snippet children({ data })}
-    {#if isSinglePointMode}
+    {#if singlePointMode}
       {#if activeSeries && activeSeries.key !== 'default'}
         <Tooltip.Header
           value={activeSeries.label ?? activeSeries.key}

@@ -325,6 +325,13 @@
       "line": "<Circle"
     },
     {
+      "example": "facet-click-panel",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-click-panel",
+      "lineNumber": 45,
+      "line": "<Circle"
+    },
+    {
       "example": "facet-color",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-color",
@@ -1207,5 +1214,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-20T12:48:38.692Z"
+  "updatedAt": "2026-08-23T18:52:25.346Z"
 }

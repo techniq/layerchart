@@ -18,6 +18,7 @@ import {
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import type { Extents } from '$lib/utils/types.js';
 import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
+import { colorPropDataKey } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
@@ -402,7 +403,10 @@ export class ChartState<
     this.seriesState = new SeriesState(
       () => {
         const explicit = this.props.series;
-        if (explicit && explicit.length > 0) return explicit;
+        // An explicitly-provided array is authoritative even when empty. Falling through to the
+        // implicit path on `[]` deadlocks: implicit series are derived from registered marks, but
+        // charts render their marks from the series, so the two oscillate and never settle.
+        if (explicit) return explicit;
 
         // Generate implicit series from registered marks.
         // Use the value axis accessor (y for horizontal charts, x for vertical).
@@ -607,6 +611,42 @@ export class ChartState<
   });
 
   /**
+   * The colour column a mark named in its own `fill` / `stroke` — `<Circle fill="island">` — for a
+   * chart that declared no `c` of its own.
+   *
+   * Only the domain and per-row lookups follow from this.  `cGroups` deliberately does not, so an
+   * implied channel can't start naming a legend, filtering rows, or splitting a stack: those are
+   * what `ChartState.data` is built from, and `data` is read while marks are still registering.
+   * A colour never decides *which* marks render, so deriving one from the registry can't change
+   * the set being registered — the same reason `flatData` can read it.
+   */
+  #impliedC = $derived.by<string | undefined>(() => {
+    if (this.props.c != null) return undefined;
+
+    const first = chartDataArray(this.#sourceData)[0];
+    if (first == null) return undefined;
+
+    let key: string | undefined;
+    for (const { info } of this._markInfos) {
+      const named = colorPropDataKey(info.color, first);
+      if (named == null) continue;
+      // Marks naming different columns leave the chart with no one colour channel, and picking
+      // either would be a guess — so it keeps what it declared, which is nothing
+      if (key != null && key !== named) return undefined;
+      key = named;
+    }
+    return key;
+  });
+
+  /**
+   * The colour channel: `c` where the chart declared one, else the column a mark implied.
+   *
+   * What to read to ask *whether the chart has colours at all* — `config.c` answers the narrower
+   * question of whether `c` was passed.
+   */
+  cChannel = $derived(this.props.c ?? this.#impliedC);
+
+  /**
    * The groups `c` names, or `null` when the chart's `series` name them instead.
    *
    * An ordinal `c` scale with no configured series is a chart whose groups live in the data —
@@ -616,13 +656,16 @@ export class ChartState<
    * What a legend lists, what stacks, and what `cKey` reads a row's group from.
    */
   cGroups = $derived.by<any[] | null>(() => {
+    // The declared prop, never `cChannel` — an implied channel must not reach here.  `data` is
+    // built from this and is upstream of every scale, so a dependency on the mark registry closes
+    // a loop: a scale change re-runs each mark's registration effect, which re-registers, which
+    // invalidates `data`, which changes the scales.  Measured on `Waffle/stacked`: 13s and drawn
+    // with the prop, 254s and blank with `cChannel`.  See `Waffle.svelte.test.ts`.
     if (this.props.c == null) return null;
 
     // Read from the `series` prop rather than `SeriesState.isDefaultSeries`, which also counts
-    // the series inferred from registered marks.  `ChartState.data` depends on this, and marks
-    // register while deriveds are being read — so reaching into the mark registry from here
-    // makes registering a mark mutate state something is mid-read of.  Series inferred from
-    // marks name nothing a legend could select anyway.
+    // the series inferred from registered marks — the same hazard by a different route.  Series
+    // inferred from marks name nothing a legend could select anyway.
     const configured = this.props.series ?? [];
     const seriesNameThem =
       configured.length > 1 || (configured.length === 1 && configured[0].key !== 'default');
@@ -916,7 +959,7 @@ export class ChartState<
   y = $derived(this.resolveAccessor('y'));
   z = $derived(makeAccessor(this.props.z));
   r = $derived(makeAccessor(this.props.r));
-  c = $derived(accessor(this.props.c));
+  c = $derived(accessor(this.cChannel));
   x1 = $derived(makeAccessor(this.props.x1));
   y1 = $derived(makeAccessor(this.props.y1));
 
@@ -1187,9 +1230,13 @@ export class ChartState<
       // `Spline`s compared against each other, say) would otherwise be scaled to totals nothing
       // on it draws.  No registered marks at all means the chart hasn't been composed by hand,
       // so the stack stands.
-      const marks = this._markInfos;
-
       if (this.isStacked) {
+        // Read inside the guard.  This is the value domain — every scale hangs off it, and every
+        // mark off those — so subscribing it to the mark registry meant each mark registering
+        // during mount invalidated the domain, rebuilt the scales, and redrew every path from
+        // them.  Measured on a 5,000-point `LineChart`: 4 path builds per mount instead of 2.
+        const marks = this._markInfos;
+
         // Collect in a single pass — see `getStackedValues`, which hoists the
         // `keyBy` accessor and stack derived reads out of the per-row loop.
         const stacked = this.seriesState.getStackedValues(chartDataArray(this.data));

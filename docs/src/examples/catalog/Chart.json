@@ -398,6 +398,40 @@
       ]
     },
     {
+      "name": "facet-click",
+      "title": "facet click",
+      "path": "/docs/components/Chart/facet-click",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 37,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "facet-click-panel",
+      "title": "facet click panel",
+      "path": "/docs/components/Chart/facet-click-panel",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 36,
+          "line": "<Frame"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 45,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
       "name": "facet-color",
       "title": "facet color",
       "path": "/docs/components/Chart/facet-color",
@@ -2342,6 +2376,13 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-brush-zoom",
       "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "facet-click-panel",
+      "component": "Chart",
+      "path": "/docs/components/Chart/facet-click-panel",
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
@@ -5243,5 +5284,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:01.328Z"
+  "updatedAt": "2026-08-23T18:52:25.185Z"
 }

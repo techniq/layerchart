@@ -61,10 +61,7 @@
 							<Axis placement="bottom" />
 							<Rule y={0} />
 							<ChartClipPath>
-								<LinearGradient
-									class="from-[color-mix(in_lch,var(--chart-color)_50%,_transparent)] to-transparent"
-									vertical
-								>
+								<LinearGradient class="from-(--chart-color)/50 to-(--chart-color)/1" vertical>
 									{#snippet children({ gradient })}
 										<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />
 									{/snippet}
