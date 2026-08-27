@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "techniq/layerchart",
   "homepage": "https://layerchart.com",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "scripts": {
     "dev": "pnpm package:watch",
     "build": "svelte-package",
