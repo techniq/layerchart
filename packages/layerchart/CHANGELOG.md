@@ -4,21 +4,21 @@
 
 ### Patch Changes
 
-- perf(Chart): Resolve a plain-key accessor (`x="date"`) directly instead of re-parsing the path string on every row ([#906](https://github.com/techniq/layerchart/pull/906))
+- perf(Chart): Resolve a plain-key accessor (`x="date"`) directly instead of re-parsing the path string ([#906](https://github.com/techniq/layerchart/pull/906))
 
-- fix(Chart): Treat an explicit but empty `series` array as authoritative, rather than deriving implicit series from the marks it just rendered (the two never settled, locking the page) ([#906](https://github.com/techniq/layerchart/pull/906))
+- fix(Chart): Treat an explicit but empty `series` array as authoritative, rather than deriving implicit series from marks ([#906](https://github.com/techniq/layerchart/pull/906))
 
 - perf(Chart): Keep the value domain off the mark registry, so mounting a chart no longer rebuilds its scales — and every path drawn from them — once per mark registered ([#906](https://github.com/techniq/layerchart/pull/906))
 
-- fix(Highlight): Point `c`-grouped rows from `flatData`, fixing a crash on nested `stack()` data and `NaN` points where a category's value is a span (`y={[0, 1]}`) ([#906](https://github.com/techniq/layerchart/pull/906))
+- fix(Highlight): Fix crash highlighting `c`-grouped points over nested chart data ([#906](https://github.com/techniq/layerchart/pull/906))
 
 - fix(Highlight): Mark only the hovered row in `quadtree` / `voronoi` tooltips, rather than every row sharing its position ([#906](https://github.com/techniq/layerchart/pull/906))
 
-- feat(Chart): Take the colour channel from a mark's own `fill` / `stroke` (`<Circle fill="island">`) when no `c` is declared, so the colour domain and legend hold the categories rather than the rows — hiding one still needs `c` ([#906](https://github.com/techniq/layerchart/pull/906))
+- feat(Chart): Take the color channel from a mark's own `fill` / `stroke` (`<Circle fill="island">`) when no `c` is declared ([#906](https://github.com/techniq/layerchart/pull/906))
 
-- fix(Tooltip): Center `x="data"` / `y="data"` on the interval when `xInterval` / `yInterval` is set, instead of on its leading edge ([#906](https://github.com/techniq/layerchart/pull/906))
+- fix(Tooltip): Center on internal when data snapping (instead of on its leading edge) ([#906](https://github.com/techniq/layerchart/pull/906))
 
-- fix(Tooltip): Hide after the pointer leaves the tooltip when `pointerEvents` is enabled (hovering it suppressed the pending hide, and leaving never re-armed it) ([#906](https://github.com/techniq/layerchart/pull/906))
+- fix(Tooltip): Fix persistent tooltip when rendered outside Chart container and `pointerEvents` is enabled ([#906](https://github.com/techniq/layerchart/pull/906))
 
 ## 2.3.0
 
