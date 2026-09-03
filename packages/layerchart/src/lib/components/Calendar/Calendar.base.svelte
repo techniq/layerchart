@@ -104,7 +104,8 @@
     <Text
       x={timeWeek.count(start, timeWeek.ceil(date)) * cellSize[0]}
       value={format(date, 'month', { variant: 'short' })}
-      capHeight="7px"
+      verticalAnchor="end"
+      dy={-4}
       {...extractLayerProps(monthLabel, 'lc-calendar-month-label')}
     />
   {/each}
