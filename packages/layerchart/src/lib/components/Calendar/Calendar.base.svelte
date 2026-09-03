@@ -13,7 +13,7 @@
 <script lang="ts">
   import { timeDays, timeMonths, timeWeek } from 'd3-time';
   import { index } from 'd3-array';
-  import { format } from '@layerstack/utils';
+  import { endOfInterval, format } from '@layerstack/utils';
 
   // MonthPath isn't split — only used here when `monthPath` is set.
   import MonthPath from '../MonthPath.svelte';
@@ -41,7 +41,18 @@
   const yearDays = $derived(timeDays(start, end));
   const yearMonths = $derived(timeMonths(start, end));
   const yearWeeks = $derived(timeWeek.count(start, end));
-  const chartCellWidth = $derived(ctx.width / (yearWeeks + 1));
+
+  // `MonthPath` outlines the whole month, so the last month can extend past `end` when the range
+  // stops mid-month (ex. a trailing 90 days). Size cells against the widest thing drawn, otherwise
+  // the outline overflows the chart until the container shrinks past the last cell instead.
+  const monthPathWeeks = $derived(
+    monthPath && yearMonths.length
+      ? timeWeek.count(start, endOfInterval('month', yearMonths[yearMonths.length - 1]))
+      : 0
+  );
+  const weekColumns = $derived(Math.max(yearWeeks, monthPathWeeks) + 1);
+
+  const chartCellWidth = $derived(ctx.width / weekColumns);
   const chartCellHeight = $derived(ctx.height / 7);
   const chartCellSize = $derived(Math.min(chartCellWidth, chartCellHeight));
 
