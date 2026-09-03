@@ -12,7 +12,7 @@ import type { GroupProps } from '../Group/Group.shared.svelte.js';
 import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
-import { occlude, rotateRect } from '$lib/utils/occlusion.js';
+import { occlude } from '$lib/utils/occlusion.js';
 import { getTextRect } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
@@ -547,36 +547,22 @@ export class AxisState {
    * Box each tick label occupies once rendered, for `tickOcclusion`.
    *
    * Measured with the same metrics `<Text>` draws with, anchored the way
-   * `getDefaultTickLabelProps()` anchors it.  A multiline label (`tickMultiline`) is as wide as
-   * its widest line and as tall as the stack.
+   * `getDefaultTickLabelProps()` anchors it.  Rotation matters: an angled label is what makes
+   * long categories fit in the first place, and measuring it flat would keep dropping ticks that
+   * now have room.
    */
   #tickLabelRect(labelProps: TextProps) {
     const value = labelProps.value;
     const lines = (Array.isArray(value) ? value : [value]).filter(Boolean).map(String);
-    const fontSize = Number.parseFloat(String(labelProps.fontSize ?? 10)) || 10;
-    const x = Number(labelProps.x) || 0;
-    const y = Number(labelProps.y) || 0;
 
-    const rects = lines.map((line) =>
-      getTextRect(line, x, y, {
-        textAnchor: labelProps.textAnchor as 'start' | 'middle' | 'end',
-        verticalAnchor: labelProps.verticalAnchor as 'start' | 'middle' | 'end',
-        fontSize,
-        dx: Number(labelProps.dx) || 0,
-        dy: Number(labelProps.dy) || 0,
-      })
-    );
-
-    let rect = rects[0] ?? { x: 0, y: 0, width: 0, height: 0 };
-    if (rects.length > 1) {
-      const widest = rects.reduce((a, b) => (b.width > a.width ? b : a));
-      rect = { ...widest, height: fontSize * rects.length };
-    }
-
-    // `<Text>` rotates about its anchor (`rotate(deg, x, y)`), which is what makes angled category
-    // labels fit in the first place — a 45° label needs far less horizontal room than a flat one.
-    // Measuring the unrotated box would keep dropping ticks that now have space.
-    return rotateRect(rect, Number(labelProps.rotate) || 0, x, y);
+    return getTextRect(lines, Number(labelProps.x) || 0, Number(labelProps.y) || 0, {
+      textAnchor: labelProps.textAnchor as 'start' | 'middle' | 'end',
+      verticalAnchor: labelProps.verticalAnchor as 'start' | 'middle' | 'end',
+      fontSize: Number.parseFloat(String(labelProps.fontSize ?? 10)) || 10,
+      dx: Number(labelProps.dx) || 0,
+      dy: Number(labelProps.dy) || 0,
+      rotate: Number(labelProps.rotate) || 0,
+    });
   }
 
   /**

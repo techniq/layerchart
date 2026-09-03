@@ -33,6 +33,42 @@ export const getStringWidth = memoize(_getStringWidth, {
   cacheKey: ([str, style]) => `${str}_${JSON.stringify(style)}`,
 });
 
+type Rect = { x: number; y: number; width: number; height: number };
+
+/**
+ * Axis-aligned box enclosing `rect` after rotating it `degrees` about (`originX`, `originY`) —
+ * the same rotation SVG's `rotate(deg, x, y)` applies.
+ *
+ * A rotated label still has to be compared as an axis-aligned box (that is all `occlude()` tests),
+ * so it is widened to the box that contains it.  At 45° a long label takes far less horizontal
+ * room than it does flat, and measuring it unrotated would drop neighbours that actually fit.
+ */
+function rotateRect(rect: Rect, degrees: number, originX: number, originY: number): Rect {
+  if (!degrees) return rect;
+
+  const radians = (degrees * Math.PI) / 180;
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+
+  const corners = [
+    [rect.x, rect.y],
+    [rect.x + rect.width, rect.y],
+    [rect.x, rect.y + rect.height],
+    [rect.x + rect.width, rect.y + rect.height],
+  ].map(([cx, cy]) => {
+    const dx = cx - originX;
+    const dy = cy - originY;
+    return [originX + dx * cos - dy * sin, originY + dx * sin + dy * cos];
+  });
+
+  const xs = corners.map(([cx]) => cx);
+  const ys = corners.map(([, cy]) => cy);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+
+  return { x: minX, y: minY, width: Math.max(...xs) - minX, height: Math.max(...ys) - minY };
+}
+
 export type TextRectOptions = {
   /** Horizontal placement of `x` within the text. @default 'start' */
   textAnchor?: 'start' | 'middle' | 'end';
@@ -40,38 +76,66 @@ export type TextRectOptions = {
   verticalAnchor?: 'start' | 'middle' | 'end';
   /** Font size (px) — measures the width and sets the height. @default 16 */
   fontSize?: number;
+  /** Height of each line when `text` is multiline. @default `fontSize` */
+  lineHeight?: number;
   /** Additional offset applied to `x` / `y` (matching `<Text>`'s `dx` / `dy`). */
   dx?: number;
   dy?: number;
+  /**
+   * Degrees to rotate the text by, matching `<Text>`'s `rotate`.
+   *
+   * The result stays axis-aligned — it is the box *enclosing* the rotated text, which is what
+   * `occlude()` needs.  Rotation is about (`x`, `y`) and deliberately ignores `dx`/`dy`, because
+   * `<Text>` emits `rotate(deg, x, y)` and so pivots about the unoffset anchor.
+   */
+  rotate?: number;
 };
 
 /**
  * Bounding box (`{ x, y, width, height }`) of `text` anchored at (`x`, `y`) — matching
- * how `<Text>` positions it for the given `textAnchor`/`verticalAnchor`. Width is measured
- * with the same memoized metrics as `<Text>` (falling back to a character-count estimate
+ * how `<Text>` positions it for the given `textAnchor`/`verticalAnchor`/`rotate`. Width is
+ * measured with the same memoized metrics as `<Text>` (falling back to a character-count estimate
  * when the DOM is unavailable, e.g. during SSR), making it a convenient `bounds` for
  * `occlude()`.
+ *
+ * Pass an array to measure a multiline `<Text>` value: the box is as wide as the widest line and
+ * as tall as the stack.
  */
-export function getTextRect(text: string, x: number, y: number, options: TextRectOptions = {}) {
+export function getTextRect(
+  text: string | string[],
+  x: number,
+  y: number,
+  options: TextRectOptions = {}
+) {
   const {
     textAnchor = 'start',
     verticalAnchor = 'middle',
     fontSize = 16,
+    lineHeight = fontSize,
     dx = 0,
     dy = 0,
+    rotate = 0,
   } = options;
-  const width =
-    getStringWidth(text, { fontSize: `${fontSize}px` } as CSSStyleDeclaration) ??
-    text.length * fontSize * 0.6;
-  const height = fontSize;
+
+  const lines = Array.isArray(text) ? text : [text];
+  const width = lines.reduce((widest, line) => {
+    const lineWidth =
+      getStringWidth(line, { fontSize: `${fontSize}px` } as CSSStyleDeclaration) ??
+      line.length * fontSize * 0.6;
+    return Math.max(widest, lineWidth);
+  }, 0);
+  const height = lines.length > 1 ? lineHeight * lines.length : fontSize;
+
   const ax = x + dx;
   const ay = y + dy;
-  return {
+  const rect = {
     x: textAnchor === 'end' ? ax - width : textAnchor === 'middle' ? ax - width / 2 : ax,
     y: verticalAnchor === 'end' ? ay - height : verticalAnchor === 'middle' ? ay - height / 2 : ay,
     width,
     height,
   };
+
+  return rotateRect(rect, rotate, x, y);
 }
 
 export type RasterizeTextOptions = {
