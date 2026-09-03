@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
-import TransformTestHarness from './tests/TransformTestHarness.svelte';
+import TransformTestHarness from '$lib/tests/TransformTestHarness.svelte';
 import { geoMercator, geoOrthographic } from 'd3-geo';
 
 describe('TransformContext', () => {

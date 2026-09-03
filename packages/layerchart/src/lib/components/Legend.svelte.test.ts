@@ -5,7 +5,7 @@ import { interpolateTurbo } from 'd3-scale-chromatic';
 
 import BarChart from './charts/BarChart/BarChart.svelte';
 import LineChart from './charts/LineChart/LineChart.svelte';
-import ChartWithMarkSeries from './tests/ChartWithMarkSeries.svelte';
+import ChartWithMarkSeries from '$lib/tests/ChartWithMarkSeries.svelte';
 
 const longData = [
   { year: 2019, fruit: 'apples', value: 30 },

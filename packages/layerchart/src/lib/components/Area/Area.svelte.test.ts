@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import TestHarness from '../tests/TestHarness.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
 import Area from './Area.svelte';
 
 /** Two series interleaved in one flat array, as long-format data arrives */

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
 
-import TestHarness from '../tests/TestHarness.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
 import Area from './Area.svelte';
 import Spline from '../Spline/Spline.svelte';
 

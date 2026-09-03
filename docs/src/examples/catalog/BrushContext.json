@@ -632,11 +632,11 @@
         {
           "component": "LinearGradient",
           "lineNumber": 69,
-          "line": "<LinearGradient"
+          "line": "<LinearGradient class=\"from-(--chart-color)/50 to-(--chart-color)/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 74,
+          "lineNumber": 71,
           "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
         }
       ]
@@ -690,5 +690,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-08-14T18:32:52.361Z"
+  "updatedAt": "2026-09-03T20:00:06.000Z"
 }

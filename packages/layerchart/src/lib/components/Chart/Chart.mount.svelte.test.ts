@@ -1,12 +1,12 @@
 import { describe, expect, it, beforeEach } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import TestHarness from '../tests/TestHarness.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
 import MountCounter, {
   mountCounts,
   resetMountCounts,
   sizeAtConstruction,
-} from '../tests/MountCounter.svelte';
+} from '$lib/tests/MountCounter.svelte';
 
 /**
  * `Chart` used to wrap its subtree in `{#key chartState.isMounted}`, remounting every child once

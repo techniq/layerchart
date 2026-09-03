@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand } from 'd3-scale';
 
-import TestHarness from '../tests/TestHarness.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
 import Axis from './Axis.svelte';
 
 /** Long category names, so the labels collide well before the ticks do */

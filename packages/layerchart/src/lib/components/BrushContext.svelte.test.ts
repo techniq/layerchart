@@ -3,8 +3,8 @@ import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
 import Chart from './Chart/Chart.svelte';
-import BrushTestHarness from './tests/BrushTestHarness.svelte';
-import BrushContextAccessHarness from './tests/BrushContextAccessHarness.svelte';
+import BrushTestHarness from '$lib/tests/BrushTestHarness.svelte';
+import BrushContextAccessHarness from '$lib/tests/BrushContextAccessHarness.svelte';
 
 const data = [
   { x: 0, y: 10 },

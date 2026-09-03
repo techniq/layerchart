@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 
-import TooltipTestHarness from '../tests/TooltipTestHarness.svelte';
+import TooltipTestHarness from '$lib/tests/TooltipTestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 const data = [

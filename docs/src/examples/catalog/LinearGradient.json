@@ -154,6 +154,13 @@
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 20,
+      "line": "<LinearGradient stops={['black', 'white']}>"
+    },
+    {
       "example": "gradient",
       "component": "Area",
       "path": "/docs/components/Area/gradient",
@@ -298,7 +305,7 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 69,
-      "line": "<LinearGradient"
+      "line": "<LinearGradient class=\"from-(--chart-color)/50 to-(--chart-color)/1\" vertical>"
     },
     {
       "example": "tooltip-interop",
@@ -312,7 +319,7 @@
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
       "lineNumber": 64,
-      "line": "<LinearGradient"
+      "line": "<LinearGradient class=\"from-(--chart-color)/50 to-(--chart-color)/1\" vertical>"
     },
     {
       "example": "gradient",
@@ -581,5 +588,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:02.179Z"
+  "updatedAt": "2026-09-03T20:00:07.738Z"
 }

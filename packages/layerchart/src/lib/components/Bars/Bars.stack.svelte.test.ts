@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import BarsStackTestHarness from '../tests/BarsStackTestHarness.svelte';
+import BarsStackTestHarness from '$lib/tests/BarsStackTestHarness.svelte';
 
 /** Long rows — the category is a column, so no `series` names the layers */
 const longData = [
