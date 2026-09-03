@@ -499,6 +499,27 @@
       import('../BrushContext.svelte').then((m) => (BrushContext = m.default));
     }
   });
+
+  /**
+   * Explicit dimensions are already the real ones, and the server has nothing to measure — only an
+   * auto-sized chart in the browser has to wait.
+   */
+  const needsMeasure = $derived(typeof window !== 'undefined' && (width == null || height == null));
+
+  /**
+   * Measure the container before the subtree is built, rather than letting marks construct against
+   * the placeholder and correcting them afterwards.
+   *
+   * `bind:clientWidth` below keeps the size current, but it reports through a `ResizeObserver` that
+   * lands after this flush — too late for marks that capture the scales as they are constructed.
+   * Reading the element here costs one layout per chart and gets them the real numbers first time.
+   */
+  $effect(() => {
+    if (!needsMeasure || !ref) return;
+    chartState._containerWidth = ref.clientWidth;
+    chartState._containerHeight = ref.clientHeight;
+    chartState.isMeasured = true;
+  });
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -518,7 +539,7 @@
     class={['lc-root-container', className]}
     {...restProps}
   >
-    {#key chartState.isMounted}
+    {#if !needsMeasure || chartState.isMeasured}
       {#if transform && TransformContext}
         <!-- Lazy-load TransformContext only when transform is enabled -->
         {@const {
@@ -552,7 +573,7 @@
       {:else}
         {@render inner()}
       {/if}
-    {/key}
+    {/if}
   </div>
 {/if}
 
