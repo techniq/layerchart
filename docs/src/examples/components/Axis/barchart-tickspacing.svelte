@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { BarChart } from 'layerchart';
 	import { getRandomInteger } from '$lib/utils/data.js';
-	import { Switch } from 'svelte-ux';
+	import { RangeField, Switch } from 'svelte-ux';
 
 	const states = [
 		'AL',
@@ -58,20 +58,25 @@
 
 	const data = states.map((state) => ({ state, value: getRandomInteger(20, 100) }));
 
-	let tickSpacing = $state(true);
+	let enabled = $state(true);
+	let tickSpacing = $state(80);
 
 	export { data };
 </script>
 
-<label class="flex gap-2 pb-4 screenshot-hidden">
-	<Switch bind:checked={tickSpacing} />
-	{tickSpacing ? 'Applying tickSpacing' : 'Not applying tickSpacing'}
-</label>
+<div class="grid grid-cols-[auto_1fr] items-center gap-4 pb-4 screenshot-hidden">
+	<label class="flex gap-2">
+		<Switch bind:checked={enabled} />
+		{enabled ? 'Applying tickSpacing' : 'Not applying tickSpacing'}
+	</label>
+
+	<RangeField label="tickSpacing" bind:value={tickSpacing} min={20} max={200} step={10} />
+</div>
 
 <BarChart
 	{data}
 	x="state"
 	y="value"
-	props={{ xAxis: { tickSpacing: tickSpacing ? 80 : null } }}
+	props={{ xAxis: { tickSpacing: enabled ? tickSpacing : null } }}
 	height={300}
 />

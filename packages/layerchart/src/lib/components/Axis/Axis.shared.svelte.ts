@@ -12,6 +12,8 @@ import type { GroupProps } from '../Group/Group.shared.svelte.js';
 import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
+import { occlude, rotateRect } from '$lib/utils/occlusion.js';
+import { getTextRect } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -78,6 +80,23 @@ export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
    * @default 80 (top|bottom|angle) or 50 (left|right|radius)
    */
   tickSpacing?: number | null;
+
+  /**
+   * Drop ticks whose labels would overlap one already kept, measuring each label at the size
+   * it actually renders.
+   *
+   * `tickSpacing` only picks a tick *count* — it cannot know how wide a formatted label turns
+   * out to be, so a long format (`'Wednesday'`, `'$1,234,567'`) still collides at any count
+   * that fits the axis.  This measures instead.
+   *
+   * - `priority`: which ticks win when labels compete. `'end'` (default) keeps the last tick and
+   *   walks backwards (the newest value on a time axis); `'start'` keeps the first; `'start-end'`
+   *   anchors both ends of the axis and thins what is between them.
+   * - `padding`: minimum gap, in pixels, required between two kept labels.
+   *
+   * @default false
+   */
+  tickOcclusion?: boolean | { padding?: number; priority?: 'start' | 'end' | 'start-end' };
 
   /**
    * Whether to render tick labels on multiple lines for additional context
@@ -524,9 +543,82 @@ export class AxisState {
     } as TextProps;
   });
 
+  /**
+   * Box each tick label occupies once rendered, for `tickOcclusion`.
+   *
+   * Measured with the same metrics `<Text>` draws with, anchored the way
+   * `getDefaultTickLabelProps()` anchors it.  A multiline label (`tickMultiline`) is as wide as
+   * its widest line and as tall as the stack.
+   */
+  #tickLabelRect(labelProps: TextProps) {
+    const value = labelProps.value;
+    const lines = (Array.isArray(value) ? value : [value]).filter(Boolean).map(String);
+    const fontSize = Number.parseFloat(String(labelProps.fontSize ?? 10)) || 10;
+    const x = Number(labelProps.x) || 0;
+    const y = Number(labelProps.y) || 0;
+
+    const rects = lines.map((line) =>
+      getTextRect(line, x, y, {
+        textAnchor: labelProps.textAnchor as 'start' | 'middle' | 'end',
+        verticalAnchor: labelProps.verticalAnchor as 'start' | 'middle' | 'end',
+        fontSize,
+        dx: Number(labelProps.dx) || 0,
+        dy: Number(labelProps.dy) || 0,
+      })
+    );
+
+    let rect = rects[0] ?? { x: 0, y: 0, width: 0, height: 0 };
+    if (rects.length > 1) {
+      const widest = rects.reduce((a, b) => (b.width > a.width ? b : a));
+      rect = { ...widest, height: fontSize * rects.length };
+    }
+
+    // `<Text>` rotates about its anchor (`rotate(deg, x, y)`), which is what makes angled category
+    // labels fit in the first place — a 45° label needs far less horizontal room than a flat one.
+    // Measuring the unrotated box would keep dropping ticks that now have space.
+    return rotateRect(rect, Number(labelProps.rotate) || 0, x, y);
+  }
+
+  /**
+   * Ticks whose labels fit, in axis order.
+   *
+   * `occlude()` returns what it kept in *priority* order, so the result is put back into tick
+   * order before rendering — otherwise the `{#each}` key order would jump around on resize.
+   */
+  #occludeTickItems(items: AxisTickItem[]): AxisTickItem[] {
+    const config = this.#props.tickOcclusion;
+    if (!config || items.length <= 1) return items;
+
+    const { padding = 4, priority = 'end' } = config === true ? {} : config;
+
+    const order = new Map(items.map((item, index) => [item, index]));
+    const last = items.length - 1;
+
+    /**
+     * `occlude()` places the highest priority first, so ranking by index makes the last tick win
+     * (`'end'`) and negating it makes the first win (`'start'`).
+     *
+     * `'start-end'` lifts both ends above every interior tick — `items.length` clears the whole
+     * index range — and thins what is left between them from the end inwards.
+     */
+    function rank(item: AxisTickItem) {
+      const index = order.get(item)!;
+      if (priority === 'start') return -index;
+      if (priority === 'start-end' && (index === 0 || index === last)) return items.length;
+      return index;
+    }
+
+    const kept = occlude(items, (item) => this.#tickLabelRect(item.tickLabelProps), {
+      priority: rank,
+      padding,
+    });
+
+    return kept.sort((a, b) => order.get(a)! - order.get(b)!);
+  }
+
   tickItems = $derived.by<AxisTickItem[]>(() => {
     const { motion, stroke, fill, tickLabelProps, classes = {} } = this.#props;
-    return this.tickVals.map((tick, index) => {
+    const items = this.tickVals.map((tick, index) => {
       const tickCoords = this.getCoords(tick);
       const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y);
       const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
@@ -559,5 +651,7 @@ export class AxisState {
         tickLabelProps: labelProps,
       };
     });
+
+    return this.#occludeTickItems(items);
   });
 }

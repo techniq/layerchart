@@ -3,6 +3,46 @@ import { sortFunc } from '@layerstack/utils';
 /** Axis-aligned bounding box in pixel space. */
 export type OcclusionRect = { x: number; y: number; width: number; height: number };
 
+/**
+ * Axis-aligned box enclosing `rect` after rotating it `degrees` about (`originX`, `originY`) —
+ * the same rotation SVG's `rotate(deg, x, y)` applies.
+ *
+ * `occlude()` tests axis-aligned boxes, so a rotated label has to be widened to the box that
+ * contains it.  Angled tick labels are the common case: at 45° a long label takes far less
+ * horizontal room than it does flat, and measuring it unrotated would drop neighbours that
+ * actually fit.
+ */
+export function rotateRect(
+  rect: OcclusionRect,
+  degrees: number,
+  originX: number,
+  originY: number
+): OcclusionRect {
+  if (!degrees) return rect;
+
+  const radians = (degrees * Math.PI) / 180;
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+
+  const corners = [
+    [rect.x, rect.y],
+    [rect.x + rect.width, rect.y],
+    [rect.x, rect.y + rect.height],
+    [rect.x + rect.width, rect.y + rect.height],
+  ].map(([cx, cy]) => {
+    const dx = cx - originX;
+    const dy = cy - originY;
+    return [originX + dx * cos - dy * sin, originY + dx * sin + dy * cos];
+  });
+
+  const xs = corners.map(([cx]) => cx);
+  const ys = corners.map(([, cy]) => cy);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+
+  return { x: minX, y: minY, width: Math.max(...xs) - minX, height: Math.max(...ys) - minY };
+}
+
 export type OcclusionOptions<T> = {
   /**
    * Priority accessor — higher-priority items are placed first and win ties
