@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'svelte';
+import { untrack, type ComponentProps } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 import { type Area as D3Area, area as d3Area, areaRadial, type CurveFactory } from 'd3-shape';
 import { group as d3Group, min } from 'd3-array';
@@ -17,6 +17,7 @@ import { isScaleBand } from '$lib/utils/scales.svelte.js';
 import { flattenPathData } from '$lib/utils/path.js';
 import {
   createMotion,
+  createPathMotionMap,
   extractTweenConfig,
   type MotionProp,
   type ResolvedMotion,
@@ -87,6 +88,9 @@ export class AreaState {
 
   #tweenState!: ReturnType<typeof createMotion<string | undefined>>;
 
+  /** One tween per `z` group, for the grouped branch that draws an area each */
+  #areaTweens: ReturnType<typeof createPathMotionMap> = null;
+
   constructor(getProps: () => AreaProps) {
     this.#getProps = getProps;
 
@@ -120,6 +124,27 @@ export class AreaState {
       () => this.d,
       tweenOptions
     );
+
+    // `#tweenState` animates the single-path case; grouped areas each need their own, since the
+    // set of them changes with the data.
+    this.#areaTweens = createPathMotionMap(initial.motion, interpolatePath);
+    if (this.#areaTweens) {
+      const tweens = this.#areaTweens;
+      $effect(() => {
+        const targets = this.#areaTargets;
+        if (!targets) return;
+
+        const active = new Set<any>();
+        for (const area of targets) {
+          active.add(area.key);
+          // `update` reads and writes the tween's own state, so it must not be tracked here
+          untrack(() =>
+            tweens.update(area.key, area.d, () => this.#defaultPathData(tweenOptions, area.data))
+          );
+        }
+        untrack(() => tweens.cleanup(active));
+      });
+    }
   }
 
   series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
@@ -194,14 +219,19 @@ export class AreaState {
 
   /**
    * One entry per area, with its own path and styles — or `null` when there's no grouping, which
-   * leaves the single-path (and tweenable) branch in place.
+   * leaves the single-path branch in place.
+   *
+   * Before motion: kept separate from `areas` so the effect driving the tweens can read the
+   * targets without reading the tweens' own output, which would be a cycle.
    */
-  areas = $derived.by(() => {
+  #areaTargets = $derived.by(() => {
     if (!this.zAccessor || this.#props.pathData) return null;
     const props = this.#props;
+    const zAccessor = this.zAccessor;
 
-    return Array.from(d3Group(this.resolvedData, this.zAccessor).values()).map((data) => ({
+    return Array.from(d3Group(this.resolvedData, zAccessor).values()).map((data) => ({
       data,
+      key: zAccessor(data[0]),
       d: this.#buildPath(data),
       // Styles are uniform across an area, so they resolve from its first point
       fill:
@@ -212,6 +242,15 @@ export class AreaState {
       opacity: resolveStyleProp(props.opacity, data[0]),
       class: resolveStyleProp(props.class, data[0]),
     }));
+  });
+
+  /** `#areaTargets` with each group's path swapped for its in-flight tween */
+  areas = $derived.by(() => {
+    const targets = this.#areaTargets;
+    const tweens = this.#areaTweens;
+    if (!targets || !tweens) return targets;
+
+    return targets.map((area) => ({ ...area, d: tweens.get(area.key) ?? area.d }));
   });
 
   /** `fill` / `stroke` / `class` for the ungrouped case, resolved the same way */
@@ -232,7 +271,8 @@ export class AreaState {
   xOffset = $derived(isScaleBand(this.ctx.xScale) ? this.ctx.xScale.bandwidth() / 2 : 0);
   yOffset = $derived(isScaleBand(this.ctx.yScale) ? this.ctx.yScale.bandwidth() / 2 : 0);
 
-  #defaultPathData(tweenOptions: ResolvedMotion | undefined): string {
+  /** The area flattened to the baseline — what a group tweens out of when it first appears */
+  #defaultPathData(tweenOptions: ResolvedMotion | undefined, data?: any[]): string {
     const props = this.#props;
     if (!tweenOptions) return '';
     if (props.pathData) {
@@ -254,7 +294,7 @@ export class AreaState {
       );
       if (props.curve) path.curve(props.curve);
 
-      return path(this.resolvedData) ?? '';
+      return path(data ?? this.resolvedData) ?? '';
     }
     return '';
   }
