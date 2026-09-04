@@ -37,6 +37,19 @@ async function renderChart(chartProps: Record<string, any> = {}) {
 
 describe('TooltipState', () => {
   describe('show({ value })', () => {
+    /**
+     * A chart can leave an axis unconfigured — `<Chart x="distance">` with no `y` — which makes
+     * `ctx.y` null.  `dataCoords` guards `ctx.y?.(data)` but still reads `ctx.yGet(data)` to place
+     * the tooltip, and `createGetter` called the accessor before checking anything, so showing a
+     * tooltip on such a chart threw `accessor is not a function`.
+     */
+    it('places the tooltip on a chart with no `y` configured', async () => {
+      const ctx = await renderChart({ y: undefined, tooltipContext: { mode: 'bisect-x' } });
+
+      expect(() => ctx.tooltip.show({ value: { x: new Date('2024-01-02') } })).not.toThrow();
+      expect(ctx.tooltip.data).toEqual(data[1]);
+    });
+
     it('resolves the nearest data point from a domain value', async () => {
       const ctx = await renderChart({ tooltipContext: { mode: 'bisect-x' } });
 
