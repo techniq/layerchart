@@ -41,6 +41,18 @@ const SVG_STYLE_PROPERTIES = [
 ] as const;
 
 /**
+ * Properties that only apply to `<stop>` elements, inlined separately so every
+ * other element doesn't carry a pointless `stop-color: rgb(0, 0, 0)`.
+ *
+ * `<LinearGradient>`/`<RadialGradient>` default their stops to
+ * `stop-color: var(--tw-gradient-from)` / `var(--tw-gradient-to)`, with the
+ * variables supplied by Tailwind `from-*`/`to-*` classes on the stop. Outside
+ * the document those variables don't resolve and `stop-color` falls back to
+ * black, turning gradient-filled marks into solid black in the export.
+ */
+const SVG_STOP_STYLE_PROPERTIES = ['stop-color', 'stop-opacity'] as const;
+
+/**
  * Clone an SVG element and inline all computed styles so the exported image
  * renders correctly without access to the page's stylesheets or CSS variables.
  */
@@ -59,6 +71,15 @@ function inlineSvgStyles(svg: SVGSVGElement): SVGSVGElement {
       const value = computed.getPropertyValue(prop);
       if (value) {
         cloneEl.style.setProperty(prop, value);
+      }
+    }
+
+    if (original.tagName === 'stop') {
+      for (const prop of SVG_STOP_STYLE_PROPERTIES) {
+        const value = computed.getPropertyValue(prop);
+        if (value) {
+          cloneEl.style.setProperty(prop, value);
+        }
       }
     }
   }

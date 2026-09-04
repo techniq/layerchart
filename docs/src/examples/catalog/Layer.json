@@ -199,6 +199,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 16,
+      "line": "<Layer>"
+    },
+    {
       "example": "gradient",
       "component": "Area",
       "path": "/docs/components/Area/gradient",
@@ -238,6 +245,13 @@
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-highlight-on-hover",
       "lineNumber": 54,
+      "line": "<Layer>"
+    },
+    {
+      "example": "multiple-series-tweened",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series-tweened",
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
@@ -574,6 +588,20 @@
       "component": "Axis",
       "path": "/docs/components/Axis/tick-label-styling",
       "lineNumber": 10,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tick-occlusion-explicit-ticks",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-explicit-ticks",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tick-occlusion-priority",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-priority",
+      "lineNumber": 34,
       "line": "<Layer>"
     },
     {
@@ -1448,7 +1476,7 @@
       "example": "synced-brushes",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/synced-brushes",
-      "lineNumber": 92,
+      "lineNumber": 89,
       "line": "<Layer>"
     },
     {
@@ -1623,7 +1651,7 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 77,
+      "lineNumber": 74,
       "line": "<Layer>"
     },
     {
@@ -3895,6 +3923,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "multiple-series-tweened",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series-tweened",
+      "lineNumber": 47,
+      "line": "<Layer>"
+    },
+    {
       "example": "multiple-series-using-overrides",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-using-overrides",
@@ -4399,5 +4434,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-08-25T17:59:25.225Z"
+  "updatedAt": "2026-09-03T20:00:07.575Z"
 }

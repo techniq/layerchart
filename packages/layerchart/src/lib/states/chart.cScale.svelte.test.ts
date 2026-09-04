@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import TestHarness from '../components/tests/TestHarness.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
 import Circle from '../components/Circle/Circle.svelte';
 import Density from '../components/Density/Density.svelte';
 import Contour from '../components/Contour/Contour.svelte';

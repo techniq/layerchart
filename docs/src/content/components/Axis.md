@@ -25,6 +25,80 @@ Default: `80` for horizontal axes (top/bottom/angle) and `50` for vertical axes 
 See [time scales](#time-scales) for how tick labels are chosen, and [brush](/docs/components/Axis/time-scale-brush-multiline) for tick spacing while zooming.
 ::
 
+### tickOcclusion
+
+`tickSpacing` divides the axis length by a pixel budget to pick a tick **count**. It never looks at
+the labels, so it is only right when every label is about as wide as the budget assumes.
+`tickOcclusion` measures each label at the size it renders and drops the ticks whose labels would
+overlap one already kept.
+
+Reach for `tickSpacing` when labels are uniform (a numeric scale, `12:00`-style times) — it is
+cheaper and gives evenly spaced ticks. Reach for `tickOcclusion` when they are not:
+
+:example{ name="tick-occlusion" }
+
+`padding` is the minimum gap required between two kept labels — raise it to thin the axis further
+than mere non-overlap would.
+
+#### Why not just lower `tickSpacing`?
+
+Because one budget has to serve every label. Set it wide enough for `Customer Success Operations`
+and you throw away ticks next to `HR`; set it for `HR` and the long ones still collide.
+
+:example{ name="tick-occlusion-vs-tick-spacing" }
+
+::note
+Band scales default `tickSpacing` to `null` and draw a tick per band, so a category axis with long
+names overlaps out of the box. This is the case `tickOcclusion` is most useful for.
+::
+
+#### Ticks `tickSpacing` cannot thin at all
+
+An explicit `ticks` array or time interval sets the tick values outright — `tickSpacing` and
+`count` have no say (see [time scale (explicit)](#time-scale-explicit)). `tickOcclusion` runs after
+the values are chosen, so it is the only way to thin them while keeping the interval you asked for.
+
+:example{ name="tick-occlusion-explicit-ticks" }
+
+#### Priority
+
+Which ticks win when labels compete:
+
+- `'end'` (default) — keep the last tick and walk backwards. The newest value on a time axis.
+- `'start'` — keep the first and walk forwards.
+- `'start-end'` — anchor both ends of the axis, thin what is between them, so the reader always
+  sees the range the chart spans.
+
+:example{ name="tick-occlusion-priority" }
+
+#### Rotated labels
+
+Rotation is the other way out of a crowded category axis, and the two compose: labels are measured
+after rotation, so an angled label — which needs far less horizontal room — keeps neighbours that a
+flat one would push out.
+
+:example{ name="tick-occlusion-rotated" }
+
+#### Options
+
+```svelte
+<Axis placement="bottom" tickOcclusion={{ priority: 'start-end', padding: 12 }} />
+```
+
+- `priority` — `'end'` (default), `'start'`, or `'start-end'`.
+- `padding` — minimum gap, in pixels, required between two kept labels. Defaults to `4`.
+
+::note
+The whole tick is dropped, not just its label — its tick mark and grid line go with it, the same way
+a lower `tickSpacing` would.
+::
+
+::note
+Labels are tested against each other, not against the plot bounds. A kept label at either end of the
+axis is drawn wherever its tick sits, so reserve horizontal `padding` for it — especially with
+`priority: 'start-end'`, which anchors both ends by design.
+::
+
 ### time scales
 
 With no `format`, tick labels are chosen automatically from the duration between ticks — a domain spanning years is labelled with years, one spanning a minute with seconds. Resizing the chart (or changing `tickSpacing`) changes the tick density, and the labels follow.

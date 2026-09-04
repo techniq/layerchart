@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import MixedMarksHarness from '../components/tests/MixedMarksHarness.svelte';
+import MixedMarksHarness from '$lib/tests/MixedMarksHarness.svelte';
 import type { ChartState } from './chart.svelte.js';
 
 /** Long rows — `c` names the layers, so a bare `Bars` stacks them */

@@ -687,7 +687,7 @@
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
       "lineNumber": 40,
-      "line": "<!-- <Text"
+      "line": "<Text"
     },
     {
       "example": "icons",
@@ -1166,5 +1166,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-08-19T14:28:20.072Z"
+  "updatedAt": "2026-09-03T20:00:08.583Z"
 }

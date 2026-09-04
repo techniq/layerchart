@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import BrushMarkHarness from '../tests/BrushMarkHarness.svelte';
+import BrushMarkHarness from '$lib/tests/BrushMarkHarness.svelte';
 
 describe('Brush', () => {
   describe('touch', () => {

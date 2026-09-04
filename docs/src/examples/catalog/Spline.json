@@ -443,6 +443,33 @@
       ]
     },
     {
+      "name": "multiple-series-tweened",
+      "title": "multiple series tweened",
+      "path": "/docs/components/Spline/multiple-series-tweened",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 48,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 51,
+          "line": "<Spline motion=\"tween\" class=\"stroke-2\" />"
+        }
+      ]
+    },
+    {
       "name": "multiple-series-using-overrides",
       "title": "multiple series using overrides",
       "path": "/docs/components/Spline/multiple-series-using-overrides",
@@ -1020,6 +1047,20 @@
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
+      "example": "tick-occlusion-explicit-ticks",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-explicit-ticks",
+      "lineNumber": 23,
+      "line": "<Spline />"
+    },
+    {
+      "example": "tick-occlusion-priority",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-priority",
+      "lineNumber": 43,
+      "line": "<Spline />"
+    },
+    {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -1426,6 +1467,13 @@
       "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
     },
     {
+      "example": "multiple-series-tweened",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series-tweened",
+      "lineNumber": 51,
+      "line": "<Spline motion=\"tween\" class=\"stroke-2\" />"
+    },
+    {
       "example": "multiple-series-using-overrides",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-using-overrides",
@@ -1622,5 +1670,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:19.579Z"
+  "updatedAt": "2026-09-03T20:00:08.496Z"
 }

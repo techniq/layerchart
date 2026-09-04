@@ -226,6 +226,17 @@ export class ChartState<
   // Mount state
   isMounted = $state(false);
 
+  /**
+   * Whether the container has been measured, so the scales describe the real layout rather than
+   * the placeholder above.
+   *
+   * Marks read the scales as they are *constructed* — a motion baseline, an initial position — and
+   * those reads happen once. Building them against the placeholder leaves a mark animating out of
+   * a 100×100 corner instead of the layout it belongs to, so `Chart` holds its subtree back until
+   * this is true.
+   */
+  isMeasured = $state(false);
+
   // Mark registration — marks register stable MarkInfo snapshots on mount for
   // domain/series calculation. Snapshots are updated via $effect (not $derived)
   // in registerComponent, so reads here never create circular derived refs.

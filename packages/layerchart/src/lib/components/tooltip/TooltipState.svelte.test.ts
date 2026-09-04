@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 
-import TooltipTestHarness from '../tests/TooltipTestHarness.svelte';
+import TooltipTestHarness from '$lib/tests/TooltipTestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 const data = [
@@ -37,6 +37,19 @@ async function renderChart(chartProps: Record<string, any> = {}) {
 
 describe('TooltipState', () => {
   describe('show({ value })', () => {
+    /**
+     * A chart can leave an axis unconfigured — `<Chart x="distance">` with no `y` — which makes
+     * `ctx.y` null.  `dataCoords` guards `ctx.y?.(data)` but still reads `ctx.yGet(data)` to place
+     * the tooltip, and `createGetter` called the accessor before checking anything, so showing a
+     * tooltip on such a chart threw `accessor is not a function`.
+     */
+    it('places the tooltip on a chart with no `y` configured', async () => {
+      const ctx = await renderChart({ y: undefined, tooltipContext: { mode: 'bisect-x' } });
+
+      expect(() => ctx.tooltip.show({ value: { x: new Date('2024-01-02') } })).not.toThrow();
+      expect(ctx.tooltip.data).toEqual(data[1]);
+    });
+
     it('resolves the nearest data point from a domain value', async () => {
       const ctx = await renderChart({ tooltipContext: { mode: 'bisect-x' } });
 
@@ -190,11 +203,17 @@ describe('TooltipState', () => {
       });
     });
 
-    it('is not re-shown by a chart mounting under a parked cursor', async () => {
+    it('is shielded from a chart mounting under a parked cursor by the harness', async () => {
+      // Covers `TooltipTestHarness`'s `pointer-events: none`, rather than anything `hide()` does.
+      //
       // Vitest's browser mode tiles every test file's iframe into one page sharing a single
       // cursor, so a `hover()` elsewhere can leave it wherever this chart later mounts.  Park it
       // first, then mount underneath it: the browser fires a boundary event at the element that
       // appears under a stationary cursor, which would otherwise show data never asked for.
+      //
+      // `TooltipState` does not ignore that event — disabled pointer input is what keeps it away.
+      // Drop the guard from the harness and this fails, which is the point of keeping it: the
+      // other files on the page render charts directly and depend on the same behaviour.
       const parked = await renderChart({ tooltipContext: { mode: 'bisect-x' } });
       const rect = parked.containerRef!.getBoundingClientRect();
       await page
@@ -216,10 +235,6 @@ describe('TooltipState', () => {
       // give a boundary event from the parked cursor a chance to land
       await new Promise((resolve) => setTimeout(resolve, 50));
       expect(ctx.tooltip.data).toBeNull();
-
-      // Put the cursor back where it started.  Files sharing the page render charts directly
-      // rather than through this harness, so leaving it parked would hand them the same hazard.
-      await page.elementLocator(document.body).hover({ position: { x: 0, y: 0 } });
     });
   });
 });

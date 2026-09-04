@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand } from 'd3-scale';
 
-import TestHarness from '../components/tests/TestHarness.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
 import Circle from '../components/Circle/Circle.svelte';
 import Highlight from '../components/Highlight/Highlight.svelte';
 import ScatterChart from '../components/charts/ScatterChart/ScatterChart.svelte';

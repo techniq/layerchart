@@ -1218,7 +1218,7 @@
       "example": "linechart-tickspacing",
       "component": "Axis",
       "path": "/docs/components/Axis/linechart-tickspacing",
-      "lineNumber": 18,
+      "lineNumber": 23,
       "line": "<LineChart"
     },
     {
@@ -1810,5 +1810,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:02.140Z"
+  "updatedAt": "2026-09-03T20:00:07.682Z"
 }

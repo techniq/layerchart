@@ -63,6 +63,8 @@
 
   const drawTransition = $derived(draw ? _drawTransition : () => ({}));
   let startPoint = $state<DOMPoint | undefined>();
+  // Used when `draw` is not configured, where the end point does not animate
+  let staticEndPoint = $state<DOMPoint | undefined>();
 
   // Compute the class string here rather than inline in the `class={...}`
   // attribute: a TS cast in markup survives into `dist` and breaks tooling that
@@ -83,21 +85,25 @@
 
   // Only allocate the controlled motion container when `draw` is configured;
   // otherwise the per-Path `MotionNone` × hundreds of paths was a measurable
-  // mount-time cost in mark-heavy scenes.
-  const endPoint = draw
-    ? createControlledMotion<DOMPoint | undefined>(undefined, {
-        type: 'tween',
-        duration: () => endPointDuration,
-        easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
-        interpolate() {
-          return (t: number) => {
-            const totalLength = pathRef?.getTotalLength() ?? 0;
-            const point = pathRef?.getPointAtLength(totalLength * t);
-            return point;
-          };
-        },
-      })
-    : null;
+  // mount-time cost in mark-heavy scenes.  Without `draw`, `staticEndPoint` is
+  // used instead.
+  const endPoint =
+    draw && endContent
+      ? createControlledMotion<DOMPoint | undefined>(undefined, {
+          type: 'tween',
+          duration: () => endPointDuration,
+          easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
+          interpolate() {
+            return (t: number) => {
+              const totalLength = pathRef?.getTotalLength() ?? 0;
+              const point = pathRef?.getPointAtLength(totalLength * t);
+              return point;
+            };
+          },
+        })
+      : null;
+
+  const currentEndPoint = $derived(endPoint ? endPoint.current : staticEndPoint);
 
   // Only set up path-end tracking when startContent/endContent require it.
   if (startContent || endContent) {
@@ -113,6 +119,8 @@
         startPoint = pathRef.getPointAtLength(0);
         if (endPoint) {
           endPoint.target = pathRef.getPointAtLength(totalLength);
+        } else {
+          staticEndPoint = pathRef.getPointAtLength(totalLength);
         }
       });
     });
@@ -158,13 +166,13 @@
     </Group>
   {/if}
 
-  {#if endContent && endPoint?.current}
-    <Group x={endPoint.current.x} y={endPoint.current.y} class="lc-path-g-end">
+  {#if endContent && currentEndPoint}
+    <Group x={currentEndPoint.x} y={currentEndPoint.y} class="lc-path-g-end">
       {@render endContent({
-        point: endPoint.current,
+        point: currentEndPoint,
         value: {
-          x: c.chartCtx.xScale?.invert?.(endPoint.current.x),
-          y: c.chartCtx.yScale?.invert?.(endPoint.current.y),
+          x: c.chartCtx.xScale?.invert?.(currentEndPoint.x),
+          y: c.chartCtx.yScale?.invert?.(currentEndPoint.y),
         },
       })}
     </Group>

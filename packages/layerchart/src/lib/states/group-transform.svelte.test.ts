@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import ChartGroupTestHarness from '../components/tests/ChartGroupTestHarness.svelte';
+import ChartGroupTestHarness from '$lib/tests/ChartGroupTestHarness.svelte';
 import LineChart from '../components/charts/LineChart/LineChart.svelte';
 import { ChartGroupState } from './group.svelte.js';
 import type { ChartState } from './chart.svelte.js';

@@ -580,32 +580,32 @@
         },
         {
           "component": "FacetAxis",
-          "lineNumber": 27,
+          "lineNumber": 26,
           "line": "<FacetAxis />"
         },
         {
           "component": "Grid",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<Grid x y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 29,
+          "lineNumber": 28,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Circle",
-          "lineNumber": 31,
+          "lineNumber": 30,
           "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"island\" fillOpacity={0.6} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 32,
+          "lineNumber": 31,
           "line": "<Highlight lines points axis=\"both\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 35,
+          "lineNumber": 34,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -923,6 +923,13 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+    },
+    {
       "example": "gradient",
       "component": "Area",
       "path": "/docs/components/Area/gradient",
@@ -962,6 +969,13 @@
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-highlight-on-hover",
       "lineNumber": 40,
+      "line": "<Chart"
+    },
+    {
+      "example": "multiple-series-tweened",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series-tweened",
+      "lineNumber": 36,
       "line": "<Chart"
     },
     {
@@ -1285,6 +1299,20 @@
       "path": "/docs/components/Axis/tick-label-styling",
       "lineNumber": 9,
       "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+    },
+    {
+      "example": "tick-occlusion-explicit-ticks",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-explicit-ticks",
+      "lineNumber": 19,
+      "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ bottom: 24, left: 32, right: 34 }} height={200}>"
+    },
+    {
+      "example": "tick-occlusion-priority",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-priority",
+      "lineNumber": 33,
+      "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ bottom: 24, left: 40, right: 34 }} height={200}>"
     },
     {
       "example": "tick-spacing",
@@ -2186,7 +2214,7 @@
       "example": "synced-brushes",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/synced-brushes",
-      "lineNumber": 81,
+      "lineNumber": 78,
       "line": "<Chart"
     },
     {
@@ -2508,7 +2536,7 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 76,
+      "lineNumber": 73,
       "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 16 }} brush height={20}>"
     },
     {
@@ -4668,6 +4696,13 @@
       "line": "<Chart"
     },
     {
+      "example": "multiple-series-tweened",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series-tweened",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
       "example": "multiple-series-using-overrides",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-using-overrides",
@@ -5284,5 +5319,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-08-23T18:52:25.185Z"
+  "updatedAt": "2026-09-03T20:00:06.106Z"
 }

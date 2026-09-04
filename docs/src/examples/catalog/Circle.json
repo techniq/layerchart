@@ -377,7 +377,7 @@
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"island\" fillOpacity={0.6} />"
     },
     {
@@ -1214,5 +1214,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-23T18:52:25.346Z"
+  "updatedAt": "2026-09-03T20:00:06.279Z"
 }

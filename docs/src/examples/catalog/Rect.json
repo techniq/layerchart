@@ -198,6 +198,13 @@
   ],
   "usage": [
     {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 24,
+      "line": "<rect width={context.width} height={context.height} fill={gradient} />"
+    },
+    {
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
@@ -1052,5 +1059,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-08-17T11:19:20.832Z"
+  "updatedAt": "2026-09-03T20:00:08.325Z"
 }

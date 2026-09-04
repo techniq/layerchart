@@ -74,7 +74,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 71,
+          "lineNumber": 76,
           "line": "<BarChart"
         }
       ]
@@ -323,7 +323,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 18,
+          "lineNumber": 23,
           "line": "<LineChart"
         }
       ]
@@ -735,6 +735,96 @@
       ]
     },
     {
+      "name": "tick-occlusion",
+      "title": "tick occlusion",
+      "path": "/docs/components/Axis/tick-occlusion",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 40,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "tick-occlusion-explicit-ticks",
+      "title": "tick occlusion explicit ticks",
+      "path": "/docs/components/Axis/tick-occlusion-explicit-ticks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ bottom: 24, left: 32, right: 34 }} height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 23,
+          "line": "<Spline />"
+        }
+      ]
+    },
+    {
+      "name": "tick-occlusion-priority",
+      "title": "tick occlusion priority",
+      "path": "/docs/components/Axis/tick-occlusion-priority",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 33,
+          "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ bottom: 24, left: 40, right: 34 }} height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 43,
+          "line": "<Spline />"
+        }
+      ]
+    },
+    {
+      "name": "tick-occlusion-rotated",
+      "title": "tick occlusion rotated",
+      "path": "/docs/components/Axis/tick-occlusion-rotated",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 33,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "tick-occlusion-vs-tick-spacing",
+      "title": "tick occlusion vs tick spacing",
+      "path": "/docs/components/Axis/tick-occlusion-vs-tick-spacing",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 33,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "tick-spacing",
       "title": "tick spacing",
       "path": "/docs/components/Axis/tick-spacing",
@@ -984,6 +1074,20 @@
       "line": "<Axis placement=\"bottom\" format=\"day\" rule ticks={(scale) => scale.domain()}>"
     },
     {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "gradient",
       "component": "Area",
       "path": "/docs/components/Area/gradient",
@@ -1065,6 +1169,20 @@
       "component": "Area",
       "path": "/docs/components/Area/multiple-series-highlight-on-hover",
       "lineNumber": 56,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "multiple-series-tweened",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series-tweened",
+      "lineNumber": 48,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "multiple-series-tweened",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series-tweened",
+      "lineNumber": 49,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1653,6 +1771,34 @@
       "component": "Axis",
       "path": "/docs/components/Axis/tick-label-styling",
       "lineNumber": 11,
+      "line": "<Axis"
+    },
+    {
+      "example": "tick-occlusion-explicit-ticks",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-explicit-ticks",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "tick-occlusion-explicit-ticks",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-explicit-ticks",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule ticks={{ interval: timeDay }} format=\"day\" {tickOcclusion} />"
+    },
+    {
+      "example": "tick-occlusion-priority",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-priority",
+      "lineNumber": 35,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "tick-occlusion-priority",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-priority",
+      "lineNumber": 36,
       "line": "<Axis"
     },
     {
@@ -3297,14 +3443,14 @@
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 29,
+      "lineNumber": 28,
       "line": "<Axis placement=\"left\" />"
     },
     {
       "example": "facet-tooltip",
       "component": "Chart",
       "path": "/docs/components/Chart/facet-tooltip",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -4750,6 +4896,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "multiple-series-tweened",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series-tweened",
+      "lineNumber": 48,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "multiple-series-tweened",
+      "component": "Spline",
+      "path": "/docs/components/Spline/multiple-series-tweened",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "multiple-series-using-overrides",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series-using-overrides",
@@ -5478,5 +5638,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:00.975Z"
+  "updatedAt": "2026-09-03T20:00:05.736Z"
 }

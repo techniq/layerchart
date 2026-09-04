@@ -9,8 +9,8 @@
 
 	import { Chart, Layer, Text } from 'layerchart';
 	import { GeoPath } from 'layerchart/geo';
-	const states = feature(topology, topology.objects.states);
 
+	const states = feature(topology, topology.objects.states);
 	const data = { topology, states };
 	export { data };
 </script>
@@ -36,15 +36,16 @@
 				<GeoPath geojson={feature}>
 					{#snippet children({ geoPath })}
 						{@const [x, y] = geoPath?.centroid(feature) ?? []}
-						<!-- TODO: Why has this locking up the browser (Svelte release)? -->
-						<!-- <Text
-							{x}
-							{y}
-							value={feature.properties.name}
-							textAnchor="middle"
-							verticalAnchor="middle"
-							class="text-[8px] stroke-surface-100 stroke-[2px]"
-						/> -->
+						{#if Number.isFinite(x) && Number.isFinite(y)}
+							<Text
+								{x}
+								{y}
+								value={feature.properties.name}
+								textAnchor="middle"
+								verticalAnchor="middle"
+								class="text-[8px] stroke-surface-100 stroke-[2px]"
+							/>
+						{/if}
 					{/snippet}
 				</GeoPath>
 			{/each}

@@ -140,6 +140,43 @@
       ]
     },
     {
+      "name": "fade-mask",
+      "title": "fade mask",
+      "path": "/docs/components/Area/fade-mask",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 20,
+          "line": "<LinearGradient stops={['black', 'white']}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 24,
+          "line": "<rect width={context.width} height={context.height} fill={gradient} />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 28,
+          "line": "<Area"
+        }
+      ]
+    },
+    {
       "name": "gradient",
       "title": "gradient",
       "path": "/docs/components/Area/gradient",
@@ -398,6 +435,33 @@
           "component": "Tooltip",
           "lineNumber": 82,
           "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-series-tweened",
+      "title": "multiple series tweened",
+      "path": "/docs/components/Area/multiple-series-tweened",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 48,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 51,
+          "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} motion=\"tween\" />"
         }
       ]
     },
@@ -964,6 +1028,13 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
+      "example": "fade-mask",
+      "component": "Area",
+      "path": "/docs/components/Area/fade-mask",
+      "lineNumber": 28,
+      "line": "<Area"
+    },
+    {
       "example": "gradient",
       "component": "Area",
       "path": "/docs/components/Area/gradient",
@@ -1018,6 +1089,13 @@
       "path": "/docs/components/Area/multiple-series-highlight-on-hover",
       "lineNumber": 61,
       "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+    },
+    {
+      "example": "multiple-series-tweened",
+      "component": "Area",
+      "path": "/docs/components/Area/multiple-series-tweened",
+      "lineNumber": 51,
+      "line": "<Area fill=\"fruit\" fillOpacity={0.3} line={{ class: 'stroke-2' }} motion=\"tween\" />"
     },
     {
       "example": "multiple-series-using-overrides",
@@ -1394,14 +1472,14 @@
       "example": "synced-brushes",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/synced-brushes",
-      "lineNumber": 74,
+      "lineNumber": 71,
       "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
     },
     {
       "example": "synced-brushes",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/synced-brushes",
-      "lineNumber": 93,
+      "lineNumber": 90,
       "line": "<Area"
     },
     {
@@ -1443,14 +1521,14 @@
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 69,
+      "lineNumber": 66,
       "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
     },
     {
       "example": "synced-brushes",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/synced-brushes",
-      "lineNumber": 78,
+      "lineNumber": 75,
       "line": "<Area"
     },
     {
@@ -1622,5 +1700,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:00.930Z"
+  "updatedAt": "2026-09-03T20:00:05.673Z"
 }

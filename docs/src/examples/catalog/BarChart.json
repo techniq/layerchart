@@ -1686,7 +1686,7 @@
       "example": "barchart-tickspacing",
       "component": "Axis",
       "path": "/docs/components/Axis/barchart-tickspacing",
-      "lineNumber": 71,
+      "lineNumber": 76,
       "line": "<BarChart"
     },
     {
@@ -1694,6 +1694,34 @@
       "component": "Axis",
       "path": "/docs/components/Axis/barchart-xinterval-xinset",
       "lineNumber": 25,
+      "line": "<BarChart"
+    },
+    {
+      "example": "tick-occlusion",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion",
+      "lineNumber": 40,
+      "line": "<BarChart"
+    },
+    {
+      "example": "tick-occlusion-rotated",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-rotated",
+      "lineNumber": 33,
+      "line": "<BarChart"
+    },
+    {
+      "example": "tick-occlusion-vs-tick-spacing",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-vs-tick-spacing",
+      "lineNumber": 33,
+      "line": "<BarChart"
+    },
+    {
+      "example": "tick-occlusion-vs-tick-spacing",
+      "component": "Axis",
+      "path": "/docs/components/Axis/tick-occlusion-vs-tick-spacing",
+      "lineNumber": 48,
       "line": "<BarChart"
     },
     {
@@ -2474,5 +2502,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-08-23T18:52:24.929Z"
+  "updatedAt": "2026-09-03T20:00:05.808Z"
 }

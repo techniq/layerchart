@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-23T18:54:59.937Z",
+  "generatedAt": "2026-09-03T20:01:04.033Z",
   "totalComponents": 80,
-  "totalExamples": 982,
+  "totalExamples": 990,
   "components": [
     {
       "component": "AnnotationLine",
@@ -362,6 +362,11 @@
           "checksum": "fd7137092a61faa36d965a8f62307987"
         },
         {
+          "name": "fade-mask",
+          "path": "/example/Area/fade-mask",
+          "checksum": "4b4dee345976ed3d2ae6f510c3a480a8"
+        },
+        {
           "name": "gradient",
           "path": "/example/Area/gradient",
           "checksum": "063c0ea169422aeffaa01033d97d4c32"
@@ -390,6 +395,11 @@
           "name": "multiple-series-highlight-on-hover",
           "path": "/example/Area/multiple-series-highlight-on-hover",
           "checksum": "7803a5a1ed70d70cdba18309491ae727"
+        },
+        {
+          "name": "multiple-series-tweened",
+          "path": "/example/Area/multiple-series-tweened",
+          "checksum": "a03de351686765ce2126c29b25e37674"
         },
         {
           "name": "multiple-series-using-overrides",
@@ -714,7 +724,7 @@
         {
           "name": "barchart-tickspacing",
           "path": "/example/Axis/barchart-tickspacing",
-          "checksum": "9a654f6fda830f6a8a2bb35621b64a93"
+          "checksum": "34e8b7d93bc5f8b0960d1700a3830e3a"
         },
         {
           "name": "barchart-xinterval-xinset",
@@ -774,7 +784,7 @@
         {
           "name": "linechart-tickspacing",
           "path": "/example/Axis/linechart-tickspacing",
-          "checksum": "b6942a3a773b12fa00d4ff20f15d9ed2"
+          "checksum": "6c805788a037881afb9cc2d9183094ac"
         },
         {
           "name": "log-scale",
@@ -865,6 +875,31 @@
           "name": "tick-label-styling",
           "path": "/example/Axis/tick-label-styling",
           "checksum": "0792f03cca1d6671235eab0da9770be5"
+        },
+        {
+          "name": "tick-occlusion",
+          "path": "/example/Axis/tick-occlusion",
+          "checksum": "5031b26a62dd4d77422255f80876d7d6"
+        },
+        {
+          "name": "tick-occlusion-explicit-ticks",
+          "path": "/example/Axis/tick-occlusion-explicit-ticks",
+          "checksum": "d2c6490ee292134100c9e9cbc7c563e9"
+        },
+        {
+          "name": "tick-occlusion-priority",
+          "path": "/example/Axis/tick-occlusion-priority",
+          "checksum": "c9b20bd4b09a6ff5ffdec46393892766"
+        },
+        {
+          "name": "tick-occlusion-rotated",
+          "path": "/example/Axis/tick-occlusion-rotated",
+          "checksum": "ecb0ea33d14830eb382d28a8095d019d"
+        },
+        {
+          "name": "tick-occlusion-vs-tick-spacing",
+          "path": "/example/Axis/tick-occlusion-vs-tick-spacing",
+          "checksum": "d65535723ae907998be5192211a80255"
         },
         {
           "name": "tick-spacing",
@@ -1979,7 +2014,7 @@
         {
           "name": "synced-brushes",
           "path": "/example/BrushContext/synced-brushes",
-          "checksum": "4437f58eddef3689dc1a7ecbf5badadf"
+          "checksum": "709efa62cf3aa2b7f2bf6aff82bb1415"
         },
         {
           "name": "tooltip-interop",
@@ -2199,7 +2234,7 @@
         {
           "name": "facet-tooltip",
           "path": "/example/Chart/facet-tooltip",
-          "checksum": "60477e105a22f7c2b4ba39c441b27813"
+          "checksum": "357c62b9fbfb0723f457691c83661de2"
         },
         {
           "name": "facet-two-dimensional",
@@ -2269,7 +2304,7 @@
         {
           "name": "synced-brushes",
           "path": "/example/ChartGroup/synced-brushes",
-          "checksum": "65e8b1d5ec4291c7f1865ac499dda55e"
+          "checksum": "a2c7f2bb9dec9cda6c3e388168e01914"
         },
         {
           "name": "synced-legend",
@@ -4785,6 +4820,11 @@
           "name": "multiple-series-highlight-on-hover",
           "path": "/example/Spline/multiple-series-highlight-on-hover",
           "checksum": "403a7d99d8180c6296f7d9a6e28d303e"
+        },
+        {
+          "name": "multiple-series-tweened",
+          "path": "/example/Spline/multiple-series-tweened",
+          "checksum": ""
         },
         {
           "name": "multiple-series-using-overrides",

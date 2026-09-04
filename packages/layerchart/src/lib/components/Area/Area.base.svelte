@@ -56,6 +56,21 @@
         seriesKey,
       }) as AreaProps
   );
+
+  /**
+   * The props that describe the mark as a whole rather than one of its paths.
+   *
+   * An `<Area line>` draws two paths — the filled body and the top curve — so anything that
+   * clips or filters "the area" has to reach both, or a reveal mask wipes the fill in while
+   * the curve appears instantly.  Only these are forwarded: `id` and event handlers stay on
+   * the fill path alone, so nothing is duplicated and the pointer fires once.  Whatever
+   * `line={{ ... }}` sets wins, since it is spread after.
+   */
+  const sharedLineProps = $derived({
+    mask: restProps.mask,
+    filter: restProps.filter,
+    'clip-path': restProps['clip-path'],
+  });
 </script>
 
 {#if c.areas}
@@ -70,6 +85,8 @@
         {curve}
         {defined}
         stroke={area.fill}
+        {motion}
+        {...sharedLineProps}
         {...extractLayerProps(line, 'lc-area-line')}
       />
     {/if}
@@ -92,6 +109,7 @@
       {curve}
       {defined}
       {motion}
+      {...sharedLineProps}
       {...extractLayerProps(line, 'lc-area-line')}
     />
   {/if}

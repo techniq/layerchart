@@ -1,3 +1,4 @@
+import { untrack } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 import { line as d3Line, lineRadial } from 'd3-shape';
@@ -7,7 +8,12 @@ import { interpolatePath } from 'd3-interpolate-path';
 
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
-import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+import {
+  createMotion,
+  createPathMotionMap,
+  extractTweenConfig,
+  type MotionProp,
+} from '$lib/utils/motion.svelte.js';
 import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
 import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
@@ -84,6 +90,9 @@ export class SplineState {
 
   #tweenState!: ReturnType<typeof createMotion<string>>;
 
+  /** One tween per `z` group — see `#segmentTargets` for why the style-function split is excluded */
+  #segmentTweens: ReturnType<typeof createPathMotionMap> = null;
+
   constructor(getProps: () => SplineProps) {
     this.#getProps = getProps;
 
@@ -113,6 +122,26 @@ export class SplineState {
       () => this.d,
       tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined
     );
+
+    // `#tweenState` animates the single-path case; grouped lines each need their own, since the
+    // set of them changes with the data.
+    this.#segmentTweens = createPathMotionMap(initial.motion, interpolatePath);
+    if (this.#segmentTweens) {
+      const tweens = this.#segmentTweens;
+      $effect(() => {
+        const targets = this.#segmentTargets;
+        if (!targets) return;
+
+        const active = new Set<any>();
+        for (const seg of targets) {
+          if (seg.key === undefined) continue;
+          active.add(seg.key);
+          // `update` reads and writes the tween's own state, so it must not be tracked here
+          untrack(() => tweens.update(seg.key, seg.d, () => this.#defaultPathData(seg.data)));
+        }
+        untrack(() => tweens.cleanup(active));
+      });
+    }
   }
 
   #getScaleValue(
@@ -249,12 +278,23 @@ export class SplineState {
     return this.#buildPath(resolvedData);
   });
 
-  segments = $derived.by<SplineSegment[] | null>(() => {
+  /**
+   * The segments as the data says they should be, before motion — each with the key its tween is
+   * stored under and the rows it was built from.
+   *
+   * Separate from `segments` so the effect driving the tweens can read the targets without
+   * reading the tweens' own output, which would be a cycle.
+   *
+   * Only the `z` split gets a key. A style function splits a line further, into one path per run
+   * of matching style, and those runs are redrawn by the data — their count and boundaries move,
+   * so there is no identity to carry a tween across.
+   */
+  #segmentTargets = $derived.by<(SplineSegment & { key?: any; data: any[] })[] | null>(() => {
     if (!this.hasAnyStyleFn && !this.zAccessor) return null;
     const props = this.#props;
     if (this.geo.projection) return null;
 
-    const out: SplineSegment[] = [];
+    const out: (SplineSegment & { key?: any; data: any[] })[] = [];
 
     for (const lineData of this.lines) {
       const lineOpacity = this.#lineOpacity(lineData);
@@ -276,6 +316,7 @@ export class SplineState {
             ...group.style,
             opacity: group.style.opacity ?? lineOpacity,
             d: this.#buildPath(group.data),
+            data: group.data,
           });
         }
       } else {
@@ -290,11 +331,24 @@ export class SplineState {
           opacity: resolveStyleProp(props.opacity, lineData[0]) ?? lineOpacity,
           class: resolveStyleProp(props.class, lineData[0]),
           d: this.#buildPath(lineData),
+          data: lineData,
+          key: this.zAccessor ? this.zAccessor(lineData[0]) : undefined,
         });
       }
     }
 
     return out;
+  });
+
+  /** `#segmentTargets` with each `z` group's path swapped for its in-flight tween */
+  segments = $derived.by<SplineSegment[] | null>(() => {
+    const targets = this.#segmentTargets;
+    const tweens = this.#segmentTweens;
+    if (!targets || !tweens) return targets;
+
+    return targets.map((seg) =>
+      seg.key === undefined ? seg : { ...seg, d: tweens.get(seg.key) ?? seg.d }
+    );
   });
 
   /**
@@ -345,12 +399,13 @@ export class SplineState {
     return this.ctx.series.visibleSeries.some((s) => s.key === key);
   }
 
-  #defaultPathData(): string {
+  /** The path flattened to the baseline — what a line tweens out of when it first appears */
+  #defaultPathData(data?: any[]): string {
     const props = this.#props;
     if (!extractTweenConfig(props.motion)) return '';
 
     if (this.ctx.config.x) {
-      const resolvedData = this.resolvedData;
+      const resolvedData = data ?? this.resolvedData;
       const baseline = Math.min(this.ctx.yScale(0) ?? this.ctx.yRange[0], this.ctx.yRange[0]);
 
       const path = this.ctx.radial
