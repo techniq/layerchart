@@ -19,6 +19,8 @@ vi.mock('d3-interpolate-path', async (importOriginal) => {
 });
 
 import LineChart from '../charts/LineChart/LineChart.svelte';
+import TestHarness from '$lib/tests/TestHarness.svelte';
+import Spline from './Spline.svelte';
 
 function data(offset: number, n = 300) {
   return Array.from({ length: n }, (_, i) => ({
@@ -54,5 +56,84 @@ describe('Spline path tween is only built when `motion` is set', () => {
 
     expect(calls.built).toBe(0);
     expect(calls.invoked).toBe(0);
+  });
+});
+
+/**
+ * A style function splits a line into one path per run of matching style. Those runs move with
+ * the data, but "the nth run of this style" is identity enough to tween across — without it a
+ * line drawn with a `class` function animated not at all, while the same line drawn with a
+ * static class animated normally.
+ */
+describe('Spline tweens style-split runs', () => {
+  /** One line, dashed across the middle, at a height the `offset` shifts */
+  const bridged = (offset: number) =>
+    Array.from({ length: 6 }, (_, i) => ({
+      date: new Date(Date.UTC(2024, i, 1)),
+      value: 10 + i * 10 + offset,
+      gap: i === 2 || i === 3,
+    }));
+
+  const harness = (motion?: any) => ({
+    component: Spline,
+    chartProps: { data: bridged(0), x: 'date', y: 'value', yDomain: [0, 200], height: 300 },
+    componentProps: {
+      motion,
+      class: (d: { gap: boolean }) => (d.gap ? 'gap-run' : 'solid-run'),
+    },
+  });
+
+  const dashed = () => document.querySelector('svg path.gap-run')?.getAttribute('d') ?? null;
+
+  /** The dashed run's `d` on each of the next `n` frames */
+  async function sample(n: number) {
+    const seen: (string | null)[] = [];
+    for (let i = 0; i < n; i++) {
+      await frame();
+      seen.push(dashed());
+    }
+    return seen;
+  }
+
+  beforeEach(() => cleanup());
+
+  it('animates a style-split run across a data change', async () => {
+    const props = harness({ type: 'tween', duration: 400 });
+    const { rerender } = render(TestHarness, props as any);
+
+    await expect.poll(dashed).not.toBeNull();
+    // Let the initial grow-in finish, so what follows is only the data change
+    await new Promise((r) => setTimeout(r, 500));
+    const before = dashed();
+
+    await rerender({
+      ...props,
+      chartProps: { ...props.chartProps, data: bridged(60) },
+    } as any);
+
+    const seen = await sample(8);
+    // Interpolated, so the run passes through intermediate paths rather than snapping
+    expect(new Set(seen).size).toBeGreaterThan(2);
+    expect(seen[0]).not.toBe(before);
+
+    // ...and lands on the target, which is where an unanimated run would have gone immediately
+    await new Promise((r) => setTimeout(r, 600));
+    const after = dashed();
+    expect(after).not.toBe(before);
+    await frame();
+    expect(dashed()).toBe(after);
+  });
+
+  it('snaps without `motion`, as before', async () => {
+    const props = harness();
+    const { rerender } = render(TestHarness, props as any);
+
+    await expect.poll(dashed).not.toBeNull();
+    await rerender({
+      ...props,
+      chartProps: { ...props.chartProps, data: bridged(60) },
+    } as any);
+
+    expect(new Set(await sample(6)).size).toBe(1);
   });
 });

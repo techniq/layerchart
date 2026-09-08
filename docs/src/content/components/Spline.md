@@ -53,19 +53,42 @@ Pass a function to `stroke`, `fill`, `opacity`, or `class` to style each segment
 <Spline z="year" class={(d) => (d.year === 2024 ? 'stroke-primary' : 'stroke-surface-content')} />
 ```
 
-:example{ name="stroke-grouping" showCode }
+:example{ name="stroke-grouping" }
+
+A run keeps its line's color unless the function itself names one, so a `class` that only changes the dashes doesn't have to restate the `stroke`. And each run animates: `motion` tweens it to the next update's run of the same style, so a dashed stretch follows the dashed stretch rather than the solid one beside it.
+
+### Bridging missing data
+
+Days a source never reported are absent from the data, not zero — so the line spans them, and a `class` function is what marks that span as a bridge. Because a run takes its style from the point it _starts_ at, the flag belongs on the last point before the gap:
+
+```svelte
+<Spline
+	motion="tween"
+	class={(d) => (d.bridged ? 'stroke-2 [stroke-dasharray:4_4]' : 'stroke-2')}
+/>
+```
+
+:example{ name="missing-data-dashed" }
+
+This draws the bridge _in_ the line rather than under it, so fading or hiding the series takes the dashes with it.
+
+### Line ends across runs
+
+However many paths a style function splits a line into, `startContent`, `endContent`, `markerStart`, and `markerEnd` belong to the line — they render once, at its ends. The seams between runs are interior points, so they take `markerMid`.
+
+:example{ name="missing-data-with-markers" }
 
 ### Geo mode
 
 When inside a `GeoProjection` context, Spline automatically renders as a projected geographic path. The `x` and `y` accessors extract longitude/latitude from each data point, which are converted to a GeoJSON `LineString` and rendered via `geoPath(projection)` — providing geodesic interpolation (great circle arcs) and proper antimeridian wrapping.
 
-:example{ name="geo-routes" showCode }
+:example{ name="geo-routes" }
 
 ### Parallel coordinates
 
 One line per row across an axis per dimension, from a single `Spline` grouped by `z`. Each dimension keeps its own domain — `Axis` takes a `scale` override, so the ticks read in real units — while positions are normalized to a shared `0–1` domain so every dimension can share the chart's `y` scale. `Group` places each axis at its point on the categorical `x` scale.
 
-:example{ name="parallel-coordinates" showCode }
+:example{ name="parallel-coordinates" }
 
 ### Brushable parallel coordinates
 
@@ -77,7 +100,7 @@ A chart's `brush` prop owns one selection over the whole plot area. For several 
 
 `contains()` then filters the lines — a row is kept when every brushed dimension contains it, so brushing several intersects them.
 
-:example{ name="parallel-coordinates-brush" showCode }
+:example{ name="parallel-coordinates-brush" }
 
 ### Mixed dimension types
 
@@ -85,13 +108,13 @@ A dimension doesn't have to be numeric. Give each one the scale its own data cal
 
 Here `species` is an axis in its own right as well as the color, so brushing it narrows to those species and intersects with the numeric dimensions like any other.
 
-:example{name="parallel-coordinates-mixed" showCode}
+:example{name="parallel-coordinates-mixed" }
 
 ### Faceted parallel coordinates
 
 A line crosses every dimension, so the dimensions can't be panels — but `fy` gives one plot per group, sharing the dimension scales so the panels stay comparable. The per-dimension axes repeat in each panel with `facetAll`, while the dimension names, being an axis over the shared `x`, draw above the top panel only.
 
-:example{ name="parallel-coordinates-faceted" showCode }
+:example{ name="parallel-coordinates-faceted" }
 
 ### Playground
 
