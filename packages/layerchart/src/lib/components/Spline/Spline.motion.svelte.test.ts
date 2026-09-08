@@ -136,4 +136,98 @@ describe('Spline tweens style-split runs', () => {
 
     expect(new Set(await sample(6)).size).toBe(1);
   });
+
+  /**
+   * A run that appears has to come from somewhere. A whole new line rises from the baseline, as
+   * it always has — but a run appearing *within* a line already on screen would rise through the
+   * chart to reach it, so it grows out of the point it joins instead. Consecutive runs share
+   * their boundary point, so that point is the end of the run before it.
+   */
+  describe('where a run enters from', () => {
+    /** Every `y` in a path's `d`, as `M x,y L x,y ...` */
+    const ys = (d: string | null) =>
+      [...(d ?? '').matchAll(/[ML]-?[\d.]+,(-?[\d.]+)/g)].map((m) => Number(m[1]));
+
+    /** Flat lines high up the chart, so the baseline is nowhere near them */
+    const flat = (groups: string[], gapAt: number | null) =>
+      Array.from({ length: 6 }, (_, i) => i).flatMap((i) =>
+        groups.map((group) => ({
+          date: new Date(Date.UTC(2024, i, 1)),
+          value: 150,
+          group,
+          gap: i === gapAt,
+        }))
+      );
+
+    const chartProps = { x: 'date', y: 'value', yDomain: [0, 200], height: 300 };
+    // Slow, so a handful of frames lands well inside the entrance rather than after it
+    const componentProps = {
+      motion: { type: 'tween', duration: 2000 },
+      z: 'group',
+      class: (d: { gap: boolean }) => (d.gap ? 'gap-run' : 'solid-run'),
+    };
+
+    /** The `y` of a value of 150 in a 300px chart over `[0, 200]`, and of the baseline */
+    const lineY = 300 * (1 - 150 / 200);
+    const baselineY = 300;
+    const midway = (lineY + baselineY) / 2;
+
+    /** How low the lowest of the `n` most recently drawn paths gets over the next `frames` */
+    async function lowestOfLast(n: number, frames: number) {
+      let lowest = -Infinity;
+      for (let i = 0; i < frames; i++) {
+        await frame();
+        const paths = [...document.querySelectorAll('svg path')].slice(-n);
+        for (const p of paths) lowest = Math.max(lowest, ...ys(p.getAttribute('d')));
+      }
+      return lowest;
+    }
+
+    it('grows the runs of a line that appears in from the baseline with it', async () => {
+      const props = {
+        component: Spline,
+        chartProps: { ...chartProps, data: flat(['a'], 2) },
+        componentProps,
+      };
+      const { rerender } = render(TestHarness, props as any);
+
+      await expect.poll(() => document.querySelectorAll('svg path').length).toBe(3);
+      await new Promise((r) => setTimeout(r, 2200));
+
+      // A second line, split the same way — nothing of it was on screen, so it enters as a line
+      await rerender({ ...props, chartProps: { ...chartProps, data: flat(['a', 'b'], 2) } } as any);
+      await expect.poll(() => document.querySelectorAll('svg path').length).toBe(6);
+
+      expect(await lowestOfLast(3, 12)).toBeGreaterThan(midway);
+    });
+
+    it('grows a run appearing in a drawn line out from the point it joins', async () => {
+      const props = {
+        component: Spline,
+        chartProps: { ...chartProps, data: flat(['a'], null) },
+        componentProps,
+      };
+      const { rerender } = render(TestHarness, props as any);
+
+      // One solid run, fully entered — there is no dashed run yet
+      await expect.poll(() => document.querySelectorAll('svg path').length).toBe(1);
+      await new Promise((r) => setTimeout(r, 2200));
+      expect(dashed()).toBeNull();
+
+      await rerender({ ...props, chartProps: { ...chartProps, data: flat(['a'], 2) } } as any);
+      await expect.poll(dashed).not.toBeNull();
+
+      // It starts collapsed on the line, so it never goes near the baseline...
+      let lowest = -Infinity;
+      for (let i = 0; i < 12; i++) {
+        await frame();
+        lowest = Math.max(lowest, ...ys(dashed()));
+      }
+      expect(lowest).toBeLessThan(midway);
+
+      // ...and collapsed means it starts with no extent to speak of
+      const entering = ys(dashed());
+      expect(Math.max(...entering) - Math.min(...entering)).toBeLessThan(lineY / 2);
+    });
+  });
 });

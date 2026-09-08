@@ -132,17 +132,31 @@ export class SplineState {
     this.#segmentTweens = createPathMotionMap(initial.motion, interpolatePath);
     if (this.#segmentTweens) {
       const tweens = this.#segmentTweens;
+      // The lines that were on screen last pass, so a run appearing in one of them can be told
+      // apart from a run of a line being drawn for the first time.  Rebuilt each pass, which
+      // prunes lines the data dropped — one that comes back is new again, and enters as one.
+      let drawnLines = new Set<any>();
+
       $effect(() => {
         const targets = this.#segmentTargets;
         if (!targets) return;
 
         const active = new Set<any>();
+        const lines = new Set<any>();
         for (const seg of targets) {
           if (seg.key === undefined) continue;
           active.add(seg.key);
+          if (seg.lineKey !== undefined) lines.add(seg.lineKey);
+
+          const intoDrawnLine = seg.lineKey !== undefined && drawnLines.has(seg.lineKey);
           // `update` reads and writes the tween's own state, so it must not be tracked here
-          untrack(() => tweens.update(seg.key, seg.d, () => this.#defaultPathData(seg.data)));
+          untrack(() =>
+            tweens.update(seg.key, seg.d, () =>
+              intoDrawnLine ? this.#collapsedPathData(seg.data) : this.#defaultPathData(seg.data)
+            )
+          );
         }
+        drawnLines = lines;
         untrack(() => tweens.cleanup(active));
       });
     }
@@ -296,12 +310,14 @@ export class SplineState {
    * second dashed stretch rather than morphing into the solid one beside it, and the
    * interpolator handles the two having different point counts.
    */
-  #segmentTargets = $derived.by<(SplineSegment & { key?: any; data: any[] })[] | null>(() => {
+  #segmentTargets = $derived.by<
+    (SplineSegment & { key?: any; lineKey?: any; data: any[] })[] | null
+  >(() => {
     if (!this.hasAnyStyleFn && !this.zAccessor) return null;
     const props = this.#props;
     if (this.geo.projection) return null;
 
-    const out: (SplineSegment & { key?: any; data: any[] })[] = [];
+    const out: (SplineSegment & { key?: any; lineKey?: any; data: any[] })[] = [];
 
     for (const lineData of this.lines) {
       const lineOpacity = this.#lineOpacity(lineData);
@@ -338,6 +354,7 @@ export class SplineState {
             d: this.#buildPath(group.data),
             data: group.data,
             key: `${lineKey}\0${group.key}\0${ordinal}`,
+            lineKey,
             lineStart: index === 0,
             lineEnd: index === groups.length - 1,
           });
@@ -450,6 +467,36 @@ export class SplineState {
     }
 
     return '';
+  }
+
+  /**
+   * The segment collapsed onto its own first point — what a run tweens out of when it appears in
+   * a line that is already on screen.
+   *
+   * Consecutive runs share their boundary point, so a run's first point is the last point of the
+   * run before it: a dashed bridge that appears mid-line grows out along the line, rather than
+   * rising from the baseline the way a line drawn for the first time does.
+   */
+  #collapsedPathData(data: any[]): string {
+    const props = this.#props;
+    if (!extractTweenConfig(props.motion) || data[0] == null) return '';
+
+    const x = this.#getScaleValue(data[0], this.ctx.xScale, this.xAccessor);
+    const y = this.#getScaleValue(data[0], this.ctx.yScale, this.yAccessor);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return '';
+
+    const path = this.ctx.radial
+      ? lineRadial()
+          .angle(() => x)
+          .radius(() => y + this.yOffset)
+      : d3Line()
+          .x(() => x + this.xOffset)
+          .y(() => y + this.yOffset);
+
+    path.defined(props.defined ?? ((d) => this.xAccessor(d) != null && this.yAccessor(d) != null));
+    if (props.curve) path.curve(props.curve);
+
+    return path(data) ?? '';
   }
 
   /**
