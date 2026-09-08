@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { createRawSnippet } from 'svelte';
 import { render } from 'vitest-browser-svelte';
 
 import TestHarness from '$lib/tests/TestHarness.svelte';
@@ -328,6 +329,149 @@ describe('Spline', () => {
       });
 
       await expect.poll(() => paths()[0]?.getAttribute('stroke')).toBe('rebeccapurple');
+    });
+  });
+
+  describe('style-split runs', () => {
+    /** One line, dashed across the middle two points — the shape a "no data reported" bridge has */
+    const bridged = [
+      { date: new Date('2024-01-01'), value: 10, gap: false },
+      { date: new Date('2024-02-01'), value: 20, gap: false },
+      { date: new Date('2024-03-01'), value: 30, gap: true },
+      { date: new Date('2024-04-01'), value: 40, gap: true },
+      { date: new Date('2024-05-01'), value: 50, gap: false },
+      { date: new Date('2024-06-01'), value: 60, gap: false },
+    ];
+
+    const dashOn = (d: (typeof bridged)[number]) => (d.gap ? 'dashed' : 'solid');
+
+    it('takes each run`s style from the point it starts at, sharing the boundary point', async () => {
+      render(TestHarness, {
+        component: Spline,
+        chartProps: { data: bridged, x: 'date', y: 'value', yDomain: [0, 100] },
+        componentProps: { class: dashOn },
+      });
+
+      await expect.poll(() => paths().length).toBe(3);
+      expect(paths().map((p) => p.classList.contains('dashed'))).toEqual([false, true, false]);
+      // The overlap: 3 + 3 + 2 points across the runs covers 6 rows twice-counting 2 boundaries
+      expect(paths().map((p) => p.getAttribute('d')!.split(/[ML]/).length - 1)).toEqual([3, 3, 2]);
+    });
+
+    it('keeps the `c` color on every run when only `class` splits the line', async () => {
+      render(TestHarness, {
+        component: Spline,
+        chartProps: {
+          ...chartProps({ c: 'group', cRange: ['rgb(255, 0, 0)', 'rgb(0, 0, 255)'] }),
+        },
+        componentProps: { class: (d: any) => (d.value % 20 === 0 ? 'even' : 'odd') },
+      });
+
+      // Two lines (`c` names the groups), each split further by the class function
+      await expect.poll(() => paths().length).toBeGreaterThan(2);
+      // Every run is colored, and only by which line it belongs to — not by its style run
+      expect(
+        paths().every((p) =>
+          ['rgb(255, 0, 0)', 'rgb(0, 0, 255)'].includes(p.getAttribute('stroke')!)
+        )
+      ).toBe(true);
+      expect(paths().some((p) => p.classList.contains('even'))).toBe(true);
+      expect(paths().some((p) => p.classList.contains('odd'))).toBe(true);
+    });
+
+    it('keeps the series color on every run when only `class` splits the line', async () => {
+      render(TestHarness, {
+        component: Spline,
+        chartProps: {
+          data: bridged,
+          x: 'date',
+          yDomain: [0, 100],
+          series: [{ key: 'value', color: 'rgb(0, 128, 0)' }],
+        },
+        componentProps: { seriesKey: 'value', class: dashOn },
+      });
+
+      await expect.poll(() => paths().length).toBe(3);
+      expect(paths().map((p) => p.getAttribute('stroke'))).toEqual([
+        'rgb(0, 128, 0)',
+        'rgb(0, 128, 0)',
+        'rgb(0, 128, 0)',
+      ]);
+    });
+
+    it('lets a `stroke` function color runs individually', async () => {
+      // The fallback must not overwrite what the style function actually asked for
+      render(TestHarness, {
+        component: Spline,
+        chartProps: {
+          data: bridged,
+          x: 'date',
+          yDomain: [0, 100],
+          series: [{ key: 'value', color: 'rgb(0, 128, 0)' }],
+        },
+        componentProps: {
+          seriesKey: 'value',
+          stroke: (d: (typeof bridged)[number]) => (d.gap ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'),
+        },
+      });
+
+      await expect.poll(() => paths().length).toBe(3);
+      expect(paths().map((p) => p.getAttribute('stroke'))).toEqual([
+        'rgb(0, 0, 255)',
+        'rgb(255, 0, 0)',
+        'rgb(0, 0, 255)',
+      ]);
+    });
+
+    describe('the ends of the line, not of each run', () => {
+      const dot = createRawSnippet(() => ({ render: () => '<circle r="4" />' }));
+
+      const ends = () => ({
+        start: document.querySelectorAll('.lc-path-g-start').length,
+        end: document.querySelectorAll('.lc-path-g-end').length,
+      });
+
+      it('renders start/end content once per line, not once per run', async () => {
+        render(TestHarness, {
+          component: Spline,
+          chartProps: { data: bridged, x: 'date', y: 'value', yDomain: [0, 100] },
+          componentProps: { class: dashOn, startContent: dot, endContent: dot },
+        });
+
+        await expect.poll(() => paths().length).toBe(3);
+        await expect.poll(ends).toEqual({ start: 1, end: 1 });
+      });
+
+      it('still renders them per line when `z` splits the mark', async () => {
+        render(TestHarness, {
+          component: Spline,
+          chartProps: chartProps(),
+          componentProps: { z: 'group', startContent: dot, endContent: dot },
+        });
+
+        await expect.poll(() => paths().length).toBe(2);
+        await expect.poll(ends).toEqual({ start: 2, end: 2 });
+      });
+
+      it('puts start/end markers on the line`s ends and mid markers on the seams', async () => {
+        render(TestHarness, {
+          component: Spline,
+          chartProps: { data: bridged, x: 'date', y: 'value', yDomain: [0, 100] },
+          componentProps: {
+            class: dashOn,
+            markerStart: 'circle',
+            markerMid: 'circle',
+            markerEnd: 'arrow',
+          },
+        });
+
+        await expect.poll(() => paths().length).toBe(3);
+        // The two seams are interior points of the line, so they take the mid marker — once each,
+        // from the run that starts there rather than the one that ends there
+        expect(paths().map((p) => p.hasAttribute('marker-end'))).toEqual([false, false, true]);
+        expect(paths().every((p) => p.hasAttribute('marker-start'))).toBe(true);
+        expect(paths().every((p) => p.hasAttribute('marker-mid'))).toBe(true);
+      });
     });
   });
 

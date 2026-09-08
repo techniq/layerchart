@@ -66,6 +66,10 @@ export type SplineSegment = {
   opacity?: number;
   class?: string;
   d: string;
+  /** Whether this path starts its line, rather than continuing one a style function split */
+  lineStart: boolean;
+  /** Whether this path ends its line */
+  lineEnd: boolean;
 };
 
 /**
@@ -90,7 +94,7 @@ export class SplineState {
 
   #tweenState!: ReturnType<typeof createMotion<string>>;
 
-  /** One tween per `z` group — see `#segmentTargets` for why the style-function split is excluded */
+  /** One tween per path this mark draws — see `#segmentTargets` for what identifies each */
   #segmentTweens: ReturnType<typeof createPathMotionMap> = null;
 
   constructor(getProps: () => SplineProps) {
@@ -128,17 +132,31 @@ export class SplineState {
     this.#segmentTweens = createPathMotionMap(initial.motion, interpolatePath);
     if (this.#segmentTweens) {
       const tweens = this.#segmentTweens;
+      // The lines that were on screen last pass, so a run appearing in one of them can be told
+      // apart from a run of a line being drawn for the first time.  Rebuilt each pass, which
+      // prunes lines the data dropped — one that comes back is new again, and enters as one.
+      let drawnLines = new Set<any>();
+
       $effect(() => {
         const targets = this.#segmentTargets;
         if (!targets) return;
 
         const active = new Set<any>();
+        const lines = new Set<any>();
         for (const seg of targets) {
           if (seg.key === undefined) continue;
           active.add(seg.key);
+          if (seg.lineKey !== undefined) lines.add(seg.lineKey);
+
+          const intoDrawnLine = seg.lineKey !== undefined && drawnLines.has(seg.lineKey);
           // `update` reads and writes the tween's own state, so it must not be tracked here
-          untrack(() => tweens.update(seg.key, seg.d, () => this.#defaultPathData(seg.data)));
+          untrack(() =>
+            tweens.update(seg.key, seg.d, () =>
+              intoDrawnLine ? this.#collapsedPathData(seg.data) : this.#defaultPathData(seg.data)
+            )
+          );
         }
+        drawnLines = lines;
         untrack(() => tweens.cleanup(active));
       });
     }
@@ -285,16 +303,21 @@ export class SplineState {
    * Separate from `segments` so the effect driving the tweens can read the targets without
    * reading the tweens' own output, which would be a cycle.
    *
-   * Only the `z` split gets a key. A style function splits a line further, into one path per run
-   * of matching style, and those runs are redrawn by the data — their count and boundaries move,
-   * so there is no identity to carry a tween across.
+   * The key composes both splits: the `z` group, then — where a style function splits that line
+   * further into one path per run of matching style — the style itself plus how many runs of that
+   * style came before it. A run's position in the line moves with the data, so a raw index
+   * carries no identity, but "the second dashed stretch" does: it tweens to the next render's
+   * second dashed stretch rather than morphing into the solid one beside it, and the
+   * interpolator handles the two having different point counts.
    */
-  #segmentTargets = $derived.by<(SplineSegment & { key?: any; data: any[] })[] | null>(() => {
+  #segmentTargets = $derived.by<
+    (SplineSegment & { key?: any; lineKey?: any; data: any[] })[] | null
+  >(() => {
     if (!this.hasAnyStyleFn && !this.zAccessor) return null;
     const props = this.#props;
     if (this.geo.projection) return null;
 
-    const out: (SplineSegment & { key?: any; data: any[] })[] = [];
+    const out: (SplineSegment & { key?: any; lineKey?: any; data: any[] })[] = [];
 
     for (const lineData of this.lines) {
       const lineOpacity = this.#lineOpacity(lineData);
@@ -311,14 +334,31 @@ export class SplineState {
             style: { stroke: s, fill: f, opacity: o, class: c },
           };
         });
-        for (const group of groups) {
+
+        // The line's own color, for the runs a `stroke` function didn't name one for — a `class`
+        // function alone splits the line without saying anything about its color, and without
+        // this every run would fall through to `Path`'s unstroked default.  Resolved from the
+        // line's first point, as the single-path case is, so the split doesn't recolor anything.
+        const lineStroke = this.#colorFromC(lineData[0]) ?? this.series?.color;
+        const lineKey = this.zAccessor ? this.zAccessor(lineData[0]) : '';
+        const seen = new Map<string, number>();
+
+        groups.forEach((group, index) => {
+          const ordinal = seen.get(group.key) ?? 0;
+          seen.set(group.key, ordinal + 1);
+
           out.push({
             ...group.style,
+            stroke: group.style.stroke ?? lineStroke,
             opacity: group.style.opacity ?? lineOpacity,
             d: this.#buildPath(group.data),
             data: group.data,
+            key: `${lineKey}\0${group.key}\0${ordinal}`,
+            lineKey,
+            lineStart: index === 0,
+            lineEnd: index === groups.length - 1,
           });
-        }
+        });
       } else {
         // One path for the whole line, styled from its first point — so `stroke="species"` picks
         // the line's color out of the data via the chart's color scale
@@ -333,6 +373,8 @@ export class SplineState {
           d: this.#buildPath(lineData),
           data: lineData,
           key: this.zAccessor ? this.zAccessor(lineData[0]) : undefined,
+          lineStart: true,
+          lineEnd: true,
         });
       }
     }
@@ -340,7 +382,7 @@ export class SplineState {
     return out;
   });
 
-  /** `#segmentTargets` with each `z` group's path swapped for its in-flight tween */
+  /** `#segmentTargets` with each path swapped for its in-flight tween */
   segments = $derived.by<SplineSegment[] | null>(() => {
     const targets = this.#segmentTargets;
     const tweens = this.#segmentTweens;
@@ -428,6 +470,36 @@ export class SplineState {
   }
 
   /**
+   * The segment collapsed onto its own first point — what a run tweens out of when it appears in
+   * a line that is already on screen.
+   *
+   * Consecutive runs share their boundary point, so a run's first point is the last point of the
+   * run before it: a dashed bridge that appears mid-line grows out along the line, rather than
+   * rising from the baseline the way a line drawn for the first time does.
+   */
+  #collapsedPathData(data: any[]): string {
+    const props = this.#props;
+    if (!extractTweenConfig(props.motion) || data[0] == null) return '';
+
+    const x = this.#getScaleValue(data[0], this.ctx.xScale, this.xAccessor);
+    const y = this.#getScaleValue(data[0], this.ctx.yScale, this.yAccessor);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return '';
+
+    const path = this.ctx.radial
+      ? lineRadial()
+          .angle(() => x)
+          .radius(() => y + this.yOffset)
+      : d3Line()
+          .x(() => x + this.xOffset)
+          .y(() => y + this.yOffset);
+
+    path.defined(props.defined ?? ((d) => this.xAccessor(d) != null && this.yAccessor(d) != null));
+    if (props.curve) path.curve(props.curve);
+
+    return path(data) ?? '';
+  }
+
+  /**
    * `stroke` / `fill` for the single-path case, resolved the way every other mark resolves them:
    * a string naming a data property goes through the chart's color scale, anything else is a
    * literal CSS color.  Uniform across the path, so it resolves from the first point.
@@ -462,33 +534,35 @@ export class SplineState {
   });
 }
 
-type SegmentStyle = { stroke?: string; fill?: string; opacity?: number };
+type SegmentStyle = { stroke?: string; fill?: string; opacity?: number; class?: string };
 
 /**
  * Groups consecutive data points by a composite key derived from function-valued style props.
  * The key at index `i` determines the style for the segment from point `i` to point `i+1`.
  * Each group includes an overlap of 1 point at boundaries for curve continuity.
+ *
+ * The key comes back out alongside the style so the caller can identify a run across renders.
  */
 function groupConsecutive(
   data: any[],
   keyFn: (d: any, index: number, data: any[]) => { key: string; style: SegmentStyle }
-): Array<{ style: SegmentStyle; data: any[] }> {
+): Array<{ key: string; style: SegmentStyle; data: any[] }> {
   if (data.length < 2) return [];
 
-  const groups: Array<{ style: SegmentStyle; data: any[] }> = [];
+  const groups: Array<{ key: string; style: SegmentStyle; data: any[] }> = [];
   let current = keyFn(data[0], 0, data);
   let startIdx = 0;
 
   for (let i = 1; i < data.length; i++) {
     const next = keyFn(data[i], i, data);
     if (next.key !== current.key) {
-      groups.push({ style: current.style, data: data.slice(startIdx, i + 1) });
+      groups.push({ key: current.key, style: current.style, data: data.slice(startIdx, i + 1) });
       startIdx = i;
       current = next;
     }
   }
   if (data.length - startIdx >= 2) {
-    groups.push({ style: current.style, data: data.slice(startIdx) });
+    groups.push({ key: current.key, style: current.style, data: data.slice(startIdx) });
   }
 
   return groups;
