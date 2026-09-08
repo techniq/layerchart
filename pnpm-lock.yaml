@@ -121,14 +121,14 @@ importers:
         specifier: 1.0.0-next.4
         version: 1.0.0-next.4(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-actions':
-        specifier: 1.0.1-next.18
-        version: 1.0.1-next.18
+        specifier: 1.0.1-next.20
+        version: 1.0.1-next.20
       '@layerstack/svelte-state':
-        specifier: 0.1.0-next.23
-        version: 0.1.0-next.23
+        specifier: 0.1.0-next.25
+        version: 0.1.0-next.25
       '@layerstack/svelte-table':
-        specifier: 1.0.1-next.18
-        version: 1.0.1-next.18
+        specifier: 1.0.1-next.20
+        version: 1.0.1-next.20
       '@layerstack/tailwind':
         specifier: 2.0.0-next.21
         version: 2.0.0-next.21
@@ -760,11 +760,11 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4
       '@layerstack/svelte-actions':
-        specifier: 1.0.1-next.18
-        version: 1.0.1-next.18
+        specifier: 1.0.1-next.20
+        version: 1.0.1-next.20
       '@layerstack/svelte-state':
-        specifier: 0.1.0-next.23
-        version: 0.1.0-next.23
+        specifier: 0.1.0-next.25
+        version: 0.1.0-next.25
       '@layerstack/tailwind':
         specifier: 2.0.0-next.21
         version: 2.0.0-next.21
@@ -951,7 +951,7 @@ importers:
         version: 5.56.1(@typescript-eslint/types@8.60.1)
       svelte-check:
         specifier: ^4.5.0
-        version: 4.5.0(picomatch@4.0.4)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+        version: 4.5.0(picomatch@4.0.5)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
       svelte2tsx:
         specifier: ^0.7.56
         version: 0.7.56(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
@@ -1945,8 +1945,11 @@ packages:
   '@layerstack/svelte-actions@1.0.1-next.18':
     resolution: {integrity: sha512-gxPzCnJ1c9LTfWtRqLUzefCx+k59ZpxDUQ2XB+LokveZQPe7IDSOwHaBOEMlaGoGrtwc3Ft8dSZq+2WT2o9u/g==}
 
-  '@layerstack/svelte-state@0.1.0-next.23':
-    resolution: {integrity: sha512-7O4umv+gXwFfs3/vjzFWYHNXGwYnnjBapWJ5Y+9u99F4eVk6rh4ocNwqkqQNkpMZ5tUJBlRTWjPE1So6+hEzIg==}
+  '@layerstack/svelte-actions@1.0.1-next.20':
+    resolution: {integrity: sha512-OtFteDyvTUR6F7dSKPkpD/S77K7vbCHStApSlx8djJBxDKJHU3zxA4gYP6Z71Nc6HB/wLCfjZopkvxnMblbRRw==}
+
+  '@layerstack/svelte-state@0.1.0-next.25':
+    resolution: {integrity: sha512-K+SO4dYd2D9OSCnj92Ugo6i5OfVKZoHHA1DA7gs2ynigylRKInicniGI/OmRpp+002n3mhE/i2r3Kfctj8eAdw==}
 
   '@layerstack/svelte-stores@1.0.2-next.14':
     resolution: {integrity: sha512-UI8VO35hgoG0XOenPgJlieUv6f/1nomFuXnHpFwXj0+OkqIwFoJxdsA8OjbE/gS0lImqv2KKsSCqDpXsKrGi9g==}
@@ -1959,6 +1962,9 @@ packages:
 
   '@layerstack/svelte-table@1.0.1-next.18':
     resolution: {integrity: sha512-xfZETwBYMTRo7aNNfxyYHKKkK8Lv8GXYEQTVCywFvmXNI6l+X/SvCU/0IDpDuQyktUKu38/e/EaIwcH2a17Otg==}
+
+  '@layerstack/svelte-table@1.0.1-next.20':
+    resolution: {integrity: sha512-v27DkDbZEzgY8xrObOBtvGTgfLWg7eQ0dMM5WAhhbAkRw68PdHuwDn+pPUI62qY1OBTy3tJyZDwQkLoMoc+0+Q==}
 
   '@layerstack/tailwind@2.0.0-next.17':
     resolution: {integrity: sha512-ZSn6ouqpnzB6DKzSKLVwrUBOQsrzpDA/By2/ba9ApxgTGnaD1nyqNwrvmZ+kswdAwB4YnrGEAE4VZkKrB2+DaQ==}
@@ -7140,9 +7146,15 @@ snapshots:
       '@layerstack/utils': 2.0.0-next.18
       d3-scale: 4.0.2
 
-  '@layerstack/svelte-state@0.1.0-next.23':
+  '@layerstack/svelte-actions@1.0.1-next.20':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.18
+      '@floating-ui/dom': 1.7.6
+      '@layerstack/utils': 2.0.0-next.19
+      d3-scale: 4.0.2
+
+  '@layerstack/svelte-state@0.1.0-next.25':
+    dependencies:
+      '@layerstack/utils': 2.0.0-next.19
 
   '@layerstack/svelte-stores@1.0.2-next.14':
     dependencies:
@@ -7168,6 +7180,12 @@ snapshots:
     dependencies:
       '@layerstack/svelte-actions': 1.0.1-next.18
       '@layerstack/utils': 2.0.0-next.18
+      d3-array: 3.2.4
+
+  '@layerstack/svelte-table@1.0.1-next.20':
+    dependencies:
+      '@layerstack/svelte-actions': 1.0.1-next.20
+      '@layerstack/utils': 2.0.0-next.19
       d3-array: 3.2.4
 
   '@layerstack/tailwind@2.0.0-next.17':
@@ -11683,18 +11701,6 @@ snapshots:
       - sass
       - stylus
       - sugarss
-
-  svelte-check@4.5.0(picomatch@4.0.4)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.31
-      chokidar: 4.0.3
-      fdir: 6.5.0(picomatch@4.0.4)
-      picocolors: 1.1.1
-      sade: 1.8.1
-      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - picomatch
 
   svelte-check@4.5.0(picomatch@4.0.5)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
     dependencies:
