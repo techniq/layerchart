@@ -1,5 +1,17 @@
 # LayerChart
 
+## 2.4.1
+
+### Patch Changes
+
+- fix(deps): Bump `@layerstack/*` dependencies to fix `Package subpath is not defined by exports` when bundling without Vite (issue #913) ([#915](https://github.com/techniq/layerchart/pull/915))
+
+- fix(Spline): Render `startContent`, `endContent`, `markerStart`, and `markerEnd` once per line rather than once per style-split segment ([#914](https://github.com/techniq/layerchart/pull/914))
+
+- fix(Spline): Keep the line's color on segments split by a `class`, `opacity`, or `fill` function ([#914](https://github.com/techniq/layerchart/pull/914))
+
+- fix(Spline): Animate segments split by a style function, which `motion` previously skipped ([#914](https://github.com/techniq/layerchart/pull/914))
+
 ## 2.4.0
 
 ### Minor Changes
