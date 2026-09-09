@@ -26,6 +26,8 @@
     key,
     center,
     motion,
+    seriesKey,
+    opacity,
     ...rest
   }: GroupProps<T> = $props();
 
@@ -45,6 +47,8 @@
         key,
         center,
         motion,
+        seriesKey,
+        opacity,
         ...rest,
       }) as GroupProps
   );
@@ -66,13 +70,15 @@
   };
 </script>
 
-{#if c.dataMode}
+{#if c.hidden}
+  <!-- `seriesKey` names a series the legend has hidden -->
+{:else if c.dataMode}
   {#each c.resolvedItems as item (item.key)}
     <g
       style:transform="translate({item.x}px, {item.y}px)"
       class={['lc-group-g', className]}
-      opacity={rest.opacity}
       {...rest}
+      opacity={c.opacity}
       ontouchmove={handleTouchMove}
     >
       {@render children?.()}
@@ -83,8 +89,8 @@
     style:transform={c.transform}
     class={['lc-group-g', className]}
     in:transitionIn={transitionInParams}
-    opacity={rest.opacity}
     {...rest}
+    opacity={c.opacity}
     ontouchmove={handleTouchMove}
     bind:this={ref}
   >
