@@ -69,4 +69,90 @@ describe('Group', () => {
       await expect.poll(() => groups.length).toBe(1);
     });
   });
+
+  describe('seriesKey', () => {
+    const seriesChartProps = {
+      data: [{ date: new Date('2024-01-01'), apples: 20, bananas: 10 }],
+      x: 'date',
+      series: [
+        { key: 'apples', value: 'apples' },
+        { key: 'bananas', value: 'bananas' },
+      ],
+    };
+
+    function groups() {
+      return page.getByTestId(componentTestId).elements();
+    }
+
+    it('fades while another series is highlighted', async () => {
+      let ctx: any;
+      render(TestHarness, {
+        component: Group,
+        chartProps: seriesChartProps,
+        componentProps: { seriesKey: 'apples' },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      await expect.poll(() => groups()[0]?.getAttribute('opacity')).toBe(null);
+
+      ctx.series.setHighlight('bananas');
+      await expect.poll(() => groups()[0]?.getAttribute('opacity')).toBe('0.1');
+
+      ctx.series.setHighlight('apples');
+      await expect.poll(() => groups()[0]?.getAttribute('opacity')).toBe(null);
+
+      ctx.series.setHighlight(null);
+      await expect.poll(() => groups()[0]?.getAttribute('opacity')).toBe(null);
+    });
+
+    it('dims the `opacity` prop rather than replacing it', async () => {
+      let ctx: any;
+      render(TestHarness, {
+        component: Group,
+        chartProps: seriesChartProps,
+        componentProps: { seriesKey: 'apples', opacity: 0.5 },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      await expect.poll(() => groups()[0]?.getAttribute('opacity')).toBe('0.5');
+
+      ctx.series.setHighlight('bananas');
+      await expect.poll(() => groups()[0]?.getAttribute('opacity')).toBe('0.05');
+    });
+
+    it('is removed while the legend has its series hidden', async () => {
+      let ctx: any;
+      render(TestHarness, {
+        component: Group,
+        chartProps: seriesChartProps,
+        componentProps: { seriesKey: 'apples' },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      await expect.poll(() => groups().length).toBe(1);
+
+      ctx.series.selectedKeys.toggle('bananas');
+      await expect.poll(() => groups().length).toBe(0);
+
+      ctx.series.selectedKeys.toggle('bananas');
+      await expect.poll(() => groups().length).toBe(1);
+    });
+
+    it('leaves a group alone when its key names no series', async () => {
+      let ctx: any;
+      render(TestHarness, {
+        component: Group,
+        chartProps: seriesChartProps,
+        componentProps: { seriesKey: 'unrelated' },
+        oncontext: (c: any) => (ctx = c),
+      } as any);
+
+      ctx.series.setHighlight('bananas');
+      await expect.poll(() => groups().length).toBe(1);
+      expect(groups()[0]?.getAttribute('opacity')).toBe(null);
+
+      ctx.series.selectedKeys.toggle('bananas');
+      await expect.poll(() => groups().length).toBe(1);
+    });
+  });
 });
