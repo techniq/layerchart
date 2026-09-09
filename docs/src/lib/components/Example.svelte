@@ -20,9 +20,13 @@
 	import { resolveExamplePath } from '@layerstack/docs/content';
 	import { exampleViewTransitionName } from '@layerstack/docs/utils';
 	import { untrack } from 'svelte';
-	import { Code, Json } from '@layerstack/docs/components';
+	import { Json } from '@layerstack/docs/components';
+	import CodePanel from '$lib/sandbox/CodePanel.svelte';
+	import { createSandbox } from '$lib/sandbox/state.svelte';
+	import { exposeData } from '$lib/utils/exampleSource';
 
 	import LucideCode from '~icons/lucide/code';
+	import LucideRotateCcw from '~icons/lucide/rotate-ccw';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
 	import LucideFilePen from '~icons/lucide/file-pen';
@@ -128,9 +132,17 @@
 	}
 
 	let ref = $state<SvelteComponent | null>(null);
+
+	/**
+	 * In-page editing. `example.source` resolves asynchronously, so the sandbox seeds
+	 * itself from the getter rather than a constructor argument.
+	 */
+	const sandbox = createSandbox(() => example?.source ?? '', exposeData);
+
 	let data = $derived.by(() => {
 		try {
-			return ref?.data;
+			// Once edited, the chart on screen is the sandbox's, so `Data` must read from it.
+			return sandbox.live ? sandbox.instance?.data : ref?.data;
 		} catch {
 			return undefined;
 		}
@@ -270,7 +282,12 @@
 			>
 				{#if isVisible}
 					<svelte:boundary>
-						<example.component bind:this={ref} />
+						{#if sandbox.live}
+							<!-- Edited: render the user's source instead of the shipped component. -->
+							<div {@attach sandbox.preview}></div>
+						{:else}
+							<example.component bind:this={ref} />
+						{/if}
 						{#snippet failed(error, reset)}
 							<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
 								<div class="font-semibold text-danger mb-2">
@@ -315,7 +332,16 @@
 
 		{#if showCode}
 			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
-				<Code source={example.source} {showLineNumbers} {highlight} class="outline-none" />
+				<CodePanel {sandbox} {showLineNumbers} {highlight} />
+			</div>
+		{/if}
+
+		{#if sandbox.status && sandbox.hasError}
+			<div
+				class="mt-0.5 truncate rounded-sm bg-danger/10 px-2 py-1 text-xs text-danger"
+				title={sandbox.status}
+			>
+				{sandbox.status}
 			</div>
 		{/if}
 
@@ -328,6 +354,20 @@
 						on:click={() => (showCode = !showCode)}
 					>
 						{showCode ? 'Hide' : ''} Code
+					</Button>
+				{/if}
+
+				<!--
+					Without this, hiding the code after an edit leaves the example permanently
+					showing the user's version with nothing on screen explaining why.
+				-->
+				{#if sandbox.dirty}
+					<Button
+						icon={LucideRotateCcw}
+						class="text-surface-content/70 py-1"
+						on:click={() => sandbox.reset()}
+					>
+						Reset
 					</Button>
 				{/if}
 
