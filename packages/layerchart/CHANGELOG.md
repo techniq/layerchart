@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.5.0
+
+### Minor Changes
+
+- feat(Group|Hull|Rule): Support `seriesKey` prop to fade the mark while another series is highlighted and remove it while the legend has that series hidden ([#917](https://github.com/techniq/layerchart/pull/917))
+
 ## 2.4.1
 
 ### Patch Changes
