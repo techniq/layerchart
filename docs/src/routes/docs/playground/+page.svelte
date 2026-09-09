@@ -29,7 +29,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
 	import type { PageData } from './$types';
-	import CodeEditor from './CodeEditor.svelte';
 	import { Overlay, ProgressCircle } from 'svelte-ux';
 	import { AnsiUp } from 'ansi_up';
 
@@ -190,6 +189,17 @@
 	async function openInREPL() {
 		// This needs wired up
 	}
+
+	/**
+	 * CodeMirror is browser-only, and `@replit/codemirror-lang-svelte` has no `default`
+	 * export condition — bundling it for SSR resolves its CJS build and blows up on
+	 * `module is not defined`. Loading it after mount sidesteps that and keeps the
+	 * editor out of the server bundle.
+	 */
+	let CodeEditor = $state<typeof import('$lib/sandbox/CodeEditor.svelte').default | null>(null);
+	onMount(async () => {
+		CodeEditor = (await import('$lib/sandbox/CodeEditor.svelte')).default;
+	});
 
 	onMount(async () => {
 		try {
@@ -435,11 +445,13 @@
 						<div class="flex items-center justify-center h-full">
 							<div class="text-surface-content/50">Loading...</div>
 						</div>
-					{:else}
+					{:else if CodeEditor}
 						<CodeEditor
 							bind:value={fileContent}
 							filename={selectedFile}
 							oninput={saveFileContent}
+							lineNumbers
+							class="h-full"
 						/>
 					{/if}
 				</div>
