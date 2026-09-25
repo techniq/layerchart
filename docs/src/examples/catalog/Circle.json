@@ -794,6 +794,13 @@
       "line": "<Circle r={4} class=\"fill-primary\" />"
     },
     {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 34,
+      "line": "<Circle r={4} fill={s.color} />"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -1130,6 +1137,13 @@
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 64,
+      "line": "<Circle r={4} class=\"fill-primary\" />"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -1214,5 +1228,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:06.279Z"
+  "updatedAt": "2026-09-25T04:42:17.383Z"
 }

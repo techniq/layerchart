@@ -349,6 +349,75 @@
       ]
     },
     {
+      "name": "missing-data-dashed",
+      "title": "missing data dashed",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 56,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 68,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 69,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 71,
+          "line": "<Spline"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 77,
+          "line": "<Legend placement=\"bottom\" />"
+        }
+      ]
+    },
+    {
+      "name": "missing-data-with-markers",
+      "title": "missing data with markers",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 45,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 56,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 58,
+          "line": "<Spline"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 64,
+          "line": "<Circle r={4} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 65,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "multiple-series",
       "title": "multiple series",
       "path": "/docs/components/Spline/multiple-series",
@@ -1453,6 +1522,20 @@
       "line": "<Spline seriesKey={s.key} />"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 71,
+      "line": "<Spline"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 58,
+      "line": "<Spline"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -1670,5 +1753,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.496Z"
+  "updatedAt": "2026-09-25T04:42:18.541Z"
 }

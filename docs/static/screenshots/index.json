@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-03T20:01:04.033Z",
+  "generatedAt": "2026-09-25T04:42:57.226Z",
   "totalComponents": 80,
-  "totalExamples": 990,
+  "totalExamples": 996,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2257,6 +2257,21 @@
           "checksum": "19d81cdbf281d26360989b8713f0495e"
         },
         {
+          "name": "isometric-heatmap",
+          "path": "/example/Chart/isometric-heatmap",
+          "checksum": "498dd964428c74ca136b5e3b132943fc"
+        },
+        {
+          "name": "isometric-scatter",
+          "path": "/example/Chart/isometric-scatter",
+          "checksum": "238d84e1158a7869164406f9cef4a085"
+        },
+        {
+          "name": "isometric-transition",
+          "path": "/example/Chart/isometric-transition",
+          "checksum": "a2e01495a3cb08cfa0a0b591cd3e1eb4"
+        },
+        {
           "name": "mixed-marks-with-stack",
           "path": "/example/Chart/mixed-marks-with-stack",
           "checksum": "02e00237acf4bdd1ce8cc96e9ca53cee"
@@ -3150,6 +3165,11 @@
           "name": "data-mode",
           "path": "/example/Group/data-mode",
           "checksum": "a9aa025a951b95e558cefc62deaaef0c"
+        },
+        {
+          "name": "series-state",
+          "path": "/example/Group/series-state",
+          "checksum": "21a81c2eb7cccbc49c1a670fd2b6ec0e"
         }
       ]
     },
@@ -4812,6 +4832,16 @@
           "checksum": "f3f2ca0bdcc2099f1694537ef4cb90ab"
         },
         {
+          "name": "missing-data-dashed",
+          "path": "/example/Spline/missing-data-dashed",
+          "checksum": "85e95eb848a9ece7bb7fa3c0d5984816"
+        },
+        {
+          "name": "missing-data-with-markers",
+          "path": "/example/Spline/missing-data-with-markers",
+          "checksum": "a246fa5ec590fd48eae443f4301e5acc"
+        },
+        {
           "name": "multiple-series",
           "path": "/example/Spline/multiple-series",
           "checksum": "7c74b80a74c757ce9c2111a5ef22b626"
@@ -4824,7 +4854,7 @@
         {
           "name": "multiple-series-tweened",
           "path": "/example/Spline/multiple-series-tweened",
-          "checksum": ""
+          "checksum": "c2a5ae822fcd74993e637456b1c3013b"
         },
         {
           "name": "multiple-series-using-overrides",

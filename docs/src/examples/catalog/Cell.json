@@ -177,7 +177,21 @@
       "path": "/docs/components/Cell/rounded-insets",
       "lineNumber": 42,
       "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 37,
+      "line": "<Cell"
+    },
+    {
+      "example": "isometric-transition",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-transition",
+      "lineNumber": 45,
+      "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:04.354Z"
+  "updatedAt": "2026-09-25T04:42:17.244Z"
 }

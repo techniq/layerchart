@@ -52,7 +52,7 @@
     center?: boolean | 'x' | 'y';
 
     /**
-     * Ignore TransformContext.
+     * Ignore TransformContext and the chart's `isometric` view.
      * Useful to add static elements such as legends.
      */
     ignoreTransform?: boolean;
@@ -76,6 +76,7 @@
   import Facet from '../Facet.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
+  import { matrixToString } from '$lib/utils/isometric.js';
 
   let {
     ref: refProp = $bindable(),
@@ -106,11 +107,18 @@
   const ctx = getChartContext();
 
   const transform = $derived.by(() => {
-    if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
-      return `translate(${ctx.transform.translate.x},${ctx.transform.translate.y}) scale(${ctx.transform.scale})`;
-    } else if (center) {
-      return `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}, ${center === 'y' || center === true ? ctx.height / 2 : 0})`;
-    }
+    const zoom = ctx.transform.mode === 'canvas' && !ignoreTransform;
+    const isometric = ignoreTransform ? null : ctx.isometricMatrix;
+    const parts = [
+      zoom &&
+        `translate(${ctx.transform.translate.x},${ctx.transform.translate.y}) scale(${ctx.transform.scale})`,
+      isometric && matrixToString(isometric),
+      // Centring happens on the floor, so a radial chart turns and tips with it
+      !zoom &&
+        center &&
+        `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}, ${center === 'y' || center === true ? ctx.height / 2 : 0})`,
+    ].filter(Boolean);
+    return parts.length ? parts.join(' ') : undefined;
   });
 
   setLayerContext('svg');

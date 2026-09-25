@@ -135,6 +135,7 @@
   import { raise } from '$lib/utils/chart.js';
   import { TooltipState, type TooltipShowOptions } from '$lib/states/tooltip.svelte.js';
   import { dataCoords, findDatumByValue } from '$lib/utils/tooltip.js';
+  import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
   import { getSettings } from '$lib/contexts/settings.js';
 
@@ -258,11 +259,22 @@
    * that panel's coordinates.
    *
    * Unfaceted charts land in the single full-size panel, so callers need no branch. Returns
-   * `undefined` in the gap between panels, where there's nothing to resolve against.
+   * `undefined` in the gap between panels, or off the floor of an `isometric` chart, where there's
+   * nothing to resolve against.
    */
   function resolvePanel(point: { x: number; y: number }) {
-    const x = point.x - ctx.padding.left;
-    const y = point.y - ctx.padding.top;
+    let x = point.x - ctx.padding.left;
+    let y = point.y - ctx.padding.top;
+
+    // Undo the layers' pan / zoom and `isometric` view, back to where the scales laid it out
+    const inverse = ctx.layerMatrix ? invertMatrix(ctx.layerMatrix) : null;
+    if (inverse) {
+      const p = applyMatrix(inverse, { x, y });
+      // Rounded, as inverting leaves enough error to push a point on the floor's edge just off it
+      x = Math.round(p.x * 1e6) / 1e6;
+      y = Math.round(p.y * 1e6) / 1e6;
+    }
+
     const panel = ctx.facet.panelAt(x, y);
     return panel ? { panel, x: x - panel.x, y: y - panel.y } : undefined;
   }
@@ -314,18 +326,15 @@
       case 'quadtree-x':
       case 'quadtree-y':
       case 'quadtree': {
-        let qx = hit.x;
-        let qy = hit.y;
-
-        // Apply inverse transform to convert screen coordinates to canvas coordinates
-        if (ctx.transform.mode === 'canvas') {
-          qx = (qx - ctx.transform.translate.x) / ctx.transform.scale;
-          qy = (qy - ctx.transform.translate.y) / ctx.transform.scale;
-        }
+        // A 2D search on an `isometric` chart looks where the points are drawn on the floor
+        const isometric = mode === 'quadtree' ? ctx.isometricMatrix : null;
+        const q = isometric
+          ? applyMatrix(isometric, { x: hit.x + panel.x, y: hit.y + panel.y })
+          : hit;
 
         // One tree per panel — panels share the scales, so their points would otherwise
         // occupy the same coordinates and the nearest could come from any of them
-        return quadtrees.get(panel.key)?.find(qx, qy, radius);
+        return quadtrees.get(panel.key)?.find(q.x, q.y, radius);
       }
 
       default:
@@ -520,56 +529,71 @@
     const xAccCtx = ctx.x;
     const yAccCtx = ctx.y;
     const projection = geo.projection;
-    const panels = ctx.facet.panels.map((panel) => [panel.key, panelData(panel)] as const);
+    // Only a 2D search measures across the floor — `quadtree-x` / `-y` are along a data axis
+    const isometric = m === 'quadtree' ? ctx.isometricMatrix : null;
+    const panels = ctx.facet.panels.map((panel) => [panel, panelData(panel)] as const);
+
+    const flatX = (d: any) => {
+      if (m === 'quadtree-y') return 0;
+      if (xAcc) {
+        const scaled = xScale(xAcc(d));
+        return typeof scaled === 'number' ? scaled : 0;
+      }
+      if (projection) {
+        const lat = xAccCtx(d);
+        const long = yAccCtx(d);
+        const geoValue = projection([lat, long]) ?? [0, 0];
+        return geoValue[0];
+      }
+      const value = xGet(d);
+      if (Array.isArray(value)) {
+        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
+        // Default to the max (typically the "target"/"end" endpoint); override
+        // via the `x` prop for explicit control.
+        return max(value);
+      }
+      return value;
+    };
+
+    const flatY = (d: any) => {
+      if (m === 'quadtree-x') return 0;
+      if (yAcc) {
+        const scaled = yScale(yAcc(d));
+        return typeof scaled === 'number' ? scaled : 0;
+      }
+      if (projection) {
+        const lat = xAccCtx(d);
+        const long = yAccCtx(d);
+        const geoValue = projection([lat, long]) ?? [0, 0];
+        return geoValue[1];
+      }
+      const value = yGet(d);
+      if (Array.isArray(value)) {
+        // `y` accessor with multiple properties — default to max endpoint.
+        return max(value);
+      }
+      return value;
+    };
 
     let cancelled = false;
     import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
       if (cancelled) return;
-      const build = (flatData: any[]) =>
-        d3Quadtree<[number, number]>()
-          .x((d) => {
-            if (m === 'quadtree-y') return 0;
-            if (xAcc) {
-              const scaled = xScale(xAcc(d));
-              return typeof scaled === 'number' ? scaled : 0;
-            }
-            if (projection) {
-              const lat = xAccCtx(d);
-              const long = yAccCtx(d);
-              const geoValue = projection([lat, long]) ?? [0, 0];
-              return geoValue[0];
-            }
-            const value = xGet(d);
-            if (Array.isArray(value)) {
-              // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
-              // Default to the max (typically the "target"/"end" endpoint); override
-              // via the `x` prop for explicit control.
-              return max(value);
-            }
-            return value;
-          })
-          .y((d) => {
-            if (m === 'quadtree-x') return 0;
-            if (yAcc) {
-              const scaled = yScale(yAcc(d));
-              return typeof scaled === 'number' ? scaled : 0;
-            }
-            if (projection) {
-              const lat = xAccCtx(d);
-              const long = yAccCtx(d);
-              const geoValue = projection([lat, long]) ?? [0, 0];
-              return geoValue[1];
-            }
-            const value = yGet(d);
-            if (Array.isArray(value)) {
-              // `y` accessor with multiple properties — default to max endpoint.
-              return max(value);
-            }
-            return value;
-          })
-          .addAll(flatData as [number, number][]);
+      const build = (flatData: any[], panel: Facet) => {
+        const tree = d3Quadtree<[number, number]>();
+        if (isometric) {
+          // Placed where they're drawn on the floor, so the nearest is the nearest on screen —
+          // foreshortening makes the two differ.  Pan / zoom is left out, as it scales every
+          // distance alike, so panning needn't rebuild the tree.
+          const at = (d: any) =>
+            applyMatrix(isometric, { x: flatX(d) + panel.x, y: flatY(d) + panel.y });
+          tree.x((d) => at(d).x).y((d) => at(d).y);
+        } else {
+          tree.x(flatX).y(flatY);
+        }
+        return tree.addAll(flatData as [number, number][]);
+      };
 
-      quadtrees = new Map(panels.map(([key, data]) => [key, build(data)]));
+      quadtrees = new Map(panels.map(([panel, data]) => [panel.key, build(data, panel)]));
     });
     return () => {
       cancelled = true;
@@ -918,7 +942,8 @@
         {/snippet}
       </Svg>
     {:else if ['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode) && debug}
-      <Svg pointerEvents={false}>
+      <!-- A 2D tree on an `isometric` chart is already laid out on the floor -->
+      <Svg pointerEvents={false} ignoreTransform={mode === 'quadtree' && !!ctx.isometricMatrix}>
         <ChartClipPath>
           <g class="lc-tooltip-quadtree-g">
             {#each quadtrees.values() as tree}

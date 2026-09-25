@@ -65,7 +65,7 @@
     center?: boolean | 'x' | 'y';
 
     /**
-     * Ignore TransformContext.
+     * Ignore TransformContext and the chart's `isometric` view.
      *
      * Useful to add static elements such as legends.
      *
@@ -290,18 +290,28 @@
     // apply padding translation
     context.translate(ctx.padding.left ?? 0, ctx.padding.top ?? 0);
 
-    let newTranslate: undefined | { x: number; y: number };
+    const isometric = ignoreTransform ? null : ctx.isometricMatrix;
 
     // apply centering or transform
     if (center) {
-      newTranslate = {
-        x: center === 'x' || center === true ? ctx.width / 2 : 0,
-        y: center === 'y' || center === true ? ctx.height / 2 : 0,
-      };
-      context.translate(newTranslate.x, newTranslate.y);
-    } else if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
-      context.translate(ctx.transform.translate.x, ctx.transform.translate.y);
-      context.scale(ctx.transform.scale, ctx.transform.scale);
+      // Centring happens on the floor, so a radial chart turns and tips with it
+      if (isometric) {
+        const { a, b, c, d, e, f } = isometric;
+        context.transform(a, b, c, d, e, f);
+      }
+      context.translate(
+        center === 'x' || center === true ? ctx.width / 2 : 0,
+        center === 'y' || center === true ? ctx.height / 2 : 0
+      );
+    } else {
+      if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
+        context.translate(ctx.transform.translate.x, ctx.transform.translate.y);
+        context.scale(ctx.transform.scale, ctx.transform.scale);
+      }
+      if (isometric) {
+        const { a, b, c, d, e, f } = isometric;
+        context.transform(a, b, c, d, e, f);
+      }
     }
 
     // Recursively render the component tree with proper save/restore scoping
@@ -417,7 +427,14 @@
   const canvasContext = createCanvasContext();
 
   $effect.pre(() => {
-    [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, ctx.transform.dragging];
+    [
+      ctx.height,
+      ctx.width,
+      ctx.containerHeight,
+      ctx.containerWidth,
+      ctx.transform.dragging,
+      ctx.isometricMatrix,
+    ];
     canvasContext.invalidate();
   });
 

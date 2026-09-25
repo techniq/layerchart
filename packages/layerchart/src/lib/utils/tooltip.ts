@@ -5,6 +5,7 @@ import { sortFunc } from '@layerstack/utils';
 import { isEqualValue } from './common.js';
 
 import { isScaleBand, type AnyScale } from './scales.svelte.js';
+import { applyMatrix, type AffineMatrix } from './isometric.js';
 import type { TooltipMode } from '$lib/components/tooltip/TooltipContext.svelte';
 
 /**
@@ -50,6 +51,8 @@ export type TooltipCoordContext = {
   yInterval?: TimeInterval | null;
   /** Present on a real `ChartState`; used to offset into the panel a row belongs to */
   facet?: { enabled: boolean; panels: Array<{ x: number; y: number; has(row: any): boolean }> };
+  /** Present on a real `ChartState`; where the layers' pan / zoom and `isometric` view move a point */
+  layerMatrix?: AffineMatrix | null;
 };
 
 /**
@@ -220,10 +223,13 @@ export function dataCoords(ctx: TooltipCoordContext, data: any) {
   // were in the first panel
   const panel = ctx.facet?.enabled ? ctx.facet.panels.find((p) => p.has(data)) : undefined;
 
-  return {
-    x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + ctx.padding.left + (panel?.x ?? 0), // prettier-ignore
-    y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + ctx.padding.top + (panel?.y ?? 0), // prettier-ignore
+  const plotPoint = {
+    x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + (panel?.x ?? 0),
+    y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + (panel?.y ?? 0),
   };
+  const { x, y } = ctx.layerMatrix ? applyMatrix(ctx.layerMatrix, plotPoint) : plotPoint;
+
+  return { x: x + ctx.padding.left, y: y + ctx.padding.top };
 }
 
 /** The subset of the chart context needed to match a row across facet panels */

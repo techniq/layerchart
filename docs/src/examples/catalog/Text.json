@@ -739,6 +739,13 @@
       "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-8} class=\"text-xs fill-surface-content\" />"
     },
     {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 35,
+      "line": "<Text value={s.key} dx={8} dy={4} class=\"text-xs fill-surface-content\" />"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -933,6 +940,13 @@
       "path": "/docs/components/Spline/label-using-start-end-snippets",
       "lineNumber": 44,
       "line": "<Text value=\"end\" verticalAnchor=\"middle\" dx={8} />"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 65,
+      "line": "<Text"
     },
     {
       "example": "multiple-series",
@@ -1166,5 +1180,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.583Z"
+  "updatedAt": "2026-09-25T04:42:18.603Z"
 }

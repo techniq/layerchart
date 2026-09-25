@@ -571,6 +571,13 @@
       "line": "<Legend"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 77,
+      "line": "<Legend placement=\"bottom\" />"
+    },
+    {
       "example": "parallel-coordinates",
       "component": "Spline",
       "path": "/docs/components/Spline/parallel-coordinates",
@@ -606,5 +613,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.939Z"
+  "updatedAt": "2026-09-25T04:42:18.051Z"
 }

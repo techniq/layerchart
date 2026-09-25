@@ -3454,6 +3454,34 @@
       "line": "<Axis placement=\"bottom\" />"
     },
     {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 35,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} />"
+    },
+    {
+      "example": "isometric-transition",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-transition",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "isometric-transition",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-transition",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -4868,6 +4896,34 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 69,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 70,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 57,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -5638,5 +5694,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:05.736Z"
+  "updatedAt": "2026-09-25T04:42:17.018Z"
 }

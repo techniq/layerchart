@@ -694,6 +694,82 @@
       ]
     },
     {
+      "name": "isometric-heatmap",
+      "title": "isometric heatmap",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 34,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 37,
+          "line": "<Cell"
+        }
+      ]
+    },
+    {
+      "name": "isometric-scatter",
+      "title": "isometric scatter",
+      "path": "/docs/components/Chart/isometric-scatter",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice isometric padding={24} height={400} />"
+        }
+      ]
+    },
+    {
+      "name": "isometric-transition",
+      "title": "isometric transition",
+      "path": "/docs/components/Chart/isometric-transition",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 29,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 42,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 43,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 45,
+          "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
+        }
+      ]
+    },
+    {
       "name": "mixed-marks-with-stack",
       "title": "mixed marks with stack",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -2488,6 +2564,20 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
       "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-transition",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-transition",
+      "lineNumber": 29,
       "line": "<Chart"
     },
     {
@@ -4682,6 +4772,20 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 56,
+      "line": "<Chart"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 45,
+      "line": "<Chart"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -5319,5 +5423,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:06.106Z"
+  "updatedAt": "2026-09-25T04:42:17.265Z"
 }

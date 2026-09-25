@@ -22,6 +22,7 @@ import { colorPropDataKey } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
+import { createIsometricMatrix, type AffineMatrix } from '$lib/utils/isometric.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { GeoState } from './geo.svelte.js';
@@ -1091,6 +1092,43 @@ export class ChartState<
 
   width = $derived(this.facetState.width);
   height = $derived(this.facetState.height);
+
+  /**
+   * The matrix every layer draws through when `isometric` is set, or `null` when the chart is
+   * flat.  Fitted to the whole plot area rather than one panel, so a faceted chart becomes a single
+   * floor of panels.
+   */
+  isometricMatrix = $derived.by((): AffineMatrix | null => {
+    const isometric = this.props.isometric;
+    if (!isometric) return null;
+    return createIsometricMatrix(
+      isometric === true ? {} : isometric,
+      this.box.width,
+      this.box.height
+    );
+  });
+
+  /**
+   * The matrix a layer draws through, relative to the plot area — the `canvas` transform's pan and
+   * zoom, then the `isometric` view — or `null` when neither applies.  Maps a point laid out by the
+   * scales to where it lands on screen, and inverted, a pointer back to the scales.
+   */
+  get layerMatrix(): AffineMatrix | null {
+    const isometric = this.isometricMatrix;
+    const transform = this.transform;
+    if (transform.mode !== 'canvas') return isometric;
+
+    const { scale: k, translate } = transform;
+    const m = isometric ?? { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
+    return {
+      a: k * m.a,
+      b: k * m.b,
+      c: k * m.c,
+      d: k * m.d,
+      e: k * m.e + translate.x,
+      f: k * m.f + translate.y,
+    };
+  }
 
   extents = $derived.by((): Extents => {
     const scaleLookup: Record<string, ScaleEntry> = {
