@@ -79,8 +79,9 @@
     debug?: boolean;
 
     /**
-     * Click handler for the tooltip
-     * @default () => {}
+     * Click handler for the tooltip. When set, every data point also gets a
+     * keyboard-focusable target: focusing one shows its tooltip, and Enter or
+     * Space calls this handler with that data point.
      */
     onclick?: (e: MouseEvent, { data }: { data: any }) => any;
 
@@ -142,6 +143,9 @@
   const geo = getGeoContext();
   const settings = getSettings();
 
+  // Hit size of the keyboard focus target drawn around each data point (WCAG 2.5.8 minimum)
+  const KEYBOARD_TARGET_SIZE = 24;
+
   let {
     ref: refProp = $bindable(),
     debug: debugProp,
@@ -150,7 +154,7 @@
     locked = false,
     touchEvents = 'pan-y',
     mode = 'manual',
-    onclick = () => {},
+    onclick,
     radius = Infinity,
     raiseTarget = false,
     state: stateProp = $bindable() as TooltipStateType<TData>,
@@ -753,6 +757,27 @@
   );
 
   /**
+   * Keyboard access to `onclick`: when a click handler is set, every data point gets an invisible
+   * focusable target.  Focusing one shows its tooltip, and Enter or Space activates the same
+   * handler a pointer click would.  Radial charts and `manual` mode wire their own events on their
+   * own shapes, so they are left out.
+   */
+  const keyboardTargetsEnabled = $derived(onclick != null && mode !== 'manual' && !ctx.radial);
+
+  /** Accessible name for a keyboard target — the position axis value, like the tooltip header */
+  function keyboardTargetLabel(d: any) {
+    const value = ctx.valueAxis === 'y' ? ctx.x?.(d) : ctx.y?.(d);
+    return value == null ? 'Data point' : `${value}`;
+  }
+
+  function onKeyboardTargetKeydown(e: KeyboardEvent) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    // Like a native button: Enter/Space synthesize the click the `onclick` handler receives
+    e.currentTarget?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+  }
+
+  /**
    * Whether a transform pointer gesture (drag or pinch) is in progress.  Pointer capture normally
    * retargets events to `TransformContext` mid-gesture, but events which arrive before capture is
    * established (ex. each new pointer of a pinch) would otherwise show/update the tooltip.
@@ -819,7 +844,7 @@
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
     if (triggerPointerEvents && tooltipState.data != null) {
-      onclick(e, { data: tooltipState.data });
+      onclick?.(e, { data: tooltipState.data });
     }
   }}
   onkeydown={() => {}}
@@ -858,7 +883,7 @@
               }
             }}
             onclick={(e, { data }) => {
-              onclick(e, { data });
+              onclick?.(e, { data });
             }}
             classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
           />
@@ -888,7 +913,7 @@
                       }
                     }}
                     onclick={(e) => {
-                      onclick(e, { data: rect?.data });
+                      onclick?.(e, { data: rect?.data });
                     }}
                   />
                 {/await}
@@ -909,7 +934,7 @@
                     }
                   }}
                   onclick={(e) => {
-                    onclick(e, { data: rect?.data });
+                    onclick?.(e, { data: rect?.data });
                   }}
                 />
               {/if}
@@ -934,6 +959,38 @@
             {/each}
           </g>
         </ChartClipPath>
+      </Svg>
+    {/if}
+
+    {#if keyboardTargetsEnabled}
+      <Svg pointerEvents={false}>
+        {#snippet children({ facet })}
+          <g class="lc-tooltip-keyboard-g">
+            {#each panelData(facet) as d (d)}
+              {@const coords = dataCoords(ctx, d)}
+              <rect
+                x={coords.x - KEYBOARD_TARGET_SIZE / 2 - ctx.padding.left - facet.x}
+                y={coords.y - KEYBOARD_TARGET_SIZE / 2 - ctx.padding.top - facet.y}
+                width={KEYBOARD_TARGET_SIZE}
+                height={KEYBOARD_TARGET_SIZE}
+                class="lc-tooltip-keyboard-target"
+                tabindex="0"
+                role="button"
+                aria-label={keyboardTargetLabel(d)}
+                onfocus={() => showTooltip({ data: d })}
+                onblur={() => hideTooltip()}
+                onkeydown={onKeyboardTargetKeydown}
+                onclick={(e) => {
+                  // Only ever reached from the keydown-synthesized click (this layer has
+                  // pointer-events disabled) — stop it so the container's own click handler,
+                  // which would call `onclick` a second time, does not fire
+                  e.stopPropagation();
+                  onclick?.(e, { data: d });
+                }}
+              />
+            {/each}
+          </g>
+        {/snippet}
       </Svg>
     {/if}
   </div>
@@ -977,6 +1034,15 @@
       &.debug {
         stroke: var(--color-danger);
         fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
+      }
+    }
+
+    :where(.lc-tooltip-keyboard-target) {
+      fill: transparent;
+
+      &:focus-visible {
+        stroke: currentColor;
+        fill: color-mix(in oklab, currentColor 10%, transparent);
       }
     }
   }
