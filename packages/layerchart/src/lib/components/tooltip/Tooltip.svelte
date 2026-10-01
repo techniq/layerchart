@@ -42,19 +42,22 @@
     /**
      * Offset added to `x` position
      *
-     * @default x === 'pointer' ? 10 : 0
+     * @default x === 'pointer' ? 10 : 0 (0 when following a finger)
      */
     xOffset?: number;
 
     /**
      * Offset added to `y` position
      *
-     * @default y === 'pointer' ? 10 : 0
+     * @default y === 'pointer' ? 10 : 0 (32 when following a finger)
      */
     yOffset?: number;
 
     /**
      * Align based on edge of tooltip
+     *
+     * When following a touch, defaults to `'bottom'` (with a larger `yOffset`) so the tooltip sits
+     * above the finger instead of under it.  Setting `anchor` opts out of this.
      *
      * @default 'top-left'
      */
@@ -193,7 +196,7 @@
   import { type Snippet } from 'svelte';
 
   let {
-    anchor = 'top-left',
+    anchor: anchorProp,
     classes = {},
     contained = 'container',
     fadeDuration = 100,
@@ -204,9 +207,9 @@
     data: dataProp,
     facetAll = false,
     x = 'pointer',
-    xOffset = x === 'pointer' || facetAll ? 10 : 0,
+    xOffset: xOffsetProp,
     y = 'pointer',
-    yOffset = y === 'pointer' || facetAll ? 10 : 0,
+    yOffset: yOffsetProp,
     children,
     rootRef: rootRefProp = $bindable(),
     props = {
@@ -226,6 +229,27 @@
   import Self from './Tooltip.svelte';
 
   const ctx = getChartContext();
+
+  /**
+   * Whether the tooltip is following a finger.  The default below-right placement puts it under
+   * the finger (and the hand behind it), so it moves above instead.
+   *
+   * Driven by the event rather than a `(pointer: coarse)` media query so a touchscreen laptop
+   * gets this for a tap and the usual placement for its mouse.
+   */
+  const isTouchPlacement = $derived(
+    anchorProp === undefined &&
+      ctx.tooltip.pointerType === 'touch' &&
+      ((x === 'pointer' && y === 'pointer') || facetAll)
+  );
+
+  const anchor = $derived<Placement>(anchorProp ?? (isTouchPlacement ? 'bottom' : 'top-left'));
+  const xOffset = $derived(
+    xOffsetProp ?? (isTouchPlacement ? 0 : x === 'pointer' || facetAll ? 10 : 0)
+  );
+  const yOffset = $derived(
+    yOffsetProp ?? (isTouchPlacement ? 32 : y === 'pointer' || facetAll ? 10 : 0)
+  );
 
   /** The row this tooltip shows — its own when given, else whatever the pointer resolved */
   const tooltipData = $derived(dataProp ?? ctx.tooltip.data);
@@ -383,7 +407,10 @@
           }
           if (
             (yAlign === 'end' || yAlign === 'center') &&
-            containerRect.top + rect.top < containerRect.top + ctx.padding.top
+            // Above a finger, rising past the chart beats flipping underneath it, and the portal
+            // keeps it from being clipped, so only the viewport limits it
+            containerRect.top + rect.top <
+              (isTouchPlacement ? 0 : containerRect.top + ctx.padding.top)
           ) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }

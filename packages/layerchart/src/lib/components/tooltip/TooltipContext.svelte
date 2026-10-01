@@ -404,7 +404,11 @@
   function applyTooltip(
     point: { x: number; y: number },
     tooltipData: any,
-    options: { source?: string | symbol | null; suppressed?: boolean } = {}
+    options: {
+      source?: string | symbol | null;
+      suppressed?: boolean;
+      pointerType?: string | null;
+    } = {}
   ) {
     if (tooltipData == null) {
       // Hide tooltip if unable to locate
@@ -420,6 +424,7 @@
     // Unset `source` means this chart's own pointer drove it
     tooltipState.source = options.source ?? ctx.id;
     tooltipState.suppressed = options.suppressed ?? false;
+    tooltipState.pointerType = options.pointerType ?? null;
     tooltipState.onChange?.();
     // Reverse series order for stacked charts to match visual stack order (bottom to top).
     // `ctx.isStacked` rather than the layout: an inferred stack that the marks declined draws
@@ -454,7 +459,12 @@
       raise(e.target as Element);
     }
 
-    applyTooltip(point, tooltipData);
+    applyTooltip(point, tooltipData, { pointerType: getPointerType(e) });
+  }
+
+  function getPointerType(e: PointerEvent | MouseEvent | TouchEvent) {
+    if ('pointerType' in e && e.pointerType) return e.pointerType;
+    return 'touches' in e ? 'touch' : 'mouse';
   }
 
   function showFromOptions({ point, value, data, source, suppressed }: TooltipShowOptions<TData>) {

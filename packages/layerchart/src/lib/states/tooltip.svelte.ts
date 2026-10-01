@@ -87,6 +87,14 @@ export class TooltipState<T = any> {
    */
   suppressed = $state(false);
 
+  /**
+   * The kind of pointer that drove the current tooltip (`'mouse'`, `'pen'`, or `'touch'`), or
+   * `null` when it was shown some other way (keyboard, a chart group, `show({ ... })`).
+   *
+   * `Tooltip` reads this to sit above a finger rather than underneath it.
+   */
+  pointerType = $state<string | null>(null);
+
   mode: TooltipMode;
 
   /**
