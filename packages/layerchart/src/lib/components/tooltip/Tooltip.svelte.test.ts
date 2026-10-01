@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import LineChart from '../charts/LineChart/LineChart.svelte';
+import TooltipLockHarness from '$lib/tests/TooltipLockHarness.svelte';
 
 const data = [
   { date: 0, value: 10 },
@@ -364,6 +365,69 @@ describe('Tooltip', () => {
           expect(tooltipLeft).toBeGreaterThanOrEqual(pointerViewportX - 1);
         }
       );
+    });
+  });
+
+  describe('locked', () => {
+    /** Dispatch the boundary events of a tap.  On touch the pointer leaves before `click` fires. */
+    function tap(el: Element) {
+      const rect = el.getBoundingClientRect();
+      const eventInit = {
+        bubbles: true,
+        clientX: rect.x + rect.width / 2,
+        clientY: rect.y + rect.height / 2,
+      };
+      el.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+      el.dispatchEvent(new PointerEvent('pointerleave', eventInit));
+      el.dispatchEvent(new MouseEvent('click', eventInit));
+    }
+
+    /**
+     * `pointerleave` schedules a hide, then `click` locks the tooltip.  The scheduled hide used to
+     * clear the data regardless, leaving the tooltip locked and empty, and the root `onclick`
+     * (which needs data) could no longer unlock it.
+     */
+    it('should keep a tooltip pinned by a tap, and hide it once unpinned', async () => {
+      const { container } = render(TooltipLockHarness, { props: { data } });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      const lockedEl = container.querySelector('.locked') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      await waitForTooltip(tooltipCtx, undefined, () => {
+        expect(getTooltipRoot()).not.toBeNull();
+      });
+
+      tap(tooltipCtx);
+      await expect.element(lockedEl).toHaveTextContent('true');
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(getTooltipRoot(), 'should stay visible while pinned').not.toBeNull();
+
+      // The pointer has already left when `click` unpins it, so nothing else would hide it
+      tap(tooltipCtx);
+      await expect.element(lockedEl).toHaveTextContent('false');
+      await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
+    });
+
+    it('should hide once unlocked if the pointer left while locked', async () => {
+      const { container, rerender } = render(TooltipLockHarness, { props: { data } });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      const lockedEl = container.querySelector('.locked') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      await waitForTooltip(tooltipCtx, undefined, () => {
+        expect(getTooltipRoot()).not.toBeNull();
+      });
+
+      // Click while hovering (mouse), then leave
+      tooltipCtx.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await expect.element(lockedEl).toHaveTextContent('true');
+      tooltipCtx.dispatchEvent(new PointerEvent('pointerleave', { bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(getTooltipRoot(), 'should stay visible while locked').not.toBeNull();
+
+      // Unlocked from outside the chart
+      rerender({ locked: false });
+      await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
     });
   });
 

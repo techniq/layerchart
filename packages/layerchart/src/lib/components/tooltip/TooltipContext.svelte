@@ -189,6 +189,23 @@
 
   let hideTimeoutId: ReturnType<typeof setTimeout>;
 
+  /**
+   * Whether a hide was ignored because the tooltip was locked (ex. the pointer left while pinned),
+   * and should be applied once it is unlocked.  Not reactive on purpose: only `locked` should
+   * re-run the effect below.
+   */
+  let hideWhenUnlocked = false;
+
+  $effect(() => {
+    // Apply a hide ignored while locked.  On touch, a tap dispatches `pointerleave` before
+    // `click`, so unpinning from `onclick` would otherwise leave the tooltip visible (but
+    // unlocked) with nothing left to hide it.
+    if (!locked && hideWhenUnlocked) {
+      hideWhenUnlocked = false;
+      hideTooltip();
+    }
+  });
+
   function resolveTooltipSeriesKey(series: any, seriesTooltipData: any) {
     if (
       mode === 'manual' &&
@@ -222,6 +239,7 @@
     if (hideTimeoutId) {
       clearTimeout(hideTimeoutId);
     }
+    hideWhenUnlocked = false;
 
     // Ignore while locked (keep current position / data)
     return !locked;
@@ -476,7 +494,8 @@
 
   function hideTooltip() {
     if (locked) {
-      // Ignore (keep open)
+      // Ignore (keep open) until unlocked
+      hideWhenUnlocked = true;
       return;
     }
 
@@ -486,6 +505,13 @@
     // to allow tweening (ex. moving between bands/bars)
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
+      if (locked) {
+        // Locked since this hide was scheduled (ex. tap to pin on touch, where `pointerleave`
+        // precedes `click`).  Clearing the data now would leave it locked with nothing to show,
+        // and the root `onclick` (which needs data) could no longer unlock it.
+        hideWhenUnlocked = true;
+        return;
+      }
       if (!tooltipState.isHoveringTooltipArea && !tooltipState.isHoveringTooltipContent) {
         tooltipState.data = null;
         // This chart cleared its own tooltip — attributing the clear to it is what lets a group
