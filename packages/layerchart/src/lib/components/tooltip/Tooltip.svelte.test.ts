@@ -278,6 +278,60 @@ describe('Tooltip', () => {
         }
       );
     });
+
+    /**
+     * A start-aligned tooltip that doesn't fit on the right flips to the left of the pointer, but
+     * nothing checked the left edge after the flip, so a tooltip wider than about half the chart
+     * opened past it.
+     */
+    it.each([
+      { portal: true, label: 'portaled' },
+      { portal: false, label: 'inline' },
+    ])('should keep a flipped tooltip inside the left edge ($label)', async ({ portal }) => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { portal, props: { root: { style: 'width: 300px' } } } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      // Too close to the right edge to fit on the right, and to the left edge once flipped
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRect = getTooltipRoot(portal ? document.body : container)!.getBoundingClientRect(); // prettier-ignore
+          expect(tooltipRect.left).toBeGreaterThanOrEqual(ctxRect.left - 1);
+          expect(tooltipRect.right).toBeLessThanOrEqual(ctxRect.left + 400);
+        }
+      );
+    });
+
+    it('should keep a flipped tooltip inside the top edge', async () => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { props: { root: { style: 'height: 220px' } } } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRect = getTooltipRoot()!.getBoundingClientRect();
+          expect(tooltipRect.top).toBeGreaterThanOrEqual(ctxRect.top - 1);
+        }
+      );
+    });
   });
 
   describe('contained="window"', () => {
@@ -331,6 +385,40 @@ describe('Tooltip', () => {
           const tooltipTop = parseFloat(tooltipRoot.style.top);
           // Tooltip should not overflow the bottom of the viewport
           expect(tooltipTop + tooltipRoot.offsetHeight).toBeLessThanOrEqual(window.innerHeight + 1);
+        }
+      );
+    });
+
+    it('should keep a flipped tooltip inside the left side of the viewport', async () => {
+      // Pointer near the chart's left edge, with a tooltip too wide to fit on its right in the
+      // viewport, and on its left once flipped
+      const pointerOffset = 30;
+      const width = window.innerWidth - pointerOffset;
+
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: {
+            tooltip: {
+              root: {
+                contained: 'window' as const,
+                props: { root: { style: `width: ${width}px` } },
+              },
+            },
+          },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.left + pointerOffset, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRect = getTooltipRoot()!.getBoundingClientRect();
+          expect(tooltipRect.left).toBeGreaterThanOrEqual(-1);
         }
       );
     });
