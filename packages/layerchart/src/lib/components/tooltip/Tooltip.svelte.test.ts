@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import LineChart from '../charts/LineChart/LineChart.svelte';
+import TooltipLockHarness from '$lib/tests/TooltipLockHarness.svelte';
 
 const data = [
   { date: 0, value: 10 },
@@ -277,6 +278,60 @@ describe('Tooltip', () => {
         }
       );
     });
+
+    /**
+     * A start-aligned tooltip that doesn't fit on the right flips to the left of the pointer, but
+     * nothing checked the left edge after the flip, so a tooltip wider than about half the chart
+     * opened past it.
+     */
+    it.each([
+      { portal: true, label: 'portaled' },
+      { portal: false, label: 'inline' },
+    ])('should keep a flipped tooltip inside the left edge ($label)', async ({ portal }) => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { portal, props: { root: { style: 'width: 300px' } } } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      // Too close to the right edge to fit on the right, and to the left edge once flipped
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRect = getTooltipRoot(portal ? document.body : container)!.getBoundingClientRect(); // prettier-ignore
+          expect(tooltipRect.left).toBeGreaterThanOrEqual(ctxRect.left - 1);
+          expect(tooltipRect.right).toBeLessThanOrEqual(ctxRect.left + 400);
+        }
+      );
+    });
+
+    it('should keep a flipped tooltip inside the top edge', async () => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { props: { root: { style: 'height: 220px' } } } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRect = getTooltipRoot()!.getBoundingClientRect();
+          expect(tooltipRect.top).toBeGreaterThanOrEqual(ctxRect.top - 1);
+        }
+      );
+    });
   });
 
   describe('contained="window"', () => {
@@ -333,6 +388,40 @@ describe('Tooltip', () => {
         }
       );
     });
+
+    it('should keep a flipped tooltip inside the left side of the viewport', async () => {
+      // Pointer near the chart's left edge, with a tooltip too wide to fit on its right in the
+      // viewport, and on its left once flipped
+      const pointerOffset = 30;
+      const width = window.innerWidth - pointerOffset;
+
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: {
+            tooltip: {
+              root: {
+                contained: 'window' as const,
+                props: { root: { style: `width: ${width}px` } },
+              },
+            },
+          },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.left + pointerOffset, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRect = getTooltipRoot()!.getBoundingClientRect();
+          expect(tooltipRect.left).toBeGreaterThanOrEqual(-1);
+        }
+      );
+    });
   });
 
   describe('contained={false}', () => {
@@ -364,6 +453,69 @@ describe('Tooltip', () => {
           expect(tooltipLeft).toBeGreaterThanOrEqual(pointerViewportX - 1);
         }
       );
+    });
+  });
+
+  describe('locked', () => {
+    /** Dispatch the boundary events of a tap.  On touch the pointer leaves before `click` fires. */
+    function tap(el: Element) {
+      const rect = el.getBoundingClientRect();
+      const eventInit = {
+        bubbles: true,
+        clientX: rect.x + rect.width / 2,
+        clientY: rect.y + rect.height / 2,
+      };
+      el.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+      el.dispatchEvent(new PointerEvent('pointerleave', eventInit));
+      el.dispatchEvent(new MouseEvent('click', eventInit));
+    }
+
+    /**
+     * `pointerleave` schedules a hide, then `click` locks the tooltip.  The scheduled hide used to
+     * clear the data regardless, leaving the tooltip locked and empty, and the root `onclick`
+     * (which needs data) could no longer unlock it.
+     */
+    it('should keep a tooltip pinned by a tap, and hide it once unpinned', async () => {
+      const { container } = render(TooltipLockHarness, { props: { data } });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      const lockedEl = container.querySelector('.locked') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      await waitForTooltip(tooltipCtx, undefined, () => {
+        expect(getTooltipRoot()).not.toBeNull();
+      });
+
+      tap(tooltipCtx);
+      await expect.element(lockedEl).toHaveTextContent('true');
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(getTooltipRoot(), 'should stay visible while pinned').not.toBeNull();
+
+      // The pointer has already left when `click` unpins it, so nothing else would hide it
+      tap(tooltipCtx);
+      await expect.element(lockedEl).toHaveTextContent('false');
+      await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
+    });
+
+    it('should hide once unlocked if the pointer left while locked', async () => {
+      const { container, rerender } = render(TooltipLockHarness, { props: { data } });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      const lockedEl = container.querySelector('.locked') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      await waitForTooltip(tooltipCtx, undefined, () => {
+        expect(getTooltipRoot()).not.toBeNull();
+      });
+
+      // Click while hovering (mouse), then leave
+      tooltipCtx.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await expect.element(lockedEl).toHaveTextContent('true');
+      tooltipCtx.dispatchEvent(new PointerEvent('pointerleave', { bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(getTooltipRoot(), 'should stay visible while locked').not.toBeNull();
+
+      // Unlocked from outside the chart
+      rerender({ locked: false });
+      await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
     });
   });
 

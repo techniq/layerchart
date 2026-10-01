@@ -238,6 +238,15 @@
     return value + (align === 'end' ? -additionalOffset : additionalOffset) - alignOffset;
   }
 
+  /**
+   * Keep a flipped tooltip within `[min, max]`, as flipping to the other side can overflow that
+   * side instead (ex. a wide tooltip on a narrow chart).  `min` (the left/top edge) wins when the
+   * tooltip doesn't fit either way.
+   */
+  function clampToEdges(value: number, min: number, max: number) {
+    return Math.max(min, Math.min(value, max));
+  }
+
   const isPortaled = $derived(
     typeof portalProp === 'boolean' ? portalProp : portalProp?.enabled !== false
   );
@@ -361,6 +370,7 @@
           ) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
+          rect.left = clampToEdges(rect.left, ctx.padding.left, containerRect.width - tooltipWidth);
         }
         rect.right = rect.left + tooltipWidth;
 
@@ -377,6 +387,7 @@
           ) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
+          rect.top = clampToEdges(rect.top, ctx.padding.top, containerRect.height - tooltipHeight);
         }
         rect.bottom = rect.top + tooltipHeight;
       } else {
@@ -389,6 +400,7 @@
           if ((xAlign === 'end' || xAlign === 'center') && rect.left < ctx.padding.left) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
+          rect.left = clampToEdges(rect.left, ctx.padding.left, ctx.containerWidth - tooltipWidth);
         }
         rect.right = rect.left + tooltipWidth;
 
@@ -399,6 +411,7 @@
           if ((yAlign === 'end' || yAlign === 'center') && rect.top < ctx.padding.top) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
+          rect.top = clampToEdges(rect.top, ctx.padding.top, ctx.containerHeight - tooltipHeight);
         }
         rect.bottom = rect.top + tooltipHeight;
       }
@@ -415,6 +428,11 @@
           if ((xAlign === 'end' || xAlign === 'center') && containerRect.left + rect.left < 0) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
+          rect.left = clampToEdges(
+            rect.left,
+            -containerRect.left,
+            window.innerWidth - containerRect.left - tooltipWidth
+          );
         }
         rect.right = rect.left + tooltipWidth;
 
@@ -428,6 +446,11 @@
           if ((yAlign === 'end' || yAlign === 'center') && containerRect.top + rect.top < 0) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
+          rect.top = clampToEdges(
+            rect.top,
+            -containerRect.top,
+            window.innerHeight - containerRect.top - tooltipHeight
+          );
         }
         rect.bottom = rect.top + tooltipHeight;
       } else {
@@ -450,6 +473,11 @@
             ) {
               rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
             }
+            rect.left = clampToEdges(
+              rect.left,
+              -parentViewportRect.left,
+              window.innerWidth - parentViewportRect.left - tooltipWidth
+            );
           }
           rect.right = rect.left + tooltipWidth;
 
@@ -466,6 +494,11 @@
             ) {
               rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
             }
+            rect.top = clampToEdges(
+              rect.top,
+              -parentViewportRect.top,
+              window.innerHeight - parentViewportRect.top - tooltipHeight
+            );
           }
           rect.bottom = rect.top + tooltipHeight;
         }
