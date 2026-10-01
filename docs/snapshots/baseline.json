@@ -2010,7 +2010,7 @@
       "elements": 151
     },
     "ForceSimulation/collision-detection": {
-      "hash": "17551b2b7e0db6fe",
+      "hash": "c7d519b60cc7ac47",
       "elements": 205,
       "settled": false,
       "unstable": true
@@ -2021,13 +2021,13 @@
       "settled": false
     },
     "ForceSimulation/games-industry-layoffs": {
-      "hash": "6a614b524f3dcf37",
+      "hash": "240425ddad7e93a6",
       "elements": 500,
       "settled": false,
       "unstable": true
     },
     "ForceSimulation/graph-drag": {
-      "hash": "a96eb26be7ab304e",
+      "hash": "1bd6a025a4e9c554",
       "elements": 37,
       "settled": false,
       "unstable": true
@@ -2038,7 +2038,7 @@
       "settled": false
     },
     "ForceSimulation/group": {
-      "hash": "9a455638c1372f1d",
+      "hash": "a36b531c6b1aabc0",
       "elements": 39,
       "settled": false,
       "unstable": true
@@ -2054,7 +2054,7 @@
       "settled": false
     },
     "ForceSimulation/text": {
-      "hash": "43fe657875a38878",
+      "hash": "4b09bd550231a017",
       "elements": 252,
       "settled": false,
       "unstable": true
@@ -2081,8 +2081,8 @@
       "elements": 58
     },
     "GeoCircle/earthquake-globe": {
-      "hash": "679d4cea417b5136",
-      "elements": 76
+      "hash": "f9fbc95a12914632",
+      "elements": 80
     },
     "GeoCircle/playground": {
       "hash": "c173658e91d8f7d0",
@@ -2133,7 +2133,7 @@
       "elements": 79
     },
     "GeoPath/interpolating-projections": {
-      "hash": "67a5b986f6893b34",
+      "hash": "cae67449f87faa00",
       "elements": 9,
       "settled": false,
       "unstable": true
@@ -2267,17 +2267,17 @@
       "elements": 10
     },
     "GeoRaster/projections": {
-      "hash": "db2af2bb51bc2a84",
-      "elements": 187,
-      "unstable": true
+      "hash": "0b7907912facc9bf",
+      "elements": 187
     },
     "GeoRaster/textures": {
       "hash": "7439cddb6117196b",
       "elements": 10
     },
     "GeoRaster/tiles-globe": {
-      "hash": "2043b1d0a59d6f65",
-      "elements": 166
+      "hash": "3842daf168db0627",
+      "elements": 166,
+      "unstable": true
     },
     "GeoSpline/draggable-globe": {
       "hash": "6922f066972b458b",
