@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, onTestFinished, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import LineChart from '../charts/LineChart/LineChart.svelte';
@@ -22,12 +22,17 @@ const baseProps = {
 };
 
 /** Dispatch pointer events to trigger the tooltip on a given element */
-function triggerTooltip(el: Element, position?: { clientX: number; clientY: number }) {
+function triggerTooltip(
+  el: Element,
+  position?: { clientX: number; clientY: number },
+  pointerType?: string
+) {
   const rect = el.getBoundingClientRect();
   const eventInit = {
     bubbles: true,
     clientX: position?.clientX ?? rect.x + rect.width / 2,
     clientY: position?.clientY ?? rect.y + rect.height / 2,
+    pointerType,
   };
   el.dispatchEvent(new PointerEvent('pointerenter', eventInit));
   el.dispatchEvent(new PointerEvent('pointermove', eventInit));
@@ -45,10 +50,11 @@ function triggerTooltip(el: Element, position?: { clientX: number; clientY: numb
 async function waitForTooltip(
   el: Element,
   position: { clientX: number; clientY: number } | undefined,
-  assertion: () => void
+  assertion: () => void,
+  pointerType?: string
 ) {
   await vi.waitFor(() => {
-    triggerTooltip(el, position);
+    triggerTooltip(el, position, pointerType);
     assertion();
   });
 }
@@ -65,6 +71,25 @@ beforeEach(() => {
 function getTooltipRoot(target: ParentNode = document.body) {
   const roots = target.querySelectorAll<HTMLElement>('.lc-tooltip-root');
   return roots.length ? roots[roots.length - 1] : null;
+}
+
+/**
+ * Pinch-zoom shrinks and pans the visible viewport inside the layout viewport, which
+ * `innerWidth` / `innerHeight` don't reflect.  Stubbed, since a test can't pinch.
+ */
+function stubVisualViewport(rect: { left: number; top: number; width: number; height: number }) {
+  vi.stubGlobal(
+    'visualViewport',
+    Object.assign(new EventTarget(), {
+      offsetLeft: rect.left,
+      offsetTop: rect.top,
+      width: rect.width,
+      height: rect.height,
+    })
+  );
+  onTestFinished(() => {
+    vi.unstubAllGlobals();
+  });
 }
 
 describe('Tooltip', () => {
@@ -332,6 +357,48 @@ describe('Tooltip', () => {
         }
       );
     });
+    it('should stay within the visible viewport when pinch-zoomed', async () => {
+      const { container } = render(LineChart, { props: baseProps });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+
+      // Zoomed into the left part of the page, its right edge partway across the chart
+      const visibleRight = ctxRect.left + ctxRect.width / 2;
+      stubVisualViewport({ left: 0, top: 0, width: visibleRight, height: window.innerHeight });
+
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: visibleRight - 10, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          const tooltipLeft = parseFloat(tooltipRoot.style.left);
+          expect(tooltipLeft + tooltipRoot.offsetWidth).toBeLessThanOrEqual(visibleRight + 1);
+        }
+      );
+    });
+
+    it('should stay beside a chart that is scrolled out of view', async () => {
+      const { container } = render(LineChart, { props: baseProps });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+
+      // Scrolled well past the chart (ex. one driven by a chart group)
+      stubVisualViewport({ left: 0, top: ctxRect.bottom + 500, width: 400, height: 400 });
+
+      await waitForTooltip(tooltipCtx, undefined, () => {
+        const tooltipRoot = getTooltipRoot()!;
+        expect(tooltipRoot).not.toBeNull();
+
+        const tooltipTop = parseFloat(tooltipRoot.style.top);
+        expect(tooltipTop + tooltipRoot.offsetHeight).toBeLessThanOrEqual(ctxRect.bottom + 1);
+      });
+    });
   });
 
   describe('contained="window"', () => {
@@ -358,6 +425,35 @@ describe('Tooltip', () => {
           const tooltipLeft = parseFloat(tooltipRoot.style.left);
           // Tooltip should not overflow the right side of the viewport
           expect(tooltipLeft + tooltipRoot.offsetWidth).toBeLessThanOrEqual(window.innerWidth + 1);
+        }
+      );
+    });
+
+    it('should stay within the visible viewport when pinch-zoomed', async () => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { contained: 'window' as const } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+
+      // Zoomed into the left part of the page, its right edge partway across the chart
+      const visibleRight = ctxRect.left + ctxRect.width / 2;
+      stubVisualViewport({ left: 0, top: 0, width: visibleRight, height: window.innerHeight });
+
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: visibleRight - 10, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          const tooltipLeft = parseFloat(tooltipRoot.style.left);
+          expect(tooltipLeft + tooltipRoot.offsetWidth).toBeLessThanOrEqual(visibleRight + 1);
         }
       );
     });
@@ -516,6 +612,87 @@ describe('Tooltip', () => {
       // Unlocked from outside the chart
       rerender({ locked: false });
       await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
+    });
+  });
+
+  describe('touch', () => {
+    it.each(['touch', 'pen'])('should sit centered above a %s', async (pointerType) => {
+      const { container } = render(LineChart, { props: baseProps });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      const pointer = { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.bottom - 20 };
+      await waitForTooltip(
+        tooltipCtx,
+        pointer,
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          const top = parseFloat(tooltipRoot.style.top);
+          const left = parseFloat(tooltipRoot.style.left);
+          expect(top + tooltipRoot.offsetHeight).toBeCloseTo(pointer.clientY - 32, 0);
+          expect(left + tooltipRoot.offsetWidth / 2).toBeCloseTo(pointer.clientX, 0);
+        },
+        pointerType
+      );
+    });
+
+    it('should rise above the chart rather than flip under a finger near the top', async () => {
+      // Room above the chart, so only the container (not the viewport) would force a flip
+      document.body.style.paddingTop = '200px';
+      onTestFinished(() => {
+        document.body.style.paddingTop = '';
+      });
+
+      const { container } = render(LineChart, { props: baseProps });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      const pointer = { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + 5 };
+      await waitForTooltip(
+        tooltipCtx,
+        pointer,
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          const top = parseFloat(tooltipRoot.style.top);
+          expect(top + tooltipRoot.offsetHeight).toBeCloseTo(pointer.clientY - 32, 0);
+        },
+        'touch'
+      );
+    });
+
+    it('should keep an explicit `anchor`', async () => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { anchor: 'top-left' as const } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      const pointer = { clientX: ctxRect.left + 20, clientY: ctxRect.top + 20 };
+      await waitForTooltip(
+        tooltipCtx,
+        pointer,
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          expect(parseFloat(tooltipRoot.style.top)).toBeCloseTo(pointer.clientY + 10, 0);
+          expect(parseFloat(tooltipRoot.style.left)).toBeCloseTo(pointer.clientX + 10, 0);
+        },
+        'touch'
+      );
     });
   });
 
