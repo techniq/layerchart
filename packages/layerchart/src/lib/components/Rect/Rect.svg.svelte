@@ -6,6 +6,7 @@
   import type { SVGAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import { polygonPath } from '$lib/utils/isometric.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
   let {
@@ -18,6 +19,8 @@
     height,
     rx: rxProp,
     ry: ryProp,
+    // Not an SVG attribute — consumed by `RectState`
+    z,
     children,
     ...rest
   }: RectProps = $props();
@@ -31,6 +34,7 @@
         height,
         rx: rxProp,
         ry: ryProp,
+        z,
         ...rest,
       }) as RectProps
   );
@@ -62,7 +66,37 @@
     {@const resolvedOpacity = resolveStyleProp(rest.opacity, item.d)}
     {@const resolvedClass = resolveStyleProp(rest.class, item.d)}
     {@const pathData = c.roundedRectPath(item.x, item.y, item.width, item.height)}
-    {#if pathData}
+    {#if item.faces}
+      <!-- Stood up into a box on an isometric floor: the sides facing the viewer, then the top -->
+      <g class="lc-rect-box">
+        {#each item.faces as face}
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <path
+            {...rest as unknown as SVGAttributes<SVGPathElement>}
+            d={polygonPath(face.points)}
+            fill={resolvedFill}
+            fill-opacity={resolvedFillOpacity}
+            stroke={resolvedStroke}
+            stroke-opacity={resolvedStrokeOpacity}
+            stroke-width={resolvedStrokeWidth}
+            opacity={resolvedOpacity}
+            stroke-dasharray={c.dashArrayAttr}
+            class={cls('lc-rect', `lc-rect-${face.kind}`, resolvedClass)}
+          />
+          {#if face.shade}
+            <path
+              d={polygonPath(face.points)}
+              fill="black"
+              fill-opacity={face.shade}
+              opacity={resolvedOpacity}
+              pointer-events="none"
+              class="lc-rect-shade"
+            />
+          {/if}
+        {/each}
+      </g>
+    {:else if pathData}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <path

@@ -22,9 +22,10 @@ import { colorPropDataKey } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
-import { createIsometricMatrix, type AffineMatrix } from '$lib/utils/isometric.js';
+import { createIsometricMatrix, isometricLift, type AffineMatrix } from '$lib/utils/isometric.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
+import { defaultSettings, type Settings } from './settings.svelte.js';
 import { GeoState } from './geo.svelte.js';
 import { FacetState, facetKey } from './facet.svelte.js';
 import type { TransformState } from './transform.svelte.js';
@@ -396,8 +397,9 @@ export class ChartState<
   // Meta data - reactive to props.meta changes
   meta = $derived(this.props.meta ?? {});
 
-  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>) {
+  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>, settings?: Settings) {
     this.props = props;
+    if (settings) this.#settings = settings;
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
 
@@ -1093,19 +1095,46 @@ export class ChartState<
   width = $derived(this.facetState.width);
   height = $derived(this.facetState.height);
 
+  #settings: Settings = defaultSettings;
+
+  /** `isometric` from the prop, else the chart's settings — an explicit `false` still opts out */
+  #isometric = $derived(this.props.isometric ?? this.#settings.isometric);
+
   /**
    * The matrix every layer draws through when `isometric` is set, or `null` when the chart is
    * flat.  Fitted to the whole plot area rather than one panel, so a faceted chart becomes a single
    * floor of panels.
    */
   isometricMatrix = $derived.by((): AffineMatrix | null => {
-    const isometric = this.props.isometric;
+    const isometric = this.#isometric;
     if (!isometric) return null;
     return createIsometricMatrix(
       isometric === true ? {} : isometric,
       this.box.width,
-      this.box.height
+      this.box.height,
+      this.zDepth
     );
+  });
+
+  /**
+   * Where raising a point by one pixel of `z` moves it on the flat plot, or `null` when the chart
+   * is flat and heights don't show.  Marks lift by offsetting along this before the layer draws
+   * them through `isometricMatrix`, which turns the offset straight up the screen.
+   */
+  isometricLift = $derived.by(() => {
+    const isometric = this.#isometric;
+    if (!isometric) return null;
+    return isometricLift(isometric === true ? {} : isometric);
+  });
+
+  /**
+   * The tallest height (in pixels) anything rises off the floor — the top of the `z` range when
+   * the chart has a `z` — so the isometric fit leaves room above the floor.
+   */
+  zDepth = $derived.by(() => {
+    if (this.props.z == null) return 0;
+    const range = this.zScale.range().filter((v: unknown) => typeof v === 'number') as number[];
+    return range.length ? Math.max(0, ...range) : 0;
   });
 
   /**
@@ -1475,7 +1504,19 @@ export class ChartState<
     return this._targetYDomain;
   });
 
-  zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
+  /**
+   * Heights measure up from the floor, so a `z` domain taken from the data reaches down to `0` —
+   * otherwise the smallest value would sit flat on the floor rather than rise by its size.
+   */
+  zDomain = $derived.by(() => {
+    const domain = calcDomain('z', this.extents, this.props.zDomain);
+    if (this.props.zDomain !== undefined || !Array.isArray(domain) || domain.length !== 2) {
+      return domain;
+    }
+    const [min, max] = domain;
+    if (typeof min !== 'number' || typeof max !== 'number') return domain;
+    return [Math.min(0, min), Math.max(0, max)];
+  });
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
   /**

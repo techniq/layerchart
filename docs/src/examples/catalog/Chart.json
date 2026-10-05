@@ -694,6 +694,38 @@
       ]
     },
     {
+      "name": "isometric-columns",
+      "title": "isometric columns",
+      "path": "/docs/components/Chart/isometric-columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 35,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 38,
+          "line": "<Cell"
+        }
+      ]
+    },
+    {
       "name": "isometric-heatmap",
       "title": "isometric heatmap",
       "path": "/docs/components/Chart/isometric-heatmap",
@@ -716,12 +748,44 @@
         {
           "component": "Axis",
           "lineNumber": 35,
-          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ upright: true }} />"
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
         },
         {
           "component": "Cell",
           "lineNumber": 37,
           "line": "<Cell"
+        }
+      ]
+    },
+    {
+      "name": "isometric-playground",
+      "title": "isometric playground",
+      "path": "/docs/components/Chart/isometric-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 65,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 66,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 67,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 69,
+          "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
         }
       ]
     },
@@ -734,38 +798,6 @@
           "component": "ScatterChart",
           "lineNumber": 9,
           "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice isometric padding={24} height={400} />"
-        }
-      ]
-    },
-    {
-      "name": "isometric-transition",
-      "title": "isometric transition",
-      "path": "/docs/components/Chart/isometric-transition",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 36,
-          "line": "<Chart"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 55,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Grid",
-          "lineNumber": 56,
-          "line": "<Grid x y bandAlign=\"between\" />"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 57,
-          "line": "<Axis placement=\"bottom\" tickLabelProps={{ upright }} />"
-        },
-        {
-          "component": "Cell",
-          "lineNumber": 59,
-          "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
         }
       ]
     },
@@ -2567,6 +2599,13 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
@@ -2574,10 +2613,10 @@
       "line": "<Chart"
     },
     {
-      "example": "isometric-transition",
+      "example": "isometric-playground",
       "component": "Chart",
-      "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 36,
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 44,
       "line": "<Chart"
     },
     {
@@ -5423,5 +5462,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-10-05T16:56:44.760Z"
+  "updatedAt": "2026-10-05T19:24:20.315Z"
 }

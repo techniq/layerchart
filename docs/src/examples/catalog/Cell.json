@@ -179,6 +179,13 @@
       "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 38,
+      "line": "<Cell"
+    },
+    {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
@@ -186,12 +193,12 @@
       "line": "<Cell"
     },
     {
-      "example": "isometric-transition",
+      "example": "isometric-playground",
       "component": "Chart",
-      "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 59,
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 69,
       "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
     }
   ],
-  "updatedAt": "2026-10-05T16:56:44.735Z"
+  "updatedAt": "2026-10-05T19:24:20.287Z"
 }

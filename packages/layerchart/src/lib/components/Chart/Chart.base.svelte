@@ -79,8 +79,11 @@
   // nested rest/spread proxies). Brush selections are supplied as getters so
   // the chart's domain calculation can layer them on top of `props.xDomain`
   // / `props.yDomain` at the read sites.
+  const settings = getSettings();
+
   const chartState = new ChartState<TData, XScale, YScale>(
-    props as ChartPropsWithoutHTML<TData, XScale, YScale>
+    props as ChartPropsWithoutHTML<TData, XScale, YScale>,
+    settings
   );
 
   let ref = $state<HTMLElement>();
@@ -104,7 +107,6 @@
     () => groupOptions
   );
 
-  const settings = getSettings();
   $effect(() => {
     settings.debug = debug;
   });

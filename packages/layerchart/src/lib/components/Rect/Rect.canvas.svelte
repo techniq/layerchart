@@ -5,7 +5,8 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
-  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { renderPathData, renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { polygonPath } from '$lib/utils/isometric.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
@@ -80,6 +81,20 @@
           resolvedOpacity,
           resolvedClass
         );
+        if (item.faces) {
+          // Stood up into a box on an isometric floor: the sides facing the viewer, then the top
+          for (const face of item.faces) {
+            const pathData = polygonPath(face.points);
+            renderPathData(ctx, pathData, styleOpts);
+            // Shading is only for the eye — the hit canvas needs each face its flat hit colour
+            if (face.shade && !styleOverrides) {
+              renderPathData(ctx, pathData, {
+                styles: { fill: 'black', fillOpacity: face.shade, opacity: resolvedOpacity },
+              });
+            }
+          }
+          continue;
+        }
         renderRect(
           ctx,
           {

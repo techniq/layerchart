@@ -23,6 +23,8 @@ import {
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { boxFaces, type BoxFace } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 
@@ -110,6 +112,17 @@ export type RectPropsWithoutHTML = {
   y1?: DataProp;
 
   /**
+   * Height to raise the rectangle into a box on an `isometric` chart (data mode).  Defaults to the
+   * chart's `z`, so `<Chart z="value">` stands every rect up off the floor.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height
+   *
+   * A chart `z` returning `[start, end]` floats the box between the two.  No effect on a flat chart.
+   */
+  z?: DataProp;
+
+  /**
    * Insets to shrink the rendered rectangle.
    * Supports `all`, `x`, `y`, `left`, `right`, `top`, `bottom`.
    */
@@ -195,6 +208,29 @@ export class RectState {
   chartCtx: ChartState = getChartContext();
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * Whether the rects stand up as boxes — data mode, a height to raise them by, and a layer that
+   * draws the isometric floor.  Seen from directly above (or in a flat layer) they stay flat.
+   */
+  extruded = $derived.by(() => {
+    if (!this.dataMode || !this.#layerIsometric()) return false;
+    const lift = this.chartCtx.isometricLift;
+    if (!lift || (lift.x === 0 && lift.y === 0)) return false;
+    return this.#props.z != null || this.chartCtx.props.z != null;
+  });
+
+  /** A box's base and top, in pixels off the floor */
+  #resolveZ(d: any): { z0: number; z1: number } {
+    const props = this.#props;
+    if (props.z != null) {
+      return { z0: 0, z1: resolveDataProp(props.z, d, this.chartCtx.zScale, 0) };
+    }
+    const value = this.chartCtx.zGet(d);
+    if (Array.isArray(value)) return { z0: Number(value[0]) || 0, z1: Number(value[1]) || 0 };
+    return { z0: 0, z1: Number(value) || 0 };
+  }
 
   // Data mode detection
   hasEdgeProps = $derived(
@@ -212,7 +248,7 @@ export class RectState {
     if (!this.dataMode) return [];
     const props = this.#props;
     const keyFn = props.key ?? defaultKey;
-    return this.#resolvedData.map((d, i) => {
+    const items = this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
       const resolved = this.#resolveRect(d);
       const animated = this.#dataMotionMap?.get(key);
@@ -223,11 +259,38 @@ export class RectState {
         y: animated?.y ?? resolved.y,
         width: animated?.width ?? resolved.width,
         height: animated?.height ?? resolved.height,
+        z0: animated?.z0 ?? resolved.z0 ?? 0,
+        z1: animated?.z1 ?? resolved.z1 ?? 0,
+        faces: null as BoxFace[] | null,
       };
     });
+
+    const m = this.#layerIsometric();
+    const lift = this.chartCtx.isometricLift;
+    if (!this.extruded || !m || !lift) return items;
+
+    for (const item of items) item.faces = boxFaces(item, lift, m);
+    // Back to front, so nearer boxes cover farther ones — by where each footprint's centre lands
+    // down the screen.  Exact for boxes on a grid, which don't overlap on the floor.
+    const depth = (item: (typeof items)[number]) =>
+      m.b * (item.x + item.width / 2) + m.d * (item.y + item.height / 2);
+    return items.sort((a, b) => depth(a) - depth(b));
   });
 
-  #resolveRect(d: any): { x: number; y: number; width: number; height: number } {
+  #resolveRect(d: any): {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    z0?: number;
+    z1?: number;
+  } {
+    return this.extruded
+      ? { ...this.#resolveFootprint(d), ...this.#resolveZ(d) }
+      : this.#resolveFootprint(d);
+  }
+
+  #resolveFootprint(d: any): { x: number; y: number; width: number; height: number } {
     const props = this.#props;
     const resolvedInsets = resolveInsets(props.insets);
 

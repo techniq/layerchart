@@ -230,7 +230,8 @@ export type ChartPropsWithoutHTML<
    * out flat as usual, then every layer is turned and tipped back by the same matrix, so anything
    * drawn lies on the floor.  Layers with `ignoreTransform` stay flat.
    *
-   * `true` is true isometric; pass `rotate` / `tilt` to change the view.
+   * `true` is true isometric; pass `rotate` / `tilt` to change the view.  Defaults to the
+   * `isometric` setting (`setSettings({ isometric })`), so `false` opts a chart out of it.
    */
   isometric?: boolean | IsometricOptions;
 

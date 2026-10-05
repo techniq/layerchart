@@ -1,6 +1,12 @@
 import { describe, it, expect } from 'vitest';
 
-import { applyMatrix, createIsometricMatrix, invertMatrix } from './isometric.js';
+import {
+  applyMatrix,
+  boxFaces,
+  createIsometricMatrix,
+  invertMatrix,
+  isometricLift,
+} from './isometric.js';
 
 /** Screen angle of a direction, in degrees above the horizontal */
 function elevation(v: { x: number; y: number }) {
@@ -81,5 +87,93 @@ describe('invertMatrix', () => {
 
   it('returns null for a matrix that collapses the plane', () => {
     expect(invertMatrix({ a: 1, b: 0, c: 0, d: 0, e: 0, f: 0 })).toBeNull();
+  });
+});
+
+describe('isometricLift', () => {
+  it('raises a point straight up the screen', () => {
+    const m = createIsometricMatrix({}, 400, 300);
+    const lift = isometricLift({});
+    const floor = applyMatrix(m, { x: 120, y: 80 });
+    const raised = applyMatrix(m, { x: 120 + lift.x * 50, y: 80 + lift.y * 50 });
+    expect(raised.x).toBeCloseTo(floor.x);
+    expect(raised.y).toBeLessThan(floor.y);
+  });
+
+  it('foreshortens a height as much as the floor in true isometric', () => {
+    const m = createIsometricMatrix({}, 400, 300);
+    const lift = isometricLift({});
+    const o = applyMatrix(m, { x: 0, y: 0 });
+    const along = applyMatrix(m, { x: 100, y: 0 });
+    const up = applyMatrix(m, { x: lift.x * 100, y: lift.y * 100 });
+    expect(Math.hypot(up.x - o.x, up.y - o.y)).toBeCloseTo(
+      Math.hypot(along.x - o.x, along.y - o.y)
+    );
+  });
+
+  it('is nothing seen from directly above', () => {
+    const lift = isometricLift({ rotate: 0, tilt: 0 });
+    expect(lift.x).toBeCloseTo(0);
+    expect(lift.y).toBeCloseTo(0);
+  });
+});
+
+describe('createIsometricMatrix depth', () => {
+  it('leaves room above the floor for the tallest height', () => {
+    const [width, height, depth] = [400, 300, 150];
+    const m = createIsometricMatrix({}, width, height, depth);
+    const lift = isometricLift({});
+    const raised = [
+      [0, 0],
+      [width, 0],
+      [width, height],
+      [0, height],
+    ].map(([x, y]) => applyMatrix(m, { x: x + lift.x * depth, y: y + lift.y * depth }));
+    for (const p of raised) {
+      expect(p.y).toBeGreaterThanOrEqual(-1e-9);
+      expect(p.x).toBeGreaterThanOrEqual(-1e-9);
+      expect(p.x).toBeLessThanOrEqual(width + 1e-9);
+    }
+  });
+});
+
+describe('boxFaces', () => {
+  const m = createIsometricMatrix({}, 400, 400);
+  const lift = isometricLift({});
+  const box = { x: 100, y: 100, width: 50, height: 40, z0: 0, z1: 30 };
+
+  it('returns the two sides facing the viewer, then the top', () => {
+    const faces = boxFaces(box, lift, m);
+    expect(faces.map((f) => f.kind)).toEqual(['side', 'side', 'top']);
+  });
+
+  it('shows the front edges — the bottom and left of the flat footprint', () => {
+    const [first, second] = boxFaces(box, lift, m);
+    // Each side's first two points are its edge on the floor
+    const edges = [first, second].map((f) => f.points.slice(0, 2));
+    expect(edges).toContainEqual([
+      { x: 150, y: 140 },
+      { x: 100, y: 140 },
+    ]);
+    expect(edges).toContainEqual([
+      { x: 100, y: 140 },
+      { x: 100, y: 100 },
+    ]);
+  });
+
+  it('shades the side turned right more than the one turned left', () => {
+    const sides = boxFaces(box, lift, m).filter((f) => f.kind === 'side');
+    const shadeOf = (f: (typeof sides)[number]) => {
+      const [a, b] = f.points.map((p) => applyMatrix(m, p));
+      // The edge's midpoint is right of the footprint's centre on screen for a right-facing side
+      return { shade: f.shade, x: (a.x + b.x) / 2 };
+    };
+    const [left, right] = sides.map(shadeOf).sort((a, b) => a.x - b.x);
+    expect(right.shade).toBeGreaterThan(left.shade);
+  });
+
+  it('raises the top to the box height', () => {
+    const top = boxFaces(box, lift, m).at(-1)!;
+    expect(top.points[0]).toEqual({ x: 100 + lift.x * 30, y: 100 + lift.y * 30 });
   });
 });

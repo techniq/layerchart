@@ -3454,32 +3454,46 @@
       "line": "<Axis placement=\"bottom\" />"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ viewport: true }} />"
+    },
+    {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
       "lineNumber": 35,
-      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ upright: true }} />"
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
     },
     {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
       "lineNumber": 36,
-      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ upright: true }} />"
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ viewport: true }} />"
     },
     {
-      "example": "isometric-transition",
+      "example": "isometric-playground",
       "component": "Chart",
-      "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 57,
-      "line": "<Axis placement=\"bottom\" tickLabelProps={{ upright }} />"
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 67,
+      "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
     },
     {
-      "example": "isometric-transition",
+      "example": "isometric-playground",
       "component": "Chart",
-      "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 58,
-      "line": "<Axis placement=\"left\" tickLabelProps={{ upright }} />"
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 68,
+      "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
     },
     {
       "example": "mixed-marks-with-stack",
@@ -5694,5 +5708,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-10-05T16:56:44.418Z"
+  "updatedAt": "2026-10-05T19:24:19.984Z"
 }

@@ -17,7 +17,11 @@
 
   const c = new RectState(() => rest as RectProps);
 
-  const htmlRest = $derived(rest as unknown as HTMLAttributes<HTMLDivElement>);
+  // `z` isn't an HTML attribute — `RectState` reads it from `rest`
+  const htmlRest = $derived.by(() => {
+    const { z: _z, ...attrs } = rest;
+    return attrs as unknown as HTMLAttributes<HTMLDivElement>;
+  });
 
   c.chartCtx.registerComponent({
     name: 'Rect',
@@ -39,24 +43,51 @@
         : resolvedStroke != null
           ? '1px'
           : undefined}
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div
-      {...htmlRest}
-      style:position="absolute"
-      style:left="{item.x}px"
-      style:top="{item.y}px"
-      style:width="{item.width}px"
-      style:height="{item.height}px"
-      style:background={resolvedFill}
-      style:background-origin="border-box"
-      style:opacity={resolvedOpacity}
-      style:border-width={resolvedBorderWidth}
-      style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
-      style:border-color={resolvedStroke}
-      style:border-radius={c.borderRadius(item.width, item.height) ?? `${c.rx}px`}
-      class={cls('lc-rect', resolvedClass)}
-    ></div>
+    {#if item.faces}
+      <!--
+        Stood up into a box on an isometric floor: the sides facing the viewer, then the top.  Each
+        face is a parallelogram, drawn as a 1px square its own matrix stretches into place.
+      -->
+      {#each item.faces as face}
+        {@const [p0, p1, , p3] = face.points}
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div
+          {...htmlRest}
+          style:position="absolute"
+          style:left="0"
+          style:top="0"
+          style:width="1px"
+          style:height="1px"
+          style:transform-origin="0 0"
+          style:transform="matrix({p1.x - p0.x}, {p1.y - p0.y}, {p3.x - p0.x}, {p3.y - p0.y}, {p0.x},
+          {p0.y})"
+          style:background={resolvedFill}
+          style:box-shadow={face.shade ? `inset 0 0 0 9999px rgb(0 0 0 / ${face.shade})` : null}
+          style:opacity={resolvedOpacity}
+          class={cls('lc-rect', `lc-rect-${face.kind}`, resolvedClass)}
+        ></div>
+      {/each}
+    {:else}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div
+        {...htmlRest}
+        style:position="absolute"
+        style:left="{item.x}px"
+        style:top="{item.y}px"
+        style:width="{item.width}px"
+        style:height="{item.height}px"
+        style:background={resolvedFill}
+        style:background-origin="border-box"
+        style:opacity={resolvedOpacity}
+        style:border-width={resolvedBorderWidth}
+        style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
+        style:border-color={resolvedStroke}
+        style:border-radius={c.borderRadius(item.width, item.height) ?? `${c.rx}px`}
+        class={cls('lc-rect', resolvedClass)}
+      ></div>
+    {/if}
   {/each}
 {:else}
   <!-- svelte-ignore a11y_click_events_have_key_events -->

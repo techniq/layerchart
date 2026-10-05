@@ -21,6 +21,15 @@ Add `isometric` to any `Chart`:
 
 :example{ component="Chart" name="isometric-heatmap" }
 
+To try it on every chart at once, turn on the `isometric` setting — charts that set their own `isometric` (including `false`) keep it. On these docs, it's the **Isometric** switch in a component page's settings menu.
+
+```svelte
+<script>
+	import { setSettings } from 'layerchart';
+	setSettings({ isometric: true });
+</script>
+```
+
 ## How it works
 
 The scales, marks, and axes lay the chart out flat, exactly as they would without `isometric`. Each layer then draws through one matrix that turns the plot area, tips it away from the viewer, and scales it down to fit back inside the chart, centred. Everything drawn lies on that floor — a cell becomes a diamond, a circle an ellipse, and an axis runs along the floor's edge.
@@ -64,7 +73,27 @@ The defaults are true isometric: the origin (bottom-left of the flat plot) sits 
 <Chart isometric={{ rotate: -45 * t.current, tilt: 54.7356 * t.current }}>
 ```
 
-:example{ component="Chart" name="isometric-transition" }
+:example{ component="Chart" name="isometric-playground" }
+
+## Height
+
+`z` raises marks off the floor. Set it on the chart and every `Rect` and `Cell` stands up into a box that tall — its top, and the sides facing the viewer, shaded as if lit from the upper left:
+
+```svelte
+<Chart {data} x="week" y="day" xScale={scaleBand()} yScale={scaleBand()} z="value" isometric>
+	<Layer>
+		<Cell x="week" y="day" fill="value" />
+	</Layer>
+</Chart>
+```
+
+:example{ component="Chart" name="isometric-columns" }
+
+- **The `z` scale** measures up from the floor: its domain reaches down to `0`, and its range runs to half the plot's shorter side. Set `zDomain` / `zRange` to change either — the **Height** slider in the playground above sets `zRange`, and `0` lays the boxes flat.
+- **A mark's own `z`** overrides the chart's, and a chart `z` returning `[start, end]` floats the box between the two.
+- **The fit** leaves room above the floor for the top of the `z` range, so tall boxes aren't cut off.
+- **Boxes are painted back to front**, so nearer ones cover farther ones. That's exact for boxes on a grid, which don't overlap on the floor.
+- **On a flat chart**, or in a layer with `ignoreTransform`, `z` has nothing to raise and the rects stay flat.
 
 ## Text
 
@@ -116,4 +145,5 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 - **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
 - **`WebGL` layers** aren't transformed.
 - **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Marks have no height.** Everything lies flat on the floor.
+- **Only `Rect` and `Cell` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

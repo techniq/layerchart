@@ -1606,6 +1606,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
@@ -1613,10 +1620,10 @@
       "line": "<Layer>"
     },
     {
-      "example": "isometric-transition",
+      "example": "isometric-playground",
       "component": "Chart",
-      "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 55,
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 65,
       "line": "<Layer>"
     },
     {
@@ -4462,5 +4469,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-05T16:56:45.656Z"
+  "updatedAt": "2026-10-05T19:24:21.243Z"
 }

@@ -131,10 +131,21 @@
 				<Tooltip title="Settings">
 					<Button iconOnly on:click={toggle}>
 						<LucideSettings class="text-surface-content" />
-						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-2' }}>
-							<label class="flex items-center gap-2">
+						<Menu
+							{open}
+							on:close={toggleOff}
+							placement="bottom-start"
+							classes={{ menu: 'p-2 grid gap-2' }}
+						>
+							<label class="flex items-center justify-between gap-2">
 								<span class="text-sm text-surface-content">Debug</span>
 								<Switch bind:checked={settings.debug} />
+							</label>
+							<label class="flex items-center justify-between gap-2">
+								<span class="text-sm text-surface-content">Isometric</span>
+								<Switch
+									bind:checked={() => !!settings.isometric, (on) => (settings.isometric = on)}
+								/>
 							</label>
 						</Menu>
 					</Button>

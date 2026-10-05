@@ -4,24 +4,28 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand, scaleQuantize } from 'd3-scale';
 	import { extent } from 'd3-array';
-	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
+	// A hill: tallest in the middle, falling away to the corners
 	const size = 12;
+	const centre = (size - 1) / 2;
 	const data = Array.from({ length: size * size }, (_, i) => {
 		const x = i % size;
 		const y = Math.floor(i / size);
-		return { x, y, value: Math.hypot(x - size / 2, y - size / 2) };
+		return { x, y, value: Math.hypot(centre, centre) - Math.hypot(x - centre, y - centre) };
 	});
 
 	let view = $state<'flat' | 'isometric'>('isometric');
 	let labels = $state<'default' | 'viewport'>('default');
+	// The top of the `z` range, in pixels — `0` keeps the floor flat
+	let height = $state(80);
 	// 0 = seen from directly above, 1 = true isometric
 	const t = Tween.of(() => (view === 'isometric' ? 1 : 0), { duration: 800, easing: cubicInOut });
 
 	export { data };
 </script>
 
-<div class="flex gap-2">
+<div class="flex flex-wrap gap-2">
 	<Field label="View">
 		<ToggleGroup bind:value={view} variant="outline">
 			<ToggleOption value="flat">Flat</ToggleOption>
@@ -34,6 +38,7 @@
 			<ToggleOption value="viewport">Viewport</ToggleOption>
 		</ToggleGroup>
 	</Field>
+	<RangeField label="Height" bind:value={height} min={0} max={200} step={10} class="w-48" />
 </div>
 
 <Chart
@@ -42,14 +47,16 @@
 	xScale={scaleBand()}
 	y="y"
 	yScale={scaleBand()}
+	z="value"
+	zRange={[0, height]}
 	c="value"
 	cScale={scaleQuantize()}
 	cDomain={extent(data, (d) => d.value)}
 	cRange={[
-		'var(--color-primary-700)',
-		'var(--color-primary-500)',
+		'var(--color-primary-100)',
 		'var(--color-primary-300)',
-		'var(--color-primary-100)'
+		'var(--color-primary-500)',
+		'var(--color-primary-700)'
 	]}
 	isometric={{ rotate: -45 * t.current, tilt: 54.7356 * t.current }}
 	padding={{ left: 20, bottom: 20, top: 8, right: 8 }}

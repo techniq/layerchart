@@ -375,6 +375,13 @@
       "line": "<Grid x y />"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 35,
+      "line": "<Grid x y bandAlign=\"between\" />"
+    },
+    {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
@@ -382,10 +389,10 @@
       "line": "<Grid x y bandAlign=\"between\" />"
     },
     {
-      "example": "isometric-transition",
+      "example": "isometric-playground",
       "component": "Chart",
-      "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 56,
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 66,
       "line": "<Grid x y bandAlign=\"between\" />"
     },
     {
@@ -487,5 +494,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-10-05T16:56:45.527Z"
+  "updatedAt": "2026-10-05T19:24:21.093Z"
 }

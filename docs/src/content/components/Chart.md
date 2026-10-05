@@ -36,7 +36,7 @@ The same chart from long data needs no `series` at all — `c` names the layers,
 
 ## Isometric
 
-`isometric` draws the plot area as a floor seen from above at an angle — faux 3D, in any layer. See the [Isometric guide](/docs/guides/isometric) for the view options, viewport-aligned text, and tooltips.
+`isometric` draws the plot area as a floor seen from above at an angle — faux 3D, in any layer. See the [Isometric guide](/docs/guides/isometric) for the view options, height, viewport-aligned text, and tooltips.
 
 ```svelte
 <Chart isometric>
@@ -44,9 +44,11 @@ The same chart from long data needs no `series` at all — `c` names the layers,
 
 :example{ name="isometric-heatmap" }
 
+:example{ name="isometric-columns" }
+
 :example{ name="isometric-scatter" }
 
-:example{ name="isometric-transition" }
+:example{ name="isometric-playground" }
 
 ## Text selection
 

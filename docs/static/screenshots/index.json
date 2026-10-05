@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-05T16:57:06.546Z",
+  "generatedAt": "2026-10-05T19:24:30.583Z",
   "totalComponents": 80,
-  "totalExamples": 996,
+  "totalExamples": 997,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2257,19 +2257,24 @@
           "checksum": "19d81cdbf281d26360989b8713f0495e"
         },
         {
+          "name": "isometric-columns",
+          "path": "/example/Chart/isometric-columns",
+          "checksum": "0b5faa188caa93513d8d1f26bb22f805"
+        },
+        {
           "name": "isometric-heatmap",
           "path": "/example/Chart/isometric-heatmap",
-          "checksum": "4cb7e57241b5ad64c08973d2d874066f"
+          "checksum": "f07900d016c3fb38055c65361f0caa65"
+        },
+        {
+          "name": "isometric-playground",
+          "path": "/example/Chart/isometric-playground",
+          "checksum": "791ec85f3f59e70d55ee7419b5e306d8"
         },
         {
           "name": "isometric-scatter",
           "path": "/example/Chart/isometric-scatter",
           "checksum": "238d84e1158a7869164406f9cef4a085"
-        },
-        {
-          "name": "isometric-transition",
-          "path": "/example/Chart/isometric-transition",
-          "checksum": "eba13af39916e078bb5dab0ce72a650e"
         },
         {
           "name": "mixed-marks-with-stack",
