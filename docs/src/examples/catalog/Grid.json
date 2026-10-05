@@ -385,7 +385,7 @@
       "example": "isometric-transition",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 42,
+      "lineNumber": 56,
       "line": "<Grid x y bandAlign=\"between\" />"
     },
     {
@@ -487,5 +487,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:17.911Z"
+  "updatedAt": "2026-10-05T16:56:45.527Z"
 }

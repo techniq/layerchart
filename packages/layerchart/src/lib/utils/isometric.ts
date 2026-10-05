@@ -100,3 +100,35 @@ export function invertMatrix(m: AffineMatrix): AffineMatrix | null {
 export function matrixToString(m: AffineMatrix) {
   return `matrix(${m.a},${m.b},${m.c},${m.d},${m.e},${m.f})`;
 }
+
+/**
+ * The matrix cancelling the turn, tilt, and fit of `m` — its linear part inverted, with no
+ * translation, so applied about a point it keeps that point's spot on the floor but draws what's
+ * there facing the viewer, unskewed and at its natural size.
+ *
+ * `null` when there's nothing to cancel, or `m` collapses the plane (ex. `tilt: 90`).
+ */
+export function viewportMatrix(m: AffineMatrix | null) {
+  return m ? invertMatrix({ ...m, e: 0, f: 0 }) : null;
+}
+
+/**
+ * Text anchors for a `viewport`-aligned label sitting off a floor edge, pointing away from the floor along
+ * `outward` (a direction on the flat plot, ex. `{ x: 0, y: 1 }` below the bottom edge).
+ *
+ * The edge runs at an angle on screen, so a label centred under its tick (the flat default) would
+ * cut back across the floor.  Anchoring by where `outward` lands on screen hangs it clear instead.
+ */
+export function viewportAnchors(m: AffineMatrix, outward: { x: number; y: number }) {
+  const sx = m.a * outward.x + m.c * outward.y;
+  const sy = m.b * outward.x + m.d * outward.y;
+  const length = Math.hypot(sx, sy) || 1;
+  // Within ~12° of an axis, centre on it rather than hanging off one side
+  const threshold = 0.2;
+  const ux = sx / length;
+  const uy = sy / length;
+  return {
+    textAnchor: ux > threshold ? 'start' : ux < -threshold ? 'end' : 'middle',
+    verticalAnchor: uy > threshold ? 'start' : uy < -threshold ? 'end' : 'middle',
+  } as const;
+}

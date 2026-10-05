@@ -3458,28 +3458,28 @@
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
       "lineNumber": 35,
-      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ upright: true }} />"
     },
     {
       "example": "isometric-heatmap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-heatmap",
       "lineNumber": 36,
-      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} />"
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ upright: true }} />"
     },
     {
       "example": "isometric-transition",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 43,
-      "line": "<Axis placement=\"bottom\" />"
+      "lineNumber": 57,
+      "line": "<Axis placement=\"bottom\" tickLabelProps={{ upright }} />"
     },
     {
       "example": "isometric-transition",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 44,
-      "line": "<Axis placement=\"left\" />"
+      "lineNumber": 58,
+      "line": "<Axis placement=\"left\" tickLabelProps={{ upright }} />"
     },
     {
       "example": "mixed-marks-with-stack",
@@ -5694,5 +5694,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:17.018Z"
+  "updatedAt": "2026-10-05T16:56:44.418Z"
 }

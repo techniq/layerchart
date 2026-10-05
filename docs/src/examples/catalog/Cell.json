@@ -189,9 +189,9 @@
       "example": "isometric-transition",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 45,
+      "lineNumber": 59,
       "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:17.244Z"
+  "updatedAt": "2026-10-05T16:56:44.735Z"
 }

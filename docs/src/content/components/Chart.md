@@ -36,23 +36,17 @@ The same chart from long data needs no `series` at all — `c` names the layers,
 
 ## Isometric
 
-`isometric` draws the plot area as a floor seen from above at an angle. The scales, marks, and axes lay out flat as usual, then every layer is turned and tipped back by the same matrix and fitted inside the chart, so everything drawn lies on the floor.
+`isometric` draws the plot area as a floor seen from above at an angle — faux 3D, in any layer. See the [Isometric guide](/docs/guides/isometric) for the view options, viewport-aligned text, and tooltips.
+
+```svelte
+<Chart isometric>
+```
 
 :example{ name="isometric-heatmap" }
 
-Tooltips follow the pointer onto the floor, including on the simplified charts.
-
 :example{ name="isometric-scatter" }
 
-Pass `rotate` and `tilt` (in degrees) to change the view. `rotate: -45` and a `tilt` of about `54.74` is true isometric, where both axes meet the horizontal at 30°, and `tilt: 60` gives the 2:1 "pixel art" projection. `rotate: 0, tilt: 0` is the flat chart, so tweening the two moves between them.
-
-```svelte
-<Chart isometric={{ rotate: -45, tilt: 60 }}>
-```
-
 :example{ name="isometric-transition" }
-
-A layer with `ignoreTransform` stays flat, for a title or legend drawn over the floor.
 
 ## Text selection
 

@@ -15,6 +15,8 @@ import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
 import { occlude } from '$lib/utils/occlusion.js';
 import { getTextRect } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { viewportAnchors } from '$lib/utils/isometric.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { type MotionProp } from '$lib/utils/motion.svelte.js';
@@ -213,6 +215,24 @@ export class AxisState {
 
   ctx: ChartState = getChartContext();
   #facetPanel = getFacetPanel();
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * Anchors for a `viewport`-aligned label hanging off this axis' edge of an `isometric` floor, or
+   * `undefined` to keep the flat ones.  The edge runs at an angle on screen, where a label centred
+   * under its tick would cut back across the floor.
+   */
+  #viewportAnchors(viewport: boolean | undefined) {
+    const m = this.#layerIsometric();
+    if (!viewport || !m) return undefined;
+    const outward = {
+      top: { x: 0, y: -1 },
+      bottom: { x: 0, y: 1 },
+      left: { x: -1, y: 0 },
+      right: { x: 1, y: 0 },
+    }[this.#props.placement as string];
+    return outward ? viewportAnchors(m, outward) : undefined;
+  }
 
   /**
    * Whether to draw at all.  In a faceted chart an axis belongs on the grid's outer edge — a
@@ -527,13 +547,16 @@ export class AxisState {
       fill,
       classes = {},
     } = this.#props;
+    const anchors = this.#viewportAnchors(labelProps?.viewport);
     return {
       value: typeof label === 'function' ? '' : label,
       x: this.resolvedLabelX,
       y: this.resolvedLabelY,
       textAnchor: this.resolvedLabelTextAnchor,
       verticalAnchor: this.resolvedLabelVerticalAnchor,
-      rotate: this.orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
+      // Facing the viewer, a title reads left to right like the tick labels
+      rotate: !anchors && this.orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
+      ...anchors,
       capHeight: '7px',
       lineHeight: '11px',
       fill,
@@ -616,6 +639,7 @@ export class AxisState {
         y: this.orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
         value: this.tickFormat(tick, index),
         ...this.getDefaultTickLabelProps(tick),
+        ...this.#viewportAnchors(tickLabelProps?.viewport),
         motion,
         capHeight: '7px',
         lineHeight: '11px',

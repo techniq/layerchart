@@ -1616,7 +1616,7 @@
       "example": "isometric-transition",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 41,
+      "lineNumber": 55,
       "line": "<Layer>"
     },
     {
@@ -4462,5 +4462,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:18.032Z"
+  "updatedAt": "2026-10-05T16:56:45.656Z"
 }

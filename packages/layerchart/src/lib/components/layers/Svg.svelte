@@ -76,6 +76,7 @@
   import Facet from '../Facet.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
+  import { setLayerIsometric } from '$lib/contexts/isometric.js';
   import { matrixToString } from '$lib/utils/isometric.js';
 
   let {
@@ -122,6 +123,7 @@
   });
 
   setLayerContext('svg');
+  setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
 </script>
 
 <svg

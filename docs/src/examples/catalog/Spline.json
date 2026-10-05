@@ -821,7 +821,7 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 17,
           "line": "<Chart"
         },
         {
@@ -1753,5 +1753,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:18.541Z"
+  "updatedAt": "2026-10-05T16:56:46.250Z"
 }

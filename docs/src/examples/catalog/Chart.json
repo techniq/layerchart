@@ -716,7 +716,7 @@
         {
           "component": "Axis",
           "lineNumber": 35,
-          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ upright: true }} />"
         },
         {
           "component": "Cell",
@@ -744,27 +744,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 29,
+          "lineNumber": 36,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 55,
           "line": "<Layer>"
         },
         {
           "component": "Grid",
-          "lineNumber": 42,
+          "lineNumber": 56,
           "line": "<Grid x y bandAlign=\"between\" />"
         },
         {
           "component": "Axis",
-          "lineNumber": 43,
-          "line": "<Axis placement=\"bottom\" />"
+          "lineNumber": 57,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ upright }} />"
         },
         {
           "component": "Cell",
-          "lineNumber": 45,
+          "lineNumber": 59,
           "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
         }
       ]
@@ -2577,7 +2577,7 @@
       "example": "isometric-transition",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-transition",
-      "lineNumber": 29,
+      "lineNumber": 36,
       "line": "<Chart"
     },
     {
@@ -4866,7 +4866,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 14,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
@@ -5423,5 +5423,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:17.265Z"
+  "updatedAt": "2026-10-05T16:56:44.760Z"
 }

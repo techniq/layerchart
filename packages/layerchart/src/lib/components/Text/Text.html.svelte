@@ -4,11 +4,18 @@
 
 <script lang="ts">
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import { matrixToString } from '$lib/utils/isometric.js';
   import { getPixelValue, TextState, textMarkInfo, type TextProps } from './Text.shared.svelte.js';
 
   let { ...rest }: TextProps = $props();
 
   const c = new TextState(() => rest as TextProps);
+
+  /**
+   * For `viewport`, cancels the chart's `isometric` view.  Sits between the anchoring `translate`
+   * and `rotate`, which both act about the anchor (`transform-origin`), so it does too.
+   */
+  const cancelView = $derived(c.viewportMatrix ? matrixToString(c.viewportMatrix) : '');
 
   c.chartCtx.registerComponent({
     name: 'Text',
@@ -33,7 +40,8 @@
       style:position="absolute"
       style:left="{getPixelValue(rest.dx ?? 0) + item.x}px"
       style:top="{getPixelValue(rest.dy ?? 0) + item.y}px"
-      style:transform="translate({translateX}, {translateY}) rotate({rest.rotate ?? 0}deg)"
+      style:transform="translate({translateX}, {translateY}) {cancelView} rotate({rest.rotate ??
+        0}deg)"
       style:transform-origin="{verticalAnchor === 'middle'
         ? 'center'
         : verticalAnchor === 'end'
@@ -62,7 +70,8 @@
       (typeof c.motionX === 'number' ? c.motionX : 0)}px"
     style:top="{(typeof rest.dy === 'number' ? rest.dy : 0) +
       (typeof c.motionY === 'number' ? c.motionY : 0)}px"
-    style:transform="translate({translateX}, {translateY}) rotate({rest.rotate ?? 0}deg)"
+    style:transform="translate({translateX}, {translateY}) {cancelView} rotate({rest.rotate ??
+      0}deg)"
     style:transform-origin="{verticalAnchor === 'middle'
       ? 'center'
       : verticalAnchor === 'end'

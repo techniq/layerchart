@@ -32,8 +32,8 @@
 >
 	<Layer>
 		<Grid x y bandAlign="between" />
-		<Axis placement="bottom" format={(d) => 'W' + d} />
-		<Axis placement="left" format={(d) => daysOfWeek[d]} />
+		<Axis placement="bottom" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />
+		<Axis placement="left" format={(d) => daysOfWeek[d]} tickLabelProps={{ viewport: true }} />
 		<Cell
 			x={(d) => timeWeek.count(timeYear(d.date), d.date)}
 			y={(d) => d.date.getDay()}

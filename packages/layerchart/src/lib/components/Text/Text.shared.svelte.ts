@@ -13,6 +13,8 @@ import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { matrixToString, viewportMatrix as cancelView } from '$lib/utils/isometric.js';
 
 /**
  * Check if a string looks like a CSS/SVG value (percentage, em, px, etc.)
@@ -179,6 +181,15 @@ export type TextPropsWithoutHTML = {
   rotate?: number;
 
   /**
+   * On an `isometric` chart, align the text to the viewport rather than the floor — placed on the
+   * floor like everything else, but facing the viewer, read left to right at its natural size.
+   * `rotate` still turns it, on screen.  No effect on a flat chart.
+   *
+   * @default false
+   */
+  viewport?: boolean;
+
+  /**
    * A bindable reference to the wrapping `<svg>` element.
    *
    * @bindable
@@ -336,6 +347,18 @@ export class TextState {
   chartCtx: ChartState = getChartContext();
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
+
+  /** The `isometric` view to cancel about the text's anchor for `viewport`, or `null` for none */
+  viewportMatrix = $derived(this.#props.viewport ? cancelView(this.#layerIsometric()) : null);
+
+  /** `viewportMatrix` applied about `(x, y)`, as an SVG `transform` — `''` when there's none */
+  viewportTransform(x: number | string, y: number | string) {
+    const m = this.viewportMatrix;
+    // A CSS-valued position (ex. `"50%"`) has no pixel anchor to turn about
+    if (!m || typeof x !== 'number' || typeof y !== 'number') return '';
+    return `translate(${x},${y}) ${matrixToString(m)} translate(${-x},${-y})`;
+  }
 
   // Path measurement (only meaningful for SVG layer where the textPath element exists)
   pathRef = $state<SVGPathElement>();
