@@ -41,12 +41,12 @@ export type AreaPropsWithoutHTML = {
   y1?: Accessor;
   /**
    * Group the data into a separate area per distinct value, drawing them all from this one mark.
-   * Defaults to the Chart's `z` accessor, then to the data property named by `fill` / `stroke`.
+   * Defaults to the Chart's `g` accessor, then to the data property named by `fill` / `stroke`.
    *
    * Replaces grouping the data and rendering an `Area` per group — which registers a mark, and
    * rebuilds the chart's domains, once per area.
    */
-  z?: Accessor;
+  g?: Accessor;
   /** Series key to use for accessor. */
   seriesKey?: string;
   /** Whether to tween the interpolated path data using d3-interpolate-path */
@@ -88,7 +88,7 @@ export class AreaState {
 
   #tweenState!: ReturnType<typeof createMotion<string | undefined>>;
 
-  /** One tween per `z` group, for the grouped branch that draws an area each */
+  /** One tween per `g` group, for the grouped branch that draws an area each */
   #areaTweens: ReturnType<typeof createPathMotionMap> = null;
 
   constructor(getProps: () => AreaProps) {
@@ -194,12 +194,12 @@ export class AreaState {
 
   /**
    * Accessor grouping the data into one area per distinct value, or `null` for a single area.
-   * Mirrors `Spline` — see its `zAccessor` for why the chart's raw `z` prop is the honest check.
+   * Resolves the same way as `Spline`'s `gAccessor`.
    */
-  zAccessor = $derived.by<((d: any) => any) | null>(() => {
+  gAccessor = $derived.by<((d: any) => any) | null>(() => {
     const props = this.#props;
-    const z = props.z ?? this.ctx.props.z;
-    if (z != null) return accessor(z);
+    const g = props.g ?? this.ctx.props.g;
+    if (g != null) return accessor(g);
 
     const first = this.resolvedData?.[0];
     const implied = colorPropDataKey(props.fill, first) ?? colorPropDataKey(props.stroke, first);
@@ -225,13 +225,13 @@ export class AreaState {
    * targets without reading the tweens' own output, which would be a cycle.
    */
   #areaTargets = $derived.by(() => {
-    if (!this.zAccessor || this.#props.pathData) return null;
+    if (!this.gAccessor || this.#props.pathData) return null;
     const props = this.#props;
-    const zAccessor = this.zAccessor;
+    const gAccessor = this.gAccessor;
 
-    return Array.from(d3Group(this.resolvedData, zAccessor).values()).map((data) => ({
+    return Array.from(d3Group(this.resolvedData, gAccessor).values()).map((data) => ({
       data,
-      key: zAccessor(data[0]),
+      key: gAccessor(data[0]),
       d: this.#buildPath(data),
       // Styles are uniform across an area, so they resolve from its first point
       fill:

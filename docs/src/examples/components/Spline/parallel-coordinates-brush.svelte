@@ -70,7 +70,7 @@
 	xDomain={keys}
 	y={(d) => scales.get(d.dimension)?.(d.value)}
 	yDomain={[0, 1]}
-	z="id"
+	g="id"
 	padding={{ left: 48, right: 48, top: 32, bottom: 8 }}
 	height={400}
 >
@@ -102,7 +102,7 @@
 	{/snippet}
 
 	{#snippet marks()}
-		<!-- One mark, one line per penguin (`z`); brushed-out lines stay as faint context -->
+		<!-- One mark, one line per penguin (`g`); brushed-out lines stay as faint context -->
 		<Spline
 			stroke={(d) =>
 				selectedIds.has(d.id) ? 'var(--color-primary)' : 'var(--color-surface-content)'}

@@ -6,10 +6,10 @@ import Area from './Area.svelte';
 import Spline from '../Spline/Spline.svelte';
 
 /**
- * A mark grouped by `z` draws one path per group, and those paths used to be built straight from
+ * A mark grouped by `g` draws one path per group, and those paths used to be built straight from
  * the data on every change — `Spline` renders `seg.d` and `Area` renders `area.d`, neither of
  * which consulted the mark's single `tweenedPath`.  So `motion` animated an ungrouped mark and
- * did nothing at all once `z` (or the chart's `c`) split it.
+ * did nothing at all once `g` (or the chart's `c`) split it.
  *
  * A tween caught between two shapes is the observable: sampling `d` every frame during a data
  * change gives one value if the path snapped, and a spread of them if it animated.
@@ -75,13 +75,13 @@ async function sampleDuringDataChange(options: {
   };
 }
 
-describe('marks grouped by `z` animate their paths', () => {
+describe('marks grouped by `g` animate their paths', () => {
   beforeEach(cleanup);
 
   it('tweens each line of a grouped `Spline`', async () => {
     const result = await sampleDuringDataChange({
       component: Spline,
-      chartExtra: { z: 'group' },
+      chartExtra: { g: 'group' },
       selector: 'path',
     });
 
@@ -93,7 +93,7 @@ describe('marks grouped by `z` animate their paths', () => {
   it("tweens each group's fill in a grouped `Area`", async () => {
     const result = await sampleDuringDataChange({
       component: Area,
-      chartExtra: { z: 'group' },
+      chartExtra: { g: 'group' },
       selector: '.lc-area-path',
     });
 
@@ -106,7 +106,7 @@ describe('marks grouped by `z` animate their paths', () => {
     const result = await sampleDuringDataChange({
       component: Area,
       componentProps: { line: true },
-      chartExtra: { z: 'group' },
+      chartExtra: { g: 'group' },
       selector: '.lc-area-line',
     });
 
@@ -130,7 +130,7 @@ describe('marks grouped by `z` animate their paths', () => {
     const result = await sampleDuringDataChange({
       component: Area,
       componentProps: { motion: undefined },
-      chartExtra: { z: 'group' },
+      chartExtra: { g: 'group' },
       selector: '.lc-area-path',
     });
 

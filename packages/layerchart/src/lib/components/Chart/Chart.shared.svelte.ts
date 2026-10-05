@@ -138,6 +138,13 @@ export type ChartPropsWithoutHTML<
   x1?: Accessor<T>;
   y1?: Accessor<T>;
   c?: Accessor<T>;
+  /**
+   * Split the data into a separate path per distinct value — one line per series for `Spline`,
+   * one area for `Area`.  Usually unneeded: a `stroke` / `fill` naming a data property, or `c`,
+   * splits the same way.  Set it when the split isn't the color, ex. one line per row colored by
+   * its category.
+   */
+  g?: Accessor<T>;
 
   /**
    * Partition the data into a column of panels ("small multiples"), one per distinct value.

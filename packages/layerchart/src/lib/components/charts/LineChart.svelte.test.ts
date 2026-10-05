@@ -116,7 +116,7 @@ describe('legend `c` category toggle', () => {
     data: longData,
     x: 'date',
     y: 'value',
-    // `c` alone splits and colors the lines — no `z`, no `stroke`, no `series`
+    // `c` alone splits and colors the lines — no `g`, no `stroke`, no `series`
     c: 'fruit',
     cRange: ['red', 'yellow'],
     legend: true,

@@ -31,7 +31,7 @@
     x,
     y0,
     y1,
-    z,
+    g,
     seriesKey,
     ...restProps
   }: AreaBaseProps = $props();
@@ -52,7 +52,7 @@
         x,
         y0,
         y1,
-        z,
+        g,
         seriesKey,
       }) as AreaProps
   );
@@ -74,7 +74,7 @@
 </script>
 
 {#if c.areas}
-  <!-- Grouped by `z` — one area (and line) per group, from this one mark -->
+  <!-- Grouped by `g` — one area (and line) per group, from this one mark -->
   {#each c.areas as area, i (i)}
     {#if line}
       <Spline

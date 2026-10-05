@@ -76,9 +76,9 @@ describe('Area line prop forwarding', () => {
     expect(clicks).toBe(1);
   });
 
-  it('forwards to every line when grouped by `z`', async () => {
+  it('forwards to every line when grouped by `g`', async () => {
     render(TestHarness, {
-      chartProps: chartProps({ z: 'group' }),
+      chartProps: chartProps({ g: 'group' }),
       component: Area,
       componentProps: { line: true, mask: 'url(#reveal)' },
     });

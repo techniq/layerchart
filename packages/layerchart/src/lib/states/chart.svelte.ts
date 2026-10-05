@@ -822,8 +822,8 @@ export class ChartState<
    * key, so a legend backed by an ordinal `c` scale acts on what it names — as `PieChart` already
    * does with its slices.
    *
-   * Distinct from `z`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
-   * (`z="id"` with `c="group"`), and it's `c` the legend names.
+   * Distinct from `g`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
+   * (`g="id"` with `c="group"`), and it's `c` the legend names.
    */
   cKey = $derived.by<(d: any) => any>(() => (this.cGroups ? (d: any) => this.c(d) : () => null));
 

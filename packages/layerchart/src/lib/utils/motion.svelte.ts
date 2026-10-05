@@ -328,7 +328,7 @@ export function createDataMotionMap(motionProp: MotionOptions | undefined) {
 export type DataMotionMap = NonNullable<ReturnType<typeof createDataMotionMap>>;
 
 /**
- * Per-key path tweens, for marks that draw one path per group (`z`) instead of a single path.
+ * Per-key path tweens, for marks that draw one path per group (`g`) instead of a single path.
  *
  * `createMotion` covers the single-path case, but a grouped mark's paths come and go with the
  * data, so each group needs a tween of its own that survives across updates. Tween only: an

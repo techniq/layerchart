@@ -13,9 +13,9 @@ See also: [AreaChart](/docs/components/AreaChart) for simplified examples
 
 :example{ name="basic" showCode }
 
-### Multiple areas (`z`)
+### Multiple areas (`g`)
 
-Set `z` to draw a separate area per distinct value, all from one mark — the same channel [`Spline`](/docs/components/Spline#multiple-lines-z) uses. A `fill` (or `stroke`) that names a data property implies it, so this draws one area per fruit, colored through the chart's [`c` scale](/docs/guides/scales):
+Set `g` to draw a separate area per distinct value, all from one mark — the same channel [`Spline`](/docs/components/Spline#multiple-lines-g) uses. A `fill` (or `stroke`) that names a data property implies it, so this draws one area per fruit, colored through the chart's [`c` scale](/docs/guides/scales):
 
 ```svelte
 <Chart {data} x="date" y="value" c="fruit" {cRange}>
