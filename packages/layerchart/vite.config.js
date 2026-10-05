@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
+import adapter from '@sveltejs/adapter-auto';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { playwright } from '@vitest/browser-playwright';
 
 // Tests run under a fixed non-zero UTC offset so bugs where local and UTC boundaries differ (day
@@ -12,7 +14,27 @@ if (process.env.VITEST) {
 
 /** @type {import('vite').UserConfig} */
 const config = defineConfig({
-  plugins: [sveltekit()],
+  plugins: [
+    sveltekit({
+      preprocess: [vitePreprocess()],
+      compilerOptions: {
+        warningFilter: (warning) => {
+          // Ignore "state_referenced_locally" warnings
+          // These occur when capturing initial prop values which is intentional
+          // TODO: re-enable and handle each case properly
+          if (warning.code === 'state_referenced_locally') return false;
+          return true;
+        },
+      },
+      adapter: adapter(),
+      alias: {
+        $lib: 'src/lib',
+        layerchart: 'src/lib/index.js',
+        'layerchart/*': 'src/lib/*',
+        '$static/*': 'static/*',
+      },
+    }),
+  ],
   ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
     // @dagrejs/dagre is CJS-only; pre-bundle for SSR to convert to ESM
