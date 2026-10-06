@@ -16,11 +16,26 @@
 	});
 
 	let view = $state<'flat' | 'isometric'>('isometric');
+	// Seen from directly above, the angles, heights, and label orientation have nothing to change
+	const flat = $derived(view === 'flat');
 	let labels = $state<'default' | 'viewport'>('default');
 	// The top of the `z` range, in pixels — `0` keeps the floor flat
 	let height = $state(80);
-	// 0 = seen from directly above, 1 = true isometric
+	// True isometric to start: turned 45° to bring the origin to the front, tipped back until both
+	// axes meet the horizontal at 30°
+	let rotate = $state(-45);
+	let tilt = $state(54.7356);
+	// 0 = seen from directly above, 1 = the view the sliders set
 	const t = Tween.of(() => (view === 'isometric' ? 1 : 0), { duration: 800, easing: cubicInOut });
+
+	// Dragging the chart turns and tips the view (`transform` in `projection` mode) — keep the
+	// sliders in step, once the view has eased in rather than partway through it
+	function onTransform({ translate }: { translate: { x: number; y: number } }) {
+		if (flat || t.current !== 1) return;
+		// Wrapped to the slider's ±180° — the same turn either way round
+		rotate = ((((translate.x + 180) % 360) + 360) % 360) - 180;
+		tilt = translate.y;
+	}
 
 	export { data };
 </script>
@@ -32,13 +47,41 @@
 			<ToggleOption value="isometric">Isometric</ToggleOption>
 		</ToggleGroup>
 	</Field>
-	<Field label="Labels">
+	<Field label="Labels" disabled={flat}>
 		<ToggleGroup bind:value={labels} variant="outline">
 			<ToggleOption value="default">Default</ToggleOption>
 			<ToggleOption value="viewport">Viewport</ToggleOption>
 		</ToggleGroup>
 	</Field>
-	<RangeField label="Height" bind:value={height} min={0} max={200} step={10} class="w-48" />
+	<RangeField
+		label="Rotate"
+		disabled={flat}
+		bind:value={rotate}
+		min={-180}
+		max={180}
+		step={1}
+		format="integer"
+		class="w-48"
+	/>
+	<RangeField
+		label="Tilt"
+		disabled={flat}
+		bind:value={tilt}
+		min={0}
+		max={89}
+		step={1}
+		format="integer"
+		class="w-48"
+	/>
+	<RangeField
+		label="Height"
+		disabled={flat}
+		bind:value={height}
+		min={0}
+		max={200}
+		step={10}
+		class="w-48"
+	/>
 </div>
 
 <Chart
@@ -58,7 +101,9 @@
 		'var(--color-primary-500)',
 		'var(--color-primary-700)'
 	]}
-	isometric={{ rotate: -45 * t.current, tilt: 54.7356 * t.current }}
+	isometric={{ rotate: rotate * t.current, tilt: tilt * t.current }}
+	transform={{ mode: 'projection', disablePointer: flat }}
+	{onTransform}
 	padding={{ left: 20, bottom: 20, top: 8, right: 8 }}
 	height={400}
 >

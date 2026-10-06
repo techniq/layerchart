@@ -85,6 +85,16 @@ A `radial` chart's floor is always square — the circle it draws — and is fit
 <Chart isometric={{ rotate: -45 * t.current, tilt: 54.7356 * t.current }}>
 ```
 
+### Dragging the view
+
+`transform={{ mode: 'projection' }}` lets the viewer turn and tip the floor by dragging — across to turn it, up and down to tip it — the same mode that spins a globe. The drag starts from the `isometric` prop's `rotate` and `tilt`, and `onTransform` reports where it's got to: `translate.x` is the turn and `translate.y` the tilt, in degrees.
+
+```svelte
+<Chart isometric transform={{ mode: 'projection' }}>
+```
+
+Try it in the playground below, where the sliders and the drag set the same angles, and **View** eases between them and the floor seen from above.
+
 :example{ component="Chart" name="isometric-playground" }
 
 ## Height

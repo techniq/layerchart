@@ -163,3 +163,36 @@ describe('Chart isometric', () => {
     expect(ctx.tooltip.y).toBeCloseTo(expected.y, 5);
   });
 });
+
+describe('Chart isometric with `transform={{ mode: "projection" }}`', () => {
+  /** The view a layer draws at, read back from its matrix */
+  function angles(ctx: ChartState<any, any, any>) {
+    const m = ctx.layerMatrix()!;
+    return {
+      rotate: Math.round((Math.atan2(-m.c, m.a) * 180) / Math.PI),
+      tilt: Math.round((Math.acos(Math.hypot(m.b, m.d)) * 180) / Math.PI),
+    };
+  }
+
+  it("starts from the `isometric` prop's angles, then turns and tips with the transform", async () => {
+    const ctx = await renderChart({
+      isometric: { rotate: -30, tilt: 50 },
+      transform: { mode: 'projection' },
+    });
+    expect(ctx.isometricTransform).toBe(true);
+    await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
+    await vi.waitFor(() => expect(angles(ctx)).toEqual({ rotate: -30, tilt: 50 }));
+
+    // The transform's `x` / `y` are the turn and tilt — what a drag sets
+    ctx.transform.setTranslate({ x: 20, y: 65 });
+    await vi.waitFor(() => expect(angles(ctx)).toEqual({ rotate: 20, tilt: 65 }));
+  });
+
+  it('leaves a flat chart, and other transform modes, alone', async () => {
+    expect(
+      (await renderChart({ isometric: false, transform: { mode: 'projection' } }))
+        .isometricTransform
+    ).toBe(false);
+    expect((await renderChart({ transform: { mode: 'canvas' } })).isometricTransform).toBe(false);
+  });
+});

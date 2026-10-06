@@ -1108,11 +1108,34 @@ export class ChartState<
   /** `isometric` from the prop, else the chart's settings — an explicit `false` still opts out */
   #isometric = $derived(this.props.isometric ?? this.#settings.isometric);
 
-  /** The view options, or `null` when the chart is flat — with `aspect: 'auto'` resolved */
+  /**
+   * Whether `transform={{ mode: 'projection' }}` turns and tips the isometric view — dragging
+   * across turns it, up and down tips it, the way the same mode spins a globe.  Only without a geo
+   * projection, which that mode otherwise drives.
+   */
+  isometricTransform = $derived(
+    !!this.#isometric &&
+      this.props.transform?.mode === 'projection' &&
+      !this.props.geo?.projection &&
+      (this.props.transform?.apply?.rotation ?? true)
+  );
+
+  /**
+   * The view the chart is drawn at: the `isometric` options, with `aspect: 'auto'` resolved, and
+   * `rotate` / `tilt` taken from the transform while it drives them.  `null` when the chart is
+   * flat.
+   */
   #isometricOptions = $derived.by((): IsometricOptions | null => {
     const isometric = this.#isometric;
     if (!isometric) return null;
-    const options = isometric === true ? {} : isometric;
+    let options = isometric === true ? {} : isometric;
+
+    // Until `TransformContext` loads (lazily) there's no gesture yet — the props stand
+    if (this.isometricTransform && this.transformState) {
+      const { x, y } = this.transformState.translate;
+      options = { ...options, rotate: x, tilt: y };
+    }
+
     if (typeof options.aspect === 'number') return options;
     // From the scale types and full domains — not the scales themselves, whose ranges the floor
     // this sizes decides
@@ -1185,9 +1208,8 @@ export class ChartState<
    * them through `isometricMatrix`, which turns the offset straight up the screen.
    */
   isometricLift = $derived.by(() => {
-    const isometric = this.#isometric;
-    if (!isometric) return null;
-    return isometricLift(isometric === true ? {} : isometric);
+    const options = this.#isometricOptions;
+    return options ? isometricLift(options) : null;
   });
 
   /**
