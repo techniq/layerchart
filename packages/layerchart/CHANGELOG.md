@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.5.2
+
+### Patch Changes
+
+- fix(ArcChart|AreaChart|BarChart|LineChart|PieChart|ScatterChart): Support `bind:ref`, and `bind:context` on the `.svg` / `.canvas` variants (#930) ([#931](https://github.com/techniq/layerchart/pull/931))
+
 ## 2.5.1
 
 ### Patch Changes
