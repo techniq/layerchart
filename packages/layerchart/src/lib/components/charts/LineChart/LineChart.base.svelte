@@ -38,6 +38,7 @@
     profile = false,
     tooltipContext = true,
     marks,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: LineChartBaseProps<TData> = $props();
@@ -81,6 +82,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   {xScale}

@@ -8,7 +8,7 @@
   import Spline from '../../Spline/Spline.svelte';
   import type { LineChartProps } from './LineChart.shared.svelte.js';
 
-  let { context = $bindable(), ...props }: LineChartProps<TData> = $props();
+  let { ref = $bindable(), context = $bindable(), ...props }: LineChartProps<TData> = $props();
 </script>
 
-<LineChartBase {Chart} {Spline} bind:context {...props} />
+<LineChartBase {Chart} {Spline} bind:ref bind:context {...props} />

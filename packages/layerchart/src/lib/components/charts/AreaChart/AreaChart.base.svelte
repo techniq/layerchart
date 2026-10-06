@@ -36,6 +36,7 @@
     profile = false,
     marks,
     tooltip: tooltipProp,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: AreaChartBaseProps<TData> = $props();
@@ -62,6 +63,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   {xDomain}

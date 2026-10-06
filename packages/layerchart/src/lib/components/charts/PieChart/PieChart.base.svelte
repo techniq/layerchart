@@ -61,6 +61,7 @@
     pie,
     arc,
     labels = false,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: PieChartBaseProps<TData> = $props();
@@ -176,6 +177,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   data={visibleData}
   x={value}

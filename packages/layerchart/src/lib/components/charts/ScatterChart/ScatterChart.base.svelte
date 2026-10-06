@@ -36,6 +36,7 @@
     tooltipContext = true,
     marks,
     tooltip: tooltipProp,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: ScatterChartBaseProps<TData> = $props();
@@ -52,6 +53,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   x={xProp}

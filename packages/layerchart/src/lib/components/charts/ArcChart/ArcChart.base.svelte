@@ -58,6 +58,7 @@
     tooltip: tooltipProp,
     arc,
     labels = false,
+    ref = $bindable(),
     context = $bindable(),
     trackCornerRadius,
     trackPadAngle,
@@ -192,6 +193,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   data={visibleData}
   x={value}
