@@ -107,20 +107,9 @@
 
   const ctx = getChartContext();
 
-  const transform = $derived.by(() => {
-    const zoom = ctx.transform.mode === 'canvas' && !ignoreTransform;
-    const isometric = ignoreTransform ? null : ctx.isometricMatrix;
-    const parts = [
-      zoom &&
-        `translate(${ctx.transform.translate.x},${ctx.transform.translate.y}) scale(${ctx.transform.scale})`,
-      isometric && matrixToString(isometric),
-      // Centring happens on the floor, so a radial chart turns and tips with it
-      !zoom &&
-        center &&
-        `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}, ${center === 'y' || center === true ? ctx.height / 2 : 0})`,
-    ].filter(Boolean);
-    return parts.length ? parts.join(' ') : undefined;
-  });
+  // Pan / zoom, the isometric view, and `center` — one matrix, shared with the tooltip's pointer
+  // lookups so what's drawn and what's hit always agree
+  const matrix = $derived(ctx.layerMatrix({ ignoreTransform, center }));
 
   setLayerContext('svg');
   setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
@@ -153,21 +142,14 @@
     class="lc-layout-svg-g"
     transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
-    {#if transform}
-      <g {transform} class="lc-layout-svg-g-transform">
-        <Facet>
-          {#snippet children({ facet })}
-            {@render childrenProp?.({ ref: ref!, facet })}
-          {/snippet}
-        </Facet>
-      </g>
-    {:else}
+    <!-- Always rendered, so turning a transform on or off doesn't remount everything inside -->
+    <g transform={matrix ? matrixToString(matrix) : undefined} class="lc-layout-svg-g-transform">
       <Facet>
         {#snippet children({ facet })}
           {@render childrenProp?.({ ref: ref!, facet })}
         {/snippet}
       </Facet>
-    {/if}
+    </g>
   </g>
 </svg>
 

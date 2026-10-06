@@ -72,7 +72,8 @@ describe('Chart isometric', () => {
     const ctx = await renderChart({ isometric: false });
 
     expect(ctx.isometricMatrix).toBeNull();
-    expect(ctx.containerRef!.querySelector('.lc-layout-svg-g-transform')).toBeNull();
+    const g = ctx.containerRef!.querySelector('.lc-layout-svg-g-transform');
+    expect(g?.getAttribute('transform')).toBeNull();
   });
 
   it.each(['quadtree', 'bisect-x'] as const)(

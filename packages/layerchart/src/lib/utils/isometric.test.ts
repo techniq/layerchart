@@ -9,6 +9,7 @@ import {
   fitIsometricFloor,
   invertMatrix,
   isometricLift,
+  multiplyMatrix,
 } from './isometric.js';
 
 /** Screen angle of a direction, in degrees above the horizontal */
@@ -282,5 +283,16 @@ describe('autoIsometricAspect', () => {
     expect(autoIsometricAspect(band(5), linear(0, 100))).toBe(1);
     const dates = { scale: scaleTime(), domain: [new Date(2024, 0, 1), new Date(2024, 11, 31)] };
     expect(autoIsometricAspect(dates, linear(0, 100))).toBe(1);
+  });
+});
+
+describe('multiplyMatrix', () => {
+  it('applies the second matrix first', () => {
+    const scale = { a: 2, b: 0, c: 0, d: 2, e: 0, f: 0 };
+    const translate = { a: 1, b: 0, c: 0, d: 1, e: 10, f: 5 };
+    // Translate, then scale: (1, 1) → (11, 6) → (22, 12)
+    expect(applyMatrix(multiplyMatrix(scale, translate), { x: 1, y: 1 })).toEqual({ x: 22, y: 12 });
+    // Scale, then translate: (1, 1) → (2, 2) → (12, 7)
+    expect(applyMatrix(multiplyMatrix(translate, scale), { x: 1, y: 1 })).toEqual({ x: 12, y: 7 });
   });
 });

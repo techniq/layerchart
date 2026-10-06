@@ -267,7 +267,8 @@
     let y = point.y - ctx.padding.top;
 
     // Undo the layers' pan / zoom and `isometric` view, back to where the scales laid it out
-    const inverse = ctx.layerMatrix ? invertMatrix(ctx.layerMatrix) : null;
+    const matrix = ctx.layerMatrix();
+    const inverse = matrix ? invertMatrix(matrix) : null;
     if (inverse) {
       const p = applyMatrix(inverse, { x, y });
       // Rounded, as inverting leaves enough error to push a point on the floor's edge just off it

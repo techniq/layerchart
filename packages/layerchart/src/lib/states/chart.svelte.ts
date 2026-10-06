@@ -27,6 +27,7 @@ import {
   createIsometricMatrix,
   fitIsometricFloor,
   isometricLift,
+  multiplyMatrix,
   type AffineMatrix,
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
@@ -1199,26 +1200,37 @@ export class ChartState<
     return range.length ? Math.max(0, ...range) : 0;
   });
 
-  /**
-   * The matrix a layer draws through, relative to the plot area — the `canvas` transform's pan and
-   * zoom, then the `isometric` view — or `null` when neither applies.  Maps a point laid out by the
-   * scales to where it lands on screen, and inverted, a pointer back to the scales.
-   */
-  get layerMatrix(): AffineMatrix | null {
+  /** Pan / zoom, then the isometric view — cached, as every layer and pointer lookup reads it */
+  #layerMatrix = $derived.by((): AffineMatrix | null => {
     const isometric = this.isometricMatrix;
     const transform = this.transform;
     if (transform.mode !== 'canvas') return isometric;
 
     const { scale: k, translate } = transform;
-    const m = isometric ?? { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
-    return {
-      a: k * m.a,
-      b: k * m.b,
-      c: k * m.c,
-      d: k * m.d,
-      e: k * m.e + translate.x,
-      f: k * m.f + translate.y,
-    };
+    const zoom = { a: k, b: 0, c: 0, d: k, e: translate.x, f: translate.y };
+    return isometric ? multiplyMatrix(zoom, isometric) : zoom;
+  });
+
+  /**
+   * The matrix a layer draws its content through, relative to the plot area — the `canvas`
+   * transform's pan and zoom, then the `isometric` view, then the layer's own `center` translate
+   * (applied on the floor, so a radial chart turns, tilts, and zooms with the rest).  `null` when
+   * nothing applies.
+   *
+   * Without options, the chart's own — what every layer shares, before centring.  Maps a point
+   * laid out by the scales to where it lands on screen, and inverted, a pointer back to the
+   * scales.
+   */
+  layerMatrix({
+    ignoreTransform = false,
+    center = false,
+  }: { ignoreTransform?: boolean; center?: boolean | 'x' | 'y' } = {}): AffineMatrix | null {
+    const base = ignoreTransform ? null : this.#layerMatrix;
+    const x = center === true || center === 'x' ? this.width / 2 : 0;
+    const y = center === true || center === 'y' ? this.height / 2 : 0;
+    if (!x && !y) return base;
+    const translate = { a: 1, b: 0, c: 0, d: 1, e: x, f: y };
+    return base ? multiplyMatrix(base, translate) : translate;
   }
 
   extents = $derived.by((): Extents => {

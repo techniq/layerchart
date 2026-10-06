@@ -88,20 +88,10 @@
 
   const ctx = getChartContext();
 
-  const transform = $derived.by(() => {
-    const zoom = ctx.transform.mode === 'canvas' && !ignoreTransform;
-    const isometric = ignoreTransform ? null : ctx.isometricMatrix;
-    const parts = [
-      zoom &&
-        `translate(${ctx.transform.translate.x}px,${ctx.transform.translate.y}px) scale(${ctx.transform.scale})`,
-      isometric && matrixToString(isometric),
-      // Centring happens on the floor, so a radial chart turns and tips with it
-      !zoom &&
-        center &&
-        `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}px, ${center === 'y' || center === true ? ctx.height / 2 : 0}px)`,
-    ].filter(Boolean);
-    return parts.length ? parts.join(' ') : undefined;
-  });
+  // Pan / zoom, the isometric view, and `center` — one matrix, shared with the tooltip's pointer
+  // lookups so what's drawn and what's hit always agree
+  const matrix = $derived(ctx.layerMatrix({ ignoreTransform, center }));
+  const transform = $derived(matrix ? matrixToString(matrix) : undefined);
 
   setLayerContext('html');
   setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));

@@ -167,6 +167,9 @@
 
   const ctx = getChartContext();
 
+  /** Pan / zoom, the isometric view, and `center` — the one matrix the layer draws through */
+  const matrix = $derived(ctx.layerMatrix({ ignoreTransform, center }));
+
   const logger = new Logger('Canvas');
 
   // Root node for the component tree — children register via ctx.registerComponent
@@ -291,28 +294,11 @@
     // apply padding translation
     context.translate(ctx.padding.left ?? 0, ctx.padding.top ?? 0);
 
-    const isometric = ignoreTransform ? null : ctx.isometricMatrix;
-
-    // apply centering or transform
-    if (center) {
-      // Centring happens on the floor, so a radial chart turns and tips with it
-      if (isometric) {
-        const { a, b, c, d, e, f } = isometric;
-        context.transform(a, b, c, d, e, f);
-      }
-      context.translate(
-        center === 'x' || center === true ? ctx.width / 2 : 0,
-        center === 'y' || center === true ? ctx.height / 2 : 0
-      );
-    } else {
-      if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
-        context.translate(ctx.transform.translate.x, ctx.transform.translate.y);
-        context.scale(ctx.transform.scale, ctx.transform.scale);
-      }
-      if (isometric) {
-        const { a, b, c, d, e, f } = isometric;
-        context.transform(a, b, c, d, e, f);
-      }
+    // Pan / zoom, the isometric view, and `center` — one matrix, shared with the tooltip's
+    // pointer lookups so what's drawn and what's hit always agree
+    if (matrix) {
+      const { a, b, c, d, e, f } = matrix;
+      context.transform(a, b, c, d, e, f);
     }
 
     // Recursively render the component tree with proper save/restore scoping
@@ -434,7 +420,7 @@
       ctx.containerHeight,
       ctx.containerWidth,
       ctx.transform.dragging,
-      ctx.isometricMatrix,
+      matrix,
     ];
     canvasContext.invalidate();
   });

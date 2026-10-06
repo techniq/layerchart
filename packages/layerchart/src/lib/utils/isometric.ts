@@ -253,6 +253,18 @@ export function invertMatrix(m: AffineMatrix): AffineMatrix | null {
   };
 }
 
+/** `m` after `n` — the matrix applying `n` first, then `m` */
+export function multiplyMatrix(m: AffineMatrix, n: AffineMatrix): AffineMatrix {
+  return {
+    a: m.a * n.a + m.c * n.b,
+    b: m.b * n.a + m.d * n.b,
+    c: m.a * n.c + m.c * n.d,
+    d: m.b * n.c + m.d * n.d,
+    e: m.a * n.e + m.c * n.f + m.e,
+    f: m.b * n.e + m.d * n.f + m.f,
+  };
+}
+
 /** `m` as an SVG / CSS `matrix()` transform function */
 export function matrixToString(m: AffineMatrix) {
   return `matrix(${m.a},${m.b},${m.c},${m.d},${m.e},${m.f})`;

@@ -52,7 +52,7 @@ export type TooltipCoordContext = {
   /** Present on a real `ChartState`; used to offset into the panel a row belongs to */
   facet?: { enabled: boolean; panels: Array<{ x: number; y: number; has(row: any): boolean }> };
   /** Present on a real `ChartState`; where the layers' pan / zoom and `isometric` view move a point */
-  layerMatrix?: AffineMatrix | null;
+  layerMatrix?: () => AffineMatrix | null;
 };
 
 /**
@@ -227,7 +227,8 @@ export function dataCoords(ctx: TooltipCoordContext, data: any) {
     x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + (panel?.x ?? 0),
     y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + (panel?.y ?? 0),
   };
-  const { x, y } = ctx.layerMatrix ? applyMatrix(ctx.layerMatrix, plotPoint) : plotPoint;
+  const matrix = ctx.layerMatrix?.();
+  const { x, y } = matrix ? applyMatrix(matrix, plotPoint) : plotPoint;
 
   return { x: x + ctx.padding.left, y: y + ctx.padding.top };
 }
