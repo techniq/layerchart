@@ -30,6 +30,7 @@
   } from '$lib/utils/index.js';
   import { interpolateGrid } from '$lib/utils/rasterInterpolate.js';
   import { isScaleOrdinal } from '$lib/utils/scales.svelte.js';
+  import { resolveDataProp } from '$lib/utils/dataProp.js';
 
   const ctx = getChartContext();
   const markData = getMarkData();
@@ -52,6 +53,7 @@
     thresholds = 10,
     blur: blurRadius = 0,
     smooth = true,
+    z,
     fill,
     fillOpacity,
     stroke,
@@ -206,8 +208,21 @@
     );
   });
 
+  /**
+   * Each band's `[start, end]` height for `Path`'s `z` — standing on the band below, or the floor
+   * — when there's a `z`.  `Path` stands it up on an isometric floor, and leaves it flat otherwise.
+   */
+  const bandHeights = $derived.by(() => {
+    if (z == null) return null;
+    const heights = contourData.map((contour) => resolveDataProp(z, contour, ctx.zScale, 0));
+    return heights.map((top, i) => [i > 0 ? heights[i - 1] : 0, top] as [number, number]);
+  });
+
+  /** Unfilled bands with no `stroke` of their own are lines in the bands' colours */
+  const coloredLines = $derived(fill === 'none' && stroke == null);
+
   const colorScale = $derived.by(() => {
-    if (fill) return null;
+    if (fill && !coloredLines) return null;
     const minValue = min(contourData, (d) => d.value) ?? 0;
     const maxValue = max(contourData, (d) => d.value) ?? 1;
     // Not an ordinal scale — `cScale` defaults to a `series` color lookup, which can't ramp
@@ -218,9 +233,16 @@
     return scaleSequential([minValue, maxValue], interpolateYlGnBu);
   });
 
-  function getContourFill(contour: { value: number }) {
-    if (fill) return fill;
+  function getContourColor(contour: { value: number }) {
     return colorScale ? String(colorScale(contour.value)) : 'steelblue';
+  }
+
+  function getContourFill(contour: { value: number }) {
+    return fill ?? getContourColor(contour);
+  }
+
+  function getContourStroke(contour: { value: number }) {
+    return coloredLines ? getContourColor(contour) : stroke;
   }
 </script>
 
@@ -229,9 +251,10 @@
     {#each contourData as contour, i (i)}
       <Path
         pathData={pathGenerator(contour) ?? ''}
+        z={bandHeights?.[i]}
         fill={getContourFill(contour)}
         {fillOpacity}
-        {stroke}
+        stroke={getContourStroke(contour)}
         {strokeWidth}
         class={cls('lc-contour-band', className)}
       />

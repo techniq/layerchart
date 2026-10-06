@@ -12,6 +12,12 @@ import type { PathProps } from '../../Path/Path.shared.svelte.js';
 import type { geoCurvePath } from '$lib/utils/geo.js';
 
 export type GeoPathPropsWithoutHTML = {
+  /**
+   * On an `isometric` chart, stand the shape up off the floor — `z` pixels tall, or floating from
+   * `start` to `end` — like a `Path`.  No effect on a flat chart.
+   */
+  z?: number | [start: number, end: number];
+
   geojson?: GeoPermissibleObjects | null;
   tooltip?: boolean;
   onclick?:

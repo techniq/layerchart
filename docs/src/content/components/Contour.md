@@ -23,6 +23,20 @@ Filled contour bands of the same Maungawhau elevation data, colored by threshold
 
 :example{ name="volcano-filled" showCode }
 
+## Isometric terrain
+
+On an [isometric](/docs/guides/isometric) chart, `z` raises each band to its height — `z="value"` measures its threshold with `zScale`. Filled bands stand on the one below as terraces, their sides shaded by which way they face; unfilled ones float as lines, in the bands' colors. Drag to turn it.
+
+```svelte
+<Chart zDomain={extent(volcano.values)} zRange={[0, 100]} isometric>
+	<Layer>
+		<Contour data={volcano.values} width={volcano.width} height={volcano.height} z="value" />
+	</Layer>
+</Chart>
+```
+
+:example{ name="volcano-isometric" }
+
 ## Interactive controls
 
 Adjust the number of **thresholds** and **blur** radius interactively.

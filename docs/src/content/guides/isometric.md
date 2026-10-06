@@ -193,6 +193,30 @@ Dragging pans it, with the wheel zooming, and shift-dragging turns the view — 
 
 :example{ component="Chart" name="isometric-treemap" }
 
+### Contours
+
+`Contour` raises each band with `z` the same way — `z="value"` measures its threshold — so filled bands stack into terraces, each standing on the one below with its sides shaded, and unfilled ones float as lines at their heights. See [Contour](/docs/components/Contour#isometric-terrain).
+
+:example{ component="Contour" name="volcano-isometric" }
+
+### Paths and maps
+
+`Path` takes a `z` too — `z` pixels tall, or `[start, end]` to float it — and stands its shape up with its sides shaded, as a `Rect` stands up a box. An unfilled path, a line, is just raised. Marks drawn with `Path` pass it through, so a `GeoPath` stands a region up:
+
+```svelte
+<GeoPath geojson={state} z={share * 60} fill={color} />
+```
+
+A shape is drawn whole — its sides, then its top — so where several stand side by side, nearer ones have to come later. The map below sorts its states by where their centres stand, from `context.isometricMatrix`:
+
+```svelte
+{#each states.toSorted((a, b) => depth(a) - depth(b)) as state}
+```
+
+That's right for shapes of similar size. A large shape that wraps around a smaller one, or a long one reaching past its neighbours, can still be drawn in the wrong order — the price of sorting whole shapes.
+
+:example{ component="GeoPath" name="election-isometric" }
+
 ## Text
 
 Text lies on the floor along with everything else, which suits labels that belong to it. Where it should stay readable instead, set `viewport` to align it to the viewport rather than the floor: the text keeps its spot on the floor but faces the viewer, reading left to right at its natural size. `rotate` still turns it, on screen.
@@ -245,6 +269,6 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 - **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
 - **`WebGL` layers** aren't transformed.
 - **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Only `Rect`, `Cell`, `Circle`, `Text`, and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **Only `Rect`, `Cell`, `Circle`, `Text`, `Path` (with `GeoPath` and `Contour`), and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
 - **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
 - **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

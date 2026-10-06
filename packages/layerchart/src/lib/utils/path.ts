@@ -334,3 +334,119 @@ export function flattenPathData(pathData: string, yOverride = 0) {
 
   return result;
 }
+
+/** Steps a curve segment is flattened into by `pathRings` */
+const CURVE_STEPS = 8;
+
+/**
+ * The closed rings of an SVG path's `d`, as points — one per subpath, straight segments as given
+ * and curves flattened into a few straight steps.  An arc only reaches its end point.
+ */
+export function pathRings(d: string): Array<Array<[number, number]>> {
+  const tokens = d.match(/[a-zA-Z]|[-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? [];
+  const rings: Array<Array<[number, number]>> = [];
+  let ring: Array<[number, number]> = [];
+  let x = 0;
+  let y = 0;
+  let start: [number, number] = [0, 0];
+  // The last curve's second control point, for `S` / `T` to reflect
+  let control: [number, number] | null = null;
+  let command = '';
+  let i = 0;
+
+  const num = () => Number(tokens[i++]);
+  const finish = () => {
+    if (ring.length > 2) rings.push(ring);
+    ring = [];
+  };
+  const to = (nx: number, ny: number) => {
+    x = nx;
+    y = ny;
+    ring.push([x, y]);
+  };
+  const curve = (points: Array<[number, number]>) => {
+    // Bézier of any order through `points`, from the current point
+    const all: Array<[number, number]> = [[x, y], ...points];
+    for (let s = 1; s <= CURVE_STEPS; s++) {
+      const t = s / CURVE_STEPS;
+      let level = all;
+      while (level.length > 1) {
+        level = level.slice(1).map(([px, py], k) => {
+          const [qx, qy] = level[k];
+          return [qx + (px - qx) * t, qy + (py - qy) * t] as [number, number];
+        });
+      }
+      ring.push(level[0]);
+    }
+    [x, y] = points[points.length - 1];
+    control = points.length > 1 ? points[points.length - 2] : null;
+  };
+
+  while (i < tokens.length) {
+    if (/[a-zA-Z]/.test(tokens[i])) command = tokens[i++];
+    const relative = command === command.toLowerCase();
+    const ox = relative ? x : 0;
+    const oy = relative ? y : 0;
+    const reflected = (): [number, number] =>
+      control ? [2 * x - control[0], 2 * y - control[1]] : [x, y];
+    switch (command.toUpperCase()) {
+      case 'M':
+        finish();
+        start = [ox + num(), oy + num()];
+        to(...start);
+        // Further pairs are lines
+        command = relative ? 'l' : 'L';
+        control = null;
+        break;
+      case 'L':
+        to(ox + num(), oy + num());
+        control = null;
+        break;
+      case 'H':
+        to(ox + num(), y);
+        control = null;
+        break;
+      case 'V':
+        to(x, oy + num());
+        control = null;
+        break;
+      case 'C':
+        curve([
+          [ox + num(), oy + num()],
+          [ox + num(), oy + num()],
+          [ox + num(), oy + num()],
+        ]);
+        break;
+      case 'S':
+        curve([reflected(), [ox + num(), oy + num()], [ox + num(), oy + num()]]);
+        break;
+      case 'Q':
+        curve([
+          [ox + num(), oy + num()],
+          [ox + num(), oy + num()],
+        ]);
+        break;
+      case 'T': {
+        const c = reflected();
+        curve([c, [ox + num(), oy + num()]]);
+        control = c;
+        break;
+      }
+      case 'A':
+        // Radii, rotation, and flags don't move the end point
+        i += 5;
+        to(ox + num(), oy + num());
+        control = null;
+        break;
+      case 'Z':
+        [x, y] = start;
+        finish();
+        control = null;
+        break;
+      default:
+        i++;
+    }
+  }
+  finish();
+  return rings;
+}

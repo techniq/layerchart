@@ -1120,13 +1120,14 @@ export class ChartState<
   /**
    * Whether the transform turns and tips the isometric view, as well as panning and zooming it — a
    * `drag: 'rotate'` (or the `dragSwitchKey` held) turns it across and tips it up and down.  Any
-   * transform `mode` but `'none'`, without a geo projection, which a transform otherwise drives.
+   * transform `mode` but `'none'` — with a geo projection, only `'canvas'`, as the others drive
+   * the projection.
    */
   isometricTransform = $derived(
     !!this.#isometric &&
       !!this.props.transform?.mode &&
       this.props.transform.mode !== 'none' &&
-      !this.props.geo?.projection
+      (!this.props.geo?.projection || this.props.transform.mode === 'canvas')
   );
 
   /** The `isometric` options' `rotate` / `tilt`, with their defaults — the angles the view eases to */

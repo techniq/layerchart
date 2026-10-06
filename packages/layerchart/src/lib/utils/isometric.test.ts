@@ -12,7 +12,9 @@ import {
   multiplyMatrix,
   planeEllipse,
   paintOrder,
+  extrudeRings,
 } from './isometric.js';
+import { pathRings } from './path.js';
 
 /** Screen angle of a direction, in degrees above the horizontal */
 function elevation(v: { x: number; y: number }) {
@@ -377,5 +379,64 @@ describe('paintOrder', () => {
         if (xApart && yOverlap) expect(at.get(a)!).toBeLessThan(at.get(b)!);
       }
     }
+  });
+});
+
+describe('pathRings', () => {
+  it('reads each subpath as a ring, absolute and relative', () => {
+    expect(pathRings('M0,0L10,0L10,10Z m20,0 h5 v5 h-5z')).toEqual([
+      [
+        [0, 0],
+        [10, 0],
+        [10, 10],
+      ],
+      [
+        [20, 0],
+        [25, 0],
+        [25, 5],
+        [20, 5],
+      ],
+    ]);
+  });
+
+  it('flattens curves into steps ending on their end point', () => {
+    const [ring] = pathRings('M0,0 C0,10 10,10 10,0 L5,-5 Z');
+    expect(ring.length).toBeGreaterThan(4);
+    expect(ring).toContainEqual([10, 0]);
+    // A point partway along the curve, above the chord
+    expect(ring.some(([x, y]) => x > 0 && x < 10 && y > 5)).toBe(true);
+  });
+});
+
+describe('extrudeRings', () => {
+  const m = createIsometricMatrix({}, { width: 100, height: 100 }, { width: 100, height: 100 });
+  const lift = isometricLift({});
+  const square = (x: number, y: number, size: number, clockwise = true): Array<[number, number]> =>
+    clockwise
+      ? [
+          [x, y],
+          [x + size, y],
+          [x + size, y + size],
+          [x, y + size],
+        ]
+      : [
+          [x, y],
+          [x, y + size],
+          [x + size, y + size],
+          [x + size, y],
+        ];
+
+  it('stands up the two sides of a square that face the viewer, whichever way it winds', () => {
+    for (const clockwise of [true, false]) {
+      const { sides } = extrudeRings([square(0, 0, 10, clockwise)], 0, 20, lift, m);
+      expect(sides.match(/M/g)).toHaveLength(2);
+    }
+  });
+
+  it('shows the inside of a hole from its far side', () => {
+    // A hole's near walls face away; its far walls face the viewer
+    const outer = extrudeRings([square(0, 0, 30)], 0, 20, lift, m).sides;
+    const withHole = extrudeRings([square(0, 0, 30), square(10, 10, 10)], 0, 20, lift, m).sides;
+    expect(withHole.match(/M/g)!.length).toBe(outer.match(/M/g)!.length + 2);
   });
 });

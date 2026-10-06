@@ -20,6 +20,36 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
+    const raised = c.raised;
+    if (raised) {
+      // Stood up on an isometric floor: the sides facing the viewer, then the shape on top
+      if (raised.sides) {
+        renderPathData(
+          ctx,
+          raised.sides,
+          styleOverrides ?? {
+            // The shape's colour, but not its outline (see the svg layer)
+            styles: {
+              fill: rest.fill,
+              fillOpacity: rest.fillOpacity,
+              opacity: rest.opacity,
+              stroke: 'none',
+            },
+            classes: cls('lc-path-side', rest.class as string | undefined),
+          }
+        );
+      }
+      // Shading is only for the eye — the hit canvas needs the sides their flat hit colour
+      if (!styleOverrides) {
+        for (const side of raised.shades) {
+          renderPathData(ctx, side.d, {
+            styles: { fill: 'black', fillOpacity: side.shade, opacity: rest.opacity },
+          });
+        }
+      }
+      ctx.save();
+      ctx.translate(raised.shift.x, raised.shift.y);
+    }
     renderPathData(
       ctx,
       c.tweenedPathData ?? '',
@@ -38,6 +68,7 @@
             style: (rest as any).style as string | undefined,
           }
     );
+    if (raised) ctx.restore();
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue
@@ -84,6 +115,7 @@
         rest.opacity,
         rest.class,
         c.tweenedPathData,
+        c.raised,
         (rest as any).style,
       ],
     },

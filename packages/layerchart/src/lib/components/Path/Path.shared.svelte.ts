@@ -12,6 +12,9 @@ import {
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { extrudeRings } from '$lib/utils/isometric.js';
+import { pathRings } from '$lib/utils/path.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 import type { draw as _drawTransition } from 'svelte/transition';
@@ -69,6 +72,14 @@ export type PathPropsWithoutHTML = {
   pathRef?: SVGPathElement;
 
   motion?: MotionProp;
+
+  /**
+   * On an `isometric` chart, stand the shape up off the floor — `z` pixels tall, or floating from
+   * `start` to `end` — its sides facing the viewer shaded as if lit from the upper left.  An
+   * unfilled path (ex. a line) has no sides, so is just raised to the top.  No effect on a flat
+   * chart.
+   */
+  z?: number | [start: number, end: number];
 } & CommonStyleProps;
 
 export type PathProps = PathPropsWithoutHTML &
@@ -103,6 +114,25 @@ export class PathState {
   // Re-key trigger for draw transitions
   drawKey = $state(Symbol());
 
+  #getProps: () => PathProps;
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * On an isometric floor with a `z`, where the shape stands: the offset its top is drawn at, and
+   * its sides (see `extrudeRings`) — `null` when it lies flat.
+   */
+  raised = $derived.by(() => {
+    const { z, fill } = this.#getProps();
+    if (z == null) return null;
+    const m = this.#layerIsometric();
+    const lift = this.chartCtx.isometricLift;
+    if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
+    const [z0, z1] = Array.isArray(z) ? z : [0, z];
+    const shift = { x: lift.x * z1, y: lift.y * z1 };
+    if (fill === 'none' || z1 <= z0) return { shift, sides: '', shades: [] };
+    return { shift, ...extrudeRings(pathRings(this.tweenedPathData ?? ''), z0, z1, lift, m) };
+  });
+
   /**
    * @param getPathData  Hot-path getter — reads only `pathData`. Kept separate from
    *                     `getProps` so the `<path d=...>` updater (and the canvas
@@ -116,6 +146,7 @@ export class PathState {
     getProps: () => PathProps = () => ({}) as PathProps
   ) {
     this.#getPathData = () => resolvePathData(getPathData());
+    this.#getProps = getProps;
 
     const initial = getProps();
     const extractedTween = extractTweenConfig(initial.motion);
