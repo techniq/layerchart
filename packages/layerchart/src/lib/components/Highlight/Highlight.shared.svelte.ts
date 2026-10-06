@@ -5,6 +5,7 @@ import { notNull } from '@layerstack/utils';
 
 import type Bar from '../Bar/Bar.svelte';
 import type Circle from '../Circle/Circle.svelte';
+import type Ellipse from '../Ellipse/Ellipse.svelte';
 import type Line from '../Line/Line.svelte';
 import type Rect from '../Rect/Rect.svelte';
 import { accessor, chartDataArray, isEqualValue, type Accessor } from '$lib/utils/common.js';
@@ -12,6 +13,8 @@ import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 import { isSinglePointMode, panelDatum } from '$lib/utils/tooltip.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { backWalls, planeEllipse } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
@@ -35,6 +38,12 @@ export type HighlightPropsWithoutHTML = {
   x?: Accessor;
   /** Override `y` from context */
   y?: Accessor;
+  /**
+   * Override `z` from context.  On an `isometric` chart with a `z`, the highlight's points float
+   * at the hovered row's height — pin it with a constant to mark the row's position on a plane
+   * instead: `z={() => 0}` puts them on the floor beneath, like a shadow.
+   */
+  z?: Accessor;
   /**
    * Use the chart's radius scale for highlight point size.
    * When `true`, uses the `r` config from the chart context.
@@ -81,6 +90,14 @@ export type HighlightPropsWithoutHTML = {
     | boolean
     | Partial<ComponentProps<typeof Line>>
     | Snippet<[{ lines: HighlightLineSegment[] }]>;
+
+  /**
+   * On an `isometric` chart with a `z`, the point's light spot on every grid the box shows — the
+   * floor beneath it and each back wall beside it — lying flat on each, like the shadows a light
+   * from that side would cast.  Pass props to style the `Ellipse`s, and `r` for their size.
+   * @default false
+   */
+  shadows?: boolean | (Partial<ComponentProps<typeof Ellipse>> & { r?: number });
 
   /**
    * Show area and pass props to Rect
@@ -142,6 +159,27 @@ export class HighlightState {
 
   highlightData = $derived(this.#props.data ?? this.ctx.tooltip.data);
 
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * How far the highlight rises off an `isometric` floor — to the hovered row's `z` — as an offset
+   * on the flat plot, or `null` when there's no height to rise to.
+   */
+  lift = $derived.by(() => {
+    const lift = this.ctx.isometricLift;
+    const height = this.#height;
+    if (!lift || height == null) return null;
+    return { x: lift.x * height, y: lift.y * height };
+  });
+
+  /** The hovered row's height off an `isometric` floor in pixels, or `null` without one */
+  #height = $derived.by(() => {
+    const z = this.#props.z ?? this.ctx.props.z;
+    if (!this.#layerIsometric() || !this.ctx.isometricLift || z == null) return null;
+    if (this.highlightData == null) return null;
+    return Number(this.ctx.zScale(accessor(z)(this.highlightData))) || 0;
+  });
+
   /**
    * Whether the highlighted row belongs to the panel this is rendering into.
    *
@@ -200,7 +238,80 @@ export class HighlightState {
     return value != null ? this.ctx.rScale(value) : undefined;
   }
 
+  /**
+   * The row's position traced on the grid — on a flat chart, across the plot at its `x` / `y`.  On
+   * an `isometric` chart with a `z`, on every grid the box shows: those same lines on the floor,
+   * then on each back wall a line up it at the `x` or `y` of the edge it stands on, and a line
+   * across it at the row's height.
+   */
   lines = $derived.by<HighlightLineSegment[]>(() => {
+    const floor = this.#flatLines;
+    const m = this.#layerIsometric();
+    const lift = this.ctx.isometricLift;
+    const height = this.#height;
+    const depth = this.ctx.zDepth;
+    if (!m || !lift || height == null || depth <= 0) return floor;
+
+    const raise = (p: { x: number; y: number }, h: number) => ({
+      x: p.x + lift.x * h,
+      y: p.y + lift.y * h,
+    });
+    const segment = (a: { x: number; y: number }, b: { x: number; y: number }) => ({
+      x1: a.x,
+      y1: a.y,
+      x2: b.x,
+      y2: b.y,
+    });
+    const axis = this.axis;
+    const x = (this.xCoordScalar as number) + this.xOffset;
+    const y = (this.yCoordScalar as number) + this.yOffset;
+
+    const walls = backWalls({ width: this.ctx.width, height: this.ctx.height }, m).flatMap(
+      (edge) => {
+        const lines = [segment(raise(edge.from, height), raise(edge.to, height))];
+        const along = edge.axis === 'x' ? ['x', 'both'] : ['y', 'both'];
+        if (along.includes(axis)) {
+          const foot = edge.axis === 'x' ? { x, y: edge.from.y } : { x: edge.from.x, y };
+          lines.push(segment(foot, raise(foot, depth)));
+        }
+        return lines;
+      }
+    );
+    return [...floor, ...walls];
+  });
+
+  /**
+   * For `shadows`: the point's light spot on the floor beneath it and on each back wall, as the
+   * ellipse a circle lying on each draws — none without an isometric floor and a height.
+   */
+  shadows = $derived.by(() => {
+    const m = this.#layerIsometric();
+    const lift = this.ctx.isometricLift;
+    const height = this.#height;
+    if (!m || !lift || height == null || this.xCoordScalar == null || this.yCoordScalar == null) {
+      return [];
+    }
+
+    const shadowsProp = this.#props.shadows;
+    const r = (typeof shadowsProp === 'object' ? shadowsProp.r : undefined) ?? 6;
+    const x = (this.xCoordScalar as number) + this.xOffset;
+    const y = (this.yCoordScalar as number) + this.yOffset;
+
+    const floor = { cx: x, cy: y, ...planeEllipse({ x: 1, y: 0 }, { x: 0, y: 1 }, r) };
+    const walls = backWalls({ width: this.ctx.width, height: this.ctx.height }, m).map((edge) => {
+      // Level with the point, on the wall at its x (a wall along x) or y (a wall along y)
+      const foot = edge.axis === 'x' ? { x, y: edge.from.y } : { x: edge.from.x, y };
+      const across = edge.axis === 'x' ? { x: 1, y: 0 } : { x: 0, y: 1 };
+      return {
+        cx: foot.x + lift.x * height,
+        cy: foot.y + lift.y * height,
+        ...planeEllipse(across, lift, r),
+      };
+    });
+    return [floor, ...walls];
+  });
+
+  #flatLines = $derived.by<HighlightLineSegment[]>(() => {
     let tmpLines: HighlightLineSegment[] = [];
     if (!this.highlightData) return tmpLines;
     // The crosshair marks a position rather than a row, so `facetAll` draws it in every panel —
@@ -649,6 +760,11 @@ export class HighlightState {
       if (pointR != null) {
         tmpPoints = tmpPoints.map((p) => ({ ...p, r: pointR }));
       }
+    }
+
+    const lift = this.lift;
+    if (lift) {
+      tmpPoints = tmpPoints.map((p) => ({ ...p, x: p.x + lift.x, y: p.y + lift.y }));
     }
 
     return tmpPoints;

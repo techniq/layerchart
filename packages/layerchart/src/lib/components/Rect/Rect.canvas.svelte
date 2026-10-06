@@ -6,7 +6,7 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
   import { renderPathData, renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { polygonPath } from '$lib/utils/isometric.js';
+  import { polygonPath, shadeFilter, type BoxFace } from '$lib/utils/isometric.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
@@ -58,6 +58,22 @@
         };
   }
 
+  /** Stood up into a box on an isometric floor: the sides facing the viewer, then the top */
+  function renderFaces(
+    ctx: CanvasRenderingContext2D,
+    faces: BoxFace[],
+    styleOpts: ComputedStylesOptions,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
+    for (const face of faces) {
+      // Shading is only for the eye — the hit canvas needs each face its flat hit colour
+      const filter = styleOverrides ? undefined : shadeFilter(face);
+      if (filter) ctx.filter = filter;
+      renderPathData(ctx, polygonPath(face.points), styleOpts);
+      if (filter) ctx.filter = 'none';
+    }
+  }
+
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
@@ -82,17 +98,7 @@
           resolvedClass
         );
         if (item.faces) {
-          // Stood up into a box on an isometric floor: the sides facing the viewer, then the top
-          for (const face of item.faces) {
-            const pathData = polygonPath(face.points);
-            renderPathData(ctx, pathData, styleOpts);
-            // Shading is only for the eye — the hit canvas needs each face its flat hit colour
-            if (face.shade && !styleOverrides) {
-              renderPathData(ctx, pathData, {
-                styles: { fill: 'black', fillOpacity: face.shade, opacity: resolvedOpacity },
-              });
-            }
-          }
+          renderFaces(ctx, item.faces, styleOpts, styleOverrides);
           continue;
         }
         renderRect(
@@ -109,6 +115,8 @@
           styleOpts
         );
       }
+    } else if (c.pixelFaces) {
+      renderFaces(ctx, c.pixelFaces, getStyleOptions(styleOverrides), styleOverrides);
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
       renderRect(
@@ -150,6 +158,7 @@
       deps: () => [
         c.dataMode,
         c.dataMode ? c.resolvedItems : null,
+        c.pixelFaces,
         c.motionX,
         c.motionY,
         c.motionWidth,

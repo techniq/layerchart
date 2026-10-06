@@ -16,7 +16,7 @@ import { occlude } from '$lib/utils/occlusion.js';
 import { getTextRect } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { viewportAnchors } from '$lib/utils/isometric.js';
+import { floorCorner, screenToFloor, viewportAnchors } from '$lib/utils/isometric.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { type MotionProp } from '$lib/utils/motion.svelte.js';
@@ -29,9 +29,10 @@ import {
 
 export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
   /**
-   * Location of axis
+   * Location of axis.  `'back'` stands up the back corner of an `isometric` chart's floor — the
+   * left end of its back walls — and runs along `z`, the height.
    */
-  placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
+  placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius' | 'back';
 
   /**
    * The label for the axis.
@@ -233,6 +234,24 @@ export class AxisState {
     }[this.#props.placement as string];
     return outward ? viewportAnchors(m, outward) : undefined;
   }
+  /**
+   * For `placement="back"`: the floor corner the axis stands on, how a height lifts off it, and
+   * screen-space offsets restated on the floor — `null` without an isometric floor and a `z`.
+   */
+  back = $derived.by(() => {
+    const m = this.#layerIsometric();
+    const lift = this.ctx.isometricLift;
+    if (!m || !lift || this.ctx.props.z == null) return null;
+    const corner = floorCorner({ width: this.ctx.width, height: this.ctx.height }, m, 'left');
+    const left = screenToFloor(m, { x: -1, y: 0 });
+    const up = screenToFloor(m, { x: 0, y: -1 });
+    if (!left || !up) return null;
+    const raise = (height: number) => ({
+      x: corner.x + lift.x * height,
+      y: corner.y + lift.y * height,
+    });
+    return { corner, raise, left, up, top: raise(this.ctx.zDepth) };
+  });
 
   /**
    * Whether to draw at all.  In a faceted chart an axis belongs on the grid's outer edge — a
@@ -240,6 +259,8 @@ export class AxisState {
    * panels don't redraw the same ticks.  `facetAll` opts back into one per panel.
    */
   visible = $derived.by(() => {
+    // Height only stands up off an isometric floor
+    if (this.#props.placement === 'back' && !this.back) return false;
     const facet = this.#facetPanel?.();
     if (!facet || this.#props.facetAll) return true;
 
@@ -267,6 +288,7 @@ export class AxisState {
 
   orientation = $derived.by(() => {
     const placement = this.#props.placement;
+    if (placement === 'back') return 'back';
     return placement === 'angle'
       ? 'angle'
       : placement === 'radius'
@@ -278,21 +300,24 @@ export class AxisState {
 
   scale = $derived.by(() => {
     const scaleProp = this.#props.scale;
-    return (
-      scaleProp ??
-      (['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale)
-    );
+    if (scaleProp) return scaleProp;
+    if (this.orientation === 'back') return this.ctx.zScale;
+    return ['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale;
   });
 
   interval = $derived(
-    ['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xInterval : this.ctx.yInterval
+    this.orientation === 'back'
+      ? null
+      : ['horizontal', 'angle'].includes(this.orientation)
+        ? this.ctx.xInterval
+        : this.ctx.yInterval
   );
 
   defaultTickSpacing = $derived.by(() => {
     const placement = this.#props.placement;
     return ['top', 'bottom', 'angle'].includes(placement)
       ? 80
-      : ['left', 'right', 'radius'].includes(placement)
+      : ['left', 'right', 'radius', 'back'].includes(placement)
         ? 50
         : undefined;
   });
@@ -327,6 +352,7 @@ export class AxisState {
     if (this.orientation === 'vertical') return this.ctx.height;
     if (this.orientation === 'horizontal') return this.ctx.width;
     if (this.orientation === 'radius') return this.ctx.height / 2;
+    if (this.orientation === 'back') return this.ctx.zDepth;
     if (this.orientation === 'angle') {
       // The length of the arc the labels run around — the angle swept, at the outer radius.  The
       // chart's width has nothing to do with it, so resizing it mustn't change the ticks.
@@ -433,6 +459,9 @@ export class AxisState {
           x: this.xRangeMinMax[0],
           y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
         };
+
+      case 'back':
+        return this.back ? this.back.raise(scale(tick)) : { x: 0, y: 0 };
     }
     return { x: 0, y: 0 };
   }
@@ -496,6 +525,18 @@ export class AxisState {
           verticalAnchor: 'middle',
           dx: 2,
         };
+
+      case 'back': {
+        // Off to the left of the edge on screen, facing the viewer, however the floor is turned
+        const gap = tickLength + labelPadding;
+        return {
+          textAnchor: 'end',
+          verticalAnchor: 'middle',
+          dx: (this.back?.left.x ?? 0) * gap,
+          dy: (this.back?.left.y ?? 0) * gap,
+          viewport: true,
+        };
+      }
     }
     return {};
   }
@@ -555,6 +596,26 @@ export class AxisState {
       classes = {},
     } = this.#props;
     const anchors = this.#viewportAnchors(labelProps?.viewport);
+
+    // Atop the edge, facing the viewer
+    if (this.back && this.#props.placement === 'back') {
+      const gap = 8;
+      return {
+        value: typeof label === 'function' ? '' : label,
+        x: this.back.top.x + this.back.up.x * gap,
+        y: this.back.top.y + this.back.up.y * gap,
+        textAnchor: 'middle',
+        verticalAnchor: 'end',
+        viewport: true,
+        capHeight: '7px',
+        lineHeight: '11px',
+        fill,
+        stroke,
+        ...labelProps,
+        class: cls('lc-axis-label', classes.label, labelProps?.class),
+      } as TextProps;
+    }
+
     return {
       value: typeof label === 'function' ? '' : label,
       x: this.resolvedLabelX,

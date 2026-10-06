@@ -6,7 +6,7 @@
   import type { SVGAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-  import { polygonPath } from '$lib/utils/isometric.js';
+  import { polygonPath, shadeFilter, type BoxFace } from '$lib/utils/isometric.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
   let {
@@ -19,8 +19,9 @@
     height,
     rx: rxProp,
     ry: ryProp,
-    // Not an SVG attribute — consumed by `RectState`
+    // Not SVG attributes — consumed by `RectState`
     z,
+    shade,
     children,
     ...rest
   }: RectProps = $props();
@@ -35,9 +36,20 @@
         rx: rxProp,
         ry: ryProp,
         z,
+        shade,
         ...rest,
       }) as RectProps
   );
+
+  type FaceStyle = {
+    fill?: string;
+    fillOpacity?: number;
+    stroke?: string;
+    strokeOpacity?: number;
+    strokeWidth?: number;
+    opacity?: number;
+    class?: string;
+  };
 
   let ref = $state<SVGRectElement>();
 
@@ -67,35 +79,15 @@
     {@const resolvedClass = resolveStyleProp(rest.class, item.d)}
     {@const pathData = c.roundedRectPath(item.x, item.y, item.width, item.height)}
     {#if item.faces}
-      <!-- Stood up into a box on an isometric floor: the sides facing the viewer, then the top -->
-      <g class="lc-rect-box">
-        {#each item.faces as face}
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <path
-            {...rest as unknown as SVGAttributes<SVGPathElement>}
-            d={polygonPath(face.points)}
-            fill={resolvedFill}
-            fill-opacity={resolvedFillOpacity}
-            stroke={resolvedStroke}
-            stroke-opacity={resolvedStrokeOpacity}
-            stroke-width={resolvedStrokeWidth}
-            opacity={resolvedOpacity}
-            stroke-dasharray={c.dashArrayAttr}
-            class={cls('lc-rect', `lc-rect-${face.kind}`, resolvedClass)}
-          />
-          {#if face.shade}
-            <path
-              d={polygonPath(face.points)}
-              fill="black"
-              fill-opacity={face.shade}
-              opacity={resolvedOpacity}
-              pointer-events="none"
-              class="lc-rect-shade"
-            />
-          {/if}
-        {/each}
-      </g>
+      {@render box(item.faces, {
+        fill: resolvedFill,
+        fillOpacity: resolvedFillOpacity,
+        stroke: resolvedStroke,
+        strokeOpacity: resolvedStrokeOpacity,
+        strokeWidth: resolvedStrokeWidth,
+        opacity: resolvedOpacity,
+        class: resolvedClass,
+      })}
     {:else if pathData}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -131,6 +123,16 @@
       />
     {/if}
   {/each}
+{:else if c.pixelFaces}
+  {@render box(c.pixelFaces, {
+    fill: c.staticFill,
+    fillOpacity: c.staticFillOpacity,
+    stroke: c.staticStroke,
+    strokeOpacity: c.staticStrokeOpacity,
+    strokeWidth: c.staticStrokeWidth,
+    opacity: c.staticOpacity,
+    class: c.staticClassName,
+  })}
 {:else if c.pixelPathData}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -166,6 +168,29 @@
     bind:this={ref}
   />
 {/if}
+
+<!-- Stood up into a box on an isometric floor: the sides facing the viewer, then the top -->
+{#snippet box(faces: BoxFace[], style: FaceStyle)}
+  <g class="lc-rect-box">
+    {#each faces as face}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <path
+        {...rest as unknown as SVGAttributes<SVGPathElement>}
+        d={polygonPath(face.points)}
+        fill={style.fill}
+        fill-opacity={style.fillOpacity}
+        stroke={style.stroke}
+        stroke-opacity={style.strokeOpacity}
+        stroke-width={style.strokeWidth}
+        opacity={style.opacity}
+        stroke-dasharray={c.dashArrayAttr}
+        style:filter={shadeFilter(face)}
+        class={cls('lc-rect', `lc-rect-${face.kind}`, style.class)}
+      />
+    {/each}
+  </g>
+{/snippet}
 
 <style>
   @layer base {

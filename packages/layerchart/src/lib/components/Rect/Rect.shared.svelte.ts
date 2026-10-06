@@ -116,11 +116,19 @@ export type RectPropsWithoutHTML = {
    * chart's `z`, so `<Chart z="value">` stands every rect up off the floor.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
-   * - `number`: pixel height
+   * - `number`: pixel height — in pixel mode too, where it's the only way to raise the rect
    *
    * A chart `z` returning `[start, end]` floats the box between the two.  No effect on a flat chart.
    */
   z?: DataProp;
+
+  /**
+   * Whether a rect raised by `z` shades its sides, as if lit from the upper left — set `false` for
+   * flat colour.
+   *
+   * @default true
+   */
+  shade?: boolean;
 
   /**
    * Insets to shrink the rendered rectangle.
@@ -221,6 +229,32 @@ export class RectState {
     return this.#props.z != null || this.chartCtx.props.z != null;
   });
 
+  /** `faces` with their shading dropped when `shade` is off */
+  #shaded(faces: BoxFace[]) {
+    return this.#props.shade === false ? faces.map((face) => ({ ...face, shade: 0 })) : faces;
+  }
+
+  /**
+   * In pixel mode, the faces of the box a numeric `z` stands the rect up into — `null` for a flat
+   * rect, or without an isometric floor to stand it on.
+   */
+  pixelFaces = $derived.by((): BoxFace[] | null => {
+    const z = this.#props.z;
+    if (this.dataMode || typeof z !== 'number') return null;
+    const m = this.#layerIsometric();
+    const lift = this.chartCtx.isometricLift;
+    if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
+    const box = {
+      x: this.motionX,
+      y: this.motionY,
+      width: this.motionWidth,
+      height: this.motionHeight,
+      z0: 0,
+      z1: z,
+    };
+    return this.#shaded(boxFaces(box, lift, m));
+  });
+
   /** A box's base and top, in pixels off the floor */
   #resolveZ(d: any): { z0: number; z1: number } {
     const props = this.#props;
@@ -269,7 +303,7 @@ export class RectState {
     const lift = this.chartCtx.isometricLift;
     if (!this.extruded || !m || !lift) return items;
 
-    for (const item of items) item.faces = boxFaces(item, lift, m);
+    for (const item of items) item.faces = this.#shaded(boxFaces(item, lift, m));
     // Back to front, so nearer boxes cover farther ones — by where each footprint's centre lands
     // down the screen.  Exact for boxes on a grid, which don't overlap on the floor.
     const depth = (item: (typeof items)[number]) =>

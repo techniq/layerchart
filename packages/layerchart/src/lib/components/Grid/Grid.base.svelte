@@ -26,6 +26,8 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   import { GridState } from './Grid.shared.svelte.js';
+  import { getLayerIsometric } from '$lib/contexts/isometric.js';
+  import { backWalls } from '$lib/utils/isometric.js';
 
   let {
     Group,
@@ -34,8 +36,10 @@
     Rule,
     x = false,
     y = false,
+    z = false,
     xTicks,
     yTicks,
+    zTicks,
     bandAlign = 'center',
     radialY = 'circle',
     stroke,
@@ -53,8 +57,10 @@
       ({
         x,
         y,
+        z,
         xTicks,
         yTicks,
+        zTicks,
         bandAlign,
         radialY,
         stroke,
@@ -70,6 +76,26 @@
   $effect.pre(() => {
     refProp = ref as any;
   });
+
+  const layerIsometric = getLayerIsometric();
+
+  /**
+   * For `z`: the back walls of an `isometric` chart with a `z`, and how far up the screen one
+   * pixel of height is — `null` where there are no walls to draw on.
+   */
+  const walls = $derived.by(() => {
+    const m = layerIsometric();
+    const lift = c.ctx.isometricLift;
+    const depth = c.ctx.zDepth;
+    if (!z || !m || !lift || c.ctx.props.z == null || depth <= 0) return null;
+    return { lift, depth, edges: backWalls({ width: c.ctx.width, height: c.ctx.height }, m) };
+  });
+
+  /** A point on the floor raised by `height` pixels */
+  function raise(p: { x: number; y: number }, height: number) {
+    const lift = walls!.lift;
+    return { x: p.x + lift.x * height, y: p.y + lift.y * height };
+  }
 
   const transitionIn = $derived(transitionInProp ?? c.defaultTransitionIn) as T;
   const transitionInParams = $derived(transitionInParamsProp ?? c.defaultTransitionInParams);
@@ -192,6 +218,48 @@
       {/if}
     </Group>
   {/if}
+
+  {#if walls}
+    {@const zProps = extractLayerProps(z, 'lc-grid-z-line')}
+    <Group {transitionIn} {transitionInParams} class="lc-grid-z">
+      {#each walls.edges as edge}
+        <!-- Across the wall at each height -->
+        {#each c.zTickVals as tick (tick)}
+          {@const a = raise(edge.from, c.ctx.zScale(tick))}
+          {@const b = raise(edge.to, c.ctx.zScale(tick))}
+          <Line
+            x1={a.x}
+            y1={a.y}
+            x2={b.x}
+            y2={b.y}
+            {stroke}
+            {...zProps}
+            class={cls('lc-grid-z-rule', classes.line, zProps?.class)}
+          />
+        {/each}
+
+        <!-- Up the wall, continuing the floor's gridlines along the edge it stands on -->
+        {#if edge.axis === 'x' ? x : y}
+          {#each edge.axis === 'x' ? c.xTickVals : c.yTickVals as tick (tick)}
+            {@const foot =
+              edge.axis === 'x'
+                ? { x: c.ctx.xScale(tick) + c.xBandOffset, y: edge.from.y }
+                : { x: edge.from.x, y: c.ctx.yScale(tick) + c.yBandOffset }}
+            {@const top = raise(foot, walls.depth)}
+            <Line
+              x1={foot.x}
+              y1={foot.y}
+              x2={top.x}
+              y2={top.y}
+              {stroke}
+              {...zProps}
+              class={cls('lc-grid-z-rule', classes.line, zProps?.class)}
+            />
+          {/each}
+        {/if}
+      {/each}
+    </Group>
+  {/if}
 </Group>
 
 <style>
@@ -203,6 +271,7 @@
         .lc-grid-x-radial-line,
         .lc-grid-y-rule,
         .lc-grid-y-end-rule,
+        .lc-grid-z-rule,
         .lc-grid-y-radial-line
       )
     ) {

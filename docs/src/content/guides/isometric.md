@@ -113,9 +113,41 @@ Try it in the playground below, where the sliders and the drag set the same angl
 
 - **The `z` scale** measures up from the floor: its domain reaches down to `0`, and its range runs to half the plot's shorter side. Set `zDomain` / `zRange` to change either — the **Height** slider in the playground above sets `zRange`, and `0` lays the boxes flat.
 - **A mark's own `z`** overrides the chart's, and a chart `z` returning `[start, end]` floats the box between the two.
+- **A `Rect` placed in pixels** ignores the chart's `z` — it has no row to read — but a number stands it up that many pixels: `<Rect x={0} y={0} width={100} height={60} z={40} />`. With no `width` or `height` it's a wall.
+- **`shade={false}`** draws every face in the same flat colour. Shading darkens each side's own colour, so a translucent box stays as see-through as its top.
 - **The fit** leaves room above the floor for the top of the `z` range, so tall boxes aren't cut off — the floor is a little smaller to make that room.
 - **Boxes are painted back to front**, so nearer ones cover farther ones. That's exact for boxes on a grid, which don't overlap on the floor.
 - **On a flat chart**, or in a layer with `ignoreTransform`, `z` has nothing to raise and the rects stay flat.
+
+### 3D scatter
+
+`Circle` floats each point at its `z` too, painted back to front, and `viewport` keeps it round rather than lying on the floor as an ellipse. Around them, `Frame` stands two walls up the floor's far edges, as tall as the `z` range — each a `Rect` with no depth, stood up like a box; `Grid z` draws gridlines across the walls and carries the floor's `x` / `y` gridlines up them; and `Axis placement="back"` runs the height up the corner where the walls start. All of them follow the view as it turns.
+
+```svelte
+<Chart {data} x="x" y="y" z="z" isometric transform={{ mode: 'projection' }}>
+	<Layer>
+		<Frame />
+		<Grid x y z />
+		<Axis placement="bottom" />
+		<Axis placement="left" />
+		<Axis placement="back" />
+		<Circle cx="x" cy="y" r={6} viewport />
+	</Layer>
+</Chart>
+```
+
+A `zRange` as tall as the floor is deep makes a cube: `zRange={({ height }) => [0, height]}`. Drag to turn it.
+
+:example{ component="Chart" name="isometric-scatter-3d" }
+
+`quadtree` tooltips find each point where it floats — over the floor or not — and `Highlight` floats with the hovered row. Its `lines` trace the row on every grid the box shows: across the floor at its `x` and `y`, and on each back wall, up it at that edge's `x` or `y` and across it at the row's height. `shadows` lays the row's light spot where those lines cross — on the floor beneath it and on each back wall beside it, lying flat on each.
+
+```svelte
+<Highlight data={hovered} lines shadows axis="both" />
+<Highlight data={hovered} points={{ fill: 'none', stroke: 'currentColor' }} />
+```
+
+A floating highlight point is round, like a `viewport` circle. To mark a single plane instead, pin a coordinate: `z={() => 0}` puts a highlight's points on the floor beneath the row.
 
 ## Text
 
@@ -167,5 +199,6 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 - **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
 - **`WebGL` layers** aren't transformed.
 - **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Only `Rect` and `Cell` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **Only `Rect`, `Cell`, `Circle`, and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
 - **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

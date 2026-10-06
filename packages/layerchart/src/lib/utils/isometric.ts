@@ -327,31 +327,126 @@ export function boxFaces(
   const { x, y, width, height, z0, z1 } = box;
   const at = (px: number, py: number, z: number) => ({ x: px + lift.x * z, y: py + lift.y * z });
 
-  // Footprint corners clockwise from the top-left, each with the outward normal of the edge that
-  // starts there
-  const corners = [
-    { x, y, normal: { x: 0, y: -1 } },
-    { x: x + width, y, normal: { x: 1, y: 0 } },
-    { x: x + width, y: y + height, normal: { x: 0, y: 1 } },
-    { x, y: y + height, normal: { x: -1, y: 0 } },
-  ];
-
   const sides: BoxFace[] = [];
-  corners.forEach((p, i) => {
-    const q = corners[(i + 1) % corners.length];
-    // On screen, a side faces the viewer when its normal points down (towards the front)
-    const sx = m.a * p.normal.x + m.c * p.normal.y;
-    const sy = m.b * p.normal.x + m.d * p.normal.y;
-    if (sy <= 1e-9) return;
+  for (const edge of footprintEdges(x, y, width, height)) {
+    const { from: p, to: q } = edge;
+    // A rect with no depth (a wall) has no sides across it
+    if (p.x === q.x && p.y === q.y) continue;
+    const facing = edgeFacing(edge, m);
+    if (!facing.front) continue;
     sides.push({
       kind: 'side',
       points: [at(p.x, p.y, z0), at(q.x, q.y, z0), at(q.x, q.y, z1), at(p.x, p.y, z1)],
       // Lit from the upper left: a side turned to the right sits in more shadow
-      shade: sx > 1e-9 ? 0.3 : 0.15,
+      shade: facing.right ? 0.3 : 0.15,
     });
-  });
+  }
 
-  return [...sides, { kind: 'top', points: corners.map((p) => at(p.x, p.y, z1)), shade: 0 }];
+  // ...nor a top
+  if (!width || !height) return sides;
+  const top = footprintEdges(x, y, width, height).map((e) => at(e.from.x, e.from.y, z1));
+  return [...sides, { kind: 'top', points: top, shade: 0 }];
+}
+
+type FootprintEdge = {
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  /** The direction the edge's side faces, away from the footprint */
+  normal: { x: number; y: number };
+  /** Which axis the edge runs along */
+  axis: 'x' | 'y';
+};
+
+/** A rectangle's edges, clockwise from its top-left corner */
+function footprintEdges(x: number, y: number, width: number, height: number): FootprintEdge[] {
+  const tl = { x, y };
+  const tr = { x: x + width, y };
+  const br = { x: x + width, y: y + height };
+  const bl = { x, y: y + height };
+  return [
+    { from: tl, to: tr, normal: { x: 0, y: -1 }, axis: 'x' },
+    { from: tr, to: br, normal: { x: 1, y: 0 }, axis: 'y' },
+    { from: br, to: bl, normal: { x: 0, y: 1 }, axis: 'x' },
+    { from: bl, to: tl, normal: { x: -1, y: 0 }, axis: 'y' },
+  ];
+}
+
+/** Which way an edge's side faces on screen — towards the viewer (`front`), and to the right */
+function edgeFacing(edge: FootprintEdge, m: AffineMatrix) {
+  const sx = m.a * edge.normal.x + m.c * edge.normal.y;
+  const sy = m.b * edge.normal.x + m.d * edge.normal.y;
+  return { front: sy > 1e-9, right: sx > 1e-9 };
+}
+
+/**
+ * The floor's far edges for the view `m` — where walls stand behind everything else.  Each runs
+ * along `x` or `y`, so a wall's gridlines can follow that axis' ticks.
+ */
+export function backWalls(floor: { width: number; height: number }, m: AffineMatrix) {
+  return footprintEdges(0, 0, floor.width, floor.height)
+    .filter((edge) => !edgeFacing(edge, m).front && !isEdgeOn(edge, m))
+    .map(({ from, to, axis }) => ({ from, to, axis }));
+}
+
+/** An edge seen exactly edge on — its side neither faces the viewer nor turns away */
+function isEdgeOn(edge: FootprintEdge, m: AffineMatrix) {
+  return Math.abs(m.b * edge.normal.x + m.d * edge.normal.y) <= 1e-9;
+}
+
+/** The floor corner furthest to one side of the screen — where the back walls end */
+export function floorCorner(
+  floor: { width: number; height: number },
+  m: AffineMatrix,
+  side: 'left' | 'right'
+) {
+  const corners = footprintEdges(0, 0, floor.width, floor.height).map((e) => e.from);
+  const screenX = (p: { x: number; y: number }) => m.a * p.x + m.c * p.y;
+  return corners.reduce((best, p) =>
+    side === 'left'
+      ? screenX(p) < screenX(best)
+        ? p
+        : best
+      : screenX(p) > screenX(best)
+        ? p
+        : best
+  );
+}
+
+/**
+ * A screen-space offset (ex. "8px to the left") restated on the floor, for drawing something a
+ * fixed distance off a point however the floor is turned.  `null` when `m` collapses the plane.
+ */
+export function screenToFloor(m: AffineMatrix, offset: { x: number; y: number }) {
+  const inverse = viewportMatrix(m);
+  return inverse ? applyMatrix(inverse, offset) : null;
+}
+
+/**
+ * A circle of radius `r` laid in a plane — given as the two directions on the flat plot that run
+ * one pixel across it (`u`) and one pixel up or into it (`v`) — as the ellipse it draws:
+ * semi-axes and the clockwise turn, in degrees, of the first.  The floor is `u = (1, 0)`,
+ * `v = (0, 1)`, a plain circle; a wall pairs its edge's direction with `isometricLift`.
+ */
+export function planeEllipse(u: { x: number; y: number }, v: { x: number; y: number }, r: number) {
+  // The ellipse is the image of the unit circle under [u v]; its axes come from (u v)(u v)ᵀ
+  const a = u.x * u.x + v.x * v.x;
+  const b = u.x * u.y + v.x * v.y;
+  const d = u.y * u.y + v.y * v.y;
+  const mean = (a + d) / 2;
+  const spread = Math.hypot((a - d) / 2, b);
+  return {
+    rx: r * Math.sqrt(Math.max(mean + spread, 0)),
+    ry: r * Math.sqrt(Math.max(mean - spread, 0)),
+    rotate: (Math.atan2(2 * b, a - d) / 2) * (180 / Math.PI),
+  };
+}
+
+/**
+ * The CSS filter that darkens a box face by its `shade` — its own colour made darker, so a
+ * translucent face stays as see-through as the rest of the box.
+ */
+export function shadeFilter(face: Pick<BoxFace, 'shade'>) {
+  return face.shade ? `brightness(${1 - face.shade})` : undefined;
 }
 
 /** `points` as an SVG path */

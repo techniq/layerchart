@@ -7,7 +7,8 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { EllipseState, ellipseMarkInfo, type EllipseProps } from './Ellipse.shared.svelte.js';
 
-  let { ...rest }: EllipseProps = $props();
+  // `rotate` isn't an HTML attribute — it turns the ellipse below
+  let { rotate, ...rest }: EllipseProps = $props();
 
   const c = new EllipseState(() => rest as EllipseProps);
 
@@ -45,7 +46,7 @@
       style:border-width={resolvedBorderWidth}
       style:border-color={resolvedStroke}
       style:border-style="solid"
-      style:transform="translate(-50%, -50%)"
+      style:transform="translate(-50%, -50%) rotate({rotate ?? 0}deg)"
       class={cls('lc-ellipse', resolvedClass)}
     ></div>
   {/each}
@@ -64,7 +65,7 @@
     style:border-width={c.staticBorderWidth}
     style:border-color={c.staticStroke}
     style:border-style="solid"
-    style:transform="translate(-50%, -50%)"
+    style:transform="translate(-50%, -50%) rotate({rotate ?? 0}deg)"
     class={cls('lc-ellipse', c.staticClassName)}
   ></div>
 {/if}

@@ -9,6 +9,7 @@
    */
   export type HighlightBaseLayerComponents = {
     Circle: Component<any>;
+    Ellipse: Component<any>;
     Line: Component<any>;
     Rect: Component<any>;
     Arc: Component<any>;
@@ -25,11 +26,13 @@
 
   let {
     Circle,
+    Ellipse,
     Line,
     Rect,
     Arc,
     points = false,
     lines: linesProp = false,
+    shadows = false,
     area = false,
     bar = false,
     opacity,
@@ -48,6 +51,7 @@
         ...rest,
         points,
         lines: linesProp,
+        shadows,
         area,
         bar,
         opacity,
@@ -117,6 +121,18 @@
     {/if}
   {/if}
 
+  {#if shadows}
+    {@const { r: _r, ...shadowProps } = typeof shadows === 'object' ? shadows : {}}
+    {#each c.shadows as shadow}
+      <Ellipse
+        motion={motion === 'spring' ? 'spring' : undefined}
+        {...shadow}
+        {opacity}
+        {...extractLayerProps(shadowProps, 'lc-highlight-shadow')}
+      />
+    {/each}
+  {/if}
+
   {#if points}
     {#if typeof points === 'function'}
       {@render points({ points: c.points })}
@@ -137,6 +153,7 @@
           r={point.r ?? 4}
           strokeWidth={point.r ? 2 : 6}
           opacity={pointOpacity}
+          viewport={c.lift != null}
           {...extractLayerProps(points, 'lc-highlight-point')}
           onpointerdown={onPointClick &&
             ((e: PointerEvent) => {
@@ -186,6 +203,16 @@
       );
       stroke-width: 2;
       stroke-dasharray: 2 2;
+      pointer-events: none;
+    }
+
+    :global(:where(.lc-highlight-shadow)) {
+      --fill-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+      --stroke-color: none;
       pointer-events: none;
     }
 

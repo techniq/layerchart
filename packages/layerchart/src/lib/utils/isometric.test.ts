@@ -10,6 +10,7 @@ import {
   invertMatrix,
   isometricLift,
   multiplyMatrix,
+  planeEllipse,
 } from './isometric.js';
 
 /** Screen angle of a direction, in degrees above the horizontal */
@@ -294,5 +295,39 @@ describe('multiplyMatrix', () => {
     expect(applyMatrix(multiplyMatrix(scale, translate), { x: 1, y: 1 })).toEqual({ x: 22, y: 12 });
     // Scale, then translate: (1, 1) → (2, 2) → (12, 7)
     expect(applyMatrix(multiplyMatrix(translate, scale), { x: 1, y: 1 })).toEqual({ x: 12, y: 7 });
+  });
+});
+
+describe('planeEllipse', () => {
+  /** Whether `p` lies on the ellipse (centred at the origin) */
+  function onEllipse(e: ReturnType<typeof planeEllipse>, p: { x: number; y: number }) {
+    const t = (-e.rotate * Math.PI) / 180;
+    const x = p.x * Math.cos(t) - p.y * Math.sin(t);
+    const y = p.x * Math.sin(t) + p.y * Math.cos(t);
+    return (x / e.rx) ** 2 + (y / e.ry) ** 2;
+  }
+
+  it('is the circle itself on the floor', () => {
+    const e = planeEllipse({ x: 1, y: 0 }, { x: 0, y: 1 }, 6);
+    expect(e.rx).toBeCloseTo(6);
+    expect(e.ry).toBeCloseTo(6);
+  });
+
+  it('traces the circle laid in any plane', () => {
+    const lift = isometricLift({ rotate: -30, tilt: 70 });
+    for (const across of [
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+    ]) {
+      const e = planeEllipse(across, lift, 5);
+      for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * 2 * Math.PI;
+        const p = {
+          x: 5 * (across.x * Math.cos(a) + lift.x * Math.sin(a)),
+          y: 5 * (across.y * Math.cos(a) + lift.y * Math.sin(a)),
+        };
+        expect(onEllipse(e, p)).toBeCloseTo(1);
+      }
+    }
   });
 });

@@ -467,11 +467,12 @@ export function renderCircle(
 
 export function renderEllipse(
   ctx: CanvasRenderingContext2D,
-  coords: { cx: number; cy: number; rx: number; ry: number },
+  coords: { cx: number; cy: number; rx: number; ry: number; rotate?: number },
   styleOptions: ComputedStylesOptions = {}
 ) {
   ctx.beginPath();
-  ctx.ellipse(coords.cx, coords.cy, coords.rx, coords.ry, 0, 0, 2 * Math.PI);
+  const rotation = ((coords.rotate ?? 0) * Math.PI) / 180;
+  ctx.ellipse(coords.cx, coords.cy, coords.rx, coords.ry, rotation, 0, 2 * Math.PI);
   render(
     ctx,
     {

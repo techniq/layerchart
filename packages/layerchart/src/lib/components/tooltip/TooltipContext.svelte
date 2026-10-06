@@ -280,8 +280,39 @@
     return panel ? { panel, x: x - panel.x, y: y - panel.y } : undefined;
   }
 
+  /** The point drawn nearest a container-relative pixel coordinate, across every panel */
+  function findNearestDrawn(point: { x: number; y: number }) {
+    // The trees hold where points are drawn before the layers' pan / zoom — undo just that
+    let x = point.x - ctx.padding.left;
+    let y = point.y - ctx.padding.top;
+    if (ctx.transform.mode === 'canvas') {
+      x = (x - ctx.transform.translate.x) / ctx.transform.scale;
+      y = (y - ctx.transform.translate.y) / ctx.transform.scale;
+    }
+
+    let nearest: any;
+    let nearestDistance = Infinity;
+    for (const tree of quadtrees.values()) {
+      const found = tree.find(x, y, radius);
+      if (found === undefined) continue;
+      const distance = Math.hypot(tree.x()(found) - x, tree.y()(found) - y);
+      if (distance < nearestDistance) {
+        nearest = found;
+        nearestDistance = distance;
+      }
+    }
+    return nearest;
+  }
+
   /** Find the data point at a container-relative pixel coordinate, using the configured `mode` */
   function findDataAtPoint(point: { x: number; y: number }) {
+    // Raised off an `isometric` floor by `z`, points can float over no part of the floor at all —
+    // so a 2D search skips finding the panel under the pointer and looks through every panel's
+    // points for the one drawn nearest.  On the floor alone, a pointer off it still finds nothing.
+    if (mode === 'quadtree' && ctx.isometricMatrix && ctx.props.z != null) {
+      return findNearestDrawn(point);
+    }
+
     const hit = resolvePanel(point);
     if (!hit) return undefined;
 
@@ -532,6 +563,9 @@
     const projection = geo.projection;
     // Only a 2D search measures across the floor — `quadtree-x` / `-y` are along a data axis
     const isometric = m === 'quadtree' ? ctx.isometricMatrix : null;
+    // Points raised off the floor by `z` are found where they float
+    const lift = isometric && ctx.props.z != null ? ctx.isometricLift : null;
+    const zGet = ctx.zGet;
     const panels = ctx.facet.panels.map((panel) => [panel, panelData(panel)] as const);
 
     const flatX = (d: any) => {
@@ -585,8 +619,13 @@
           // Placed where they're drawn on the floor, so the nearest is the nearest on screen —
           // foreshortening makes the two differ.  Pan / zoom is left out, as it scales every
           // distance alike, so panning needn't rebuild the tree.
-          const at = (d: any) =>
-            applyMatrix(isometric, { x: flatX(d) + panel.x, y: flatY(d) + panel.y });
+          const at = (d: any) => {
+            const z = lift ? Number(zGet(d)) || 0 : 0;
+            return applyMatrix(isometric, {
+              x: flatX(d) + panel.x + (lift?.x ?? 0) * z,
+              y: flatY(d) + panel.y + (lift?.y ?? 0) * z,
+            });
+          };
           tree.x((d) => at(d).x).y((d) => at(d).y);
         } else {
           tree.x(flatX).y(flatY);

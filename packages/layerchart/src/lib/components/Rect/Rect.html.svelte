@@ -6,6 +6,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import { shadeFilter, type BoxFace } from '$lib/utils/isometric.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
   let { children, ref: refProp = $bindable(), ...rest }: RectProps = $props();
@@ -17,9 +18,9 @@
 
   const c = new RectState(() => rest as RectProps);
 
-  // `z` isn't an HTML attribute — `RectState` reads it from `rest`
+  // `z` and `shade` aren't HTML attributes — `RectState` reads them from `rest`
   const htmlRest = $derived.by(() => {
-    const { z: _z, ...attrs } = rest;
+    const { z: _z, shade: _shade, ...attrs } = rest;
     return attrs as unknown as HTMLAttributes<HTMLDivElement>;
   });
 
@@ -44,30 +45,7 @@
           ? '1px'
           : undefined}
     {#if item.faces}
-      <!--
-        Stood up into a box on an isometric floor: the sides facing the viewer, then the top.  Each
-        face is a parallelogram, drawn as a 1px square its own matrix stretches into place.
-      -->
-      {#each item.faces as face}
-        {@const [p0, p1, , p3] = face.points}
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <!-- svelte-ignore a11y_no_static_element_interactions -->
-        <div
-          {...htmlRest}
-          style:position="absolute"
-          style:left="0"
-          style:top="0"
-          style:width="1px"
-          style:height="1px"
-          style:transform-origin="0 0"
-          style:transform="matrix({p1.x - p0.x}, {p1.y - p0.y}, {p3.x - p0.x}, {p3.y - p0.y}, {p0.x},
-          {p0.y})"
-          style:background={resolvedFill}
-          style:box-shadow={face.shade ? `inset 0 0 0 9999px rgb(0 0 0 / ${face.shade})` : null}
-          style:opacity={resolvedOpacity}
-          class={cls('lc-rect', `lc-rect-${face.kind}`, resolvedClass)}
-        ></div>
-      {/each}
+      {@render box(item.faces, resolvedFill, resolvedOpacity, resolvedClass)}
     {:else}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -89,6 +67,8 @@
       ></div>
     {/if}
   {/each}
+{:else if c.pixelFaces}
+  {@render box(c.pixelFaces, c.staticFill, c.staticOpacity, c.staticClassName)}
 {:else}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -112,6 +92,33 @@
     {@render children?.()}
   </div>
 {/if}
+
+<!--
+  Stood up into a box on an isometric floor: the sides facing the viewer, then the top.  Each face
+  is a parallelogram, drawn as a 1px square its own matrix stretches into place.
+-->
+{#snippet box(faces: BoxFace[], fill?: string, opacity?: number, className?: string)}
+  {#each faces as face}
+    {@const [p0, p1, , p3] = face.points}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div
+      {...htmlRest}
+      style:position="absolute"
+      style:left="0"
+      style:top="0"
+      style:width="1px"
+      style:height="1px"
+      style:transform-origin="0 0"
+      style:transform="matrix({p1.x - p0.x}, {p1.y - p0.y}, {p3.x - p0.x}, {p3.y - p0.y}, {p0.x},
+      {p0.y})"
+      style:background={fill}
+      style:filter={shadeFilter(face)}
+      style:opacity
+      class={cls('lc-rect', `lc-rect-${face.kind}`, className)}
+    ></div>
+  {/each}
+{/snippet}
 
 <style>
   @layer base {

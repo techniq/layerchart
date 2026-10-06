@@ -9,6 +9,7 @@
 
 <script lang="ts">
   import HighlightBase from './Highlight.base.svelte';
+  import Ellipse from '../Ellipse/Ellipse.html.svelte';
   import Circle from '../Circle/Circle.html.svelte';
   import Line from '../Line/Line.html.svelte';
   import Rect from '../Rect/Rect.html.svelte';
@@ -22,4 +23,4 @@
   let props: HighlightProps = $props();
 </script>
 
-<HighlightBase {Circle} {Line} {Rect} {Arc} {...props} />
+<HighlightBase {Circle} {Ellipse} {Line} {Rect} {Arc} {...props} />
