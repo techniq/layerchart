@@ -41,9 +41,16 @@ function pressKey(el: Element, key: string) {
 }
 
 describe('TooltipContext keyboard access', () => {
-  it('renders no keyboard targets without a click handler', async () => {
+  it('does not render keyboard targets for a click handler alone', async () => {
     const { container } = render(LineChart, {
-      props: { data, x: 'date', y: 'value', height: 300, width: 400 },
+      props: {
+        data,
+        x: 'date',
+        y: 'value',
+        height: 300,
+        width: 400,
+        onTooltipClick: () => {},
+      },
     });
 
     await expect
@@ -52,7 +59,7 @@ describe('TooltipContext keyboard access', () => {
     expect(getKeyboardTargets(container)).toHaveLength(0);
   });
 
-  it('renders a labeled, tabbable target per data point when a click handler is set', async () => {
+  it('renders a labeled, tabbable target per data point when keyboard access is enabled', async () => {
     const { container } = render(LineChart, {
       props: {
         data,
@@ -60,6 +67,7 @@ describe('TooltipContext keyboard access', () => {
         y: 'value',
         height: 300,
         width: 400,
+        tooltipContext: { keyboard: true },
         onTooltipClick: () => {},
       },
     });
@@ -84,6 +92,7 @@ describe('TooltipContext keyboard access', () => {
         y: 'value',
         height: 300,
         width: 400,
+        tooltipContext: { keyboard: true },
         onTooltipClick: () => {},
       },
     });
@@ -112,6 +121,7 @@ describe('TooltipContext keyboard access', () => {
         y: 'value',
         height: 300,
         width: 400,
+        tooltipContext: { keyboard: true },
         onTooltipClick,
       },
     });
@@ -146,6 +156,7 @@ describe('TooltipContext keyboard access', () => {
         y: 'value',
         height: 300,
         width: 400,
+        tooltipContext: { keyboard: true },
         onTooltipClick,
       },
     });

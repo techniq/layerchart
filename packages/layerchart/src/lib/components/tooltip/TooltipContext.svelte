@@ -79,11 +79,16 @@
     debug?: boolean;
 
     /**
-     * Click handler for the tooltip. When set, every data point also gets a
-     * keyboard-focusable target: focusing one shows its tooltip, and Enter or
-     * Space calls this handler with that data point.
+     * Click handler for the tooltip.
      */
     onclick?: (e: MouseEvent, { data }: { data: any }) => any;
+
+    /**
+     * Add keyboard-focusable targets for each data point when `onclick` is set.
+     * Focusing one shows its tooltip, and Enter or Space calls the click handler.
+     * @default false
+     */
+    keyboard?: boolean;
 
     /**
      * Exposed to allow binding in Chart
@@ -155,6 +160,7 @@
     touchEvents = 'pan-y',
     mode = 'manual',
     onclick,
+    keyboard = false,
     radius = Infinity,
     raiseTarget = false,
     state: stateProp = $bindable() as TooltipStateType<TData>,
@@ -757,12 +763,14 @@
   );
 
   /**
-   * Keyboard access to `onclick`: when a click handler is set, every data point gets an invisible
-   * focusable target.  Focusing one shows its tooltip, and Enter or Space activates the same
-   * handler a pointer click would.  Radial charts and `manual` mode wire their own events on their
-   * own shapes, so they are left out.
+   * Keyboard access to `onclick`: when explicitly enabled and a click handler is set, every data
+   * point gets an invisible focusable target. Focusing one shows its tooltip, and Enter or Space
+   * activates the same handler a pointer click would. Radial charts and `manual` mode wire their
+   * own events on their own shapes, so they are left out.
    */
-  const keyboardTargetsEnabled = $derived(onclick != null && mode !== 'manual' && !ctx.radial);
+  const keyboardTargetsEnabled = $derived(
+    keyboard && onclick != null && mode !== 'manual' && !ctx.radial
+  );
 
   /** Accessible name for a keyboard target — the position axis value, like the tooltip header */
   function keyboardTargetLabel(d: any) {
