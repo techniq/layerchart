@@ -10,7 +10,7 @@
   import Group from '../../Group/Group.svelte';
   import type { ArcChartProps } from './ArcChart.shared.svelte.js';
 
-  let { context = $bindable(), ...props }: ArcChartProps<TData> = $props();
+  let { ref = $bindable(), context = $bindable(), ...props }: ArcChartProps<TData> = $props();
 </script>
 
-<ArcChartBase {Chart} {Arc} {ArcLabel} {Group} bind:context {...props} />
+<ArcChartBase {Chart} {Arc} {ArcLabel} {Group} bind:ref bind:context {...props} />

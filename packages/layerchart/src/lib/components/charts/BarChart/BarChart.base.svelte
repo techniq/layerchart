@@ -40,6 +40,7 @@
     yInterval,
     tooltipContext = true,
     marks,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: BarChartBaseProps<TData> = $props();
@@ -76,6 +77,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   x={xProp}

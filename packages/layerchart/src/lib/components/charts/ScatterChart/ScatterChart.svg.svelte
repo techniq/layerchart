@@ -8,7 +8,7 @@
   import Points from '../../Points/Points.svg.svelte';
   import type { ScatterChartProps } from './ScatterChart.shared.svelte.js';
 
-  let props: ScatterChartProps<TData> = $props();
+  let { ref = $bindable(), context = $bindable(), ...props }: ScatterChartProps<TData> = $props();
 </script>
 
-<ScatterChartBase {Chart} {Points} {...props} />
+<ScatterChartBase {Chart} {Points} bind:ref bind:context {...props} />
