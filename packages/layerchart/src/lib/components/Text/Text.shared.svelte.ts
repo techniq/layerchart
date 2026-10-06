@@ -190,6 +190,17 @@ export type TextPropsWithoutHTML = {
   viewport?: boolean;
 
   /**
+   * Height to raise the text off an `isometric` floor.  In data mode it defaults to the chart's
+   * `z`, so a label floats with the point it names.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height — in pixel mode too
+   *
+   * No effect on a flat chart.
+   */
+  z?: string | number | ((d: any) => any);
+
+  /**
    * A bindable reference to the wrapping `<svg>` element.
    *
    * @bindable
@@ -360,6 +371,28 @@ export class TextState {
     return `translate(${x},${y}) ${matrixToString(m)} translate(${-x},${-y})`;
   }
 
+  /**
+   * Where raising the text by `z` moves it on the flat plot, or `null` when it stays put — no
+   * height, or no isometric floor in this layer (or seen from directly above).
+   */
+  #lift = $derived.by(() => {
+    if (!this.#layerIsometric()) return null;
+    const lift = this.chartCtx.isometricLift;
+    if (!lift || (lift.x === 0 && lift.y === 0)) return null;
+    const z = this.#props.z;
+    const raised = this.dataMode
+      ? z != null || this.chartCtx.props.z != null
+      : typeof z === 'number';
+    return raised ? lift : null;
+  });
+
+  /** The text's height off the floor, in pixels */
+  #resolveZ(d: any) {
+    const z = this.#props.z;
+    if (z != null) return resolveDataProp(z, d, this.chartCtx.zScale, 0);
+    return Number(this.chartCtx.zGet(d)) || 0;
+  }
+
   // Path measurement (only meaningful for SVG layer where the textPath element exists)
   pathRef = $state<SVGPathElement>();
 
@@ -379,11 +412,12 @@ export class TextState {
       const key = keyFn(d, i);
       const resolved = this.resolveTextPosition(d);
       const animated = this.#dataMotionMap?.get(key);
+      const z = this.#lift ? this.#resolveZ(d) : 0;
       return {
         d,
         key,
-        x: animated?.x ?? resolved.x,
-        y: animated?.y ?? resolved.y,
+        x: (animated?.x ?? resolved.x) + (this.#lift?.x ?? 0) * z,
+        y: (animated?.y ?? resolved.y) + (this.#lift?.y ?? 0) * z,
       };
     });
   });
@@ -439,11 +473,21 @@ export class TextState {
   #motionY!: ReturnType<typeof createMotion<number | string>>;
   #motionValue!: ReturnType<typeof createMotion<number>>;
 
+  /** Pixel mode: `(x, y)` raised by a pixel `z` — a CSS value (ex. `"50%"`) has no pixel to raise */
+  #raise<V>(x: V, y: V): { x: V; y: V } {
+    const lift = this.#lift;
+    const z = this.#props.z;
+    if (!lift || typeof z !== 'number' || typeof x !== 'number' || typeof y !== 'number') {
+      return { x, y };
+    }
+    return { x: (x + lift.x * z) as V, y: (y + lift.y * z) as V };
+  }
+
   get motionX() {
-    return this.#motionX.current;
+    return this.#raise(this.#motionX.current, this.#motionY.current).x;
   }
   get motionY() {
-    return this.#motionY.current;
+    return this.#raise(this.#motionX.current, this.#motionY.current).y;
   }
 
   // Resolved width: for path text, defer to the (SVG-bound) pathRef length
@@ -555,8 +599,8 @@ export class TextState {
 
   scaleTransform = $derived.by(() => {
     const props = this.#props;
-    const x = props.x;
-    const y = props.y;
+    // About where the text is drawn — raised by `z`
+    const { x, y } = this.#raise(props.x, props.y);
     const width = props.width;
     const scaleToFit = props.scaleToFit ?? false;
     if (
@@ -578,7 +622,8 @@ export class TextState {
 
   rotateTransform = $derived.by(() => {
     const props = this.#props;
-    return props.rotate ? `rotate(${props.rotate}, ${props.x}, ${props.y})` : '';
+    const { x, y } = this.#raise(props.x, props.y);
+    return props.rotate ? `rotate(${props.rotate}, ${x}, ${y})` : '';
   });
 
   transform = $derived(

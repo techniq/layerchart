@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from 'svelte/elements';
 
-	type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
+	type Actions = 'zoomIn' | 'zoomOut' | 'reset' | 'scrollMode' | 'drag';
 
 	export type Placement =
 		| 'top-left'
@@ -31,7 +31,10 @@
 		size?: ComponentProps<Button>['size'];
 
 		/**
-		 * @default ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode']
+		 * `drag` picks what a drag does — pan, or turn the view — where there's a view to turn (ex. an
+		 * `isometric` chart)
+		 *
+		 * @default ['zoomIn', 'zoomOut', 'reset', 'scrollMode', 'drag']
 		 */
 		show?: Actions[];
 	};
@@ -49,7 +52,8 @@
 	import LucideCircleOff from '~icons/lucide/circle-off';
 	import LucideImageUpscale from '~icons/lucide/image-upscale';
 	import LucideMove from '~icons/lucide/move';
-	import LucideUndo2 from '~icons/lucide/undo-2';
+	import LucideHand from '~icons/lucide/hand';
+	import LucideRotate3d from '~icons/lucide/rotate-3d';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 
@@ -59,7 +63,7 @@
 		placement = 'top-right',
 		orientation = 'vertical',
 		size = 'md',
-		show = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'],
+		show = ['zoomIn', 'zoomOut', 'reset', 'scrollMode', 'drag'],
 		class: className
 	}: TransformControlsProps = $props();
 
@@ -123,21 +127,11 @@
 		</Tooltip>
 	{/if}
 
-	{#if show.includes('center')}
-		<Tooltip title="Center">
-			<Button
-				icon={LucideFocus}
-				on:click={() => chart.transform.translateCenter()}
-				{size}
-				class="text-surface-content p-2"
-			/>
-		</Tooltip>
-	{/if}
-
 	{#if show.includes('reset')}
+		<!-- Back to where the chart started — the whole chart, fitted -->
 		<Tooltip title="Reset">
 			<Button
-				icon={LucideUndo2}
+				icon={LucideFocus}
 				on:click={() => chart.transform.reset()}
 				{size}
 				class="text-surface-content p-2"
@@ -159,6 +153,32 @@
 				{size}
 				value={chart.transform.scrollMode}
 				on:change={(e) => (chart.transform.scrollMode = e.detail.value)}
+				class="text-surface-content"
+			>
+				<svelte:fragment slot="selection" let:value>
+					{#key value}
+						<Icon data={value?.icon ?? LucideChevronDown} />
+					{/key}
+				</svelte:fragment>
+			</MenuButton>
+		</Tooltip>
+	{/if}
+
+	{#if show.includes('drag') && chart.transform.rotation}
+		<Tooltip
+			title={`Drag to ${chart.transform.drag === 'rotate' ? 'rotate' : 'pan'} — hold ${chart.transform.dragSwitchKey} to ${chart.transform.drag === 'rotate' ? 'pan' : 'rotate'}`}
+		>
+			<MenuButton
+				iconOnly
+				options={[
+					{ label: 'Pan', value: 'translate', icon: LucideHand },
+					{ label: 'Rotate', value: 'rotate', icon: LucideRotate3d }
+				]}
+				menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
+				menuIcon={null}
+				{size}
+				value={chart.transform.drag}
+				on:change={(e) => (chart.transform.drag = e.detail.value)}
 				class="text-surface-content"
 			>
 				<svelte:fragment slot="selection" let:value>

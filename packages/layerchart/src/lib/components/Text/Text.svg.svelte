@@ -24,12 +24,13 @@
     // `fontSize` is a typed prop (drives `capHeight` defaults), but on the
     // DOM it must be rendered as the kebab-case `font-size` attribute.
     fontSize,
-    // Not an SVG attribute — consumed by `TextState`
+    // Not SVG attributes — consumed by `TextState`
     viewport,
+    z,
     ...rest
   }: TextProps = $props();
 
-  const c = new TextState(() => ({ rotate, dx, dy, fontSize, viewport, ...rest }) as TextProps);
+  const c = new TextState(() => ({ rotate, dx, dy, fontSize, viewport, z, ...rest }) as TextProps);
 
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();

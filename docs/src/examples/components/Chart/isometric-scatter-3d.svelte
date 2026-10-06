@@ -37,7 +37,7 @@
 		'var(--color-primary-900)'
 	]}
 	isometric={{ rotate: -30, tilt: 70 }}
-	transform={{ mode: 'projection' }}
+	transform={{ mode: 'canvas', drag: 'rotate' }}
 	tooltipContext={{ mode: 'quadtree', radius: 20 }}
 	padding={{ top: 24, bottom: 24, left: 40, right: 24 }}
 	height={500}

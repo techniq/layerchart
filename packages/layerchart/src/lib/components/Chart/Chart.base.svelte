@@ -35,7 +35,6 @@
   import type { ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
-  import { ISOMETRIC_TILT } from '$lib/utils/isometric.js';
   import {
     type BrushDomainType,
     type BrushState,
@@ -117,9 +116,6 @@
     if (transform?.mode !== 'projection')
       return { rotation: false, scale: false, translate: false };
 
-    // Turning and tipping an isometric view is the one thing a drag does to it
-    if (chartState.isometricTransform) return { rotation: true, scale: false, translate: false };
-
     // Auto-detect globe projections from clipAngle (flat projections return 0, globes return > 0)
     let isGlobe = false;
     if (geo?.projection) {
@@ -178,33 +174,35 @@
    * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
    * two are exclusive: one is `mode: 'projection'`, the other `mode: 'domain'`.
    */
-  /** The isometric view the drag starts from — the `isometric` prop's own angles */
+  /**
+   * The isometric view the transform turns from — the `isometric` prop's angles, eased by its
+   * `motion` — or `null`
+   * when there's no view for it to turn
+   */
   const isometricView = $derived.by(() => {
-    const isometric = props.isometric ?? settings.isometric;
-    const options = typeof isometric === 'object' ? isometric : {};
-    return { x: options.rotate ?? -45, y: options.tilt ?? ISOMETRIC_TILT };
+    if (!chartState.isometricTransform) return null;
+    const { rotate, tilt } = chartState.isometricAngles;
+    return { x: rotate, y: tilt };
   });
 
+  /**
+   * `x` is the turn and `y` the tilt, in degrees.  Dragging right spins the floor the way the
+   * pointer moves across its front edge; dragging up tips it towards edge on.
+   */
+  function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
+    return { x: x - deltaX / 2, y: Math.min(89, Math.max(0, y - deltaY * 0.3)) };
+  }
+
   const resolvedInitialTransform = $derived(
-    chartState.isometricTransform
-      ? { translate: isometricView, scale: undefined }
-      : transform?.mode === 'projection'
-        ? {
-            translate: resolvedApply.translate ? initialTransform?.translate : undefined,
-            scale: resolvedApply.scale ? initialTransform?.scale : undefined,
-          }
-        : { translate: initialZoom?.translate, scale: initialZoom?.scale }
+    transform?.mode === 'projection'
+      ? {
+          translate: resolvedApply.translate ? initialTransform?.translate : undefined,
+          scale: resolvedApply.scale ? initialTransform?.scale : undefined,
+        }
+      : { translate: initialZoom?.translate, scale: initialZoom?.scale }
   );
 
   const processTranslate = $derived.by(() => {
-    if (chartState.isometricTransform) {
-      // `x` is the turn and `y` the tilt, in degrees.  Dragging right spins the floor the way the
-      // pointer moves across its front edge; dragging up tips it towards edge on.
-      return (x: number, y: number, deltaX: number, deltaY: number) => ({
-        x: x - deltaX / 2,
-        y: Math.min(89, Math.max(0, y - deltaY * 0.3)),
-      });
-    }
     if (resolvedApply.rotation && chartState.geoState?.projection) {
       return (x: number, y: number, deltaX: number, deltaY: number) => {
         const projectionScale = chartState.geoState.projection!.scale() ?? 0;
@@ -579,6 +577,8 @@
           mode={transform.mode ?? 'none'}
           initialTranslate={resolvedInitialTransform.translate}
           initialScale={resolvedInitialTransform.scale}
+          initialRotation={isometricView}
+          processRotate={processIsometricRotate}
           {processTranslate}
           {...transformProps}
           scaleExtent={resolvedScaleExtent}

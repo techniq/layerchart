@@ -1,3 +1,5 @@
+import type { MotionProp } from './motion.svelte.js';
+
 /**
  * A 2D affine matrix in SVG / canvas order — `x' = a·x + c·y + e`, `y' = b·x + d·y + f`.
  *
@@ -34,6 +36,12 @@ export type IsometricOptions = {
    * @default 'auto'
    */
   aspect?: number | 'auto';
+
+  /**
+   * Ease the view to new `rotate` / `tilt` values rather than jumping there — ex. between flat
+   * (`tilt: 0`) and isometric, or following a slider.  Read as the chart mounts.
+   */
+  motion?: MotionProp;
 };
 
 /** The tilt at which both axes meet the horizontal at 30° */
@@ -447,6 +455,70 @@ export function planeEllipse(u: { x: number; y: number }, v: { x: number; y: num
  */
 export function shadeFilter(face: Pick<BoxFace, 'shade'>) {
   return face.shade ? `brightness(${1 - face.shade})` : undefined;
+}
+
+/** A rectangle on the floor, by its corners — the shape `d3-hierarchy` lays nodes out in */
+export type Footprint = { x0: number; y0: number; x1: number; y1: number };
+
+/**
+ * Whether a box standing on `a` must be painted before one standing on `b`.  A footprint inside
+ * another stands on top of it (a stacked tier), so goes after.  Otherwise the two are apart along
+ * `x` or `y`, and the one farther back along that axis goes first.  Apart along both, with the
+ * axes disagreeing on which is farther back, neither can hide the other.
+ */
+function paintsBefore(a: Footprint, b: Footprint, m: AffineMatrix) {
+  const contains = (p: Footprint, q: Footprint) =>
+    p.x0 <= q.x0 && q.x1 <= p.x1 && p.y0 <= q.y0 && q.y1 <= p.y1;
+  if (contains(a, b)) return true;
+  if (contains(b, a)) return false;
+
+  // `> 0` when `a` is farther back along the axis — screen depth grows by `m.b` per pixel of `x`
+  // and `m.d` per pixel of `y`
+  const apart = (a0: number, a1: number, b0: number, b1: number) =>
+    a1 <= b0 ? 1 : b1 <= a0 ? -1 : 0;
+  const alongX = apart(a.x0, a.x1, b.x0, b.x1) * Math.sign(m.b);
+  const alongY = apart(a.y0, a.y1, b.y0, b.y1) * Math.sign(m.d);
+  if (alongX && alongY) return alongX > 0 && alongY > 0;
+  return (alongX || alongY) > 0;
+}
+
+/**
+ * `items` in the order to paint boxes standing on their footprints, back to front — each before
+ * any box it could hide, and a footprint before the ones stacked inside it.  Exact for footprints
+ * of any sizes, where sorting by a single depth is only exact on a grid.  Quadratic, for a
+ * treemap node's children rather than a whole tree.
+ */
+export function paintOrder<T extends Footprint>(items: readonly T[], m: AffineMatrix): T[] {
+  const n = items.length;
+  const later: number[][] = Array.from({ length: n }, () => []);
+  const waiting = new Array<number>(n).fill(0);
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      if (paintsBefore(items[i], items[j], m)) {
+        later[i].push(j);
+        waiting[j]++;
+      } else if (paintsBefore(items[j], items[i], m)) {
+        later[j].push(i);
+        waiting[i]++;
+      }
+    }
+  }
+
+  // Free to go in any order, boxes go farthest first — a steady order as the view turns
+  const depth = (f: Footprint) => m.b * (f.x0 + f.x1) + m.d * (f.y0 + f.y1);
+  const candidates = items.map((_, i) => i).sort((i, j) => depth(items[i]) - depth(items[j]));
+  const order: T[] = [];
+  const done = new Array<boolean>(n).fill(false);
+  while (order.length < n) {
+    // Footprints that overlap without nesting can't be ordered — rather than stall, take the
+    // farthest left
+    const next =
+      candidates.find((i) => !done[i] && waiting[i] === 0) ?? candidates.find((i) => !done[i])!;
+    done[next] = true;
+    order.push(items[next]);
+    for (const j of later[next]) waiting[j]--;
+  }
+  return order;
 }
 
 /** `points` as an SVG path */

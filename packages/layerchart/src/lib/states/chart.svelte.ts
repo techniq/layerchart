@@ -28,6 +28,7 @@ import {
   fitIsometricFloor,
   isometricLift,
   multiplyMatrix,
+  ISOMETRIC_TILT,
   type AffineMatrix,
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
@@ -41,7 +42,7 @@ import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
 import { SeriesState, type SeriesLayout, type StackLayout } from './series.svelte.js';
 import type { SeriesData } from '$lib/components/charts/types.js';
-import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
+import { createControlledMotion, createMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -410,6 +411,14 @@ export class ChartState<
     if (settings) this.#settings = settings;
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
+
+    // The view eases to new angles with the `isometric` options' `motion`, read once like `motion`
+    const isometric = this.#isometric;
+    this.#angles = createMotion(
+      this.#propAngles,
+      () => this.#propAngles,
+      typeof isometric === 'object' ? isometric.motion : undefined
+    );
 
     // Create GeoState instance — pass a dimensions getter so projection
     // is available during SSR (where $effect doesn't run)
@@ -1109,16 +1118,33 @@ export class ChartState<
   #isometric = $derived(this.props.isometric ?? this.#settings.isometric);
 
   /**
-   * Whether `transform={{ mode: 'projection' }}` turns and tips the isometric view — dragging
-   * across turns it, up and down tips it, the way the same mode spins a globe.  Only without a geo
-   * projection, which that mode otherwise drives.
+   * Whether the transform turns and tips the isometric view, as well as panning and zooming it — a
+   * `drag: 'rotate'` (or the `dragSwitchKey` held) turns it across and tips it up and down.  Any
+   * transform `mode` but `'none'`, without a geo projection, which a transform otherwise drives.
    */
   isometricTransform = $derived(
     !!this.#isometric &&
-      this.props.transform?.mode === 'projection' &&
-      !this.props.geo?.projection &&
-      (this.props.transform?.apply?.rotation ?? true)
+      !!this.props.transform?.mode &&
+      this.props.transform.mode !== 'none' &&
+      !this.props.geo?.projection
   );
+
+  /** The `isometric` options' `rotate` / `tilt`, with their defaults — the angles the view eases to */
+  #propAngles = $derived.by(() => {
+    const isometric = this.#isometric;
+    const options = typeof isometric === 'object' ? isometric : {};
+    return { rotate: options.rotate ?? -45, tilt: options.tilt ?? ISOMETRIC_TILT };
+  });
+
+  #angles: { readonly current: { rotate: number; tilt: number } };
+
+  /**
+   * The view's angles from the `isometric` options, eased by their `motion`.  A transform turns
+   * the view from here, and follows as they change.
+   */
+  get isometricAngles() {
+    return this.#angles.current;
+  }
 
   /**
    * The view the chart is drawn at: the `isometric` options, with `aspect: 'auto'` resolved, and
@@ -1131,10 +1157,10 @@ export class ChartState<
     let options = isometric === true ? {} : isometric;
 
     // Until `TransformContext` loads (lazily) there's no gesture yet — the props stand
-    if (this.isometricTransform && this.transformState) {
-      const { x, y } = this.transformState.translate;
-      options = { ...options, rotate: x, tilt: y };
-    }
+    const rotation = this.isometricTransform ? this.transformState?.rotation : null;
+    options = rotation
+      ? { ...options, rotate: rotation.x, tilt: rotation.y }
+      : { ...options, ...this.isometricAngles };
 
     if (typeof options.aspect === 'number') return options;
     // From the scale types and full domains — not the scales themselves, whose ranges the floor
@@ -1192,7 +1218,7 @@ export class ChartState<
    * rather than `zScale` — which is sized by the floor this is helping to size.
    */
   #zDepthFor(floor: { width: number; height: number }) {
-    if (this.props.z == null) return 0;
+    if (!this.#hasHeight) return 0;
     const range = this.props.zRange;
     const values =
       typeof range === 'function'
@@ -1213,11 +1239,17 @@ export class ChartState<
   });
 
   /**
+   * Whether anything rises off the floor: a `z` channel, or a `zRange` set for marks given heights
+   * of their own — ex. a treemap's tiers, measured with `zScale`.
+   */
+  #hasHeight = $derived(this.props.z != null || this.props.zRange != null);
+
+  /**
    * The tallest height (in pixels) anything rises off the floor — the top of the `z` range when
-   * the chart has a `z` — so the isometric fit leaves room above the floor.
+   * the chart has a `z` or a `zRange` — so the isometric fit leaves room above the floor.
    */
   zDepth = $derived.by(() => {
-    if (this.props.z == null) return 0;
+    if (!this.#hasHeight) return 0;
     const range = this.zScale.range().filter((v: unknown) => typeof v === 'number') as number[];
     return range.length ? Math.max(0, ...range) : 0;
   });

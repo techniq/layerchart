@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { Chart, Cell, Axis, Grid, Layer } from 'layerchart';
-	import { Tween } from 'svelte/motion';
-	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand, scaleQuantize } from 'd3-scale';
 	import { extent } from 'd3-array';
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -25,17 +23,9 @@
 	// axes meet the horizontal at 30°
 	let rotate = $state(-45);
 	let tilt = $state(54.7356);
-	// 0 = seen from directly above, 1 = the view the sliders set
-	const t = Tween.of(() => (view === 'isometric' ? 1 : 0), { duration: 800, easing: cubicInOut });
 
-	// Dragging the chart turns and tips the view (`transform` in `projection` mode) — keep the
-	// sliders in step, once the view has eased in rather than partway through it
-	function onTransform({ translate }: { translate: { x: number; y: number } }) {
-		if (flat || t.current !== 1) return;
-		// Wrapped to the slider's ±180° — the same turn either way round
-		rotate = ((((translate.x + 180) % 360) + 360) % 360) - 180;
-		tilt = translate.y;
-	}
+	// Whether the view is being dragged, rather than easing to new angles (see `onTransform`)
+	let dragging = false;
 
 	export { data };
 </script>
@@ -101,9 +91,22 @@
 		'var(--color-primary-500)',
 		'var(--color-primary-700)'
 	]}
-	isometric={{ rotate: rotate * t.current, tilt: tilt * t.current }}
-	transform={{ mode: 'projection', disablePointer: flat }}
-	{onTransform}
+	isometric={{
+		rotate: flat ? 0 : rotate,
+		tilt: flat ? 0 : tilt,
+		motion: 'spring'
+	}}
+	transform={{ mode: 'canvas', drag: 'rotate', disablePointer: flat }}
+	onTransform={({ rotation }) => {
+		// Dragging turns and tips the view (`drag: 'rotate'`) — keep the sliders in step.  Only
+		// while dragging: the view easing to new angles reports them too
+		if (!dragging || !rotation) return;
+		// Wrapped to the slider's ±180° — the same turn either way round
+		rotate = ((((rotation.x + 180) % 360) + 360) % 360) - 180;
+		tilt = rotation.y;
+	}}
+	ondragstart={() => (dragging = true)}
+	ondragend={() => (dragging = false)}
 	padding={{ left: 20, bottom: 20, top: 8, right: 8 }}
 	height={400}
 >

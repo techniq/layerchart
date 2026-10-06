@@ -73,8 +73,6 @@
     const dx = rest.dx ?? 0;
     const dy = rest.dy ?? 0;
     const rotate = rest.rotate;
-    const x = rest.x;
-    const y = rest.y;
 
     if (c.dataMode) {
       const baseStyles = getTextStyles(styleOverrides);
@@ -126,8 +124,9 @@
       faceViewer(ctx, baseX, getPixelValue(c.motionY) + getPixelValue(dy));
 
       if (rotate !== undefined) {
-        const centerX = getPixelValue(typeof x === 'function' ? 0 : (x ?? 0));
-        const centerY = getPixelValue(typeof y === 'function' ? 0 : (y ?? 0));
+        // About where the text is drawn — raised by `z`
+        const centerX = getPixelValue(c.motionX);
+        const centerY = getPixelValue(c.motionY);
         const radians = degreesToRadians(rotate);
         ctx.translate(centerX, centerY);
         ctx.rotate(radians);

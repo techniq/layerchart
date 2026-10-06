@@ -117,10 +117,11 @@ export type RectPropsWithoutHTML = {
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
    * - `number`: pixel height — in pixel mode too, where it's the only way to raise the rect
+   * - `[start, end]`: pixel heights to float the box between, ex. a tier stacked on another
    *
-   * A chart `z` returning `[start, end]` floats the box between the two.  No effect on a flat chart.
+   * A chart `z` returning `[start, end]` floats the box the same way.  No effect on a flat chart.
    */
-  z?: DataProp;
+  z?: DataProp | [start: number, end: number];
 
   /**
    * Whether a rect raised by `z` shades its sides, as if lit from the upper left — set `false` for
@@ -240,7 +241,7 @@ export class RectState {
    */
   pixelFaces = $derived.by((): BoxFace[] | null => {
     const z = this.#props.z;
-    if (this.dataMode || typeof z !== 'number') return null;
+    if (this.dataMode || (typeof z !== 'number' && !Array.isArray(z))) return null;
     const m = this.#layerIsometric();
     const lift = this.chartCtx.isometricLift;
     if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
@@ -249,8 +250,7 @@ export class RectState {
       y: this.motionY,
       width: this.motionWidth,
       height: this.motionHeight,
-      z0: 0,
-      z1: z,
+      ...(Array.isArray(z) ? { z0: z[0], z1: z[1] } : { z0: 0, z1: z }),
     };
     return this.#shaded(boxFaces(box, lift, m));
   });
@@ -258,6 +258,7 @@ export class RectState {
   /** A box's base and top, in pixels off the floor */
   #resolveZ(d: any): { z0: number; z1: number } {
     const props = this.#props;
+    if (Array.isArray(props.z)) return { z0: props.z[0], z1: props.z[1] };
     if (props.z != null) {
       return { z0: 0, z1: resolveDataProp(props.z, d, this.chartCtx.zScale, 0) };
     }

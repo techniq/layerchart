@@ -72,26 +72,37 @@ A `radial` chart's floor is always square — the circle it draws — and is fit
 
 ### Animating the view
 
-`rotate: 0, tilt: 0` shows the floor from directly above, so tweening both moves smoothly between that and the tilted view:
+`motion` eases the view to new `rotate` / `tilt` values rather than jumping there. `rotate: 0, tilt: 0` shows the floor from directly above, so switching the angles moves smoothly between that and the tilted view:
 
 ```svelte
 <script>
-	import { Tween } from 'svelte/motion';
-
-	let view = $state('isometric');
-	const t = Tween.of(() => (view === 'isometric' ? 1 : 0));
+	let flat = $state(false);
 </script>
 
-<Chart isometric={{ rotate: -45 * t.current, tilt: 54.7356 * t.current }}>
+<Chart
+	isometric={{
+		rotate: flat ? 0 : -45,
+		tilt: flat ? 0 : 54.7356,
+		motion: { type: 'tween', duration: 800 }
+	}}
+>
 ```
+
+Any `motion` works — a `'spring'` follows a value that keeps changing, like a slider, without trailing behind it. It's read as the chart mounts, like a chart's `motion`. With a transform (below), the view turns from these eased angles, while the transform's own `motion` eases its zoom buttons and reset.
 
 ### Dragging the view
 
-`transform={{ mode: 'projection' }}` lets the viewer turn and tip the floor by dragging — across to turn it, up and down to tip it — the same mode that spins a globe. The drag starts from the `isometric` prop's `rotate` and `tilt`, and `onTransform` reports where it's got to: `translate.x` is the turn and `translate.y` the tilt, in degrees.
+A transform on an isometric chart moves it two ways: it pans and zooms the chart, as on any chart, and it turns and tips the view — dragged across to turn it, up and down to tip it. `drag` picks which a plain drag does, and holding `dragSwitchKey` (`shift` by default) as a drag starts does the other:
 
 ```svelte
-<Chart isometric transform={{ mode: 'projection' }}>
+<!-- Drag to pan, shift-drag to turn -->
+<Chart isometric transform={{ mode: 'canvas', scrollMode: 'scale' }}>
+
+<!-- Drag to turn, shift-drag to pan -->
+<Chart isometric transform={{ mode: 'canvas', drag: 'rotate' }}>
 ```
+
+The view starts from the `isometric` prop's `rotate` and `tilt`, and changing them turns it there, leaving the pan and zoom. `onTransform` reports where it's got to — `rotation.x` is the turn and `rotation.y` the tilt, in degrees — and `reset()` puts the angles back along with the pan and zoom. `transform.drag` is reactive, so controls can switch it.
 
 Try it in the playground below, where the sliders and the drag set the same angles, and **View** eases between them and the floor seen from above.
 
@@ -124,7 +135,7 @@ Try it in the playground below, where the sliders and the drag set the same angl
 `Circle` floats each point at its `z` too, painted back to front, and `viewport` keeps it round rather than lying on the floor as an ellipse. Around them, `Frame` stands two walls up the floor's far edges, as tall as the `z` range — each a `Rect` with no depth, stood up like a box; `Grid z` draws gridlines across the walls and carries the floor's `x` / `y` gridlines up them; and `Axis placement="back"` runs the height up the corner where the walls start. All of them follow the view as it turns.
 
 ```svelte
-<Chart {data} x="x" y="y" z="z" isometric transform={{ mode: 'projection' }}>
+<Chart {data} x="x" y="y" z="z" isometric transform={{ mode: 'canvas', drag: 'rotate' }}>
 	<Layer>
 		<Frame />
 		<Grid x y z />
@@ -149,6 +160,39 @@ A `zRange` as tall as the floor is deep makes a cube: `zRange={({ height }) => [
 
 A floating highlight point is round, like a `viewport` circle. To mark a single plane instead, pin a coordinate: `z={() => 0}` puts a highlight's points on the floor beneath the row.
 
+### Treemap
+
+Stacked tiers make a treemap 3D: each node stands on its parent, inset by the treemap's padding. A tier is a `Rect` floated between two heights with `z={[start, end]}`, and `zScale` measures them — a `zDomain` of one step per level, and a `zRange` for how tall they all reach. A chart with a `zRange` leaves room above the floor for it, `z` channel or not.
+
+```svelte
+<Chart zDomain={[0, root.height + 1]} zRange={[0, 30]} isometric>
+	<Layer>
+		<Treemap hierarchy={root} paddingOuter={4}>
+			{#snippet children({ nodes })}
+				{#each nodes as node}
+					<Rect
+						x={node.x0}
+						y={node.y0}
+						width={node.x1 - node.x0}
+						height={node.y1 - node.y0}
+						z={[context.zScale(node.depth), context.zScale(node.depth + 1)]}
+					/>
+				{/each}
+			{/snippet}
+		</Treemap>
+	</Layer>
+</Chart>
+```
+
+On an isometric chart `Treemap` hands out its `nodes` in the order to paint them, depth first: each node, then each of its children's subtrees whole, back to front. Children stand inside their parent and siblings tile it, so only siblings ever need comparing — and the order is exact for rectangles of any size, re-sorted as the view turns.
+
+- **Labels drawn with their node**, right after its `Rect`, lie on its top: `Text` with the tier's height as `z`, without `viewport`. Nearer towers drawn later cover them, as they should. `rotate` turns one along a tall box, and a half turn more keeps it reading left to right as the view comes round.
+- **Leave the `{#each}` unkeyed.** As the view turns the order changes; unkeyed, each row takes its new node, where keyed rows would move — which a `Canvas` layer doesn't follow, as it paints in the order its marks mounted.
+
+Dragging pans it, with the wheel zooming, and shift-dragging turns the view — or the other way round, picked on its controls. A `motion` tween eases the zoom buttons and reset into place, and the view between flat and isometric as the `isometric` prop's angles change, while drags and the wheel follow the pointer directly.
+
+:example{ component="Chart" name="isometric-treemap" }
+
 ## Text
 
 Text lies on the floor along with everything else, which suits labels that belong to it. Where it should stay readable instead, set `viewport` to align it to the viewport rather than the floor: the text keeps its spot on the floor but faces the viewer, reading left to right at its natural size. `rotate` still turns it, on screen.
@@ -165,6 +209,8 @@ An `Axis` passes it through `tickLabelProps` and `labelProps`. Its edge runs at 
 ```
 
 Switch **Labels** between **Default** and **Viewport** in the example above to compare the two. Text drawn along a `path`, or positioned with a CSS value such as `x="50%"`, has no single point to stand on and stays on the floor.
+
+`z` raises text off the floor like any other mark — a number of pixels, or in data mode a `z` per row, defaulting to the chart's.
 
 ## Flat overlays
 
@@ -199,6 +245,6 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 - **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
 - **`WebGL` layers** aren't transformed.
 - **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Only `Rect`, `Cell`, `Circle`, and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **Only `Rect`, `Cell`, `Circle`, `Text`, and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
 - **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
 - **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

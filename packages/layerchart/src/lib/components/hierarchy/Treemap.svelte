@@ -69,6 +69,10 @@
      */
     maintainAspectRatio?: boolean;
 
+    /**
+     * Render the nodes.  On an `isometric` chart they come in the order to paint boxes standing on
+     * them — back to front, each tier after the one it stands on.
+     */
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
 </script>
@@ -88,6 +92,8 @@
 
   import { aspectTile } from '../../utils/treemap.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getLayerIsometric } from '$lib/contexts/isometric.js';
+  import { paintOrder } from '$lib/utils/isometric.js';
   import type { Snippet } from 'svelte';
 
   let {
@@ -105,6 +111,7 @@
   }: TreemapProps<T> = $props();
 
   const ctx = getChartContext();
+  const layerIsometric = getLayerIsometric();
 
   const tileFunc = $derived(
     tile === 'squarify'
@@ -198,6 +205,25 @@
       nodes: [],
     };
   });
+
+  /**
+   * On an isometric floor, depth first: a node, then each child's whole subtree in turn, back to
+   * front.  Children stand inside their parent and siblings tile it, so only siblings ever need
+   * comparing — a subtree behind can't hide one in front, and a tier can't hide the ones above it.
+   * Re-sorted, not re-laid out, as the view turns.
+   */
+  const nodes = $derived.by(() => {
+    const m = layerIsometric();
+    const root = treemapData.nodes[0];
+    if (!m || !root) return treemapData.nodes;
+    const order: HierarchyRectangularNode<T>[] = [];
+    const visit = (node: HierarchyRectangularNode<T>) => {
+      order.push(node);
+      for (const child of node.children ? paintOrder(node.children, m) : []) visit(child);
+    };
+    visit(root);
+    return order;
+  });
 </script>
 
-{@render children?.({ nodes: treemapData.nodes })}
+{@render children?.({ nodes })}

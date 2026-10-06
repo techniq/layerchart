@@ -171,4 +171,26 @@ describe('Rect in pixel mode on an isometric floor', () => {
     expect(el.querySelectorAll('.lc-rect-side')).toHaveLength(1);
     expect(el.querySelectorAll('.lc-rect-top')).toHaveLength(0);
   });
+
+  it('floats between `[start, end]`', async () => {
+    const measure = async (z: any) => {
+      const screen = render(TestHarness, {
+        chartProps: { ...cellChart, isometric: true },
+        layerProps: { center: false },
+        component: Rect,
+        componentProps: { x: 20, y: 30, width: 100, height: 60, z },
+      });
+      await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
+      const el = page.getByTestId(chartTestId).element() as HTMLElement;
+      const box = el.querySelector('.lc-rect-box')!.getBoundingClientRect();
+      const top = el.querySelector('.lc-rect-top')!.getBoundingClientRect();
+      screen.unmount();
+      return { height: box.bottom - top.bottom, top: top.top };
+    };
+    const standing = await measure(40);
+    const floating = await measure([20, 40]);
+    // The same top, on a box half as tall
+    expect(floating.top).toBeCloseTo(standing.top, 0);
+    expect(floating.height).toBeCloseTo(standing.height / 2, 0);
+  });
 });

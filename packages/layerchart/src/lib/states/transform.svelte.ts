@@ -13,6 +13,9 @@ export type TransformScrollMode = 'scale' | 'translate' | 'none';
 export type ScrollActivationKey = 'meta' | 'alt' | 'control' | 'shift';
 
 export const DEFAULT_TRANSLATE = { x: 0, y: 0 };
+
+/** What a drag moves: the content (`translate`), or the view it's seen from (`rotate`) */
+export type TransformDrag = 'translate' | 'rotate';
 export const DEFAULT_SCALE = 1;
 
 export type TransformAxis = 'x' | 'y' | 'both';
@@ -20,6 +23,13 @@ export type TransformAxis = 'x' | 'y' | 'both';
 export type TransformConstraint = {
   scale: number;
   translate: { x: number; y: number };
+};
+
+export type TransformDetails = {
+  scale: number;
+  translate: { x: number; y: number };
+  /** The view's rotation, when there's one to turn (see `initialRotation`) */
+  rotation: { x: number; y: number } | null;
 };
 
 export type InertiaOptions = {
@@ -48,9 +58,37 @@ export type TransformStateOptions = {
   clickDistance?: number;
   initialTranslate?: { x: number; y: number };
   initialScale?: number;
-  onTransform?: (details: { scale: number; translate: { x: number; y: number } }) => void;
+  onTransform?: (details: TransformDetails) => void;
   ondragstart?: () => void;
   ondragend?: () => void;
+
+  /**
+   * Where the view starts turned to, when there's a view to turn — ex. an `isometric` chart's
+   * `rotate` (`x`) and `tilt` (`y`), in degrees.  `null` (the default) for none, and `drag: 'rotate'`
+   * then pans.
+   */
+  initialRotation?: { x: number; y: number } | null;
+
+  /** Turn the rotation by a drag of `deltaX` / `deltaY` pixels.  Default: one degree a pixel. */
+  processRotate?: (
+    x: number,
+    y: number,
+    deltaX: number,
+    deltaY: number
+  ) => { x: number; y: number };
+
+  /**
+   * What a drag does: move the content (`'translate'`), or turn the view (`'rotate'`), where there's
+   * a rotation.  Holding `dragSwitchKey` does the other.
+   * @default 'translate'
+   */
+  drag?: TransformDrag;
+
+  /**
+   * Held as a drag starts, the drag does whichever of `translate` / `rotate` `drag` doesn't.
+   * @default 'shift'
+   */
+  dragSwitchKey?: ScrollActivationKey;
 
   /** Enable inertia (momentum) after drag release. Pass `true` for defaults or an options object. */
   inertia?: boolean | InertiaOptions;
@@ -84,7 +122,8 @@ export class TransformState {
   ctx: ChartState | null;
 
   // Options
-  mode: TransformMode;
+  /** Reactive, so a chart can switch it — ex. between panning and turning an isometric view */
+  mode = $state<TransformMode>('none');
   axis: TransformAxis;
   processTranslate?: (
     x: number,
@@ -99,7 +138,14 @@ export class TransformState {
   clickDistance: number;
   initialTranslate: { x: number; y: number };
   initialScale: number;
-  onTransform: (details: { scale: number; translate: { x: number; y: number } }) => void;
+  onTransform: (details: TransformDetails) => void;
+  processRotate?: (
+    x: number,
+    y: number,
+    deltaX: number,
+    deltaY: number
+  ) => { x: number; y: number };
+  dragSwitchKey: ScrollActivationKey;
   ondragstart: () => void;
   ondragend: () => void;
   scrollActivationKey: ScrollActivationKey | undefined;
@@ -116,12 +162,19 @@ export class TransformState {
   pinch: boolean;
 
   // State
+  /** What a drag does, unless `dragSwitchKey` is held — reactive, so controls can switch it */
+  drag = $state<TransformDrag>('translate');
+  /** Where the view starts turned to, or `null` when there's no view to turn */
+  initialRotation = $state<{ x: number; y: number } | null>(null);
   pointerDown = $state(false);
   dragging = $state(false);
   pinching = $state(false);
   scrollMode = $state<TransformScrollMode>('none');
   startPoint = $state({ x: 0, y: 0 });
   startTranslate = $state({ x: 0, y: 0 });
+  startRotation = { x: 0, y: 0 };
+  /** What the drag in progress moves — settled as it starts */
+  private _dragging: TransformDrag = 'translate';
 
   // Velocity tracking for inertia
   private _pointerSamples: { x: number; y: number; t: number }[] = [];
@@ -140,6 +193,7 @@ export class TransformState {
   // Motion controllers (internal)
   private _translate: ReturnType<typeof createControlledMotion<{ x: number; y: number }>>;
   private _scale: ReturnType<typeof createControlledMotion<number>>;
+  private _rotation: ReturnType<typeof createControlledMotion<{ x: number; y: number }>>;
   private _translating: ReturnType<typeof createMotionTracker>;
   private _scaling: ReturnType<typeof createMotionTracker>;
 
@@ -155,6 +209,10 @@ export class TransformState {
     this.initialTranslate = options.initialTranslate ?? DEFAULT_TRANSLATE;
     this.initialScale = options.initialScale ?? DEFAULT_SCALE;
     this.onTransform = options.onTransform ?? (() => {});
+    this.initialRotation = options.initialRotation ?? null;
+    this.processRotate = options.processRotate;
+    this.drag = options.drag ?? 'translate';
+    this.dragSwitchKey = options.dragSwitchKey ?? 'shift';
     this.ondragstart = options.ondragstart ?? (() => {});
     this.ondragend = options.ondragend ?? (() => {});
     this.scrollActivationKey = options.scrollActivationKey;
@@ -196,16 +254,21 @@ export class TransformState {
     const resolvedMotion = parseMotionProp(options.motion);
     this._translate = createControlledMotion(this.initialTranslate, resolvedMotion);
     this._scale = createControlledMotion(this.initialScale, resolvedMotion);
+    this._rotation = createControlledMotion(this.initialRotation ?? { x: 0, y: 0 }, resolvedMotion);
     this._translating = createMotionTracker();
     this._scaling = createMotionTracker();
 
     // Watch for transform changes
-    watch([() => this._scale.current, () => this._translate.current], () => {
-      this.onTransform({
-        scale: this._scale.current,
-        translate: this._translate.current,
-      });
-    });
+    watch(
+      [() => this._scale.current, () => this._translate.current, () => this._rotation.current],
+      () => {
+        this.onTransform({
+          scale: this._scale.current,
+          translate: this._translate.current,
+          rotation: this.rotation,
+        });
+      }
+    );
   }
 
   private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {
@@ -309,6 +372,25 @@ export class TransformState {
     return this._translate.current;
   }
 
+  /** The view's rotation (see `initialRotation`), or `null` when there's no view to turn */
+  get rotation() {
+    return this.initialRotation ? this._rotation.current : null;
+  }
+
+  setRotation(value: { x: number; y: number }, options?: Parameters<typeof this._rotation.set>[1]) {
+    this._rotation.set(value, options);
+  }
+
+  /** Back to the initial rotation — eased by `motion`, or at once with `instant` */
+  resetRotation({ instant = false }: { instant?: boolean } = {}) {
+    if (!this.initialRotation) return;
+    if (instant) {
+      this._rotation.set(this.initialRotation, this._instantMotion(this._rotation));
+    } else {
+      this._rotation.target = this.initialRotation;
+    }
+  }
+
   set translate(point: { x: number; y: number }) {
     this.setTranslate(point);
   }
@@ -317,28 +399,51 @@ export class TransformState {
     this.scrollMode = mode;
   }
 
-  reset() {
+  /** Back to the initial translate and scale — eased by `motion`, or at once with `instant` */
+  reset({ instant = false }: { instant?: boolean } = {}) {
+    this.resetRotation({ instant });
+    if (instant) {
+      this._translate.set(this.initialTranslate, this._instantMotion(this._translate));
+      this._scale.set(this.initialScale, this._instantMotion(this._scale));
+      return;
+    }
     this._translate.target = this.initialTranslate;
     this._scale.target = this.initialScale;
   }
 
+  /**
+   * The middle of the plot area, from the container's top-left — where the zoom buttons zoom
+   * about.  The plot area (`box`) rather than `width` / `height`, which an isometric chart's floor
+   * makes smaller.
+   */
+  #plotCenter(ctx: ChartState) {
+    return {
+      x: ctx.padding.left + ctx.box.width / 2,
+      y: ctx.padding.top + ctx.box.height / 2,
+    };
+  }
+
   zoomIn() {
     if (!this.ctx) return;
-    this.scaleTo(1.25, {
-      x: (this.ctx.width + this.ctx.padding.left) / 2,
-      y: (this.ctx.height + this.ctx.padding.top) / 2,
-    });
+    this.scaleTo(1.25, this.#plotCenter(this.ctx));
   }
 
   zoomOut() {
     if (!this.ctx) return;
-    this.scaleTo(0.8, {
-      x: (this.ctx.width + this.ctx.padding.left) / 2,
-      y: (this.ctx.height + this.ctx.padding.top) / 2,
-    });
+    this.scaleTo(0.8, this.#plotCenter(this.ctx));
   }
 
   translateCenter() {
+    // A canvas zoom scales about the plot's top-left, so centring keeps the zoom and moves the
+    // plot's middle back to the middle.  A projection's translate is already relative to its fit.
+    if (this.mode === 'canvas' && this.ctx) {
+      const k = this._scale.target;
+      this._translate.target = {
+        x: (this.ctx.box.width / 2) * (1 - k),
+        y: (this.ctx.box.height / 2) * (1 - k),
+      };
+      return;
+    }
     this._translate.target = { x: 0, y: 0 };
   }
 
@@ -542,7 +647,16 @@ export class TransformState {
     this.dragging = false;
     this.startPoint = localPoint(e);
     this.startTranslate = this._translate.current;
+    this.startRotation = this._rotation.current;
     this._pointerSamples = [];
+
+    // The switch key swaps what the drag does — rotating only where there's a view to turn
+    const drag = this._isKeyHeld(e, this.dragSwitchKey)
+      ? this.drag === 'rotate'
+        ? 'translate'
+        : 'rotate'
+      : this.drag;
+    this._dragging = drag === 'rotate' && this.initialRotation ? 'rotate' : 'translate';
 
     this.ondragstart?.();
   }
@@ -580,6 +694,17 @@ export class TransformState {
     if (this.dragging) {
       e.stopPropagation(); // Stop tooltip from triggering (along with `capture: true`)
       this._capturePointer(e);
+
+      if (this._dragging === 'rotate') {
+        const { x, y } = this.startRotation;
+        this.setRotation(
+          this.processRotate
+            ? this.processRotate(x, y, deltaX, deltaY)
+            : { x: x + deltaX, y: y + deltaY },
+          this._instantMotion(this._rotation)
+        );
+        return;
+      }
 
       // Track pointer samples for inertia velocity calculation
       if (this.inertia.enabled) {
@@ -750,7 +875,11 @@ export class TransformState {
 
   private _isActivationKeyHeld(e: WheelEvent): boolean {
     if (!this.scrollActivationKey) return true;
-    switch (this.scrollActivationKey) {
+    return this._isKeyHeld(e, this.scrollActivationKey);
+  }
+
+  private _isKeyHeld(e: MouseEvent, key: ScrollActivationKey): boolean {
+    switch (key) {
       case 'meta':
         return e.metaKey;
       case 'alt':

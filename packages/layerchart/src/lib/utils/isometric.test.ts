@@ -11,6 +11,7 @@ import {
   isometricLift,
   multiplyMatrix,
   planeEllipse,
+  paintOrder,
 } from './isometric.js';
 
 /** Screen angle of a direction, in degrees above the horizontal */
@@ -327,6 +328,53 @@ describe('planeEllipse', () => {
           y: 5 * (across.y * Math.cos(a) + lift.y * Math.sin(a)),
         };
         expect(onEllipse(e, p)).toBeCloseTo(1);
+      }
+    }
+  });
+});
+
+describe('paintOrder', () => {
+  // Turned so screen depth grows with x much faster than with y
+  const m = createIsometricMatrix(
+    { rotate: 80, tilt: 60 },
+    { width: 100, height: 100 },
+    { width: 400, height: 400 }
+  );
+
+  it('paints a footprint before the ones stacked inside it', () => {
+    const parent = { x0: 0, y0: 0, x1: 100, y1: 100 };
+    const child = { x0: 60, y0: 60, x1: 90, y1: 90 };
+    expect(paintOrder([child, parent], m)).toEqual([parent, child]);
+  });
+
+  it('paints a small box in front of a long one after it, where depth alone gets it wrong', () => {
+    // `wide` reaches far along x, so its centre is deeper — but `small` stands right in front of it
+    const wide = { x0: 0, y0: 0, x1: 100, y1: 10 };
+    const small = { x0: 0, y0: 10, x1: 10, y1: 20 };
+    const depth = (f: typeof wide) => m.b * (f.x0 + f.x1) + m.d * (f.y0 + f.y1);
+    expect(m.b).toBeGreaterThan(m.d);
+    expect(m.d).toBeGreaterThan(0);
+    expect(depth(wide)).toBeGreaterThan(depth(small));
+    expect(paintOrder([wide, small], m)).toEqual([wide, small]);
+  });
+
+  it('orders every row of a treemap-like strip layout consistently', () => {
+    // Columns of stacked cells, each cell before any it could hide
+    const cells = [];
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 4; j++) {
+        cells.push({ x0: i * 10, y0: j * (5 + i), x1: i * 10 + 10, y1: (j + 1) * (5 + i) });
+      }
+    }
+    const order = paintOrder([...cells].reverse(), m);
+    expect(order).toHaveLength(cells.length);
+    const at = new Map(order.map((c, i) => [c, i]));
+    // Apart along x only: the one farther back along x first (depth grows with x here)
+    for (const a of cells) {
+      for (const b of cells) {
+        const xApart = a.x1 <= b.x0;
+        const yOverlap = a.y0 < b.y1 && b.y0 < a.y1;
+        if (xApart && yOverlap) expect(at.get(a)!).toBeLessThan(at.get(b)!);
       }
     }
   });

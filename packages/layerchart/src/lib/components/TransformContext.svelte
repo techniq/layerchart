@@ -57,6 +57,10 @@
     inertia,
     pinch,
     scrollActivationKey,
+    initialRotation,
+    processRotate,
+    drag,
+    dragSwitchKey,
     ...restProps
   }: TransformContextProps = $props();
 
@@ -79,6 +83,10 @@
     inertia,
     pinch,
     scrollActivationKey,
+    initialRotation,
+    processRotate,
+    drag,
+    dragSwitchKey,
   };
 
   let ref = $state<HTMLElement>();
@@ -95,6 +103,9 @@
   $effect.pre(() => {
     const newTranslate = initialTranslate ?? { x: 0, y: 0 };
     const newScale = initialScale ?? 1;
+    const newMode = mode ?? 'none';
+    const modeChanged = newMode !== transformState.mode;
+    transformState.mode = newMode;
     // Only reset if values actually changed from current initial values
     if (
       newTranslate.x !== transformState.initialTranslate.x ||
@@ -103,8 +114,33 @@
     ) {
       transformState.initialTranslate = newTranslate;
       transformState.initialScale = newScale;
-      transformState.reset();
+      // A new mode reads translate and scale differently (ex. a domain zoom as a canvas one) —
+      // start it where it starts, rather than easing there through the old mode's values
+      transformState.reset({ instant: modeChanged });
     }
+  });
+
+  // The view's starting rotation — a change turns the view there at once, leaving the pan and
+  // zoom.  Easing it is for whatever sets it (ex. an isometric chart's `motion`), so it's followed
+  // exactly rather than eased again
+  $effect.pre(() => {
+    const next = initialRotation ?? null;
+    const current = transformState.initialRotation;
+    if (next?.x === current?.x && next?.y === current?.y) return;
+    transformState.initialRotation = next;
+    transformState.resetRotation({ instant: true });
+  });
+
+  $effect.pre(() => {
+    transformState.processRotate = processRotate;
+  });
+
+  $effect.pre(() => {
+    if (drag !== undefined) transformState.drag = drag;
+  });
+
+  $effect.pre(() => {
+    transformState.dragSwitchKey = dragSwitchKey ?? 'shift';
   });
 
   $effect.pre(() => {

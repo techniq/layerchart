@@ -151,6 +151,7 @@ When set, scroll events without the key held are ignored (no `preventDefault`), 
 ### Pointer interactions
 
 - **Drag** — pan (click and drag to move the view)
+- **Shift + drag** — on an `isometric` chart, turn and tip the view instead. `drag: 'rotate'` swaps the two, and `dragSwitchKey` picks the key (see the [Isometric guide](/docs/guides/isometric#dragging-the-view))
 - **Double-click** — zoom in 2x at the click point
 - **Shift + double-click** — zoom out 0.5x
 - **Trackpad pinch** — detected as ctrl+wheel events, always zooms regardless of scroll mode
@@ -235,7 +236,7 @@ Use `setScale()` and `reset()` to build animated zoom controls, like this solar 
 | `zoomIn()`                      | Zoom in by 1.25x from center              |
 | `zoomOut()`                     | Zoom out by 0.8x from center              |
 | `reset()`                       | Restore initial scale and translate       |
-| `translateCenter()`             | Center the view (translate to 0,0)        |
+| `translateCenter()`             | Center the view, keeping the zoom         |
 | `zoomTo(center, rect?)`         | Zoom to fit a point or bounding rectangle |
 | `setScale(value, options?)`     | Set scale directly                        |
 | `setTranslate(point, options?)` | Set translate directly                    |
@@ -509,7 +510,7 @@ Inertia works with all transform modes and respects `translateExtent`, `constrai
 
 ## Controls
 
-The `TransformContextControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
+The `TransformContextControls` component provides a UI overlay with zoom buttons, a reset back to where the chart started, and a scroll mode selector:
 
 ```svelte
 <Chart transform={{ mode: 'canvas', scrollMode: 'scale' }}>
@@ -519,6 +520,8 @@ The `TransformContextControls` component provides a UI overlay with zoom/pan but
 ```
 
 It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orientation (`'horizontal'` or `'vertical'`), and selective display of controls via the `show` prop.
+
+Where there's a view to turn — an `isometric` chart — it also offers a menu to pick what a drag does: pan, or turn the view (`transform.drag`). Holding `dragSwitchKey` (`shift` by default) does the other.
 
 ## Quick reference
 

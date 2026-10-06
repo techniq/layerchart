@@ -112,3 +112,48 @@ describe('Axis viewport labels', () => {
     expect(new Set(await tickLabels('bottom'))).toEqual(new Set(['middle']));
   });
 });
+
+describe('Text z', () => {
+  /** Where the text's anchor lands on screen */
+  async function anchor(componentProps: Record<string, any>, extraChart = {}) {
+    const screen = render(TestHarness, {
+      chartProps: { ...chartProps, ...extraChart },
+      component: Text,
+      componentProps: { value: () => 'Label', viewport: true, ...componentProps },
+    });
+    const el = page.getByTestId(componentTestId);
+    await expect.element(el).toBeInTheDocument();
+    const text = el.element() as SVGTextElement;
+    const point = at(text.getScreenCTM()!, +text.getAttribute('x')!, +text.getAttribute('y')!);
+    screen.unmount();
+    return point;
+  }
+
+  it('raises pixel-placed text straight up the screen', async () => {
+    const floor = await anchor({ x: 30, y: 20 });
+    const raised = await anchor({ x: 30, y: 20, z: 40 });
+    expect(raised.x).toBeCloseTo(floor.x, 0);
+    expect(floor.y - raised.y).toBeGreaterThan(20);
+  });
+
+  it('raises each row in data mode', async () => {
+    const data = [{ x: 3, y: 4 }];
+    const floor = await anchor({ data, x: 'x', y: 'y' });
+    const raised = await anchor({ data, x: 'x', y: 'y', z: 40 });
+    expect(raised.x).toBeCloseTo(floor.x, 0);
+    expect(floor.y - raised.y).toBeGreaterThan(20);
+  });
+
+  it('stays put on a flat chart', async () => {
+    const floor = await anchor({ x: 30, y: 20 }, { isometric: false });
+    const raised = await anchor({ x: 30, y: 20, z: 40 }, { isometric: false });
+    expect(raised).toEqual(floor);
+  });
+
+  it('turns raised text about where it stands', async () => {
+    const plain = await anchor({ x: 30, y: 20, z: 40, viewport: false });
+    const turned = await anchor({ x: 30, y: 20, z: 40, viewport: false, rotate: 90 });
+    expect(turned.x).toBeCloseTo(plain.x, 1);
+    expect(turned.y).toBeCloseTo(plain.y, 1);
+  });
+});
