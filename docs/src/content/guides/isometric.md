@@ -32,18 +32,19 @@ To try it on every chart at once, turn on the `isometric` setting — charts tha
 
 ## How it works
 
-The scales, marks, and axes lay the chart out flat, exactly as they would without `isometric`. Each layer then draws through one matrix that turns the plot area, tips it away from the viewer, and scales it down to fit back inside the chart, centred. Everything drawn lies on that floor — a cell becomes a diamond, a circle an ellipse, and an axis runs along the floor's edge.
+The chart lays out on a **floor** of its own proportions rather than on the plot area, sized so that turned and tipped back it fits the chart. The scales, marks, and axes lay out across that floor exactly as they would across a flat plot, then each layer draws it through one matrix that turns it and tips it away from the viewer, centred in the chart. Everything drawn lies on the floor — a cell becomes a diamond, a circle an ellipse, and an axis runs along the floor's edge.
 
-Because it's only a change of view, a chart with `isometric` reads its data, builds its scales, and lays out its marks the same as one without. It is a parallel projection: the far side of the floor is drawn the same size as the near side, with no vanishing point.
+Because the floor keeps its proportions, resizing the chart scales it rather than stretching it, and text and strokes stay their natural size. It is a parallel projection: the far side of the floor is drawn the same size as the near side, with no vanishing point.
 
 ## The view
 
-`isometric` takes `rotate` and `tilt`, both in degrees:
+`isometric` takes `rotate` and `tilt` in degrees, and the floor's `aspect`:
 
 | Option   | What it does                                                                      | Default                   |
 | -------- | --------------------------------------------------------------------------------- | ------------------------- |
-| `rotate` | Turns the plot area about its centre, clockwise                                   | `-45`                     |
+| `rotate` | Turns the floor about its centre, clockwise                                       | `-45`                     |
 | `tilt`   | Tips it away from the viewer, from `0` (seen from directly above) towards edge on | `54.7356`, true isometric |
+| `aspect` | The floor's width over its depth, or `'auto'` to take it from the data            | `'auto'`                  |
 
 The defaults are true isometric: the origin (bottom-left of the flat plot) sits at the front corner, `x` runs up and to the right, `y` up and to the left, and both meet the horizontal at 30°.
 
@@ -56,11 +57,22 @@ The defaults are true isometric: the origin (bottom-left of the flat plot) sits 
 
 <!-- Origin at the left corner instead -->
 <Chart isometric={{ rotate: 45 }}>
+
+<!-- A floor twice as wide as it is deep -->
+<Chart isometric={{ aspect: 2 }}>
 ```
+
+`aspect: 'auto'` takes the floor's proportions from the data:
+
+- **Two band scales** — columns over rows, so every cell is square. A 20-week calendar is a floor 20 cells by 7.
+- **Two continuous scales** — the domains' spans, so a unit runs as far across the floor as into it. When one span is more than four times the other, equal units would leave a sliver, so the floor is square instead.
+- **Anything else** — a band against values, or dates against counts — is square: the units don't compare.
+
+A `radial` chart's floor is always square — the circle it draws — and is fitted by that circle rather than its corners, since a circle keeps its width however it's turned.
 
 ### Animating the view
 
-`rotate: 0, tilt: 0` draws the flat chart, so tweening both moves smoothly between the flat chart and the floor:
+`rotate: 0, tilt: 0` shows the floor from directly above, so tweening both moves smoothly between that and the tilted view:
 
 ```svelte
 <script>
@@ -91,7 +103,7 @@ The defaults are true isometric: the origin (bottom-left of the flat plot) sits 
 
 - **The `z` scale** measures up from the floor: its domain reaches down to `0`, and its range runs to half the plot's shorter side. Set `zDomain` / `zRange` to change either — the **Height** slider in the playground above sets `zRange`, and `0` lays the boxes flat.
 - **A mark's own `z`** overrides the chart's, and a chart `z` returning `[start, end]` floats the box between the two.
-- **The fit** leaves room above the floor for the top of the `z` range, so tall boxes aren't cut off.
+- **The fit** leaves room above the floor for the top of the `z` range, so tall boxes aren't cut off — the floor is a little smaller to make that room.
 - **Boxes are painted back to front**, so nearer ones cover farther ones. That's exact for boxes on a grid, which don't overlap on the floor.
 - **On a flat chart**, or in a layer with `ignoreTransform`, `z` has nothing to raise and the rects stay flat.
 

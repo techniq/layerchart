@@ -7,7 +7,7 @@ export type AffineMatrix = { a: number; b: number; c: number; d: number; e: numb
 
 export type IsometricOptions = {
   /**
-   * Degrees to turn the plot area about its centre, clockwise like `<Text rotate>`.  The default
+   * Degrees to turn the floor about its centre, clockwise like `<Text rotate>`.  The default
    * brings the origin (bottom-left) to the front corner, with `x` running up and to the right and
    * `y` up and to the left.
    *
@@ -16,13 +16,24 @@ export type IsometricOptions = {
   rotate?: number;
 
   /**
-   * Degrees to tip the plot area away from the viewer, from `0` (seen from directly above) towards
-   * `90` (edge on, held just short of it).  The default is true isometric, where both axes meet the horizontal at 30°.  `60`
-   * gives the 2:1 "pixel art" projection.
+   * Degrees to tip the floor away from the viewer, from `0` (seen from directly above) towards
+   * `90` (edge on, held just short of it).  The default is true isometric, where both axes meet
+   * the horizontal at 30°.  `60` gives the 2:1 "pixel art" projection.
    *
    * @default 54.7356 (`acos(tan(30°))`)
    */
   tilt?: number;
+
+  /**
+   * The floor's width over its depth.  The floor keeps these proportions however the chart is
+   * sized, like a real object.  `'auto'` takes them from the data: one cell each way when both
+   * scales are bands (so cells are square), equal units when both are continuous (unless one runs
+   * more than four times the other), and square otherwise.  A `radial` chart's floor is always
+   * square, the circle it draws.
+   *
+   * @default 'auto'
+   */
+  aspect?: number | 'auto';
 };
 
 /** The tilt at which both axes meet the horizontal at 30° */
@@ -36,56 +47,174 @@ function tiltRadians(tilt: number) {
   return (Math.min(Math.max(tilt, 0), MAX_TILT) * Math.PI) / 180;
 }
 
+export type IsometricFit = {
+  /**
+   * The tallest height anything rises off the floor, in the floor's pixels — the fit leaves room
+   * above the floor for it.
+   */
+  depth?: number;
+
+  /**
+   * What's drawn on the floor.  `'rect'` is the whole floor.  `'disc'` is the circle centred in it
+   * — a radial chart, which keeps its width however it's turned, where fitting the floor's corners
+   * would leave it smaller than it needs to be.
+   *
+   * @default 'rect'
+   */
+  footprint?: 'rect' | 'disc';
+};
+
+/** How far apart a continuous axis' ends may sit before `'auto'` gives up on equal units */
+const MAX_AUTO_ASPECT = 4;
+
 /**
- * The matrix drawing a `width` × `height` plot area as a floor seen at an angle — turned by
- * `rotate`, foreshortened by `tilt`, then scaled down to fit back inside the same box and centred.
- * `depth` is the tallest height anything rises off the floor (in the same pixels as the floor), so
- * the fit leaves room for it.
+ * The floor's proportions for `aspect: 'auto'`, from the `x` / `y` scales and their full domains.
  *
- * `rotate: 0, tilt: 0` is the identity, so animating to and from it moves between the flat and
- * isometric charts.
+ * - **Band × band**: columns over rows, so each cell is square.
+ * - **Continuous × continuous**: the domains' spans, so a unit runs as far across the floor as
+ *   it does into it — falling back to square when one span is more than four times the other,
+ *   where equal units would leave a sliver.
+ * - **Anything else** (a band against values, dates against counts): square — the units don't
+ *   compare.
  */
-export function createIsometricMatrix(
-  { rotate = -45, tilt = ISOMETRIC_TILT }: IsometricOptions,
+export function autoIsometricAspect(
+  x: { scale: unknown; domain: unknown[] },
+  y: { scale: unknown; domain: unknown[] }
+) {
+  const isBand = (scale: unknown) => typeof (scale as any)?.bandwidth === 'function';
+  if (isBand(x.scale) && isBand(y.scale)) {
+    return x.domain.length > 0 && y.domain.length > 0 ? x.domain.length / y.domain.length : 1;
+  }
+
+  const span = (domain: unknown[]) => {
+    const [d0, d1] = [domain[0], domain[domain.length - 1]];
+    return typeof d0 === 'number' && typeof d1 === 'number' ? Math.abs(d1 - d0) : NaN;
+  };
+  const ratio = span(x.domain) / span(y.domain);
+  if (!Number.isFinite(ratio) || ratio <= 0) return 1;
+  return ratio > MAX_AUTO_ASPECT || ratio < 1 / MAX_AUTO_ASPECT ? 1 : ratio;
+}
+
+/** The turn and tilt of the view, at its natural size */
+function isometricLinear({ rotate = -45, tilt = ISOMETRIC_TILT }: IsometricOptions): AffineMatrix {
+  const theta = (rotate * Math.PI) / 180;
+  // Foreshortening across the floor — tipped away by `tilt`, it appears this much shorter
+  const k = Math.cos(tiltRadians(tilt));
+  return {
+    a: Math.cos(theta),
+    b: k * Math.sin(theta),
+    c: -Math.sin(theta),
+    d: k * Math.cos(theta),
+    e: 0,
+    f: 0,
+  };
+}
+
+/** Where a `width` × `height` floor, and anything rising `depth` off it, lands on screen */
+function floorBounds(
+  options: IsometricOptions,
   width: number,
   height: number,
-  depth = 0
-): AffineMatrix {
-  const theta = (rotate * Math.PI) / 180;
-  const cos = Math.cos(theta);
-  const sin = Math.sin(theta);
-  const tau = tiltRadians(tilt);
-  // Foreshortening across the floor — tipped away by `tilt`, it appears this much shorter
-  const k = Math.cos(tau);
+  { depth = 0, footprint = 'rect' }: IsometricFit
+) {
+  const linear = isometricLinear(options);
   // A height rises straight up the screen, shortened as the floor is
-  const rise = depth * Math.sin(tau);
+  const rise = depth * Math.sin(tiltRadians(options.tilt ?? ISOMETRIC_TILT));
 
-  const linear = { a: cos, b: k * sin, c: -sin, d: k * cos, e: 0, f: 0 };
+  let xs: number[];
+  let ys: number[];
+  if (footprint === 'disc') {
+    // Turning a circle leaves it be, and tilting squashes it — an ellipse `2r` wide, `2r·k` tall
+    const r = Math.min(width, height) / 2;
+    const k = Math.hypot(linear.b, linear.d);
+    const c = applyMatrix(linear, { x: width / 2, y: height / 2 });
+    xs = [c.x - r, c.x + r];
+    ys = [c.y - r * k - rise, c.y + r * k];
+  } else {
+    const corners = [
+      applyMatrix(linear, { x: 0, y: 0 }),
+      applyMatrix(linear, { x: width, y: 0 }),
+      applyMatrix(linear, { x: width, y: height }),
+      applyMatrix(linear, { x: 0, y: height }),
+    ];
+    xs = corners.map((p) => p.x);
+    ys = corners.flatMap((p) => [p.y, p.y - rise]);
+  }
+  return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
+}
 
-  const corners = [
-    applyMatrix(linear, { x: 0, y: 0 }),
-    applyMatrix(linear, { x: width, y: 0 }),
-    applyMatrix(linear, { x: width, y: height }),
-    applyMatrix(linear, { x: 0, y: height }),
-  ];
-  const xs = corners.map((p) => p.x);
-  const ys = corners.flatMap((p) => [p.y, p.y - rise]);
-  const [x0, x1] = [Math.min(...xs), Math.max(...xs)];
-  const [y0, y1] = [Math.min(...ys), Math.max(...ys)];
+/**
+ * The floor's size: the largest floor of the view's `aspect` that, turned and tilted, fits a
+ * `width` × `height` box — with room above it for heights — and fits the box flat too.  The chart lays out on this floor
+ * rather than on the box, so it keeps its proportions as the chart resizes, and draws at its
+ * natural size.
+ *
+ * `depthAt` is how tall the tallest height is for a floor of a given size — heights usually
+ * scale with the floor (the default `z` range does), so the fit settles on both together.
+ */
+export function fitIsometricFloor(
+  options: IsometricOptions,
+  width: number,
+  height: number,
+  {
+    footprint = 'rect',
+    depthAt = () => 0,
+  }: {
+    footprint?: IsometricFit['footprint'];
+    depthAt?: (floor: { width: number; height: number }) => number;
+  } = {}
+) {
+  const aspect =
+    footprint === 'disc' || typeof options.aspect !== 'number' ? 1 : Math.max(options.aspect, 1e-6);
+  // Bounds of a floor one unit deep, then scaled to fit
+  const unit = floorBounds(options, aspect, 1, { footprint });
+  const unitWidth = unit.x1 - unit.x0;
+  const unitHeight = unit.y1 - unit.y0;
+  const rise = Math.sin(tiltRadians(options.tilt ?? ISOMETRIC_TILT));
 
-  // Seen edge on, the floor has no height — fit it by its width alone
-  const fitX = x1 > x0 ? width / (x1 - x0) : Infinity;
-  const fitY = y1 > y0 ? height / (y1 - y0) : Infinity;
-  const fit = Math.min(fitX, fitY);
-  const scale = Number.isFinite(fit) ? fit : 1;
+  const fit = (depth: number) => {
+    const byWidth = unitWidth > 0 ? width / unitWidth : Infinity;
+    const byHeight = unitHeight > 0 ? (height - depth * rise) / unitHeight : Infinity;
+    const size = Math.min(byWidth, byHeight);
+    return Number.isFinite(size) ? Math.max(size, 0) : Math.min(width, height);
+  };
 
+  // Heights follow the floor's size, and the floor's size makes room for the heights — so find
+  // the largest floor that fits along with its own heights.  Fitting only gets harder as the floor
+  // grows, which makes it a bisection.
+  const fits = (size: number) => size <= fit(depthAt({ width: aspect * size, height: size }));
+  let lo = 0;
+  // Never larger than the plot area itself, so a floor that already fits — a circle, which turning
+  // doesn't widen — keeps the size it has flat rather than growing into the room the tilt frees
+  let hi = Math.min(fit(0), width / aspect, height);
+  if (fits(hi)) lo = hi;
+  else {
+    for (let i = 0; i < 30; i++) {
+      const mid = (lo + hi) / 2;
+      if (fits(mid)) lo = mid;
+      else hi = mid;
+    }
+  }
+  return { width: aspect * lo, height: lo };
+}
+
+/**
+ * The matrix drawing a `floor`-sized plot area as a floor seen at an angle — turned by `rotate`,
+ * foreshortened by `tilt`, and centred in a `box`, along with anything rising `depth` off it.
+ * Draws at its natural size: `fitIsometricFloor` already sized the floor to fit.
+ */
+export function createIsometricMatrix(
+  options: IsometricOptions,
+  floor: { width: number; height: number },
+  box: { width: number; height: number },
+  fit: IsometricFit = {}
+): AffineMatrix {
+  const linear = isometricLinear(options);
+  const { x0, x1, y0, y1 } = floorBounds(options, floor.width, floor.height, fit);
   return {
-    a: scale * linear.a,
-    b: scale * linear.b,
-    c: scale * linear.c,
-    d: scale * linear.d,
-    e: width / 2 - (scale * (x0 + x1)) / 2,
-    f: height / 2 - (scale * (y0 + y1)) / 2,
+    ...linear,
+    e: box.width / 2 - (x0 + x1) / 2,
+    f: box.height / 2 - (y0 + y1) / 2,
   };
 }
 

@@ -226,9 +226,10 @@ export type ChartPropsWithoutHTML<
   radial?: boolean;
 
   /**
-   * Draw the plot area as a floor seen from above at an angle.  Scales, marks, and axes are laid
-   * out flat as usual, then every layer is turned and tipped back by the same matrix, so anything
-   * drawn lies on the floor.  Layers with `ignoreTransform` stay flat.
+   * Draw the chart on a floor seen from above at an angle.  Scales, marks, and axes lay out across
+   * a floor of its own proportions (`aspect`, from the data by default) sized to fit the plot area, then
+   * every layer turns and tips it back by the same matrix, so anything drawn lies on the floor.
+   * Layers with `ignoreTransform` stay flat.
    *
    * `true` is true isometric; pass `rotate` / `tilt` to change the view.  Defaults to the
    * `isometric` setting (`setSettings({ isometric })`), so `false` opts a chart out of it.

@@ -22,7 +22,14 @@ import { colorPropDataKey } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
-import { createIsometricMatrix, isometricLift, type AffineMatrix } from '$lib/utils/isometric.js';
+import {
+  autoIsometricAspect,
+  createIsometricMatrix,
+  fitIsometricFloor,
+  isometricLift,
+  type AffineMatrix,
+  type IsometricOptions,
+} from '$lib/utils/isometric.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { defaultSettings, type Settings } from './settings.svelte.js';
@@ -1100,21 +1107,76 @@ export class ChartState<
   /** `isometric` from the prop, else the chart's settings — an explicit `false` still opts out */
   #isometric = $derived(this.props.isometric ?? this.#settings.isometric);
 
-  /**
-   * The matrix every layer draws through when `isometric` is set, or `null` when the chart is
-   * flat.  Fitted to the whole plot area rather than one panel, so a faceted chart becomes a single
-   * floor of panels.
-   */
-  isometricMatrix = $derived.by((): AffineMatrix | null => {
+  /** The view options, or `null` when the chart is flat — with `aspect: 'auto'` resolved */
+  #isometricOptions = $derived.by((): IsometricOptions | null => {
     const isometric = this.#isometric;
     if (!isometric) return null;
-    return createIsometricMatrix(
-      isometric === true ? {} : isometric,
-      this.box.width,
-      this.box.height,
-      this.zDepth
-    );
+    const options = isometric === true ? {} : isometric;
+    if (typeof options.aspect === 'number') return options;
+    // From the scale types and full domains — not the scales themselves, whose ranges the floor
+    // this sizes decides
+    return {
+      ...options,
+      aspect: autoIsometricAspect(
+        { scale: this._xScaleProp, domain: this._baseXDomain },
+        { scale: this._yScaleProp, domain: this._baseYDomain }
+      ),
+    };
   });
+
+  /** A radial chart draws a circle, which turns without growing — fit it as one */
+  #isometricFootprint = $derived<'rect' | 'disc'>(this.props.radial ? 'disc' : 'rect');
+
+  /**
+   * The floor an `isometric` chart lays out on, in place of the plot area: the view's `aspect`,
+   * sized so that turned and tilted it fits the plot area.  `null` when the chart is flat.
+   *
+   * Keeping its own proportions rather than the plot area's means resizing the chart scales the
+   * floor rather than stretching it, and the layers draw it at its natural size.
+   */
+  isometricFloor = $derived.by(() => {
+    const options = this.#isometricOptions;
+    if (!options) return null;
+    return fitIsometricFloor(options, this.box.width, this.box.height, {
+      footprint: this.#isometricFootprint,
+      depthAt: (floor) => this.#zDepthFor(floor),
+    });
+  });
+
+  /**
+   * The area the scales lay out across — the isometric floor, or the plot area when flat.  Faceted
+   * charts divide this into panels, so `width` / `height` are one panel's share of it.
+   */
+  plot = $derived(this.isometricFloor ?? { width: this.box.width, height: this.box.height });
+
+  /**
+   * The matrix every layer draws through when `isometric` is set, or `null` when the chart is
+   * flat.  Turns and tilts the whole floor — every panel of a faceted chart — and centres it in
+   * the plot area.
+   */
+  isometricMatrix = $derived.by((): AffineMatrix | null => {
+    const options = this.#isometricOptions;
+    if (!options) return null;
+    return createIsometricMatrix(options, this.plot, this.box, {
+      depth: this.zDepth,
+      footprint: this.#isometricFootprint,
+    });
+  });
+
+  /**
+   * How tall the tallest height would be on a floor of this size, read from the `z` range props
+   * rather than `zScale` — which is sized by the floor this is helping to size.
+   */
+  #zDepthFor(floor: { width: number; height: number }) {
+    if (this.props.z == null) return 0;
+    const range = this.props.zRange;
+    const values =
+      typeof range === 'function'
+        ? range(floor)
+        : (range ?? [0, Math.min(floor.width, floor.height) / 2]);
+    const numbers = (values as unknown[]).filter((v): v is number => typeof v === 'number');
+    return numbers.length ? Math.max(0, ...numbers) : 0;
+  }
 
   /**
    * Where raising a point by one pixel of `z` moves it on the flat plot, or `null` when the chart

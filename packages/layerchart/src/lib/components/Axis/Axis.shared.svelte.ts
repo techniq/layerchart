@@ -327,7 +327,14 @@ export class AxisState {
     if (this.orientation === 'vertical') return this.ctx.height;
     if (this.orientation === 'horizontal') return this.ctx.width;
     if (this.orientation === 'radius') return this.ctx.height / 2;
-    if (this.orientation === 'angle') return this.ctx.width;
+    if (this.orientation === 'angle') {
+      // The length of the arc the labels run around — the angle swept, at the outer radius.  The
+      // chart's width has nothing to do with it, so resizing it mustn't change the ticks.
+      const [a0, a1] = this.xRangeMinMax;
+      const outerRadius = Math.max(...this.yRangeMinMax.map(Math.abs));
+      const arc = Math.abs(a1 - a0) * outerRadius;
+      return Number.isFinite(arc) && arc > 0 ? arc : null;
+    }
     return null;
   });
 
