@@ -6,7 +6,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-  import { shadeFilter, type BoxFace } from '$lib/utils/isometric.js';
+  import type { BoxFace } from '$lib/utils/isometric.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
   let { children, ref: refProp = $bindable(), ...rest }: RectProps = $props();
@@ -113,7 +113,7 @@
       style:transform="matrix({p1.x - p0.x}, {p1.y - p0.y}, {p3.x - p0.x}, {p3.y - p0.y}, {p0.x},
       {p0.y})"
       style:background={fill}
-      style:filter={shadeFilter(face)}
+      style:box-shadow={face.shade ? `inset 0 0 0 9999px rgb(0 0 0 / ${face.shade})` : null}
       style:opacity
       class={cls('lc-rect', `lc-rect-${face.kind}`, className)}
     ></div>

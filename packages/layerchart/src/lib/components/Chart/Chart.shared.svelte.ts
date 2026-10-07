@@ -222,7 +222,12 @@ export type ChartPropsWithoutHTML<
   yBaseline?: number | null;
   xInterval?: TimeInterval | null;
   yInterval?: TimeInterval | null;
-  valueAxis?: 'x' | 'y';
+  /**
+   * The axis values run along — what `seriesLayout` stacks.  Inferred as `x` / `y` from which
+   * scale is a band.  `'z'` stacks heights instead, on an `isometric` chart: `Bars` stand up off
+   * their `x` / `y` band cell, stacked per `x` and `y`.
+   */
+  valueAxis?: 'x' | 'y' | 'z';
   radial?: boolean;
 
   /**

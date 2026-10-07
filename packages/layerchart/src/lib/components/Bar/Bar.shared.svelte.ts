@@ -1,7 +1,7 @@
 import type { SVGAttributes } from 'svelte/elements';
 import { greatestAbs } from '@layerstack/utils';
 
-import { createDimensionGetter, type Insets } from '$lib/utils/rect.svelte.js';
+import { createDimensionGetter, resolveInsets, type Insets } from '$lib/utils/rect.svelte.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -141,7 +141,11 @@ export class BarState {
 
   stackInsets = $derived.by<Insets | undefined>(() => {
     const stackPadding = this.#props.stackPadding ?? 0;
-    if (this.ctx.series.stackLayout == null || stackPadding === 0 || this.seriesIndex === undefined) {
+    if (
+      this.ctx.series.stackLayout == null ||
+      stackPadding === 0 ||
+      this.seriesIndex === undefined
+    ) {
       return undefined;
     }
 
@@ -173,8 +177,64 @@ export class BarState {
     }))
   );
 
+  /**
+   * With values along `z`, the band cell the bar stands on — its `x` (and `x1` sub-band) by its
+   * `y` (and `y1`) — or `null` when its value runs along the floor.
+   */
+  #footprint = $derived.by(() => {
+    if (this.ctx.valueAxis !== 'z') return null;
+    const d = this.#props.data;
+    const insets = resolveInsets(this.insets);
+    const band = (
+      scale: any,
+      value: any,
+      subScale: any,
+      subValue: (() => any) | null,
+      before: number,
+      after: number
+    ) => {
+      const sub = subValue && subScale;
+      const start = (scale(value) ?? 0) + (sub ? (subScale(subValue()) ?? 0) : 0) + before;
+      const size = (sub ? subScale.bandwidth?.() : scale.bandwidth?.()) ?? 0;
+      return [start, Math.max(0, size - before - after)];
+    };
+    const x1 = this.x1 ?? this.ctx.config.x1;
+    const y1 = this.y1 ?? this.ctx.config.y1;
+    const [x, width] = band(
+      this.ctx.xScale,
+      accessor(this.x)(d),
+      this.ctx.x1Scale,
+      x1 != null ? () => accessor(x1)(d) : null,
+      insets.left,
+      insets.right
+    );
+    const [y, height] = band(
+      this.ctx.yScale,
+      accessor(this.y)(d),
+      this.ctx.y1Scale,
+      y1 != null ? () => accessor(y1)(d) : null,
+      insets.top,
+      insets.bottom
+    );
+    return { x, y, width, height };
+  });
+
+  /**
+   * With values along `z`, the `[start, end]` heights the bar stands between, in pixels — its
+   * segment of the stack, else up from `0` — or `undefined` when its value runs along the floor.
+   */
+  zExtent = $derived.by((): [number, number] | undefined => {
+    if (this.ctx.valueAxis !== 'z') return undefined;
+    const d = this.#props.data;
+    const value = this.stackAccessors?.value(d) ?? this.ctx.z(d);
+    const [a, b] = Array.isArray(value) ? value : [0, value];
+    const z0 = this.ctx.zScale(Number(a) || 0);
+    const z1 = this.ctx.zScale(Number(b) || 0);
+    return [Math.min(z0, z1), Math.max(z0, z1)];
+  });
+
   scaleDimensions = $derived(
-    this.getDimensions(this.#props.data) ?? { x: 0, y: 0, width: 0, height: 0 }
+    this.#footprint ?? this.getDimensions(this.#props.data) ?? { x: 0, y: 0, width: 0, height: 0 }
   );
 
   dimensions = $derived.by(() => {

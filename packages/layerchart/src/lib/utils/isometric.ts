@@ -450,14 +450,6 @@ export function planeEllipse(u: { x: number; y: number }, v: { x: number; y: num
   };
 }
 
-/**
- * The CSS filter that darkens a box face by its `shade` — its own colour made darker, so a
- * translucent face stays as see-through as the rest of the box.
- */
-export function shadeFilter(face: Pick<BoxFace, 'shade'>) {
-  return face.shade ? `brightness(${1 - face.shade})` : undefined;
-}
-
 /** A rectangle on the floor, by its corners — the shape `d3-hierarchy` lays nodes out in */
 export type Footprint = { x0: number; y0: number; x1: number; y1: number };
 
@@ -522,11 +514,11 @@ export function paintOrder<T extends Footprint>(items: readonly T[], m: AffineMa
   return order;
 }
 
-/** How many shades `extrudeRings` draws the sides in, turning with the outline */
-const SIDE_SHADES = 8;
+/** A turn sharper than this, in degrees, between edges of an outline is a corner between faces */
+const FACE_CORNER = 30;
 
-/** Edges either side of each that its shading follows the outline across */
-const SHADE_SPAN = 3;
+/** Faces shorter than this along the floor, in pixels, join the one before — a jagged outline's */
+const MIN_FACE = 6;
 
 /** Whether `point` lies inside `ring` (even-odd) */
 function insideRing([px, py]: [number, number], ring: Array<[number, number]>) {
@@ -539,12 +531,19 @@ function insideRing([px, py]: [number, number], ring: Array<[number, number]>) {
   return inside;
 }
 
+/** A face of a stood-up shape's sides, and how much to darken it (`0`–`1`) */
+export type ExtrudedSide = { d: string; opacity: number };
+
 /**
- * The sides of a shape stood up from `z0` to `z1` pixels off the floor — every edge of its `rings`
- * that faces the viewer, as a quad, for the layer to draw through `m`.  Holes are rings inside
- * another, whatever their winding.  `sides` is every quad, to fill in the shape's colour; `shades`
- * the same quads in groups, to darken as if lit from the upper left — from `0.15` facing left to
- * `0.3` facing right, like a box's sides, turning smoothly with the outline.
+ * The sides of a shape stood up from `z0` to `z1` pixels off the floor — the edges of its `rings`
+ * that face the viewer, for the layer to draw through `m`.  Holes are rings inside another,
+ * whatever their winding.
+ *
+ * `sides` is every side in one path, to fill in the shape's colour.  `shades` splits them into
+ * faces at the outline's corners, each darkened flat by which way it faces — from `0.15` facing
+ * left to `0.3` facing right, as if lit from the upper left, like a box's sides.  A curve (a pie's
+ * rim) turns too gently for corners, so stands as one face; a jagged outline (a coastline) has its
+ * slivers joined into the faces beside them.
  */
 export function extrudeRings(
   rings: Array<Array<[number, number]>>,
@@ -554,49 +553,83 @@ export function extrudeRings(
   m: AffineMatrix
 ) {
   const at = ([x, y]: [number, number], z: number) => `${x + lift.x * z},${y + lift.y * z}`;
+  const corner = Math.cos((FACE_CORNER * Math.PI) / 180);
   let sides = '';
-  const shades = Array.from({ length: SIDE_SHADES }, () => '');
+  const shades: ExtrudedSide[] = [];
 
   for (const ring of rings) {
+    const n = ring.length;
+    if (n < 2) continue;
     // Inside an odd number of other rings, it's a hole — its sides face into it
     const depth = rings.filter((other) => other !== ring && insideRing(ring[0], other)).length;
     let area = 0;
-    for (let k = 0; k < ring.length; k++) {
+    for (let k = 0; k < n; k++) {
       const [x0, y0] = ring[k];
-      const [x1, y1] = ring[(k + 1) % ring.length];
+      const [x1, y1] = ring[(k + 1) % n];
       area += x0 * y1 - x1 * y0;
     }
     const sign = (area > 0 ? 1 : -1) * (depth % 2 ? -1 : 1);
 
-    for (let k = 0; k < ring.length; k++) {
-      const p = ring[k];
-      const q = ring[(k + 1) % ring.length];
-      // Outward normal, and which way it faces on screen
+    /** How the outward normal from `p` to `q` faces on screen: towards the viewer, and across */
+    const facingOf = (p: [number, number], q: [number, number]) => {
       const nx = sign * (q[1] - p[1]);
       const ny = sign * -(q[0] - p[0]);
-      const facing = m.b * nx + m.d * ny;
-      if (facing <= 0) continue;
-      const quad = `M${at(p, z0)}L${at(q, z0)}L${at(q, z1)}L${at(p, z1)}Z`;
-      sides += quad;
-      // Shaded by the way the outline runs here rather than the edge alone, which on a jagged
-      // outline (a coastline) turns every which way — the chord across a few edges either side
-      const a = ring[(k - SHADE_SPAN + ring.length * SHADE_SPAN) % ring.length];
-      const b = ring[(k + 1 + SHADE_SPAN) % ring.length];
-      const sx = sign * (b[1] - a[1]);
-      const sy = sign * -(b[0] - a[0]);
-      // -1 facing left, 1 facing right
-      const across = m.a * sx + m.c * sy;
-      const t = across / (Math.hypot(across, m.b * sx + m.d * sy) || 1);
-      shades[Math.min(SIDE_SHADES - 1, Math.floor(((t + 1) / 2) * SIDE_SHADES))] += quad;
+      return { toward: m.b * nx + m.d * ny, across: m.a * nx + m.c * ny };
+    };
+    const front = ring.map((p, k) => facingOf(p, ring[(k + 1) % n]).toward > 0);
+
+    /** A face from vertex `a` to `b` of a run, as a shape and its flat shade */
+    const face = (vertices: number[]) => {
+      const bottom = vertices.map((k) => at(ring[k], z0));
+      const top = vertices.map((k) => at(ring[k], z1)).reverse();
+      const facing = facingOf(ring[vertices[0]], ring[vertices[vertices.length - 1]]);
+      const t = facing.across / (Math.hypot(facing.across, facing.toward) || 1);
+      return { d: `M${bottom.join('L')}L${top.join('L')}Z`, opacity: 0.15 + (0.15 * (t + 1)) / 2 };
+    };
+
+    // Each run of facing edges, starting where one begins (or anywhere, when they all face)
+    const begin = front.findIndex((f, k) => f && !front[(k - 1 + n) % n]);
+    if (begin < 0 && !front[0]) continue;
+    const first = begin < 0 ? 0 : begin;
+    for (let step = 0; step < n; ) {
+      const k0 = (first + step) % n;
+      if (!front[k0]) {
+        step++;
+        continue;
+      }
+      // The run's vertices, from the start of its first edge to the end of its last
+      const vertices: number[] = [k0];
+      while (step < n && front[(first + step) % n]) {
+        vertices.push((first + step + 1) % n);
+        step++;
+      }
+      sides += face(vertices).d;
+
+      // Split at the corners into faces, joining any too short to stand alone onto the one before
+      const faces: number[][] = [[vertices[0]]];
+      let length = 0;
+      for (let i = 1; i < vertices.length; i++) {
+        const [px, py] = ring[vertices[i - 1]];
+        const [qx, qy] = ring[vertices[i]];
+        faces[faces.length - 1].push(vertices[i]);
+        length += Math.hypot(qx - px, qy - py);
+        if (i === vertices.length - 1) break;
+        const [rx, ry] = ring[vertices[i + 1]];
+        const ax = qx - px;
+        const ay = qy - py;
+        const bx = rx - qx;
+        const by = ry - qy;
+        const turn = (ax * bx + ay * by) / (Math.hypot(ax, ay) * Math.hypot(bx, by) || 1);
+        if (turn < corner && length >= MIN_FACE) {
+          faces.push([vertices[i]]);
+          length = 0;
+        }
+      }
+      for (const vertices of faces) if (vertices.length > 1) shades.push(face(vertices));
     }
   }
 
-  return {
-    sides,
-    shades: shades
-      .map((d, level) => ({ d, shade: 0.15 + (0.15 * (level + 0.5)) / SIDE_SHADES }))
-      .filter((side) => side.d),
-  };
+  return { sides, shades };
 }
 
 /**
@@ -611,8 +644,7 @@ export function extrudePath(
   filled = true
 ) {
   const shift = { x: lift.x * z1, y: lift.y * z1 };
-  if (!filled || z1 <= z0)
-    return { shift, sides: '', shades: [] as { d: string; shade: number }[] };
+  if (!filled || z1 <= z0) return { shift, sides: '', shades: [] as ExtrudedSide[] };
   return { shift, ...extrudeRings(pathRings(d), z0, z1, lift, m) };
 }
 

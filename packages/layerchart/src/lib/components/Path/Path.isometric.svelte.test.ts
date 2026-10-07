@@ -36,8 +36,8 @@ async function renderPath(pathProps: Record<string, any>, chartProps: Record<str
 describe('Path on an isometric floor', () => {
   it('stands up `z` pixels with the sides facing the viewer, its top raised', async () => {
     const { sides, shades, top } = await renderPath({ z: 40 });
-    // Two sides of a square face the viewer
-    expect(sides?.getAttribute('d')?.match(/M/g)).toHaveLength(2);
+    // Two sides of a square face the viewer, as one shape around its near corner
+    expect(sides?.getAttribute('d')?.match(/M/g)).toHaveLength(1);
     expect(shades).toBeGreaterThan(0);
     expect(top.getAttribute('transform')).toMatch(/^translate\(/);
   });

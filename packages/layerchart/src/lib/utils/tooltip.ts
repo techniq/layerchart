@@ -238,7 +238,7 @@ export type FacetRowContext = {
   x: (d: any) => any;
   y: (d: any) => any;
   /** Which axis carries the value — the *other* one is the position the panels share */
-  valueAxis: 'x' | 'y';
+  valueAxis: 'x' | 'y' | 'z';
 };
 
 /**
@@ -254,7 +254,7 @@ export type FacetRowContext = {
 export function panelDatum(ctx: FacetRowContext, panel: { data: any[] }, data: any) {
   if (data == null) return undefined;
 
-  const accessor = ctx.valueAxis === 'y' ? ctx.x : ctx.y;
+  const accessor = ctx.valueAxis === 'x' ? ctx.y : ctx.x;
   if (!accessor) return undefined;
 
   const value = accessor(data);

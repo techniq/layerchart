@@ -6,7 +6,7 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
   import { renderPathData, renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { polygonPath, shadeFilter, type BoxFace } from '$lib/utils/isometric.js';
+  import { polygonPath, type BoxFace } from '$lib/utils/isometric.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
@@ -66,11 +66,13 @@
     styleOverrides: ComputedStylesOptions | undefined
   ) {
     for (const face of faces) {
-      // Shading is only for the eye — the hit canvas needs each face its flat hit colour
-      const filter = styleOverrides ? undefined : shadeFilter(face);
-      if (filter) ctx.filter = filter;
-      renderPathData(ctx, polygonPath(face.points), styleOpts);
-      if (filter) ctx.filter = 'none';
+      const pathData = polygonPath(face.points);
+      renderPathData(ctx, pathData, styleOpts);
+      // Shaded by darkening over it (Safari's canvas ignores `filter`).  Only for the eye — the hit
+      // canvas needs each face its flat hit colour
+      if (face.shade && !styleOverrides) {
+        renderPathData(ctx, pathData, { styles: { fill: 'black', fillOpacity: face.shade } });
+      }
     }
   }
 

@@ -5,7 +5,11 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import {
+    renderExtrudedShades,
+    renderPathData,
+    type ComputedStylesOptions,
+  } from '$lib/utils/canvas.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { PolygonState, polygonMarkInfo, type PolygonProps } from './Polygon.shared.svelte.js';
@@ -55,11 +59,7 @@
         });
       }
       // Shading is only for the eye — the hit canvas needs the sides their flat hit colour
-      if (!styleOverrides) {
-        for (const side of raised.shades) {
-          renderPathData(ctx, side.d, { styles: { fill: 'black', fillOpacity: side.shade } });
-        }
-      }
+      if (!styleOverrides) renderExtrudedShades(ctx, raised.shades);
       ctx.save();
       ctx.translate(raised.shift.x, raised.shift.y);
       renderPathData(ctx, pathData, styleOpts);

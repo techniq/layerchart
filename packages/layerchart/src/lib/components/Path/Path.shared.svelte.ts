@@ -8,6 +8,7 @@ import { flattenPathData } from '$lib/utils/path.js';
 import {
   createMotion,
   extractTweenConfig,
+  parseMotionProp,
   type MotionProp,
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
@@ -114,6 +115,7 @@ export class PathState {
   drawKey = $state(Symbol());
 
   #getProps: () => PathProps;
+  #motionZ!: ReturnType<typeof createMotion<[number, number]>>;
   #layerIsometric = getLayerIsometric();
 
   /**
@@ -126,8 +128,7 @@ export class PathState {
     const m = this.#layerIsometric();
     const lift = this.chartCtx.isometricLift;
     if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
-    const heights: [number, number] = Array.isArray(z) ? z : [0, z];
-    return extrudePath(this.tweenedPathData ?? '', heights, lift, m, fill !== 'none');
+    return extrudePath(this.tweenedPathData ?? '', this.#motionZ.current, lift, m, fill !== 'none');
   });
 
   /**
@@ -145,6 +146,17 @@ export class PathState {
     this.#getPathData = () => resolvePathData(getPathData());
     this.#getProps = getProps;
 
+    // The `[start, end]` heights `z` stands the shape between, tweened by `motion` like its path
+    const heights = (): [number, number] => {
+      const z = this.#getProps().z;
+      return Array.isArray(z) ? z : [0, z ?? 0];
+    };
+    this.#motionZ = createMotion(
+      heights(),
+      heights,
+      getProps().motion === undefined ? undefined : parseMotionProp(getProps().motion)
+    );
+
     const initial = getProps();
     const extractedTween = extractTweenConfig(initial.motion);
     const tweenedOptions: ResolvedMotion | undefined = extractedTween
@@ -161,6 +173,9 @@ export class PathState {
         return '';
       }
       const resolved = resolvePathData(getPathData());
+      // A map's shapes are already where they belong — rather than rising from a baseline, a
+      // geo path starts as itself and only tweens when it changes
+      if (resolved && this.chartCtx.geoState?.projection) return resolved;
       if (resolved) {
         return flattenPathData(
           resolved,

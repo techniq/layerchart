@@ -46,7 +46,8 @@
 </script>
 
 {#each walls as wall}
-  <Rect {...wall} z={ctx.zDepth} {...wallProps} />
+  <!-- Unshaded: a wall's faint fill would gray under a darkened side -->
+  <Rect {...wall} z={ctx.zDepth} shade={false} {...wallProps} />
 {/each}
 
 <Rect

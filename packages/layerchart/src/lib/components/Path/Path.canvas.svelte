@@ -5,7 +5,11 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import {
+    renderExtrudedShades,
+    renderPathData,
+    type ComputedStylesOptions,
+  } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { PathState, type PathProps } from './Path.shared.svelte.js';
 
@@ -41,11 +45,11 @@
       }
       // Shading is only for the eye — the hit canvas needs the sides their flat hit colour
       if (!styleOverrides) {
-        for (const side of raised.shades) {
-          renderPathData(ctx, side.d, {
-            styles: { fill: 'black', fillOpacity: side.shade, opacity: rest.opacity },
-          });
-        }
+        renderExtrudedShades(
+          ctx,
+          raised.shades,
+          typeof rest.opacity === 'number' ? rest.opacity : 1
+        );
       }
       ctx.save();
       ctx.translate(raised.shift.x, raised.shift.y);

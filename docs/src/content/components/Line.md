@@ -30,3 +30,11 @@ Use `stroke` with a data property name to color each line through the chart's co
 Use a threshold scale to color lines based on value ranges.
 
 :example{ name="color-via-threshold-scale" showCode }
+
+## Isometric
+
+On an [isometric](/docs/guides/isometric) chart, `z1` / `z2` raise each end of a line. A line from a point on the floor up to its height is a stem — under a 3D scatter's points, or the spikes of a map:
+
+```svelte
+<Line x1="x" y1="y" x2="x" y2="y" z2="z" />
+```

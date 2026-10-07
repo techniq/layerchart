@@ -428,15 +428,58 @@ describe('extrudeRings', () => {
 
   it('stands up the two sides of a square that face the viewer, whichever way it winds', () => {
     for (const clockwise of [true, false]) {
-      const { sides } = extrudeRings([square(0, 0, 10, clockwise)], 0, 20, lift, m);
-      expect(sides.match(/M/g)).toHaveLength(2);
+      const { sides, shades } = extrudeRings([square(0, 0, 10, clockwise)], 0, 20, lift, m);
+      // One run around the near corner — three corners along the floor, three along the top
+      expect(sides.match(/M/g)).toHaveLength(1);
+      expect(sides.match(/[ML]/g)).toHaveLength(6);
+      // ...shaded as two faces, split at the corner like a box's sides
+      expect(shades).toHaveLength(2);
+      expect(shades[0].opacity).not.toBeCloseTo(shades[1].opacity);
     }
+  });
+
+  it('shades a curve as one flat face, like a pie rim', () => {
+    const circle = Array.from({ length: 72 }, (_, i): [number, number] => [
+      50 + 40 * Math.cos((i / 72) * 2 * Math.PI),
+      50 + 40 * Math.sin((i / 72) * 2 * Math.PI),
+    ]);
+    expect(extrudeRings([circle], 0, 20, lift, m).shades).toHaveLength(1);
+  });
+
+  it("splits a polygon's sides into faces at its corners, each shaded by which way it faces", () => {
+    const hexagon = Array.from({ length: 6 }, (_, i): [number, number] => [
+      50 + 30 * Math.cos((i / 6) * 2 * Math.PI),
+      50 + 30 * Math.sin((i / 6) * 2 * Math.PI),
+    ]);
+    const { shades } = extrudeRings([hexagon], 0, 20, lift, m);
+    expect(shades.length).toBeGreaterThan(1);
+    expect(new Set(shades.map((side) => side.opacity.toFixed(3))).size).toBe(shades.length);
+  });
+
+  it("joins a jagged outline's slivers into the faces beside them", () => {
+    // A zig-zag edge of 1px teeth along a 60px side
+    const teeth = Array.from({ length: 61 }, (_, i): [number, number] => [i, i % 2]);
+    const jagged: Array<[number, number]> = [...teeth, [60, 40], [0, 40]];
+    const { shades } = extrudeRings([jagged], 0, 20, lift, m);
+    // Far fewer faces than teeth
+    expect(shades.length).toBeLessThan(15);
   });
 
   it('shows the inside of a hole from its far side', () => {
     // A hole's near walls face away; its far walls face the viewer
     const outer = extrudeRings([square(0, 0, 30)], 0, 20, lift, m).sides;
     const withHole = extrudeRings([square(0, 0, 30), square(10, 10, 10)], 0, 20, lift, m).sides;
-    expect(withHole.match(/M/g)!.length).toBe(outer.match(/M/g)!.length + 2);
+    expect(withHole.match(/M/g)!.length).toBe(outer.match(/M/g)!.length + 1);
+  });
+});
+
+describe('pathRings arcs', () => {
+  it('follows an arc around its circle, not straight across', () => {
+    // A half circle of radius 10 about (10, 0), from (0, 0) to (20, 0)
+    const [ring] = pathRings('M0,0A10,10,0,0,1,20,0Z');
+    expect(ring.length).toBeGreaterThan(8);
+    for (const [x, y] of ring) expect(Math.hypot(x - 10, y)).toBeCloseTo(10);
+    // Swept through the top (negative y, clockwise on screen)
+    expect(Math.min(...ring.map(([, y]) => y))).toBeCloseTo(-10, 0);
   });
 });

@@ -405,3 +405,35 @@ describe('Chart isometric `motion`', () => {
     expect(ctx.transform.translate).toEqual({ x: 30, y: 10 });
   });
 });
+
+describe('Chart isometric brush', () => {
+  it('brushes across the floor, measuring the pointer back onto it', async () => {
+    const ctx = await renderChart({ brush: { axis: 'x' } });
+    await vi.waitFor(() => expect(ctx.brushState).toBeTruthy());
+    const el = ctx.containerRef!.querySelector('.lc-brush-context') as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    // Container-relative screen points of two places on the floor
+    const at = (x: number) => {
+      const p = applyMatrix(ctx.layerMatrix()!, { x: ctx.xScale(x), y: ctx.yScale(5) });
+      return { clientX: rect.left + p.x, clientY: rect.top + p.y };
+    };
+    el.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerId: 1, ...at(2) }));
+    window.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, pointerId: 1, ...at(5) })
+    );
+    window.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, pointerId: 1, ...at(8) })
+    );
+    window.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerId: 1, ...at(8) }));
+
+    const [start, end] = ctx.brush.x as number[];
+    expect(start).toBeCloseTo(2, 1);
+    expect(end).toBeCloseTo(8, 1);
+    // Drawn through the floor's matrix
+    await vi.waitFor(() =>
+      expect((el.querySelector('.lc-brush-plot') as HTMLElement | null)?.style.transform).toMatch(
+        /^matrix\(/
+      )
+    );
+  });
+});

@@ -5,6 +5,7 @@ import { min, max } from 'd3-array';
 import { degreesToRadians } from '$lib/utils/math.js';
 import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
@@ -32,6 +33,12 @@ export type PiePropsWithoutHTML = {
   padAngle?: number;
   /** @default 0 */
   offset?: number;
+
+  /**
+   * On an `isometric` chart, stand every slice up `z` pixels off the floor — or between `[start,
+   * end]` — and draw them back to front: a 3D pie.  No effect on a flat chart.
+   */
+  z?: number | [start: number, end: number];
   /** Setup pointer events to show tooltip for related data */
   tooltip?: boolean;
   /** Sort function to sort the arcs */
@@ -91,5 +98,22 @@ export class PieState {
     return _pie;
   });
 
-  arcs = $derived(this.pie(this.markData(this.#getProps().data)));
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * The slices, in the order to draw them: on an isometric floor, back to front by where each
+   * slice's middle stands — so nearer slices, and their sides, cover farther ones — else as laid
+   * out.
+   */
+  arcs = $derived.by(() => {
+    const arcs = this.pie(this.markData(this.#getProps().data));
+    const m = this.#layerIsometric();
+    if (!m) return arcs;
+    // Pie angles run clockwise from 12 o'clock, about the layer's centre
+    const depth = (arc: (typeof arcs)[number]) => {
+      const angle = (arc.startAngle + arc.endAngle) / 2;
+      return m.b * Math.sin(angle) - m.d * Math.cos(angle);
+    };
+    return arcs.sort((a, b) => depth(a) - depth(b));
+  });
 }

@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 
-import CalendarHarness from '$lib/tests/CalendarHarness.svelte';
+import MarkHarness from '$lib/tests/MarkHarness.svelte';
+import Calendar from './Calendar.svelte';
 import { chartTestId } from '$lib/tests/TestHarness.svelte';
 
 const start = new Date(2024, 0, 1);
@@ -14,7 +15,7 @@ const data = Array.from({ length: 28 }, (_, i) => ({
 }));
 
 async function renderCalendar(chartProps: Record<string, any> = {}) {
-  render(CalendarHarness, {
+  render(MarkHarness, {
     chartProps: {
       data,
       x: 'date',
@@ -26,7 +27,9 @@ async function renderCalendar(chartProps: Record<string, any> = {}) {
       isometric: true,
       ...chartProps,
     },
-    calendarProps: { start, end, monthLabel: false },
+    layerProps: { center: false },
+    component: Calendar,
+    componentProps: { start, end, monthLabel: false },
   });
   await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
   return page.getByTestId(chartTestId).element() as HTMLElement;

@@ -125,7 +125,7 @@ Try it in the playground below, where the sliders and the drag set the same angl
 - **The `z` scale** measures up from the floor: its domain reaches down to `0`, and its range runs to half the plot's shorter side. Set `zDomain` / `zRange` to change either — the **Height** slider in the playground above sets `zRange`, and `0` lays the boxes flat.
 - **A mark's own `z`** overrides the chart's, and a chart `z` returning `[start, end]` floats the box between the two.
 - **A `Rect` placed in pixels** ignores the chart's `z` — it has no row to read — but a number stands it up that many pixels: `<Rect x={0} y={0} width={100} height={60} z={40} />`. With no `width` or `height` it's a wall.
-- **`shade={false}`** draws every face in the same flat colour. Shading darkens each side's own colour, so a translucent box stays as see-through as its top.
+- **`shade={false}`** draws every face in the same flat colour, rather than darkening the sides facing the viewer.
 - **The fit** leaves room above the floor for the top of the `z` range, so tall boxes aren't cut off — the floor is a little smaller to make that room.
 - **Boxes are painted back to front**, so nearer ones cover farther ones. That's exact for boxes on a grid, which don't overlap on the floor.
 - **On a flat chart**, or in a layer with `ignoreTransform`, `z` has nothing to raise and the rects stay flat.
@@ -219,7 +219,15 @@ That's right for shapes of similar size. A large shape that wraps around a small
 
 ### More marks with height
 
-- **Stacked columns:** a chart `z` returning `[start, end]` floats each box between the two, so stacked values stand as stacks. Boxes on the same footprint are drawn bottom up.
+- **Bars:** with `valueAxis="z"` the values run up off the floor rather than along it. Each bar stands on its `x` / `y` band cell (and any `x1` / `y1` sub-band), and the chart stacks heights per `x` and `y` row — so the legend hides a layer and the stacks close up, as they do on a flat bar chart. `zScale` takes its domain from the stacks.
+
+  ```svelte
+  <Chart {data} x="year" y="basket" z="value" valueAxis="z" c="fruit" isometric>
+  	<Layer>
+  		<Bars />
+  	</Layer>
+  </Chart>
+  ```
 
   :example{ component="Chart" name="isometric-stacked-columns" }
 
@@ -231,11 +239,23 @@ That's right for shapes of similar size. A large shape that wraps around a small
 
   :example{ component="Chart" name="isometric-areas" }
 
-  :example{ component="Area" name="oscilloscope-ridgeline-isometric" }
-
 - **Polygon:** `z` stands a polygon up into a prism — the nodes of a tree, say, over links lying on the floor.
 
   :example{ component="Tree" name="isometric" }
+
+- **Pie:** `z` stands every slice up, drawn back to front — a 3D pie, or with an `innerRadius` a donut, its inside showing through the hole. An `ArcLabel` given the slice's `z` labels it: on its top, or as a callout from the top of a slice behind and the foot of one in front, so labels clear the sides — on whichever side of the pie the slice falls on screen.
+
+  :example{ component="Pie" name="isometric" }
+
+- **Line:** `z1` / `z2` give each end a height. A line from a point on the floor up to its height is a stem — under a 3D scatter's points, or the spikes of a map.
+
+  ```svelte
+  <Line x1="x" y1="y" x2="x" y2="y" z2="z" />
+  ```
+
+- **Labels** float with the points they name, at the chart's `z` (or their own).
+
+Heights tween with a mark's `motion`, the way its position does — `Bars` and `Rect`, and the marks drawn with a `Path` (`GeoPath`, `Contour`, `Pie`). The map above eases its states between parties with `motion` on each `GeoPath`.
 
 ## Text
 
@@ -285,10 +305,10 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 
 ## Limitations
 
-- **Brushing** isn't supported yet: the brush is drawn and measured on the flat plot, so its selection won't match the floor.
+- **Brushing** works on the floor — the pointer is measured back onto it, and the selection lies on it — but a brush selects by where things stand on the floor, not their height.
 - **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
 - **`WebGL` layers** aren't transformed.
 - **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Only `Rect`, `Cell`, `Calendar`, `Circle`, `Text`, `Polygon`, `Path` (with `GeoPath` and `Contour`), `Area`, `Spline`, and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **Only `Rect`, `Cell`, `Bars`, `Calendar`, `Circle`, `Text`, `Labels`, `Line`, `Polygon`, `Path` (with `GeoPath`, `Contour`, `Arc`, and `Pie`), `Area`, `Spline`, and `Highlight` have height** so far. Other marks lie flat on the floor.
 - **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
 - **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

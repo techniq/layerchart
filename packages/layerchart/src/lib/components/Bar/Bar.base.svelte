@@ -137,6 +137,7 @@
     initialHeight={c.resolvedInitialHeight}
     initialWidth={c.resolvedInitialWidth}
     {...c.dimensions}
+    z={c.zExtent}
     onpointerenter={onPointerEnter}
     onpointermove={onPointerMove}
     onpointerleave={onPointerLeave}

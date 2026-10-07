@@ -50,7 +50,7 @@
   {#if children}
     {@render children()}
   {:else}
-    {#each c.data as d, i (key(d, i))}
+    {#each c.paintedData as d, i (key(d, i))}
       <Bar
         data={d}
         {radius}

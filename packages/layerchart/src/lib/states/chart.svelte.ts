@@ -442,7 +442,7 @@ export class ChartState<
         // Generate implicit series from registered marks.
         // Use the value axis accessor (y for horizontal charts, x for vertical).
         const valueAxis = this.valueAxis;
-        const chartValueProp = valueAxis === 'y' ? this.props.y : this.props.x;
+        const chartValueProp = this.#valueProp;
         const chartValueKeys = Array.isArray(chartValueProp)
           ? chartValueProp.filter((k): k is string => typeof k === 'string')
           : typeof chartValueProp === 'string'
@@ -453,7 +453,8 @@ export class ChartState<
           (!Array.isArray(this.props.data) || this.props.data.length > 0);
         const implicitSeries: SeriesData<TData, any>[] = [];
         for (const { info } of this._markInfos) {
-          const valueAccessor = valueAxis === 'y' ? info.y : info.x;
+          const valueAccessor =
+            valueAxis === 'y' ? info.y : valueAxis === 'z' ? (info as any).z : info.x;
           const key =
             info.seriesKey ??
             (typeof valueAccessor === 'string' ? (valueAccessor as string) : undefined);
@@ -480,7 +481,8 @@ export class ChartState<
         if (!layout || !layout.startsWith('stack')) return null;
 
         const series = this.props.series ?? [];
-        const keyBy = this.valueAxis === 'y' ? this.props.x : this.props.y;
+        // Stacked along `z`, a stack stands on an `x` category — and a `y` row, see `#stackGroupBy`
+        const keyBy = this.valueAxis === 'x' ? this.props.y : this.props.x;
         const hasSeparateData = series.some((s) => s.data != null);
 
         return {
@@ -492,7 +494,7 @@ export class ChartState<
           // key it wasn't given.
           data: hasSeparateData ? undefined : chartDataArray(this.props.data),
           keyBy: keyBy!,
-          valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
+          valueAccessor: this.#valueProp,
           // Anything that subdivides the plot also subdivides the stack — see `StackConfig.groupBy`
           groupBy: this.#stackGroupBy,
           // Long data stacks by the category its rows carry, since no series names the layers
@@ -748,7 +750,7 @@ export class ChartState<
     // beeswarm placing points along one axis with no accessor on the other — has nothing to
     // stack, and inferring one would give that axis a domain, and so ticks and gridlines.
     const configured = this.props.series ?? [];
-    const valueOf = this.valueAxis === 'y' ? this.props.y : this.props.x;
+    const valueOf = this.#valueProp;
     if (valueOf == null && configured.length === 0) return 'overlap';
 
     // Only layers the chart was *configured* with count.  `SeriesState.series` also holds the
@@ -1004,12 +1006,15 @@ export class ChartState<
   #stackGroupBy = $derived.by<((d: any) => string) | undefined>(() => {
     const facet = this.facetState.enabled ? this.facetState : null;
     const subBand = this.props.x1 != null ? this.x1 : this.props.y1 != null ? this.y1 : null;
-    if (!facet && !subBand) return undefined;
+    // Stacked along `z`, each `y` row holds stacks of its own
+    const row = this.valueAxis === 'z' ? this.y : null;
+    if (!facet && !subBand && !row) return undefined;
 
     return (d: any) =>
       JSON.stringify([
         facet ? facetKey(facet.x?.(d), facet.y?.(d)) : null,
         subBand ? (subBand(d) ?? null) : null,
+        row ? (row(d) ?? null) : null,
       ]);
   });
 
@@ -1638,6 +1643,14 @@ export class ChartState<
    * otherwise the smallest value would sit flat on the floor rather than rise by its size.
    */
   zDomain = $derived.by(() => {
+    // Stacked along `z`, the domain reaches the tops of the stacks
+    if (this.props.zDomain === undefined && this.valueAxis === 'z' && this.isStacked) {
+      const stacked = this.seriesState.getStackedValues(chartDataArray(this.data));
+      if (stacked.length > 0) {
+        const [min, max] = extent(stacked) as [number, number];
+        return [Math.min(0, min), Math.max(0, max)];
+      }
+    }
     const domain = calcDomain('z', this.extents, this.props.zDomain);
     if (this.props.zDomain !== undefined || !Array.isArray(domain) || domain.length !== 2) {
       return domain;
@@ -1997,6 +2010,12 @@ export class ChartState<
   get radial() {
     return this.props.radial ?? false;
   }
+  /** The chart's accessor for its value axis */
+  get #valueProp() {
+    const axis = this.valueAxis;
+    return axis === 'y' ? this.props.y : axis === 'z' ? this.props.z : this.props.x;
+  }
+
   get valueAxis() {
     return (
       this.props.valueAxis ??

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { scaleBand } from 'd3-scale';
@@ -102,20 +102,19 @@ describe('Rect on an isometric floor', () => {
     expect(new Set(heights).size).toBe(4);
   });
 
-  it('shades the sides by darkening their own colour', async () => {
+  it('shades the sides facing the viewer, not the top', async () => {
     render(TestHarness, {
       chartProps: { ...cellChart, isometric: true },
       layerProps: { center: false },
       component: Cell,
-      componentProps: { x: 'x', y: 'y', fill: 'red', fillOpacity: 0.5 },
+      componentProps: { x: 'x', y: 'y', fill: 'red' },
     });
     const el = page.getByTestId(chartTestId).element() as HTMLElement;
     await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
-    const sides = [...el.querySelectorAll<SVGPathElement>('.lc-rect-side')];
-    expect(sides.length).toBeGreaterThan(0);
-    // A filter on the face itself, not a black overlay, so a translucent box stays translucent
-    for (const side of sides) expect(side.style.filter).toMatch(/^brightness\(0\.\d+\)$/);
-    expect(el.querySelectorAll('.lc-rect-top')[0]).toHaveProperty('style.filter', '');
+    // A darkening shape over each side — which every browser draws, unlike a filter on the shape
+    const sides = el.querySelectorAll('.lc-rect-side').length;
+    expect(sides).toBeGreaterThan(0);
+    expect(el.querySelectorAll('.lc-rect-shade')).toHaveLength(sides);
   });
 
   it('leaves the sides flat with `shade={false}`', async () => {
@@ -127,9 +126,8 @@ describe('Rect on an isometric floor', () => {
     });
     const el = page.getByTestId(chartTestId).element() as HTMLElement;
     await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
-    const sides = [...el.querySelectorAll<SVGPathElement>('.lc-rect-side')];
-    expect(sides.length).toBeGreaterThan(0);
-    for (const side of sides) expect(side.style.filter).toBe('');
+    expect(el.querySelectorAll('.lc-rect-side').length).toBeGreaterThan(0);
+    expect(el.querySelectorAll('.lc-rect-shade')).toHaveLength(0);
   });
 });
 
@@ -217,5 +215,33 @@ describe('Rect in pixel mode on an isometric floor', () => {
     const tops = [...el.querySelectorAll('.lc-rect-top')].map((t) => t.getBoundingClientRect().top);
     // The lower box first, the upper one (higher on screen) over it
     expect(tops[0]).toBeGreaterThan(tops[1]);
+  });
+
+  it('eases to a new height with `motion`, like its other dimensions', async () => {
+    const props = (z: number) => ({
+      chartProps: { ...cellChart, isometric: true },
+      layerProps: { center: false },
+      component: Rect,
+      componentProps: {
+        x: 20,
+        y: 30,
+        width: 100,
+        height: 60,
+        z,
+        motion: { type: 'tween', duration: 300 },
+      },
+    });
+    const screen = render(TestHarness, props(20));
+    await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
+    const el = page.getByTestId(chartTestId).element() as HTMLElement;
+    const top = () => el.querySelector('.lc-rect-top')!.getBoundingClientRect().top;
+    const before = top();
+    await screen.rerender(props(80));
+    // Partway up, then there
+    await vi.waitFor(() => {
+      expect(top()).toBeLessThan(before - 1);
+    });
+    const partway = top();
+    await vi.waitFor(() => expect(top()).toBeLessThan(partway - 1));
   });
 });

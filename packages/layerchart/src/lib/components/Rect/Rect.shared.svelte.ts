@@ -250,7 +250,8 @@ export class RectState {
       y: this.motionY,
       width: this.motionWidth,
       height: this.motionHeight,
-      ...(Array.isArray(z) ? { z0: z[0], z1: z[1] } : { z0: 0, z1: z }),
+      z0: this.#motionZ.current[0],
+      z1: this.#motionZ.current[1],
     };
     // No height at all lies flat — a plain rect, not an empty box
     if (box.z1 <= box.z0 && box.z0 === 0) return null;
@@ -410,6 +411,7 @@ export class RectState {
   #motionY!: ReturnType<typeof createMotion<number>>;
   #motionWidth!: ReturnType<typeof createMotion<number>>;
   #motionHeight!: ReturnType<typeof createMotion<number>>;
+  #motionZ!: ReturnType<typeof createMotion<[number, number]>>;
 
   get motionX() {
     return this.#motionX.current;
@@ -526,6 +528,17 @@ export class RectState {
       initialHeight,
       () => (typeof this.#props.height === 'number' ? (this.#props.height as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'height')
+    );
+    // Pixel mode: the `[start, end]` heights a numeric `z` stands the rect between, tweened with
+    // the rest
+    const pixelZ = (): [number, number] => {
+      const z = this.#props.z;
+      return Array.isArray(z) ? z : [0, typeof z === 'number' ? z : 0];
+    };
+    this.#motionZ = createMotion(
+      pixelZ(),
+      pixelZ,
+      motion === undefined ? undefined : parseMotionProp(motion, 'z')
     );
 
     this.#dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);

@@ -1,3 +1,4 @@
+import type { DataProp } from '$lib/utils/dataProp.js';
 import type { ComponentProps, Snippet } from 'svelte';
 import { Delaunay } from 'd3-delaunay';
 import { polygonArea, polygonCentroid } from 'd3-polygon';
@@ -17,6 +18,13 @@ import type { Point } from '../Points/Points.shared.svelte.js';
 import type Link from '../Link/Link.svelte';
 
 export type LabelsPropsWithoutHTML<T = any> = {
+  /**
+   * On an `isometric` chart, the height to raise each label off the floor — defaults to the
+   * chart's `z`, so labels float with the points they name.  A data property or accessor (through
+   * zScale), or pixels.  No effect on a flat chart.
+   */
+  z?: DataProp;
+
   /** Override data instead of using context */
   data?: T;
   /** Override display value accessor. By default, uses `y` unless yScale is band scale */

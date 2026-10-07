@@ -6,7 +6,7 @@
   import type { SVGAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-  import { polygonPath, shadeFilter, type BoxFace } from '$lib/utils/isometric.js';
+  import { polygonPath, type BoxFace } from '$lib/utils/isometric.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
   let {
@@ -185,9 +185,19 @@
         stroke-width={style.strokeWidth}
         opacity={style.opacity}
         stroke-dasharray={c.dashArrayAttr}
-        style:filter={shadeFilter(face)}
         class={cls('lc-rect', `lc-rect-${face.kind}`, style.class)}
       />
+      <!-- Shaded by darkening over it — a CSS filter on an SVG shape is lost in Safari -->
+      {#if face.shade}
+        <path
+          d={polygonPath(face.points)}
+          fill="black"
+          fill-opacity={face.shade}
+          opacity={style.opacity}
+          pointer-events="none"
+          class="lc-rect-shade"
+        />
+      {/if}
     {/each}
   </g>
 {/snippet}

@@ -150,7 +150,7 @@
       <path
         d={side.d}
         fill="black"
-        fill-opacity={side.shade}
+        fill-opacity={side.opacity}
         opacity={opacityProp}
         pointer-events="none"
         class="lc-path-side-shade"

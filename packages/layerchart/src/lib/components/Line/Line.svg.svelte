@@ -22,6 +22,9 @@
     markerStart,
     markerMid,
     markerEnd,
+    // Not SVG attributes — the ends' heights, consumed by `LineState`
+    z1,
+    z2,
     ...rest
   }: LineProps = $props();
 
@@ -36,6 +39,8 @@
         markerStart,
         markerMid,
         markerEnd,
+        z1,
+        z2,
         ...rest,
       }) as LineProps
   );

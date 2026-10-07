@@ -1,4 +1,5 @@
 import { radiansToDegrees } from '$lib/utils/math.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import type { PathProps } from '../Path/Path.shared.svelte.js';
 import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type { GetArcTextProps, ArcTextOptions } from '$lib/utils/arcText.svelte.js';
@@ -33,8 +34,14 @@ export type ArcLabelConfig = {
   line?: Omit<PathProps, 'pathData'>;
   /** Radial offset for the label, interpreted per-placement. @default 0 */
   offset?: number;
+  /**
+   * On an `isometric` chart, the height of the slice the label names — its `z` — so the label
+   * sits on top of it.  A callout on a slice facing the viewer hangs below the pie instead, from
+   * the foot of its side, clear of the sides.  No effect on a flat chart.
+   */
+  z?: number;
 } & ArcTextOptions &
-  Omit<TextProps, 'path'>;
+  Omit<TextProps, 'path' | 'z'>;
 
 export type ArcLabelProps = {
   /** Function from `Arc` children snippet for `inner`/`middle`/`outer` placements. */
@@ -71,6 +78,21 @@ export class ArcLabelState {
    * per derived per update. Read it once here instead.
    */
   #props: ArcLabelProps = $derived(this.#getProps());
+
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * How high the label sits off an isometric floor: the top of the slice — or, for a callout on a
+   * slice facing the viewer, the floor, so it hangs below the pie rather than over its sides
+   */
+  labelHeight = $derived.by(() => {
+    const { z, placement } = this.#props;
+    if (z == null) return undefined;
+    const m = this.#layerIsometric();
+    if (!m || placement !== 'callout') return z;
+    const angle = this.midAngle - Math.PI / 2;
+    return m.b * Math.cos(angle) + m.d * Math.sin(angle) > 0 ? 0 : z;
+  });
 
   constructor(getProps: () => ArcLabelProps) {
     this.#getProps = getProps;
@@ -147,14 +169,20 @@ export class ArcLabelState {
     const x1 = cos * bendRadius;
     const y1 = sin * bendRadius;
 
-    const onRightSide = cos >= 0;
-    const x2 = x1 + (onRightSide ? calloutLabelOffset : -calloutLabelOffset);
-    const y2 = y1;
+    // On an isometric floor, the side and the level run of the callout are the screen's: the
+    // floor turns `(1, 0)` here into the flat vector one pixel rightwards on screen
+    const m = this.#layerIsometric();
+    const det = m ? m.a * m.d - m.b * m.c : 1;
+    const level = m && det ? { x: m.d / det, y: -m.b / det } : { x: 1, y: 0 };
+    const onRightSide = m ? m.a * cos + m.c * sin >= 0 : cos >= 0;
+    const side = onRightSide ? 1 : -1;
+    const x2 = x1 + level.x * calloutLabelOffset * side;
+    const y2 = y1 + level.y * calloutLabelOffset * side;
 
     return {
       pathData: `M${x0},${y0}L${x1},${y1}L${x2},${y2}`,
-      labelX: x2 + (onRightSide ? calloutPadding : -calloutPadding),
-      labelY: y2,
+      labelX: x2 + level.x * calloutPadding * side,
+      labelY: y2 + level.y * calloutPadding * side,
       textAnchor: onRightSide ? 'start' : 'end',
     };
   });

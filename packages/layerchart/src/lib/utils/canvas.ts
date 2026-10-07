@@ -647,3 +647,21 @@ function toRectCornerPx(value: string, max: number): number {
   const n = parseFloat(value);
   return Number.isFinite(n) ? n : 0;
 }
+
+/**
+ * The shading of a stood-up shape's sides (see `extrudeRings`), each face darkened flat — drawn
+ * over the sides in the shape's colour.
+ */
+export function renderExtrudedShades(
+  ctx: CanvasRenderingContext2D,
+  shades: Array<{ d: string; opacity: number }>,
+  opacity = 1
+) {
+  ctx.save();
+  ctx.globalAlpha *= opacity;
+  for (const side of shades) {
+    ctx.fillStyle = `rgba(0,0,0,${side.opacity})`;
+    ctx.fill(new Path2D(side.d));
+  }
+  ctx.restore();
+}
