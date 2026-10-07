@@ -5,6 +5,7 @@ import {
   parseMotionProp,
 } from '$lib/utils/motion.svelte.js';
 import { localPoint } from '@layerstack/utils';
+import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
 import { watch } from 'runed';
 import type { ChartState } from './chart.svelte.js';
 
@@ -63,13 +64,12 @@ export type TransformStateOptions = {
   ondragend?: () => void;
 
   /**
-   * Where the view starts turned to, when there's a view to turn — ex. an `isometric` chart's
-   * `rotate` (`x`) and `tilt` (`y`), in degrees.  `null` (the default) for none, and `drag: 'rotate'`
-   * then pans.
+   * The view's starting rotation, ex. an `isometric` chart's `rotate` (`x`) and `tilt` (`y`) in
+   * degrees.  `null` for none, where `drag: 'rotate'` pans.
    */
   initialRotation?: { x: number; y: number } | null;
 
-  /** Turn the rotation by a drag of `deltaX` / `deltaY` pixels.  Default: one degree a pixel. */
+  /** Turn the rotation by a drag of `deltaX` / `deltaY` pixels.  Default: one degree a pixel */
   processRotate?: (
     x: number,
     y: number,
@@ -78,14 +78,14 @@ export type TransformStateOptions = {
   ) => { x: number; y: number };
 
   /**
-   * What a drag does: move the content (`'translate'`), or turn the view (`'rotate'`), where there's
-   * a rotation.  Holding `dragSwitchKey` does the other.
+   * What a drag does: move the content (`'translate'`) or turn the view (`'rotate'`).  Holding
+   * `dragSwitchKey` does the other.
    * @default 'translate'
    */
   drag?: TransformDrag;
 
   /**
-   * Held as a drag starts, the drag does whichever of `translate` / `rotate` `drag` doesn't.
+   * Held as a drag starts, switches it to whichever of `translate` / `rotate` `drag` isn't.
    * @default 'shift'
    */
   dragSwitchKey?: ScrollActivationKey;
@@ -117,12 +117,17 @@ export type TransformStateOptions = {
   constrain?: (transform: TransformConstraint) => TransformConstraint;
 };
 
+/** What scrolling does in `mode` when `scrollMode` isn't set: zoom a domain, else nothing */
+export function defaultScrollMode(mode: TransformMode): TransformScrollMode {
+  return mode === 'domain' ? 'scale' : 'none';
+}
+
 export class TransformState {
   // Context reference
   ctx: ChartState | null;
 
   // Options
-  /** Reactive, so a chart can switch it — ex. between panning and turning an isometric view */
+  /** Reactive, so a chart can switch it without remounting */
   mode = $state<TransformMode>('none');
   axis: TransformAxis;
   processTranslate?: (
@@ -162,7 +167,7 @@ export class TransformState {
   pinch: boolean;
 
   // State
-  /** What a drag does, unless `dragSwitchKey` is held — reactive, so controls can switch it */
+  /** What a drag does, unless `dragSwitchKey` is held */
   drag = $state<TransformDrag>('translate');
   /** Where the view starts turned to, or `null` when there's no view to turn */
   initialRotation = $state<{ x: number; y: number } | null>(null);
@@ -173,7 +178,7 @@ export class TransformState {
   startPoint = $state({ x: 0, y: 0 });
   startTranslate = $state({ x: 0, y: 0 });
   startRotation = { x: 0, y: 0 };
-  /** What the drag in progress moves — settled as it starts */
+  /** What the drag in progress moves, settled as it starts */
   private _dragging: TransformDrag = 'translate';
 
   // Velocity tracking for inertia
@@ -248,7 +253,7 @@ export class TransformState {
         velocityWindow: 160,
       };
     }
-    this.scrollMode = options.scrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
+    this.scrollMode = options.scrollMode ?? defaultScrollMode(this.mode);
 
     // Initialize motion controllers
     const resolvedMotion = parseMotionProp(options.motion);
@@ -274,6 +279,13 @@ export class TransformState {
   private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {
     if (this.processTranslate) return this.processTranslate(x, y, deltaX, deltaY);
     if (this.mode === 'domain') {
+      // On an isometric floor, the movement across it
+      const inverse = this.#floorInverse();
+      if (inverse)
+        ({ x: deltaX, y: deltaY } = applyMatrix(
+          { ...inverse, e: 0, f: 0 },
+          { x: deltaX, y: deltaY }
+        ));
       // Negate deltaY because screen Y (top→bottom) is inverted vs data Y (bottom→top).
       // This works for both normal and reversed Y domains because _computeTransformDomain
       // uses signed range, which naturally handles the reversal.
@@ -328,15 +340,29 @@ export class TransformState {
   }
 
   /**
-   * In domain mode, reflect the Y coordinate since screen Y is inverted vs data Y.  This ensures
+   * On an isometric chart, the inverse of its view.  A domain is measured across the flat floor,
+   * so in domain mode the pointer is mapped back onto it.
+   */
+  #floorInverse() {
+    const m = this.mode === 'domain' ? this.ctx?.isometricMatrix : null;
+    return m ? invertMatrix(m) : null;
+  }
+
+  /**
+   * In domain mode, a container point where the domain measures it: on the flat floor of an
+   * isometric chart, and with Y reflected, since screen Y is inverted vs data Y.  This ensures
    * zooming targets the correct data position under the cursor/gesture.
    */
-  private _reflectPoint(point: { x: number; y: number }) {
-    if (!this.ctx || this.mode !== 'domain' || this.axis === 'x') return point;
-    return {
-      x: point.x,
-      y: this.ctx.padding.top + this.ctx.height - (point.y - this.ctx.padding.top),
-    };
+  private _domainPoint(point: { x: number; y: number }) {
+    if (!this.ctx || this.mode !== 'domain') return point;
+    const { top, left } = this.ctx.padding;
+    const inverse = this.#floorInverse();
+    if (inverse) {
+      const floor = applyMatrix(inverse, { x: point.x - left, y: point.y - top });
+      point = { x: floor.x + left, y: floor.y + top };
+    }
+    if (this.axis === 'x') return point;
+    return { x: point.x, y: top + this.ctx.height - (point.y - top) };
   }
 
   // Derived state
@@ -381,7 +407,7 @@ export class TransformState {
     this._rotation.set(value, options);
   }
 
-  /** Back to the initial rotation — eased by `motion`, or at once with `instant` */
+  /** Back to the initial rotation, eased by `motion` unless `instant` */
   resetRotation({ instant = false }: { instant?: boolean } = {}) {
     if (!this.initialRotation) return;
     if (instant) {
@@ -399,7 +425,7 @@ export class TransformState {
     this.scrollMode = mode;
   }
 
-  /** Back to the initial translate and scale — eased by `motion`, or at once with `instant` */
+  /** Back to the initial translate and scale, eased by `motion` unless `instant` */
   reset({ instant = false }: { instant?: boolean } = {}) {
     this.resetRotation({ instant });
     if (instant) {
@@ -412,9 +438,8 @@ export class TransformState {
   }
 
   /**
-   * The middle of the plot area, from the container's top-left — where the zoom buttons zoom
-   * about.  The plot area (`box`) rather than `width` / `height`, which an isometric chart's floor
-   * makes smaller.
+   * The middle of the plot area from the container's top-left, for the zoom buttons.  Uses `box`,
+   * as an isometric chart's floor makes `width` / `height` smaller.
    */
   #plotCenter(ctx: ChartState) {
     return {
@@ -434,8 +459,8 @@ export class TransformState {
   }
 
   translateCenter() {
-    // A canvas zoom scales about the plot's top-left, so centring keeps the zoom and moves the
-    // plot's middle back to the middle.  A projection's translate is already relative to its fit.
+    // A canvas zoom scales about the plot's top-left, so recentre while keeping the zoom.  A
+    // projection's translate is already relative to its fit.
     if (this.mode === 'canvas' && this.ctx) {
       const k = this._scale.target;
       this._translate.target = {
@@ -492,7 +517,7 @@ export class TransformState {
   ) {
     if (!this.ctx) return;
 
-    point = this._reflectPoint(point);
+    point = this._domainPoint(point);
 
     const currentScale = this._scale.current;
     const newScale = this._clampScale(this._scale.current * value);
@@ -608,8 +633,8 @@ export class TransformState {
     } else {
       // Keep the content under the initial midpoint anchored to the current midpoint, which
       // handles zooming and two-finger panning together
-      const startMidpoint = this._reflectPoint(pinchStart.midpoint);
-      const currentMidpoint = this._reflectPoint(midpoint);
+      const startMidpoint = this._domainPoint(pinchStart.midpoint);
+      const currentMidpoint = this._domainPoint(midpoint);
 
       const invertTransformPoint = {
         x: (startMidpoint.x - this.ctx.padding.left - pinchStart.translate.x) / pinchStart.scale,
@@ -650,7 +675,7 @@ export class TransformState {
     this.startRotation = this._rotation.current;
     this._pointerSamples = [];
 
-    // The switch key swaps what the drag does — rotating only where there's a view to turn
+    // Rotating only where there's a view to turn
     const drag = this._isKeyHeld(e, this.dragSwitchKey)
       ? this.drag === 'rotate'
         ? 'translate'
@@ -741,6 +766,7 @@ export class TransformState {
         // Continue dragging with the remaining pointer without jumping
         this.startPoint = remaining;
         this.startTranslate = this._translate.current;
+        this.startRotation = this._rotation.current;
         this._pointerSamples = [];
         return;
       }
@@ -855,6 +881,7 @@ export class TransformState {
       // Continue dragging with the remaining pointer without jumping
       this.startPoint = remaining;
       this.startTranslate = this._translate.current;
+      this.startRotation = this._rotation.current;
       this._pointerSamples = [];
       return;
     }

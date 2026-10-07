@@ -58,7 +58,7 @@
         };
   }
 
-  /** Stood up into a box on an isometric floor: the sides facing the viewer, then the top */
+  /** An extruded box: the sides facing the viewer, then the top */
   function renderFaces(
     ctx: CanvasRenderingContext2D,
     faces: BoxFace[],
@@ -68,8 +68,7 @@
     for (const face of faces) {
       const pathData = polygonPath(face.points);
       renderPathData(ctx, pathData, styleOpts);
-      // Shaded by darkening over it (Safari's canvas ignores `filter`).  Only for the eye — the hit
-      // canvas needs each face its flat hit colour
+      // Darkened by an overlay, as Safari's canvas ignores `filter`.  Not on the hit canvas
       if (face.shade && !styleOverrides) {
         renderPathData(ctx, pathData, { styles: { fill: 'black', fillOpacity: face.shade } });
       }
@@ -147,6 +146,7 @@
     markInfo: () => rectMarkInfo(rest as RectProps, c.dataMode),
     canvasRender: {
       render,
+      depth: () => c.paintDepth,
       events: {
         click: (rest as any).onclick,
         dblclick: (rest as any).ondblclick,

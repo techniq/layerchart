@@ -48,7 +48,7 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    // Stood up on an isometric floor: the sides facing the viewer, then the polygon on top
+    // Extruded: the sides facing the viewer, then the polygon on top
     const draw = (pathData: string, styleOpts: ComputedStylesOptions, d?: any) => {
       const raised = c.raise(pathData, d);
       if (!raised) return renderPathData(ctx, pathData, styleOpts);
@@ -58,7 +58,7 @@
           styles: { ...styleOpts.styles, stroke: 'none' },
         });
       }
-      // Shading is only for the eye — the hit canvas needs the sides their flat hit colour
+      // Not on the hit canvas, which needs the flat hit colour
       if (!styleOverrides) renderExtrudedShades(ctx, raised.shades);
       ctx.save();
       ctx.translate(raised.shift.x, raised.shift.y);

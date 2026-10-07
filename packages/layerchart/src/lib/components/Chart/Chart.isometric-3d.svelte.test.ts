@@ -9,7 +9,7 @@ const data = [
   { x: 1, y: 1, z: 2 },
   { x: 5, y: 5, z: 9 },
   { x: 9, y: 2, z: 5 },
-  // The far corner, raised to the top — above everything the floor covers on screen
+  // The far corner, raised above everything the floor covers on screen
   { x: 10, y: 10, z: 10 },
 ];
 
@@ -27,13 +27,15 @@ const cube = {
 async function renderScene(
   chartProps: Record<string, any> = {},
   circleProps = {},
-  highlights: Record<string, any>[] = []
+  highlights: Record<string, any>[] = [],
+  layer?: 'svg' | 'canvas' | 'html'
 ) {
   let ctx: ChartState<any, any, any> = null!;
   const screen = render(IsometricSceneHarness, {
     chartProps: { ...cube, ...chartProps },
     circleProps,
     highlights,
+    layer,
     oncontext: (c: any) => (ctx = c),
   });
   await vi.waitFor(() => expect(ctx?.width).toBeGreaterThan(0));
@@ -177,7 +179,7 @@ describe('3D scatter on an isometric floor', () => {
     const wallLines = [...root().querySelectorAll<SVGLineElement>('.lc-highlight-line')].slice(2);
     const atHeight = wallLines.filter((l) => {
       const [x1, y1] = [+l.getAttribute('x1')!, +l.getAttribute('y1')!];
-      // Back on the floor, a line across a wall starts on the wall's edge (x or y at the floor's limit)
+      // Lowered to the floor, a line across a wall starts on the wall's edge
       const fx = x1 - lift.x * height;
       const fy = y1 - lift.y * height;
       const onEdge = (v: number, max: number) => Math.abs(v) < 0.5 || Math.abs(v - max) < 0.5;
@@ -186,24 +188,57 @@ describe('3D scatter on an isometric floor', () => {
     expect(atHeight).toHaveLength(2);
   });
 
+  it('anchors a tooltip shown from code where the point floats', async () => {
+    const row = data[1];
+    const { ctx } = await renderScene({ tooltipContext: { mode: 'quadtree' } });
+    ctx.tooltip.show({ data: row });
+    const expected = drawnAt(ctx, row);
+    await vi.waitFor(() => expect(ctx.tooltip.x).toBeCloseTo(expected.x, 0));
+    expect(ctx.tooltip.y).toBeCloseTo(expected.y, 0);
+  });
+
+  it("lays a `Highlight`'s shadows on their planes in the html layer, which has no paths", async () => {
+    const row = data[1];
+    const { ctx, root } = await renderScene({}, {}, [{ data: row, shadows: true }], 'html');
+    await vi.waitFor(() => expect(root().querySelectorAll('.lc-highlight-shadow')).toHaveLength(3));
+    const [floor, ...walls] = [...root().querySelectorAll<HTMLElement>('.lc-highlight-shadow')];
+
+    // A round box centred beneath the point, lying flat on the floor
+    const r = parseFloat(floor.style.width) / 2;
+    expect(parseFloat(floor.style.left) + r).toBeCloseTo(ctx.xScale(row.x));
+    expect(parseFloat(floor.style.top) + r).toBeCloseTo(ctx.yScale(row.y));
+    expect(floor.style.transform).toBe('matrix(1, 0, 0, 1, 0, 0)');
+    // Each wall's stood up on it, along its edge and the lift
+    const lift = ctx.isometricLift!;
+    for (const wall of walls) {
+      const [, , c, d] = wall.style.transform.match(/-?[\d.e-]+/g)!.map(Number);
+      expect(c).toBeCloseTo(lift.x);
+      expect(d).toBeCloseTo(lift.y);
+    }
+  });
+
   it("lays a `Highlight`'s shadows on the floor and both back walls, level with the point", async () => {
     const row = data[1];
     const { ctx, root } = await renderScene({}, {}, [{ data: row, shadows: true }]);
     await vi.waitFor(() => expect(root().querySelectorAll('.lc-highlight-shadow')).toHaveLength(3));
+    // Each shadow's centre on the flat plot, before the view is applied
     const [floor, ...walls] = [
-      ...root().querySelectorAll<SVGEllipseElement>('.lc-highlight-shadow'),
-    ];
+      ...root().querySelectorAll<SVGPathElement>('.lc-highlight-shadow'),
+    ].map((shadow) => {
+      const box = shadow.getBBox();
+      return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+    });
 
     // On the floor, right beneath the point
-    expect(+floor.getAttribute('cx')!).toBeCloseTo(ctx.xScale(row.x));
-    expect(+floor.getAttribute('cy')!).toBeCloseTo(ctx.yScale(row.y));
+    expect(floor.x).toBeCloseTo(ctx.xScale(row.x));
+    expect(floor.y).toBeCloseTo(ctx.yScale(row.y));
 
     // On each wall, raised to the point's height off the wall's edge
     const lift = ctx.isometricLift!;
     const height = ctx.zScale(row.z);
     for (const wall of walls) {
-      const fx = +wall.getAttribute('cx')! - lift.x * height;
-      const fy = +wall.getAttribute('cy')! - lift.y * height;
+      const fx = wall.x - lift.x * height;
+      const fy = wall.y - lift.y * height;
       const onEdge = (v: number, max: number) => Math.abs(v) < 0.5 || Math.abs(v - max) < 0.5;
       expect(onEdge(fx, ctx.width) || onEdge(fy, ctx.height)).toBe(true);
     }

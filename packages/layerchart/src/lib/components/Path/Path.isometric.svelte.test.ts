@@ -42,6 +42,18 @@ describe('Path on an isometric floor', () => {
     expect(top.getAttribute('transform')).toMatch(/^translate\(/);
   });
 
+  it('moves its sides with its `transform`, as an offset `Arc` slice does', async () => {
+    const left = (el: SVGGraphicsElement | null) => el!.getBoundingClientRect().left;
+    const flat = await renderPath({ z: 40 });
+    const before = { sides: left(flat.sides), top: left(flat.top) };
+    flat.unmount();
+
+    const { sides, top } = await renderPath({ z: 40, transform: 'translate(10, 5)' });
+    // Sides and top both shifted, by the same amount
+    expect(left(top) - before.top).not.toBeCloseTo(0, 0);
+    expect(left(sides) - before.sides).toBeCloseTo(left(top) - before.top, 0);
+  });
+
   it('floats between `[start, end]`', async () => {
     const standing = await renderPath({ z: 40 });
     const standingTop = standing.top.getAttribute('transform');

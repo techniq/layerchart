@@ -35,9 +35,8 @@ export type ArcLabelConfig = {
   /** Radial offset for the label, interpreted per-placement. @default 0 */
   offset?: number;
   /**
-   * On an `isometric` chart, the height of the slice the label names — its `z` — so the label
-   * sits on top of it.  A callout on a slice facing the viewer hangs below the pie instead, from
-   * the foot of its side, clear of the sides.  No effect on a flat chart.
+   * On an `isometric` chart, the height of the labelled slice, so the label sits on top of it.  A
+   * callout on a slice facing the viewer hangs below the pie instead, clear of its sides.
    */
   z?: number;
 } & ArcTextOptions &
@@ -81,10 +80,7 @@ export class ArcLabelState {
 
   #layerIsometric = getLayerIsometric();
 
-  /**
-   * How high the label sits off an isometric floor: the top of the slice — or, for a callout on a
-   * slice facing the viewer, the floor, so it hangs below the pie rather than over its sides
-   */
+  /** The label's height: the slice's top, or the floor for a callout on a slice facing the viewer */
   labelHeight = $derived.by(() => {
     const { z, placement } = this.#props;
     if (z == null) return undefined;
@@ -169,8 +165,8 @@ export class ArcLabelState {
     const x1 = cos * bendRadius;
     const y1 = sin * bendRadius;
 
-    // On an isometric floor, the side and the level run of the callout are the screen's: the
-    // floor turns `(1, 0)` here into the flat vector one pixel rightwards on screen
+    // On an isometric floor, the callout's side and level run follow the screen: `level` is the
+    // flat vector that lands one pixel rightwards on screen
     const m = this.#layerIsometric();
     const det = m ? m.a * m.d - m.b * m.c : 1;
     const level = m && det ? { x: m.d / det, y: -m.b / det } : { x: 1, y: 0 };

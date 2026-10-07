@@ -12,11 +12,13 @@
     chartProps = {},
     circleProps = {},
     highlights = [],
+    layer,
     oncontext,
   }: {
     chartProps?: Record<string, any>;
     circleProps?: Record<string, any>;
     highlights?: Record<string, any>[];
+    layer?: 'svg' | 'canvas' | 'html';
     oncontext?: (ctx: ChartState<any, any, any>) => void;
   } = $props();
 
@@ -29,7 +31,7 @@
 <!-- Pointer input off: these tests drive the tooltip programmatically (see TooltipTestHarness) -->
 <div style="pointer-events: none">
   <Chart width={500} height={400} padding={30} {...chartProps} bind:context>
-    <Layer>
+    <Layer type={layer}>
       <Frame />
       <Grid x y z />
       <Axis placement="back" />

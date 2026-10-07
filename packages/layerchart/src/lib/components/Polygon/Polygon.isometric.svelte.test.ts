@@ -45,7 +45,7 @@ describe('Polygon on an isometric floor', () => {
       { zDomain: [0, 40], zRange: [0, 40] }
     );
     expect(sides).toBe(2);
-    // Drawn back to front — the order on screen, top to bottom, of where each stands
+    // Drawn back to front: top to bottom on screen by where each stands
     const bottoms = tops.map(
       (t) =>
         t.getBoundingClientRect().bottom -

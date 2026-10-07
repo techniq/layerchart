@@ -142,6 +142,11 @@ type InternalMotionOptions = {
    * rather than automatically tracking changes to the source value
    */
   controlled?: boolean;
+  /**
+   * Read on each change of the source value: `true` jumps to it rather than easing (ex. a path
+   * that moved only because an isometric view turned)
+   */
+  instant?: () => boolean;
 };
 
 /**
@@ -181,7 +186,11 @@ function setupTracking<T>(
     // Use untrack to prevent reactive reads inside motion.set() and motion.target
     // from being tracked as dependencies of this effect (which would cause infinite loops)
     untrack(() => {
-      motion.set(value, { instant: motion.target == null });
+      if (options.instant?.()) {
+        (motion as any).set(value, motion.type === 'tween' ? { duration: 0 } : { instant: true });
+      } else {
+        motion.set(value, { instant: motion.target == null });
+      }
     });
   });
 }
@@ -353,9 +362,10 @@ export function createPathMotionMap(
      *
      * `getInitial` supplies the value a newly seen group starts from — the flattened baseline,
      * so a group that appears grows in rather than popping. It is a thunk because building that
-     * path is only worth doing on the update that actually creates the tween.
+     * path is only worth doing on the update that actually creates the tween.  `instant` jumps
+     * there rather than easing.
      */
-    update(key: any, d: string, getInitial?: () => string) {
+    update(key: any, d: string, getInitial?: () => string, instant = false) {
       let state = map.get(key);
       if (!state) {
         state = new MotionTween(getInitial?.() ?? d, {
@@ -364,7 +374,7 @@ export function createPathMotionMap(
         });
         map.set(key, state);
       }
-      state.set(d);
+      state.set(d, instant ? { duration: 0 } : undefined);
     },
 
     /** Current animated `d` for `key`, or `null` until its first `update` */

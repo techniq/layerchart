@@ -37,9 +37,8 @@ export type GridPropsWithoutHTML<In extends Transition = Transition> = {
   y?: boolean | GridLineProps;
 
   /**
-   * On an `isometric` chart with a `z`, gridlines up the back walls — across them at each `z`
-   * tick, and up them at the `x` / `y` ticks when those gridlines are on.  No effect on a flat
-   * chart.
+   * On an `isometric` chart with a `z`, gridlines on the back walls at each `z` tick, and up them at
+   * the `x` / `y` ticks when those are on.
    */
   z?: boolean | GridLineProps;
 

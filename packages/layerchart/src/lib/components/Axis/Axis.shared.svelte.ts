@@ -29,8 +29,7 @@ import {
 
 export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
   /**
-   * Location of axis.  `'back'` stands up the back corner of an `isometric` chart's floor — the
-   * left end of its back walls — and runs along `z`, the height.
+   * Location of axis.  `'back'` runs along `z` up the back corner of an `isometric` chart's floor.
    */
   placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius' | 'back';
 
@@ -219,9 +218,8 @@ export class AxisState {
   #layerIsometric = getLayerIsometric();
 
   /**
-   * Anchors for a `viewport`-aligned label hanging off this axis' edge of an `isometric` floor, or
-   * `undefined` to keep the flat ones.  The edge runs at an angle on screen, where a label centred
-   * under its tick would cut back across the floor.
+   * Anchors for a `viewport` label hanging off this axis' edge of an `isometric` floor (see
+   * `viewportAnchors`), or `undefined` to keep the flat ones.
    */
   #viewportAnchors(viewport: boolean | undefined) {
     const m = this.#layerIsometric();
@@ -235,8 +233,8 @@ export class AxisState {
     return outward ? viewportAnchors(m, outward) : undefined;
   }
   /**
-   * For `placement="back"`: the floor corner the axis stands on, how a height lifts off it, and
-   * screen-space offsets restated on the floor — `null` without an isometric floor and a `z`.
+   * For `placement="back"`: the floor corner the axis stands on, the lift, and screen offsets on
+   * the floor.  `null` without an isometric floor and a `z`.
    */
   back = $derived.by(() => {
     const m = this.#layerIsometric();
@@ -354,8 +352,7 @@ export class AxisState {
     if (this.orientation === 'radius') return this.ctx.height / 2;
     if (this.orientation === 'back') return this.ctx.zDepth;
     if (this.orientation === 'angle') {
-      // The length of the arc the labels run around — the angle swept, at the outer radius.  The
-      // chart's width has nothing to do with it, so resizing it mustn't change the ticks.
+      // The arc the labels run around, so the ticks don't change with the chart's width
       const [a0, a1] = this.xRangeMinMax;
       const outerRadius = Math.max(...this.yRangeMinMax.map(Math.abs));
       const arc = Math.abs(a1 - a0) * outerRadius;
@@ -527,7 +524,7 @@ export class AxisState {
         };
 
       case 'back': {
-        // Off to the left of the edge on screen, facing the viewer, however the floor is turned
+        // Left of the edge on screen, however the floor is turned
         const gap = tickLength + labelPadding;
         return {
           textAnchor: 'end',

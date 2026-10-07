@@ -36,7 +36,7 @@ export type EllipsePropsWithoutHTML = {
   ref?: SVGEllipseElement;
   /** Motion configuration (pixel mode only). */
   motion?: MotionProp;
-  /** Degrees to turn the ellipse about its centre, clockwise like `<Text rotate>`. */
+  /** Degrees to turn the ellipse clockwise about its centre */
   rotate?: number;
 } & DataDrivenStyleProps;
 

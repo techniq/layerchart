@@ -79,10 +79,7 @@
 
   const layerIsometric = getLayerIsometric();
 
-  /**
-   * For `z`: the back walls of an `isometric` chart with a `z`, and how far up the screen one
-   * pixel of height is — `null` where there are no walls to draw on.
-   */
+  /** For `z`: the back walls and the lift, or `null` without walls */
   const walls = $derived.by(() => {
     const m = layerIsometric();
     const lift = c.ctx.isometricLift;
@@ -238,7 +235,7 @@
           />
         {/each}
 
-        <!-- Up the wall, continuing the floor's gridlines along the edge it stands on -->
+        <!-- Up the wall, continuing the floor's gridlines -->
         {#if edge.axis === 'x' ? x : y}
           {#each edge.axis === 'x' ? c.xTickVals : c.yTickVals as tick (tick)}
             {@const foot =

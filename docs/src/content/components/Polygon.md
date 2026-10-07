@@ -33,4 +33,4 @@ Use a threshold scale to color items based on value ranges.
 
 ## Isometric
 
-On an [isometric](/docs/guides/isometric) chart, `z` stands a polygon up into a prism, its sides shaded by which way they face — see the [isometric tree](/docs/components/Tree#isometric).
+On an [isometric](/docs/guides/isometric) chart, `z` stands a polygon up into a prism. See the [isometric tree](/docs/components/Tree#isometric).

@@ -15,6 +15,6 @@ See also: [PieChart](/docs/components/PieChart) for simplified examples
 
 ## Isometric
 
-On an [isometric](/docs/guides/isometric) chart, `z` stands every slice up, drawn back to front — a 3D pie, or with an `innerRadius` a donut. `ArcLabel` callouts given the same `z` keep clear of the sides. Drag to turn it.
+On an [isometric](/docs/guides/isometric) chart, `z` stands every slice up, for a 3D pie or donut. Give an `ArcLabel` the same `z` and its callouts keep clear of the slices' sides. Drag to turn it.
 
 :example{ name="isometric" }

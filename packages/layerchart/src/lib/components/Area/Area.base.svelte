@@ -31,7 +31,7 @@
     x,
     y0,
     y1,
-    // Each point's height — not `Path`'s, which would stand the whole area up by one
+    // Each point's height, not `Path`'s, which would raise the whole area
     z,
     g,
     seriesKey,

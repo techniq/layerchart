@@ -253,6 +253,36 @@ describe('Chart isometric with a transform', () => {
     expect(ctx.transform.translate).toEqual({ x: 40, y: 10 });
   });
 
+  it('keeps turning from where it is when a pinch ends mid-drag', async () => {
+    const ctx = await renderTransformed({ mode: 'canvas', drag: 'rotate' });
+    const el = ctx.containerRef!.querySelector('.lc-transform-context')!;
+    const box = el.getBoundingClientRect();
+    const touch = (type: string, pointerId: number, x: number) =>
+      el.dispatchEvent(
+        new PointerEvent(type, {
+          bubbles: true,
+          pointerId,
+          pointerType: 'touch',
+          clientX: box.x + x,
+          clientY: box.y + 100,
+        })
+      );
+
+    // Turn 30° with one finger
+    touch('pointerdown', 1, 100);
+    touch('pointermove', 1, 160);
+    expect(ctx.transform.rotation!.x).toBeCloseTo(-60);
+
+    // A second finger comes and goes
+    touch('pointerdown', 2, 300);
+    touch('pointerup', 2, 300);
+
+    // The first finger carries on 5° further, rather than back from where the drag began
+    touch('pointermove', 1, 170);
+    expect(ctx.transform.rotation!.x).toBeCloseTo(-65);
+    touch('pointerup', 1, 170);
+  });
+
   it('resets the rotation along with the pan and zoom', async () => {
     const ctx = await renderTransformed({ mode: 'canvas' });
     ctx.transform.setRotation({ x: 20, y: 65 });
@@ -333,7 +363,7 @@ describe('Chart switching `transform` mode', () => {
       yDomain: [0, 10],
       width: 400,
       height: 300,
-      // Eased, which a switch must not do — one mode's translate means nothing to another
+      // Eased, which a mode switch must skip
       transform: { mode, motion: { type: 'tween', duration: 500 } },
     });
     const screen = render(TooltipTestHarness, {
@@ -343,10 +373,43 @@ describe('Chart switching `transform` mode', () => {
     await vi.waitFor(() => expect(ctx?.transformState).toBeTruthy());
     const root = ctx.containerRef;
     ctx.transform.setTranslate({ x: 40, y: 20 });
+    ctx.transform.setScale(2);
+    expect(ctx.transform.scrollMode).toBe('none');
 
     await screen.rerender({ chartProps: chartProps('domain') });
     expect(ctx.transform.mode).toBe('domain');
     expect(ctx.containerRef).toBe(root);
+    // At once, and with domain mode's own default for scrolling
+    expect(ctx.transform.translate).toEqual({ x: 0, y: 0 });
+    expect(ctx.transform.scale).toBe(1);
+    expect(ctx.transform.scrollMode).toBe('scale');
+  });
+
+  it('pans an isometric chart in domain mode with the pointer, across the floor', async () => {
+    const ctx = await renderChart({
+      isometric: { rotate: -30, tilt: 50 },
+      transform: { mode: 'domain' },
+    });
+    await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
+    const drawn = () => applyMatrix(ctx.layerMatrix()!, { x: ctx.xScale(5), y: ctx.yScale(5) });
+    const before = drawn();
+
+    const el = ctx.containerRef!.querySelector('.lc-transform-context')!;
+    const box = el.getBoundingClientRect();
+    const at = (x: number) => ({
+      bubbles: true,
+      pointerId: 1,
+      clientX: box.x + x,
+      clientY: box.y + 100,
+    });
+    el.dispatchEvent(new PointerEvent('pointerdown', at(100)));
+    el.dispatchEvent(new PointerEvent('pointermove', at(130)));
+    el.dispatchEvent(new PointerEvent('pointermove', at(160)));
+    el.dispatchEvent(new PointerEvent('pointerup', at(160)));
+
+    // The value under the pointer moved with it: 60px across the screen, not along the floor's x
+    await vi.waitFor(() => expect(drawn().x - before.x).toBeCloseTo(60, 0));
+    expect(drawn().y - before.y).toBeCloseTo(0, 0);
   });
 });
 

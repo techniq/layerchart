@@ -6,11 +6,12 @@ import {
   autoIsometricAspect,
   boxFaces,
   createIsometricMatrix,
+  sectorDepth,
   fitIsometricFloor,
   invertMatrix,
   isometricLift,
   multiplyMatrix,
-  planeEllipse,
+  planeCircle,
   paintOrder,
   extrudeRings,
 } from './isometric.js';
@@ -149,8 +150,8 @@ describe('fitIsometricFloor', () => {
   });
 
   it('keeps a radial floor the size of its circle flat', () => {
-    // A circle keeps its width however it turns and is only foreshortened top to bottom, so it
-    // fits as it is — and isn't enlarged into the room the tilt frees
+    // A circle keeps its width as it turns, so fits as it is rather than growing into the room the
+    // tilt frees
     const box = { width: 900, height: 400 };
     const { floor } = view({}, box, { footprint: 'disc' });
     expect(floor.width).toBeCloseTo(box.height);
@@ -301,19 +302,19 @@ describe('multiplyMatrix', () => {
   });
 });
 
-describe('planeEllipse', () => {
-  /** Whether `p` lies on the ellipse (centred at the origin) */
-  function onEllipse(e: ReturnType<typeof planeEllipse>, p: { x: number; y: number }) {
-    const t = (-e.rotate * Math.PI) / 180;
-    const x = p.x * Math.cos(t) - p.y * Math.sin(t);
-    const y = p.x * Math.sin(t) + p.y * Math.cos(t);
-    return (x / e.rx) ** 2 + (y / e.ry) ** 2;
+describe('planeCircle', () => {
+  /** The points the path passes through: its start and each arc's end */
+  function ends(d: string) {
+    return [...d.matchAll(/[MA][^MAZ]*/g)].map((m) => {
+      const n = m[0].slice(1).split(',').map(Number);
+      return { x: n.at(-2)!, y: n.at(-1)! };
+    });
   }
 
   it('is the circle itself on the floor', () => {
-    const e = planeEllipse({ x: 1, y: 0 }, { x: 0, y: 1 }, 6);
-    expect(e.rx).toBeCloseTo(6);
-    expect(e.ry).toBeCloseTo(6);
+    const d = planeCircle({ x: 10, y: 20 }, { x: 1, y: 0 }, { x: 0, y: 1 }, 6);
+    for (const p of ends(d)) expect(Math.hypot(p.x - 10, p.y - 20)).toBeCloseTo(6);
+    expect(d).toMatch(/A6,6,/);
   });
 
   it('traces the circle laid in any plane', () => {
@@ -322,14 +323,22 @@ describe('planeEllipse', () => {
       { x: 1, y: 0 },
       { x: 0, y: 1 },
     ]) {
-      const e = planeEllipse(across, lift, 5);
+      const d = planeCircle({ x: 0, y: 0 }, across, lift, 5);
+      // Semi-axes and turn from the arcs, then every point of the laid circle on that ellipse
+      const [rx, ry, rotate] = d
+        .match(/A([^,]+),([^,]+),([^,]+)/)!
+        .slice(1)
+        .map(Number);
+      const t = (-rotate * Math.PI) / 180;
       for (let i = 0; i < 12; i++) {
         const a = (i / 12) * 2 * Math.PI;
         const p = {
           x: 5 * (across.x * Math.cos(a) + lift.x * Math.sin(a)),
           y: 5 * (across.y * Math.cos(a) + lift.y * Math.sin(a)),
         };
-        expect(onEllipse(e, p)).toBeCloseTo(1);
+        const x = p.x * Math.cos(t) - p.y * Math.sin(t);
+        const y = p.x * Math.sin(t) + p.y * Math.cos(t);
+        expect((x / rx) ** 2 + (y / ry) ** 2).toBeCloseTo(1);
       }
     }
   });
@@ -350,7 +359,7 @@ describe('paintOrder', () => {
   });
 
   it('paints a small box in front of a long one after it, where depth alone gets it wrong', () => {
-    // `wide` reaches far along x, so its centre is deeper — but `small` stands right in front of it
+    // `wide`'s centre is deeper, but `small` stands in front of it
     const wide = { x0: 0, y0: 0, x1: 100, y1: 10 };
     const small = { x0: 0, y0: 10, x1: 10, y1: 20 };
     const depth = (f: typeof wide) => m.b * (f.x0 + f.x1) + m.d * (f.y0 + f.y1);
@@ -429,7 +438,7 @@ describe('extrudeRings', () => {
   it('stands up the two sides of a square that face the viewer, whichever way it winds', () => {
     for (const clockwise of [true, false]) {
       const { sides, shades } = extrudeRings([square(0, 0, 10, clockwise)], 0, 20, lift, m);
-      // One run around the near corner — three corners along the floor, three along the top
+      // One run around the near corner
       expect(sides.match(/M/g)).toHaveLength(1);
       expect(sides.match(/[ML]/g)).toHaveLength(6);
       // ...shaded as two faces, split at the corner like a box's sides
@@ -481,5 +490,46 @@ describe('pathRings arcs', () => {
     for (const [x, y] of ring) expect(Math.hypot(x - 10, y)).toBeCloseTo(10);
     // Swept through the top (negative y, clockwise on screen)
     expect(Math.min(...ring.map(([, y]) => y))).toBeCloseTo(-10, 0);
+  });
+});
+
+describe('sectorDepth', () => {
+  const box = { width: 200, height: 200 };
+  /** Where the floor is nearest the viewer, as a pie angle (clockwise from 12 o'clock) */
+  const frontOf = (m: ReturnType<typeof createIsometricMatrix>) => Math.atan2(m.b, -m.d);
+
+  it('puts a wide slice reaching round the front after its narrow neighbour', () => {
+    const m = createIsometricMatrix({ rotate: 0, tilt: 50 }, box, box);
+    const front = frontOf(m);
+    // Wide, ending just past the front; narrow, just beyond it
+    const wide = [front - 2.4, front + 0.1];
+    const narrow = [front + 0.1, front + 0.4];
+    const mid = ([a, b]: number[]) => {
+      const angle = (a + b) / 2;
+      return m.b * Math.sin(angle) - m.d * Math.cos(angle);
+    };
+    // Their middles say the reverse
+    expect(mid(wide)).toBeLessThan(mid(narrow));
+    expect(sectorDepth(wide[0], wide[1], m)).toBeGreaterThan(sectorDepth(narrow[0], narrow[1], m));
+  });
+
+  it('paints the slice spanning the front last, however the pie is turned', () => {
+    // Slices of 40%, 10%, 25%, 5% and 20%
+    const shares = [0.4, 0.1, 0.25, 0.05, 0.2];
+    const slices = shares.map((_, i) => {
+      const start = shares.slice(0, i).reduce((a, b) => a + b, 0) * 2 * Math.PI;
+      return [start, start + shares[i] * 2 * Math.PI];
+    });
+    // Off the slices' edges, where two slices share the front
+    for (let rotate = 2.5; rotate < 360; rotate += 5) {
+      const m = createIsometricMatrix({ rotate, tilt: 55 }, box, box);
+      const tau = 2 * Math.PI;
+      const front = ((frontOf(m) % tau) + tau) % tau;
+      const order = [...slices].sort(
+        (a, b) => sectorDepth(a[0], a[1], m) - sectorDepth(b[0], b[1], m)
+      );
+      const last = order.at(-1)!;
+      expect(last[0] <= front && front <= last[1]).toBe(true);
+    }
   });
 });

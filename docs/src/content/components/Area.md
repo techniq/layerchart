@@ -37,6 +37,6 @@ This replaces grouping the data yourself and rendering an `Area` per group — e
 
 ## Isometric ridgeline
 
-On an [isometric](/docs/guides/isometric) chart, `z` (or the chart's `z`) gives each point a height: an `Area` stands up as a curtain along its row, from the floor to each point's height. One curtain per row of a band `y`, drawn back to front, makes a 3D ridgeline.
+On an [isometric](/docs/guides/isometric) chart, `z` gives each point a height, and an `Area` stands up as a curtain from the floor to those heights. One curtain per row of a band `y`, drawn back to front, makes a 3D ridgeline.
 
 :example{ name="oscilloscope-ridgeline-isometric" }

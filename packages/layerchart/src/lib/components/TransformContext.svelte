@@ -1,6 +1,10 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
-  import { TransformState, type TransformStateOptions } from '$lib/states/transform.svelte.js';
+  import {
+    defaultScrollMode,
+    TransformState,
+    type TransformStateOptions,
+  } from '$lib/states/transform.svelte.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   type TransformContextPropsWithoutHTML = TransformStateOptions & {
@@ -106,23 +110,25 @@
     const newMode = mode ?? 'none';
     const modeChanged = newMode !== transformState.mode;
     transformState.mode = newMode;
-    // Only reset if values actually changed from current initial values
-    if (
+    const initialChanged =
       newTranslate.x !== transformState.initialTranslate.x ||
       newTranslate.y !== transformState.initialTranslate.y ||
-      newScale !== transformState.initialScale
-    ) {
-      transformState.initialTranslate = newTranslate;
-      transformState.initialScale = newScale;
-      // A new mode reads translate and scale differently (ex. a domain zoom as a canvas one) —
-      // start it where it starts, rather than easing there through the old mode's values
-      transformState.reset({ instant: modeChanged });
+      newScale !== transformState.initialScale;
+    transformState.initialTranslate = newTranslate;
+    transformState.initialScale = newScale;
+    if (modeChanged) {
+      // A new mode starts over from its initial view, at once
+      transformState.reset({ instant: true });
+      if (scrollMode === undefined) {
+        transformState.scrollMode = defaultScrollMode(newMode);
+      }
+    } else if (initialChanged) {
+      transformState.reset();
     }
   });
 
-  // The view's starting rotation — a change turns the view there at once, leaving the pan and
-  // zoom.  Easing it is for whatever sets it (ex. an isometric chart's `motion`), so it's followed
-  // exactly rather than eased again
+  // Follow `initialRotation` at once, leaving pan and zoom; whatever sets it (ex. `isometric.motion`)
+  // already eases it
   $effect.pre(() => {
     const next = initialRotation ?? null;
     const current = transformState.initialRotation;

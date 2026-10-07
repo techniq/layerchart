@@ -37,10 +37,7 @@ export type BrushableOptions = {
    */
   origin?: (offset: { x: number; y: number }) => { x: number; y: number } | null;
 
-  /**
-   * Where a point measured within `bounds` lands on the plot — for a plot drawn transformed, ex.
-   * an `isometric` chart's floor.  Defaults to the point itself.
-   */
+  /** Map a point within `bounds` onto a transformed plot, ex. an `isometric` floor */
   toPlot?: (point: { x: number; y: number }) => { x: number; y: number };
 
   /** Distance from an edge, in pixels, that resizes rather than starting a new selection @default 6 */

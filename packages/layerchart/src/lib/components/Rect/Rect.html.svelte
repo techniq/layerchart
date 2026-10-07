@@ -18,7 +18,7 @@
 
   const c = new RectState(() => rest as RectProps);
 
-  // `z` and `shade` aren't HTML attributes — `RectState` reads them from `rest`
+  // `z` and `shade` are read by `RectState`, not HTML attributes
   const htmlRest = $derived.by(() => {
     const { z: _z, shade: _shade, ...attrs } = rest;
     return attrs as unknown as HTMLAttributes<HTMLDivElement>;
@@ -94,8 +94,8 @@
 {/if}
 
 <!--
-  Stood up into a box on an isometric floor: the sides facing the viewer, then the top.  Each face
-  is a parallelogram, drawn as a 1px square its own matrix stretches into place.
+  An extruded box: the sides facing the viewer, then the top.  Each face is a 1px square its own
+  matrix stretches into place.
 -->
 {#snippet box(faces: BoxFace[], fill?: string, opacity?: number, className?: string)}
   {#each faces as face}

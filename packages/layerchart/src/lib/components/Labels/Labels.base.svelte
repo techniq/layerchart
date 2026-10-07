@@ -18,7 +18,6 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { LabelsState } from './Labels.shared.svelte.js';
   import { getPixelValue } from '../Text/Text.shared.svelte.js';
-  import { resolveDataProp } from '$lib/utils/dataProp.js';
   import type { Point } from '../Points/Points.shared.svelte.js';
 
   let {
@@ -48,12 +47,10 @@
 
   const linkProps = $derived(typeof links === 'object' ? links : {});
 
-  /** A label's height off an `isometric` floor, in pixels — from `z`, else the chart's — or none */
+  /** A label's height in pixels, from `z` or the chart's, or `undefined` */
   function labelHeight(point: Point) {
-    if (z != null) return resolveDataProp(z, point.data, c.ctx.zScale, 0);
-    if (c.ctx.config.z == null) return undefined;
-    const value = c.ctx.zGet(point.data);
-    return Number(Array.isArray(value) ? value[1] : value) || 0;
+    if (z == null && c.ctx.config.z == null) return undefined;
+    return c.ctx.heightOf(point.data, z)[1];
   }
 
   const c = new LabelsState<TData>(

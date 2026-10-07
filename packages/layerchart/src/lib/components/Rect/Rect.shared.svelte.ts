@@ -112,20 +112,17 @@ export type RectPropsWithoutHTML = {
   y1?: DataProp;
 
   /**
-   * Height to raise the rectangle into a box on an `isometric` chart (data mode).  Defaults to the
-   * chart's `z`, so `<Chart z="value">` stands every rect up off the floor.
+   * Height to raise the rectangle into a box on an `isometric` chart, defaulting to the chart's `z`
+   * in data mode.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
-   * - `number`: pixel height — in pixel mode too, where it's the only way to raise the rect
-   * - `[start, end]`: pixel heights to float the box between, ex. a tier stacked on another
-   *
-   * A chart `z` returning `[start, end]` floats the box the same way.  No effect on a flat chart.
+   * - `number`: pixel height (also in pixel mode)
+   * - `[start, end]`: pixel heights to float the box between
    */
   z?: DataProp | [start: number, end: number];
 
   /**
-   * Whether a rect raised by `z` shades its sides, as if lit from the upper left — set `false` for
-   * flat colour.
+   * Whether a box raised by `z` shades its sides.
    *
    * @default true
    */
@@ -219,10 +216,7 @@ export class RectState {
   geo: GeoState = getGeoContext();
   #layerIsometric = getLayerIsometric();
 
-  /**
-   * Whether the rects stand up as boxes — data mode, a height to raise them by, and a layer that
-   * draws the isometric floor.  Seen from directly above (or in a flat layer) they stay flat.
-   */
+  /** Whether the rects stand up as boxes: data mode, with a height, in a layer drawing the floor */
   extruded = $derived.by(() => {
     if (!this.dataMode || !this.#layerIsometric()) return false;
     const lift = this.chartCtx.isometricLift;
@@ -235,10 +229,7 @@ export class RectState {
     return this.#props.shade === false ? faces.map((face) => ({ ...face, shade: 0 })) : faces;
   }
 
-  /**
-   * In pixel mode, the faces of the box a numeric `z` stands the rect up into — `null` for a flat
-   * rect, or without an isometric floor to stand it on.
-   */
+  /** In pixel mode, the faces of the box `z` stands the rect up into, or `null` when flat */
   pixelFaces = $derived.by((): BoxFace[] | null => {
     const z = this.#props.z;
     if (this.dataMode || (typeof z !== 'number' && !Array.isArray(z))) return null;
@@ -253,21 +244,24 @@ export class RectState {
       z0: this.#motionZ.current[0],
       z1: this.#motionZ.current[1],
     };
-    // No height at all lies flat — a plain rect, not an empty box
+    // No height draws a plain rect, not an empty box
     if (box.z1 <= box.z0 && box.z0 === 0) return null;
     return this.#shaded(boxFaces(box, lift, m));
   });
 
+  /** In pixel mode, how far back the box stands on the floor (its footprint's centre), if a box */
+  paintDepth = $derived.by(() => {
+    const m = this.#layerIsometric();
+    if (!this.pixelFaces || !m) return undefined;
+    return (
+      m.b * (this.motionX + this.motionWidth / 2) + m.d * (this.motionY + this.motionHeight / 2)
+    );
+  });
+
   /** A box's base and top, in pixels off the floor */
   #resolveZ(d: any): { z0: number; z1: number } {
-    const props = this.#props;
-    if (Array.isArray(props.z)) return { z0: props.z[0], z1: props.z[1] };
-    if (props.z != null) {
-      return { z0: 0, z1: resolveDataProp(props.z, d, this.chartCtx.zScale, 0) };
-    }
-    const value = this.chartCtx.zGet(d);
-    if (Array.isArray(value)) return { z0: Number(value[0]) || 0, z1: Number(value[1]) || 0 };
-    return { z0: 0, z1: Number(value) || 0 };
+    const [z0, z1] = this.chartCtx.heightOf(d, this.#props.z);
+    return { z0, z1 };
   }
 
   // Data mode detection
@@ -308,9 +302,7 @@ export class RectState {
     if (!this.extruded || !m || !lift) return items;
 
     for (const item of items) item.faces = this.#shaded(boxFaces(item, lift, m));
-    // Back to front, so nearer boxes cover farther ones — by where each footprint's centre lands
-    // down the screen.  Exact for boxes on a grid, which don't overlap on the floor.  Boxes on the
-    // same footprint (a stack) go bottom up
+    // Back to front by footprint centre (exact on a grid), and a stack bottom up
     const depth = (item: (typeof items)[number]) =>
       m.b * (item.x + item.width / 2) + m.d * (item.y + item.height / 2);
     return items.sort((a, b) => depth(a) - depth(b) || a.z0 - b.z0);
@@ -529,8 +521,7 @@ export class RectState {
       () => (typeof this.#props.height === 'number' ? (this.#props.height as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'height')
     );
-    // Pixel mode: the `[start, end]` heights a numeric `z` stands the rect between, tweened with
-    // the rest
+    // Pixel mode: `z` as `[start, end]`, tweened with the rest
     const pixelZ = (): [number, number] => {
       const z = this.#props.z;
       return Array.isArray(z) ? z : [0, typeof z === 'number' ? z : 0];

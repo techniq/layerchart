@@ -124,7 +124,7 @@
       faceViewer(ctx, baseX, getPixelValue(c.motionY) + getPixelValue(dy));
 
       if (rotate !== undefined) {
-        // About where the text is drawn — raised by `z`
+        // About where the text is drawn, raised by `z`
         const centerX = getPixelValue(c.motionX);
         const centerY = getPixelValue(c.motionY);
         const radians = degreesToRadians(rotate);

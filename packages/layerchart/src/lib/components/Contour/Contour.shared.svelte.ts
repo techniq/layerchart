@@ -25,14 +25,11 @@ export type ContourPropsWithoutHTML = {
   /** @default true */
   smooth?: boolean;
   /**
-   * Height to raise each contour band off an `isometric` floor, from the band — its threshold is
-   * `value`, so `z="value"` raises each to `zScale(value)`.
+   * Height to raise each band off an `isometric` floor, ex. `z="value"` for its threshold.  Filled
+   * bands stand on the one below as terraces; unfilled ones float as lines.
    * - `string`: band property name, resolved via zScale
    * - `function(band)`: accessor, result passed through zScale
    * - `number`: pixel height for every band
-   *
-   * Filled bands stand on the one below, as terraces with sides; unfilled ones (`fill="none"`)
-   * float as lines.  No effect on a flat chart.
    */
   z?: DataProp;
 } & CommonStyleProps;

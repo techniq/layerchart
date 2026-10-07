@@ -3,7 +3,7 @@ title: Isometric (Faux 3D)
 category: state
 ---
 
-`isometric` draws a chart's plot area as a floor seen from above at an angle — the look of an isometric illustration, without WebGL. It works with the `Svg`, `Canvas`, and `Html` layers and every existing mark, because nothing about the chart changes except how the finished plot is drawn.
+`isometric` draws a chart's plot area as a floor seen from above at an angle. Works in any layer type (`Svg`, `Canvas`, `Html`) and marks (ex. `Axis`, `Rect`, etc).
 
 ## Quick start
 
@@ -21,7 +21,7 @@ Add `isometric` to any `Chart`:
 
 :example{ component="Chart" name="isometric-heatmap" }
 
-To try it on every chart at once, turn on the `isometric` setting — charts that set their own `isometric` (including `false`) keep it. On these docs, it's the **Isometric** switch in a component page's settings menu.
+To try it on every chart at once, turn on the `isometric` setting. Charts that set their own `isometric` (including `false`) keep it. LayerChart docs support this and exposed via the **Isometric** switch in a component page's settings menu.
 
 ```svelte
 <script>
@@ -32,21 +32,22 @@ To try it on every chart at once, turn on the `isometric` setting — charts tha
 
 ## How it works
 
-The chart lays out on a **floor** of its own proportions rather than on the plot area, sized so that turned and tipped back it fits the chart. The scales, marks, and axes lay out across that floor exactly as they would across a flat plot, then each layer draws it through one matrix that turns it and tips it away from the viewer, centred in the chart. Everything drawn lies on the floor — a cell becomes a diamond, a circle an ellipse, and an axis runs along the floor's edge.
+The scales, marks, and axes lay out on a flat **floor**, exactly as they would on a flat chart. Each layer then draws the floor turned and tipped away from the viewer, centered in the chart. A cell becomes a diamond, a circle an ellipse, and an axis runs along the floor's edge.
 
-Because the floor keeps its proportions, resizing the chart scales it rather than stretching it, and text and strokes stay their natural size. It is a parallel projection: the far side of the floor is drawn the same size as the near side, with no vanishing point.
+The floor keeps its own proportions, so resizing the chart scales it rather than stretching it. Text and strokes stay their natural size. It's a parallel projection: the far side of the floor is the same size as the near side.
 
 ## The view
 
-`isometric` takes `rotate` and `tilt` in degrees, and the floor's `aspect`:
+`isometric` takes these options:
 
-| Option   | What it does                                                                      | Default                   |
-| -------- | --------------------------------------------------------------------------------- | ------------------------- |
-| `rotate` | Turns the floor about its centre, clockwise                                       | `-45`                     |
-| `tilt`   | Tips it away from the viewer, from `0` (seen from directly above) towards edge on | `54.7356`, true isometric |
-| `aspect` | The floor's width over its depth, or `'auto'` to take it from the data            | `'auto'`                  |
+| Option   | What it does                                                                      | Default                    |
+| -------- | --------------------------------------------------------------------------------- | -------------------------- |
+| `rotate` | Turns the floor about its center, clockwise, in degrees                           | `-45`                      |
+| `tilt`   | Tips it away from the viewer, from `0` (seen from directly above) towards edge on | `54.7356` (true isometric) |
+| `aspect` | The floor's width over its depth, or `'auto'` to take it from the data            | `'auto'`                   |
+| `motion` | Eases the view to new `rotate` / `tilt` values ([below](#animating-the-view))     |                            |
 
-The defaults are true isometric: the origin (bottom-left of the flat plot) sits at the front corner, `x` runs up and to the right, `y` up and to the left, and both meet the horizontal at 30°.
+The defaults are true isometric: the origin sits at the front corner, and both axes meet the horizontal at 30°.
 
 ```svelte
 <!-- True isometric -->
@@ -62,17 +63,17 @@ The defaults are true isometric: the origin (bottom-left of the flat plot) sits 
 <Chart isometric={{ aspect: 2 }}>
 ```
 
-`aspect: 'auto'` takes the floor's proportions from the data:
+`aspect: 'auto'` picks the floor's proportions from the scales:
 
-- **Two band scales** — columns over rows, so every cell is square. A 20-week calendar is a floor 20 cells by 7.
-- **Two continuous scales** — the domains' spans, so a unit runs as far across the floor as into it. When one span is more than four times the other, equal units would leave a sliver, so the floor is square instead.
-- **Anything else** — a band against values, or dates against counts — is square: the units don't compare.
+- **Two band scales:** columns over rows, so every cell is square. A 20-week calendar is a floor 20 cells by 7.
+- **Two continuous scales:** the domains' spans, so a unit runs as far across the floor as into it. If one span is more than four times the other, the floor is square instead.
+- **Anything else:** square.
 
-A `radial` chart's floor is always square — the circle it draws — and is fitted by that circle rather than its corners, since a circle keeps its width however it's turned.
+A `radial` chart's floor is always square.
 
 ### Animating the view
 
-`motion` eases the view to new `rotate` / `tilt` values rather than jumping there. `rotate: 0, tilt: 0` shows the floor from directly above, so switching the angles moves smoothly between that and the tilted view:
+`motion` eases the view to new `rotate` / `tilt` values instead of jumping. `rotate: 0, tilt: 0` shows the floor from directly above, so toggling between that and the tilted view animates smoothly:
 
 ```svelte
 <script>
@@ -88,11 +89,11 @@ A `radial` chart's floor is always square — the circle it draws — and is fit
 >
 ```
 
-Any `motion` works — a `'spring'` follows a value that keeps changing, like a slider, without trailing behind it. It's read as the chart mounts, like a chart's `motion`. With a transform (below), the view turns from these eased angles, while the transform's own `motion` eases its zoom buttons and reset.
+Any `motion` works. A `'spring'` suits values that change continuously, like a slider.
 
 ### Dragging the view
 
-A transform on an isometric chart moves it two ways: it pans and zooms the chart, as on any chart, and it turns and tips the view — dragged across to turn it, up and down to tip it. `drag` picks which a plain drag does, and holding `dragSwitchKey` (`shift` by default) as a drag starts does the other:
+With a `transform`, an isometric chart can pan and zoom, and it can also turn: drag across to rotate it, up and down to tilt it. `drag` picks what a plain drag does. Holding `dragSwitchKey` (`shift` by default) as the drag starts does the other.
 
 ```svelte
 <!-- Drag to pan, shift-drag to turn -->
@@ -102,15 +103,19 @@ A transform on an isometric chart moves it two ways: it pans and zooms the chart
 <Chart isometric transform={{ mode: 'canvas', drag: 'rotate' }}>
 ```
 
-The view starts from the `isometric` prop's `rotate` and `tilt`, and changing them turns it there, leaving the pan and zoom. `onTransform` reports where it's got to — `rotation.x` is the turn and `rotation.y` the tilt, in degrees — and `reset()` puts the angles back along with the pan and zoom. `transform.drag` is reactive, so controls can switch it.
+The view starts at the `isometric` prop's `rotate` and `tilt`, and moves to new values when they change. `onTransform` reports the current angles as `rotation` (`x` is the turn, `y` the tilt, in degrees). `reset()` restores them along with the pan and zoom. `transform.drag` is reactive, so a control can switch it. `TransformContextControls` has one built in.
 
-Try it in the playground below, where the sliders and the drag set the same angles, and **View** eases between them and the floor seen from above.
+In the playground below, the sliders and dragging set the same angles.
 
 :example{ component="Chart" name="isometric-playground" }
 
+`mode: 'domain'` works too: panning and zooming change the domains rather than the drawing, so the axes re-tick and marks keep their size. Wrap the marks in `ChartClipPath` to clip them to the floor as they pan past its edge. Switch modes below to compare.
+
+:example{ component="Chart" name="isometric-pan-zoom" }
+
 ## Height
 
-`z` raises marks off the floor. Set it on the chart and every `Rect` and `Cell` stands up into a box that tall — its top, and the sides facing the viewer, shaded as if lit from the upper left:
+`z` raises marks off the floor. Set it on the chart and every `Rect` and `Cell` stands up into a box that tall, with the sides facing the viewer shaded:
 
 ```svelte
 <Chart {data} x="week" y="day" xScale={scaleBand()} yScale={scaleBand()} z="value" isometric>
@@ -122,17 +127,20 @@ Try it in the playground below, where the sliders and the drag set the same angl
 
 :example{ component="Chart" name="isometric-columns" }
 
-- **The `z` scale** measures up from the floor: its domain reaches down to `0`, and its range runs to half the plot's shorter side. Set `zDomain` / `zRange` to change either — the **Height** slider in the playground above sets `zRange`, and `0` lays the boxes flat.
-- **A mark's own `z`** overrides the chart's, and a chart `z` returning `[start, end]` floats the box between the two.
-- **A `Rect` placed in pixels** ignores the chart's `z` — it has no row to read — but a number stands it up that many pixels: `<Rect x={0} y={0} width={100} height={60} z={40} />`. With no `width` or `height` it's a wall.
-- **`shade={false}`** draws every face in the same flat colour, rather than darkening the sides facing the viewer.
-- **The fit** leaves room above the floor for the top of the `z` range, so tall boxes aren't cut off — the floor is a little smaller to make that room.
-- **Boxes are painted back to front**, so nearer ones cover farther ones. That's exact for boxes on a grid, which don't overlap on the floor.
-- **On a flat chart**, or in a layer with `ignoreTransform`, `z` has nothing to raise and the rects stay flat.
+- **The `z` scale** measures up from the floor. Its domain includes `0`, and its range defaults to half the floor's shorter side. Set `zDomain` / `zRange` to change them. The chart leaves room above the floor for the top of the range.
+- **A mark's own `z`** overrides the chart's. A value of `[start, end]` floats the box between the two heights.
+- **A `Rect` placed in pixels** takes a pixel height: `<Rect x={0} y={0} width={100} height={60} z={40} />`.
+- **`shade={false}`** draws the sides in the same color as the top.
+- **Nearer boxes draw over farther ones.**
+- **On a flat chart**, or in a layer with `ignoreTransform`, `z` has no effect.
 
 ### 3D scatter
 
-`Circle` floats each point at its `z` too, painted back to front, and `viewport` keeps it round rather than lying on the floor as an ellipse. Around them, `Frame` stands two walls up the floor's far edges, as tall as the `z` range — each a `Rect` with no depth, stood up like a box; `Grid z` draws gridlines across the walls and carries the floor's `x` / `y` gridlines up them; and `Axis placement="back"` runs the height up the corner where the walls start. All of them follow the view as it turns.
+`Circle` floats each point at its `z`. Add `viewport` to keep it round instead of lying flat as an ellipse. To frame the points:
+
+- `Frame` stands walls up the floor's two far edges, as tall as the `z` range.
+- `Grid z` draws gridlines on the walls.
+- `Axis placement="back"` runs a height axis up the back corner.
 
 ```svelte
 <Chart {data} x="x" y="y" z="z" isometric transform={{ mode: 'canvas', drag: 'rotate' }}>
@@ -147,79 +155,78 @@ Try it in the playground below, where the sliders and the drag set the same angl
 </Chart>
 ```
 
-A `zRange` as tall as the floor is deep makes a cube: `zRange={({ height }) => [0, height]}`. Drag to turn it.
+A `zRange` as tall as the floor is deep makes a cube: `zRange={({ height }) => [0, height]}`.
 
 :example{ component="Chart" name="isometric-scatter-3d" }
 
-`quadtree` tooltips find each point where it floats — over the floor or not — and `Highlight` floats with the hovered row. Its `lines` trace the row on every grid the box shows: across the floor at its `x` and `y`, and on each back wall, up it at that edge's `x` or `y` and across it at the row's height. `shadows` lays the row's light spot where those lines cross — on the floor beneath it and on each back wall beside it, lying flat on each.
+`quadtree` tooltips find each point where it floats, and `Highlight` follows the hovered point. Its `lines` trace the point on the floor and on each wall, and `shadows` marks where those lines cross.
 
 ```svelte
-<Highlight data={hovered} lines shadows axis="both" />
-<Highlight data={hovered} points={{ fill: 'none', stroke: 'currentColor' }} />
+<Highlight lines shadows axis="both" />
+<Highlight points={{ fill: 'none', stroke: 'currentColor' }} />
 ```
-
-A floating highlight point is round, like a `viewport` circle. To mark a single plane instead, pin a coordinate: `z={() => 0}` puts a highlight's points on the floor beneath the row.
 
 ### Treemap
 
-Stacked tiers make a treemap 3D: each node stands on its parent, inset by the treemap's padding. A tier is a `Rect` floated between two heights with `z={[start, end]}`, and `zScale` measures them — a `zDomain` of one step per level, and a `zRange` for how tall they all reach. A chart with a `zRange` leaves room above the floor for it, `z` channel or not.
+Floating each node's `Rect` one step above its parent makes a 3D treemap. Use `zScale` to measure the steps: a `zDomain` with one step per level, and a `zRange` for the total height.
 
 ```svelte
 <Chart zDomain={[0, root.height + 1]} zRange={[0, 30]} isometric>
-	<Layer>
-		<Treemap hierarchy={root} paddingOuter={4}>
-			{#snippet children({ nodes })}
-				{#each nodes as node}
-					<Rect
-						x={node.x0}
-						y={node.y0}
-						width={node.x1 - node.x0}
-						height={node.y1 - node.y0}
-						z={[context.zScale(node.depth), context.zScale(node.depth + 1)]}
-					/>
-				{/each}
-			{/snippet}
-		</Treemap>
-	</Layer>
+	{#snippet children({ context })}
+		<Layer>
+			<Treemap hierarchy={root} paddingOuter={4}>
+				{#snippet children({ nodes })}
+					{#each nodes as node}
+						<Rect
+							x={node.x0}
+							y={node.y0}
+							width={node.x1 - node.x0}
+							height={node.y1 - node.y0}
+							z={[context.zScale(node.depth), context.zScale(node.depth + 1)]}
+						/>
+					{/each}
+				{/snippet}
+			</Treemap>
+		</Layer>
+	{/snippet}
 </Chart>
 ```
 
-On an isometric chart `Treemap` hands out its `nodes` in the order to paint them, depth first: each node, then each of its children's subtrees whole, back to front. Children stand inside their parent and siblings tile it, so only siblings ever need comparing — and the order is exact for rectangles of any size, re-sorted as the view turns.
+On an isometric chart, `Treemap` passes `nodes` in drawing order, so nearer tiers cover farther ones. Leave the `{#each}` unkeyed: the order changes as the view turns, and a `Canvas` layer draws in the order its marks mounted.
 
-- **Labels drawn with their node**, right after its `Rect`, lie on its top: `Text` with the tier's height as `z`, without `viewport`. Nearer towers drawn later cover them, as they should. `rotate` turns one along a tall box, and a half turn more keeps it reading left to right as the view comes round.
-- **Leave the `{#each}` unkeyed.** As the view turns the order changes; unkeyed, each row takes its new node, where keyed rows would move — which a `Canvas` layer doesn't follow, as it paints in the order its marks mounted.
-
-Dragging pans it, with the wheel zooming, and shift-dragging turns the view — or the other way round, picked on its controls. A `motion` tween eases the zoom buttons and reset into place, and the view between flat and isometric as the `isometric` prop's angles change, while drags and the wheel follow the pointer directly.
+To label a node on its top, draw a `Text` right after its `Rect`, with the tier's top as its `z`.
 
 :example{ component="Chart" name="isometric-treemap" }
 
 ### Contours
 
-`Contour` raises each band with `z` the same way — `z="value"` measures its threshold — so filled bands stack into terraces, each standing on the one below with its sides shaded, and unfilled ones float as lines at their heights. See [Contour](/docs/components/Contour#isometric-terrain).
+`Contour` raises each band with `z`. With `z="value"`, each band stands at its threshold, measured by `zScale`. Filled bands stack into terraces, and unfilled ones float as lines. See [Contour](/docs/components/Contour#isometric-terrain).
 
 :example{ component="Contour" name="volcano-isometric" }
 
 ### Paths and maps
 
-`Path` takes a `z` too — `z` pixels tall, or `[start, end]` to float it — and stands its shape up with its sides shaded, as a `Rect` stands up a box. An unfilled path, a line, is just raised. Marks drawn with `Path` pass it through, so a `GeoPath` stands a region up:
+`Path` takes a `z` in pixels, or `[start, end]` to float it, and stands its shape up with shaded sides. An unfilled path is raised as a line. Marks drawn with `Path` pass it through, so a `GeoPath` can stand a region up:
 
 ```svelte
 <GeoPath geojson={state} z={share * 60} fill={color} />
 ```
 
-A shape is drawn whole — its sides, then its top — so where several stand side by side, nearer ones have to come later. The map below sorts its states by where their centres stand, from `context.isometricMatrix`:
+When shapes stand side by side, draw nearer ones last. With `m = context.isometricMatrix`, a point `[x, y]` on the floor is nearer the viewer the larger `m.b * x + m.d * y` is. The map below sorts its states by their centers this way:
 
 ```svelte
-{#each states.toSorted((a, b) => depth(a) - depth(b)) as state}
+{@const m = context.isometricMatrix}
+{@const depth = ([x, y]) => m.b * x + m.d * y}
+{#each states.toSorted((a, b) => depth(geoPath().centroid(a)) - depth(geoPath().centroid(b))) as state}
 ```
 
-That's right for shapes of similar size. A large shape that wraps around a smaller one, or a long one reaching past its neighbours, can still be drawn in the wrong order — the price of sorting whole shapes.
+Sorting by center works for shapes of similar size. A large shape wrapped around a smaller one can still draw in the wrong order.
 
 :example{ component="GeoPath" name="election-isometric" }
 
 ### More marks with height
 
-- **Bars:** with `valueAxis="z"` the values run up off the floor rather than along it. Each bar stands on its `x` / `y` band cell (and any `x1` / `y1` sub-band), and the chart stacks heights per `x` and `y` row — so the legend hides a layer and the stacks close up, as they do on a flat bar chart. `zScale` takes its domain from the stacks.
+- **Bars:** with `valueAxis="z"`, values stand up off the floor instead of running along it. Each bar stands on its `x` / `y` band cell, and the chart stacks the values per cell, so hiding a series in the legend closes up the stacks.
 
   ```svelte
   <Chart {data} x="year" y="basket" z="value" valueAxis="z" c="fruit" isometric>
@@ -231,54 +238,54 @@ That's right for shapes of similar size. A large shape that wraps around a small
 
   :example{ component="Chart" name="isometric-stacked-columns" }
 
-- **Calendar:** each day stands up to its `z`, drawn back to front as the view turns.
+- **Calendar:** `z` stands each day up to its value.
 
   :example{ component="Calendar" name="isometric" }
 
-- **Area and Spline:** a `z` (or the chart's) gives each point its own height. A `Spline` runs through the points at their heights — a line in 3D — and an `Area` stands up as a curtain along its row, from the floor to each point. One curtain per row of a band `y`, drawn back to front, makes a 3D area chart or ridgeline.
+- **Area and Spline:** `z` gives each point a height. A `Spline` runs through the points in 3D, and an `Area` stands up as a curtain from the floor to each point. One curtain per row of a band `y`, drawn back to front, makes a 3D area chart or ridgeline.
 
   :example{ component="Chart" name="isometric-areas" }
 
-- **Polygon:** `z` stands a polygon up into a prism — the nodes of a tree, say, over links lying on the floor.
+- **Polygon:** `z` stands a polygon up into a prism.
 
   :example{ component="Tree" name="isometric" }
 
-- **Pie:** `z` stands every slice up, drawn back to front — a 3D pie, or with an `innerRadius` a donut, its inside showing through the hole. An `ArcLabel` given the slice's `z` labels it: on its top, or as a callout from the top of a slice behind and the foot of one in front, so labels clear the sides — on whichever side of the pie the slice falls on screen.
+- **Pie:** `z` stands every slice up, for a 3D pie or donut. Give an `ArcLabel` the same `z` and its callouts keep clear of the slices' sides. The `arcs` it passes to `children` come in drawing order, so match a slice to its data with `arc.index` or `arc.data` rather than the `{#each}` index.
 
   :example{ component="Pie" name="isometric" }
 
-- **Line:** `z1` / `z2` give each end a height. A line from a point on the floor up to its height is a stem — under a 3D scatter's points, or the spikes of a map.
+- **Line:** `z1` / `z2` raise each end. A line from the floor up to a point is a stem:
 
   ```svelte
   <Line x1="x" y1="y" x2="x" y2="y" z2="z" />
   ```
 
-- **Labels** float with the points they name, at the chart's `z` (or their own).
+- **Labels** float with their points, at the chart's `z` or their own.
 
-Heights tween with a mark's `motion`, the way its position does — `Bars` and `Rect`, and the marks drawn with a `Path` (`GeoPath`, `Contour`, `Pie`). The map above eases its states between parties with `motion` on each `GeoPath`.
+Heights animate with a mark's `motion`, like its position. The map above eases its states between parties with `motion` on each `GeoPath`.
 
 ## Text
 
-Text lies on the floor along with everything else, which suits labels that belong to it. Where it should stay readable instead, set `viewport` to align it to the viewport rather than the floor: the text keeps its spot on the floor but faces the viewer, reading left to right at its natural size. `rotate` still turns it, on screen.
+Text lies on the floor like everything else. To keep it readable, set `viewport`: the text stays at its spot on the floor but faces the viewer, left to right at its natural size.
 
 ```svelte
 <Text x="week" y="day" value="label" viewport />
 ```
 
-An `Axis` passes it through `tickLabelProps` and `labelProps`. Its edge runs at an angle on screen, so the axis also hangs viewport-aligned labels off the side facing away from the floor rather than centring them under their ticks, and a viewport-aligned title reads left to right rather than turning to follow a vertical axis. Anchors you set yourself still win.
+On an `Axis`, pass it through `tickLabelProps` and `labelProps`:
 
 ```svelte
 <Axis placement="bottom" tickLabelProps={{ viewport: true }} />
 <Axis placement="left" label="Day" labelProps={{ viewport: true }} />
 ```
 
-Switch **Labels** between **Default** and **Viewport** in the example above to compare the two. Text drawn along a `path`, or positioned with a CSS value such as `x="50%"`, has no single point to stand on and stays on the floor.
+The **Labels** toggle in the [playground](#dragging-the-view) compares the two. Text along a `path`, or positioned with a CSS value such as `x="50%"`, stays on the floor.
 
-`z` raises text off the floor like any other mark — a number of pixels, or in data mode a `z` per row, defaulting to the chart's.
+`z` raises text like any other mark.
 
 ## Flat overlays
 
-A layer with `ignoreTransform` is drawn flat, over the floor — for a title, legend, or annotation that shouldn't tilt:
+A layer with `ignoreTransform` draws flat, over the floor. Use it for a title, legend, or annotation that shouldn't tilt:
 
 ```svelte
 <Chart isometric>
@@ -297,18 +304,17 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 
 :example{ component="Chart" name="isometric-scatter" }
 
-- **`bisect-x`, `bisect-y`, `bisect-band`** map the pointer back onto the flat plot, then look up the data the usual way.
-- **`quadtree`** finds the point nearest the pointer _on screen_. The floor is foreshortened, so that isn't always the point nearest on the floor itself.
-- **`band` and `bounds`** draw their hit areas in the chart's layers, so they lie on the floor with the marks.
-- **A pointer off the floor** — inside the chart but outside the diamond — shows nothing.
+- **`bisect-x`, `bisect-y`, `bisect-band`** look up the data under the pointer on the floor.
+- **`quadtree`** finds the point nearest the pointer on screen. Because the floor is foreshortened, that isn't always the nearest point on the floor.
+- **`band` and `bounds`** hit areas lie on the floor with the marks. For boxes with height, let each box be its own hit area instead: `<Bars tooltip>` with `tooltipContext={{ mode: 'manual' }}`.
+- **A pointer off the floor** shows nothing.
 - **`x="data"` / `y="data"`** placement puts the tooltip where the point is drawn.
 
 ## Limitations
 
-- **Brushing** works on the floor — the pointer is measured back onto it, and the selection lies on it — but a brush selects by where things stand on the floor, not their height.
-- **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
+- **Brushing** selects by position on the floor, not by height.
+- **`voronoi` tooltips** pick the point nearest on the floor, not on screen. Prefer `quadtree`.
 - **`WebGL` layers** aren't transformed.
-- **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Only `Rect`, `Cell`, `Bars`, `Calendar`, `Circle`, `Text`, `Labels`, `Line`, `Polygon`, `Path` (with `GeoPath`, `Contour`, `Arc`, and `Pie`), `Area`, `Spline`, and `Highlight` have height** so far. Other marks lie flat on the floor.
+- **`tickOcclusion`** measures labels on the flat plot, so it may drop or overlap labels on the floor.
+- **Only some marks have height:** `Rect`, `Cell`, `Bars`, `Calendar`, `Circle`, `Text`, `Labels`, `Line`, `Polygon`, `Path` (and `GeoPath`, `Contour`, `Arc`, `Pie`), `Area`, `Spline`, and `Highlight`. Other marks lie flat.
 - **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
-- **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

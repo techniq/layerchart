@@ -18,7 +18,7 @@ import {
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import type { Extents } from '$lib/utils/types.js';
 import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
-import { colorPropDataKey } from '$lib/utils/dataProp.js';
+import { colorPropDataKey, resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
@@ -92,6 +92,8 @@ export interface ComponentNode {
   canvasRender?: ComponentRender;
   /** Whether this node has a composite-mark ancestor (computed on creation) */
   insideCompositeMark: boolean;
+  /** Paint children on canvas back to front by their `depth`, rather than in mount order */
+  paintByDepth?: boolean;
 }
 
 export interface RegisterComponentOptions<T extends Element = Element> {
@@ -106,6 +108,11 @@ export interface RegisterComponentOptions<T extends Element = Element> {
    * When provided and not inside a composite mark, automatically registered reactively.
    */
   markInfo?: () => MarkInfo;
+  /**
+   * Paint children on canvas back to front by the `depth` they report (see `ComponentRender`),
+   * for a mark drawing its items keyed, in depth order, on an isometric floor
+   */
+  paintByDepth?: boolean;
 }
 
 /** Svelte context key for tracking the nearest parent ComponentNode. */
@@ -309,7 +316,7 @@ export class ChartState<
   registerComponent<T extends Element = Element>(
     options: RegisterComponentOptions<T>
   ): ComponentNode {
-    const { name, kind, canvasRender, markInfo } = options;
+    const { name, kind, canvasRender, markInfo, paintByDepth } = options;
     const parent = _ParentNodeContext.getOr(null);
 
     // Walk ancestors to check for composite-mark
@@ -331,6 +338,7 @@ export class ChartState<
       children: [],
       canvasRender: canvasRender as ComponentRender | undefined,
       insideCompositeMark,
+      paintByDepth,
     };
 
     if (parent) parent.children.push(node);
@@ -412,7 +420,7 @@ export class ChartState<
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
 
-    // The view eases to new angles with the `isometric` options' `motion`, read once like `motion`
+    // `isometric.motion` is read once, like other `motion` props
     const isometric = this.#isometric;
     this.#angles = createMotion(
       this.#propAngles,
@@ -1119,14 +1127,12 @@ export class ChartState<
 
   #settings: Settings = defaultSettings;
 
-  /** `isometric` from the prop, else the chart's settings — an explicit `false` still opts out */
+  /** `isometric` from the prop, else the chart's settings */
   #isometric = $derived(this.props.isometric ?? this.#settings.isometric);
 
   /**
-   * Whether the transform turns and tips the isometric view, as well as panning and zooming it — a
-   * `drag: 'rotate'` (or the `dragSwitchKey` held) turns it across and tips it up and down.  Any
-   * transform `mode` but `'none'` — with a geo projection, only `'canvas'`, as the others drive
-   * the projection.
+   * Whether the transform can rotate the isometric view as well as pan and zoom it.  With a geo
+   * projection, only in `'canvas'` mode, as the others drive the projection.
    */
   isometricTransform = $derived(
     !!this.#isometric &&
@@ -1135,7 +1141,7 @@ export class ChartState<
       (!this.props.geo?.projection || this.props.transform.mode === 'canvas')
   );
 
-  /** The `isometric` options' `rotate` / `tilt`, with their defaults — the angles the view eases to */
+  /** The `isometric` options' `rotate` / `tilt`, with their defaults */
   #propAngles = $derived.by(() => {
     const isometric = this.#isometric;
     const options = typeof isometric === 'object' ? isometric : {};
@@ -1144,33 +1150,28 @@ export class ChartState<
 
   #angles: { readonly current: { rotate: number; tilt: number } };
 
-  /**
-   * The view's angles from the `isometric` options, eased by their `motion`.  A transform turns
-   * the view from here, and follows as they change.
-   */
+  /** The `isometric` angles, eased by their `motion`; a transform rotates the view from these */
   get isometricAngles() {
     return this.#angles.current;
   }
 
   /**
-   * The view the chart is drawn at: the `isometric` options, with `aspect: 'auto'` resolved, and
-   * `rotate` / `tilt` taken from the transform while it drives them.  `null` when the chart is
-   * flat.
+   * The resolved `isometric` options, with the transform's rotation when it drives the view.
+   * `null` when the chart is flat.
    */
   #isometricOptions = $derived.by((): IsometricOptions | null => {
     const isometric = this.#isometric;
     if (!isometric) return null;
     let options = isometric === true ? {} : isometric;
 
-    // Until `TransformContext` loads (lazily) there's no gesture yet — the props stand
+    // `TransformContext` loads lazily; until then the props stand
     const rotation = this.isometricTransform ? this.transformState?.rotation : null;
     options = rotation
       ? { ...options, rotate: rotation.x, tilt: rotation.y }
       : { ...options, ...this.isometricAngles };
 
     if (typeof options.aspect === 'number') return options;
-    // From the scale types and full domains — not the scales themselves, whose ranges the floor
-    // this sizes decides
+    // From the scale types and domains, not the scales, whose ranges depend on the floor
     return {
       ...options,
       aspect: autoIsometricAspect(
@@ -1184,11 +1185,8 @@ export class ChartState<
   #isometricFootprint = $derived<'rect' | 'disc'>(this.props.radial ? 'disc' : 'rect');
 
   /**
-   * The floor an `isometric` chart lays out on, in place of the plot area: the view's `aspect`,
-   * sized so that turned and tilted it fits the plot area.  `null` when the chart is flat.
-   *
-   * Keeping its own proportions rather than the plot area's means resizing the chart scales the
-   * floor rather than stretching it, and the layers draw it at its natural size.
+   * The floor an `isometric` chart lays out on in place of the plot area, at the view's `aspect` so
+   * resizing scales it rather than stretching it.  `null` when the chart is flat.
    */
   isometricFloor = $derived.by(() => {
     const options = this.#isometricOptions;
@@ -1199,17 +1197,10 @@ export class ChartState<
     });
   });
 
-  /**
-   * The area the scales lay out across — the isometric floor, or the plot area when flat.  Faceted
-   * charts divide this into panels, so `width` / `height` are one panel's share of it.
-   */
+  /** The area the scales lay out across: the isometric floor, or the plot area when flat */
   plot = $derived(this.isometricFloor ?? { width: this.box.width, height: this.box.height });
 
-  /**
-   * The matrix every layer draws through when `isometric` is set, or `null` when the chart is
-   * flat.  Turns and tilts the whole floor — every panel of a faceted chart — and centres it in
-   * the plot area.
-   */
+  /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {
     const options = this.#isometricOptions;
     if (!options) return null;
@@ -1220,8 +1211,8 @@ export class ChartState<
   });
 
   /**
-   * How tall the tallest height would be on a floor of this size, read from the `z` range props
-   * rather than `zScale` — which is sized by the floor this is helping to size.
+   * The tallest height on a floor of this size, from the `z` range props rather than `zScale`,
+   * which depends on the floor this helps size.
    */
   #zDepthFor(floor: { width: number; height: number }) {
     if (!this.#hasHeight) return 0;
@@ -1235,32 +1226,25 @@ export class ChartState<
   }
 
   /**
-   * Where raising a point by one pixel of `z` moves it on the flat plot, or `null` when the chart
-   * is flat and heights don't show.  Marks lift by offsetting along this before the layer draws
-   * them through `isometricMatrix`, which turns the offset straight up the screen.
+   * Where raising a point by one pixel of `z` moves it on the flat plot (see `isometricLift`), or
+   * `null` when the chart is flat.
    */
   isometricLift = $derived.by(() => {
     const options = this.#isometricOptions;
     return options ? isometricLift(options) : null;
   });
 
-  /**
-   * Whether anything rises off the floor: a `z` channel, or a `zRange` set for marks given heights
-   * of their own — ex. a treemap's tiers, measured with `zScale`.
-   */
+  /** Whether anything rises off the floor: a `z` channel, or a `zRange` for marks' own heights */
   #hasHeight = $derived(this.props.z != null || this.props.zRange != null);
 
-  /**
-   * The tallest height (in pixels) anything rises off the floor — the top of the `z` range when
-   * the chart has a `z` or a `zRange` — so the isometric fit leaves room above the floor.
-   */
+  /** The tallest height in pixels anything rises off the floor: the top of the `z` range */
   zDepth = $derived.by(() => {
     if (!this.#hasHeight) return 0;
     const range = this.zScale.range().filter((v: unknown) => typeof v === 'number') as number[];
     return range.length ? Math.max(0, ...range) : 0;
   });
 
-  /** Pan / zoom, then the isometric view — cached, as every layer and pointer lookup reads it */
+  /** Pan / zoom, then the isometric view; cached, as every layer and pointer lookup reads it */
   #layerMatrix = $derived.by((): AffineMatrix | null => {
     const isometric = this.isometricMatrix;
     const transform = this.transform;
@@ -1272,14 +1256,9 @@ export class ChartState<
   });
 
   /**
-   * The matrix a layer draws its content through, relative to the plot area — the `canvas`
-   * transform's pan and zoom, then the `isometric` view, then the layer's own `center` translate
-   * (applied on the floor, so a radial chart turns, tilts, and zooms with the rest).  `null` when
-   * nothing applies.
-   *
-   * Without options, the chart's own — what every layer shares, before centring.  Maps a point
-   * laid out by the scales to where it lands on screen, and inverted, a pointer back to the
-   * scales.
+   * The matrix a layer draws through: the `canvas` pan and zoom, the `isometric` view, then the
+   * layer's `center` translate (on the floor, so a radial chart turns with the rest).  `null` when
+   * nothing applies.  Inverted, it maps a pointer back to the scales.
    */
   layerMatrix({
     ignoreTransform = false,
@@ -1638,10 +1617,7 @@ export class ChartState<
     return this._targetYDomain;
   });
 
-  /**
-   * Heights measure up from the floor, so a `z` domain taken from the data reaches down to `0` —
-   * otherwise the smallest value would sit flat on the floor rather than rise by its size.
-   */
+  /** Heights measure up from the floor, so a `z` domain from the data includes `0` */
   zDomain = $derived.by(() => {
     // Stacked along `z`, the domain reaches the tops of the stacks
     if (this.props.zDomain === undefined && this.valueAxis === 'z' && this.isStacked) {
@@ -1820,6 +1796,26 @@ export class ChartState<
   );
 
   zGet = $derived(createGetter(this.z, this.zScale));
+
+  /** Along `valueAxis="z"`, a row's stacked `[start, end]`, or `null` when nothing stacks */
+  #zStack = $derived(
+    this.valueAxis === 'z'
+      ? (this.stackAccessorsFor({ stacksImplicitly: true })?.value ?? null)
+      : null
+  );
+
+  /**
+   * A row's `[base, top]` height off an `isometric` floor, in pixels.  From a mark's own `z` when
+   * given (a number is pixels, and `[start, end]` floats it), else the chart's `z`: the row's
+   * stack along `valueAxis="z"`, or a `[start, end]` value.
+   */
+  heightOf(d: any, z?: DataProp | [number, number]): [number, number] {
+    if (Array.isArray(z)) return z;
+    if (z != null) return [0, resolveDataProp(z, d, this.zScale, 0)];
+    const value = this.#zStack?.(d) ?? this.z(d);
+    const pixels = (v: unknown) => Number(this.zScale(Number(v) || 0)) || 0;
+    return Array.isArray(value) ? [pixels(value[0]), pixels(value[1])] : [0, pixels(value)];
+  }
 
   rScale = $derived(
     createChartScale('r', {

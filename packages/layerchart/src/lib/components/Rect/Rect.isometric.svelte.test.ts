@@ -85,16 +85,14 @@ describe('Rect on an isometric floor', () => {
 
   it('draws nearer boxes after farther ones', async () => {
     const { tops } = await renderCells();
-    // A box's lowest point on screen is its nearest corner on the floor, whatever its height —
-    // lower is nearer, and must be painted later
+    // A box's lowest point on screen is its nearest corner, so lower must be painted later
     const nearest = tops.map((top) => top.closest('.lc-rect-box')!.getBoundingClientRect().bottom);
     expect(nearest).toEqual([...nearest].sort((a, b) => a - b));
   });
 
   it('raises each box by its own value', async () => {
     const { tops } = await renderCells();
-    // Every footprint is the same size, so how far a top sits above the bottom of its box is its
-    // height — and the four values differ
+    // Equal footprints, so a top's distance above its box's bottom is its height
     const heights = tops.map((top) => {
       const group = top.closest('.lc-rect-box')!.getBoundingClientRect();
       return Math.round(group.bottom - top.getBoundingClientRect().bottom);
@@ -111,7 +109,7 @@ describe('Rect on an isometric floor', () => {
     });
     const el = page.getByTestId(chartTestId).element() as HTMLElement;
     await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
-    // A darkening shape over each side — which every browser draws, unlike a filter on the shape
+    // An overlay per side, which every browser draws, unlike a filter
     const sides = el.querySelectorAll('.lc-rect-side').length;
     expect(sides).toBeGreaterThan(0);
     expect(el.querySelectorAll('.lc-rect-shade')).toHaveLength(sides);

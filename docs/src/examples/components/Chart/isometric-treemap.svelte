@@ -80,8 +80,8 @@
 	transform={{
 		mode: 'canvas',
 		scrollMode: 'scale',
-		// Dragging pans and shift-dragging turns the view — or the other way round, picked on the
-		// controls.  The zoom buttons and reset ease into place too
+		// Drag to pan and shift-drag to turn, or the reverse via the controls.  Eases the zoom
+		// buttons and reset
 		motion: { type: 'tween', duration: 800, easing: cubicInOut }
 	}}
 	padding={24}
@@ -95,8 +95,8 @@
 			<Treemap hierarchy={root} paddingOuter={4}>
 				{#snippet children({ nodes })}
 					<!--
-						In paint order: each node, then its children's subtrees back to front.  Unkeyed, so as
-						the view turns each row takes its new node — a canvas paints in mount order
+						In drawing order, back to front.  Unkeyed, so as the view turns each row takes its new
+						node (a canvas draws in mount order)
 					-->
 					{#each nodes as node}
 						{@const top = context.zScale(node.depth + 1)}

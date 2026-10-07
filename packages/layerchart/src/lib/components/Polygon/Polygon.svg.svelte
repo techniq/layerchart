@@ -7,10 +7,12 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { PolygonState, polygonMarkInfo, type PolygonProps } from './Polygon.shared.svelte.js';
 
-  // `z` isn't an SVG attribute here — the height, consumed by `PolygonState`
-  let { ref: refProp = $bindable(), z, ...rest }: PolygonProps = $props();
+  let { ref: refProp = $bindable(), ...props }: PolygonProps = $props();
 
-  const c = new PolygonState(() => ({ ...rest, z }) as PolygonProps);
+  const c = new PolygonState(() => props as PolygonProps);
+
+  // Not an SVG attribute — read by `PolygonState`
+  const { z: _z, ...rest } = $derived(props);
 
   let ref = $state<SVGPathElement>();
 
@@ -25,7 +27,7 @@
   });
 </script>
 
-<!-- Stood up on an isometric floor: the sides facing the viewer, under the polygon -->
+<!-- Extruded: the sides facing the viewer, under the polygon -->
 {#snippet sides(raised: ReturnType<typeof c.raise>, fill?: string, className?: string)}
   {#if raised?.sides}
     <path

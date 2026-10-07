@@ -8,10 +8,13 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
 
-  // `z` / `viewport` aren't HTML attributes — consumed by `CircleState`
-  let { children, z, viewport, ...rest }: CircleProps = $props();
+  // Consumed by `CircleState`, not HTML attributes
+  let { children, ...props }: CircleProps = $props();
 
-  const c = new CircleState(() => ({ z, viewport, ...rest }) as CircleProps);
+  const c = new CircleState(() => props as CircleProps);
+
+  // Not HTML attributes — read by `CircleState`
+  const { z: _z, viewport: _viewport, ...rest } = $derived(props);
 
   /** For `viewport`, cancels the chart's `isometric` view about each circle's centre */
   const cancelView = $derived(c.viewportMatrix ? matrixToString(c.viewportMatrix) : '');

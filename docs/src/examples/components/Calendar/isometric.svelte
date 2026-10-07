@@ -17,8 +17,7 @@
 	export { data };
 </script>
 
-<!-- A year of days, each standing as tall as its count — weeks running down to the right and
-     Sundays at the back, as GitHub's isometric contributions show them -->
+<!-- A year of days, each as tall as its count, with Sundays at the back -->
 <Chart
 	{data}
 	x="date"

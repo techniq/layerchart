@@ -73,4 +73,41 @@ describe('Area and Spline with heights on an isometric floor', () => {
     const { ctx, points } = await renderRaised(Spline, { isometric: false });
     expect(points[0][1]).toBeCloseTo(ctx.yScale('a') + ctx.yScale.bandwidth!() / 2);
   });
+
+  for (const [name, component] of [
+    ['Area', Area],
+    ['Spline', Spline],
+  ] as const) {
+    it(`follows the view as it turns at once with \`motion\` (${name})`, async () => {
+      const props = (rotate: number) => ({
+        chartProps: {
+          data,
+          x: 'x',
+          y: 'row',
+          yScale: scaleBand(),
+          z: 'value',
+          zDomain: [0, 10],
+          zRange: [0, 50],
+          width: 400,
+          height: 300,
+          isometric: { rotate, tilt: 60 },
+        },
+        layerProps: { center: false },
+        component,
+        componentProps: { motion: { type: 'tween', duration: 1000 } },
+      });
+      const screen = render(TestHarness, props(-45));
+      await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
+      const el = page.getByTestId(chartTestId).element() as HTMLElement;
+      const d = () => el.querySelector('path.lc-path')!.getAttribute('d');
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
+      await screen.rerender(props(30));
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      const turned = d();
+      // Easing would still be on its way there
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      expect(d()).toEqual(turned);
+    });
+  }
 });

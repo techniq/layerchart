@@ -25,7 +25,7 @@ Filled contour bands of the same Maungawhau elevation data, colored by threshold
 
 ## Isometric terrain
 
-On an [isometric](/docs/guides/isometric) chart, `z` raises each band to its height — `z="value"` measures its threshold with `zScale`. Filled bands stand on the one below as terraces, their sides shaded by which way they face; unfilled ones float as lines, in the bands' colors. Drag to turn it.
+On an [isometric](/docs/guides/isometric) chart, `z` raises each band. With `z="value"`, each band stands at its threshold, measured by `zScale`. Filled bands stack into terraces, and unfilled ones float as lines in the bands' colors. Drag to turn it.
 
 ```svelte
 <Chart zDomain={extent(volcano.values)} zRange={[0, 100]} isometric>

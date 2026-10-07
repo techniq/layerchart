@@ -271,7 +271,7 @@
     const inverse = matrix ? invertMatrix(matrix) : null;
     if (inverse) {
       const p = applyMatrix(inverse, { x, y });
-      // Rounded, as inverting leaves enough error to push a point on the floor's edge just off it
+      // Rounded, as inverting can push a point on the floor's edge just off it
       x = Math.round(p.x * 1e6) / 1e6;
       y = Math.round(p.y * 1e6) / 1e6;
     }
@@ -306,9 +306,8 @@
 
   /** Find the data point at a container-relative pixel coordinate, using the configured `mode` */
   function findDataAtPoint(point: { x: number; y: number }) {
-    // Raised off an `isometric` floor by `z`, points can float over no part of the floor at all —
-    // so a 2D search skips finding the panel under the pointer and looks through every panel's
-    // points for the one drawn nearest.  On the floor alone, a pointer off it still finds nothing.
+    // Points raised by `z` can float off the floor, so search every panel rather than the one
+    // under the pointer
     if (mode === 'quadtree' && ctx.isometricMatrix && ctx.props.z != null) {
       return findNearestDrawn(point);
     }
@@ -551,6 +550,10 @@
       return;
     }
 
+    // Turning the view moves every point; like the hit canvas, wait for the drag to end (no one
+    // can hover meanwhile) rather than rebuilding every frame
+    if (ctx.isometricTransform && ctx.transform.dragging) return;
+
     const m = mode;
     const xAcc = xAccessorOverride;
     const yAcc = yAccessorOverride;
@@ -565,7 +568,6 @@
     const isometric = m === 'quadtree' ? ctx.isometricMatrix : null;
     // Points raised off the floor by `z` are found where they float
     const lift = isometric && ctx.props.z != null ? ctx.isometricLift : null;
-    const zGet = ctx.zGet;
     const panels = ctx.facet.panels.map((panel) => [panel, panelData(panel)] as const);
 
     const flatX = (d: any) => {
@@ -616,11 +618,10 @@
       const build = (flatData: any[], panel: Facet) => {
         const tree = d3Quadtree<[number, number]>();
         if (isometric) {
-          // Placed where they're drawn on the floor, so the nearest is the nearest on screen —
-          // foreshortening makes the two differ.  Pan / zoom is left out, as it scales every
-          // distance alike, so panning needn't rebuild the tree.
+          // Where they're drawn, since foreshortening changes which is nearest.  Pan / zoom scales
+          // every distance alike, so it's left out and panning needn't rebuild the tree.
           const at = (d: any) => {
-            const z = lift ? Number(zGet(d)) || 0 : 0;
+            const z = lift ? ctx.heightOf(d)[1] : 0;
             return applyMatrix(isometric, {
               x: flatX(d) + panel.x + (lift?.x ?? 0) * z,
               y: flatY(d) + panel.y + (lift?.y ?? 0) * z,

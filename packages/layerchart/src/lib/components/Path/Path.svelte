@@ -6,6 +6,7 @@
 <script lang="ts">
   import { getLayerContext } from '$lib/contexts/layer.js';
   import PathSvg from './Path.svg.svelte';
+  import PathExtrudedSvg from './PathExtruded.svg.svelte';
   import PathCanvas from './Path.canvas.svelte';
   import type { PathProps } from './Path.shared.svelte.js';
 
@@ -14,7 +15,9 @@
   let { pathRef = $bindable(), ...rest }: PathProps = $props();
 </script>
 
-{#if layerCtx === 'svg'}
+{#if layerCtx === 'svg' && rest.z != null}
+  <PathExtrudedSvg bind:pathRef {...rest} />
+{:else if layerCtx === 'svg'}
   <PathSvg bind:pathRef {...rest} />
 {:else if layerCtx === 'canvas'}
   <PathCanvas {...rest} />

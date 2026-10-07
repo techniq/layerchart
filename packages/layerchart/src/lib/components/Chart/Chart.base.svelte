@@ -170,15 +170,7 @@
     return untrack(() => chartState._initialTransform);
   });
 
-  /**
-   * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
-   * two are exclusive: one is `mode: 'projection'`, the other `mode: 'domain'`.
-   */
-  /**
-   * The isometric view the transform turns from — the `isometric` prop's angles, eased by its
-   * `motion` — or `null`
-   * when there's no view for it to turn
-   */
+  /** The isometric view the transform turns from (the `isometric` angles, eased), or `null` */
   const isometricView = $derived.by(() => {
     if (!chartState.isometricTransform) return null;
     const { rotate, tilt } = chartState.isometricAngles;
@@ -186,13 +178,17 @@
   });
 
   /**
-   * `x` is the turn and `y` the tilt, in degrees.  Dragging right spins the floor the way the
-   * pointer moves across its front edge; dragging up tips it towards edge on.
+   * `x` is the turn and `y` the tilt, in degrees.  Dragging right spins the floor with the pointer
+   * across its front edge; dragging up tips it towards edge on.
    */
   function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
     return { x: x - deltaX / 2, y: Math.min(89, Math.max(0, y - deltaY * 0.3)) };
   }
 
+  /**
+   * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
+   * two are exclusive: one is `mode: 'projection'`, the other `mode: 'domain'`.
+   */
   const resolvedInitialTransform = $derived(
     transform?.mode === 'projection'
       ? {

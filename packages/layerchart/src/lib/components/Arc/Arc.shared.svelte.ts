@@ -20,10 +20,7 @@ import {
 } from '$lib/utils/arcText.svelte.js';
 
 export type ArcPropsWithoutHTML = {
-  /**
-   * On an `isometric` chart, stand the arc up off the floor — `z` pixels tall, or floating from
-   * `start` to `end` — like a `Path`: a slice of a 3D pie.  No effect on a flat chart.
-   */
+  /** On an `isometric` chart, stand the arc up `z` pixels, or between `[start, end]`, like a `Path` */
   z?: number | [start: number, end: number];
 
   value?: number;

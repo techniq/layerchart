@@ -151,7 +151,7 @@ When set, scroll events without the key held are ignored (no `preventDefault`), 
 ### Pointer interactions
 
 - **Drag** — pan (click and drag to move the view)
-- **Shift + drag** — on an `isometric` chart, turn and tip the view instead. `drag: 'rotate'` swaps the two, and `dragSwitchKey` picks the key (see the [Isometric guide](/docs/guides/isometric#dragging-the-view))
+- **Shift + drag** — on an `isometric` chart, turn the view instead. `drag: 'rotate'` swaps the two, and `dragSwitchKey` changes the key (see [Dragging the view](/docs/guides/isometric#dragging-the-view))
 - **Double-click** — zoom in 2x at the click point
 - **Shift + double-click** — zoom out 0.5x
 - **Trackpad pinch** — detected as ctrl+wheel events, always zooms regardless of scroll mode
@@ -521,7 +521,7 @@ The `TransformContextControls` component provides a UI overlay with zoom buttons
 
 It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orientation (`'horizontal'` or `'vertical'`), and selective display of controls via the `show` prop.
 
-Where there's a view to turn — an `isometric` chart — it also offers a menu to pick what a drag does: pan, or turn the view (`transform.drag`). Holding `dragSwitchKey` (`shift` by default) does the other.
+On an `isometric` chart, it also has a menu to pick what a drag does: pan or turn the view (`transform.drag`).
 
 ## Quick reference
 

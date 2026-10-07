@@ -9,7 +9,8 @@
    */
   export type HighlightBaseLayerComponents = {
     Circle: Component<any>;
-    Ellipse: Component<any>;
+    /** Draws `shadows`; the html layer has none, and lays a round `Rect` on each plane instead */
+    Path?: Component<any>;
     Line: Component<any>;
     Rect: Component<any>;
     Arc: Component<any>;
@@ -26,7 +27,7 @@
 
   let {
     Circle,
-    Ellipse,
+    Path,
     Line,
     Rect,
     Arc,
@@ -123,13 +124,21 @@
 
   {#if shadows}
     {@const { r: _r, ...shadowProps } = typeof shadows === 'object' ? shadows : {}}
-    {#each c.shadows as shadow}
-      <Ellipse
-        motion={motion === 'spring' ? 'spring' : undefined}
-        {...shadow}
-        {opacity}
-        {...extractLayerProps(shadowProps, 'lc-highlight-shadow')}
-      />
+    {#each c.shadows as { pathData, c: centre, u, v, r }}
+      {#if Path}
+        <Path {pathData} {opacity} {...extractLayerProps(shadowProps, 'lc-highlight-shadow')} />
+      {:else}
+        <Rect
+          x={centre.x - r}
+          y={centre.y - r}
+          width={r * 2}
+          height={r * 2}
+          rx={r}
+          style="transform: matrix({u.x}, {u.y}, {v.x}, {v.y}, 0, 0); transform-origin: center"
+          {opacity}
+          {...extractLayerProps(shadowProps, 'lc-highlight-shadow')}
+        />
+      {/if}
     {/each}
   {/if}
 

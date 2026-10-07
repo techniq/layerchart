@@ -65,15 +65,14 @@ export type LinePropsWithoutHTML = {
   y2: DataProp;
 
   /**
-   * On an `isometric` chart, the height of the line's starting point off the floor — a data
-   * property or accessor (through zScale), or pixels.  A line from a point on the floor up to its
-   * height (`z2`) is a stem.  No effect on a flat chart.
+   * On an `isometric` chart, the height of the line's start: a data property or accessor (through
+   * zScale), or pixels.
    *
    * @default 0
    */
   z1?: DataProp;
 
-  /** The height of the line's ending point off an `isometric` floor (see `z1`) @default 0 */
+  /** The height of the line's end on an `isometric` chart (see `z1`).  @default 0 */
   z2?: DataProp;
 
   /** The initial y-coordinate of the line's ending point (pixel mode only). @default y2 */

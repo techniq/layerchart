@@ -169,7 +169,7 @@
   />
 {/if}
 
-<!-- Stood up into a box on an isometric floor: the sides facing the viewer, then the top -->
+<!-- An extruded box: the sides facing the viewer, then the top -->
 {#snippet box(faces: BoxFace[], style: FaceStyle)}
   <g class="lc-rect-box">
     {#each faces as face}
@@ -187,7 +187,7 @@
         stroke-dasharray={c.dashArrayAttr}
         class={cls('lc-rect', `lc-rect-${face.kind}`, style.class)}
       />
-      <!-- Shaded by darkening over it — a CSS filter on an SVG shape is lost in Safari -->
+      <!-- Darkened by an overlay, as Safari ignores CSS filters on SVG shapes -->
       {#if face.shade}
         <path
           d={polygonPath(face.points)}

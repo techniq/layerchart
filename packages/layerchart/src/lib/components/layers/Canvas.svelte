@@ -127,7 +127,7 @@
     type CanvasContextValue,
     type ComponentRender,
   } from '$lib/contexts/canvas.js';
-  import { renderTree } from '$lib/server/renderTree.js';
+  import { paintOrder, renderTree } from '$lib/server/renderTree.js';
 
   let {
     ref: refProp = $bindable(),
@@ -294,8 +294,7 @@
     // apply padding translation
     context.translate(ctx.padding.left ?? 0, ctx.padding.top ?? 0);
 
-    // Pan / zoom, the isometric view, and `center` — one matrix, shared with the tooltip's
-    // pointer lookups so what's drawn and what's hit always agree
+    // Shared with the tooltip's pointer lookups, so what's drawn and what's hit agree
     if (matrix) {
       const { a, b, c, d, e, f } = matrix;
       context.transform(a, b, c, d, e, f);
@@ -350,7 +349,7 @@
       // Group: apply transform, recurse children (scoped by save/restore)
       hitCtx.save();
       node.canvasRender.render(hitCtx);
-      for (const child of node.children) {
+      for (const child of paintOrder(node)) {
         renderHitTree(hitCtx, child, groupHasEvents);
       }
       hitCtx.restore();
@@ -367,7 +366,7 @@
       }
     } else {
       // Non-rendering node: recurse children
-      for (const child of node.children) {
+      for (const child of paintOrder(node)) {
         renderHitTree(hitCtx, child, ancestorHasEvents);
       }
     }

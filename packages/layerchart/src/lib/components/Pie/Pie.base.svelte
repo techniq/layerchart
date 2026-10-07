@@ -52,7 +52,7 @@
 {#if children}
   {@render children({ arcs: c.arcs })}
 {:else}
-  <!-- Unkeyed, so as the view turns each row takes its new slice -->
+  <!-- Unkeyed, as canvas draws in mount order -->
   {#each c.arcs as arc}
     <Arc
       class="lc-pie-arc"

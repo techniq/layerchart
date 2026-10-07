@@ -15,6 +15,6 @@ related: []
 
 ## Isometric
 
-On an [isometric](/docs/guides/isometric) chart, nodes can stand up as prisms — here `Polygon`s with a `z` — over links lying on the floor.
+On an [isometric](/docs/guides/isometric) chart, nodes can stand up as prisms (`Polygon`s with a `z`) over links lying on the floor.
 
 :example{ name="isometric" }

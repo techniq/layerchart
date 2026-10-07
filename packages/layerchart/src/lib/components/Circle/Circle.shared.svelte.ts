@@ -61,19 +61,16 @@ export type CirclePropsWithoutHTML = {
   r?: DataProp;
 
   /**
-   * Height to raise the circle off an `isometric` floor (data mode).  Defaults to the chart's
-   * `z`, so `<Chart z="value">` floats each point at its value — a 3D scatter.
+   * Height to raise the circle off an `isometric` floor (data mode), defaulting to the chart's `z`.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
    * - `number`: pixel height
-   *
-   * No effect on a flat chart.
    */
   z?: DataProp;
 
   /**
-   * On an `isometric` chart, keep the circle facing the viewer — round, rather than lying on the
-   * floor as an ellipse.  No effect on a flat chart.
+   * On an `isometric` chart, keep the circle facing the viewer (round) rather than lying on the
+   * floor as an ellipse.
    *
    * @default false
    */
@@ -194,10 +191,7 @@ export class CircleState {
   geo = getGeoContext();
   #layerIsometric = getLayerIsometric();
 
-  /**
-   * Whether the circles float at a height — data mode, a height to raise them by, and a layer that
-   * draws the isometric floor.  Seen from directly above (or in a flat layer) they stay put.
-   */
+  /** Whether the circles float: data mode, with a height, in a layer drawing the isometric floor */
   lifted = $derived.by(() => {
     if (!this.dataMode || !this.#layerIsometric()) return false;
     const lift = this.chartCtx.isometricLift;
@@ -208,7 +202,7 @@ export class CircleState {
   /** The `isometric` view to cancel about each circle for `viewport`, or `null` for none */
   viewportMatrix = $derived(this.#getProps().viewport ? cancelView(this.#layerIsometric()) : null);
 
-  /** `viewportMatrix` applied about `(cx, cy)`, as an SVG `transform` — `''` when there's none */
+  /** `viewportMatrix` applied about `(cx, cy)` as an SVG `transform`, or `''` */
   viewportTransform(cx: number, cy: number) {
     const m = this.viewportMatrix;
     if (!m) return '';
@@ -217,9 +211,7 @@ export class CircleState {
 
   /** A circle's height off the floor, in pixels */
   #resolveZ(d: any) {
-    const z = this.#getProps().z;
-    if (z != null) return resolveDataProp(z, d, this.chartCtx.zScale, 0);
-    return Number(this.chartCtx.zGet(d)) || 0;
+    return this.chartCtx.heightOf(d, this.#getProps().z)[1];
   }
 
   // Reactive derivations
@@ -255,8 +247,7 @@ export class CircleState {
     const lift = this.chartCtx.isometricLift;
     if (!this.lifted || !m || !lift) return items;
 
-    // Back to front, so nearer points cover farther ones — by where each stands on the floor,
-    // before it's raised
+    // Back to front by where each stands on the floor, before it's raised
     const depth = new Map(items.map((item) => [item, m.b * item.cx + m.d * item.cy]));
     for (const item of items) {
       const z = this.#resolveZ(item.d);

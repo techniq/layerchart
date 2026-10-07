@@ -17,7 +17,7 @@
     data,
     x,
     y,
-    // Each point's height — not `Path`'s, which would raise the whole line by one
+    // Each point's height, not `Path`'s, which would raise the whole line
     z,
     g,
     seriesKey,

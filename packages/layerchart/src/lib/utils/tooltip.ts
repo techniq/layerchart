@@ -51,8 +51,12 @@ export type TooltipCoordContext = {
   yInterval?: TimeInterval | null;
   /** Present on a real `ChartState`; used to offset into the panel a row belongs to */
   facet?: { enabled: boolean; panels: Array<{ x: number; y: number; has(row: any): boolean }> };
-  /** Present on a real `ChartState`; where the layers' pan / zoom and `isometric` view move a point */
+  /** The layers' pan / zoom and `isometric` view, present on a real `ChartState` */
   layerMatrix?: () => AffineMatrix | null;
+  /** On an `isometric` chart, a pixel of height on the flat plot, and a row's height */
+  isometricLift?: { x: number; y: number } | null;
+  heightOf?: (d: any) => [number, number];
+  config?: { z?: unknown };
 };
 
 /**
@@ -227,6 +231,13 @@ export function dataCoords(ctx: TooltipCoordContext, data: any) {
     x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + (panel?.x ?? 0),
     y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + (panel?.y ?? 0),
   };
+  // Where the row floats, as the marks raise it, before the view is applied
+  const lift = ctx.config?.z != null ? ctx.isometricLift : null;
+  if (lift && ctx.heightOf) {
+    const height = ctx.heightOf(data)[1];
+    plotPoint.x += lift.x * height;
+    plotPoint.y += lift.y * height;
+  }
   const matrix = ctx.layerMatrix?.();
   const { x, y } = matrix ? applyMatrix(matrix, plotPoint) : plotPoint;
 

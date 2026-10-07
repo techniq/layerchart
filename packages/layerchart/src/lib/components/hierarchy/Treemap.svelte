@@ -69,10 +69,7 @@
      */
     maintainAspectRatio?: boolean;
 
-    /**
-     * Render the nodes.  On an `isometric` chart they come in the order to paint boxes standing on
-     * them — back to front, each tier after the one it stands on.
-     */
+    /** Render the nodes, in back-to-front paint order on an `isometric` chart */
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
 </script>
@@ -207,10 +204,8 @@
   });
 
   /**
-   * On an isometric floor, depth first: a node, then each child's whole subtree in turn, back to
-   * front.  Children stand inside their parent and siblings tile it, so only siblings ever need
-   * comparing — a subtree behind can't hide one in front, and a tier can't hide the ones above it.
-   * Re-sorted, not re-laid out, as the view turns.
+   * On an isometric floor, depth first with siblings back to front.  Children sit inside their
+   * parent and siblings tile it, so only siblings need comparing.
    */
   const nodes = $derived.by(() => {
     const m = layerIsometric();

@@ -22,7 +22,7 @@
     markerStart,
     markerMid,
     markerEnd,
-    // Not SVG attributes — the ends' heights, consumed by `LineState`
+    // Consumed by `LineState`, not SVG attributes
     z1,
     z2,
     ...rest

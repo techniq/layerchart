@@ -25,8 +25,8 @@
     endContent,
     draw,
     motion,
-    // Not an SVG attribute here — the height to stand the shape up, consumed by `PathState`
-    z,
+    // Raised by `PathExtruded` (see `Path`), not an SVG attribute
+    z: _z,
     // Extracted out of `rest` so the `<path>` element's `{...rest}`
     // spread doesn't re-evaluate on every frame in mark-heavy scenes
     // (force-simulation graphs with hundreds of links updating per tick).
@@ -52,7 +52,7 @@
   // through `getProps()` on each force-sim tick × hundreds of paths.
   const c = new PathState(
     () => _pathData,
-    () => ({ draw, motion, z, fill: fillProp }) as PathProps
+    () => ({ draw, motion }) as PathProps
   );
 
   const markerStart = $derived(markerStartProp ?? marker);
@@ -130,38 +130,8 @@
 </script>
 
 {#key c.drawKey}
-  {#if c.raised}
-    <!--
-      Stood up on an isometric floor: the sides facing the viewer, then the shape on top.  The sides
-      take the shape's class for its colour, but not its outline — around every edge of a jagged
-      outline, that would stripe them
-    -->
-    {#if c.raised.sides}
-      <path
-        d={c.raised.sides}
-        fill={fillProp}
-        fill-opacity={fillOpacityProp}
-        opacity={opacityProp}
-        class={cls('lc-path-side', classProp as string | undefined)}
-        style:stroke="none"
-      />
-    {/if}
-    {#each c.raised.shades as side}
-      <path
-        d={side.d}
-        fill="black"
-        fill-opacity={side.opacity}
-        opacity={opacityProp}
-        pointer-events="none"
-        class="lc-path-side-shade"
-      />
-    {/each}
-  {/if}
   <path
     {...rest as any}
-    transform={c.raised
-      ? `translate(${c.raised.shift.x},${c.raised.shift.y})${rest.transform ? ` ${rest.transform}` : ''}`
-      : rest.transform}
     d={c.tweenedPathData}
     fill={fillProp}
     fill-opacity={fillOpacityProp}

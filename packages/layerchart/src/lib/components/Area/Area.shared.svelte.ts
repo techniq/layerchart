@@ -11,6 +11,7 @@ import {
   resolveColorProp,
   resolveStyleProp,
   type ColorProp,
+  type DataProp,
   type StyleProp,
 } from '$lib/utils/dataProp.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
@@ -24,7 +25,7 @@ import {
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
+import { liftChanged } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type Spline from '../Spline/Spline.svelte';
@@ -34,13 +35,11 @@ export type AreaPropsWithoutHTML = {
   /** Override data instead of using context */
   data?: any;
   /**
-   * Height to raise each point off an `isometric` floor — defaults to the chart's `z`.
+   * Height to raise each point off an `isometric` floor, defaulting to the chart's `z`.  The area
+   * stands on the floor as a curtain up to each point's height.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
    * - `number`: pixel height
-   *
-   * The area stands on the floor along its `x` / `y`, rising to each point's height — a
-   * curtain, ex. one series per row of a band `y`.  No effect on a flat chart.
    */
   z?: DataProp;
 
@@ -98,22 +97,17 @@ export class AreaState {
   ctx: ChartState = getChartContext();
   #layerIsometric = getLayerIsometric();
 
-  /**
-   * Where raising a point one pixel moves it on the flat plot, when the area has heights — an
-   * isometric floor, and a `z` (or the chart's) — or `null` when it lies flat.
-   */
+  /** The chart's `isometricLift` when the area has heights, else `null` */
   lift = $derived.by(() => {
     if (this.ctx.radial || !this.#layerIsometric()) return null;
     if (this.#props.z == null && this.ctx.props.z == null) return null;
-    // Even seen from directly above, where heights don't show — a curtain is then edge on
+    // Even seen from directly above, where the curtain is edge on
     return this.ctx.isometricLift;
   });
 
   /** A point's height off the floor, in pixels */
   height(d: any) {
-    const z = this.#props.z;
-    if (z != null) return resolveDataProp(z, d, this.ctx.zScale, 0);
-    return Number(this.ctx.zGet(d)) || 0;
+    return this.ctx.heightOf(d, this.#props.z)[1];
   }
 
   markData = getMarkData();
@@ -154,7 +148,8 @@ export class AreaState {
     this.#tweenState = createMotion(
       this.#defaultPathData(tweenOptions),
       () => this.d,
-      tweenOptions
+      tweenOptions,
+      { instant: liftChanged(() => this.lift) }
     );
 
     // `#tweenState` animates the single-path case; grouped areas each need their own, since the
@@ -162,16 +157,23 @@ export class AreaState {
     this.#areaTweens = createPathMotionMap(initial.motion, interpolatePath);
     if (this.#areaTweens) {
       const tweens = this.#areaTweens;
+      const viewTurned = liftChanged(() => this.lift);
       $effect(() => {
         const targets = this.#areaTargets;
         if (!targets) return;
+        const instant = viewTurned();
 
         const active = new Set<any>();
         for (const area of targets) {
           active.add(area.key);
           // `update` reads and writes the tween's own state, so it must not be tracked here
           untrack(() =>
-            tweens.update(area.key, area.d, () => this.#defaultPathData(tweenOptions, area.data))
+            tweens.update(
+              area.key,
+              area.d,
+              () => this.#defaultPathData(tweenOptions, area.data),
+              instant
+            )
           );
         }
         untrack(() => tweens.cleanup(active));
@@ -335,7 +337,7 @@ export class AreaState {
     const props = this.#props;
     const lift = this.lift;
     if (lift) {
-      // A curtain: along the floor at each point's `x` / `y`, up to its height
+      // A curtain from the floor up to each point's height
       const x = (d: any) => this.ctx.xScale(this.xAccessor(d)) + this.xOffset;
       const y = (d: any) => this.ctx.yScale(this.y1Accessor(d)) + this.yOffset;
       const curtain = d3Area()

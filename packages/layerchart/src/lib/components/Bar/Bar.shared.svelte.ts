@@ -177,10 +177,7 @@ export class BarState {
     }))
   );
 
-  /**
-   * With values along `z`, the band cell the bar stands on — its `x` (and `x1` sub-band) by its
-   * `y` (and `y1`) — or `null` when its value runs along the floor.
-   */
+  /** With `valueAxis="z"`, the `x` × `y` band cell the bar stands on, else `null` */
   #footprint = $derived.by(() => {
     if (this.ctx.valueAxis !== 'z') return null;
     const d = this.#props.data;
@@ -219,10 +216,7 @@ export class BarState {
     return { x, y, width, height };
   });
 
-  /**
-   * With values along `z`, the `[start, end]` heights the bar stands between, in pixels — its
-   * segment of the stack, else up from `0` — or `undefined` when its value runs along the floor.
-   */
+  /** With `valueAxis="z"`, the bar's `[start, end]` heights in pixels, else `undefined` */
   zExtent = $derived.by((): [number, number] | undefined => {
     if (this.ctx.valueAxis !== 'z') return undefined;
     const d = this.#props.data;

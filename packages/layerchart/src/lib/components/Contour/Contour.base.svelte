@@ -208,10 +208,7 @@
     );
   });
 
-  /**
-   * Each band's `[start, end]` height for `Path`'s `z` — standing on the band below, or the floor
-   * — when there's a `z`.  `Path` stands it up on an isometric floor, and leaves it flat otherwise.
-   */
+  /** Each band's `[start, end]` height for `Path`'s `z`, standing on the band below */
   const bandHeights = $derived.by(() => {
     if (z == null) return null;
     const heights = contourData.map((contour) => resolveDataProp(z, contour, ctx.zScale, 0));

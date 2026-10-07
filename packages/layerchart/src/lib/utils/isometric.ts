@@ -1,10 +1,10 @@
+import { untrack } from 'svelte';
 import type { MotionProp } from './motion.svelte.js';
 import { pathRings } from './path.js';
 
 /**
- * A 2D affine matrix in SVG / canvas order — `x' = a·x + c·y + e`, `y' = b·x + d·y + f`.
- *
- * Plain numbers rather than `DOMMatrix`, which the server doesn't have.
+ * A 2D affine matrix in SVG / canvas order: `x' = a·x + c·y + e`, `y' = b·x + d·y + f`.  Plain
+ * numbers rather than `DOMMatrix`, which the server doesn't have.
  */
 export type AffineMatrix = { a: number; b: number; c: number; d: number; e: number; f: number };
 
@@ -28,27 +28,22 @@ export type IsometricOptions = {
   tilt?: number;
 
   /**
-   * The floor's width over its depth.  The floor keeps these proportions however the chart is
-   * sized, like a real object.  `'auto'` takes them from the data: one cell each way when both
-   * scales are bands (so cells are square), equal units when both are continuous (unless one runs
-   * more than four times the other), and square otherwise.  A `radial` chart's floor is always
-   * square, the circle it draws.
+   * The floor's width over its depth, kept however the chart is sized.  `'auto'` makes band cells
+   * square, gives continuous axes equal units (unless one spans over 4× the other), and is square
+   * otherwise.  A `radial` chart's floor is always square.
    *
    * @default 'auto'
    */
   aspect?: number | 'auto';
 
-  /**
-   * Ease the view to new `rotate` / `tilt` values rather than jumping there — ex. between flat
-   * (`tilt: 0`) and isometric, or following a slider.  Read as the chart mounts.
-   */
+  /** Ease the view to new `rotate` / `tilt` values, ex. between flat (`tilt: 0`) and isometric */
   motion?: MotionProp;
 };
 
 /** The tilt at which both axes meet the horizontal at 30° */
 export const ISOMETRIC_TILT = (Math.acos(Math.tan(Math.PI / 6)) * 180) / Math.PI;
 
-/** Upper bound for `tilt` — edge on, the floor collapses to a line and heights grow without bound */
+/** Upper bound for `tilt`: edge on, the floor collapses to a line */
 const MAX_TILT = 89;
 
 /** `tilt` in radians, kept between seen from above (`0`) and just short of edge on */
@@ -57,16 +52,12 @@ function tiltRadians(tilt: number) {
 }
 
 export type IsometricFit = {
-  /**
-   * The tallest height anything rises off the floor, in the floor's pixels — the fit leaves room
-   * above the floor for it.
-   */
+  /** The tallest height anything rises off the floor, in pixels, for the fit to leave room for */
   depth?: number;
 
   /**
-   * What's drawn on the floor.  `'rect'` is the whole floor.  `'disc'` is the circle centred in it
-   * — a radial chart, which keeps its width however it's turned, where fitting the floor's corners
-   * would leave it smaller than it needs to be.
+   * What's drawn on the floor: the whole `'rect'`, or the `'disc'` centred in it (a radial chart,
+   * whose width doesn't change as it turns).
    *
    * @default 'rect'
    */
@@ -77,14 +68,8 @@ export type IsometricFit = {
 const MAX_AUTO_ASPECT = 4;
 
 /**
- * The floor's proportions for `aspect: 'auto'`, from the `x` / `y` scales and their full domains.
- *
- * - **Band × band**: columns over rows, so each cell is square.
- * - **Continuous × continuous**: the domains' spans, so a unit runs as far across the floor as
- *   it does into it — falling back to square when one span is more than four times the other,
- *   where equal units would leave a sliver.
- * - **Anything else** (a band against values, dates against counts): square — the units don't
- *   compare.
+ * The floor's proportions for `aspect: 'auto'`: columns over rows for two band scales, the
+ * domains' spans for two continuous ones (square when that would leave a sliver), else square.
  */
 export function autoIsometricAspect(
   x: { scale: unknown; domain: unknown[] },
@@ -153,13 +138,10 @@ function floorBounds(
 }
 
 /**
- * The floor's size: the largest floor of the view's `aspect` that, turned and tilted, fits a
- * `width` × `height` box — with room above it for heights — and fits the box flat too.  The chart lays out on this floor
- * rather than on the box, so it keeps its proportions as the chart resizes, and draws at its
- * natural size.
+ * The largest floor of the view's `aspect` that, turned and tilted with room above it for heights,
+ * fits a `width` × `height` box (and fits it flat too).
  *
- * `depthAt` is how tall the tallest height is for a floor of a given size — heights usually
- * scale with the floor (the default `z` range does), so the fit settles on both together.
+ * `depthAt` gives the tallest height for a floor size, since heights usually scale with the floor.
  */
 export function fitIsometricFloor(
   options: IsometricOptions,
@@ -188,13 +170,11 @@ export function fitIsometricFloor(
     return Number.isFinite(size) ? Math.max(size, 0) : Math.min(width, height);
   };
 
-  // Heights follow the floor's size, and the floor's size makes room for the heights — so find
-  // the largest floor that fits along with its own heights.  Fitting only gets harder as the floor
-  // grows, which makes it a bisection.
+  // Heights depend on the floor's size and vice versa; fitting only gets harder as the floor grows,
+  // so bisect for the largest that fits
   const fits = (size: number) => size <= fit(depthAt({ width: aspect * size, height: size }));
   let lo = 0;
-  // Never larger than the plot area itself, so a floor that already fits — a circle, which turning
-  // doesn't widen — keeps the size it has flat rather than growing into the room the tilt frees
+  // Never larger than the plot area, so a circle (which turning doesn't widen) keeps its flat size
   let hi = Math.min(fit(0), width / aspect, height);
   if (fits(hi)) lo = hi;
   else {
@@ -208,9 +188,8 @@ export function fitIsometricFloor(
 }
 
 /**
- * The matrix drawing a `floor`-sized plot area as a floor seen at an angle — turned by `rotate`,
- * foreshortened by `tilt`, and centred in a `box`, along with anything rising `depth` off it.
- * Draws at its natural size: `fitIsometricFloor` already sized the floor to fit.
+ * The matrix drawing a `floor`-sized plot area turned by `rotate`, foreshortened by `tilt`, and
+ * centred in `box` with anything rising `depth` off it.
  */
 export function createIsometricMatrix(
   options: IsometricOptions,
@@ -228,12 +207,9 @@ export function createIsometricMatrix(
 }
 
 /**
- * Where raising a point by one pixel of height moves it on the flat plot.
- *
- * The layers draw the flat plot through the isometric matrix, so a mark lifts something off the
- * floor by offsetting it along this before drawing — the matrix turns that offset straight up the
- * screen, foreshortened exactly as the floor is.  `{ x: 0, y: 0 }` seen from directly above,
- * where heights don't show.
+ * Where raising a point by one pixel of height moves it on the flat plot.  Drawn through the
+ * isometric matrix, this offset points straight up the screen.  `{ x: 0, y: 0 }` from directly
+ * above.
  */
 export function isometricLift({ rotate = -45, tilt = ISOMETRIC_TILT }: IsometricOptions) {
   const theta = (rotate * Math.PI) / 180;
@@ -280,22 +256,16 @@ export function matrixToString(m: AffineMatrix) {
 }
 
 /**
- * The matrix cancelling the turn, tilt, and fit of `m` — its linear part inverted, with no
- * translation, so applied about a point it keeps that point's spot on the floor but draws what's
- * there facing the viewer, unskewed and at its natural size.
- *
- * `null` when there's nothing to cancel, or `m` collapses the plane (ex. `tilt: 90`).
+ * `m`'s linear part inverted: applied about a point, it draws what's there facing the viewer.
+ * `null` when there's nothing to cancel or `m` collapses the plane.
  */
 export function viewportMatrix(m: AffineMatrix | null) {
   return m ? invertMatrix({ ...m, e: 0, f: 0 }) : null;
 }
 
 /**
- * Text anchors for a `viewport`-aligned label sitting off a floor edge, pointing away from the floor along
- * `outward` (a direction on the flat plot, ex. `{ x: 0, y: 1 }` below the bottom edge).
- *
- * The edge runs at an angle on screen, so a label centred under its tick (the flat default) would
- * cut back across the floor.  Anchoring by where `outward` lands on screen hangs it clear instead.
+ * Text anchors for a `viewport` label off a floor edge, by where `outward` (a direction on the flat
+ * plot, ex. `{ x: 0, y: 1 }` below the bottom edge) lands on screen, so it hangs clear of the floor.
  */
 export function viewportAnchors(m: AffineMatrix, outward: { x: number; y: number }) {
   const sx = m.a * outward.x + m.c * outward.y;
@@ -321,12 +291,8 @@ export type BoxFace = {
 };
 
 /**
- * The faces of a box standing on a `width` × `height` footprint at `(x, y)`, from `z0` up to `z1`
- * pixels — in the order to paint them, so nearer faces cover farther ones.
- *
- * Only the sides facing the viewer are returned (the others are hidden behind the box), then the
- * top.  `lift` is `ChartState.isometricLift`, and `m` the matrix the layer draws through, which
- * decides which way each side faces on screen.
+ * The visible faces of a box on a `width` × `height` footprint at `(x, y)`, from `z0` to `z1`
+ * pixels, in paint order: the sides facing the viewer, then the top.
  */
 export function boxFaces(
   box: { x: number; y: number; width: number; height: number; z0: number; z1: number },
@@ -387,10 +353,7 @@ function edgeFacing(edge: FootprintEdge, m: AffineMatrix) {
   return { front: sy > 1e-9, right: sx > 1e-9 };
 }
 
-/**
- * The floor's far edges for the view `m` — where walls stand behind everything else.  Each runs
- * along `x` or `y`, so a wall's gridlines can follow that axis' ticks.
- */
+/** The floor's far edges for the view `m`, where the back walls stand */
 export function backWalls(floor: { width: number; height: number }, m: AffineMatrix) {
   return footprintEdges(0, 0, floor.width, floor.height)
     .filter((edge) => !edgeFacing(edge, m).front && !isEdgeOn(edge, m))
@@ -421,43 +384,44 @@ export function floorCorner(
   );
 }
 
-/**
- * A screen-space offset (ex. "8px to the left") restated on the floor, for drawing something a
- * fixed distance off a point however the floor is turned.  `null` when `m` collapses the plane.
- */
+/** A screen-space offset restated on the floor, or `null` when `m` collapses the plane */
 export function screenToFloor(m: AffineMatrix, offset: { x: number; y: number }) {
   const inverse = viewportMatrix(m);
   return inverse ? applyMatrix(inverse, offset) : null;
 }
 
 /**
- * A circle of radius `r` laid in a plane — given as the two directions on the flat plot that run
- * one pixel across it (`u`) and one pixel up or into it (`v`) — as the ellipse it draws:
- * semi-axes and the clockwise turn, in degrees, of the first.  The floor is `u = (1, 0)`,
- * `v = (0, 1)`, a plain circle; a wall pairs its edge's direction with `isometricLift`.
+ * SVG path data for a circle of radius `r` about `c` on the plane spanned by `u` and `v` (ex.
+ * `(1, 0)` and `(0, 1)` for the floor), on the flat plot: the ellipse it is on screen.
  */
-export function planeEllipse(u: { x: number; y: number }, v: { x: number; y: number }, r: number) {
+export function planeCircle(
+  c: { x: number; y: number },
+  u: { x: number; y: number },
+  v: { x: number; y: number },
+  r: number
+) {
   // The ellipse is the image of the unit circle under [u v]; its axes come from (u v)(u v)ᵀ
   const a = u.x * u.x + v.x * v.x;
   const b = u.x * u.y + v.x * v.y;
   const d = u.y * u.y + v.y * v.y;
   const mean = (a + d) / 2;
   const spread = Math.hypot((a - d) / 2, b);
-  return {
-    rx: r * Math.sqrt(Math.max(mean + spread, 0)),
-    ry: r * Math.sqrt(Math.max(mean - spread, 0)),
-    rotate: (Math.atan2(2 * b, a - d) / 2) * (180 / Math.PI),
-  };
+  const rx = r * Math.sqrt(Math.max(mean + spread, 0));
+  const ry = r * Math.sqrt(Math.max(mean - spread, 0));
+  const angle = Math.atan2(2 * b, a - d) / 2;
+  const rotate = (angle * 180) / Math.PI;
+  const dx = rx * Math.cos(angle);
+  const dy = rx * Math.sin(angle);
+  const arc = (sign: number) => `A${rx},${ry},${rotate},0,1,${c.x + sign * dx},${c.y + sign * dy}`;
+  return `M${c.x + dx},${c.y + dy}${arc(-1)}${arc(1)}Z`;
 }
 
 /** A rectangle on the floor, by its corners — the shape `d3-hierarchy` lays nodes out in */
 export type Footprint = { x0: number; y0: number; x1: number; y1: number };
 
 /**
- * Whether a box standing on `a` must be painted before one standing on `b`.  A footprint inside
- * another stands on top of it (a stacked tier), so goes after.  Otherwise the two are apart along
- * `x` or `y`, and the one farther back along that axis goes first.  Apart along both, with the
- * axes disagreeing on which is farther back, neither can hide the other.
+ * Whether a box on `a` must be painted before one on `b`: a containing footprint first (the tier
+ * below), otherwise the one farther back along the axis they're apart on.
  */
 function paintsBefore(a: Footprint, b: Footprint, m: AffineMatrix) {
   const contains = (p: Footprint, q: Footprint) =>
@@ -476,10 +440,8 @@ function paintsBefore(a: Footprint, b: Footprint, m: AffineMatrix) {
 }
 
 /**
- * `items` in the order to paint boxes standing on their footprints, back to front — each before
- * any box it could hide, and a footprint before the ones stacked inside it.  Exact for footprints
- * of any sizes, where sorting by a single depth is only exact on a grid.  Quadratic, for a
- * treemap node's children rather than a whole tree.
+ * `items` in back-to-front paint order for boxes standing on their footprints.  Unlike sorting by
+ * depth, exact for footprints of any size; quadratic, so meant for one node's children.
  */
 export function paintOrder<T extends Footprint>(items: readonly T[], m: AffineMatrix): T[] {
   const n = items.length;
@@ -503,8 +465,7 @@ export function paintOrder<T extends Footprint>(items: readonly T[], m: AffineMa
   const order: T[] = [];
   const done = new Array<boolean>(n).fill(false);
   while (order.length < n) {
-    // Footprints that overlap without nesting can't be ordered — rather than stall, take the
-    // farthest left
+    // Overlapping footprints can't be ordered; take the farthest left rather than stall
     const next =
       candidates.find((i) => !done[i] && waiting[i] === 0) ?? candidates.find((i) => !done[i])!;
     done[next] = true;
@@ -517,7 +478,7 @@ export function paintOrder<T extends Footprint>(items: readonly T[], m: AffineMa
 /** A turn sharper than this, in degrees, between edges of an outline is a corner between faces */
 const FACE_CORNER = 30;
 
-/** Faces shorter than this along the floor, in pixels, join the one before — a jagged outline's */
+/** Faces shorter than this, in pixels, join the one before */
 const MIN_FACE = 6;
 
 /** Whether `point` lies inside `ring` (even-odd) */
@@ -535,15 +496,12 @@ function insideRing([px, py]: [number, number], ring: Array<[number, number]>) {
 export type ExtrudedSide = { d: string; opacity: number };
 
 /**
- * The sides of a shape stood up from `z0` to `z1` pixels off the floor — the edges of its `rings`
- * that face the viewer, for the layer to draw through `m`.  Holes are rings inside another,
+ * The visible sides of `rings` stood up from `z0` to `z1` pixels.  Holes are rings inside another,
  * whatever their winding.
  *
- * `sides` is every side in one path, to fill in the shape's colour.  `shades` splits them into
- * faces at the outline's corners, each darkened flat by which way it faces — from `0.15` facing
- * left to `0.3` facing right, as if lit from the upper left, like a box's sides.  A curve (a pie's
- * rim) turns too gently for corners, so stands as one face; a jagged outline (a coastline) has its
- * slivers joined into the faces beside them.
+ * `sides` is one path for all of them.  `shades` splits them into faces at the outline's corners,
+ * each darkened by which way it faces (`0.15` left to `0.3` right, like a box's sides), so a curve
+ * stays one face and a jagged outline's slivers join their neighbours.
  */
 export function extrudeRings(
   rings: Array<Array<[number, number]>>,
@@ -578,7 +536,7 @@ export function extrudeRings(
     };
     const front = ring.map((p, k) => facingOf(p, ring[(k + 1) % n]).toward > 0);
 
-    /** A face from vertex `a` to `b` of a run, as a shape and its flat shade */
+    /** A face through a run's `vertices`, as a shape and its shade */
     const face = (vertices: number[]) => {
       const bottom = vertices.map((k) => at(ring[k], z0));
       const top = vertices.map((k) => at(ring[k], z1)).reverse();
@@ -633,8 +591,8 @@ export function extrudeRings(
 }
 
 /**
- * A path's shape stood up from `z0` to `z1` pixels off the floor: the offset its top is drawn at,
- * and its sides (see `extrudeRings`) — none when it's unfilled, which only rises.
+ * A path stood up from `z0` to `z1` pixels: the offset to draw its top at, and its sides (none
+ * when unfilled).
  */
 export function extrudePath(
   d: string,
@@ -651,4 +609,35 @@ export function extrudePath(
 /** `points` as an SVG path */
 export function polygonPath(points: Array<{ x: number; y: number }>) {
   return points.map((p, i) => `${i ? 'L' : 'M'}${p.x},${p.y}`).join('') + 'Z';
+}
+
+/**
+ * A check reporting whether `getLift` has changed since it last ran: a path built through it
+ * then moved only because the view turned, and should follow at once rather than ease.
+ */
+export function liftChanged(getLift: () => { x: number; y: number } | null) {
+  let last: { x: number; y: number } | null | undefined;
+  return () => {
+    const lift = untrack(getLift);
+    const changed = last !== undefined && (lift?.x !== last?.x || lift?.y !== last?.y);
+    last = lift;
+    return changed;
+  };
+}
+
+/**
+ * How near the viewer a pie slice comes on an isometric floor, to paint slices back to front: the
+ * depth of its nearest point on the rim, which is the very front if it spans that.  Not its middle,
+ * which for a wide slice reaching round the front can be farther back than a narrow neighbour's.
+ * Angles run clockwise from 12 o'clock, as `d3-shape` lays them out.
+ */
+export function sectorDepth(startAngle: number, endAngle: number, m: AffineMatrix) {
+  // On a unit rim, depth at `angle` is `m.b·sin − m.d·cos`: greatest at `front`
+  const depth = (angle: number) => m.b * Math.sin(angle) - m.d * Math.cos(angle);
+  const front = Math.atan2(m.b, -m.d);
+  const [a0, a1] = startAngle <= endAngle ? [startAngle, endAngle] : [endAngle, startAngle];
+  const tau = 2 * Math.PI;
+  const past = (((front - a0) % tau) + tau) % tau;
+  if (past <= a1 - a0) return Math.hypot(m.b, m.d);
+  return Math.max(depth(a0), depth(a1));
 }

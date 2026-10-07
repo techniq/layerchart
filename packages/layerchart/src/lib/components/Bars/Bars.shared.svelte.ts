@@ -37,6 +37,8 @@ export class BarsState {
     this.ctx.registerComponent({
       name: 'Bars',
       kind: 'mark',
+      // Its bars are keyed, in depth order on an isometric floor
+      paintByDepth: true,
       markInfo: () => {
         const p = getProps();
         return {
@@ -59,8 +61,8 @@ export class BarsState {
   #layerIsometric = getLayerIsometric();
 
   /**
-   * `data` in the order to draw it: with values standing up along `z` on an isometric floor, back
-   * to front by the cell each bar stands on, and each stack bottom up — else as given.
+   * `data` in draw order: with `valueAxis="z"` on an isometric floor, back to front and each stack
+   * bottom up, else as given.
    */
   paintedData = $derived.by(() => {
     const m = this.#layerIsometric();

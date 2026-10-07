@@ -74,10 +74,8 @@ export type PathPropsWithoutHTML = {
   motion?: MotionProp;
 
   /**
-   * On an `isometric` chart, stand the shape up off the floor — `z` pixels tall, or floating from
-   * `start` to `end` — its sides facing the viewer shaded as if lit from the upper left.  An
-   * unfilled path (ex. a line) has no sides, so is just raised to the top.  No effect on a flat
-   * chart.
+   * On an `isometric` chart, stand the shape up `z` pixels, or between `[start, end]`, with shaded
+   * sides.  An unfilled path is only raised.
    */
   z?: number | [start: number, end: number];
 } & CommonStyleProps;
@@ -114,23 +112,6 @@ export class PathState {
   // Re-key trigger for draw transitions
   drawKey = $state(Symbol());
 
-  #getProps: () => PathProps;
-  #motionZ!: ReturnType<typeof createMotion<[number, number]>>;
-  #layerIsometric = getLayerIsometric();
-
-  /**
-   * On an isometric floor with a `z`, where the shape stands: the offset its top is drawn at, and
-   * its sides (see `extrudeRings`) — `null` when it lies flat.
-   */
-  raised = $derived.by(() => {
-    const { z, fill } = this.#getProps();
-    if (z == null) return null;
-    const m = this.#layerIsometric();
-    const lift = this.chartCtx.isometricLift;
-    if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
-    return extrudePath(this.tweenedPathData ?? '', this.#motionZ.current, lift, m, fill !== 'none');
-  });
-
   /**
    * @param getPathData  Hot-path getter — reads only `pathData`. Kept separate from
    *                     `getProps` so the `<path d=...>` updater (and the canvas
@@ -144,19 +125,6 @@ export class PathState {
     getProps: () => PathProps = () => ({}) as PathProps
   ) {
     this.#getPathData = () => resolvePathData(getPathData());
-    this.#getProps = getProps;
-
-    // The `[start, end]` heights `z` stands the shape between, tweened by `motion` like its path
-    const heights = (): [number, number] => {
-      const z = this.#getProps().z;
-      return Array.isArray(z) ? z : [0, z ?? 0];
-    };
-    this.#motionZ = createMotion(
-      heights(),
-      heights,
-      getProps().motion === undefined ? undefined : parseMotionProp(getProps().motion)
-    );
-
     const initial = getProps();
     const extractedTween = extractTweenConfig(initial.motion);
     const tweenedOptions: ResolvedMotion | undefined = extractedTween
@@ -173,8 +141,7 @@ export class PathState {
         return '';
       }
       const resolved = resolvePathData(getPathData());
-      // A map's shapes are already where they belong — rather than rising from a baseline, a
-      // geo path starts as itself and only tweens when it changes
+      // A geo path starts as itself rather than rising from a baseline
       if (resolved && this.chartCtx.geoState?.projection) return resolved;
       if (resolved) {
         return flattenPathData(
@@ -194,5 +161,58 @@ export class PathState {
       void this.#getPathData();
       this.drawKey = Symbol();
     });
+  }
+}
+
+/**
+ * A path stood up off an `isometric` floor by its `z`: the sides facing the viewer, and the shift
+ * raising its top.  Kept apart from `PathState` so a flat path pays nothing for it.
+ */
+export class PathExtrusion {
+  #chartCtx = getChartContext();
+  #layerIsometric = getLayerIsometric();
+  #getProps: () => Pick<PathProps, 'z' | 'fill'>;
+  #getPathData: () => string;
+  #motionZ: ReturnType<typeof createMotion<[number, number]>>;
+
+  /** The shape's top offset and sides (see `extrudePath`), or `null` when it lies flat */
+  raised = $derived.by(() => {
+    const { z, fill } = this.#getProps();
+    if (z == null) return null;
+    const m = this.#layerIsometric();
+    const lift = this.#chartCtx.isometricLift;
+    if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
+    return extrudePath(this.#getPathData(), this.#motionZ.current, lift, m, fill !== 'none');
+  });
+
+  /**
+   * @param getPathData  The path as drawn (tweened, if it is)
+   * @param getProps     Its `z` and `fill`
+   * @param motion       Eases a change of `z`, like the path
+   */
+  constructor(
+    getPathData: () => string,
+    getProps: () => Pick<PathProps, 'z' | 'fill'>,
+    motion?: MotionProp
+  ) {
+    this.#getPathData = getPathData;
+    this.#getProps = getProps;
+    // `z` as `[start, end]`
+    const heights = (): [number, number] => {
+      const z = this.#getProps().z;
+      return Array.isArray(z) ? z : [0, z ?? 0];
+    };
+    this.#motionZ = createMotion(
+      heights(),
+      heights,
+      motion === undefined ? undefined : parseMotionProp(motion)
+    );
+  }
+
+  /** `transform` raised by the shift, for the top */
+  transform(transform?: string) {
+    const shift = this.raised?.shift;
+    if (!shift) return transform;
+    return `translate(${shift.x},${shift.y})${transform ? ` ${transform}` : ''}`;
   }
 }

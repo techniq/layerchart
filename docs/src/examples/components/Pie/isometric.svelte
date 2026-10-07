@@ -37,8 +37,8 @@
 	</Field>
 </div>
 
-<!-- Every slice stood up 40px, drawn back to front — drag to turn it.  `zRange` leaves room
-     above the floor for them -->
+<!-- Each slice stands 40px tall, and `zRange` leaves room above the floor for them.  Drag to
+     turn it -->
 <Chart
 	{data}
 	x="count"
@@ -79,7 +79,7 @@
 								outerRadius,
 								getArcTextProps
 							})}
-								<!-- Off the top of the slices behind, below the slices in front — facing the viewer -->
+								<!-- Callouts clear of the slices' sides, facing the viewer -->
 								<ArcLabel
 									{centroid}
 									{startAngle}

@@ -7,7 +7,7 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { EllipseState, ellipseMarkInfo, type EllipseProps } from './Ellipse.shared.svelte.js';
 
-  // `rotate` isn't an HTML attribute — it turns the ellipse below
+  // `rotate` turns the ellipse below, not an HTML attribute
   let { rotate, ...rest }: EllipseProps = $props();
 
   const c = new EllipseState(() => rest as EllipseProps);

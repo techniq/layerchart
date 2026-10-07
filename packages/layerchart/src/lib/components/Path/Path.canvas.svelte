@@ -11,7 +11,7 @@
     type ComputedStylesOptions,
   } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { PathState, type PathProps } from './Path.shared.svelte.js';
+  import { PathExtrusion, PathState, type PathProps } from './Path.shared.svelte.js';
 
   let { pathData, ...rest }: PathProps = $props();
 
@@ -19,14 +19,19 @@
     () => pathData,
     () => rest as PathProps
   );
+  const extrusion = new PathExtrusion(
+    () => c.tweenedPathData ?? '',
+    () => rest,
+    rest.motion
+  );
 
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    const raised = c.raised;
+    const raised = extrusion.raised;
     if (raised) {
-      // Stood up on an isometric floor: the sides facing the viewer, then the shape on top
+      // Extruded: the sides facing the viewer, then the shape on top
       if (raised.sides) {
         renderPathData(
           ctx,
@@ -43,7 +48,7 @@
           }
         );
       }
-      // Shading is only for the eye — the hit canvas needs the sides their flat hit colour
+      // Not on the hit canvas, which needs the flat hit colour
       if (!styleOverrides) {
         renderExtrudedShades(
           ctx,
@@ -119,7 +124,7 @@
         rest.opacity,
         rest.class,
         c.tweenedPathData,
-        c.raised,
+        extrusion.raised,
         (rest as any).style,
       ],
     },

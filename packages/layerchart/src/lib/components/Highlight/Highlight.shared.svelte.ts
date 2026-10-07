@@ -5,7 +5,6 @@ import { notNull } from '@layerstack/utils';
 
 import type Bar from '../Bar/Bar.svelte';
 import type Circle from '../Circle/Circle.svelte';
-import type Ellipse from '../Ellipse/Ellipse.svelte';
 import type Line from '../Line/Line.svelte';
 import type Rect from '../Rect/Rect.svelte';
 import { accessor, chartDataArray, isEqualValue, type Accessor } from '$lib/utils/common.js';
@@ -14,9 +13,10 @@ import { isSinglePointMode, panelDatum } from '$lib/utils/tooltip.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { backWalls, planeEllipse } from '$lib/utils/isometric.js';
+import { backWalls, planeCircle } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
+import type { CommonStyleProps } from '$lib/utils/types.js';
 
 export type HighlightPointData = { x: any; y: any };
 export type HighlightPoint = {
@@ -39,9 +39,8 @@ export type HighlightPropsWithoutHTML = {
   /** Override `y` from context */
   y?: Accessor;
   /**
-   * Override `z` from context.  On an `isometric` chart with a `z`, the highlight's points float
-   * at the hovered row's height — pin it with a constant to mark the row's position on a plane
-   * instead: `z={() => 0}` puts them on the floor beneath, like a shadow.
+   * Override `z` from context.  On an `isometric` chart, points float at the row's height;
+   * `z={() => 0}` puts them on the floor beneath instead.
    */
   z?: Accessor;
   /**
@@ -92,12 +91,11 @@ export type HighlightPropsWithoutHTML = {
     | Snippet<[{ lines: HighlightLineSegment[] }]>;
 
   /**
-   * On an `isometric` chart with a `z`, the point's light spot on every grid the box shows — the
-   * floor beneath it and each back wall beside it — lying flat on each, like the shadows a light
-   * from that side would cast.  Pass props to style the `Ellipse`s, and `r` for their size.
+   * On an `isometric` chart with a `z`, mark the point's position on the floor and each back wall.
+   * Pass props to style them, and `r` for their size.
    * @default false
    */
-  shadows?: boolean | (Partial<ComponentProps<typeof Ellipse>> & { r?: number });
+  shadows?: boolean | (CommonStyleProps & { class?: string; r?: number });
 
   /**
    * Show area and pass props to Rect
@@ -161,10 +159,7 @@ export class HighlightState {
 
   #layerIsometric = getLayerIsometric();
 
-  /**
-   * How far the highlight rises off an `isometric` floor — to the hovered row's `z` — as an offset
-   * on the flat plot, or `null` when there's no height to rise to.
-   */
+  /** The highlight's rise to the row's `z`, as an offset on the flat plot, or `null` */
   lift = $derived.by(() => {
     const lift = this.ctx.isometricLift;
     const height = this.#height;
@@ -177,7 +172,8 @@ export class HighlightState {
     const z = this.#props.z ?? this.ctx.props.z;
     if (!this.#layerIsometric() || !this.ctx.isometricLift || z == null) return null;
     if (this.highlightData == null) return null;
-    return Number(this.ctx.zScale(accessor(z)(this.highlightData))) || 0;
+    const own = this.#props.z;
+    return this.ctx.heightOf(this.highlightData, own == null ? undefined : accessor(own))[1];
   });
 
   /**
@@ -239,10 +235,8 @@ export class HighlightState {
   }
 
   /**
-   * The row's position traced on the grid — on a flat chart, across the plot at its `x` / `y`.  On
-   * an `isometric` chart with a `z`, on every grid the box shows: those same lines on the floor,
-   * then on each back wall a line up it at the `x` or `y` of the edge it stands on, and a line
-   * across it at the row's height.
+   * The row's position traced on the grid: across the plot at its `x` / `y`, and on an `isometric`
+   * chart with a `z`, also up and across each back wall.
    */
   lines = $derived.by<HighlightLineSegment[]>(() => {
     const floor = this.#flatLines;
@@ -281,8 +275,8 @@ export class HighlightState {
   });
 
   /**
-   * For `shadows`: the point's light spot on the floor beneath it and on each back wall, as the
-   * ellipse a circle lying on each draws — none without an isometric floor and a height.
+   * For `shadows`: a circle of radius `r` on the floor beneath the point and on each back wall, as
+   * path data, and as its centre and plane (`u`, `v`) for a layer without paths
    */
   shadows = $derived.by(() => {
     const m = this.#layerIsometric();
@@ -297,16 +291,19 @@ export class HighlightState {
     const x = (this.xCoordScalar as number) + this.xOffset;
     const y = (this.yCoordScalar as number) + this.yOffset;
 
-    const floor = { cx: x, cy: y, ...planeEllipse({ x: 1, y: 0 }, { x: 0, y: 1 }, r) };
+    const shadow = (c: { x: number; y: number }, u: typeof lift, v: typeof lift) => ({
+      pathData: planeCircle(c, u, v, r),
+      c,
+      u,
+      v,
+      r,
+    });
+    const floor = shadow({ x, y }, { x: 1, y: 0 }, { x: 0, y: 1 });
     const walls = backWalls({ width: this.ctx.width, height: this.ctx.height }, m).map((edge) => {
       // Level with the point, on the wall at its x (a wall along x) or y (a wall along y)
       const foot = edge.axis === 'x' ? { x, y: edge.from.y } : { x: edge.from.x, y };
       const across = edge.axis === 'x' ? { x: 1, y: 0 } : { x: 0, y: 1 };
-      return {
-        cx: foot.x + lift.x * height,
-        cy: foot.y + lift.y * height,
-        ...planeEllipse(across, lift, r),
-      };
+      return shadow({ x: foot.x + lift.x * height, y: foot.y + lift.y * height }, across, lift);
     });
     return [floor, ...walls];
   });
@@ -517,7 +514,11 @@ export class HighlightState {
     // to one row by proximity in both axes — a scatter, where the rows sharing an x are unrelated
     // points rather than a category's line, and pointing all of them marks places nothing was
     // hovered.
+    // Along `valueAxis="z"` the value is a height, not a position on the plot: the row's own point
+    // (below), raised to the top of its segment, is the one to mark
+    const valueIsPosition = this.ctx.valueAxis !== 'z';
     if (
+      valueIsPosition &&
       props.data === undefined &&
       this.ctx.cGroups &&
       this.ctx.series.isDefaultSeries &&
@@ -560,7 +561,7 @@ export class HighlightState {
           .filter(notNull) as HighlightPoint[];
     }
 
-    if (props.data === undefined && this.ctx.tooltip.series.length > 0) {
+    if (valueIsPosition && props.data === undefined && this.ctx.tooltip.series.length > 0) {
       tmpPoints = this.ctx.tooltip.series
         .flatMap((seriesInfo) => {
           if (!seriesInfo.visible) return [];

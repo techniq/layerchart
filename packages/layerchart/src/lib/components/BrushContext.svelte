@@ -181,15 +181,15 @@
   const logger = new Logger('BrushContext');
   const RESET_THRESHOLD = 1; // size of pointer delta to ignore
 
+  /** The layers' matrix (an isometric view or a zoom) the brush is drawn through, or `null` */
+  const plotMatrix = $derived(ctx.layerMatrix?.() ?? null);
+  const plotInverse = $derived(plotMatrix ? invertMatrix(plotMatrix) : null);
+
   /**
    * The gesture, from the `brushable` attachment — the same one a chart can attach to elements of
    * its own.  Each part of the brush takes the mode it represents, so the handles keep their own
    * cursors and hit areas, and the root creates a new selection.
    */
-  /** The layers' matrix — an isometric view, or a zoom — the brush is drawn through, or none */
-  const plotMatrix = $derived(ctx.layerMatrix?.() ?? null);
-  const plotInverse = $derived(plotMatrix ? invertMatrix(plotMatrix) : null);
-
   function gesture(mode: BrushMode) {
     return brushable({
       state: brushState,
@@ -197,7 +197,6 @@
       mode,
       // Every part measures against the root, not against itself — a handle is only a few pixels
       bounds: () => rootEl?.getBoundingClientRect(),
-      // On an isometric floor, back through the layers' matrix to the flat plot
       toPlot: (point) => (plotInverse ? applyMatrix(plotInverse, point) : point),
       // The gesture belongs to the panel it started in, and stays there — the scales are shared,
       // so the selection it produces applies to every panel.  Unfaceted charts resolve to the
@@ -262,7 +261,7 @@
         One selection, drawn in every panel — the panels share the position scales, so a range
         of the domain is the same range in each of them.
       -->
-      <!-- Drawn through the layers' matrix, so on an isometric floor the selection lies on it -->
+      <!-- Drawn through the layers' matrix, so the selection lies on an isometric floor -->
       <div
         class="lc-brush-plot"
         style:transform={plotMatrix ? matrixToString(plotMatrix) : undefined}

@@ -168,7 +168,7 @@ export class WaffleState {
     });
   }
 
-  // A waffle fills along `x` or `y` — values stacked along `z` still run up the floor's `y`
+  // A waffle fills along `x` or `y`; a `z` value axis still runs up the floor's `y`
   axis = $derived<'x' | 'y'>(
     this.#props.axis ?? (this.ctx.valueAxis === 'z' ? 'y' : this.ctx.valueAxis)
   );

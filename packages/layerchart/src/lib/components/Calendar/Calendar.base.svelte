@@ -21,7 +21,6 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getMarkData } from '$lib/contexts/facet.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import { resolveDataProp } from '$lib/utils/dataProp.js';
   import { getLayerIsometric } from '$lib/contexts/isometric.js';
 
   let {
@@ -39,6 +38,8 @@
   }: CalendarBaseProps = $props();
 
   const ctx = getChartContext();
+  // Its days are keyed, in depth order on an isometric floor
+  ctx.registerComponent({ name: 'Calendar', kind: 'mark', paintByDepth: true });
   const layerIsometric = getLayerIsometric();
   const markData = getMarkData();
 
@@ -84,31 +85,27 @@
     })
   ) satisfies CalendarCell[];
 
-  /**
-   * A day's height off an `isometric` floor, in pixels — from `z`, else the chart's — or none.
-   * Its cell stands up to it.
-   */
+  /** A day's height in pixels, from `z` or the chart's, or `undefined` */
   function cellHeight(cell: CalendarCell) {
-    if (Array.isArray(z)) return z;
-    if (z != null) return resolveDataProp(z, cell.data, ctx.zScale, 0);
-    if (ctx.config.z == null) return undefined;
-    return Number(ctx.zGet(cell.data)) || 0;
+    if (z == null && ctx.config.z == null) return undefined;
+    return ctx.heightOf(cell.data, z);
   }
 
-  // On an isometric floor, back to front, so nearer days cover farther ones.  Unkeyed below, so
-  // as the view turns each cell takes its new day
+  // Back to front on an isometric floor, each keyed by its day so a reorder doesn't hand one
+  // day's `Rect` (and its `motion`) another's
   const paintedCells = $derived.by(() => {
+    const keyed = cells.map((cell, index) => ({ cell, index }));
     const m = layerIsometric();
-    if (!m) return cells;
-    const depth = (cell: CalendarCell) => m.b * cell.x + m.d * cell.y;
-    return [...cells].sort((a, b) => depth(a) - depth(b));
+    if (!m) return keyed;
+    const depth = ({ cell }: (typeof keyed)[number]) => m.b * cell.x + m.d * cell.y;
+    return keyed.sort((a, b) => depth(a) - depth(b));
   });
 </script>
 
 {#if children}
   {@render children({ cells, cellSize })}
 {:else}
-  {#each paintedCells as cell}
+  {#each paintedCells as { cell, index } (index)}
     <Rect
       x={cell.x}
       y={cell.y}

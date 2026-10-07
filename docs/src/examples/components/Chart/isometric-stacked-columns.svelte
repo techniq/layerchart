@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { Axis, Bars, Chart, Frame, Grid, Layer, Legend } from 'layerchart';
+	import { Axis, Bars, Chart, Frame, Grid, Highlight, Layer, Legend, Tooltip } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { longData } from '$lib/utils/data.js';
 
@@ -8,9 +8,8 @@
 	export { data };
 </script>
 
-<!-- Years across the floor, each basket a row into the depth — and the values standing up along
-     `z`, where the chart stacks each year's basket by fruit.  The fruit colors at full strength:
-     the docs' see-through ones would show each box's insides -->
+<!-- Years across the floor and baskets into it, with each basket's fruit stacked up along `z`.
+     Solid colors, since translucent boxes would show their insides -->
 <Chart
 	{data}
 	x="year"
@@ -29,6 +28,7 @@
 	]}
 	isometric={{ rotate: -25, tilt: 65 }}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
+	tooltipContext={{ mode: 'manual' }}
 	padding={{ top: 24, bottom: 40, left: 40, right: 24 }}
 	height={500}
 	clip
@@ -41,8 +41,19 @@
 		<Axis placement="bottom" format="none" tickLabelProps={{ viewport: true }} />
 		<Axis placement="left" format={(d) => `Basket ${d}`} tickLabelProps={{ viewport: true }} />
 		<Axis placement="back" format="metric" />
-		<Bars strokeWidth={1} class="stroke-surface-100/40" />
+		<!-- Each box is its own hit area, as the floor cell under the pointer may be another box -->
+		<Bars tooltip strokeWidth={1} class="stroke-surface-100/40" />
+		<Highlight points={{ r: 5 }} />
 	</Layer>
 
 	<Legend placement="top-left" variant="swatches" />
+
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header>{data.year} · Basket {data.basket}</Tooltip.Header>
+			<Tooltip.List>
+				<Tooltip.Item label={data.fruit} value={data.value} format="integer" />
+			</Tooltip.List>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>

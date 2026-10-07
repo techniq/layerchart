@@ -63,4 +63,15 @@ describe('Bars with values along `z`', () => {
       expect(tops[i].top).toBeGreaterThan(tops[i + 1].top);
     }
   });
+
+  it("gives every mark a row's height in its stack", async () => {
+    const { ctx } = await renderBars();
+    // Pears stand on apples (2 of 5, then 3 more) — on a 0..100 range
+    const pears = data[1];
+    const [base, top] = ctx.heightOf(pears);
+    expect(base).toBeCloseTo(40);
+    expect(top).toBeCloseTo(100);
+    // A mark's own `z` overrides it: a number in pixels
+    expect(ctx.heightOf(pears, 10)).toEqual([0, 10]);
+  });
 });

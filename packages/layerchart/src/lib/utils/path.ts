@@ -335,10 +335,7 @@ export function flattenPathData(pathData: string, yOverride = 0) {
   return result;
 }
 
-/**
- * Points along an SVG elliptical arc from `(x0, y0)` to `(x1, y1)`, ending on the end point — a
- * step every few degrees.  The endpoint-to-centre conversion of the SVG spec.
- */
+/** Points along an SVG elliptical arc, via the SVG spec's endpoint-to-centre conversion */
 function arcPoints(
   x0: number,
   y0: number,
@@ -394,10 +391,7 @@ function arcPoints(
 /** Fewest steps a curve segment is flattened into by `pathRings` */
 const CURVE_STEPS = 8;
 
-/**
- * The closed rings of an SVG path's `d`, as points — one per subpath, straight segments as given
- * and curves and arcs flattened into a few straight steps.
- */
+/** The closed rings of an SVG path's `d`, one per subpath, with curves and arcs flattened */
 export function pathRings(d: string): Array<Array<[number, number]>> {
   const tokens = d.match(/[a-zA-Z]|[-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? [];
   const rings: Array<Array<[number, number]>> = [];
@@ -423,7 +417,6 @@ export function pathRings(d: string): Array<Array<[number, number]>> {
   const curve = (points: Array<[number, number]>) => {
     // Bézier of any order through `points`, from the current point
     const all: Array<[number, number]> = [[x, y], ...points];
-    // About a step every few pixels along the control polygon
     let length = 0;
     for (let k = 1; k < all.length; k++) {
       length += Math.hypot(all[k][0] - all[k - 1][0], all[k][1] - all[k - 1][1]);
@@ -456,7 +449,7 @@ export function pathRings(d: string): Array<Array<[number, number]>> {
         finish();
         start = [ox + num(), oy + num()];
         to(...start);
-        // Further pairs are lines
+        // Further pairs after a move are lines
         command = relative ? 'l' : 'L';
         control = null;
         break;

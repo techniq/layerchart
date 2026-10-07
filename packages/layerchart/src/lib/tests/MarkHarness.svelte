@@ -25,8 +25,8 @@
 </script>
 
 <!--
-  A mark in a chart, without the `children` `TestHarness` always passes — which marks that draw
-  their own pieces (`Bars`, `Pie`, `Calendar`) render instead of them
+  A mark without the `children` snippet `TestHarness` always passes, for marks that otherwise render
+  `children` in place of their own pieces (`Bars`, `Pie`, `Calendar`)
 -->
 <Chart {...chartProps} bind:context data-testid="test-lc-chart">
   <Layer {...layerProps}>

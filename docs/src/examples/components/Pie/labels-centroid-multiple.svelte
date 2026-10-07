@@ -22,8 +22,8 @@
 	<Layer center>
 		<Pie>
 			{#snippet children({ arcs })}
-				{#each arcs as arc, index}
-					{@const colors = keyClasses[index]}
+				{#each arcs as arc}
+					{@const colors = keyClasses[arc.index]}
 					<Arc
 						startAngle={arc.startAngle}
 						endAngle={arc.endAngle}

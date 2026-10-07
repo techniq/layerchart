@@ -26,9 +26,8 @@
   const layerIsometric = getLayerIsometric();
 
   /**
-   * On an `isometric` chart with a `z`, the walls standing on the floor's far edges, as tall as
-   * the `z` range — the back of the box the data floats in.  Each is a rect with no depth, stood up
-   * by `z` like any other.  Re-chosen as the view turns.
+   * On an `isometric` chart with a `z`, a wall on each of the floor's far edges, as tall as the `z`
+   * range: a zero-depth rect stood up by `z`.
    */
   const walls = $derived.by(() => {
     if (!layerIsometric() || ctx.props.z == null || ctx.zDepth <= 0) return [];

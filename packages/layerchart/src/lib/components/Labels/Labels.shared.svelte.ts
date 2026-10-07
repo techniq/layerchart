@@ -19,9 +19,8 @@ import type Link from '../Link/Link.svelte';
 
 export type LabelsPropsWithoutHTML<T = any> = {
   /**
-   * On an `isometric` chart, the height to raise each label off the floor — defaults to the
-   * chart's `z`, so labels float with the points they name.  A data property or accessor (through
-   * zScale), or pixels.  No effect on a flat chart.
+   * On an `isometric` chart, the height to raise each label: a data property or accessor (through
+   * zScale), or pixels.  Defaults to the chart's `z`.
    */
   z?: DataProp;
 

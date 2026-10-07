@@ -181,22 +181,18 @@ export type TextPropsWithoutHTML = {
   rotate?: number;
 
   /**
-   * On an `isometric` chart, align the text to the viewport rather than the floor — placed on the
-   * floor like everything else, but facing the viewer, read left to right at its natural size.
-   * `rotate` still turns it, on screen.  No effect on a flat chart.
+   * On an `isometric` chart, keep the text facing the viewer at its natural size rather than lying
+   * on the floor.  `rotate` still turns it on screen.
    *
    * @default false
    */
   viewport?: boolean;
 
   /**
-   * Height to raise the text off an `isometric` floor.  In data mode it defaults to the chart's
-   * `z`, so a label floats with the point it names.
+   * Height to raise the text off an `isometric` floor, defaulting to the chart's `z` in data mode.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
-   * - `number`: pixel height — in pixel mode too
-   *
-   * No effect on a flat chart.
+   * - `number`: pixel height (also in pixel mode)
    */
   z?: string | number | ((d: any) => any);
 
@@ -363,7 +359,7 @@ export class TextState {
   /** The `isometric` view to cancel about the text's anchor for `viewport`, or `null` for none */
   viewportMatrix = $derived(this.#props.viewport ? cancelView(this.#layerIsometric()) : null);
 
-  /** `viewportMatrix` applied about `(x, y)`, as an SVG `transform` — `''` when there's none */
+  /** `viewportMatrix` applied about `(x, y)` as an SVG `transform`, or `''` */
   viewportTransform(x: number | string, y: number | string) {
     const m = this.viewportMatrix;
     // A CSS-valued position (ex. `"50%"`) has no pixel anchor to turn about
@@ -371,10 +367,7 @@ export class TextState {
     return `translate(${x},${y}) ${matrixToString(m)} translate(${-x},${-y})`;
   }
 
-  /**
-   * Where raising the text by `z` moves it on the flat plot, or `null` when it stays put — no
-   * height, or no isometric floor in this layer (or seen from directly above).
-   */
+  /** The chart's `isometricLift` when the text has a height, else `null` */
   #lift = $derived.by(() => {
     if (!this.#layerIsometric()) return null;
     const lift = this.chartCtx.isometricLift;
@@ -388,9 +381,7 @@ export class TextState {
 
   /** The text's height off the floor, in pixels */
   #resolveZ(d: any) {
-    const z = this.#props.z;
-    if (z != null) return resolveDataProp(z, d, this.chartCtx.zScale, 0);
-    return Number(this.chartCtx.zGet(d)) || 0;
+    return this.chartCtx.heightOf(d, this.#props.z)[1];
   }
 
   // Path measurement (only meaningful for SVG layer where the textPath element exists)
@@ -473,7 +464,7 @@ export class TextState {
   #motionY!: ReturnType<typeof createMotion<number | string>>;
   #motionValue!: ReturnType<typeof createMotion<number>>;
 
-  /** Pixel mode: `(x, y)` raised by a pixel `z` — a CSS value (ex. `"50%"`) has no pixel to raise */
+  /** Pixel mode: `(x, y)` raised by `z`; CSS values (ex. `"50%"`) are left as they are */
   #raise<V>(x: V, y: V): { x: V; y: V } {
     const lift = this.#lift;
     const z = this.#props.z;
@@ -599,7 +590,7 @@ export class TextState {
 
   scaleTransform = $derived.by(() => {
     const props = this.#props;
-    // About where the text is drawn — raised by `z`
+    // About where the text is drawn, raised by `z`
     const { x, y } = this.#raise(props.x, props.y);
     const width = props.width;
     const scaleToFit = props.scaleToFit ?? false;

@@ -30,7 +30,7 @@ describe('Pie on an isometric floor', () => {
     // Every slice raised, and some sides showing
     for (const top of tops) expect(top.getAttribute('transform')).toMatch(/^translate\(/);
     expect(el.querySelectorAll('.lc-path-side').length).toBeGreaterThan(0);
-    // Back to front: each slice's middle lower on screen — nearer — than the one before
+    // Back to front: each slice's middle lower on screen (nearer) than the one before
     const middles = tops.map((t) => {
       const r = t.getBoundingClientRect();
       return r.top + r.height / 2;

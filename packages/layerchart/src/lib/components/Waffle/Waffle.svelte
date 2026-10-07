@@ -42,7 +42,7 @@
     onpointerleave,
     onclick,
     symbol,
-    // SVG's own `z` (for filter lights) means nothing on a cell — and isn't `Path`'s height
+    // Not `Path`'s height
     z: _z,
     ...rest
   }: WaffleProps = $props();

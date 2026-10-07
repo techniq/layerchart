@@ -14,13 +14,12 @@
 	});
 
 	let view = $state<'flat' | 'isometric'>('isometric');
-	// Seen from directly above, the angles, heights, and label orientation have nothing to change
+	// Flat is seen from directly above, so the angle, height, and label controls are disabled
 	const flat = $derived(view === 'flat');
 	let labels = $state<'default' | 'viewport'>('default');
 	// The top of the `z` range, in pixels — `0` keeps the floor flat
 	let height = $state(80);
-	// True isometric to start: turned 45° to bring the origin to the front, tipped back until both
-	// axes meet the horizontal at 30°
+	// True isometric: the origin at the front, both axes meeting the horizontal at 30°
 	let rotate = $state(-45);
 	let tilt = $state(54.7356);
 
@@ -98,8 +97,8 @@
 	}}
 	transform={{ mode: 'canvas', drag: 'rotate', disablePointer: flat }}
 	onTransform={({ rotation }) => {
-		// Dragging turns and tips the view (`drag: 'rotate'`) — keep the sliders in step.  Only
-		// while dragging: the view easing to new angles reports them too
+		// Keep the sliders in step with a drag.  Only while dragging, since easing to new angles
+		// reports them too
 		if (!dragging || !rotation) return;
 		// Wrapped to the slider's ±180° — the same turn either way round
 		rotate = ((((rotation.x + 180) % 360) + 360) % 360) - 180;

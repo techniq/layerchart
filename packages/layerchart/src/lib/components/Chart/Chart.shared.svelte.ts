@@ -139,10 +139,8 @@ export type ChartPropsWithoutHTML<
   y1?: Accessor<T>;
   c?: Accessor<T>;
   /**
-   * Split the data into a separate path per distinct value — one line per series for `Spline`,
-   * one area for `Area`.  Usually unneeded: a `stroke` / `fill` naming a data property, or `c`,
-   * splits the same way.  Set it when the split isn't the color, ex. one line per row colored by
-   * its category.
+   * Split the data into a separate path per distinct value for `Spline` / `Area`.  Only needed when
+   * the split isn't the color (`c`, or a `stroke` / `fill` naming a data property).
    */
   g?: Accessor<T>;
 
@@ -223,21 +221,16 @@ export type ChartPropsWithoutHTML<
   xInterval?: TimeInterval | null;
   yInterval?: TimeInterval | null;
   /**
-   * The axis values run along — what `seriesLayout` stacks.  Inferred as `x` / `y` from which
-   * scale is a band.  `'z'` stacks heights instead, on an `isometric` chart: `Bars` stand up off
-   * their `x` / `y` band cell, stacked per `x` and `y`.
+   * The axis values run along, which `seriesLayout` stacks.  Inferred as `x` / `y` from which scale
+   * is a band; `'z'` stacks heights on an `isometric` chart.
    */
   valueAxis?: 'x' | 'y' | 'z';
   radial?: boolean;
 
   /**
-   * Draw the chart on a floor seen from above at an angle.  Scales, marks, and axes lay out across
-   * a floor of its own proportions (`aspect`, from the data by default) sized to fit the plot area, then
-   * every layer turns and tips it back by the same matrix, so anything drawn lies on the floor.
-   * Layers with `ignoreTransform` stay flat.
-   *
-   * `true` is true isometric; pass `rotate` / `tilt` to change the view.  Defaults to the
-   * `isometric` setting (`setSettings({ isometric })`), so `false` opts a chart out of it.
+   * Draw the plot area as a floor seen at an angle; layers with `ignoreTransform` stay flat.  `true`
+   * is true isometric; pass `rotate` / `tilt` to change the view.  Defaults to the `isometric`
+   * setting, so `false` opts a chart out.
    */
   isometric?: boolean | IsometricOptions;
 

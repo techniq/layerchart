@@ -107,8 +107,7 @@
 
   const ctx = getChartContext();
 
-  // Pan / zoom, the isometric view, and `center` — one matrix, shared with the tooltip's pointer
-  // lookups so what's drawn and what's hit always agree
+  // Shared with the tooltip's pointer lookups, so what's drawn and what's hit agree
   const matrix = $derived(ctx.layerMatrix({ ignoreTransform, center }));
 
   setLayerContext('svg');

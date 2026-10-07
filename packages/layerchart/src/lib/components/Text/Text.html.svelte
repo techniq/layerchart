@@ -11,10 +11,7 @@
 
   const c = new TextState(() => rest as TextProps);
 
-  /**
-   * For `viewport`, cancels the chart's `isometric` view.  Sits between the anchoring `translate`
-   * and `rotate`, which both act about the anchor (`transform-origin`), so it does too.
-   */
+  /** For `viewport`, cancels the `isometric` view, between `translate` and `rotate` so it acts about the anchor */
   const cancelView = $derived(c.viewportMatrix ? matrixToString(c.viewportMatrix) : '');
 
   c.chartCtx.registerComponent({

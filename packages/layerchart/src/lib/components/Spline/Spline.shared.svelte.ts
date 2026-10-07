@@ -15,10 +15,10 @@ import {
   type MotionProp,
 } from '$lib/utils/motion.svelte.js';
 import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
+import type { ColorProp, DataProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
+import { liftChanged } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -30,12 +30,10 @@ export type SplinePropsWithoutHTML = {
   /** Override data instead of using context */
   data?: any;
   /**
-   * Height to raise each point off an `isometric` floor — defaults to the chart's `z`.
+   * Height to raise each point off an `isometric` floor, defaulting to the chart's `z`.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
    * - `number`: pixel height
-   *
-   * The line runs through each point at its height — a line in 3D.  No effect on a flat chart.
    */
   z?: DataProp;
 
@@ -102,22 +100,16 @@ export class SplineState {
   ctx: ChartState = getChartContext();
   #layerIsometric = getLayerIsometric();
 
-  /**
-   * Where raising a point one pixel moves it on the flat plot, when the points have heights —
-   * an isometric floor, and a `z` (or the chart's) — or `null` when the line lies flat.
-   */
+  /** The chart's `isometricLift` when the points have heights, else `null` */
   lift = $derived.by(() => {
     if (this.ctx.radial || !this.#layerIsometric()) return null;
     if (this.#props.z == null && this.ctx.props.z == null) return null;
-    // Even seen from directly above, where heights don't show — a curtain is then edge on
     return this.ctx.isometricLift;
   });
 
   /** A point's height off the floor, in pixels */
   height(d: any) {
-    const z = this.#props.z;
-    if (z != null) return resolveDataProp(z, d, this.ctx.zScale, 0);
-    return Number(this.ctx.zGet(d)) || 0;
+    return this.ctx.heightOf(d, this.#props.z)[1];
   }
 
   markData = getMarkData();
@@ -155,7 +147,8 @@ export class SplineState {
     this.#tweenState = createMotion(
       this.#defaultPathData(),
       () => this.d,
-      tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined
+      tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined,
+      { instant: liftChanged(() => this.lift) }
     );
 
     // `#tweenState` animates the single-path case; grouped lines each need their own, since the
@@ -167,10 +160,12 @@ export class SplineState {
       // apart from a run of a line being drawn for the first time.  Rebuilt each pass, which
       // prunes lines the data dropped — one that comes back is new again, and enters as one.
       let drawnLines = new Set<any>();
+      const viewTurned = liftChanged(() => this.lift);
 
       $effect(() => {
         const targets = this.#segmentTargets;
         if (!targets) return;
+        const instant = viewTurned();
 
         const active = new Set<any>();
         const lines = new Set<any>();
@@ -182,8 +177,12 @@ export class SplineState {
           const intoDrawnLine = seg.lineKey !== undefined && drawnLines.has(seg.lineKey);
           // `update` reads and writes the tween's own state, so it must not be tracked here
           untrack(() =>
-            tweens.update(seg.key, seg.d, () =>
-              intoDrawnLine ? this.#collapsedPathData(seg.data) : this.#defaultPathData(seg.data)
+            tweens.update(
+              seg.key,
+              seg.d,
+              () =>
+                intoDrawnLine ? this.#collapsedPathData(seg.data) : this.#defaultPathData(seg.data),
+              instant
             )
           );
         }
@@ -286,7 +285,6 @@ export class SplineState {
           .x((d) => this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) + this.xOffset)
           .y((d) => this.#getScaleValue(d, this.ctx.yScale, this.yAccessor) + this.yOffset);
 
-    // Each point raised to its height
     const lift = this.lift;
     if (lift && !this.ctx.radial) {
       const line = path as Line<any>;
