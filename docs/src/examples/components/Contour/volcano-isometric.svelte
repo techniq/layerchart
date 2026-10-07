@@ -13,7 +13,7 @@
 	import { Chart, Contour, Layer } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
-	let style = $state<'filled' | 'lines'>('filled');
+	let style = $state<'lines' | 'filled'>('lines');
 	let view = $state<'flat' | 'isometric'>('isometric');
 </script>
 
@@ -26,8 +26,8 @@
 	</Field>
 	<Field label="Style">
 		<ToggleGroup bind:value={style} variant="outline">
-			<ToggleOption value="filled">Filled</ToggleOption>
 			<ToggleOption value="lines">Lines</ToggleOption>
+			<ToggleOption value="filled">Filled</ToggleOption>
 		</ToggleGroup>
 	</Field>
 </div>
