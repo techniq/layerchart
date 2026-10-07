@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Contour): Stroke unfilled contours (`fill="none"`, no `stroke`) in the bands' colors rather than drawing nothing
+feat(Contour): Stroke unfilled contours in the bands' colors when no `stroke` is given

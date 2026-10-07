@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix(Link): Draw links whose ends line up along one axis, such as a child straight below its parent, rather than nothing
+fix(Link): Draw links whose ends share an `x` or `y`

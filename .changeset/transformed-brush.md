@@ -1,5 +1,5 @@
 ---
-'layerchart': minor
+'layerchart': patch
 ---
 
-feat(BrushContext): Brush on an `isometric` (or `canvas`-zoomed) chart, measuring the pointer back onto the plot and drawing the selection on it
+fix(BrushContext): Draw and measure the brush through a `canvas` pan / zoom

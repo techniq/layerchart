@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Circle|Highlight|Frame|Grid|Axis): Support 3D scatter plots on an `isometric` chart, with floating points, back walls, and a height axis (`placement="back"`)
+feat(Frame|Grid|Axis|Highlight): Draw an `isometric` chart's back walls, their gridlines (`<Grid z>`), a height axis (`<Axis placement="back">`), and highlights at a point's height
