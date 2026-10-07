@@ -31,6 +31,8 @@
     x,
     y0,
     y1,
+    // Each point's height — not `Path`'s, which would stand the whole area up by one
+    z,
     g,
     seriesKey,
     ...restProps
@@ -52,6 +54,7 @@
         x,
         y0,
         y1,
+        z,
         g,
         seriesKey,
       }) as AreaProps
@@ -81,6 +84,7 @@
         data={area.data}
         {x}
         y={c.lineYAccessor}
+        {z}
         {seriesKey}
         {curve}
         {defined}
@@ -105,6 +109,7 @@
       data={data ?? c.seriesData}
       {x}
       y={c.lineYAccessor}
+      {z}
       {seriesKey}
       {curve}
       {defined}

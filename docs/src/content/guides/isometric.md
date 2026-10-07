@@ -217,6 +217,26 @@ That's right for shapes of similar size. A large shape that wraps around a small
 
 :example{ component="GeoPath" name="election-isometric" }
 
+### More marks with height
+
+- **Stacked columns:** a chart `z` returning `[start, end]` floats each box between the two, so stacked values stand as stacks. Boxes on the same footprint are drawn bottom up.
+
+  :example{ component="Chart" name="isometric-stacked-columns" }
+
+- **Calendar:** each day stands up to its `z`, drawn back to front as the view turns.
+
+  :example{ component="Calendar" name="isometric" }
+
+- **Area and Spline:** a `z` (or the chart's) gives each point its own height. A `Spline` runs through the points at their heights — a line in 3D — and an `Area` stands up as a curtain along its row, from the floor to each point. One curtain per row of a band `y`, drawn back to front, makes a 3D area chart or ridgeline.
+
+  :example{ component="Chart" name="isometric-areas" }
+
+  :example{ component="Area" name="oscilloscope-ridgeline-isometric" }
+
+- **Polygon:** `z` stands a polygon up into a prism — the nodes of a tree, say, over links lying on the floor.
+
+  :example{ component="Tree" name="isometric" }
+
 ## Text
 
 Text lies on the floor along with everything else, which suits labels that belong to it. Where it should stay readable instead, set `viewport` to align it to the viewport rather than the floor: the text keeps its spot on the floor but faces the viewer, reading left to right at its natural size. `rotate` still turns it, on screen.
@@ -269,6 +289,6 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 - **`voronoi` tooltips** pick the point nearest on the floor rather than on screen. Prefer `quadtree` for an isometric chart.
 - **`WebGL` layers** aren't transformed.
 - **`tickOcclusion`** measures labels on the flat plot, so on a floor it may drop or overlap labels it shouldn't.
-- **Only `Rect`, `Cell`, `Circle`, `Text`, `Path` (with `GeoPath` and `Contour`), and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
+- **Only `Rect`, `Cell`, `Calendar`, `Circle`, `Text`, `Polygon`, `Path` (with `GeoPath` and `Contour`), `Area`, `Spline`, and `Highlight` have height** so far. Other marks, including `Bars`, lie flat on the floor.
 - **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
 - **Tooltips** find a box by where it stands on the floor, not by its raised top, so a pointer over a tall box's top can resolve to the box behind it.

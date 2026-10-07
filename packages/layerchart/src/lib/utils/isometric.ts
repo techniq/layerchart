@@ -1,4 +1,5 @@
 import type { MotionProp } from './motion.svelte.js';
+import { pathRings } from './path.js';
 
 /**
  * A 2D affine matrix in SVG / canvas order — `x' = a·x + c·y + e`, `y' = b·x + d·y + f`.
@@ -596,6 +597,23 @@ export function extrudeRings(
       .map((d, level) => ({ d, shade: 0.15 + (0.15 * (level + 0.5)) / SIDE_SHADES }))
       .filter((side) => side.d),
   };
+}
+
+/**
+ * A path's shape stood up from `z0` to `z1` pixels off the floor: the offset its top is drawn at,
+ * and its sides (see `extrudeRings`) — none when it's unfilled, which only rises.
+ */
+export function extrudePath(
+  d: string,
+  [z0, z1]: [number, number],
+  lift: { x: number; y: number },
+  m: AffineMatrix,
+  filled = true
+) {
+  const shift = { x: lift.x * z1, y: lift.y * z1 };
+  if (!filled || z1 <= z0)
+    return { shift, sides: '', shades: [] as { d: string; shade: number }[] };
+  return { shift, ...extrudeRings(pathRings(d), z0, z1, lift, m) };
 }
 
 /** `points` as an SVG path */

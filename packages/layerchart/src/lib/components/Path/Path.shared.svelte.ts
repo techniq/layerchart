@@ -13,8 +13,7 @@ import {
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { extrudeRings } from '$lib/utils/isometric.js';
-import { pathRings } from '$lib/utils/path.js';
+import { extrudePath } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 import type { draw as _drawTransition } from 'svelte/transition';
@@ -127,10 +126,8 @@ export class PathState {
     const m = this.#layerIsometric();
     const lift = this.chartCtx.isometricLift;
     if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
-    const [z0, z1] = Array.isArray(z) ? z : [0, z];
-    const shift = { x: lift.x * z1, y: lift.y * z1 };
-    if (fill === 'none' || z1 <= z0) return { shift, sides: '', shades: [] };
-    return { shift, ...extrudeRings(pathRings(this.tweenedPathData ?? ''), z0, z1, lift, m) };
+    const heights: [number, number] = Array.isArray(z) ? z : [0, z];
+    return extrudePath(this.tweenedPathData ?? '', heights, lift, m, fill !== 'none');
   });
 
   /**

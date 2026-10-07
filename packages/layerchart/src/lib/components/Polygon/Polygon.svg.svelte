@@ -7,9 +7,10 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { PolygonState, polygonMarkInfo, type PolygonProps } from './Polygon.shared.svelte.js';
 
-  let { ref: refProp = $bindable(), ...rest }: PolygonProps = $props();
+  // `z` isn't an SVG attribute here — the height, consumed by `PolygonState`
+  let { ref: refProp = $bindable(), z, ...rest }: PolygonProps = $props();
 
-  const c = new PolygonState(() => rest as PolygonProps);
+  const c = new PolygonState(() => ({ ...rest, z }) as PolygonProps);
 
   let ref = $state<SVGPathElement>();
 
@@ -24,17 +25,41 @@
   });
 </script>
 
+<!-- Stood up on an isometric floor: the sides facing the viewer, under the polygon -->
+{#snippet sides(raised: ReturnType<typeof c.raise>, fill?: string, className?: string)}
+  {#if raised?.sides}
+    <path
+      d={raised.sides}
+      {fill}
+      class={cls('lc-polygon', 'lc-polygon-side', className)}
+      style:stroke="none"
+    />
+  {/if}
+  {#each raised?.shades ?? [] as side}
+    <path
+      d={side.d}
+      fill="black"
+      fill-opacity={side.shade}
+      pointer-events="none"
+      class="lc-polygon-side-shade"
+    />
+  {/each}
+{/snippet}
+
 {#if c.dataMode}
-  {#each c.resolvedData as d, i (rest.key ? rest.key(d, i) : i)}
+  {#each c.paintedData as d, i (rest.key ? rest.key(d, i) : i)}
     {@const pathData = c.resolvePolygonPath(d)}
+    {@const raised = c.raise(pathData, d)}
     {@const resolvedFill = resolveColorProp(rest.fill, d, c.chartCtx.cScale)}
     {@const resolvedStroke = resolveColorProp(rest.stroke, d, c.chartCtx.cScale)}
     {@const resolvedFillOpacity = resolveStyleProp(rest.fillOpacity, d)}
     {@const resolvedStrokeWidth = resolveStyleProp(rest.strokeWidth, d)}
     {@const resolvedOpacity = resolveStyleProp(rest.opacity, d)}
     {@const resolvedClass = resolveStyleProp(rest.class, d)}
+    {@render sides(raised, resolvedFill, resolvedClass)}
     <path
       {...rest as any}
+      transform={raised ? `translate(${raised.shift.x},${raised.shift.y})` : rest.transform}
       d={pathData}
       fill={resolvedFill}
       fill-opacity={resolvedFillOpacity}
@@ -45,8 +70,11 @@
     />
   {/each}
 {:else}
+  {@const raised = c.raise(c.tweenedPathData ?? '')}
+  {@render sides(raised, c.staticFill, c.staticClassName)}
   <path
     {...rest as any}
+    transform={raised ? `translate(${raised.shift.x},${raised.shift.y})` : rest.transform}
     d={c.tweenedPathData}
     fill={c.staticFill}
     fill-opacity={c.staticFillOpacity}

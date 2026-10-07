@@ -17,6 +17,8 @@ import {
 import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
 import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -27,6 +29,16 @@ import type { PathProps } from '../Path/Path.shared.svelte.js';
 export type SplinePropsWithoutHTML = {
   /** Override data instead of using context */
   data?: any;
+  /**
+   * Height to raise each point off an `isometric` floor — defaults to the chart's `z`.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height
+   *
+   * The line runs through each point at its height — a line in 3D.  No effect on a flat chart.
+   */
+  z?: DataProp;
+
   /** Override `x` accessor from Chart context */
   x?: Accessor;
   /** Override `y` accessor from Chart context */
@@ -88,6 +100,25 @@ export class SplineState {
   #props: SplineProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * Where raising a point one pixel moves it on the flat plot, when the points have heights —
+   * an isometric floor, and a `z` (or the chart's) — or `null` when the line lies flat.
+   */
+  lift = $derived.by(() => {
+    if (this.ctx.radial || !this.#layerIsometric()) return null;
+    if (this.#props.z == null && this.ctx.props.z == null) return null;
+    // Even seen from directly above, where heights don't show — a curtain is then edge on
+    return this.ctx.isometricLift;
+  });
+
+  /** A point's height off the floor, in pixels */
+  height(d: any) {
+    const z = this.#props.z;
+    if (z != null) return resolveDataProp(z, d, this.ctx.zScale, 0);
+    return Number(this.ctx.zGet(d)) || 0;
+  }
 
   markData = getMarkData();
   geo: GeoState = getGeoContext();
@@ -254,6 +285,25 @@ export class SplineState {
       : d3Line()
           .x((d) => this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) + this.xOffset)
           .y((d) => this.#getScaleValue(d, this.ctx.yScale, this.yAccessor) + this.yOffset);
+
+    // Each point raised to its height
+    const lift = this.lift;
+    if (lift && !this.ctx.radial) {
+      const line = path as Line<any>;
+      line
+        .x(
+          (d) =>
+            this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) +
+            this.xOffset +
+            lift.x * this.height(d)
+        )
+        .y(
+          (d) =>
+            this.#getScaleValue(d, this.ctx.yScale, this.yAccessor) +
+            this.yOffset +
+            lift.y * this.height(d)
+        );
+    }
 
     path.defined(props.defined ?? ((d) => this.xAccessor(d) != null && this.yAccessor(d) != null));
     if (props.curve) path.curve(props.curve);

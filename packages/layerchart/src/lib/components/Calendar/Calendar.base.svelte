@@ -21,6 +21,8 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getMarkData } from '$lib/contexts/facet.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { resolveDataProp } from '$lib/utils/dataProp.js';
+  import { getLayerIsometric } from '$lib/contexts/isometric.js';
 
   let {
     Rect,
@@ -32,10 +34,12 @@
     monthLabel = true,
     tooltip,
     children,
+    z,
     ...restProps
   }: CalendarBaseProps = $props();
 
   const ctx = getChartContext();
+  const layerIsometric = getLayerIsometric();
   const markData = getMarkData();
 
   const yearDays = $derived(timeDays(start, end));
@@ -79,17 +83,38 @@
       };
     })
   ) satisfies CalendarCell[];
+
+  /**
+   * A day's height off an `isometric` floor, in pixels — from `z`, else the chart's — or none.
+   * Its cell stands up to it.
+   */
+  function cellHeight(cell: CalendarCell) {
+    if (Array.isArray(z)) return z;
+    if (z != null) return resolveDataProp(z, cell.data, ctx.zScale, 0);
+    if (ctx.config.z == null) return undefined;
+    return Number(ctx.zGet(cell.data)) || 0;
+  }
+
+  // On an isometric floor, back to front, so nearer days cover farther ones.  Unkeyed below, so
+  // as the view turns each cell takes its new day
+  const paintedCells = $derived.by(() => {
+    const m = layerIsometric();
+    if (!m) return cells;
+    const depth = (cell: CalendarCell) => m.b * cell.x + m.d * cell.y;
+    return [...cells].sort((a, b) => depth(a) - depth(b));
+  });
 </script>
 
 {#if children}
   {@render children({ cells, cellSize })}
 {:else}
-  {#each cells as cell}
+  {#each paintedCells as cell}
     <Rect
       x={cell.x}
       y={cell.y}
       width={cellSize[0]}
       height={cellSize[1]}
+      z={cellHeight(cell)}
       fill={cell.color}
       onpointermove={(e: PointerEvent) => tooltip && ctx.tooltip?.show(e, cell.data)}
       onpointerleave={() => tooltip && ctx.tooltip?.hide()}

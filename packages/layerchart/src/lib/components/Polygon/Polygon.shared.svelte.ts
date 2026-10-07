@@ -15,6 +15,8 @@ import {
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { extrudePath } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -52,6 +54,17 @@ export type PolygonPropsWithoutHTML = {
   /** A bindable reference to the `<path>` element. @bindable */
   ref?: SVGPathElement;
   motion?: MotionProp;
+  /**
+   * On an `isometric` chart, stand each polygon up off the floor, its sides facing the viewer shaded
+   * as if lit from the upper left.  In data mode it defaults to the chart's `z`.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height
+   * - `[start, end]`: pixel heights to float it between
+   *
+   * Unfilled, a polygon only rises.  No effect on a flat chart.
+   */
+  z?: DataProp | [start: number, end: number];
 } & DataDrivenStyleProps;
 
 export type PolygonProps = PolygonPropsWithoutHTML &
@@ -84,6 +97,43 @@ export class PolygonState {
 
   dataMode = $derived(hasAnyDataProp(this.#getProps().cx, this.#getProps().cy, this.#getProps().r));
 
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * Where raising a polygon one pixel moves it on the flat plot, when it has a height — an
+   * isometric floor, and a `z` (or in data mode the chart's) — or `null` when it lies flat.
+   */
+  #lift = $derived.by(() => {
+    const m = this.#layerIsometric();
+    if (!m) return null;
+    if (this.#getProps().z == null && !(this.dataMode && this.chartCtx.props.z != null))
+      return null;
+    const lift = this.chartCtx.isometricLift;
+    return lift && (lift.x !== 0 || lift.y !== 0) ? { lift, m } : null;
+  });
+
+  /** A polygon's `[start, end]` heights off the floor, in pixels — `null` for none */
+  #heights(d?: any): [number, number] | null {
+    const z = this.#getProps().z;
+    if (Array.isArray(z)) return z;
+    if (z != null) {
+      if (!this.dataMode) return typeof z === 'number' ? [0, z] : null;
+      return [0, resolveDataProp(z, d, this.chartCtx.zScale, 0)];
+    }
+    if (!this.dataMode) return null;
+    const value = this.chartCtx.zGet(d);
+    if (Array.isArray(value)) return [Number(value[0]) || 0, Number(value[1]) || 0];
+    return [0, Number(value) || 0];
+  }
+
+  /** `pathData` stood up to the polygon's height (see `extrudePath`), or `null` when it lies flat */
+  raise(pathData: string, d?: any) {
+    const iso = this.#lift;
+    const heights = iso && this.#heights(d);
+    if (!iso || !heights) return null;
+    return extrudePath(pathData, heights, iso.lift, iso.m, this.#getProps().fill !== 'none');
+  }
+
   resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#getProps().data) : []);
 
   resolvedItems = $derived.by(() => {
@@ -114,6 +164,19 @@ export class PolygonState {
         r: animated?.r ?? resolvedR,
       };
     });
+  });
+
+  /**
+   * The data in the order to draw it: back to front on an isometric floor, so nearer polygons
+   * cover farther ones — by where each centre stands — else as given.
+   */
+  paintedData = $derived.by(() => {
+    const iso = this.#lift;
+    if (!iso) return this.resolvedData;
+    const depth = new Map(
+      this.resolvedItems.map((item) => [item.d, iso.m.b * item.cx + iso.m.d * item.cy])
+    );
+    return [...this.resolvedData].sort((a, b) => depth.get(a)! - depth.get(b)!);
   });
 
   /** Resolve a single data item to a polygon path string. */

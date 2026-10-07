@@ -44,8 +44,30 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
+    // Stood up on an isometric floor: the sides facing the viewer, then the polygon on top
+    const draw = (pathData: string, styleOpts: ComputedStylesOptions, d?: any) => {
+      const raised = c.raise(pathData, d);
+      if (!raised) return renderPathData(ctx, pathData, styleOpts);
+      if (raised.sides) {
+        renderPathData(ctx, raised.sides, {
+          ...styleOpts,
+          styles: { ...styleOpts.styles, stroke: 'none' },
+        });
+      }
+      // Shading is only for the eye — the hit canvas needs the sides their flat hit colour
+      if (!styleOverrides) {
+        for (const side of raised.shades) {
+          renderPathData(ctx, side.d, { styles: { fill: 'black', fillOpacity: side.shade } });
+        }
+      }
+      ctx.save();
+      ctx.translate(raised.shift.x, raised.shift.y);
+      renderPathData(ctx, pathData, styleOpts);
+      ctx.restore();
+    };
+
     if (c.dataMode) {
-      for (const d of c.resolvedData) {
+      for (const d of c.paintedData) {
         const pathData = c.resolvePolygonPath(d);
         const resolvedFill = resolveColorProp(rest.fill, d, c.chartCtx.cScale);
         const resolvedStroke = resolveColorProp(rest.stroke, d, c.chartCtx.cScale);
@@ -62,11 +84,11 @@
           resolvedOpacity,
           resolvedClass
         );
-        renderPathData(ctx, pathData, styleOpts);
+        draw(pathData, styleOpts, d);
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
-      renderPathData(ctx, c.tweenedPathData, styleOpts);
+      draw(c.tweenedPathData ?? '', styleOpts);
     }
   }
 
@@ -92,6 +114,9 @@
       deps: () => [
         c.dataMode,
         c.dataMode ? c.resolvedItems : null,
+        c.paintedData,
+        c.chartCtx.isometricLift,
+        (rest as any).z,
         fillKey.current,
         rest.fillOpacity,
         strokeKey.current,

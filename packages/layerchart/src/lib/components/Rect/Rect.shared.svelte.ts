@@ -252,6 +252,8 @@ export class RectState {
       height: this.motionHeight,
       ...(Array.isArray(z) ? { z0: z[0], z1: z[1] } : { z0: 0, z1: z }),
     };
+    // No height at all lies flat — a plain rect, not an empty box
+    if (box.z1 <= box.z0 && box.z0 === 0) return null;
     return this.#shaded(boxFaces(box, lift, m));
   });
 
@@ -306,10 +308,11 @@ export class RectState {
 
     for (const item of items) item.faces = this.#shaded(boxFaces(item, lift, m));
     // Back to front, so nearer boxes cover farther ones — by where each footprint's centre lands
-    // down the screen.  Exact for boxes on a grid, which don't overlap on the floor.
+    // down the screen.  Exact for boxes on a grid, which don't overlap on the floor.  Boxes on the
+    // same footprint (a stack) go bottom up
     const depth = (item: (typeof items)[number]) =>
       m.b * (item.x + item.width / 2) + m.d * (item.y + item.height / 2);
-    return items.sort((a, b) => depth(a) - depth(b));
+    return items.sort((a, b) => depth(a) - depth(b) || a.z0 - b.z0);
   });
 
   #resolveRect(d: any): {

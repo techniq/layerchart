@@ -193,4 +193,29 @@ describe('Rect in pixel mode on an isometric floor', () => {
     expect(floating.top).toBeCloseTo(standing.top, 0);
     expect(floating.height).toBeCloseTo(standing.height / 2, 0);
   });
+
+  it('stacks boxes on the same footprint bottom up', async () => {
+    const stacked = [
+      { x: 'a', y: 'p', range: [20, 40] },
+      { x: 'a', y: 'p', range: [0, 20] },
+    ];
+    render(TestHarness, {
+      chartProps: {
+        ...cellChart,
+        data: stacked,
+        z: (d: any) => d.range,
+        zDomain: [0, 40],
+        zRange: [0, 80],
+        isometric: true,
+      },
+      layerProps: { center: false },
+      component: Cell,
+      componentProps: { x: 'x', y: 'y' },
+    });
+    await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
+    const el = page.getByTestId(chartTestId).element() as HTMLElement;
+    const tops = [...el.querySelectorAll('.lc-rect-top')].map((t) => t.getBoundingClientRect().top);
+    // The lower box first, the upper one (higher on screen) over it
+    expect(tops[0]).toBeGreaterThan(tops[1]);
+  });
 });

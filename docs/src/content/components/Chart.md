@@ -46,6 +46,10 @@ The same chart from long data needs no `series` at all — `c` names the layers,
 
 :example{ name="isometric-columns" }
 
+:example{ name="isometric-stacked-columns" }
+
+:example{ name="isometric-areas" }
+
 :example{ name="isometric-scatter-3d" }
 
 :example{ name="isometric-treemap" }
