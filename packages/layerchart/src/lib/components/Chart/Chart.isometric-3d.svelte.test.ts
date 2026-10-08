@@ -188,6 +188,21 @@ describe('3D scatter on an isometric floor', () => {
     expect(atHeight).toHaveLength(2);
   });
 
+  it('measures `voronoi` cells on screen, each holding its point where it floats', async () => {
+    const { ctx, root } = await renderScene({ tooltipContext: { mode: 'voronoi' } });
+    await vi.waitFor(() =>
+      expect(root().querySelectorAll('.lc-tooltip-voronoi-path')).toHaveLength(data.length)
+    );
+    const cells = [...root().querySelectorAll<SVGPathElement>('.lc-tooltip-voronoi-path')];
+    const toPlot = invertMatrix(ctx.layerMatrix()!)!;
+    data.forEach((d, i) => {
+      // Where it's drawn, back on the flat plot the cell is drawn on
+      const seen = drawnAt(ctx, d);
+      const p = applyMatrix(toPlot, { x: seen.x - ctx.padding.left, y: seen.y - ctx.padding.top });
+      expect(cells[i].isPointInFill(new DOMPoint(p.x, p.y))).toBe(true);
+    });
+  });
+
   it('anchors a tooltip shown from code where the point floats', async () => {
     const row = data[1];
     const { ctx } = await renderScene({ tooltipContext: { mode: 'quadtree' } });
