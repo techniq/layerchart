@@ -305,16 +305,7 @@ Tooltips follow the pointer onto the floor, including on the simplified charts:
 :example{ component="Chart" name="isometric-scatter" }
 
 - **`bisect-x`, `bisect-y`, `bisect-band`** look up the data under the pointer on the floor.
-- **`quadtree`** finds the point nearest the pointer on screen. Because the floor is foreshortened, that isn't always the nearest point on the floor.
+- **`quadtree` and `voronoi`** find the point nearest the pointer on screen, where you see it, raised by its height.
 - **`band` and `bounds`** hit areas lie on the floor with the marks. For boxes with height, let each box be its own hit area instead: `<Bars tooltip>` with `tooltipContext={{ mode: 'manual' }}`.
 - **A pointer off the floor** shows nothing.
 - **`x="data"` / `y="data"`** placement puts the tooltip where the point is drawn.
-
-## Limitations
-
-- **Brushing** selects by position on the floor, not by height.
-- **`voronoi` tooltips** pick the point nearest on the floor, not on screen. Prefer `quadtree`.
-- **`WebGL` layers** aren't transformed.
-- **`tickOcclusion`** measures labels on the flat plot, so it may drop or overlap labels on the floor.
-- **Only some marks have height:** `Rect`, `Cell`, `Bars`, `Calendar`, `Circle`, `Text`, `Labels`, `Line`, `Polygon`, `Path` (and `GeoPath`, `Contour`, `Arc`, `Pie`), `Area`, `Spline`, and `Highlight`. Other marks lie flat.
-- **The `bottom` / `left` axes stay on their edges** as the view turns, so turned far enough they run along the back.
