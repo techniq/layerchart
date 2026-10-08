@@ -29,7 +29,7 @@
 		])
 	);
 
-	// One row per (penguin, dimension), carrying `id` and `species` along for `z` and the color
+	// One row per (penguin, dimension), carrying `id` and `species` along for `g` and the color
 	const data = pivotLonger(rows, keys, 'dimension', 'value');
 
 	const series = [
@@ -48,7 +48,7 @@
 	xDomain={keys}
 	y={(d) => scales.get(d.dimension)?.(d.value)}
 	yDomain={[0, 1]}
-	z="id"
+	g="id"
 	{series}
 	padding={{ left: 48, right: 48, top: 48, bottom: 8 }}
 	height={400}
@@ -77,7 +77,7 @@
 	{/snippet}
 
 	{#snippet marks({ context })}
-		<!-- One mark, one line per penguin (`z`), colored from its species' `series` entry -->
+		<!-- One mark, one line per penguin (`g`), colored from its species' `series` entry -->
 		<Spline
 			data={data.filter((d) => context.series.isVisible(d.species))}
 			stroke="species"

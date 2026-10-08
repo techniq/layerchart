@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-03T20:01:04.033Z",
+  "generatedAt": "2026-10-05T19:24:30.583Z",
   "totalComponents": 80,
-  "totalExamples": 990,
+  "totalExamples": 997,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2257,6 +2257,26 @@
           "checksum": "19d81cdbf281d26360989b8713f0495e"
         },
         {
+          "name": "isometric-columns",
+          "path": "/example/Chart/isometric-columns",
+          "checksum": "0b5faa188caa93513d8d1f26bb22f805"
+        },
+        {
+          "name": "isometric-heatmap",
+          "path": "/example/Chart/isometric-heatmap",
+          "checksum": "f07900d016c3fb38055c65361f0caa65"
+        },
+        {
+          "name": "isometric-playground",
+          "path": "/example/Chart/isometric-playground",
+          "checksum": "791ec85f3f59e70d55ee7419b5e306d8"
+        },
+        {
+          "name": "isometric-scatter",
+          "path": "/example/Chart/isometric-scatter",
+          "checksum": "238d84e1158a7869164406f9cef4a085"
+        },
+        {
           "name": "mixed-marks-with-stack",
           "path": "/example/Chart/mixed-marks-with-stack",
           "checksum": "02e00237acf4bdd1ce8cc96e9ca53cee"
@@ -3150,6 +3170,11 @@
           "name": "data-mode",
           "path": "/example/Group/data-mode",
           "checksum": "a9aa025a951b95e558cefc62deaaef0c"
+        },
+        {
+          "name": "series-state",
+          "path": "/example/Group/series-state",
+          "checksum": "21a81c2eb7cccbc49c1a670fd2b6ec0e"
         }
       ]
     },
@@ -4812,6 +4837,16 @@
           "checksum": "f3f2ca0bdcc2099f1694537ef4cb90ab"
         },
         {
+          "name": "missing-data-dashed",
+          "path": "/example/Spline/missing-data-dashed",
+          "checksum": "85e95eb848a9ece7bb7fa3c0d5984816"
+        },
+        {
+          "name": "missing-data-with-markers",
+          "path": "/example/Spline/missing-data-with-markers",
+          "checksum": "a246fa5ec590fd48eae443f4301e5acc"
+        },
+        {
           "name": "multiple-series",
           "path": "/example/Spline/multiple-series",
           "checksum": "7c74b80a74c757ce9c2111a5ef22b626"
@@ -4824,7 +4859,7 @@
         {
           "name": "multiple-series-tweened",
           "path": "/example/Spline/multiple-series-tweened",
-          "checksum": ""
+          "checksum": "c2a5ae822fcd74993e637456b1c3013b"
         },
         {
           "name": "multiple-series-using-overrides",
@@ -4839,22 +4874,22 @@
         {
           "name": "parallel-coordinates",
           "path": "/example/Spline/parallel-coordinates",
-          "checksum": "58ca2fb6190722d0f42ce1b2e4eb2e50"
+          "checksum": "1d9542b68a352bf506ff1dc2a49a896b"
         },
         {
           "name": "parallel-coordinates-brush",
           "path": "/example/Spline/parallel-coordinates-brush",
-          "checksum": "d527860c31956707459e7fdf634afa7d"
+          "checksum": "c8fa3d19c4a39d5345efbf98635df87e"
         },
         {
           "name": "parallel-coordinates-faceted",
           "path": "/example/Spline/parallel-coordinates-faceted",
-          "checksum": "ff366835c4701e9bf3237d11cc67793e"
+          "checksum": "b5c40b937253deb18929062789ecc536"
         },
         {
           "name": "parallel-coordinates-mixed",
           "path": "/example/Spline/parallel-coordinates-mixed",
-          "checksum": "f5820afbe1b82482cef9f66f45b2e1ee"
+          "checksum": "0400c4a3c30033ca721202926956e629"
         },
         {
           "name": "playground",
@@ -4869,7 +4904,7 @@
         {
           "name": "radial-multi-year-lines",
           "path": "/example/Spline/radial-multi-year-lines",
-          "checksum": "9b9611fc43c19c8db9ba27398a85e99d"
+          "checksum": "3ea50203f1d1dec6a5cd87fe7ab22700"
         },
         {
           "name": "radial-radar",

@@ -220,7 +220,7 @@ export function getLinkD3Path({
     ];
   }
 
-  if (points.length === 2 && isNearZero(dx) && isNearZero(dx)) return FALLBACK_PATH;
+  if (points.length === 2 && isNearZero(dx) && isNearZero(dy)) return FALLBACK_PATH;
 
   const d = line(points);
 

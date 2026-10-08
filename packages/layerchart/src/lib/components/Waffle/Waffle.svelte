@@ -42,6 +42,8 @@
     onpointerleave,
     onclick,
     symbol,
+    // Not `Path`'s height
+    z: _z,
     ...rest
   }: WaffleProps = $props();
 

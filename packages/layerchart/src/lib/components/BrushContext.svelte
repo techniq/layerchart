@@ -123,6 +123,7 @@
   import { untrack } from 'svelte';
   import { brushable, type BrushMode } from '$lib/attachments/brushable.js';
   import { cls } from '@layerstack/tailwind';
+  import { applyMatrix, invertMatrix, matrixToString } from '$lib/utils/isometric.js';
   import { Logger } from '@layerstack/utils';
 
   import type { HTMLAttributes } from 'svelte/elements';
@@ -180,6 +181,10 @@
   const logger = new Logger('BrushContext');
   const RESET_THRESHOLD = 1; // size of pointer delta to ignore
 
+  /** The layers' matrix (an isometric view or a zoom) the brush is drawn through, or `null` */
+  const plotMatrix = $derived(ctx.layerMatrix?.() ?? null);
+  const plotInverse = $derived(plotMatrix ? invertMatrix(plotMatrix) : null);
+
   /**
    * The gesture, from the `brushable` attachment — the same one a chart can attach to elements of
    * its own.  Each part of the brush takes the mode it represents, so the handles keep their own
@@ -192,6 +197,7 @@
       mode,
       // Every part measures against the root, not against itself — a handle is only a few pixels
       bounds: () => rootEl?.getBoundingClientRect(),
+      toPlot: (point) => (plotInverse ? applyMatrix(plotInverse, point) : point),
       // The gesture belongs to the panel it started in, and stays there — the scales are shared,
       // so the selection it produces applies to every panel.  Unfaceted charts resolve to the
       // single full-size panel, and a point in the gap between panels to none, which ignores it.
@@ -255,108 +261,125 @@
         One selection, drawn in every panel — the panels share the position scales, so a range
         of the domain is the same range in each of them.
       -->
-      {#each ctx.facet.panels as panel (panel.key)}
-        <div class="lc-brush-panel" style:left="{panel.x}px" style:top="{panel.y}px">
-          <div
-            {...range}
-            style:left="{brushState.range.x}px"
-            style:top="{brushState.range.y}px"
-            style:width="{brushState.range.width}px"
-            style:height="{brushState.range.height}px"
-            class={cls('lc-brush-range', classes.range, range?.class)}
-            {@attach gesture('move')}
-            ondblclick={(e) => {
-              // Stopped as the handles do — the root takes a double-click as "select all", which
-              // would otherwise land right back on top of the selection just cleared
-              e.stopPropagation();
-              brushState.reset();
-              onChange({ brush: brushState });
-            }}
-          ></div>
-
-          {#if axis === 'both' || axis === 'y'}
+      <!-- Drawn through the layers' matrix, so the selection lies on an isometric floor -->
+      <div
+        class="lc-brush-plot"
+        style:transform={plotMatrix ? matrixToString(plotMatrix) : undefined}
+      >
+        {#each ctx.facet.panels as panel (panel.key)}
+          <div class="lc-brush-panel" style:left="{panel.x}px" style:top="{panel.y}px">
             <div
-              {...handle}
+              {...range}
               style:left="{brushState.range.x}px"
               style:top="{brushState.range.y}px"
               style:width="{brushState.range.width}px"
-              style:height="{handleSize}px"
-              data-position="top"
-              class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              {@attach gesture('top')}
-              ondblclick={(e) => {
-                e.stopPropagation();
-                if (brushState.y[0]) {
-                  brushState.y[0] = brushState.yDomainMin;
-                  onChange({ brush: brushState });
-                }
-              }}
-            ></div>
-
-            <div
-              {...handle}
-              style:left="{brushState.range.x}px"
-              style:top="{brushState.range.y + brushState.range.height - handleSize}px"
-              style:width="{brushState.range.width}px"
-              style:height="{handleSize}px"
-              data-position="bottom"
-              class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              {@attach gesture('bottom')}
-              ondblclick={(e) => {
-                e.stopPropagation();
-                if (brushState.y[1]) {
-                  brushState.y[1] = brushState.yDomainMax;
-                  onChange({ brush: brushState });
-                }
-              }}
-            ></div>
-          {/if}
-
-          {#if axis === 'both' || axis === 'x'}
-            <div
-              {...handle}
-              style:left="{brushState.range.x}px"
-              style:top="{brushState.range.y}px"
-              style:width="{handleSize}px"
               style:height="{brushState.range.height}px"
-              data-position="left"
-              class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              {@attach gesture('left')}
+              class={cls('lc-brush-range', classes.range, range?.class)}
+              {@attach gesture('move')}
               ondblclick={(e) => {
+                // Stopped as the handles do — the root takes a double-click as "select all", which
+                // would otherwise land right back on top of the selection just cleared
                 e.stopPropagation();
-                if (brushState.x[0]) {
-                  brushState.x[0] = brushState.xDomainMin;
-                  onChange({ brush: brushState });
-                }
+                brushState.reset();
+                onChange({ brush: brushState });
               }}
             ></div>
 
-            <div
-              {...handle}
-              style:left="{brushState.range.x + brushState.range.width - handleSize + 1}px"
-              style:top="{brushState.range.y}px"
-              style:width="{handleSize}px"
-              style:height="{brushState.range.height}px"
-              data-position="right"
-              class={cls('lc-brush-handle', classes.handle, handle?.class)}
-              {@attach gesture('right')}
-              ondblclick={(e) => {
-                e.stopPropagation();
-                if (brushState.x[1]) {
-                  brushState.x[1] = brushState.xDomainMax;
-                  onChange({ brush: brushState });
-                }
-              }}
-            ></div>
-          {/if}
-        </div>
-      {/each}
+            {#if axis === 'both' || axis === 'y'}
+              <div
+                {...handle}
+                style:left="{brushState.range.x}px"
+                style:top="{brushState.range.y}px"
+                style:width="{brushState.range.width}px"
+                style:height="{handleSize}px"
+                data-position="top"
+                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                {@attach gesture('top')}
+                ondblclick={(e) => {
+                  e.stopPropagation();
+                  if (brushState.y[0]) {
+                    brushState.y[0] = brushState.yDomainMin;
+                    onChange({ brush: brushState });
+                  }
+                }}
+              ></div>
+
+              <div
+                {...handle}
+                style:left="{brushState.range.x}px"
+                style:top="{brushState.range.y + brushState.range.height - handleSize}px"
+                style:width="{brushState.range.width}px"
+                style:height="{handleSize}px"
+                data-position="bottom"
+                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                {@attach gesture('bottom')}
+                ondblclick={(e) => {
+                  e.stopPropagation();
+                  if (brushState.y[1]) {
+                    brushState.y[1] = brushState.yDomainMax;
+                    onChange({ brush: brushState });
+                  }
+                }}
+              ></div>
+            {/if}
+
+            {#if axis === 'both' || axis === 'x'}
+              <div
+                {...handle}
+                style:left="{brushState.range.x}px"
+                style:top="{brushState.range.y}px"
+                style:width="{handleSize}px"
+                style:height="{brushState.range.height}px"
+                data-position="left"
+                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                {@attach gesture('left')}
+                ondblclick={(e) => {
+                  e.stopPropagation();
+                  if (brushState.x[0]) {
+                    brushState.x[0] = brushState.xDomainMin;
+                    onChange({ brush: brushState });
+                  }
+                }}
+              ></div>
+
+              <div
+                {...handle}
+                style:left="{brushState.range.x + brushState.range.width - handleSize + 1}px"
+                style:top="{brushState.range.y}px"
+                style:width="{handleSize}px"
+                style:height="{brushState.range.height}px"
+                data-position="right"
+                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                {@attach gesture('right')}
+                ondblclick={(e) => {
+                  e.stopPropagation();
+                  if (brushState.x[1]) {
+                    brushState.x[1] = brushState.xDomainMax;
+                    onChange({ brush: brushState });
+                  }
+                }}
+              ></div>
+            {/if}
+          </div>
+        {/each}
+      </div>
     {/if}
   </div>
 {/if}
 
 <style>
   @layer base {
+    :where(.lc-brush-plot) {
+      position: absolute;
+      inset: 0;
+      transform-origin: 0 0;
+      pointer-events: none;
+
+      & > * {
+        pointer-events: auto;
+      }
+    }
+
     :where(.lc-brush-context) {
       position: absolute;
       touch-action: none;

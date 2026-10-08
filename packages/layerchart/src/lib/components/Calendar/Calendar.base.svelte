@@ -21,6 +21,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getMarkData } from '$lib/contexts/facet.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { getLayerIsometric } from '$lib/contexts/isometric.js';
 
   let {
     Rect,
@@ -32,10 +33,14 @@
     monthLabel = true,
     tooltip,
     children,
+    z,
     ...restProps
   }: CalendarBaseProps = $props();
 
   const ctx = getChartContext();
+  // Its days are keyed, in depth order on an isometric floor
+  ctx.registerComponent({ name: 'Calendar', kind: 'mark', paintByDepth: true });
+  const layerIsometric = getLayerIsometric();
   const markData = getMarkData();
 
   const yearDays = $derived(timeDays(start, end));
@@ -79,17 +84,34 @@
       };
     })
   ) satisfies CalendarCell[];
+
+  /** A day's height in pixels, from `z` or the chart's, or `undefined` */
+  function cellHeight(cell: CalendarCell) {
+    if (z == null && ctx.config.z == null) return undefined;
+    return ctx.heightOf(cell.data, z);
+  }
+
+  // Back to front on an isometric floor, each keyed by its day so a reorder doesn't hand one
+  // day's `Rect` (and its `motion`) another's
+  const paintedCells = $derived.by(() => {
+    const keyed = cells.map((cell, index) => ({ cell, index }));
+    const m = layerIsometric();
+    if (!m) return keyed;
+    const depth = ({ cell }: (typeof keyed)[number]) => m.b * cell.x + m.d * cell.y;
+    return keyed.sort((a, b) => depth(a) - depth(b));
+  });
 </script>
 
 {#if children}
   {@render children({ cells, cellSize })}
 {:else}
-  {#each cells as cell}
+  {#each paintedCells as { cell, index } (index)}
     <Rect
       x={cell.x}
       y={cell.y}
       width={cellSize[0]}
       height={cellSize[1]}
+      z={cellHeight(cell)}
       fill={cell.color}
       onpointermove={(e: PointerEvent) => tooltip && ctx.tooltip?.show(e, cell.data)}
       onpointerleave={() => tooltip && ctx.tooltip?.hide()}

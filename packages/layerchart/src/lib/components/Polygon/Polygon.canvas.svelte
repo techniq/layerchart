@@ -5,7 +5,11 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import {
+    renderExtrudedShades,
+    renderPathData,
+    type ComputedStylesOptions,
+  } from '$lib/utils/canvas.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { PolygonState, polygonMarkInfo, type PolygonProps } from './Polygon.shared.svelte.js';
@@ -44,8 +48,26 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
+    // Extruded: the sides facing the viewer, then the polygon on top
+    const draw = (pathData: string, styleOpts: ComputedStylesOptions, d?: any) => {
+      const raised = c.raise(pathData, d);
+      if (!raised) return renderPathData(ctx, pathData, styleOpts);
+      if (raised.sides) {
+        renderPathData(ctx, raised.sides, {
+          ...styleOpts,
+          styles: { ...styleOpts.styles, stroke: 'none' },
+        });
+      }
+      // Not on the hit canvas, which needs the flat hit colour
+      if (!styleOverrides) renderExtrudedShades(ctx, raised.shades);
+      ctx.save();
+      ctx.translate(raised.shift.x, raised.shift.y);
+      renderPathData(ctx, pathData, styleOpts);
+      ctx.restore();
+    };
+
     if (c.dataMode) {
-      for (const d of c.resolvedData) {
+      for (const d of c.paintedData) {
         const pathData = c.resolvePolygonPath(d);
         const resolvedFill = resolveColorProp(rest.fill, d, c.chartCtx.cScale);
         const resolvedStroke = resolveColorProp(rest.stroke, d, c.chartCtx.cScale);
@@ -62,11 +84,11 @@
           resolvedOpacity,
           resolvedClass
         );
-        renderPathData(ctx, pathData, styleOpts);
+        draw(pathData, styleOpts, d);
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
-      renderPathData(ctx, c.tweenedPathData, styleOpts);
+      draw(c.tweenedPathData ?? '', styleOpts);
     }
   }
 
@@ -92,6 +114,9 @@
       deps: () => [
         c.dataMode,
         c.dataMode ? c.resolvedItems : null,
+        c.paintedData,
+        c.chartCtx.isometricLift,
+        (rest as any).z,
         fillKey.current,
         rest.fillOpacity,
         strokeKey.current,

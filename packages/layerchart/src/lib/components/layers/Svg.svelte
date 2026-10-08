@@ -52,7 +52,7 @@
     center?: boolean | 'x' | 'y';
 
     /**
-     * Ignore TransformContext.
+     * Ignore TransformContext and the chart's `isometric` view.
      * Useful to add static elements such as legends.
      */
     ignoreTransform?: boolean;
@@ -76,6 +76,8 @@
   import Facet from '../Facet.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
+  import { setLayerIsometric } from '$lib/contexts/isometric.js';
+  import { matrixToString } from '$lib/utils/isometric.js';
 
   let {
     ref: refProp = $bindable(),
@@ -105,15 +107,11 @@
 
   const ctx = getChartContext();
 
-  const transform = $derived.by(() => {
-    if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
-      return `translate(${ctx.transform.translate.x},${ctx.transform.translate.y}) scale(${ctx.transform.scale})`;
-    } else if (center) {
-      return `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}, ${center === 'y' || center === true ? ctx.height / 2 : 0})`;
-    }
-  });
+  // Shared with the tooltip's pointer lookups, so what's drawn and what's hit agree
+  const matrix = $derived(ctx.layerMatrix({ ignoreTransform, center }));
 
   setLayerContext('svg');
+  setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
 </script>
 
 <svg
@@ -143,21 +141,14 @@
     class="lc-layout-svg-g"
     transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
-    {#if transform}
-      <g {transform} class="lc-layout-svg-g-transform">
-        <Facet>
-          {#snippet children({ facet })}
-            {@render childrenProp?.({ ref: ref!, facet })}
-          {/snippet}
-        </Facet>
-      </g>
-    {:else}
+    <!-- Always rendered, so turning a transform on or off doesn't remount everything inside -->
+    <g transform={matrix ? matrixToString(matrix) : undefined} class="lc-layout-svg-g-transform">
       <Facet>
         {#snippet children({ facet })}
           {@render childrenProp?.({ ref: ref!, facet })}
         {/snippet}
       </Facet>
-    {/if}
+    </g>
   </g>
 </svg>
 

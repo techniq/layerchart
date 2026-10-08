@@ -34,6 +34,32 @@ The same chart from long data needs no `series` at all — `c` names the layers,
 
 :example{ name="mixed-marks-with-stack-long-data" }
 
+## Isometric
+
+`view={isometric}` draws the plot area as a floor seen from above at an angle, for a faux 3D look in any layer. See the [Isometric guide](/docs/guides/isometric) for the view options, height, text, and tooltips.
+
+```svelte
+<Chart view={isometric}>
+```
+
+:example{ name="isometric-heatmap" }
+
+:example{ name="isometric-columns" }
+
+:example{ name="isometric-stacked-columns" }
+
+:example{ name="isometric-areas" }
+
+:example{ name="isometric-scatter-3d" }
+
+:example{ name="isometric-treemap" }
+
+:example{ name="isometric-scatter" }
+
+:example{ name="isometric-playground" }
+
+:example{ name="isometric-pan-zoom" }
+
 ## Text selection
 
 Charts are treated as interactive widgets: `user-select: none` is applied to the root container (`.lc-root-container`) so dragging to brush, pan, or zoom never selects axis labels or surrounding page text. Since `user-select` inherits, this covers the whole chart.

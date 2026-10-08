@@ -69,6 +69,7 @@
      */
     maintainAspectRatio?: boolean;
 
+    /** Render the nodes, in back-to-front paint order on an `isometric` chart */
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
 </script>
@@ -88,6 +89,7 @@
 
   import { aspectTile } from '../../utils/treemap.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getLayerIsometric } from '$lib/contexts/isometric.js';
   import type { Snippet } from 'svelte';
 
   let {
@@ -105,6 +107,7 @@
   }: TreemapProps<T> = $props();
 
   const ctx = getChartContext();
+  const layerIsometric = getLayerIsometric();
 
   const tileFunc = $derived(
     tile === 'squarify'
@@ -198,6 +201,24 @@
       nodes: [],
     };
   });
+
+  /**
+   * On an isometric floor, depth first with siblings back to front.  Children sit inside their
+   * parent and siblings tile it, so only siblings need comparing.
+   */
+  const nodes = $derived.by(() => {
+    const m = layerIsometric();
+    const root = treemapData.nodes[0];
+    if (!m || !root) return treemapData.nodes;
+    const order: HierarchyRectangularNode<T>[] = [];
+    const visit = (node: HierarchyRectangularNode<T>) => {
+      order.push(node);
+      for (const child of node.children ? ctx.isometric!.paintOrder(node.children, m) : [])
+        visit(child);
+    };
+    visit(root);
+    return order;
+  });
 </script>
 
-{@render children?.({ nodes: treemapData.nodes })}
+{@render children?.({ nodes })}

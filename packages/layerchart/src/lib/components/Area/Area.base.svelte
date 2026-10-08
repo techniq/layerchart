@@ -31,7 +31,9 @@
     x,
     y0,
     y1,
+    // Each point's height, not `Path`'s, which would raise the whole area
     z,
+    g,
     seriesKey,
     ...restProps
   }: AreaBaseProps = $props();
@@ -53,6 +55,7 @@
         y0,
         y1,
         z,
+        g,
         seriesKey,
       }) as AreaProps
   );
@@ -74,13 +77,14 @@
 </script>
 
 {#if c.areas}
-  <!-- Grouped by `z` — one area (and line) per group, from this one mark -->
+  <!-- Grouped by `g` — one area (and line) per group, from this one mark -->
   {#each c.areas as area, i (i)}
     {#if line}
       <Spline
         data={area.data}
         {x}
         y={c.lineYAccessor}
+        {z}
         {seriesKey}
         {curve}
         {defined}
@@ -105,6 +109,7 @@
       data={data ?? c.seriesData}
       {x}
       y={c.lineYAccessor}
+      {z}
       {seriesKey}
       {curve}
       {defined}

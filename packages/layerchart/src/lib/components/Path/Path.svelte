@@ -4,17 +4,23 @@
 </script>
 
 <script lang="ts">
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import PathSvg from './Path.svg.svelte';
   import PathCanvas from './Path.canvas.svelte';
   import type { PathProps } from './Path.shared.svelte.js';
 
   const layerCtx = getLayerContext();
+  const ctx = getChartContext();
 
   let { pathRef = $bindable(), ...rest }: PathProps = $props();
 </script>
 
-{#if layerCtx === 'svg'}
+{#if layerCtx === 'svg' && rest.z != null && ctx.isometric?.PathExtruded}
+  <!-- Stood up by `z`, with the `isometric` view's own component -->
+  {@const PathExtruded = ctx.isometric.PathExtruded}
+  <PathExtruded bind:pathRef {...rest} />
+{:else if layerCtx === 'svg'}
   <PathSvg bind:pathRef {...rest} />
 {:else if layerCtx === 'canvas'}
   <PathCanvas {...rest} />

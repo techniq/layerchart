@@ -12,6 +12,8 @@
 export { default as Canvas, default as Layer } from './components/layers/Canvas.svelte';
 export type { CanvasProps } from './components/layers/Canvas.svelte';
 export { default as Chart } from './components/Chart/Chart.canvas.svelte';
+// `view={isometric}`, drawing height in canvas layers only
+export { isometric } from './views/isometric.canvas.js';
 export { default as ChartCore } from './components/Chart/ChartCore.svelte';
 export type {
   ChartProps,

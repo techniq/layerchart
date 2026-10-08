@@ -3454,6 +3454,48 @@
       "line": "<Axis placement=\"bottom\" />"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 35,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 67,
+      "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 68,
+      "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -4868,6 +4910,34 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 69,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 70,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 57,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -5638,5 +5708,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:05.736Z"
+  "updatedAt": "2026-10-05T19:24:19.984Z"
 }

@@ -23,6 +23,10 @@ import {
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import type { LayerContext } from '$lib/contexts/layer.js';
+import { missingRenderer } from '$lib/views/view.js';
+import type { BoxFace } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 
@@ -110,6 +114,23 @@ export type RectPropsWithoutHTML = {
   y1?: DataProp;
 
   /**
+   * Height to raise the rectangle into a box on an `isometric` chart, defaulting to the chart's `z`
+   * in data mode.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height (also in pixel mode)
+   * - `[start, end]`: pixel heights to float the box between
+   */
+  z?: DataProp | [start: number, end: number];
+
+  /**
+   * Whether a box raised by `z` shades its sides.
+   *
+   * @default true
+   */
+  shade?: boolean;
+
+  /**
    * Insets to shrink the rendered rectangle.
    * Supports `all`, `x`, `y`, `left`, `right`, `top`, `bottom`.
    */
@@ -195,6 +216,71 @@ export class RectState {
   chartCtx: ChartState = getChartContext();
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
+
+  /** Whether the rects stand up as boxes: data mode, with a height, in a layer drawing the floor */
+  extruded = $derived.by(() => {
+    if (!this.dataMode || !this.#layerIsometric()) return false;
+    const lift = this.chartCtx.isometricLift;
+    if (!lift || (lift.x === 0 && lift.y === 0)) return false;
+    return (this.#props.z != null || this.chartCtx.props.z != null) && this.#drawsBoxes;
+  });
+
+  #layer: LayerContext = 'svg';
+
+  /**
+   * Whether the `isometric` view draws boxes in this layer.  One from `layerchart/svg` doesn't in a
+   * canvas layer, say: the rect lies flat, with a warning.
+   */
+  #drawsBoxes = $derived.by(() => {
+    const iso = this.chartCtx.isometric;
+    if (!iso) return false;
+    const renderer = { svg: iso.RectBoxSvg, html: iso.RectBoxHtml, canvas: iso.renderBoxFaces }[
+      this.#layer
+    ];
+    if (!renderer) missingRenderer(this.#layer);
+    return !!renderer;
+  });
+
+  /** `faces` with their shading dropped when `shade` is off */
+  #shaded(faces: BoxFace[]) {
+    return this.#props.shade === false ? faces.map((face) => ({ ...face, shade: 0 })) : faces;
+  }
+
+  /** In pixel mode, the faces of the box `z` stands the rect up into, or `null` when flat */
+  pixelFaces = $derived.by((): BoxFace[] | null => {
+    const z = this.#props.z;
+    if (this.dataMode || (typeof z !== 'number' && !Array.isArray(z))) return null;
+    const m = this.#layerIsometric();
+    const lift = this.chartCtx.isometricLift;
+    if (!m || !lift || (lift.x === 0 && lift.y === 0) || !this.#drawsBoxes) return null;
+    const box = {
+      x: this.motionX,
+      y: this.motionY,
+      width: this.motionWidth,
+      height: this.motionHeight,
+      z0: this.#motionZ.current[0],
+      z1: this.#motionZ.current[1],
+    };
+    // No height draws a plain rect, not an empty box
+    if (box.z1 <= box.z0 && box.z0 === 0) return null;
+    return this.#shaded(this.chartCtx.isometric!.boxFaces(box, lift, m));
+  });
+
+  /** In pixel mode, how far back the box stands on the floor (its footprint's centre), if a box */
+  paintDepth = $derived.by(() => {
+    const m = this.#layerIsometric();
+    if (!this.pixelFaces || !m) return undefined;
+    return (
+      m.b * (this.motionX + this.motionWidth / 2) + m.d * (this.motionY + this.motionHeight / 2)
+    );
+  });
+
+  /** A box's base and top, in pixels off the floor */
+  #resolveZ(d: any): { z0: number; z1: number } {
+    const [z0, z1] = this.chartCtx.heightOf(d, this.#props.z);
+    return { z0, z1 };
+  }
 
   // Data mode detection
   hasEdgeProps = $derived(
@@ -212,7 +298,7 @@ export class RectState {
     if (!this.dataMode) return [];
     const props = this.#props;
     const keyFn = props.key ?? defaultKey;
-    return this.#resolvedData.map((d, i) => {
+    const items = this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
       const resolved = this.#resolveRect(d);
       const animated = this.#dataMotionMap?.get(key);
@@ -223,11 +309,38 @@ export class RectState {
         y: animated?.y ?? resolved.y,
         width: animated?.width ?? resolved.width,
         height: animated?.height ?? resolved.height,
+        z0: animated?.z0 ?? resolved.z0 ?? 0,
+        z1: animated?.z1 ?? resolved.z1 ?? 0,
+        faces: null as BoxFace[] | null,
       };
     });
+
+    const m = this.#layerIsometric();
+    const lift = this.chartCtx.isometricLift;
+    if (!this.extruded || !m || !lift) return items;
+
+    for (const item of items)
+      item.faces = this.#shaded(this.chartCtx.isometric!.boxFaces(item, lift, m));
+    // Back to front by footprint centre (exact on a grid), and a stack bottom up
+    const depth = (item: (typeof items)[number]) =>
+      m.b * (item.x + item.width / 2) + m.d * (item.y + item.height / 2);
+    return items.sort((a, b) => depth(a) - depth(b) || a.z0 - b.z0);
   });
 
-  #resolveRect(d: any): { x: number; y: number; width: number; height: number } {
+  #resolveRect(d: any): {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    z0?: number;
+    z1?: number;
+  } {
+    return this.extruded
+      ? { ...this.#resolveFootprint(d), ...this.#resolveZ(d) }
+      : this.#resolveFootprint(d);
+  }
+
+  #resolveFootprint(d: any): { x: number; y: number; width: number; height: number } {
     const props = this.#props;
     const resolvedInsets = resolveInsets(props.insets);
 
@@ -309,6 +422,7 @@ export class RectState {
   #motionY!: ReturnType<typeof createMotion<number>>;
   #motionWidth!: ReturnType<typeof createMotion<number>>;
   #motionHeight!: ReturnType<typeof createMotion<number>>;
+  #motionZ!: ReturnType<typeof createMotion<[number, number]>>;
 
   get motionX() {
     return this.#motionX.current;
@@ -394,8 +508,12 @@ export class RectState {
     return undefined;
   });
 
-  constructor(getProps: () => RectProps) {
+  /**
+   * @param layer  The layer this `Rect` draws into, to draw boxes with that layer's renderer
+   */
+  constructor(getProps: () => RectProps, layer: LayerContext) {
     this.#getProps = getProps;
+    this.#layer = layer;
 
     const initial = getProps();
     const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
@@ -425,6 +543,16 @@ export class RectState {
       initialHeight,
       () => (typeof this.#props.height === 'number' ? (this.#props.height as number) : 0),
       motion === undefined ? undefined : parseMotionProp(motion, 'height')
+    );
+    // Pixel mode: `z` as `[start, end]`, tweened with the rest
+    const pixelZ = (): [number, number] => {
+      const z = this.#props.z;
+      return Array.isArray(z) ? z : [0, typeof z === 'number' ? z : 0];
+    };
+    this.#motionZ = createMotion(
+      pixelZ(),
+      pixelZ,
+      motion === undefined ? undefined : parseMotionProp(motion, 'z')
     );
 
     this.#dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);

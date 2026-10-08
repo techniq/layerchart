@@ -47,7 +47,7 @@
 
   {#if ctx.facet.yScale && ctx.facet.yDomain.length > 1}
     <!-- Shifted to the plot's right edge: `Axis` positions from the *panel* range -->
-    <Group x={ctx.box.width - ctx.facet.width}>
+    <Group x={ctx.plot.width - ctx.facet.width}>
       <Axis
         placement="right"
         scale={ctx.facet.yScale}

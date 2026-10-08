@@ -203,17 +203,17 @@ Naming that column as the `c` channel is enough to draw it. There's no `series` 
 
 | Source            | Example                     | Notes                                       |
 | ----------------- | --------------------------- | ------------------------------------------- |
-| The mark's `z`    | `<Spline z="id" />`         | Most specific                               |
-| The chart's `z`   | `<Chart z="id">`            | Applies to every mark inside                |
+| The mark's `g`    | `<Spline g="id" />`         | Most specific                               |
+| The chart's `g`   | `<Chart g="id">`            | Applies to every mark inside                |
 | `stroke` / `fill` | `<Spline stroke="fruit" />` | Names a data property, colored via `cScale` |
 | The chart's `c`   | `<Chart c="fruit">`         | Only when it names a column (see below)     |
 
 `c` only splits when it **names a column**. `c="fruit"` says that column holds the category; a computed accessor like `c={(d) => (d.value < 0 ? 'under' : 'over')}` is a color per row, and grouping on it would cut one series into a path per color, joining points that aren't next to each other. A continuous `c` (`c="value"` with a sequential scale) is a color ramp for the same reason — measurements aren't category names. Neither does a mark handed its own rows via `data` split — whoever grouped them already decided.
 
-Use `z` when the split and the color aren't the same thing. Here each line is one flower, colored by its species:
+Use `g` when the split and the color aren't the same thing. Here each line is one flower, colored by its species:
 
 ```svelte
-<Chart {data} z="id" c="group">
+<Chart {data} g="id" c="group">
 ```
 
 ### Legend

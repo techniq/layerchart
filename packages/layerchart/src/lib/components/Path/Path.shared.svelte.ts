@@ -8,10 +8,12 @@ import { flattenPathData } from '$lib/utils/path.js';
 import {
   createMotion,
   extractTweenConfig,
+  parseMotionProp,
   type MotionProp,
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 import type { draw as _drawTransition } from 'svelte/transition';
@@ -69,6 +71,12 @@ export type PathPropsWithoutHTML = {
   pathRef?: SVGPathElement;
 
   motion?: MotionProp;
+
+  /**
+   * On an `isometric` chart, stand the shape up `z` pixels, or between `[start, end]`, with shaded
+   * sides.  An unfilled path is only raised.
+   */
+  z?: number | [start: number, end: number];
 } & CommonStyleProps;
 
 export type PathProps = PathPropsWithoutHTML &
@@ -116,7 +124,6 @@ export class PathState {
     getProps: () => PathProps = () => ({}) as PathProps
   ) {
     this.#getPathData = () => resolvePathData(getPathData());
-
     const initial = getProps();
     const extractedTween = extractTweenConfig(initial.motion);
     const tweenedOptions: ResolvedMotion | undefined = extractedTween
@@ -133,6 +140,8 @@ export class PathState {
         return '';
       }
       const resolved = resolvePathData(getPathData());
+      // A geo path starts as itself rather than rising from a baseline
+      if (resolved && this.chartCtx.geoState?.projection) return resolved;
       if (resolved) {
         return flattenPathData(
           resolved,
@@ -151,5 +160,64 @@ export class PathState {
       void this.#getPathData();
       this.drawKey = Symbol();
     });
+  }
+}
+
+/**
+ * A path stood up off an `isometric` floor by its `z`: the sides facing the viewer, and the shift
+ * raising its top.  Kept apart from `PathState` so a flat path pays nothing for it.
+ */
+export class PathExtrusion {
+  #chartCtx = getChartContext();
+  #layerIsometric = getLayerIsometric();
+  #getProps: () => Pick<PathProps, 'z' | 'fill'>;
+  #getPathData: () => string;
+  #motionZ: ReturnType<typeof createMotion<[number, number]>>;
+
+  /** The shape's top offset and sides (see `extrudePath`), or `null` when it lies flat */
+  raised = $derived.by(() => {
+    const { z, fill } = this.#getProps();
+    if (z == null) return null;
+    const m = this.#layerIsometric();
+    const lift = this.#chartCtx.isometricLift;
+    if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
+    return this.#chartCtx.isometric!.extrudePath(
+      this.#getPathData(),
+      this.#motionZ.current,
+      lift,
+      m,
+      fill !== 'none'
+    );
+  });
+
+  /**
+   * @param getPathData  The path as drawn (tweened, if it is)
+   * @param getProps     Its `z` and `fill`
+   * @param motion       Eases a change of `z`, like the path
+   */
+  constructor(
+    getPathData: () => string,
+    getProps: () => Pick<PathProps, 'z' | 'fill'>,
+    motion?: MotionProp
+  ) {
+    this.#getPathData = getPathData;
+    this.#getProps = getProps;
+    // `z` as `[start, end]`
+    const heights = (): [number, number] => {
+      const z = this.#getProps().z;
+      return Array.isArray(z) ? z : [0, z ?? 0];
+    };
+    this.#motionZ = createMotion(
+      heights(),
+      heights,
+      motion === undefined ? undefined : parseMotionProp(motion)
+    );
+  }
+
+  /** `transform` raised by the shift, for the top */
+  transform(transform?: string) {
+    const shift = this.raised?.shift;
+    if (!shift) return transform;
+    return `translate(${shift.x},${shift.y})${transform ? ` ${transform}` : ''}`;
   }
 }

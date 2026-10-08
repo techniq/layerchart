@@ -92,7 +92,18 @@
     data-placement={placement}
     class={cls('lc-axis', `placement-${placement}`, classes.root, className)}
   >
-    {#if rule !== false}
+    {#if rule !== false && placement === 'back'}
+      {#if c.back}
+        <Line
+          x1={c.back.corner.x}
+          y1={c.back.corner.y}
+          x2={c.back.top.x}
+          y2={c.back.top.y}
+          {stroke}
+          {...extractLayerProps(rule, 'lc-axis-rule', classes.rule ?? '')}
+        />
+      {/if}
+    {:else if rule !== false}
       <Rule
         x={placement === 'left'
           ? '$left'
@@ -118,7 +129,7 @@
 
     {#each c.tickItems as item, index (item.key)}
       <Group {transitionIn} {transitionInParams} class="lc-axis-tick-group">
-        {#if grid !== false}
+        {#if grid !== false && c.orientation !== 'back'}
           <Rule
             x={c.orientation === 'horizontal' || c.orientation === 'angle' ? item.tick : false}
             y={c.orientation === 'vertical' || c.orientation === 'radius' ? item.tick : false}
@@ -146,6 +157,16 @@
               y1={item.tickCoordsY}
               x2={item.tickCoordsX + (placement === 'left' ? -tickLength : tickLength)}
               y2={item.tickCoordsY}
+              {stroke}
+              {motion}
+              class={tickClasses}
+            />
+          {:else if c.orientation === 'back' && c.back}
+            <Line
+              x1={item.tickCoordsX}
+              y1={item.tickCoordsY}
+              x2={item.tickCoordsX + c.back.left.x * tickLength}
+              y2={item.tickCoordsY + c.back.left.y * tickLength}
               {stroke}
               {motion}
               class={tickClasses}

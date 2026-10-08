@@ -4,12 +4,20 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
+  import { matrixToString } from '$lib/utils/isometric.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
 
-  let { children, ...rest }: CircleProps = $props();
+  // Consumed by `CircleState`, not HTML attributes
+  let { children, ...props }: CircleProps = $props();
 
-  const c = new CircleState(() => rest as CircleProps);
+  const c = new CircleState(() => props as CircleProps);
+
+  // Not HTML attributes — read by `CircleState`
+  const { z: _z, viewport: _viewport, ...rest } = $derived(props);
+
+  /** For `viewport`, cancels the chart's `isometric` view about each circle's centre */
+  const cancelView = $derived(c.viewportMatrix ? matrixToString(c.viewportMatrix) : '');
 
   // HTML-only: derive a border-width that mimics SVG's implicit `stroke-width: 1`
   // when `stroke` is set but `strokeWidth` is not.
@@ -55,7 +63,7 @@
       style:border-width={resolvedBorderWidth}
       style:border-color={resolvedStroke}
       style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
-      style:transform="translate(-50%, -50%)"
+      style:transform="translate(-50%, -50%) {cancelView}"
       class={cls('lc-circle', resolvedClass)}
     ></div>
   {/each}
@@ -74,7 +82,7 @@
     style:border-width={staticBorderWidth}
     style:border-color={c.staticStroke}
     style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
-    style:transform="translate(-50%, -50%)"
+    style:transform="translate(-50%, -50%) {cancelView}"
     class={cls('lc-circle', c.staticClassName)}
   >
     {@render children?.()}

@@ -18,6 +18,9 @@
     height,
     rx: rxProp,
     ry: ryProp,
+    // Not SVG attributes — consumed by `RectState`
+    z,
+    shade,
     children,
     ...rest
   }: RectProps = $props();
@@ -31,8 +34,11 @@
         height,
         rx: rxProp,
         ry: ryProp,
+        z,
+        shade,
         ...rest,
-      }) as RectProps
+      }) as RectProps,
+    'svg'
   );
 
   let ref = $state<SVGRectElement>();
@@ -62,7 +68,24 @@
     {@const resolvedOpacity = resolveStyleProp(rest.opacity, item.d)}
     {@const resolvedClass = resolveStyleProp(rest.class, item.d)}
     {@const pathData = c.roundedRectPath(item.x, item.y, item.width, item.height)}
-    {#if pathData}
+    {#if item.faces}
+      <!-- Only when the `isometric` view draws boxes in this layer (see `RectState`) -->
+      {@const RectBox = c.chartCtx.isometric!.RectBoxSvg!}
+      <RectBox
+        faces={item.faces}
+        attrs={rest}
+        dashArray={c.dashArrayAttr}
+        style={{
+          fill: resolvedFill,
+          fillOpacity: resolvedFillOpacity,
+          stroke: resolvedStroke,
+          strokeOpacity: resolvedStrokeOpacity,
+          strokeWidth: resolvedStrokeWidth,
+          opacity: resolvedOpacity,
+          class: resolvedClass,
+        }}
+      />
+    {:else if pathData}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <path
@@ -97,6 +120,22 @@
       />
     {/if}
   {/each}
+{:else if c.pixelFaces}
+  {@const RectBox = c.chartCtx.isometric!.RectBoxSvg!}
+  <RectBox
+    faces={c.pixelFaces}
+    attrs={rest}
+    dashArray={c.dashArrayAttr}
+    style={{
+      fill: c.staticFill,
+      fillOpacity: c.staticFillOpacity,
+      stroke: c.staticStroke,
+      strokeOpacity: c.staticStrokeOpacity,
+      strokeWidth: c.staticStrokeWidth,
+      opacity: c.staticOpacity,
+      class: c.staticClassName,
+    }}
+  />
 {:else if c.pixelPathData}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->

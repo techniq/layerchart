@@ -11,6 +11,7 @@ import {
   resolveColorProp,
   resolveStyleProp,
   type ColorProp,
+  type DataProp,
   type StyleProp,
 } from '$lib/utils/dataProp.js';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
@@ -23,6 +24,8 @@ import {
   type ResolvedMotion,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { liftChanged } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type Spline from '../Spline/Spline.svelte';
@@ -31,6 +34,15 @@ import type { PathProps } from '../Path/Path.shared.svelte.js';
 export type AreaPropsWithoutHTML = {
   /** Override data instead of using context */
   data?: any;
+  /**
+   * Height to raise each point off an `isometric` floor, defaulting to the chart's `z`.  The area
+   * stands on the floor as a curtain up to each point's height.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height
+   */
+  z?: DataProp;
+
   /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
   pathData?: string | null;
   /** Override x accessor */
@@ -41,12 +53,12 @@ export type AreaPropsWithoutHTML = {
   y1?: Accessor;
   /**
    * Group the data into a separate area per distinct value, drawing them all from this one mark.
-   * Defaults to the Chart's `z` accessor, then to the data property named by `fill` / `stroke`.
+   * Defaults to the Chart's `g` accessor, then to the data property named by `fill` / `stroke`.
    *
    * Replaces grouping the data and rendering an `Area` per group — which registers a mark, and
    * rebuilds the chart's domains, once per area.
    */
-  z?: Accessor;
+  g?: Accessor;
   /** Series key to use for accessor. */
   seriesKey?: string;
   /** Whether to tween the interpolated path data using d3-interpolate-path */
@@ -83,12 +95,26 @@ export class AreaState {
   #props: AreaProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+  #layerIsometric = getLayerIsometric();
+
+  /** The chart's `isometricLift` when the area has heights, else `null` */
+  lift = $derived.by(() => {
+    if (this.ctx.radial || !this.#layerIsometric()) return null;
+    if (this.#props.z == null && this.ctx.props.z == null) return null;
+    // Even seen from directly above, where the curtain is edge on
+    return this.ctx.isometricLift;
+  });
+
+  /** A point's height off the floor, in pixels */
+  height(d: any) {
+    return this.ctx.heightOf(d, this.#props.z)[1];
+  }
 
   markData = getMarkData();
 
   #tweenState!: ReturnType<typeof createMotion<string | undefined>>;
 
-  /** One tween per `z` group, for the grouped branch that draws an area each */
+  /** One tween per `g` group, for the grouped branch that draws an area each */
   #areaTweens: ReturnType<typeof createPathMotionMap> = null;
 
   constructor(getProps: () => AreaProps) {
@@ -122,7 +148,8 @@ export class AreaState {
     this.#tweenState = createMotion(
       this.#defaultPathData(tweenOptions),
       () => this.d,
-      tweenOptions
+      tweenOptions,
+      { instant: liftChanged(() => this.lift) }
     );
 
     // `#tweenState` animates the single-path case; grouped areas each need their own, since the
@@ -130,16 +157,23 @@ export class AreaState {
     this.#areaTweens = createPathMotionMap(initial.motion, interpolatePath);
     if (this.#areaTweens) {
       const tweens = this.#areaTweens;
+      const viewTurned = liftChanged(() => this.lift);
       $effect(() => {
         const targets = this.#areaTargets;
         if (!targets) return;
+        const instant = viewTurned();
 
         const active = new Set<any>();
         for (const area of targets) {
           active.add(area.key);
           // `update` reads and writes the tween's own state, so it must not be tracked here
           untrack(() =>
-            tweens.update(area.key, area.d, () => this.#defaultPathData(tweenOptions, area.data))
+            tweens.update(
+              area.key,
+              area.d,
+              () => this.#defaultPathData(tweenOptions, area.data),
+              instant
+            )
           );
         }
         untrack(() => tweens.cleanup(active));
@@ -194,12 +228,12 @@ export class AreaState {
 
   /**
    * Accessor grouping the data into one area per distinct value, or `null` for a single area.
-   * Mirrors `Spline` — see its `zAccessor` for why the chart's raw `z` prop is the honest check.
+   * Resolves the same way as `Spline`'s `gAccessor`.
    */
-  zAccessor = $derived.by<((d: any) => any) | null>(() => {
+  gAccessor = $derived.by<((d: any) => any) | null>(() => {
     const props = this.#props;
-    const z = props.z ?? this.ctx.props.z;
-    if (z != null) return accessor(z);
+    const g = props.g ?? this.ctx.props.g;
+    if (g != null) return accessor(g);
 
     const first = this.resolvedData?.[0];
     const implied = colorPropDataKey(props.fill, first) ?? colorPropDataKey(props.stroke, first);
@@ -225,13 +259,13 @@ export class AreaState {
    * targets without reading the tweens' own output, which would be a cycle.
    */
   #areaTargets = $derived.by(() => {
-    if (!this.zAccessor || this.#props.pathData) return null;
+    if (!this.gAccessor || this.#props.pathData) return null;
     const props = this.#props;
-    const zAccessor = this.zAccessor;
+    const gAccessor = this.gAccessor;
 
-    return Array.from(d3Group(this.resolvedData, zAccessor).values()).map((data) => ({
+    return Array.from(d3Group(this.resolvedData, gAccessor).values()).map((data) => ({
       data,
-      key: zAccessor(data[0]),
+      key: gAccessor(data[0]),
       d: this.#buildPath(data),
       // Styles are uniform across an area, so they resolve from its first point
       fill:
@@ -301,6 +335,20 @@ export class AreaState {
 
   #buildPath(data: any[]): string {
     const props = this.#props;
+    const lift = this.lift;
+    if (lift) {
+      // A curtain from the floor up to each point's height
+      const x = (d: any) => this.ctx.xScale(this.xAccessor(d)) + this.xOffset;
+      const y = (d: any) => this.ctx.yScale(this.y1Accessor(d)) + this.yOffset;
+      const curtain = d3Area()
+        .x0(x)
+        .y0(y)
+        .x1((d) => x(d) + lift.x * this.height(d))
+        .y1((d) => y(d) + lift.y * this.height(d));
+      curtain.defined(props.defined ?? ((d: any) => this.xAccessor(d) != null));
+      if (props.curve) curtain.curve(props.curve);
+      return curtain(data) ?? '';
+    }
     const _path = this.ctx.radial
       ? areaRadial()
           .angle((d) => this.ctx.xScale(this.xAccessor(d)))

@@ -7,9 +7,12 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
 
-  let { ref: refProp = $bindable(), ...rest }: CircleProps = $props();
+  let { ref: refProp = $bindable(), ...props }: CircleProps = $props();
 
-  const c = new CircleState(() => rest as CircleProps);
+  const c = new CircleState(() => props as CircleProps);
+
+  // Not SVG attributes — read by `CircleState`
+  const { z: _z, viewport: _viewport, ...rest } = $derived(props);
 
   let ref = $state<SVGCircleElement>();
 
@@ -37,6 +40,7 @@
       cx={item.cx}
       cy={item.cy}
       r={item.r}
+      transform={c.viewportTransform(item.cx, item.cy) || undefined}
       fill={resolvedFill}
       fill-opacity={resolvedFillOpacity}
       stroke={resolvedStroke}
@@ -53,6 +57,7 @@
     cx={c.motionCx}
     cy={c.motionCy}
     r={c.motionR}
+    transform={c.viewportTransform(c.motionCx, c.motionCy) || undefined}
     fill={c.staticFill}
     fill-opacity={c.staticFillOpacity}
     stroke={c.staticStroke}

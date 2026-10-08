@@ -5,6 +5,7 @@ import { sortFunc } from '@layerstack/utils';
 import { isEqualValue } from './common.js';
 
 import { isScaleBand, type AnyScale } from './scales.svelte.js';
+import { applyMatrix, type AffineMatrix } from './isometric.js';
 import type { TooltipMode } from '$lib/components/tooltip/TooltipContext.svelte';
 
 /**
@@ -50,6 +51,12 @@ export type TooltipCoordContext = {
   yInterval?: TimeInterval | null;
   /** Present on a real `ChartState`; used to offset into the panel a row belongs to */
   facet?: { enabled: boolean; panels: Array<{ x: number; y: number; has(row: any): boolean }> };
+  /** The layers' pan / zoom and `isometric` view, present on a real `ChartState` */
+  layerMatrix?: () => AffineMatrix | null;
+  /** On an `isometric` chart, a pixel of height on the flat plot, and a row's height */
+  isometricLift?: { x: number; y: number } | null;
+  heightOf?: (d: any) => [number, number];
+  config?: { z?: unknown };
 };
 
 /**
@@ -220,10 +227,21 @@ export function dataCoords(ctx: TooltipCoordContext, data: any) {
   // were in the first panel
   const panel = ctx.facet?.enabled ? ctx.facet.panels.find((p) => p.has(data)) : undefined;
 
-  return {
-    x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + ctx.padding.left + (panel?.x ?? 0), // prettier-ignore
-    y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + ctx.padding.top + (panel?.y ?? 0), // prettier-ignore
+  const plotPoint = {
+    x: axisCenter(ctx.xScale, ctx.xInterval, ctx.xGet(data), ctx.x?.(data)) + (panel?.x ?? 0),
+    y: axisCenter(ctx.yScale, ctx.yInterval, ctx.yGet(data), ctx.y?.(data)) + (panel?.y ?? 0),
   };
+  // Where the row floats, as the marks raise it, before the view is applied
+  const lift = ctx.config?.z != null ? ctx.isometricLift : null;
+  if (lift && ctx.heightOf) {
+    const height = ctx.heightOf(data)[1];
+    plotPoint.x += lift.x * height;
+    plotPoint.y += lift.y * height;
+  }
+  const matrix = ctx.layerMatrix?.();
+  const { x, y } = matrix ? applyMatrix(matrix, plotPoint) : plotPoint;
+
+  return { x: x + ctx.padding.left, y: y + ctx.padding.top };
 }
 
 /** The subset of the chart context needed to match a row across facet panels */
@@ -231,7 +249,7 @@ export type FacetRowContext = {
   x: (d: any) => any;
   y: (d: any) => any;
   /** Which axis carries the value — the *other* one is the position the panels share */
-  valueAxis: 'x' | 'y';
+  valueAxis: 'x' | 'y' | 'z';
 };
 
 /**
@@ -247,7 +265,7 @@ export type FacetRowContext = {
 export function panelDatum(ctx: FacetRowContext, panel: { data: any[] }, data: any) {
   if (data == null) return undefined;
 
-  const accessor = ctx.valueAxis === 'y' ? ctx.x : ctx.y;
+  const accessor = ctx.valueAxis === 'x' ? ctx.y : ctx.x;
   if (!accessor) return undefined;
 
   const value = accessor(data);

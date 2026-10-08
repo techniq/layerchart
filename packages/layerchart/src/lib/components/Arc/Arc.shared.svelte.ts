@@ -20,6 +20,9 @@ import {
 } from '$lib/utils/arcText.svelte.js';
 
 export type ArcPropsWithoutHTML = {
+  /** On an `isometric` chart, stand the arc up `z` pixels, or between `[start, end]`, like a `Path` */
+  z?: number | [start: number, end: number];
+
   value?: number;
   initialValue?: number;
   /** Domain [min,max] in degrees @default [0, 100] */

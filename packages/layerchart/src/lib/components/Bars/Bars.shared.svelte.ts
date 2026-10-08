@@ -2,6 +2,7 @@ import type { Snippet } from 'svelte';
 import type { BarProps, BarPropsWithoutHTML } from '../Bar/Bar.shared.svelte.js';
 import {} from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
@@ -36,6 +37,8 @@ export class BarsState {
     this.ctx.registerComponent({
       name: 'Bars',
       kind: 'mark',
+      // Its bars are keyed, in depth order on an isometric floor
+      paintByDepth: true,
       markInfo: () => {
         const p = getProps();
         return {
@@ -54,4 +57,28 @@ export class BarsState {
   });
   seriesData = $derived(this.series?.data);
   data = $derived(this.markData(this.#getProps().data ?? this.seriesData));
+
+  #layerIsometric = getLayerIsometric();
+
+  /**
+   * `data` in draw order: with `valueAxis="z"` on an isometric floor, back to front and each stack
+   * bottom up, else as given.
+   */
+  paintedData = $derived.by(() => {
+    const m = this.#layerIsometric();
+    const ctx = this.ctx;
+    if (!m || ctx.valueAxis !== 'z') return this.data;
+    const centre = (scale: any, value: any) => (scale(value) ?? 0) + (scale.bandwidth?.() ?? 0) / 2;
+    const depth = (d: any) =>
+      m.b * centre(ctx.xScale, ctx.x(d)) + m.d * centre(ctx.yScale, ctx.y(d));
+    const stack = ctx.stackAccessorsFor({
+      seriesKey: this.#getProps().seriesKey,
+      stacksImplicitly: true,
+    });
+    const base = (d: any) => {
+      const value = stack?.value(d);
+      return Array.isArray(value) ? Math.min(...value) : 0;
+    };
+    return [...this.data].sort((a, b) => depth(a) - depth(b) || base(a) - base(b));
+  });
 }

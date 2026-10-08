@@ -75,7 +75,8 @@ export type Facet<TData = any> = {
 /** The chart surface the facet layout reads, narrowed so `FacetState` is testable on its own */
 export type FacetChartContext = {
   data: any;
-  box: { width: number; height: number };
+  /** The area the panels divide — the plot area, or an `isometric` chart's floor */
+  plot: { width: number; height: number };
   /** The chart's position accessors, for matching a row across panels */
   x?: (d: any) => any;
   y?: (d: any) => any;
@@ -97,7 +98,7 @@ export function facetKey(fx: any, fy: any) {
  * Layout for a chart partitioned into panels.
  *
  * The panels divide the plot area while the position scales stay shared, which is what makes them
- * comparable — so `ChartState.width` / `height` are one panel's box and `box` is the whole plot.
+ * comparable — so `ChartState.width` / `height` are one panel's box and `plot` is the whole plot.
  */
 export class FacetState {
   // Assigned in the constructor; the `$derived` below is lazy so it never reads it early
@@ -146,21 +147,21 @@ export class FacetState {
   xScale = $derived(
     facetScale(
       this.xDomain,
-      this.#ctx.box.width,
+      this.#ctx.plot.width,
       this.#ctx.props.facet?.paddingX ?? this.#ctx.props.facet?.padding ?? 0.1
     )
   );
   yScale = $derived(
     facetScale(
       this.yDomain,
-      this.#ctx.box.height,
+      this.#ctx.plot.height,
       this.#ctx.props.facet?.paddingY ?? this.#ctx.props.facet?.padding ?? 0.1
     )
   );
 
   /** One panel's dimensions — the whole plot area when not faceting */
-  width = $derived(this.xScale ? this.xScale.bandwidth() : this.#ctx.box.width);
-  height = $derived(this.yScale ? this.yScale.bandwidth() : this.#ctx.box.height);
+  width = $derived(this.xScale ? this.xScale.bandwidth() : this.#ctx.plot.width);
+  height = $derived(this.yScale ? this.yScale.bandwidth() : this.#ctx.plot.height);
 
   /** The panels to render, with their offsets, rows, and outer-edge flags */
   panels = $derived.by<Facet[]>(() => {

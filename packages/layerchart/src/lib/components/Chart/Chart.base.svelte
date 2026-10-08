@@ -79,8 +79,11 @@
   // nested rest/spread proxies). Brush selections are supplied as getters so
   // the chart's domain calculation can layer them on top of `props.xDomain`
   // / `props.yDomain` at the read sites.
+  const settings = getSettings();
+
   const chartState = new ChartState<TData, XScale, YScale>(
-    props as ChartPropsWithoutHTML<TData, XScale, YScale>
+    props as ChartPropsWithoutHTML<TData, XScale, YScale>,
+    settings
   );
 
   let ref = $state<HTMLElement>();
@@ -104,7 +107,6 @@
     () => groupOptions
   );
 
-  const settings = getSettings();
   $effect(() => {
     settings.debug = debug;
   });
@@ -167,6 +169,21 @@
     if (!TransformContext) return undefined;
     return untrack(() => chartState._initialTransform);
   });
+
+  /** The isometric view the transform turns from (the `isometric` angles, eased), or `null` */
+  const isometricView = $derived.by(() => {
+    if (!chartState.isometricTransform) return null;
+    const { rotate, tilt } = chartState.isometricAngles;
+    return { x: rotate, y: tilt };
+  });
+
+  /**
+   * `x` is the turn and `y` the tilt, in degrees.  Dragging right spins the floor with the pointer
+   * across its front edge; dragging up tips it towards edge on.
+   */
+  function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
+    return { x: x - deltaX / 2, y: Math.min(89, Math.max(0, y - deltaY * 0.3)) };
+  }
 
   /**
    * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
@@ -556,6 +573,8 @@
           mode={transform.mode ?? 'none'}
           initialTranslate={resolvedInitialTransform.translate}
           initialScale={resolvedInitialTransform.scale}
+          initialRotation={isometricView}
+          processRotate={processIsometricRotate}
           {processTranslate}
           {...transformProps}
           scaleExtent={resolvedScaleExtent}

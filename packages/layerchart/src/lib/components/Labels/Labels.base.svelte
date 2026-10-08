@@ -41,10 +41,17 @@
     class: className,
     fill,
     opacity,
+    z,
     ...restProps
   }: LabelsBaseProps<TData> = $props();
 
   const linkProps = $derived(typeof links === 'object' ? links : {});
+
+  /** A label's height in pixels, from `z` or the chart's, or `undefined` */
+  function labelHeight(point: Point) {
+    if (z == null && c.ctx.config.z == null) return undefined;
+    return c.ctx.heightOf(point.data, z)[1];
+  }
 
   const c = new LabelsState<TData>(
     () =>
@@ -104,6 +111,7 @@
               <Text
                 {...textProps}
                 {...restProps}
+                z={labelHeight(point)}
                 {...extractLayerProps(item.textProps, 'lc-labels-text', className ?? '')}
               />
             {/if}
@@ -120,6 +128,7 @@
               data-placement={placement}
               {...textProps}
               {...restProps}
+              z={labelHeight(point)}
               {...extractLayerProps(baseProps, 'lc-labels-text', className ?? '')}
             />
           {/if}

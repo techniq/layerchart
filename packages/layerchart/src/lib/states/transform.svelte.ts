@@ -5,6 +5,7 @@ import {
   parseMotionProp,
 } from '$lib/utils/motion.svelte.js';
 import { localPoint } from '@layerstack/utils';
+import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
 import { watch } from 'runed';
 import type { ChartState } from './chart.svelte.js';
 
@@ -13,6 +14,9 @@ export type TransformScrollMode = 'scale' | 'translate' | 'none';
 export type ScrollActivationKey = 'meta' | 'alt' | 'control' | 'shift';
 
 export const DEFAULT_TRANSLATE = { x: 0, y: 0 };
+
+/** What a drag moves: the content (`translate`), or the view it's seen from (`rotate`) */
+export type TransformDrag = 'translate' | 'rotate';
 export const DEFAULT_SCALE = 1;
 
 export type TransformAxis = 'x' | 'y' | 'both';
@@ -20,6 +24,13 @@ export type TransformAxis = 'x' | 'y' | 'both';
 export type TransformConstraint = {
   scale: number;
   translate: { x: number; y: number };
+};
+
+export type TransformDetails = {
+  scale: number;
+  translate: { x: number; y: number };
+  /** The view's rotation, when there's one to turn (see `initialRotation`) */
+  rotation: { x: number; y: number } | null;
 };
 
 export type InertiaOptions = {
@@ -48,9 +59,36 @@ export type TransformStateOptions = {
   clickDistance?: number;
   initialTranslate?: { x: number; y: number };
   initialScale?: number;
-  onTransform?: (details: { scale: number; translate: { x: number; y: number } }) => void;
+  onTransform?: (details: TransformDetails) => void;
   ondragstart?: () => void;
   ondragend?: () => void;
+
+  /**
+   * The view's starting rotation, ex. an `isometric` chart's `rotate` (`x`) and `tilt` (`y`) in
+   * degrees.  `null` for none, where `drag: 'rotate'` pans.
+   */
+  initialRotation?: { x: number; y: number } | null;
+
+  /** Turn the rotation by a drag of `deltaX` / `deltaY` pixels.  Default: one degree a pixel */
+  processRotate?: (
+    x: number,
+    y: number,
+    deltaX: number,
+    deltaY: number
+  ) => { x: number; y: number };
+
+  /**
+   * What a drag does: move the content (`'translate'`) or turn the view (`'rotate'`).  Holding
+   * `dragSwitchKey` does the other.
+   * @default 'translate'
+   */
+  drag?: TransformDrag;
+
+  /**
+   * Held as a drag starts, switches it to whichever of `translate` / `rotate` `drag` isn't.
+   * @default 'shift'
+   */
+  dragSwitchKey?: ScrollActivationKey;
 
   /** Enable inertia (momentum) after drag release. Pass `true` for defaults or an options object. */
   inertia?: boolean | InertiaOptions;
@@ -79,12 +117,18 @@ export type TransformStateOptions = {
   constrain?: (transform: TransformConstraint) => TransformConstraint;
 };
 
+/** What scrolling does in `mode` when `scrollMode` isn't set: zoom a domain, else nothing */
+export function defaultScrollMode(mode: TransformMode): TransformScrollMode {
+  return mode === 'domain' ? 'scale' : 'none';
+}
+
 export class TransformState {
   // Context reference
   ctx: ChartState | null;
 
   // Options
-  mode: TransformMode;
+  /** Reactive, so a chart can switch it without remounting */
+  mode = $state<TransformMode>('none');
   axis: TransformAxis;
   processTranslate?: (
     x: number,
@@ -99,7 +143,14 @@ export class TransformState {
   clickDistance: number;
   initialTranslate: { x: number; y: number };
   initialScale: number;
-  onTransform: (details: { scale: number; translate: { x: number; y: number } }) => void;
+  onTransform: (details: TransformDetails) => void;
+  processRotate?: (
+    x: number,
+    y: number,
+    deltaX: number,
+    deltaY: number
+  ) => { x: number; y: number };
+  dragSwitchKey: ScrollActivationKey;
   ondragstart: () => void;
   ondragend: () => void;
   scrollActivationKey: ScrollActivationKey | undefined;
@@ -116,12 +167,19 @@ export class TransformState {
   pinch: boolean;
 
   // State
+  /** What a drag does, unless `dragSwitchKey` is held */
+  drag = $state<TransformDrag>('translate');
+  /** Where the view starts turned to, or `null` when there's no view to turn */
+  initialRotation = $state<{ x: number; y: number } | null>(null);
   pointerDown = $state(false);
   dragging = $state(false);
   pinching = $state(false);
   scrollMode = $state<TransformScrollMode>('none');
   startPoint = $state({ x: 0, y: 0 });
   startTranslate = $state({ x: 0, y: 0 });
+  startRotation = { x: 0, y: 0 };
+  /** What the drag in progress moves, settled as it starts */
+  private _dragging: TransformDrag = 'translate';
 
   // Velocity tracking for inertia
   private _pointerSamples: { x: number; y: number; t: number }[] = [];
@@ -140,6 +198,7 @@ export class TransformState {
   // Motion controllers (internal)
   private _translate: ReturnType<typeof createControlledMotion<{ x: number; y: number }>>;
   private _scale: ReturnType<typeof createControlledMotion<number>>;
+  private _rotation: ReturnType<typeof createControlledMotion<{ x: number; y: number }>>;
   private _translating: ReturnType<typeof createMotionTracker>;
   private _scaling: ReturnType<typeof createMotionTracker>;
 
@@ -155,6 +214,10 @@ export class TransformState {
     this.initialTranslate = options.initialTranslate ?? DEFAULT_TRANSLATE;
     this.initialScale = options.initialScale ?? DEFAULT_SCALE;
     this.onTransform = options.onTransform ?? (() => {});
+    this.initialRotation = options.initialRotation ?? null;
+    this.processRotate = options.processRotate;
+    this.drag = options.drag ?? 'translate';
+    this.dragSwitchKey = options.dragSwitchKey ?? 'shift';
     this.ondragstart = options.ondragstart ?? (() => {});
     this.ondragend = options.ondragend ?? (() => {});
     this.scrollActivationKey = options.scrollActivationKey;
@@ -190,27 +253,39 @@ export class TransformState {
         velocityWindow: 160,
       };
     }
-    this.scrollMode = options.scrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
+    this.scrollMode = options.scrollMode ?? defaultScrollMode(this.mode);
 
     // Initialize motion controllers
     const resolvedMotion = parseMotionProp(options.motion);
     this._translate = createControlledMotion(this.initialTranslate, resolvedMotion);
     this._scale = createControlledMotion(this.initialScale, resolvedMotion);
+    this._rotation = createControlledMotion(this.initialRotation ?? { x: 0, y: 0 }, resolvedMotion);
     this._translating = createMotionTracker();
     this._scaling = createMotionTracker();
 
     // Watch for transform changes
-    watch([() => this._scale.current, () => this._translate.current], () => {
-      this.onTransform({
-        scale: this._scale.current,
-        translate: this._translate.current,
-      });
-    });
+    watch(
+      [() => this._scale.current, () => this._translate.current, () => this._rotation.current],
+      () => {
+        this.onTransform({
+          scale: this._scale.current,
+          translate: this._translate.current,
+          rotation: this.rotation,
+        });
+      }
+    );
   }
 
   private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {
     if (this.processTranslate) return this.processTranslate(x, y, deltaX, deltaY);
     if (this.mode === 'domain') {
+      // On an isometric floor, the movement across it
+      const inverse = this.#floorInverse();
+      if (inverse)
+        ({ x: deltaX, y: deltaY } = applyMatrix(
+          { ...inverse, e: 0, f: 0 },
+          { x: deltaX, y: deltaY }
+        ));
       // Negate deltaY because screen Y (top→bottom) is inverted vs data Y (bottom→top).
       // This works for both normal and reversed Y domains because _computeTransformDomain
       // uses signed range, which naturally handles the reversal.
@@ -265,15 +340,29 @@ export class TransformState {
   }
 
   /**
-   * In domain mode, reflect the Y coordinate since screen Y is inverted vs data Y.  This ensures
+   * On an isometric chart, the inverse of its view.  A domain is measured across the flat floor,
+   * so in domain mode the pointer is mapped back onto it.
+   */
+  #floorInverse() {
+    const m = this.mode === 'domain' ? this.ctx?.isometricMatrix : null;
+    return m ? invertMatrix(m) : null;
+  }
+
+  /**
+   * In domain mode, a container point where the domain measures it: on the flat floor of an
+   * isometric chart, and with Y reflected, since screen Y is inverted vs data Y.  This ensures
    * zooming targets the correct data position under the cursor/gesture.
    */
-  private _reflectPoint(point: { x: number; y: number }) {
-    if (!this.ctx || this.mode !== 'domain' || this.axis === 'x') return point;
-    return {
-      x: point.x,
-      y: this.ctx.padding.top + this.ctx.height - (point.y - this.ctx.padding.top),
-    };
+  private _domainPoint(point: { x: number; y: number }) {
+    if (!this.ctx || this.mode !== 'domain') return point;
+    const { top, left } = this.ctx.padding;
+    const inverse = this.#floorInverse();
+    if (inverse) {
+      const floor = applyMatrix(inverse, { x: point.x - left, y: point.y - top });
+      point = { x: floor.x + left, y: floor.y + top };
+    }
+    if (this.axis === 'x') return point;
+    return { x: point.x, y: top + this.ctx.height - (point.y - top) };
   }
 
   // Derived state
@@ -309,6 +398,25 @@ export class TransformState {
     return this._translate.current;
   }
 
+  /** The view's rotation (see `initialRotation`), or `null` when there's no view to turn */
+  get rotation() {
+    return this.initialRotation ? this._rotation.current : null;
+  }
+
+  setRotation(value: { x: number; y: number }, options?: Parameters<typeof this._rotation.set>[1]) {
+    this._rotation.set(value, options);
+  }
+
+  /** Back to the initial rotation, eased by `motion` unless `instant` */
+  resetRotation({ instant = false }: { instant?: boolean } = {}) {
+    if (!this.initialRotation) return;
+    if (instant) {
+      this._rotation.set(this.initialRotation, this._instantMotion(this._rotation));
+    } else {
+      this._rotation.target = this.initialRotation;
+    }
+  }
+
   set translate(point: { x: number; y: number }) {
     this.setTranslate(point);
   }
@@ -317,28 +425,50 @@ export class TransformState {
     this.scrollMode = mode;
   }
 
-  reset() {
+  /** Back to the initial translate and scale, eased by `motion` unless `instant` */
+  reset({ instant = false }: { instant?: boolean } = {}) {
+    this.resetRotation({ instant });
+    if (instant) {
+      this._translate.set(this.initialTranslate, this._instantMotion(this._translate));
+      this._scale.set(this.initialScale, this._instantMotion(this._scale));
+      return;
+    }
     this._translate.target = this.initialTranslate;
     this._scale.target = this.initialScale;
   }
 
+  /**
+   * The middle of the plot area from the container's top-left, for the zoom buttons.  Uses `box`,
+   * as an isometric chart's floor makes `width` / `height` smaller.
+   */
+  #plotCenter(ctx: ChartState) {
+    return {
+      x: ctx.padding.left + ctx.box.width / 2,
+      y: ctx.padding.top + ctx.box.height / 2,
+    };
+  }
+
   zoomIn() {
     if (!this.ctx) return;
-    this.scaleTo(1.25, {
-      x: (this.ctx.width + this.ctx.padding.left) / 2,
-      y: (this.ctx.height + this.ctx.padding.top) / 2,
-    });
+    this.scaleTo(1.25, this.#plotCenter(this.ctx));
   }
 
   zoomOut() {
     if (!this.ctx) return;
-    this.scaleTo(0.8, {
-      x: (this.ctx.width + this.ctx.padding.left) / 2,
-      y: (this.ctx.height + this.ctx.padding.top) / 2,
-    });
+    this.scaleTo(0.8, this.#plotCenter(this.ctx));
   }
 
   translateCenter() {
+    // A canvas zoom scales about the plot's top-left, so recentre while keeping the zoom.  A
+    // projection's translate is already relative to its fit.
+    if (this.mode === 'canvas' && this.ctx) {
+      const k = this._scale.target;
+      this._translate.target = {
+        x: (this.ctx.box.width / 2) * (1 - k),
+        y: (this.ctx.box.height / 2) * (1 - k),
+      };
+      return;
+    }
     this._translate.target = { x: 0, y: 0 };
   }
 
@@ -387,7 +517,7 @@ export class TransformState {
   ) {
     if (!this.ctx) return;
 
-    point = this._reflectPoint(point);
+    point = this._domainPoint(point);
 
     const currentScale = this._scale.current;
     const newScale = this._clampScale(this._scale.current * value);
@@ -503,8 +633,8 @@ export class TransformState {
     } else {
       // Keep the content under the initial midpoint anchored to the current midpoint, which
       // handles zooming and two-finger panning together
-      const startMidpoint = this._reflectPoint(pinchStart.midpoint);
-      const currentMidpoint = this._reflectPoint(midpoint);
+      const startMidpoint = this._domainPoint(pinchStart.midpoint);
+      const currentMidpoint = this._domainPoint(midpoint);
 
       const invertTransformPoint = {
         x: (startMidpoint.x - this.ctx.padding.left - pinchStart.translate.x) / pinchStart.scale,
@@ -542,7 +672,16 @@ export class TransformState {
     this.dragging = false;
     this.startPoint = localPoint(e);
     this.startTranslate = this._translate.current;
+    this.startRotation = this._rotation.current;
     this._pointerSamples = [];
+
+    // Rotating only where there's a view to turn
+    const drag = this._isKeyHeld(e, this.dragSwitchKey)
+      ? this.drag === 'rotate'
+        ? 'translate'
+        : 'rotate'
+      : this.drag;
+    this._dragging = drag === 'rotate' && this.initialRotation ? 'rotate' : 'translate';
 
     this.ondragstart?.();
   }
@@ -581,6 +720,17 @@ export class TransformState {
       e.stopPropagation(); // Stop tooltip from triggering (along with `capture: true`)
       this._capturePointer(e);
 
+      if (this._dragging === 'rotate') {
+        const { x, y } = this.startRotation;
+        this.setRotation(
+          this.processRotate
+            ? this.processRotate(x, y, deltaX, deltaY)
+            : { x: x + deltaX, y: y + deltaY },
+          this._instantMotion(this._rotation)
+        );
+        return;
+      }
+
       // Track pointer samples for inertia velocity calculation
       if (this.inertia.enabled) {
         const now = performance.now();
@@ -616,6 +766,7 @@ export class TransformState {
         // Continue dragging with the remaining pointer without jumping
         this.startPoint = remaining;
         this.startTranslate = this._translate.current;
+        this.startRotation = this._rotation.current;
         this._pointerSamples = [];
         return;
       }
@@ -730,6 +881,7 @@ export class TransformState {
       // Continue dragging with the remaining pointer without jumping
       this.startPoint = remaining;
       this.startTranslate = this._translate.current;
+      this.startRotation = this._rotation.current;
       this._pointerSamples = [];
       return;
     }
@@ -750,7 +902,11 @@ export class TransformState {
 
   private _isActivationKeyHeld(e: WheelEvent): boolean {
     if (!this.scrollActivationKey) return true;
-    switch (this.scrollActivationKey) {
+    return this._isKeyHeld(e, this.scrollActivationKey);
+  }
+
+  private _isKeyHeld(e: MouseEvent, key: ScrollActivationKey): boolean {
+    switch (key) {
       case 'meta':
         return e.metaKey;
       case 'alt':

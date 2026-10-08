@@ -30,8 +30,8 @@
 		<Layer center>
 			<Pie>
 				{#snippet children({ arcs })}
-					{#each arcs as arc, index}
-						{@const colors = keyClasses[index]}
+					{#each arcs as arc}
+						{@const colors = keyClasses[arc.index]}
 						{@const isHighlighted = context.tooltip.data?.date === arc.data.date}
 						{@const isFaded =
 							context.tooltip.data != null && context.tooltip.data.date !== arc.data.date}

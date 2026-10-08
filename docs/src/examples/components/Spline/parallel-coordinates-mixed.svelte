@@ -78,7 +78,7 @@
 	xDomain={keys}
 	y={(d) => scales.get(d.dimension)?.(d.value)}
 	yDomain={[0, 1]}
-	z="id"
+	g="id"
 	c="group"
 	cDomain={species}
 	cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
@@ -110,7 +110,7 @@
 	{/snippet}
 
 	{#snippet marks({ context })}
-		<!-- One line per flower (`z`), colored by species; brushed-out lines stay as faint context -->
+		<!-- One line per flower (`g`), colored by species; brushed-out lines stay as faint context -->
 		<Spline
 			stroke={(d) =>
 				selectedIds.has(d.id) ? context.cScale?.(d.group) : 'var(--color-surface-content)'}

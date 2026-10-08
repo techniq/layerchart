@@ -37,6 +37,9 @@ export type BrushableOptions = {
    */
   origin?: (offset: { x: number; y: number }) => { x: number; y: number } | null;
 
+  /** Map a point within `bounds` onto a transformed plot, ex. an `isometric` floor */
+  toPlot?: (point: { x: number; y: number }) => { x: number; y: number };
+
   /** Distance from an edge, in pixels, that resizes rather than starting a new selection @default 6 */
   edgeSize?: number;
 
@@ -94,7 +97,10 @@ export function brushGesture(options: BrushableOptions) {
     if (!ctx) return;
 
     const bounds = options.bounds?.(node) ?? node.getBoundingClientRect();
-    const offset = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+    const toPlot = options.toPlot ?? ((point: { x: number; y: number }) => point);
+    const pointAt = (e: { clientX: number; clientY: number }) =>
+      toPlot({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    const offset = pointAt(event);
 
     const origin = options.origin ? options.origin(offset) : { x: 0, y: 0 };
     if (!origin) return;
@@ -102,10 +108,13 @@ export function brushGesture(options: BrushableOptions) {
     /** The pointer as a value on each brushed axis */
     // `BrushChartContext` types its scales as callables; `scaleInvert` wants the full scale,
     // which is what a chart always passes
-    const valueAt = (e: { clientX: number; clientY: number }) => ({
-      x: scaleInvert(ctx.xScale as AnyScale, e.clientX - bounds.left - origin.x),
-      y: scaleInvert(ctx.yScale as AnyScale, e.clientY - bounds.top - origin.y),
-    });
+    const valueAt = (e: { clientX: number; clientY: number }) => {
+      const point = pointAt(e);
+      return {
+        x: scaleInvert(ctx.xScale as AnyScale, point.x - origin.x),
+        y: scaleInvert(ctx.yScale as AnyScale, point.y - origin.y),
+      };
+    };
 
     // Where the drag starts decides what it does, as `d3-brush` does: an edge resizes, the
     // middle moves the selection, and anywhere else starts a new one

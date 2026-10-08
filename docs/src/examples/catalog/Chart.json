@@ -694,6 +694,114 @@
       ]
     },
     {
+      "name": "isometric-columns",
+      "title": "isometric columns",
+      "path": "/docs/components/Chart/isometric-columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 35,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 38,
+          "line": "<Cell"
+        }
+      ]
+    },
+    {
+      "name": "isometric-heatmap",
+      "title": "isometric heatmap",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 34,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 37,
+          "line": "<Cell"
+        }
+      ]
+    },
+    {
+      "name": "isometric-playground",
+      "title": "isometric playground",
+      "path": "/docs/components/Chart/isometric-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 65,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 66,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 67,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 69,
+          "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
+        }
+      ]
+    },
+    {
+      "name": "isometric-scatter",
+      "title": "isometric scatter",
+      "path": "/docs/components/Chart/isometric-scatter",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice isometric padding={24} height={400} />"
+        }
+      ]
+    },
+    {
       "name": "mixed-marks-with-stack",
       "title": "mixed marks with stack",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -2488,6 +2596,27 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
       "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 44,
       "line": "<Chart"
     },
     {
@@ -4682,6 +4811,20 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 56,
+      "line": "<Chart"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 45,
+      "line": "<Chart"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -4762,7 +4905,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 14,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
@@ -5319,5 +5462,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:06.106Z"
+  "updatedAt": "2026-10-05T19:24:20.315Z"
 }

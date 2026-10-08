@@ -9,6 +9,7 @@
 
 <script lang="ts">
   import HighlightBase from './Highlight.base.svelte';
+  import Path from '../Path/Path.svg.svelte';
   import Circle from '../Circle/Circle.svg.svelte';
   import Line from '../Line/Line.svg.svelte';
   import Rect from '../Rect/Rect.svg.svelte';
@@ -19,4 +20,4 @@
   let props: HighlightProps = $props();
 </script>
 
-<HighlightBase {Circle} {Line} {Rect} {Arc} {...props} />
+<HighlightBase {Circle} {Path} {Line} {Rect} {Arc} {...props} />

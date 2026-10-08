@@ -34,8 +34,10 @@
     Rule,
     x = false,
     y = false,
+    z = false,
     xTicks,
     yTicks,
+    zTicks,
     bandAlign = 'center',
     radialY = 'circle',
     stroke,
@@ -53,8 +55,10 @@
       ({
         x,
         y,
+        z,
         xTicks,
         yTicks,
+        zTicks,
         bandAlign,
         radialY,
         stroke,
@@ -192,6 +196,22 @@
       {/if}
     </Group>
   {/if}
+
+  {#if z && c.ctx.isometric}
+    {@const GridWalls = c.ctx.isometric.GridWalls}
+    <GridWalls
+      {Group}
+      {Line}
+      grid={c}
+      {x}
+      {y}
+      {z}
+      {stroke}
+      lineClass={classes.line}
+      {transitionIn}
+      {transitionInParams}
+    />
+  {/if}
 </Group>
 
 <style>
@@ -203,6 +223,7 @@
         .lc-grid-x-radial-line,
         .lc-grid-y-rule,
         .lc-grid-y-end-rule,
+        .lc-grid-z-rule,
         .lc-grid-y-radial-line
       )
     ) {

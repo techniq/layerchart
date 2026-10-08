@@ -1606,6 +1606,27 @@
       "line": "<Layer>"
     },
     {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 65,
+      "line": "<Layer>"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -3909,6 +3930,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 68,
+      "line": "<Layer>"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -4434,5 +4469,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.575Z"
+  "updatedAt": "2026-10-05T19:24:21.243Z"
 }

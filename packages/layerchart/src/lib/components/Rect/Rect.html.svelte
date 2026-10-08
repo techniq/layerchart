@@ -15,9 +15,13 @@
     refProp = ref as any;
   });
 
-  const c = new RectState(() => rest as RectProps);
+  const c = new RectState(() => rest as RectProps, 'html');
 
-  const htmlRest = $derived(rest as unknown as HTMLAttributes<HTMLDivElement>);
+  // `z` and `shade` are read by `RectState`, not HTML attributes
+  const htmlRest = $derived.by(() => {
+    const { z: _z, shade: _shade, ...attrs } = rest;
+    return attrs as unknown as HTMLAttributes<HTMLDivElement>;
+  });
 
   c.chartCtx.registerComponent({
     name: 'Rect',
@@ -39,25 +43,46 @@
         : resolvedStroke != null
           ? '1px'
           : undefined}
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div
-      {...htmlRest}
-      style:position="absolute"
-      style:left="{item.x}px"
-      style:top="{item.y}px"
-      style:width="{item.width}px"
-      style:height="{item.height}px"
-      style:background={resolvedFill}
-      style:background-origin="border-box"
-      style:opacity={resolvedOpacity}
-      style:border-width={resolvedBorderWidth}
-      style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
-      style:border-color={resolvedStroke}
-      style:border-radius={c.borderRadius(item.width, item.height) ?? `${c.rx}px`}
-      class={cls('lc-rect', resolvedClass)}
-    ></div>
+    {#if item.faces}
+      <!-- Only when the `isometric` view draws boxes in this layer (see `RectState`) -->
+      {@const RectBox = c.chartCtx.isometric!.RectBoxHtml!}
+      <RectBox
+        faces={item.faces}
+        fill={resolvedFill}
+        opacity={resolvedOpacity}
+        class={resolvedClass}
+        attrs={htmlRest}
+      />
+    {:else}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div
+        {...htmlRest}
+        style:position="absolute"
+        style:left="{item.x}px"
+        style:top="{item.y}px"
+        style:width="{item.width}px"
+        style:height="{item.height}px"
+        style:background={resolvedFill}
+        style:background-origin="border-box"
+        style:opacity={resolvedOpacity}
+        style:border-width={resolvedBorderWidth}
+        style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
+        style:border-color={resolvedStroke}
+        style:border-radius={c.borderRadius(item.width, item.height) ?? `${c.rx}px`}
+        class={cls('lc-rect', resolvedClass)}
+      ></div>
+    {/if}
   {/each}
+{:else if c.pixelFaces}
+  {@const RectBox = c.chartCtx.isometric!.RectBoxHtml!}
+  <RectBox
+    faces={c.pixelFaces}
+    fill={c.staticFill}
+    opacity={c.staticOpacity}
+    class={c.staticClassName}
+    attrs={htmlRest}
+  />
 {:else}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
