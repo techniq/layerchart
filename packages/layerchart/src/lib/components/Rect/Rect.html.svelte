@@ -6,7 +6,6 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-  import type { BoxFace } from '$lib/utils/isometric.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
   let { children, ref: refProp = $bindable(), ...rest }: RectProps = $props();
@@ -45,7 +44,14 @@
           ? '1px'
           : undefined}
     {#if item.faces}
-      {@render box(item.faces, resolvedFill, resolvedOpacity, resolvedClass)}
+      {@const RectBox = c.chartCtx.isometric!.RectBoxHtml}
+      <RectBox
+        faces={item.faces}
+        fill={resolvedFill}
+        opacity={resolvedOpacity}
+        class={resolvedClass}
+        attrs={htmlRest}
+      />
     {:else}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -68,7 +74,14 @@
     {/if}
   {/each}
 {:else if c.pixelFaces}
-  {@render box(c.pixelFaces, c.staticFill, c.staticOpacity, c.staticClassName)}
+  {@const RectBox = c.chartCtx.isometric!.RectBoxHtml}
+  <RectBox
+    faces={c.pixelFaces}
+    fill={c.staticFill}
+    opacity={c.staticOpacity}
+    class={c.staticClassName}
+    attrs={htmlRest}
+  />
 {:else}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -92,33 +105,6 @@
     {@render children?.()}
   </div>
 {/if}
-
-<!--
-  An extruded box: the sides facing the viewer, then the top.  Each face is a 1px square its own
-  matrix stretches into place.
--->
-{#snippet box(faces: BoxFace[], fill?: string, opacity?: number, className?: string)}
-  {#each faces as face}
-    {@const [p0, p1, , p3] = face.points}
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div
-      {...htmlRest}
-      style:position="absolute"
-      style:left="0"
-      style:top="0"
-      style:width="1px"
-      style:height="1px"
-      style:transform-origin="0 0"
-      style:transform="matrix({p1.x - p0.x}, {p1.y - p0.y}, {p3.x - p0.x}, {p3.y - p0.y}, {p0.x},
-      {p0.y})"
-      style:background={fill}
-      style:box-shadow={face.shade ? `inset 0 0 0 9999px rgb(0 0 0 / ${face.shade})` : null}
-      style:opacity
-      class={cls('lc-rect', `lc-rect-${face.kind}`, className)}
-    ></div>
-  {/each}
-{/snippet}
 
 <style>
   @layer base {

@@ -3,7 +3,7 @@
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { cubicInOut } from 'svelte/easing';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { Arc, ArcLabel, Chart, Layer, Pie, Tooltip } from 'layerchart';
+	import { Arc, ArcLabel, Chart, isometric, Layer, Pie, Tooltip } from 'layerchart';
 
 	const data = [
 		{ fruit: 'Bananas', count: 8 },
@@ -46,11 +46,11 @@
 	cScale={scaleOrdinal()}
 	cRange={schemeTableau10}
 	zRange={[0, 40]}
-	isometric={{
+	view={isometric({
 		rotate: 10, // improves label position
 		tilt: view === 'flat' ? 0 : 55,
 		motion: { type: 'tween', duration: 800, easing: cubicInOut }
-	}}
+	})}
 	transform={{ mode: 'canvas', drag: 'rotate' }}
 	padding={{ top: 24, bottom: 24, left: 120, right: 120 }}
 	height={400}

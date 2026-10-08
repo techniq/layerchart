@@ -12,7 +12,7 @@
 	import { feature } from 'topojson-client';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { Chart, isometric, Layer, Tooltip } from 'layerchart';
 	import { GeoPath } from 'layerchart/geo';
 
 	const states = feature(topology, topology.objects.states);
@@ -49,7 +49,7 @@
 
 <Chart
 	geo={{ projection: geoIdentity as unknown as () => GeoProjection, fitGeojson: states }}
-	isometric={{ rotate: -2, tilt: 40, aspect: 975 / 610 }}
+	view={isometric({ rotate: -2, tilt: 40, aspect: 975 / 610 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	padding={24}
 	height={550}

@@ -5,6 +5,7 @@ import { page } from 'vitest/browser';
 import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import Contour from './Contour.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 // A hill: highest in the middle of a 20 × 20 grid
 const size = 20;
@@ -23,7 +24,7 @@ async function renderHill(contourProps: Record<string, any> = {}, chartProps = {
       height: 400,
       zDomain: [0, 100],
       zRange: [0, 80],
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     layerProps: { center: false },
@@ -80,7 +81,7 @@ describe('Contour on an isometric floor', () => {
   });
 
   it('lies flat on a flat chart', async () => {
-    const { el } = await renderHill({}, { isometric: false });
+    const { el } = await renderHill({}, { view: null });
     expect(el.querySelectorAll('.lc-path-side')).toHaveLength(0);
     for (const band of el.querySelectorAll('.lc-contour-band:not(.lc-path-side)'))
       expect(shift(band)).toEqual({ x: 0, y: 0 });

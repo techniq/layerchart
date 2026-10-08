@@ -5,11 +5,12 @@ import { page } from 'vitest/browser';
 import MarkHarness from '$lib/tests/MarkHarness.svelte';
 import { chartTestId } from '$lib/tests/TestHarness.svelte';
 import ArcLabel from './ArcLabel.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 /** A callout for a slice centred on `angle` (radians, clockwise from 12 o'clock) */
-async function callout(angle: number, isometric: any) {
+async function callout(angle: number, angles: Record<string, number> | null) {
   const screen = render(MarkHarness, {
-    chartProps: { width: 400, height: 300, isometric },
+    chartProps: { width: 400, height: 300, view: angles && isometric(angles) },
     layerProps: { center: true },
     component: ArcLabel,
     componentProps: {
@@ -46,8 +47,8 @@ describe('ArcLabel callouts on an isometric floor', () => {
     // 6 o'clock faces the viewer; 12 o'clock is at the back
     const front = await callout(Math.PI, { rotate: 0, tilt: 50 });
     const back = await callout(0, { rotate: 0, tilt: 50 });
-    const flatFront = await callout(Math.PI, false);
-    const flatBack = await callout(0, false);
+    const flatFront = await callout(Math.PI, null);
+    const flatBack = await callout(0, null);
     // In front: on the floor, where it'd be flat.  Behind: raised (its anchor lifted up the screen)
     expect(front.y).toBeCloseTo(flatFront.y);
     expect(back.y).toBeLessThan(flatBack.y);

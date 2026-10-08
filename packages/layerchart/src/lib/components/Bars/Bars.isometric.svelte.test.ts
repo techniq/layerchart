@@ -7,6 +7,7 @@ import MarkHarness from '$lib/tests/MarkHarness.svelte';
 import { chartTestId } from '$lib/tests/TestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import Bars from './Bars.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 // Two stacks of two, in rows `p` and `q`
 const data = [
@@ -33,7 +34,7 @@ async function renderBars() {
       cRange: ['red', 'blue'],
       width: 400,
       height: 300,
-      isometric: true,
+      view: isometric,
     },
     layerProps: { center: false },
     component: Bars,

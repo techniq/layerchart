@@ -4,6 +4,7 @@ import { render } from 'vitest-browser-svelte';
 import IsometricSceneHarness from '$lib/tests/IsometricSceneHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [
   { x: 1, y: 1, z: 2 },
@@ -21,7 +22,7 @@ const cube = {
   xDomain: [0, 10],
   yDomain: [0, 10],
   zDomain: [0, 10],
-  isometric: true,
+  view: isometric,
 };
 
 async function renderScene(
@@ -97,11 +98,11 @@ describe('3D scatter on an isometric floor', () => {
   });
 
   it('turns the walls with the view', async () => {
-    const before = (await renderScene({ isometric: { rotate: -30 } })).root();
+    const before = (await renderScene({ view: isometric({ rotate: -30 }) })).root();
     const walls = (el: HTMLElement) =>
       [...el.querySelectorAll('.lc-frame-wall')].map((w) => w.getAttribute('d')).join();
     const a = walls(before);
-    const after = (await renderScene({ isometric: { rotate: 120 } })).root();
+    const after = (await renderScene({ view: isometric({ rotate: 120 }) })).root();
     expect(walls(after)).not.toEqual(a);
   });
 

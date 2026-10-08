@@ -14,7 +14,6 @@ import {
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { extrudePath } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 import type { draw as _drawTransition } from 'svelte/transition';
@@ -182,7 +181,13 @@ export class PathExtrusion {
     const m = this.#layerIsometric();
     const lift = this.#chartCtx.isometricLift;
     if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
-    return extrudePath(this.#getPathData(), this.#motionZ.current, lift, m, fill !== 'none');
+    return this.#chartCtx.isometric!.extrudePath(
+      this.#getPathData(),
+      this.#motionZ.current,
+      lift,
+      m,
+      fill !== 'none'
+    );
   });
 
   /**

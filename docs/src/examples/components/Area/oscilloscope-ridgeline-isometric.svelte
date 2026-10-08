@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Area, Chart, Layer } from 'layerchart';
+	import { Area, Chart, isometric, Layer } from 'layerchart';
 	import { scaleBand, scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { curveBasis } from 'd3-shape';
@@ -130,7 +130,7 @@
 	z="value"
 	zDomain={[0, 128]}
 	zRange={({ height }) => [0, height * 0.6]}
-	isometric={{ rotate: -20, tilt: 60, aspect: 1.6 }}
+	view={isometric({ rotate: -20, tilt: 60, aspect: 1.6 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	padding={16}
 	height={500}

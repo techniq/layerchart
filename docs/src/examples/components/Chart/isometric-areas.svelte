@@ -2,7 +2,7 @@
 	import { scaleBand, scaleOrdinal } from 'd3-scale';
 	import { cubicInOut } from 'svelte/easing';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { Area, Axis, Chart, Frame, Grid, Layer } from 'layerchart';
+	import { Area, Axis, Chart, Frame, Grid, isometric, Layer } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	// A few series of rises and falls, one row each
@@ -39,14 +39,14 @@
 	c="series"
 	cScale={scaleOrdinal()}
 	cRange={['#2caffe', '#544fc5', '#00e272', '#fe6a35']}
-	isometric={{
+	view={isometric({
 		// Flat is seen from the front, edge on to the floor — an overlapping area chart
 		rotate: view === 'flat' ? 0 : -40,
 		tilt: view === 'flat' ? 90 : 65,
 		// A floor wider than it is deep
 		aspect: 2.5,
 		motion: { type: 'tween', duration: 800, easing: cubicInOut }
-	}}
+	})}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	padding={{ top: 24, bottom: 40, left: 40, right: 24 }}
 	height={500}

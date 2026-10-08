@@ -4,6 +4,7 @@ import { render } from 'vitest-browser-svelte';
 import TooltipTestHarness from '$lib/tests/TooltipTestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
+import { isometric } from '$lib/views/isometric.js';
 
 // Sorted by `x` for `bisect-x`, and inside the domain so none sits on the floor's edge
 const data = [
@@ -27,7 +28,7 @@ async function renderChart(chartProps: Record<string, any> = {}) {
       width: 400,
       height: 300,
       padding: { top: 10, right: 10, bottom: 10, left: 10 },
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     oncontext: (c: any) => (ctx = c),
@@ -78,7 +79,7 @@ describe('Chart isometric', () => {
   });
 
   it('leaves the chart flat without it', async () => {
-    const ctx = await renderChart({ isometric: false });
+    const ctx = await renderChart({ view: null });
 
     expect(ctx.isometricMatrix).toBeNull();
     const g = ctx.containerRef!.querySelector('.lc-layout-svg-g-transform');
@@ -201,7 +202,7 @@ describe('Chart isometric with a transform', () => {
   }
 
   async function renderTransformed(transform: Record<string, any>) {
-    const ctx = await renderChart({ isometric: { rotate: -30, tilt: 50 }, transform });
+    const ctx = await renderChart({ view: isometric({ rotate: -30, tilt: 50 }), transform });
     await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
     return ctx;
   }
@@ -294,7 +295,7 @@ describe('Chart isometric with a transform', () => {
 
   it('has nothing to turn on a flat chart, so a rotating drag pans', async () => {
     const ctx = await renderChart({
-      isometric: false,
+      view: null,
       transform: { mode: 'canvas', drag: 'rotate' },
     });
     await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
@@ -387,7 +388,7 @@ describe('Chart switching `transform` mode', () => {
 
   it('pans an isometric chart in domain mode with the pointer, across the floor', async () => {
     const ctx = await renderChart({
-      isometric: { rotate: -30, tilt: 50 },
+      view: isometric({ rotate: -30, tilt: 50 }),
       transform: { mode: 'domain' },
     });
     await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
@@ -416,7 +417,7 @@ describe('Chart switching `transform` mode', () => {
 describe('Chart isometric `motion`', () => {
   async function renderEased(transform?: Record<string, any>) {
     let ctx: ChartState<any, any, any> = null!;
-    const chartProps = (isometric: Record<string, any>) => ({
+    const chartProps = (angles: Record<string, any>) => ({
       data,
       x: 'x',
       y: 'y',
@@ -424,7 +425,7 @@ describe('Chart isometric `motion`', () => {
       yDomain: [0, 10],
       width: 400,
       height: 300,
-      isometric: { ...isometric, motion: { type: 'tween', duration: 300 } },
+      view: isometric({ ...angles, motion: { type: 'tween', duration: 300 } }),
       transform,
     });
     const screen = render(TooltipTestHarness, {
@@ -435,8 +436,7 @@ describe('Chart isometric `motion`', () => {
     if (transform) await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
     return {
       ctx,
-      turn: (isometric: Record<string, any>) =>
-        screen.rerender({ chartProps: chartProps(isometric) }),
+      turn: (angles: Record<string, any>) => screen.rerender({ chartProps: chartProps(angles) }),
     };
   }
 

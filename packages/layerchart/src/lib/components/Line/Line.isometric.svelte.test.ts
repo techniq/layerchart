@@ -5,6 +5,7 @@ import { page } from 'vitest/browser';
 import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import Line from './Line.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [{ x: 3, y: 4, z: 5 }];
 
@@ -23,7 +24,7 @@ describe('Line on an isometric floor', () => {
         zRange: [0, 100],
         width: 400,
         height: 300,
-        isometric: true,
+        view: isometric,
       },
       layerProps: { center: false },
       component: Line,

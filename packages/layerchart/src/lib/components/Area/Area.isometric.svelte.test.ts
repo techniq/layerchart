@@ -8,6 +8,7 @@ import type { ChartState } from '$lib/states/chart.svelte.js';
 import { pathRings } from '$lib/utils/path.js';
 import Area from './Area.svelte';
 import Spline from '../Spline/Spline.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [
   { x: 0, row: 'a', value: 2 },
@@ -29,7 +30,7 @@ async function renderRaised(component: any, chartProps: Record<string, any> = {}
       zRange: [0, 50],
       width: 400,
       height: 300,
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     layerProps: { center: false },
@@ -70,7 +71,7 @@ describe('Area and Spline with heights on an isometric floor', () => {
   });
 
   it('lies flat on a flat chart', async () => {
-    const { ctx, points } = await renderRaised(Spline, { isometric: false });
+    const { ctx, points } = await renderRaised(Spline, { view: null });
     expect(points[0][1]).toBeCloseTo(ctx.yScale('a') + ctx.yScale.bandwidth!() / 2);
   });
 
@@ -90,7 +91,7 @@ describe('Area and Spline with heights on an isometric floor', () => {
           zRange: [0, 50],
           width: 400,
           height: 300,
-          isometric: { rotate, tilt: 60 },
+          view: isometric({ rotate, tilt: 60 }),
         },
         layerProps: { center: false },
         component,

@@ -4,6 +4,7 @@ import { page } from 'vitest/browser';
 
 import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import Polygon from './Polygon.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 async function renderPolygon(componentProps: Record<string, any>, chartProps = {}) {
   const screen = render(TestHarness, {
@@ -12,7 +13,7 @@ async function renderPolygon(componentProps: Record<string, any>, chartProps = {
       height: 300,
       xDomain: [0, 10],
       yDomain: [0, 10],
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     layerProps: { center: false },
@@ -55,10 +56,7 @@ describe('Polygon on an isometric floor', () => {
   });
 
   it('lies flat on a flat chart', async () => {
-    const { sides, tops } = await renderPolygon(
-      { cx: 100, cy: 100, r: 30, z: 40 },
-      { isometric: false }
-    );
+    const { sides, tops } = await renderPolygon({ cx: 100, cy: 100, r: 30, z: 40 }, { view: null });
     expect(sides).toBe(0);
     expect(tops[0].getAttribute('transform')).toBeNull();
   });

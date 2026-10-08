@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getSettings } from 'layerchart';
+	import { getSettings, isometric } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 	import { LoadingPlaceholder } from '@layerstack/docs/components';
@@ -144,7 +144,9 @@
 							<label class="flex items-center justify-between gap-2">
 								<span class="text-sm text-surface-content">Isometric</span>
 								<Switch
-									bind:checked={() => !!settings.isometric, (on) => (settings.isometric = on)}
+									bind:checked={
+										() => !!settings.view, (on) => (settings.view = on ? isometric : null)
+									}
 								/>
 							</label>
 						</Menu>

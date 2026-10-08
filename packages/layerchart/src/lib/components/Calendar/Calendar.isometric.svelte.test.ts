@@ -5,6 +5,7 @@ import { page } from 'vitest/browser';
 import MarkHarness from '$lib/tests/MarkHarness.svelte';
 import Calendar from './Calendar.svelte';
 import { chartTestId } from '$lib/tests/TestHarness.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const start = new Date(2024, 0, 1);
 const end = new Date(2024, 0, 29);
@@ -24,7 +25,7 @@ async function renderCalendar(chartProps: Record<string, any> = {}) {
       zRange: [0, 30],
       width: 400,
       height: 200,
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     layerProps: { center: false },
@@ -61,7 +62,7 @@ describe('Calendar on an isometric floor', () => {
         zRange: [0, 30],
         width: 400,
         height: 200,
-        isometric: { rotate, tilt: 60 },
+        view: isometric({ rotate, tilt: 60 }),
       },
       layerProps: { center: false },
       component: Calendar,
@@ -82,7 +83,7 @@ describe('Calendar on an isometric floor', () => {
   });
 
   it('lies flat on a flat chart', async () => {
-    const el = await renderCalendar({ isometric: false });
+    const el = await renderCalendar({ view: null });
     expect(el.querySelectorAll('.lc-rect-box')).toHaveLength(0);
   });
 });

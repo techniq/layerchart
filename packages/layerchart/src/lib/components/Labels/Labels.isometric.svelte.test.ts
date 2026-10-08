@@ -6,6 +6,7 @@ import MarkHarness from '$lib/tests/MarkHarness.svelte';
 import { chartTestId } from '$lib/tests/TestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import Labels from './Labels.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [{ x: 3, y: 4, z: 5 }];
 
@@ -24,7 +25,7 @@ describe('Labels on an isometric floor', () => {
           zRange: [0, 100],
           width: 400,
           height: 300,
-          isometric: true,
+          view: isometric,
           ...chartProps,
         },
         layerProps: { center: false },

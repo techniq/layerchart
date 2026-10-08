@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ScatterChart } from 'layerchart';
+	import { ScatterChart, isometric } from 'layerchart';
 	import { getSpiral } from '$lib/utils/data.js';
 
 	// A spiral twice as wide as it is tall — `isometric`'s floor takes its proportions from the
@@ -10,4 +10,4 @@
 	export { data };
 </script>
 
-<ScatterChart {data} x="x" y="y" xNice yNice isometric padding={24} height={400} />
+<ScatterChart {data} x="x" y="y" xNice yNice view={isometric} padding={24} height={400} />

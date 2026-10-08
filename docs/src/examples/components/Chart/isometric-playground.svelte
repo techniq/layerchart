@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, Cell, Axis, Grid, Layer } from 'layerchart';
+	import { Axis, Cell, Chart, Grid, isometric, Layer } from 'layerchart';
 	import { scaleBand, scaleQuantize } from 'd3-scale';
 	import { extent } from 'd3-array';
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -90,11 +90,11 @@
 		'var(--color-primary-500)',
 		'var(--color-primary-700)'
 	]}
-	isometric={{
+	view={isometric({
 		rotate: flat ? 0 : rotate,
 		tilt: flat ? 0 : tilt,
 		motion: 'spring'
-	}}
+	})}
 	transform={{ mode: 'canvas', drag: 'rotate', disablePointer: flat }}
 	onTransform={({ rotation }) => {
 		// Keep the sliders in step with a drag.  Only while dragging, since easing to new angles

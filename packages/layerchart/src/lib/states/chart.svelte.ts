@@ -23,15 +23,12 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 import {
-  autoIsometricAspect,
-  createIsometricMatrix,
-  fitIsometricFloor,
-  isometricLift,
   multiplyMatrix,
   ISOMETRIC_TILT,
   type AffineMatrix,
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
+import { resolveView } from '$lib/views/view.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { defaultSettings, type Settings } from './settings.svelte.js';
@@ -420,12 +417,11 @@ export class ChartState<
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
 
-    // `isometric.motion` is read once, like other `motion` props
-    const isometric = this.#isometric;
+    // The view's `motion` is read once, like other `motion` props
     this.#angles = createMotion(
       this.#propAngles,
       () => this.#propAngles,
-      typeof isometric === 'object' ? isometric.motion : undefined
+      this.#viewOptions?.motion
     );
 
     // Create GeoState instance — pass a dimensions getter so projection
@@ -1127,15 +1123,26 @@ export class ChartState<
 
   #settings: Settings = defaultSettings;
 
-  /** `isometric` from the prop, else the chart's settings */
-  #isometric = $derived(this.props.isometric ?? this.#settings.isometric);
+  /** How the plot is seen: the `view` prop, else the chart's settings; `null` when flat */
+  view = $derived(
+    resolveView(this.props.view !== undefined ? this.props.view : this.#settings.view)
+  );
+
+  /**
+   * What an `isometric` view draws with (see `isometric`), or `null`.  Marks reach the geometry and
+   * components of height through this, so a chart that never uses `isometric` doesn't bundle them.
+   */
+  isometric = $derived(this.view?.type === 'isometric' ? this.view.impl : null);
+
+  /** The `isometric` view's options as given, or `null` */
+  #viewOptions = $derived(this.view?.type === 'isometric' ? this.view.options : null);
 
   /**
    * Whether the transform can rotate the isometric view as well as pan and zoom it.  With a geo
    * projection, only in `'canvas'` mode, as the others drive the projection.
    */
   isometricTransform = $derived(
-    !!this.#isometric &&
+    !!this.isometric &&
       !!this.props.transform?.mode &&
       this.props.transform.mode !== 'none' &&
       (!this.props.geo?.projection || this.props.transform.mode === 'canvas')
@@ -1143,8 +1150,7 @@ export class ChartState<
 
   /** The `isometric` options' `rotate` / `tilt`, with their defaults */
   #propAngles = $derived.by(() => {
-    const isometric = this.#isometric;
-    const options = typeof isometric === 'object' ? isometric : {};
+    const options = this.#viewOptions ?? {};
     return { rotate: options.rotate ?? -45, tilt: options.tilt ?? ISOMETRIC_TILT };
   });
 
@@ -1160,9 +1166,9 @@ export class ChartState<
    * `null` when the chart is flat.
    */
   #isometricOptions = $derived.by((): IsometricOptions | null => {
-    const isometric = this.#isometric;
-    if (!isometric) return null;
-    let options = isometric === true ? {} : isometric;
+    const isometric = this.isometric;
+    let options = this.#viewOptions;
+    if (!isometric || !options) return null;
 
     // `TransformContext` loads lazily; until then the props stand
     const rotation = this.isometricTransform ? this.transformState?.rotation : null;
@@ -1174,7 +1180,7 @@ export class ChartState<
     // From the scale types and domains, not the scales, whose ranges depend on the floor
     return {
       ...options,
-      aspect: autoIsometricAspect(
+      aspect: isometric.autoIsometricAspect(
         { scale: this._xScaleProp, domain: this._baseXDomain },
         { scale: this._yScaleProp, domain: this._baseYDomain }
       ),
@@ -1190,8 +1196,8 @@ export class ChartState<
    */
   isometricFloor = $derived.by(() => {
     const options = this.#isometricOptions;
-    if (!options) return null;
-    return fitIsometricFloor(options, this.box.width, this.box.height, {
+    if (!options || !this.isometric) return null;
+    return this.isometric.fitIsometricFloor(options, this.box.width, this.box.height, {
       footprint: this.#isometricFootprint,
       depthAt: (floor) => this.#zDepthFor(floor),
     });
@@ -1203,8 +1209,8 @@ export class ChartState<
   /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {
     const options = this.#isometricOptions;
-    if (!options) return null;
-    return createIsometricMatrix(options, this.plot, this.box, {
+    if (!options || !this.isometric) return null;
+    return this.isometric.createIsometricMatrix(options, this.plot, this.box, {
       depth: this.zDepth,
       footprint: this.#isometricFootprint,
     });
@@ -1231,7 +1237,7 @@ export class ChartState<
    */
   isometricLift = $derived.by(() => {
     const options = this.#isometricOptions;
-    return options ? isometricLift(options) : null;
+    return options && this.isometric ? this.isometric.isometricLift(options) : null;
   });
 
   /** Whether anything rises off the floor: a `z` channel, or a `zRange` for marks' own heights */

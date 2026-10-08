@@ -122,24 +122,10 @@
     {/if}
   {/if}
 
-  {#if shadows}
+  {#if shadows && c.shadows.length}
     {@const { r: _r, ...shadowProps } = typeof shadows === 'object' ? shadows : {}}
-    {#each c.shadows as { pathData, c: centre, u, v, r }}
-      {#if Path}
-        <Path {pathData} {opacity} {...extractLayerProps(shadowProps, 'lc-highlight-shadow')} />
-      {:else}
-        <Rect
-          x={centre.x - r}
-          y={centre.y - r}
-          width={r * 2}
-          height={r * 2}
-          rx={r}
-          style="transform: matrix({u.x}, {u.y}, {v.x}, {v.y}, 0, 0); transform-origin: center"
-          {opacity}
-          {...extractLayerProps(shadowProps, 'lc-highlight-shadow')}
-        />
-      {/if}
-    {/each}
+    {@const HighlightShadows = c.ctx.isometric!.HighlightShadows}
+    <HighlightShadows {Path} {Rect} shadows={c.shadows} {opacity} props={shadowProps} />
   {/if}
 
   {#if points}

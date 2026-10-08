@@ -7,10 +7,14 @@ category: state
 
 ## Quick start
 
-Add `isometric` to any `Chart`:
+Import `isometric` and pass as `view` to `Chart`.
 
 ```svelte
-<Chart {data} x="week" y="day" xScale={scaleBand()} yScale={scaleBand()} c="value" isometric>
+<script>
+	import { Axis, Cell, Chart, Layer, isometric } from 'layerchart';
+</script>
+
+<Chart {data} x="week" y="day" xScale={scaleBand()} yScale={scaleBand()} c="value" view={isometric}>
 	<Layer>
 		<Axis placement="bottom" />
 		<Axis placement="left" />
@@ -21,12 +25,12 @@ Add `isometric` to any `Chart`:
 
 :example{ component="Chart" name="isometric-heatmap" }
 
-To try it on every chart at once, turn on the `isometric` setting. Charts that set their own `isometric` (including `false`) keep it. LayerChart docs support this and exposed via the **Isometric** switch in a component page's settings menu.
+To try it on every chart at once, set it as the `view` setting. Charts that set their own `view` (including `null`) keep it. LayerChart docs support this and exposed via the **Isometric** switch in a component page's settings menu.
 
 ```svelte
 <script>
-	import { setSettings } from 'layerchart';
-	setSettings({ isometric: true });
+	import { isometric, setSettings } from 'layerchart';
+	setSettings({ view: isometric });
 </script>
 ```
 
@@ -38,7 +42,7 @@ The floor keeps its own proportions, so resizing the chart scales it rather than
 
 ## The view
 
-`isometric` takes these options:
+Call `isometric` with options to change the view:
 
 | Option   | What it does                                                                      | Default                    |
 | -------- | --------------------------------------------------------------------------------- | -------------------------- |
@@ -51,16 +55,16 @@ The defaults are true isometric: the origin sits at the front corner, and both a
 
 ```svelte
 <!-- True isometric -->
-<Chart isometric>
+<Chart view={isometric}>
 
 <!-- 2:1 "pixel art" projection -->
-<Chart isometric={{ tilt: 60 }}>
+<Chart view={isometric({ tilt: 60 })}>
 
 <!-- Origin at the left corner instead -->
-<Chart isometric={{ rotate: 45 }}>
+<Chart view={isometric({ rotate: 45 })}>
 
 <!-- A floor twice as wide as it is deep -->
-<Chart isometric={{ aspect: 2 }}>
+<Chart view={isometric({ aspect: 2 })}>
 ```
 
 `aspect: 'auto'` picks the floor's proportions from the scales:
@@ -81,11 +85,11 @@ A `radial` chart's floor is always square.
 </script>
 
 <Chart
-	isometric={{
+	view={isometric({
 		rotate: flat ? 0 : -45,
 		tilt: flat ? 0 : 54.7356,
 		motion: { type: 'tween', duration: 800 }
-	}}
+	})}
 >
 ```
 
@@ -97,13 +101,13 @@ With a `transform`, an isometric chart can pan and zoom, and it can also turn: d
 
 ```svelte
 <!-- Drag to pan, shift-drag to turn -->
-<Chart isometric transform={{ mode: 'canvas', scrollMode: 'scale' }}>
+<Chart view={isometric} transform={{ mode: 'canvas', scrollMode: 'scale' }}>
 
 <!-- Drag to turn, shift-drag to pan -->
-<Chart isometric transform={{ mode: 'canvas', drag: 'rotate' }}>
+<Chart view={isometric} transform={{ mode: 'canvas', drag: 'rotate' }}>
 ```
 
-The view starts at the `isometric` prop's `rotate` and `tilt`, and moves to new values when they change. `onTransform` reports the current angles as `rotation` (`x` is the turn, `y` the tilt, in degrees). `reset()` restores them along with the pan and zoom. `transform.drag` is reactive, so a control can switch it. `TransformContextControls` has one built in.
+The view starts at its `rotate` and `tilt`, and moves to new values when they change. `onTransform` reports the current angles as `rotation` (`x` is the turn, `y` the tilt, in degrees). `reset()` restores them along with the pan and zoom. `transform.drag` is reactive, so a control can switch it. `TransformContextControls` has one built in.
 
 In the playground below, the sliders and dragging set the same angles.
 
@@ -118,7 +122,7 @@ In the playground below, the sliders and dragging set the same angles.
 `z` raises marks off the floor. Set it on the chart and every `Rect` and `Cell` stands up into a box that tall, with the sides facing the viewer shaded:
 
 ```svelte
-<Chart {data} x="week" y="day" xScale={scaleBand()} yScale={scaleBand()} z="value" isometric>
+<Chart {data} x="week" y="day" xScale={scaleBand()} yScale={scaleBand()} z="value" view={isometric}>
 	<Layer>
 		<Cell x="week" y="day" fill="value" />
 	</Layer>
@@ -143,7 +147,7 @@ In the playground below, the sliders and dragging set the same angles.
 - `Axis placement="back"` runs a height axis up the back corner.
 
 ```svelte
-<Chart {data} x="x" y="y" z="z" isometric transform={{ mode: 'canvas', drag: 'rotate' }}>
+<Chart {data} x="x" y="y" z="z" view={isometric} transform={{ mode: 'canvas', drag: 'rotate' }}>
 	<Layer>
 		<Frame />
 		<Grid x y z />
@@ -171,7 +175,7 @@ A `zRange` as tall as the floor is deep makes a cube: `zRange={({ height }) => [
 Floating each node's `Rect` one step above its parent makes a 3D treemap. Use `zScale` to measure the steps: a `zDomain` with one step per level, and a `zRange` for the total height.
 
 ```svelte
-<Chart zDomain={[0, root.height + 1]} zRange={[0, 30]} isometric>
+<Chart zDomain={[0, root.height + 1]} zRange={[0, 30]} view={isometric}>
 	{#snippet children({ context })}
 		<Layer>
 			<Treemap hierarchy={root} paddingOuter={4}>
@@ -229,7 +233,7 @@ Sorting by center works for shapes of similar size. A large shape wrapped around
 - **Bars:** with `valueAxis="z"`, values stand up off the floor instead of running along it. Each bar stands on its `x` / `y` band cell, and the chart stacks the values per cell, so hiding a series in the legend closes up the stacks.
 
   ```svelte
-  <Chart {data} x="year" y="basket" z="value" valueAxis="z" c="fruit" isometric>
+  <Chart {data} x="year" y="basket" z="value" valueAxis="z" c="fruit" view={isometric}>
   	<Layer>
   		<Bars />
   	</Layer>
@@ -288,7 +292,7 @@ The **Labels** toggle in the [playground](#dragging-the-view) compares the two. 
 A layer with `ignoreTransform` draws flat, over the floor. Use it for a title, legend, or annotation that shouldn't tilt:
 
 ```svelte
-<Chart isometric>
+<Chart view={isometric}>
 	<Layer>
 		<!-- On the floor -->
 	</Layer>

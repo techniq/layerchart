@@ -11,7 +11,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-	import { Chart, Layer, Rect, Text, Tooltip, getStringWidth } from 'layerchart';
+	import { Chart, getStringWidth, isometric, Layer, Rect, Text, Tooltip } from 'layerchart';
 	import { Treemap } from 'layerchart/hierarchy';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
@@ -23,7 +23,7 @@
 
 	// Each node takes the middle of its parent's hue range, split evenly among siblings, so a
 	// package's modules share its hue
-	const hues = new Map<any, number>();
+	const hues = new WeakMap<object, number>();
 	(function assignHue(node: HierarchyNode<any>, from: number, to: number) {
 		hues.set(node.data, (from + to) / 2);
 		const step = (to - from) / (node.children?.length ?? 1);
@@ -71,12 +71,12 @@
 <Chart
 	zDomain={[0, root.height + 1]}
 	zRange={({ height }) => [0, ((root.height + 1) * height) / 80]}
-	isometric={{
+	view={isometric({
 		// Seen from directly above when flat
 		rotate: view === 'flat' ? 0 : -45,
 		tilt: view === 'flat' ? 0 : 60,
 		motion: { type: 'tween', duration: 800, easing: cubicInOut }
-	}}
+	})}
 	transform={{
 		mode: 'canvas',
 		scrollMode: 'scale',

@@ -6,6 +6,7 @@ import { scaleBand } from 'd3-scale';
 import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import Cell from '../Cell/Cell.svelte';
 import Rect from './Rect.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [
   { x: 'a', y: 'p', value: 10 },
@@ -37,7 +38,7 @@ async function renderCells(chartProps: Record<string, any> = {}, layerProps = {}
       z: 'value',
       width: 400,
       height: 300,
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     layerProps: { center: false, ...layerProps },
@@ -66,7 +67,7 @@ describe('Rect on an isometric floor', () => {
   });
 
   it('stays flat on a flat chart', async () => {
-    const drawn = await renderCells({ isometric: false });
+    const drawn = await renderCells({ view: null });
     expect(drawn.boxes).toBe(0);
     expect(drawn.rects).toBe(4);
   });
@@ -102,7 +103,7 @@ describe('Rect on an isometric floor', () => {
 
   it('shades the sides facing the viewer, not the top', async () => {
     render(TestHarness, {
-      chartProps: { ...cellChart, isometric: true },
+      chartProps: { ...cellChart, view: isometric },
       layerProps: { center: false },
       component: Cell,
       componentProps: { x: 'x', y: 'y', fill: 'red' },
@@ -117,7 +118,7 @@ describe('Rect on an isometric floor', () => {
 
   it('leaves the sides flat with `shade={false}`', async () => {
     render(TestHarness, {
-      chartProps: { ...cellChart, isometric: true },
+      chartProps: { ...cellChart, view: isometric },
       layerProps: { center: false },
       component: Cell,
       componentProps: { x: 'x', y: 'y', shade: false },
@@ -132,7 +133,7 @@ describe('Rect on an isometric floor', () => {
 describe('Rect in pixel mode on an isometric floor', () => {
   async function renderRect(rectProps: Record<string, any>, chartProps: Record<string, any> = {}) {
     render(TestHarness, {
-      chartProps: { ...cellChart, isometric: true, ...chartProps },
+      chartProps: { ...cellChart, view: isometric, ...chartProps },
       layerProps: { center: false },
       component: Rect,
       componentProps: { x: 20, y: 30, width: 100, height: 60, ...rectProps },
@@ -156,7 +157,7 @@ describe('Rect in pixel mode on an isometric floor', () => {
   });
 
   it('stays flat on a flat chart', async () => {
-    const el = await renderRect({ z: 40 }, { isometric: false });
+    const el = await renderRect({ z: 40 }, { view: null });
     expect(el.querySelectorAll('.lc-rect-box')).toHaveLength(0);
     expect(el.querySelectorAll('rect.lc-rect')).toHaveLength(1);
   });
@@ -171,7 +172,7 @@ describe('Rect in pixel mode on an isometric floor', () => {
   it('floats between `[start, end]`', async () => {
     const measure = async (z: any) => {
       const screen = render(TestHarness, {
-        chartProps: { ...cellChart, isometric: true },
+        chartProps: { ...cellChart, view: isometric },
         layerProps: { center: false },
         component: Rect,
         componentProps: { x: 20, y: 30, width: 100, height: 60, z },
@@ -202,7 +203,7 @@ describe('Rect in pixel mode on an isometric floor', () => {
         z: (d: any) => d.range,
         zDomain: [0, 40],
         zRange: [0, 80],
-        isometric: true,
+        view: isometric,
       },
       layerProps: { center: false },
       component: Cell,
@@ -217,7 +218,7 @@ describe('Rect in pixel mode on an isometric floor', () => {
 
   it('eases to a new height with `motion`, like its other dimensions', async () => {
     const props = (z: number) => ({
-      chartProps: { ...cellChart, isometric: true },
+      chartProps: { ...cellChart, view: isometric },
       layerProps: { center: false },
       component: Rect,
       componentProps: {

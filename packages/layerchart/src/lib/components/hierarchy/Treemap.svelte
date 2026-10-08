@@ -90,7 +90,6 @@
   import { aspectTile } from '../../utils/treemap.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getLayerIsometric } from '$lib/contexts/isometric.js';
-  import { paintOrder } from '$lib/utils/isometric.js';
   import type { Snippet } from 'svelte';
 
   let {
@@ -214,7 +213,8 @@
     const order: HierarchyRectangularNode<T>[] = [];
     const visit = (node: HierarchyRectangularNode<T>) => {
       order.push(node);
-      for (const child of node.children ? paintOrder(node.children, m) : []) visit(child);
+      for (const child of node.children ? ctx.isometric!.paintOrder(node.children, m) : [])
+        visit(child);
     };
     visit(root);
     return order;

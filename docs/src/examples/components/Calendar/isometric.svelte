@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleThreshold } from 'd3-scale';
 	import { timeYear } from 'd3-time';
-	import { Calendar, Chart, Layer, Tooltip } from 'layerchart';
+	import { Calendar, Chart, isometric, Layer, Tooltip } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -28,7 +28,7 @@
 	z="value"
 	zDomain={[0, 20]}
 	zRange={[0, 60]}
-	isometric={{ rotate: 45, tilt: 60, aspect: 53 / 7 }}
+	view={isometric({ rotate: 45, tilt: 60, aspect: 53 / 7 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	padding={16}
 	height={400}

@@ -16,7 +16,6 @@ import {
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { extrudePath } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -124,7 +123,13 @@ export class PolygonState {
     const iso = this.#lift;
     const heights = iso && this.#heights(d);
     if (!iso || !heights) return null;
-    return extrudePath(pathData, heights, iso.lift, iso.m, this.#getProps().fill !== 'none');
+    return this.chartCtx.isometric!.extrudePath(
+      pathData,
+      heights,
+      iso.lift,
+      iso.m,
+      this.#getProps().fill !== 'none'
+    );
   }
 
   resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#getProps().data) : []);

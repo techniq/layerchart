@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { Axis, Chart, ChartClipPath, Circle, Frame, Grid, Layer } from 'layerchart';
+	import { Axis, Chart, ChartClipPath, Circle, Frame, Grid, isometric, Layer } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	// Seeded, so the points are the same on every load
@@ -31,7 +31,7 @@
 	y="y"
 	xDomain={[0, 10]}
 	yDomain={[0, 10]}
-	isometric
+	view={isometric}
 	transform={{ mode, scrollMode: 'scale' }}
 	padding={{ top: 24, bottom: 40, left: 40, right: 24 }}
 	height={400}

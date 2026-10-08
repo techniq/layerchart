@@ -28,7 +28,7 @@ Filled contour bands of the same Maungawhau elevation data, colored by threshold
 On an [isometric](/docs/guides/isometric) chart, `z` raises each band. With `z="value"`, each band stands at its threshold, measured by `zScale`. Filled bands stack into terraces, and unfilled ones float as lines in the bands' colors. Drag to turn it.
 
 ```svelte
-<Chart zDomain={extent(volcano.values)} zRange={[0, 100]} isometric>
+<Chart zDomain={extent(volcano.values)} zRange={[0, 100]} view={isometric}>
 	<Layer>
 		<Contour data={volcano.values} width={volcano.width} height={volcano.height} z="value" />
 	</Layer>

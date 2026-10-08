@@ -5,6 +5,7 @@ import { page } from 'vitest/browser';
 import TestHarness, { chartTestId, componentTestId } from '$lib/tests/TestHarness.svelte';
 import Axis from '../Axis/Axis.svelte';
 import Text from './Text.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const chartProps = {
   width: 400,
@@ -12,7 +13,7 @@ const chartProps = {
   xDomain: [0, 10],
   yDomain: [0, 10],
   padding: 40,
-  isometric: true,
+  view: isometric,
 };
 
 /** Screen transform of a rendered `<text>`, from its own coordinates */
@@ -145,8 +146,8 @@ describe('Text z', () => {
   });
 
   it('stays put on a flat chart', async () => {
-    const floor = await anchor({ x: 30, y: 20 }, { isometric: false });
-    const raised = await anchor({ x: 30, y: 20, z: 40 }, { isometric: false });
+    const floor = await anchor({ x: 30, y: 20 }, { view: null });
+    const raised = await anchor({ x: 30, y: 20, z: 40 }, { view: null });
     expect(raised).toEqual(floor);
   });
 

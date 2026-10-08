@@ -10,7 +10,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-	import { Chart, Contour, Layer } from 'layerchart';
+	import { Chart, Contour, isometric, Layer } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	let style = $state<'lines' | 'filled'>('lines');
@@ -37,12 +37,12 @@
 	cScale={scaleSequential(interpolateViridis)}
 	zDomain={extent(volcano.values)}
 	zRange={({ height }) => [0, height * 0.25]}
-	isometric={{
+	view={isometric({
 		// Seen from directly above when flat
 		rotate: view === 'flat' ? 0 : -35,
 		tilt: view === 'flat' ? 0 : 60,
 		motion: { type: 'tween', duration: 800, easing: cubicInOut }
-	}}
+	})}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	padding={24}
 	height={500}

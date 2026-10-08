@@ -17,7 +17,7 @@ import type {
   YRangeWithScale,
 } from '$lib/utils/types.js';
 import type { GeoStateProps } from '$lib/states/geo.svelte.js';
-import type { IsometricOptions } from '$lib/utils/isometric.js';
+import type { ChartViewProp } from '$lib/views/view.js';
 import type { BrushDomainType } from '$lib/states/brush.svelte.js';
 import type { SeriesLayout } from '$lib/states/series.svelte.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -228,11 +228,11 @@ export type ChartPropsWithoutHTML<
   radial?: boolean;
 
   /**
-   * Draw the plot area as a floor seen at an angle; layers with `ignoreTransform` stay flat.  `true`
-   * is true isometric; pass `rotate` / `tilt` to change the view.  Defaults to the `isometric`
-   * setting, so `false` opts a chart out.
+   * How the plot is seen: `view={isometric}` draws it as a floor seen at an angle (layers with
+   * `ignoreTransform` stay flat), and `view={isometric({ rotate, tilt })}` changes the angle.
+   * Defaults to the `view` setting; `null` opts a chart out.
    */
-  isometric?: boolean | IsometricOptions;
+  view?: ChartViewProp | null;
 
   children?: Snippet<[{ context: ChartState<T, XScale, YScale> }]>;
 

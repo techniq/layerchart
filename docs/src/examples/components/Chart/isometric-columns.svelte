@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, Cell, Axis, Grid, Layer } from 'layerchart';
+	import { Axis, Cell, Chart, Grid, isometric, Layer } from 'layerchart';
 	import { scaleBand } from 'd3-scale';
 	import { range } from 'd3-array';
 	import { timeWeek, timeYear } from 'd3-time';
@@ -27,7 +27,7 @@
 		'var(--color-primary-500)',
 		'var(--color-primary-700)'
 	]}
-	isometric
+	view={isometric}
 	padding={{ left: 32, bottom: 20, top: 8, right: 8 }}
 	height={400}
 >

@@ -1,6 +1,17 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { Axis, Bars, Chart, Frame, Grid, Highlight, Layer, Legend, Tooltip } from 'layerchart';
+	import {
+		Axis,
+		Bars,
+		Chart,
+		Frame,
+		Grid,
+		Highlight,
+		isometric,
+		Layer,
+		Legend,
+		Tooltip
+	} from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { longData } from '$lib/utils/data.js';
 
@@ -26,7 +37,7 @@
 		'var(--color-red-500)',
 		'var(--color-purple-500)'
 	]}
-	isometric={{ rotate: -25, tilt: 65 }}
+	view={isometric({ rotate: -25, tilt: 65 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	tooltipContext={{ mode: 'manual' }}
 	padding={{ top: 24, bottom: 40, left: 40, right: 24 }}

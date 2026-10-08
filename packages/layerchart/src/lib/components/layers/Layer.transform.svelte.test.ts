@@ -7,6 +7,7 @@ import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { multiplyMatrix } from '$lib/utils/isometric.js';
 import Cell from '../Cell/Cell.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [
   { x: 'a', y: 'p' },
@@ -23,7 +24,7 @@ describe('Layer transform', () => {
       yScale: scaleBand(),
       width: 400,
       height: 300,
-      isometric: false,
+      view: null,
     });
     render(TestHarness, {
       chartProps,
@@ -36,7 +37,7 @@ describe('Layer transform', () => {
     await vi.waitFor(() => expect(chart().querySelector('rect.lc-rect')).not.toBeNull());
     const before = chart().querySelector('rect.lc-rect')!;
 
-    chartProps.isometric = true;
+    chartProps.view = isometric;
     await tick();
     await vi.waitFor(() =>
       expect(
@@ -45,7 +46,7 @@ describe('Layer transform', () => {
     );
     expect(before.isConnected).toBe(true);
 
-    chartProps.isometric = false;
+    chartProps.view = null;
     await tick();
     await vi.waitFor(() =>
       expect(
@@ -66,7 +67,7 @@ describe('Layer transform', () => {
         yScale: scaleBand(),
         width: 400,
         height: 300,
-        isometric: true,
+        view: isometric,
       },
       layerProps: { center: true },
       component: Cell,
@@ -107,7 +108,7 @@ describe('Layer transform', () => {
         yScale: scaleBand(),
         width: 400,
         height: 300,
-        isometric: true,
+        view: isometric,
       },
       layerProps: { center: false },
       component: Cell,

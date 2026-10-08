@@ -5,8 +5,7 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
-  import { renderPathData, renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { polygonPath, type BoxFace } from '$lib/utils/isometric.js';
+  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
@@ -58,23 +57,6 @@
         };
   }
 
-  /** An extruded box: the sides facing the viewer, then the top */
-  function renderFaces(
-    ctx: CanvasRenderingContext2D,
-    faces: BoxFace[],
-    styleOpts: ComputedStylesOptions,
-    styleOverrides: ComputedStylesOptions | undefined
-  ) {
-    for (const face of faces) {
-      const pathData = polygonPath(face.points);
-      renderPathData(ctx, pathData, styleOpts);
-      // Darkened by an overlay, as Safari's canvas ignores `filter`.  Not on the hit canvas
-      if (face.shade && !styleOverrides) {
-        renderPathData(ctx, pathData, { styles: { fill: 'black', fillOpacity: face.shade } });
-      }
-    }
-  }
-
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
@@ -99,7 +81,7 @@
           resolvedClass
         );
         if (item.faces) {
-          renderFaces(ctx, item.faces, styleOpts, styleOverrides);
+          c.chartCtx.isometric!.renderBoxFaces(ctx, item.faces, styleOpts, styleOverrides);
           continue;
         }
         renderRect(
@@ -117,7 +99,12 @@
         );
       }
     } else if (c.pixelFaces) {
-      renderFaces(ctx, c.pixelFaces, getStyleOptions(styleOverrides), styleOverrides);
+      c.chartCtx.isometric!.renderBoxFaces(
+        ctx,
+        c.pixelFaces,
+        getStyleOptions(styleOverrides),
+        styleOverrides
+      );
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
       renderRect(

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import TreemapOrderHarness from '$lib/tests/TreemapOrderHarness.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = {
   name: 'root',
@@ -45,7 +46,7 @@ describe('Treemap on an isometric chart', () => {
   });
 
   it('hands out each node, then its children’s subtrees whole', async () => {
-    const names = await order({ isometric: true });
+    const names = await order({ view: isometric });
     expect(names[0]).toBe('root');
     // `a`'s children follow it directly, before any sibling of `a` that comes later
     const a = names.indexOf('a');
@@ -54,9 +55,9 @@ describe('Treemap on an isometric chart', () => {
 
   it('puts siblings back to front, re-sorted as the view turns', async () => {
     // Turned so screen depth grows with `x`, then the opposite way round
-    const rising = await order({ isometric: { rotate: 80 } });
+    const rising = await order({ view: isometric({ rotate: 80 }) });
     expect(rising).toEqual(['root', 'a', 'a1', 'a2', 'b', 'c']);
-    const falling = await order({ isometric: { rotate: -100 } });
+    const falling = await order({ view: isometric({ rotate: -100 }) });
     expect(falling).toEqual(['root', 'c', 'b', 'a', 'a2', 'a1']);
   });
 });

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { hierarchy } from 'd3-hierarchy';
-	import { Chart, Layer, Link, Polygon, Text } from 'layerchart';
+	import { Chart, isometric, Layer, Link, Polygon, Text } from 'layerchart';
 	import { Tree } from 'layerchart/hierarchy';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
@@ -35,7 +35,7 @@
 
 <Chart
 	zRange={[0, 60]}
-	isometric={{ rotate: -45, tilt: 60 }}
+	view={isometric({ rotate: -45, tilt: 60 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
 	padding={32}
 	height={500}

@@ -24,7 +24,7 @@ import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { boxFaces, type BoxFace } from '$lib/utils/isometric.js';
+import type { BoxFace } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 
@@ -246,7 +246,7 @@ export class RectState {
     };
     // No height draws a plain rect, not an empty box
     if (box.z1 <= box.z0 && box.z0 === 0) return null;
-    return this.#shaded(boxFaces(box, lift, m));
+    return this.#shaded(this.chartCtx.isometric!.boxFaces(box, lift, m));
   });
 
   /** In pixel mode, how far back the box stands on the floor (its footprint's centre), if a box */
@@ -301,7 +301,8 @@ export class RectState {
     const lift = this.chartCtx.isometricLift;
     if (!this.extruded || !m || !lift) return items;
 
-    for (const item of items) item.faces = this.#shaded(boxFaces(item, lift, m));
+    for (const item of items)
+      item.faces = this.#shaded(this.chartCtx.isometric!.boxFaces(item, lift, m));
     // Back to front by footprint centre (exact on a grid), and a stack bottom up
     const depth = (item: (typeof items)[number]) =>
       m.b * (item.x + item.width / 2) + m.d * (item.y + item.height / 2);

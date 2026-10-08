@@ -1,5 +1,15 @@
 <script lang="ts">
-	import { Axis, Chart, Circle, Frame, Grid, Highlight, Layer, Tooltip } from 'layerchart';
+	import {
+		Axis,
+		Chart,
+		Circle,
+		Frame,
+		Grid,
+		Highlight,
+		isometric,
+		Layer,
+		Tooltip
+	} from 'layerchart';
 	import { scaleQuantize } from 'd3-scale';
 
 	// Seeded, so the points are the same on every load
@@ -36,7 +46,7 @@
 		'var(--color-primary-700)',
 		'var(--color-primary-900)'
 	]}
-	isometric={{ rotate: -30, tilt: 70 }}
+	view={isometric({ rotate: -30, tilt: 70 })}
 	transform={{ mode: 'canvas', drag: 'rotate' }}
 	tooltipContext={{ mode: 'quadtree', radius: 20 }}
 	padding={{ top: 24, bottom: 24, left: 40, right: 24 }}

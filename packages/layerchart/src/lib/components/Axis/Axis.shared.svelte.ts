@@ -16,7 +16,6 @@ import { occlude } from '$lib/utils/occlusion.js';
 import { getTextRect } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { floorCorner, screenToFloor, viewportAnchors } from '$lib/utils/isometric.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { type MotionProp } from '$lib/utils/motion.svelte.js';
@@ -230,7 +229,7 @@ export class AxisState {
       left: { x: -1, y: 0 },
       right: { x: 1, y: 0 },
     }[this.#props.placement as string];
-    return outward ? viewportAnchors(m, outward) : undefined;
+    return outward ? this.ctx.isometric!.viewportAnchors(m, outward) : undefined;
   }
   /**
    * For `placement="back"`: the floor corner the axis stands on, the lift, and screen offsets on
@@ -240,9 +239,10 @@ export class AxisState {
     const m = this.#layerIsometric();
     const lift = this.ctx.isometricLift;
     if (!m || !lift || this.ctx.props.z == null) return null;
-    const corner = floorCorner({ width: this.ctx.width, height: this.ctx.height }, m, 'left');
-    const left = screenToFloor(m, { x: -1, y: 0 });
-    const up = screenToFloor(m, { x: 0, y: -1 });
+    const iso = this.ctx.isometric!;
+    const corner = iso.floorCorner({ width: this.ctx.width, height: this.ctx.height }, m, 'left');
+    const left = iso.screenToFloor(m, { x: -1, y: 0 });
+    const up = iso.screenToFloor(m, { x: 0, y: -1 });
     if (!left || !up) return null;
     const raise = (height: number) => ({
       x: corner.x + lift.x * height,

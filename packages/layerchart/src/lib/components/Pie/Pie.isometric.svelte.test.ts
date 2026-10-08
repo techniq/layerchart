@@ -5,6 +5,7 @@ import { page } from 'vitest/browser';
 import MarkHarness from '$lib/tests/MarkHarness.svelte';
 import { chartTestId } from '$lib/tests/TestHarness.svelte';
 import Pie from './Pie.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const data = [{ value: 1 }, { value: 1 }, { value: 1 }, { value: 1 }];
 
@@ -17,7 +18,7 @@ describe('Pie on an isometric floor', () => {
         zRange: [0, 30],
         width: 400,
         height: 300,
-        isometric: { rotate: 0, tilt: 60 },
+        view: isometric({ rotate: 0, tilt: 60 }),
       },
       layerProps: { center: true },
       component: Pie,

@@ -4,6 +4,7 @@ import { page } from 'vitest/browser';
 
 import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import Path from './Path.svelte';
+import { isometric } from '$lib/views/isometric.js';
 
 const square = 'M20,20L80,20L80,80L20,80Z';
 
@@ -15,7 +16,7 @@ async function renderPath(pathProps: Record<string, any>, chartProps: Record<str
       height: 300,
       xDomain: [0, 100],
       yDomain: [0, 100],
-      isometric: true,
+      view: isometric,
       ...chartProps,
     },
     layerProps: { center: false },
@@ -71,7 +72,7 @@ describe('Path on an isometric floor', () => {
   });
 
   it('lies flat on a flat chart', async () => {
-    const { sides, top } = await renderPath({ z: 40 }, { isometric: false });
+    const { sides, top } = await renderPath({ z: 40 }, { view: null });
     expect(sides).toBeNull();
     expect(top.getAttribute('transform')).toBeNull();
   });

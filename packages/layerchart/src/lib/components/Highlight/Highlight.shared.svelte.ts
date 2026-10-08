@@ -13,7 +13,6 @@ import { isSinglePointMode, panelDatum } from '$lib/utils/tooltip.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { backWalls, planeCircle } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
 import type { CommonStyleProps } from '$lib/utils/types.js';
@@ -240,72 +239,39 @@ export class HighlightState {
    */
   lines = $derived.by<HighlightLineSegment[]>(() => {
     const floor = this.#flatLines;
+    const at = this.#isometricAt;
+    return at ? [...floor, ...this.ctx.isometric!.highlightWallLines(at, this.axis)] : floor;
+  });
+
+  /**
+   * For `shadows`: a circle of radius `r` on the floor beneath the point and on each back wall (see
+   * `highlightShadows`)
+   */
+  shadows = $derived.by(() => {
+    const at = this.#isometricAt;
+    if (!at) return [];
+    const shadowsProp = this.#props.shadows;
+    const r = (typeof shadowsProp === 'object' ? shadowsProp.r : undefined) ?? 6;
+    return this.ctx.isometric!.highlightShadows(at, r);
+  });
+
+  /** Where the row sits on an `isometric` floor with walls, or `null` */
+  #isometricAt = $derived.by(() => {
     const m = this.#layerIsometric();
     const lift = this.ctx.isometricLift;
     const height = this.#height;
     const depth = this.ctx.zDepth;
-    if (!m || !lift || height == null || depth <= 0) return floor;
-
-    const raise = (p: { x: number; y: number }, h: number) => ({
-      x: p.x + lift.x * h,
-      y: p.y + lift.y * h,
-    });
-    const segment = (a: { x: number; y: number }, b: { x: number; y: number }) => ({
-      x1: a.x,
-      y1: a.y,
-      x2: b.x,
-      y2: b.y,
-    });
-    const axis = this.axis;
-    const x = (this.xCoordScalar as number) + this.xOffset;
-    const y = (this.yCoordScalar as number) + this.yOffset;
-
-    const walls = backWalls({ width: this.ctx.width, height: this.ctx.height }, m).flatMap(
-      (edge) => {
-        const lines = [segment(raise(edge.from, height), raise(edge.to, height))];
-        const along = edge.axis === 'x' ? ['x', 'both'] : ['y', 'both'];
-        if (along.includes(axis)) {
-          const foot = edge.axis === 'x' ? { x, y: edge.from.y } : { x: edge.from.x, y };
-          lines.push(segment(foot, raise(foot, depth)));
-        }
-        return lines;
-      }
-    );
-    return [...floor, ...walls];
-  });
-
-  /**
-   * For `shadows`: a circle of radius `r` on the floor beneath the point and on each back wall, as
-   * path data, and as its centre and plane (`u`, `v`) for a layer without paths
-   */
-  shadows = $derived.by(() => {
-    const m = this.#layerIsometric();
-    const lift = this.ctx.isometricLift;
-    const height = this.#height;
-    if (!m || !lift || height == null || this.xCoordScalar == null || this.yCoordScalar == null) {
-      return [];
-    }
-
-    const shadowsProp = this.#props.shadows;
-    const r = (typeof shadowsProp === 'object' ? shadowsProp.r : undefined) ?? 6;
-    const x = (this.xCoordScalar as number) + this.xOffset;
-    const y = (this.yCoordScalar as number) + this.yOffset;
-
-    const shadow = (c: { x: number; y: number }, u: typeof lift, v: typeof lift) => ({
-      pathData: planeCircle(c, u, v, r),
-      c,
-      u,
-      v,
-      r,
-    });
-    const floor = shadow({ x, y }, { x: 1, y: 0 }, { x: 0, y: 1 });
-    const walls = backWalls({ width: this.ctx.width, height: this.ctx.height }, m).map((edge) => {
-      // Level with the point, on the wall at its x (a wall along x) or y (a wall along y)
-      const foot = edge.axis === 'x' ? { x, y: edge.from.y } : { x: edge.from.x, y };
-      const across = edge.axis === 'x' ? { x: 1, y: 0 } : { x: 0, y: 1 };
-      return shadow({ x: foot.x + lift.x * height, y: foot.y + lift.y * height }, across, lift);
-    });
-    return [floor, ...walls];
+    if (!m || !lift || height == null || depth <= 0) return null;
+    if (this.xCoordScalar == null || this.yCoordScalar == null) return null;
+    return {
+      x: (this.xCoordScalar as number) + this.xOffset,
+      y: (this.yCoordScalar as number) + this.yOffset,
+      height,
+      depth,
+      lift,
+      floor: { width: this.ctx.width, height: this.ctx.height },
+      m,
+    };
   });
 
   #flatLines = $derived.by<HighlightLineSegment[]>(() => {
