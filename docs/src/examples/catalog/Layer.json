@@ -276,6 +276,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "oscilloscope-ridgeline-isometric",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline-isometric",
+      "lineNumber": 144,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "Area",
       "path": "/docs/components/Area/playground",
@@ -1515,6 +1522,13 @@
       "line": "<Layer type=\"html\">"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -1606,6 +1620,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 59,
+      "line": "<Layer>"
+    },
+    {
       "example": "isometric-columns",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-columns",
@@ -1620,10 +1641,38 @@
       "line": "<Layer>"
     },
     {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
       "example": "isometric-playground",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-playground",
-      "lineNumber": 65,
+      "lineNumber": 112,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 58,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 49,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 94,
       "line": "<Layer>"
     },
     {
@@ -1806,6 +1855,13 @@
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
       "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "volcano-isometric",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-isometric",
+      "lineNumber": 54,
       "line": "<Layer>"
     },
     {
@@ -2156,6 +2212,13 @@
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
       "lineNumber": 74,
+      "line": "<Layer>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 61,
       "line": "<Layer>"
     },
     {
@@ -3227,6 +3290,13 @@
       "component": "Pie",
       "path": "/docs/components/Pie/inner-radius-zero-one",
       "lineNumber": 18,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 59,
       "line": "<Layer center>"
     },
     {
@@ -4336,6 +4406,13 @@
       "line": "<Layer type=\"html\">"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 48,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -4469,5 +4546,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-05T19:24:21.243Z"
+  "updatedAt": "2026-10-08T16:54:43.809Z"
 }

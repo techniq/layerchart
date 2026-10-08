@@ -36,7 +36,14 @@
       "path": "/docs/components/Partition/sunburst",
       "lineNumber": 119,
       "line": "<ArcLabel"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 83,
+      "line": "<ArcLabel"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:21.938Z"
+  "updatedAt": "2026-10-08T16:54:42.844Z"
 }

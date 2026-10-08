@@ -758,6 +758,13 @@
       "line": "<Polygon"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 60,
+      "line": "<Polygon"
+    },
+    {
       "example": "shapes",
       "component": "Vector",
       "path": "/docs/components/Vector/shapes",
@@ -772,5 +779,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.453Z"
+  "updatedAt": "2026-10-08T16:54:44.132Z"
 }

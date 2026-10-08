@@ -386,8 +386,8 @@
       "example": "isometric-scatter",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter",
-      "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice isometric padding={24} height={400} />"
+      "lineNumber": 13,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice view={isometric} padding={24} height={400} />"
     },
     {
       "example": "basic",
@@ -572,5 +572,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:18.513Z"
+  "updatedAt": "2026-10-08T16:54:44.247Z"
 }

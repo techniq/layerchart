@@ -242,6 +242,13 @@
   ],
   "usage": [
     {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 60,
+      "line": "<Legend placement=\"top-left\" variant=\"swatches\" />"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -613,5 +620,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:18.051Z"
+  "updatedAt": "2026-10-08T16:54:43.824Z"
 }

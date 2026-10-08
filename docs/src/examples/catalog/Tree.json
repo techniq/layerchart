@@ -76,6 +76,43 @@
       ]
     },
     {
+      "name": "isometric",
+      "title": "isometric",
+      "path": "/docs/components/Tree/isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 48,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Tree",
+          "lineNumber": 49,
+          "line": "<Tree hierarchy={data} orientation=\"vertical\">"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 53,
+          "line": "<Link data={link} orientation=\"vertical\" class=\"stroke-surface-content/40\" />"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 60,
+          "line": "<Polygon"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 70,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "playground",
       "title": "playground",
       "path": "/docs/components/Tree/playground",
@@ -134,6 +171,13 @@
       "line": "<Tree"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 49,
+      "line": "<Tree hierarchy={data} orientation=\"vertical\">"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -141,5 +185,5 @@
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:19.944Z"
+  "updatedAt": "2026-10-08T16:54:44.489Z"
 }

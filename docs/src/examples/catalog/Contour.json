@@ -110,6 +110,28 @@
       ]
     },
     {
+      "name": "volcano-isometric",
+      "title": "volcano isometric",
+      "path": "/docs/components/Contour/volcano-isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 54,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Contour",
+          "lineNumber": 57,
+          "line": "<Contour"
+        }
+      ]
+    },
+    {
       "name": "volcano-lines",
       "title": "volcano lines",
       "path": "/docs/components/Contour/volcano-lines",
@@ -167,6 +189,13 @@
       "line": "<Contour"
     },
     {
+      "example": "volcano-isometric",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-isometric",
+      "lineNumber": 57,
+      "line": "<Contour"
+    },
+    {
       "example": "volcano-lines",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-lines",
@@ -195,5 +224,5 @@
       "line": "<Contour"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:24.189Z"
+  "updatedAt": "2026-10-08T16:54:43.345Z"
 }

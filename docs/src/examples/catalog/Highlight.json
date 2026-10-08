@@ -374,6 +374,27 @@
       "line": "<Highlight lines points axis=\"both\" />"
     },
     {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 66,
+      "line": "<Highlight data={hovered} lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 71,
+      "line": "<Highlight"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 57,
+      "line": "<Highlight points={{ r: 5 }} />"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -682,5 +703,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.408Z"
+  "updatedAt": "2026-10-08T16:54:43.721Z"
 }

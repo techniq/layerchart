@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-05T19:24:30.583Z",
+  "generatedAt": "2026-10-08T16:54:42.290Z",
   "totalComponents": 80,
-  "totalExamples": 997,
+  "totalExamples": 1008,
   "components": [
     {
       "component": "AnnotationLine",
@@ -415,6 +415,11 @@
           "name": "oscilloscope-ridgeline",
           "path": "/example/Area/oscilloscope-ridgeline",
           "checksum": "df9688f2ca25fa1070f54d55024024d5"
+        },
+        {
+          "name": "oscilloscope-ridgeline-isometric",
+          "path": "/example/Area/oscilloscope-ridgeline-isometric",
+          "checksum": "a69a43e071db021587ec1a5a493f6927"
         },
         {
           "name": "playground",
@@ -2047,6 +2052,11 @@
           "checksum": "922ec05786b18e547280b38b2c4fd0e3"
         },
         {
+          "name": "isometric",
+          "path": "/example/Calendar/isometric",
+          "checksum": "bc6b98a33867348fea32a9ea628f592f"
+        },
+        {
           "name": "last-month",
           "path": "/example/Calendar/last-month",
           "checksum": "0354c813a0b8719724105f1038497a2e"
@@ -2257,24 +2267,49 @@
           "checksum": "19d81cdbf281d26360989b8713f0495e"
         },
         {
+          "name": "isometric-areas",
+          "path": "/example/Chart/isometric-areas",
+          "checksum": "3d03215a32a90450e15ac1436d01e2cb"
+        },
+        {
           "name": "isometric-columns",
           "path": "/example/Chart/isometric-columns",
-          "checksum": "0b5faa188caa93513d8d1f26bb22f805"
+          "checksum": "5b14f8e53bc88707937f07ed6b9d5f54"
         },
         {
           "name": "isometric-heatmap",
           "path": "/example/Chart/isometric-heatmap",
-          "checksum": "f07900d016c3fb38055c65361f0caa65"
+          "checksum": "0b279f101b91cfb2058d41599d355b11"
+        },
+        {
+          "name": "isometric-pan-zoom",
+          "path": "/example/Chart/isometric-pan-zoom",
+          "checksum": "d01d48d2d8e044a26f564140a436813c"
         },
         {
           "name": "isometric-playground",
           "path": "/example/Chart/isometric-playground",
-          "checksum": "791ec85f3f59e70d55ee7419b5e306d8"
+          "checksum": "0ff200bdb750eb385ceb5e966a05d957"
         },
         {
           "name": "isometric-scatter",
           "path": "/example/Chart/isometric-scatter",
-          "checksum": "238d84e1158a7869164406f9cef4a085"
+          "checksum": "1000e24fa907b21436b6e3e4146cfbb2"
+        },
+        {
+          "name": "isometric-scatter-3d",
+          "path": "/example/Chart/isometric-scatter-3d",
+          "checksum": "3e8a72430f5c727d8c8b6ec5874dd131"
+        },
+        {
+          "name": "isometric-stacked-columns",
+          "path": "/example/Chart/isometric-stacked-columns",
+          "checksum": "233c1dde3f88c0be5f163bbb7405a673"
+        },
+        {
+          "name": "isometric-treemap",
+          "path": "/example/Chart/isometric-treemap",
+          "checksum": "c19517206b417c830b6e35633672d24e"
         },
         {
           "name": "mixed-marks-with-stack",
@@ -2490,6 +2525,11 @@
           "name": "volcano-filled-interactive",
           "path": "/example/Contour/volcano-filled-interactive",
           "checksum": "c3913b72e27917bba567a9c9bb1e03f1"
+        },
+        {
+          "name": "volcano-isometric",
+          "path": "/example/Contour/volcano-isometric",
+          "checksum": "a93ddb98ed77b32ca2eb230c9b53e6a8"
         },
         {
           "name": "volcano-lines",
@@ -2830,6 +2870,11 @@
           "name": "eclipses-globe",
           "path": "/example/GeoPath/eclipses-globe",
           "checksum": "c4c87a7c15b6a555cd469b57192d3eae"
+        },
+        {
+          "name": "election-isometric",
+          "path": "/example/GeoPath/election-isometric",
+          "checksum": ""
         },
         {
           "name": "interpolating-projections",
@@ -3979,7 +4024,7 @@
         {
           "name": "default-slot-render-each-arc",
           "path": "/example/Pie/default-slot-render-each-arc",
-          "checksum": "283ff9079fce8f584598cac66469d82d"
+          "checksum": "a40c043debce7a96363d26633bf8b287"
         },
         {
           "name": "disable-sorting",
@@ -4002,34 +4047,39 @@
           "checksum": "e174a3950a2af268672dd242fadc2881"
         },
         {
+          "name": "isometric",
+          "path": "/example/Pie/isometric",
+          "checksum": "3e584f475c71a896f944b1906793a40b"
+        },
+        {
           "name": "labels",
           "path": "/example/Pie/labels",
-          "checksum": "a9dd25eda2ae16e8d3550d7d808ee97c"
+          "checksum": "e595b71aa5d8800f0968f3d081acc664"
         },
         {
           "name": "labels-centroid",
           "path": "/example/Pie/labels-centroid",
-          "checksum": "a9dd25eda2ae16e8d3550d7d808ee97c"
+          "checksum": "e595b71aa5d8800f0968f3d081acc664"
         },
         {
           "name": "labels-centroid-multiple",
           "path": "/example/Pie/labels-centroid-multiple",
-          "checksum": "92ca3a8eb5fe6daeb046ce7aaa3522bd"
+          "checksum": "8de31d8d1236c6c8285052088e98f69a"
         },
         {
           "name": "labels-outer",
           "path": "/example/Pie/labels-outer",
-          "checksum": "877618360516f8b0292f3706f67cd8c8"
+          "checksum": "bc0f0c761620285dae29629dce41c968"
         },
         {
           "name": "labels-outer-radial",
           "path": "/example/Pie/labels-outer-radial",
-          "checksum": "2ecbe07dbbc92bcd94f08ab09b98a050"
+          "checksum": "55ec9dadd8ce105069be8ce051808726"
         },
         {
           "name": "labels-outer-with-padding",
           "path": "/example/Pie/labels-outer-with-padding",
-          "checksum": "ecdfc945008bbe35cbd0966faf958088"
+          "checksum": "e2c9494aa9f43d18b318fb135914270d"
         },
         {
           "name": "multiple-data-prop",
@@ -4094,7 +4144,7 @@
         {
           "name": "tooltip-with-arcs-slot",
           "path": "/example/Pie/tooltip-with-arcs-slot",
-          "checksum": "0b0d13a0ed4f18b6d531281fdbbaf42a"
+          "checksum": "6905f45da7f21d145f5355a31e55ce9f"
         },
         {
           "name": "tweened",
@@ -5200,6 +5250,11 @@
           "name": "html-nodes",
           "path": "/example/Tree/html-nodes",
           "checksum": "fd06d8fbc2b8ba68dd380dcd13cd6f1e"
+        },
+        {
+          "name": "isometric",
+          "path": "/example/Tree/isometric",
+          "checksum": "6b5e88bd3ce5d6d6fd490e658cff81b9"
         },
         {
           "name": "playground",

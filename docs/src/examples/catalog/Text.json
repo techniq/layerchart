@@ -571,6 +571,13 @@
       "line": "<Text"
     },
     {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 119,
+      "line": "<Text"
+    },
+    {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
@@ -1040,6 +1047,13 @@
       "line": "<Text"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 70,
+      "line": "<Text"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -1180,5 +1194,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:18.603Z"
+  "updatedAt": "2026-10-08T16:54:44.328Z"
 }

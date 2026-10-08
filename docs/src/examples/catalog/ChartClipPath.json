@@ -80,6 +80,13 @@
       "line": "<ChartClipPath>"
     },
     {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 49,
+      "line": "<ChartClipPath>"
+    },
+    {
       "example": "minimap",
       "component": "ChartGroup",
       "path": "/docs/components/ChartGroup/minimap",
@@ -157,5 +164,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:01.371Z"
+  "updatedAt": "2026-10-08T16:54:43.194Z"
 }

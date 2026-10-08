@@ -196,9 +196,9 @@
       "example": "isometric-playground",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-playground",
-      "lineNumber": 69,
+      "lineNumber": 116,
       "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
     }
   ],
-  "updatedAt": "2026-10-05T19:24:20.287Z"
+  "updatedAt": "2026-10-08T16:54:43.112Z"
 }

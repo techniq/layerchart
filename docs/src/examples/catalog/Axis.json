@@ -3454,6 +3454,27 @@
       "line": "<Axis placement=\"bottom\" />"
     },
     {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 62,
+      "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 65,
+      "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 67,
+      "line": "<Axis placement=\"back\" />"
+    },
+    {
       "example": "isometric-columns",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-columns",
@@ -3482,18 +3503,74 @@
       "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} tickLabelProps={{ viewport: true }} />"
     },
     {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 46,
+      "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 47,
+      "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
       "example": "isometric-playground",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-playground",
-      "lineNumber": 67,
+      "lineNumber": 114,
       "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
     },
     {
       "example": "isometric-playground",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-playground",
-      "lineNumber": 68,
+      "lineNumber": 115,
       "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 61,
+      "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 62,
+      "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 63,
+      "line": "<Axis placement=\"back\" />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 52,
+      "line": "<Axis placement=\"bottom\" format=\"none\" tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 53,
+      "line": "<Axis placement=\"left\" format={(d) => `Basket ${d}`} tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 54,
+      "line": "<Axis placement=\"back\" format=\"metric\" />"
     },
     {
       "example": "mixed-marks-with-stack",
@@ -5708,5 +5785,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-10-05T19:24:19.984Z"
+  "updatedAt": "2026-10-08T16:54:42.908Z"
 }

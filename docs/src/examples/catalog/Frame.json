@@ -152,6 +152,34 @@
       "line": "<Frame class=\"stroke-surface-content/20 fill-none\" />"
     },
     {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 60,
+      "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 44,
+      "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 59,
+      "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 50,
+      "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+    },
+    {
       "example": "basic",
       "component": "ClipPath",
       "path": "/docs/components/ClipPath/basic",
@@ -208,5 +236,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-08-23T18:52:25.602Z"
+  "updatedAt": "2026-10-08T16:54:43.488Z"
 }

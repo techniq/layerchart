@@ -296,6 +296,13 @@
       "line": "<Rect"
     },
     {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 103,
+      "line": "<Rect"
+    },
+    {
       "example": "clip-snippet",
       "component": "ClipPath",
       "path": "/docs/components/ClipPath/clip-snippet",
@@ -1059,5 +1066,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.325Z"
+  "updatedAt": "2026-10-08T16:54:44.175Z"
 }
