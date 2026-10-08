@@ -14,6 +14,8 @@
 export { default as Svg, default as Layer } from './components/layers/Svg.svelte';
 export type { SVGProps } from './components/layers/Svg.svelte';
 export { default as Chart } from './components/Chart/Chart.svg.svelte';
+// `view={isometric}`, drawing height in svg layers only
+export { isometric } from './views/isometric.svg.js';
 export { default as ChartCore } from './components/Chart/ChartCore.svelte';
 export type {
   ChartProps,

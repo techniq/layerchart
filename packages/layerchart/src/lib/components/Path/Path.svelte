@@ -16,7 +16,7 @@
   let { pathRef = $bindable(), ...rest }: PathProps = $props();
 </script>
 
-{#if layerCtx === 'svg' && rest.z != null && ctx.isometric}
+{#if layerCtx === 'svg' && rest.z != null && ctx.isometric?.PathExtruded}
   <!-- Stood up by `z`, with the `isometric` view's own component -->
   {@const PathExtruded = ctx.isometric.PathExtruded}
   <PathExtruded bind:pathRef {...rest} />

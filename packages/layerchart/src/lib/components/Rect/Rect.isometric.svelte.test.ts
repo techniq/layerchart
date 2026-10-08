@@ -7,6 +7,8 @@ import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import Cell from '../Cell/Cell.svelte';
 import Rect from './Rect.svelte';
 import { isometric } from '$lib/views/isometric.js';
+import { isometric as isometricHtml } from '$lib/views/isometric.html.js';
+import { isometric as isometricSvg } from '$lib/views/isometric.svg.js';
 
 const data = [
   { x: 'a', y: 'p', value: 10 },
@@ -242,5 +244,34 @@ describe('Rect in pixel mode on an isometric floor', () => {
     });
     const partway = top();
     await vi.waitFor(() => expect(top()).toBeLessThan(partway - 1));
+  });
+});
+
+describe('Rect with a per-layer `isometric`', () => {
+  async function renderHtml(view: any) {
+    const screen = render(TestHarness, {
+      chartProps: { ...cellChart, view },
+      layer: 'html',
+      layerProps: { center: false },
+      component: Cell,
+      componentProps: { x: 'x', y: 'y' },
+    });
+    await expect.element(page.getByTestId(chartTestId)).toBeInTheDocument();
+    const el = page.getByTestId(chartTestId).element() as HTMLElement;
+    const result = { tops: el.querySelectorAll('.lc-rect-top').length };
+    screen.unmount();
+    return result;
+  }
+
+  it("draws boxes with its own layer's, or `layerchart`'s, which has every layer's", async () => {
+    expect((await renderHtml(isometricHtml)).tops).toBe(4);
+    expect((await renderHtml(isometric)).tops).toBe(4);
+  });
+
+  it("lies flat, with a warning, in a layer it doesn't draw", async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    expect((await renderHtml(isometricSvg)).tops).toBe(0);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("'layerchart/html'"));
+    warn.mockRestore();
   });
 });

@@ -41,6 +41,8 @@ const lib = join(import.meta.dirname, '..');
 /** The view itself, and the files that are part of it */
 const partOfView = (file: string) =>
   file.startsWith('views/') ||
+  // The per-layer entries export their layer's `isometric`
+  ['svg.ts', 'canvas.ts', 'html.ts'].includes(file) ||
   file === 'utils/isometric.ts' ||
   viewOnlyFiles.some((name) => file.includes(name));
 

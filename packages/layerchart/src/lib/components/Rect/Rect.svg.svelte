@@ -37,7 +37,8 @@
         z,
         shade,
         ...rest,
-      }) as RectProps
+      }) as RectProps,
+    'svg'
   );
 
   let ref = $state<SVGRectElement>();
@@ -68,7 +69,8 @@
     {@const resolvedClass = resolveStyleProp(rest.class, item.d)}
     {@const pathData = c.roundedRectPath(item.x, item.y, item.width, item.height)}
     {#if item.faces}
-      {@const RectBox = c.chartCtx.isometric!.RectBoxSvg}
+      <!-- Only when the `isometric` view draws boxes in this layer (see `RectState`) -->
+      {@const RectBox = c.chartCtx.isometric!.RectBoxSvg!}
       <RectBox
         faces={item.faces}
         attrs={rest}
@@ -119,7 +121,7 @@
     {/if}
   {/each}
 {:else if c.pixelFaces}
-  {@const RectBox = c.chartCtx.isometric!.RectBoxSvg}
+  {@const RectBox = c.chartCtx.isometric!.RectBoxSvg!}
   <RectBox
     faces={c.pixelFaces}
     attrs={rest}

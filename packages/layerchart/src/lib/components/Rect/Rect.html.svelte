@@ -15,7 +15,7 @@
     refProp = ref as any;
   });
 
-  const c = new RectState(() => rest as RectProps);
+  const c = new RectState(() => rest as RectProps, 'html');
 
   // `z` and `shade` are read by `RectState`, not HTML attributes
   const htmlRest = $derived.by(() => {
@@ -44,7 +44,8 @@
           ? '1px'
           : undefined}
     {#if item.faces}
-      {@const RectBox = c.chartCtx.isometric!.RectBoxHtml}
+      <!-- Only when the `isometric` view draws boxes in this layer (see `RectState`) -->
+      {@const RectBox = c.chartCtx.isometric!.RectBoxHtml!}
       <RectBox
         faces={item.faces}
         fill={resolvedFill}
@@ -74,7 +75,7 @@
     {/if}
   {/each}
 {:else if c.pixelFaces}
-  {@const RectBox = c.chartCtx.isometric!.RectBoxHtml}
+  {@const RectBox = c.chartCtx.isometric!.RectBoxHtml!}
   <RectBox
     faces={c.pixelFaces}
     fill={c.staticFill}

@@ -14,7 +14,7 @@
   // than creating an element for it
   let { ref: _ref = $bindable(), ...rest }: RectProps = $props();
 
-  const c = new RectState(() => rest as RectProps);
+  const c = new RectState(() => rest as RectProps, 'canvas');
 
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
@@ -80,8 +80,9 @@
           resolvedOpacity,
           resolvedClass
         );
+        // Only when the `isometric` view draws boxes on canvas (see `RectState`)
         if (item.faces) {
-          c.chartCtx.isometric!.renderBoxFaces(ctx, item.faces, styleOpts, styleOverrides);
+          c.chartCtx.isometric!.renderBoxFaces!(ctx, item.faces, styleOpts, styleOverrides);
           continue;
         }
         renderRect(
@@ -99,7 +100,7 @@
         );
       }
     } else if (c.pixelFaces) {
-      c.chartCtx.isometric!.renderBoxFaces(
+      c.chartCtx.isometric!.renderBoxFaces!(
         ctx,
         c.pixelFaces,
         getStyleOptions(styleOverrides),

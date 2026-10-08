@@ -3,7 +3,7 @@ title: Isometric (Faux 3D)
 category: state
 ---
 
-`isometric` draws a chart's plot area as a floor seen from above at an angle. Works in any layer type (`Svg`, `Canvas`, `Html`) and marks (ex. `Axis`, `Rect`, etc).
+`view={isometric}` draws a chart's plot area as a floor seen from above at an angle. Works in any layer type (`Svg`, `Canvas`, `Html`) and marks (ex. `Axis`, `Rect`, etc).
 
 ## Quick start
 

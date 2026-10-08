@@ -24,6 +24,8 @@ import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import type { LayerContext } from '$lib/contexts/layer.js';
+import { missingRenderer } from '$lib/views/view.js';
 import type { BoxFace } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
@@ -221,7 +223,23 @@ export class RectState {
     if (!this.dataMode || !this.#layerIsometric()) return false;
     const lift = this.chartCtx.isometricLift;
     if (!lift || (lift.x === 0 && lift.y === 0)) return false;
-    return this.#props.z != null || this.chartCtx.props.z != null;
+    return (this.#props.z != null || this.chartCtx.props.z != null) && this.#drawsBoxes;
+  });
+
+  #layer: LayerContext = 'svg';
+
+  /**
+   * Whether the `isometric` view draws boxes in this layer.  One from `layerchart/svg` doesn't in a
+   * canvas layer, say: the rect lies flat, with a warning.
+   */
+  #drawsBoxes = $derived.by(() => {
+    const iso = this.chartCtx.isometric;
+    if (!iso) return false;
+    const renderer = { svg: iso.RectBoxSvg, html: iso.RectBoxHtml, canvas: iso.renderBoxFaces }[
+      this.#layer
+    ];
+    if (!renderer) missingRenderer(this.#layer);
+    return !!renderer;
   });
 
   /** `faces` with their shading dropped when `shade` is off */
@@ -235,7 +253,7 @@ export class RectState {
     if (this.dataMode || (typeof z !== 'number' && !Array.isArray(z))) return null;
     const m = this.#layerIsometric();
     const lift = this.chartCtx.isometricLift;
-    if (!m || !lift || (lift.x === 0 && lift.y === 0)) return null;
+    if (!m || !lift || (lift.x === 0 && lift.y === 0) || !this.#drawsBoxes) return null;
     const box = {
       x: this.motionX,
       y: this.motionY,
@@ -490,8 +508,12 @@ export class RectState {
     return undefined;
   });
 
-  constructor(getProps: () => RectProps) {
+  /**
+   * @param layer  The layer this `Rect` draws into, to draw boxes with that layer's renderer
+   */
+  constructor(getProps: () => RectProps, layer: LayerContext) {
     this.#getProps = getProps;
+    this.#layer = layer;
 
     const initial = getProps();
     const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
