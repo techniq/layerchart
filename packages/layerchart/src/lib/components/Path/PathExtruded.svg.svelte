@@ -35,7 +35,7 @@
         fill={rest.fill as string | undefined}
         fill-opacity={rest.fillOpacity}
         opacity={rest.opacity}
-        class={cls('lc-path-side', rest.class as string | undefined)}
+        class={cls('lc-path-side', rest.class)}
         style:stroke="none"
       />
     {/if}
