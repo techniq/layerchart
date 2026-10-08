@@ -1,5 +1,37 @@
 # LayerChart
 
+## 2.6.0
+
+### Minor Changes
+
+- feat(Contour): Stroke unfilled contours in the bands' colors when no `stroke` is given ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(Frame|Grid|Axis|Highlight): Draw an `isometric` chart's back walls, their gridlines (`<Grid z>`), a height axis (`<Axis placement="back">`), and highlights at a point's height ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat: Support `z` heights on an `isometric` chart — boxes (`Rect`, `Cell`, `Calendar`, `Bars` with `valueAxis="z"`), floating `Circle`, `Text`, `Labels` and `ArcLabel`, `Line` stems, and extruded `Polygon`, `Path`, `GeoPath`, `Contour`, `Pie`, `Area` and `Spline` ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- breaking(Chart|Spline|Area): Rename the `z` grouping channel to `g` (ex. `<Spline g="id">`), freeing `z` for a third position ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(TransformContext): Switch `mode` without remounting the chart ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(Chart): Support `view={isometric}` to draw the plot area as a floor seen at an angle, turned with `isometric({ rotate, tilt })` or by dragging (`transform={{ drag: 'rotate' }}`), with `viewport` text facing the viewer ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(Ellipse): Support `rotate` to turn the ellipse about its center ([#934](https://github.com/techniq/layerchart/pull/934))
+
+### Patch Changes
+
+- fix(TransformContext): Zoom in / out about the middle of the plot area, and center a `canvas` zoom without resetting its scale ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(GeoPath): Start a tweened map shape as itself rather than rising from a baseline ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(Axis): Size an `angle` axis' ticks by its circle rather than the chart's width, so a continuous angle scale's tick count no longer changes with width (square charts get more ticks) ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(Link): Draw links whose ends share an `x` or `y` ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(BrushContext): Draw and measure the brush through a `canvas` pan / zoom ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(TooltipContext): Account for `transform.mode: 'canvas'` pan / zoom in bisect modes and `'data'` tooltip placement ([#934](https://github.com/techniq/layerchart/pull/934))
+
 ## 2.5.2
 
 ### Patch Changes
