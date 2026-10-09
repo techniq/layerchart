@@ -309,6 +309,10 @@
       "hash": "3bd2ac429c7d8944",
       "elements": 32
     },
+    "Area/oscilloscope-ridgeline-isometric": {
+      "hash": "e7a20bf460d7acf3",
+      "elements": 42
+    },
     "Area/playground": {
       "hash": "e26dad21edb43d28",
       "elements": 60
@@ -974,20 +978,20 @@
       "elements": 86
     },
     "BarChart/radial-horizontal": {
-      "hash": "27a8f4c6ebda204b",
-      "elements": 103
+      "hash": "bf008aff4141d956",
+      "elements": 133
     },
     "BarChart/radial-horizontal-color-per-value": {
-      "hash": "f90054d4c0f78cce",
-      "elements": 78
+      "hash": "f4ee8fbe97ce4f67",
+      "elements": 108
     },
     "BarChart/radial-horizontal-duration": {
       "hash": "84fa38cc0a07bdae",
       "elements": 89
     },
     "BarChart/radial-horizontal-grid-between": {
-      "hash": "f2e375ae2a861851",
-      "elements": 79
+      "hash": "a02e0812837581f9",
+      "elements": 109
     },
     "BarChart/radial-vertical": {
       "hash": "598fcd2a9866a812",
@@ -1581,6 +1585,10 @@
       "hash": "fc37a47a5f9ebe67",
       "elements": 6
     },
+    "Calendar/isometric": {
+      "hash": "836225f8ee09bb46",
+      "elements": 1405
+    },
     "Calendar/last-month": {
       "hash": "47176e983cde04f6",
       "elements": 40
@@ -1741,6 +1749,42 @@
       "hash": "5521cc47fa03dc76",
       "elements": 411
     },
+    "Chart/isometric-areas": {
+      "hash": "a648843c441df5cc",
+      "elements": 104
+    },
+    "Chart/isometric-columns": {
+      "hash": "e17bf07854b91121",
+      "elements": 824
+    },
+    "Chart/isometric-heatmap": {
+      "hash": "ae48345b323c3f83",
+      "elements": 264
+    },
+    "Chart/isometric-pan-zoom": {
+      "hash": "50c6b34a5cab088c",
+      "elements": 271
+    },
+    "Chart/isometric-playground": {
+      "hash": "d92407b15f8b9371",
+      "elements": 824
+    },
+    "Chart/isometric-scatter": {
+      "hash": "d9144be620e8f93e",
+      "elements": 164
+    },
+    "Chart/isometric-scatter-3d": {
+      "hash": "a247ed698bd7c5dd",
+      "elements": 209
+    },
+    "Chart/isometric-stacked-columns": {
+      "hash": "c69f9caf2ae2a03e",
+      "elements": 141
+    },
+    "Chart/isometric-treemap": {
+      "hash": "2665a01e4c9df915",
+      "elements": 1689
+    },
     "Chart/mixed-marks-with-stack": {
       "hash": "f047bc68303f8156",
       "elements": 79
@@ -1885,25 +1929,29 @@
       "hash": "90ea71aeea4ac121",
       "elements": 77
     },
+    "Contour/volcano-isometric": {
+      "hash": "e52d7228d60e6575",
+      "elements": 37
+    },
     "Contour/volcano-lines": {
       "hash": "df2243825e1f57a7",
       "elements": 77
     },
     "Dagre/basic": {
-      "hash": "cb4e63dfc118b12f",
-      "elements": 78
+      "hash": "25c012863814b1cd",
+      "elements": 76
     },
     "Dagre/playground": {
-      "hash": "cb4e63dfc118b12f",
-      "elements": 78
+      "hash": "25c012863814b1cd",
+      "elements": 76
     },
     "Dagre/software-user-flow": {
-      "hash": "41596e9d12a44862",
-      "elements": 70
+      "hash": "aee38e19cacf364b",
+      "elements": 68
     },
     "Dagre/tcp-state-diagram": {
-      "hash": "1fab39181c5de47c",
-      "elements": 121
+      "hash": "8dc51155459e1eeb",
+      "elements": 119
     },
     "Density/bandwidth": {
       "hash": "17a7838c5feced44",
@@ -1922,8 +1970,8 @@
       "elements": 179
     },
     "Density/walmart": {
-      "hash": "637108979f634cee",
-      "elements": 3284
+      "hash": "393661bda0408e6e",
+      "elements": 3282
     },
     "Density/weighted": {
       "hash": "fb630bf75b0db543",
@@ -2010,7 +2058,7 @@
       "elements": 151
     },
     "ForceSimulation/collision-detection": {
-      "hash": "17551b2b7e0db6fe",
+      "hash": "36544fadee3d7deb",
       "elements": 205,
       "settled": false,
       "unstable": true
@@ -2021,13 +2069,12 @@
       "settled": false
     },
     "ForceSimulation/games-industry-layoffs": {
-      "hash": "6a614b524f3dcf37",
+      "hash": "b7b0d3c1d41904ab",
       "elements": 500,
-      "settled": false,
-      "unstable": true
+      "settled": false
     },
     "ForceSimulation/graph-drag": {
-      "hash": "a96eb26be7ab304e",
+      "hash": "ff5aa34105afd370",
       "elements": 37,
       "settled": false,
       "unstable": true
@@ -2038,7 +2085,7 @@
       "settled": false
     },
     "ForceSimulation/group": {
-      "hash": "9a455638c1372f1d",
+      "hash": "99f4b784aeed777c",
       "elements": 39,
       "settled": false,
       "unstable": true
@@ -2054,7 +2101,7 @@
       "settled": false
     },
     "ForceSimulation/text": {
-      "hash": "43fe657875a38878",
+      "hash": "616f8890aa3b50b4",
       "elements": 252,
       "settled": false,
       "unstable": true
@@ -2081,8 +2128,8 @@
       "elements": 58
     },
     "GeoCircle/earthquake-globe": {
-      "hash": "679d4cea417b5136",
-      "elements": 76
+      "hash": "4f5f7909f6c768a7",
+      "elements": 81
     },
     "GeoCircle/playground": {
       "hash": "c173658e91d8f7d0",
@@ -2093,12 +2140,12 @@
       "elements": 60
     },
     "GeoLegend/basic": {
-      "hash": "900e05ba082f1336",
-      "elements": 24
+      "hash": "158df28e18e52369",
+      "elements": 22
     },
     "GeoLegend/canvas-mode": {
-      "hash": "e0cd40363493feda",
-      "elements": 23
+      "hash": "cd219175ec5d4223",
+      "elements": 21
     },
     "GeoLegend/stacked-units": {
       "hash": "81510fc9576c4c73",
@@ -2121,34 +2168,38 @@
       "elements": 166
     },
     "GeoPath/bubble-map": {
-      "hash": "ade3238d50facb47",
-      "elements": 6336
+      "hash": "bb6352d3b1454791",
+      "elements": 6334
     },
     "GeoPath/choropleth": {
-      "hash": "f10e2926e3e07217",
-      "elements": 3178
+      "hash": "1ad2d91532096488",
+      "elements": 3176
     },
     "GeoPath/eclipses-globe": {
       "hash": "05a6e427963d70e7",
       "elements": 79
     },
+    "GeoPath/election-isometric": {
+      "hash": "48df8818ed1eed1f",
+      "elements": 1798
+    },
     "GeoPath/interpolating-projections": {
-      "hash": "67a5b986f6893b34",
+      "hash": "48bac5ebdcdfd40d",
       "elements": 9,
       "settled": false,
       "unstable": true
     },
     "GeoPath/paint-brush-selection": {
-      "hash": "fd317b53fb83d686",
-      "elements": 3169
+      "hash": "95385ce3832206d1",
+      "elements": 3167
     },
     "GeoPath/sketchy-globe": {
       "hash": "5448c1c0088e3829",
       "elements": 9
     },
     "GeoPath/spike-map": {
-      "hash": "e795f3e34daada43",
-      "elements": 6301
+      "hash": "0dc5eb9b00870b01",
+      "elements": 6299
     },
     "GeoPath/submarine-cables-globe": {
       "hash": "d5e19fad65821195",
@@ -2163,12 +2214,12 @@
       "elements": 58
     },
     "GeoPath/transform-canvas": {
-      "hash": "f3aedf213a23145c",
-      "elements": 66
+      "hash": "591e7eb8d33eb79d",
+      "elements": 64
     },
     "GeoPath/transform-canvas-scale-extent": {
-      "hash": "fe70b30e7921b82a",
-      "elements": 67
+      "hash": "a72f4e7533062383",
+      "elements": 65
     },
     "GeoPath/transform-globe-constrain": {
       "hash": "d78718141e73895b",
@@ -2179,16 +2230,16 @@
       "elements": 164
     },
     "GeoPath/transform-projection": {
-      "hash": "c6b7bfc70cb8bc76",
-      "elements": 66
+      "hash": "824a24cadf85ab76",
+      "elements": 64
     },
     "GeoPath/transform-world-canvas": {
-      "hash": "0253ef7307a69c62",
-      "elements": 195
+      "hash": "149dc8ffbf57e5a8",
+      "elements": 193
     },
     "GeoPath/transform-world-projection": {
-      "hash": "044af9ff129c1961",
-      "elements": 195
+      "hash": "42a424079fa33999",
+      "elements": 193
     },
     "GeoPath/translucent-globe": {
       "hash": "c4c2193bf0d102c2",
@@ -2267,17 +2318,17 @@
       "elements": 10
     },
     "GeoRaster/projections": {
-      "hash": "db2af2bb51bc2a84",
-      "elements": 187,
-      "unstable": true
+      "hash": "0b7907912facc9bf",
+      "elements": 187
     },
     "GeoRaster/textures": {
       "hash": "7439cddb6117196b",
       "elements": 10
     },
     "GeoRaster/tiles-globe": {
-      "hash": "2043b1d0a59d6f65",
-      "elements": 166
+      "hash": "3842daf168db0627",
+      "elements": 166,
+      "unstable": true
     },
     "GeoSpline/draggable-globe": {
       "hash": "6922f066972b458b",
@@ -2296,16 +2347,16 @@
       "elements": 80
     },
     "GeoTile/zoomable": {
-      "hash": "6a75a1d92e6981d0",
-      "elements": 89
+      "hash": "2716ff98245a7246",
+      "elements": 87
     },
     "GeoTile/zoomable-seamless-layers": {
-      "hash": "0a54d824bc112276",
-      "elements": 101
+      "hash": "339b3d0439536620",
+      "elements": 99
     },
     "GeoTile/zoomable-with-padding": {
-      "hash": "684df0a5c334331f",
-      "elements": 97
+      "hash": "5416b06f7bd9b437",
+      "elements": 95
     },
     "Graticule/basic": {
       "hash": "96379a52c65b2f72",
@@ -2375,6 +2426,10 @@
       "hash": "2825234fc20fa903",
       "elements": 74
     },
+    "Group/series-state": {
+      "hash": "de3b4292c461cd80",
+      "elements": 75
+    },
     "Hull/geo": {
       "hash": "a8397b388d3f44e2",
       "elements": 158
@@ -2384,8 +2439,8 @@
       "elements": 94
     },
     "Image/college-football-map": {
-      "hash": "d77b3865e1ae1b75",
-      "elements": 469
+      "hash": "f82dc9090d7e85b2",
+      "elements": 467
     },
     "Image/country-flags": {
       "hash": "b12360bccd3b008a",
@@ -2785,7 +2840,8 @@
     },
     "LineChart/sparkline-within-a-paragraph": {
       "hash": "57a481bb332f9744",
-      "elements": 9
+      "elements": 9,
+      "settled": false
     },
     "LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight": {
       "hash": "57a481bb332f9744",
@@ -2877,7 +2933,8 @@
     },
     "MotionPath/rotate-object-with-path": {
       "hash": "26459658f89e010e",
-      "elements": 58
+      "elements": 58,
+      "unstable": true
     },
     "MotionPath/sync-with-draw": {
       "hash": "26459658f89e010e",
@@ -2948,7 +3005,7 @@
       "elements": 10
     },
     "Pie/default-slot-render-each-arc": {
-      "hash": "ad8bda6c8d302954",
+      "hash": "82fcc9a223144da9",
       "elements": 10
     },
     "Pie/disable-sorting": {
@@ -2966,6 +3023,10 @@
     "Pie/inner-radius-zero-one": {
       "hash": "f504b9d9579507f2",
       "elements": 10
+    },
+    "Pie/isometric": {
+      "hash": "b074be7d51ed1d86",
+      "elements": 64
     },
     "Pie/labels": {
       "hash": "a8b93f805a1bff93",
@@ -3591,6 +3652,14 @@
       "hash": "9f78fc1fae24e728",
       "elements": 68
     },
+    "Spline/missing-data-dashed": {
+      "hash": "51345eac92bf609e",
+      "elements": 86
+    },
+    "Spline/missing-data-with-markers": {
+      "hash": "e75ac738be6a70ec",
+      "elements": 69
+    },
     "Spline/multiple-series": {
       "hash": "596e7100f5d791a5",
       "elements": 89
@@ -3820,40 +3889,44 @@
       "elements": 77
     },
     "TransformContext/pan-zoom-axes": {
-      "hash": "d35e7f27d26f0b75",
-      "elements": 83
+      "hash": "4ea70de2875565ad",
+      "elements": 81
     },
     "TransformContext/pan-zoom-html-image": {
-      "hash": "17eaba663f60054a",
-      "elements": 16
+      "hash": "714a2be8ea6948fd",
+      "elements": 14
     },
     "TransformContext/pan-zoom-svg-image": {
-      "hash": "6d8dfd5a644c143f",
-      "elements": 17
+      "hash": "9c604c1e48a48cdd",
+      "elements": 15
     },
     "TransformContext/planet-distances": {
       "hash": "a6fb2727b66e61e6",
       "elements": 84
     },
     "TransformContext/playground": {
-      "hash": "65a7f05b90080efb",
-      "elements": 516
+      "hash": "9a928cf2575f87d1",
+      "elements": 514
     },
     "TransformContext/scroll-activation-key": {
-      "hash": "6d8dfd5a644c143f",
-      "elements": 17
+      "hash": "9c604c1e48a48cdd",
+      "elements": 15
     },
     "Tree/basic": {
       "hash": "c1431254bd5c2d81",
       "elements": 41
     },
     "Tree/html-nodes": {
-      "hash": "6b9ba41ebaee1134",
-      "elements": 25
+      "hash": "d0b102276a006381",
+      "elements": 23
+    },
+    "Tree/isometric": {
+      "hash": "01f8e1f1f0e49137",
+      "elements": 106
     },
     "Tree/playground": {
-      "hash": "2428f515dfe45e99",
-      "elements": 58
+      "hash": "3c5caf8be35fc72a",
+      "elements": 56
     },
     "Treemap/basic": {
       "hash": "c5dce8a4a3772f17",
