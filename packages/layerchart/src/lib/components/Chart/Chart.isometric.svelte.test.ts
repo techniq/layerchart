@@ -467,6 +467,78 @@ describe('Chart isometric `motion`', () => {
     await vi.waitFor(() => expect(ctx.transform.rotation).toEqual({ x: 0, y: 0 }));
     expect(ctx.transform.translate).toEqual({ x: 30, y: 10 });
   });
+
+  it.each([
+    ['as it is', (angle: number) => angle],
+    ['rounded', Math.round],
+  ])(
+    "follows a drag's rotation handed back %s as the view's angles, wrapped to ±180°",
+    async (_, echo) => {
+      const { ctx, turn } = await renderEased({ mode: 'canvas', drag: 'rotate' });
+      const el = ctx.containerRef!.querySelector('.lc-transform-context')!;
+      const box = el.getBoundingClientRect();
+      const at = (x: number) => ({
+        bubbles: true,
+        pointerId: 1,
+        clientX: box.x + x,
+        clientY: box.y,
+      });
+      const wrap = (angle: number) => ((((angle + 180) % 360) + 360) % 360) - 180;
+      /** The same turn, either way round */
+      const same = (a: number, b: number) => expect(Math.abs(wrap(a - b))).toBeLessThanOrEqual(0.5);
+
+      // Dragging right turns from -45° towards -180°, and on past it to 170°
+      el.dispatchEvent(new PointerEvent('pointerdown', at(0)));
+      for (const x of [100, 200, 270, 290]) {
+        el.dispatchEvent(new PointerEvent('pointermove', at(x)));
+        const turned = -45 - x / 2;
+        same(ctx.transform.rotation!.x, turned);
+
+        // As `onTransform` would, for a slider that runs -180° to 180°
+        const rotate = echo(wrap(ctx.transform.rotation!.x));
+        const tilt = echo(ctx.transform.rotation!.y);
+        await turn({ rotate, tilt });
+        // Not eased back behind the pointer
+        expect(ctx.isometricAngles).toEqual({ rotate, tilt });
+        same(ctx.transform.rotation!.x, turned);
+      }
+      el.dispatchEvent(new PointerEvent('pointerup', at(290)));
+    }
+  );
+
+  it('eases a transformed view given after the chart was made, from its own angles', async () => {
+    let ctx: ChartState<any, any, any> = null!;
+    const motion = { type: 'tween' as const, duration: 300 };
+    const chartProps = (view?: ReturnType<typeof isometric>) => ({
+      data,
+      x: 'x',
+      y: 'y',
+      xDomain: [0, 10],
+      yDomain: [0, 10],
+      width: 400,
+      height: 300,
+      view,
+      transform: { mode: 'canvas' },
+    });
+    const screen = render(TooltipTestHarness, {
+      chartProps: chartProps(),
+      oncontext: (c: any) => (ctx = c),
+    });
+    await vi.waitFor(() => expect(ctx?.transformState).toBeTruthy());
+    expect(ctx.transform.rotation).toBeNull();
+
+    // Straight to the view's angles, not eased from the defaults
+    await screen.rerender({ chartProps: chartProps(isometric({ rotate: 0, tilt: 0, motion })) });
+    expect(ctx.transform.rotation).toEqual({ x: 0, y: 0 });
+
+    await screen.rerender({ chartProps: chartProps(isometric({ rotate: 0, tilt: 60, motion })) });
+    await vi.waitFor(() => {
+      const { y } = ctx.transform.rotation!;
+      expect(y).toBeGreaterThan(0);
+      expect(y).toBeLessThan(60);
+    });
+    await vi.waitFor(() => expect(ctx.transform.rotation).toEqual({ x: 0, y: 60 }));
+  });
 });
 
 describe('Chart isometric brush', () => {

@@ -236,10 +236,7 @@
 
   function onClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     onclickcapture?.(e);
-    if (transformState.dragging) {
-      // Do not propagate click event to children if drag/moved.  Registered in capture phase (top-down)
-      e.stopPropagation();
-    }
+    transformState.onClickCapture(e);
   }
 
   function onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {

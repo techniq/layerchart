@@ -3,6 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
 import TransformTestHarness from '$lib/tests/TransformTestHarness.svelte';
+import { isometric } from '$lib/views/isometric.js';
 import { geoMercator, geoOrthographic } from 'd3-geo';
 
 describe('TransformContext', () => {
@@ -465,6 +466,163 @@ describe('TransformContext', () => {
 
       expect(transform.pinching).toBe(false);
       expect(transform.scale).toBe(1);
+    });
+  });
+
+  describe('click after a drag', () => {
+    /** Render the harness with a clickable child inside the transform context */
+    async function setup(chartProps: Record<string, any>) {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: { height: 300, ...chartProps },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      // TransformContext is lazy-loaded, so wait for it to render
+      const element = await vi.waitFor(() => {
+        const el = document.querySelector<HTMLElement>('.lc-transform-context');
+        expect(el).not.toBeNull();
+        return el!;
+      });
+
+      // Stands in for a mark (ex. a treemap node that zooms when clicked)
+      const mark = document.createElement('div');
+      element.append(mark);
+      const onclick = vi.fn();
+      mark.addEventListener('click', onclick);
+
+      const rect = element.getBoundingClientRect();
+      function dispatch(type: string, x: number, y: number, pointerId = 1) {
+        mark.dispatchEvent(
+          new PointerEvent(type, {
+            pointerId,
+            pointerType: 'mouse',
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      }
+
+      /** The `click` the browser fires after `pointerup` (`detail: 0` is a keyboard click) */
+      function click(x: number, y: number, detail = 1) {
+        mark.dispatchEvent(
+          new MouseEvent('click', {
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            detail,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      }
+
+      /** Press, move, and release, followed by the browser's `click` */
+      function drag(from: [number, number], to: [number, number]) {
+        dispatch('pointerdown', ...from);
+        dispatch('pointermove', ...to);
+        dispatch('pointerup', ...to);
+        click(...to);
+      }
+
+      return {
+        get transform() {
+          return chartContext.transform;
+        },
+        dispatch,
+        click,
+        drag,
+        onclick,
+      };
+    }
+
+    it('should not click what a pan is released over', async () => {
+      const { transform, drag, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [150, 120]);
+
+      expect(transform.translate).toEqual({ x: 50, y: 20 });
+      expect(onclick).not.toHaveBeenCalled();
+    });
+
+    it('should not click what a rotate is released over', async () => {
+      const { transform, drag, onclick } = await setup({
+        view: isometric,
+        transform: { mode: 'canvas', drag: 'rotate' },
+      });
+      await vi.waitFor(() => expect(transform.rotation).not.toBeNull());
+      const before = { ...transform.rotation };
+
+      drag([100, 100], [150, 100]);
+
+      expect(transform.rotation.x).not.toBe(before.x);
+      expect(onclick).not.toHaveBeenCalled();
+    });
+
+    it('should click when the pointer stays within `clickDistance`', async () => {
+      const { drag, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [101, 101]);
+
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should click on the next press after a drag that ended without a click', async () => {
+      const { dispatch, click, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      // Released without the browser firing `click` (ex. over another element)
+      dispatch('pointerdown', 100, 100);
+      dispatch('pointermove', 150, 100);
+      dispatch('pointerup', 150, 100);
+
+      dispatch('pointerdown', 150, 100);
+      dispatch('pointerup', 150, 100);
+      click(150, 100);
+
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should only swallow the one click', async () => {
+      const { drag, click, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [150, 100]);
+      expect(onclick).not.toHaveBeenCalled();
+
+      click(150, 100);
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should not swallow a keyboard click', async () => {
+      const { dispatch, click, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      dispatch('pointerdown', 100, 100);
+      dispatch('pointermove', 150, 100);
+      dispatch('pointerup', 150, 100);
+      click(150, 100, 0);
+
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should not click what a pinch is released over', async () => {
+      const { transform, dispatch, click, onclick } = await setup({
+        transform: { mode: 'canvas' },
+      });
+
+      dispatch('pointerdown', 100, 100, 1);
+      dispatch('pointerdown', 200, 100, 2);
+      dispatch('pointermove', 300, 100, 2);
+      dispatch('pointerup', 300, 100, 2);
+      dispatch('pointerup', 100, 100, 1);
+      click(100, 100);
+
+      expect(transform.scale).toBe(2);
+      expect(onclick).not.toHaveBeenCalled();
     });
   });
 });
