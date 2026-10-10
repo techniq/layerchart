@@ -523,12 +523,15 @@ Add an `onclick` handler to `tooltipContext` to respond to clicks on data points
 <Chart
   tooltipContext={{
     mode: 'quadtree',
+    keyboard: true,
     onclick: (e, { data }) => {
       console.log('Clicked:', data);
     }
   }}
 >
 ```
+
+Set `keyboard: true` to also give the chart keyboard access: each data point gets a focusable target that shows its tooltip when focused and calls the same handler when activated with Enter or Space, so keyboard users can step through the data with Tab. Setting `onclick` alone does not render keyboard targets.
 
 ## TooltipState properties
 
