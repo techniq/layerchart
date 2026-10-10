@@ -2058,7 +2058,7 @@
       "elements": 151
     },
     "ForceSimulation/collision-detection": {
-      "hash": "36544fadee3d7deb",
+      "hash": "c5bfe0033bfd6955",
       "elements": 205,
       "settled": false,
       "unstable": true
@@ -2069,12 +2069,13 @@
       "settled": false
     },
     "ForceSimulation/games-industry-layoffs": {
-      "hash": "b7b0d3c1d41904ab",
+      "hash": "3db3db8c7316ea42",
       "elements": 500,
-      "settled": false
+      "settled": false,
+      "unstable": true
     },
     "ForceSimulation/graph-drag": {
-      "hash": "ff5aa34105afd370",
+      "hash": "361ae7d5dd306e23",
       "elements": 37,
       "settled": false,
       "unstable": true
@@ -2085,7 +2086,7 @@
       "settled": false
     },
     "ForceSimulation/group": {
-      "hash": "99f4b784aeed777c",
+      "hash": "5bb27bbda7273577",
       "elements": 39,
       "settled": false,
       "unstable": true
@@ -2101,7 +2102,7 @@
       "settled": false
     },
     "ForceSimulation/text": {
-      "hash": "616f8890aa3b50b4",
+      "hash": "da4a1896f7b71832",
       "elements": 252,
       "settled": false,
       "unstable": true
@@ -2128,8 +2129,8 @@
       "elements": 58
     },
     "GeoCircle/earthquake-globe": {
-      "hash": "4f5f7909f6c768a7",
-      "elements": 81
+      "hash": "69a02f7fdd7c5051",
+      "elements": 107
     },
     "GeoCircle/playground": {
       "hash": "c173658e91d8f7d0",
@@ -2184,7 +2185,7 @@
       "elements": 1798
     },
     "GeoPath/interpolating-projections": {
-      "hash": "48bac5ebdcdfd40d",
+      "hash": "c82125a3118dc879",
       "elements": 9,
       "settled": false,
       "unstable": true
@@ -2326,9 +2327,8 @@
       "elements": 10
     },
     "GeoRaster/tiles-globe": {
-      "hash": "3842daf168db0627",
-      "elements": 166,
-      "unstable": true
+      "hash": "7c8e9f3a0ae2a9a5",
+      "elements": 166
     },
     "GeoSpline/draggable-globe": {
       "hash": "6922f066972b458b",
@@ -2840,8 +2840,7 @@
     },
     "LineChart/sparkline-within-a-paragraph": {
       "hash": "57a481bb332f9744",
-      "elements": 9,
-      "settled": false
+      "elements": 9
     },
     "LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight": {
       "hash": "57a481bb332f9744",
@@ -2933,8 +2932,7 @@
     },
     "MotionPath/rotate-object-with-path": {
       "hash": "26459658f89e010e",
-      "elements": 58,
-      "unstable": true
+      "elements": 58
     },
     "MotionPath/sync-with-draw": {
       "hash": "26459658f89e010e",
