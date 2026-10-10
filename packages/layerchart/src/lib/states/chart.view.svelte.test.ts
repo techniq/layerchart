@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { flushSync } from 'svelte';
 
 import { ChartState } from './chart.svelte.js';
@@ -44,5 +44,72 @@ describe('ChartState `view`', () => {
     const optedOut = chartState({ view: null }, settings);
     expect(optedOut.state.view).toBeNull();
     optedOut.cleanup();
+  });
+
+  describe('`motion`', () => {
+    const motion = { type: 'tween' as const, duration: 100 };
+
+    /** Change the props, then the angles as they are just after (before any easing) */
+    function next(state: ChartState<any>, change: () => void) {
+      change();
+      flushSync();
+      return { ...state.isometricAngles };
+    }
+
+    it('eases to new angles', async () => {
+      const props = $state<Partial<ChartPropsWithoutHTML<any>>>({
+        view: isometric({ rotate: 30, tilt: 60, motion }),
+      });
+      const { state, cleanup } = chartState(props);
+      expect(state.isometricAngles).toEqual({ rotate: 30, tilt: 60 });
+
+      const angles = next(state, () => (props.view = isometric({ rotate: 90, tilt: 60, motion })));
+      expect(angles.rotate).toBeLessThan(90);
+      await vi.waitFor(() => expect(state.isometricAngles).toEqual({ rotate: 90, tilt: 60 }));
+      cleanup();
+    });
+
+    it('eases a view given after the chart was made, starting at its own angles', async () => {
+      const props = $state<Partial<ChartPropsWithoutHTML<any>>>({ view: null });
+      const { state, cleanup } = chartState(props);
+
+      // Not from the default angles
+      const start = next(state, () => (props.view = isometric({ rotate: 30, tilt: 60, motion })));
+      expect(start).toEqual({ rotate: 30, tilt: 60 });
+
+      const angles = next(state, () => (props.view = isometric({ rotate: 90, tilt: 60, motion })));
+      expect(angles.rotate).toBeLessThan(90);
+      await vi.waitFor(() => expect(state.isometricAngles).toEqual({ rotate: 90, tilt: 60 }));
+      cleanup();
+    });
+
+    it('reads `motion` once, from the first view that has one', async () => {
+      const props = $state<Partial<ChartPropsWithoutHTML<any>>>({
+        view: isometric({ rotate: 30, tilt: 60 }),
+      });
+      const { state, cleanup } = chartState(props);
+
+      // Starting where it's given, like a mark's `motion`
+      const start = next(state, () => (props.view = isometric({ rotate: 90, tilt: 60, motion })));
+      expect(start).toEqual({ rotate: 90, tilt: 60 });
+
+      // Then easing, even once the view no longer gives it
+      const angles = next(state, () => (props.view = isometric({ rotate: 0, tilt: 60 })));
+      expect(angles.rotate).toBeGreaterThan(0);
+      await vi.waitFor(() => expect(state.isometricAngles).toEqual({ rotate: 0, tilt: 60 }));
+      cleanup();
+    });
+
+    it('starts a view that comes back at its own angles', async () => {
+      const props = $state<Partial<ChartPropsWithoutHTML<any>>>({
+        view: isometric({ rotate: 30, tilt: 60, motion }),
+      });
+      const { state, cleanup } = chartState(props);
+
+      next(state, () => (props.view = null));
+      const angles = next(state, () => (props.view = isometric({ rotate: 90, tilt: 30, motion })));
+      expect(angles).toEqual({ rotate: 90, tilt: 30 });
+      cleanup();
+    });
   });
 });

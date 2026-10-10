@@ -180,6 +180,11 @@ export class TransformState {
   startRotation = { x: 0, y: 0 };
   /** What the drag in progress moves, settled as it starts */
   private _dragging: TransformDrag = 'translate';
+  /**
+   * The gesture just released was a drag (or pinch), so the `click` the browser fires after
+   * `pointerup` is swallowed rather than reaching what's under the pointer (see `onClickCapture`)
+   */
+  private _suppressClick = false;
 
   // Velocity tracking for inertia
   private _pointerSamples: { x: number; y: number; t: number }[] = [];
@@ -670,6 +675,7 @@ export class TransformState {
 
     this.pointerDown = true;
     this.dragging = false;
+    this._suppressClick = false;
     this.startPoint = localPoint(e);
     this.startTranslate = this._translate.current;
     this.startRotation = this._rotation.current;
@@ -774,6 +780,7 @@ export class TransformState {
       // Pinch ended without inertia (velocity samples are not tracked while pinching)
       this.pointerDown = false;
       this.dragging = false;
+      this._suppressClick = true;
       this.ondragend?.();
       return;
     }
@@ -781,6 +788,7 @@ export class TransformState {
     const wasDragging = this.dragging;
     this.pointerDown = false;
     this.dragging = false;
+    if (wasDragging) this._suppressClick = true;
 
     // Apply inertia if enabled and was dragging with enough velocity
     if (this.inertia.enabled && wasDragging && this._pointerSamples.length >= 2) {
@@ -892,6 +900,19 @@ export class TransformState {
     this.dragging = false;
     this._pointerSamples = [];
     this.ondragend?.();
+  }
+
+  /**
+   * Keep the `click` that ends a drag from reaching what's under the pointer.  Registered in the
+   * capture phase (top-down).  The browser fires `click` after `pointerup`, which already ended the
+   * drag, so the drag is remembered until the next click or pointer down.  A keyboard `click`
+   * (`detail: 0`) never ends a drag, so it always goes through.
+   */
+  onClickCapture(e: MouseEvent) {
+    if ((this.dragging || this._suppressClick) && e.detail !== 0) {
+      e.stopPropagation();
+    }
+    this._suppressClick = false;
   }
 
   onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {

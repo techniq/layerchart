@@ -39,7 +39,7 @@ import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
 import { SeriesState, type SeriesLayout, type StackLayout } from './series.svelte.js';
 import type { SeriesData } from '$lib/components/charts/types.js';
-import { createControlledMotion, createMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
+import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -78,6 +78,9 @@ export interface MarkInfo {
 }
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
+
+/** An `isometric` view's turn and tip */
+type IsometricAngles = { rotate: number; tilt: number };
 
 export interface ComponentNode {
   id: symbol;
@@ -417,12 +420,28 @@ export class ChartState<
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
 
-    // The view's `motion` is read once, like other `motion` props
-    this.#angles = createMotion(
-      this.#propAngles,
-      () => this.#propAngles,
-      this.#viewOptions?.motion
-    );
+    let shown = false;
+    $effect.pre(() => {
+      const options = this.#viewOptions;
+      const angles = this.#propAngles;
+      untrack(() => {
+        // A view that appears starts at its own angles, having none to ease from, and a drag owns
+        // the view while it lasts (ex. its rotation handed back from `onTransform`)
+        const instant = !shown || !!this.transformState?.dragging;
+        // Without a view the angles hold, for one that comes back
+        shown = !!options;
+        if (!options) return;
+        if (!this.#angles && options.motion) {
+          this.#angles = createControlledMotion(angles, options.motion);
+        }
+        const motion = this.#angles;
+        if (!motion) return;
+        motion.set(
+          angles,
+          instant ? (motion.type === 'tween' ? { duration: 0 } : { instant: true }) : undefined
+        );
+      });
+    });
 
     // Create GeoState instance — pass a dimensions getter so projection
     // is available during SSR (where $effect doesn't run)
@@ -1149,16 +1168,20 @@ export class ChartState<
   );
 
   /** The `isometric` options' `rotate` / `tilt`, with their defaults */
-  #propAngles = $derived.by(() => {
+  #propAngles = $derived.by((): IsometricAngles => {
     const options = this.#viewOptions ?? {};
     return { rotate: options.rotate ?? -45, tilt: options.tilt ?? ISOMETRIC_TILT };
   });
 
-  #angles: { readonly current: { rotate: number; tilt: number } };
+  /**
+   * The angles eased by the view's `motion`, read once from the first view that has one (a chart
+   * may start without a view).  `null` until then, following the angles as given.
+   */
+  #angles = $state.raw<ReturnType<typeof createControlledMotion<IsometricAngles>> | null>(null);
 
   /** The `isometric` angles, eased by their `motion`; a transform rotates the view from these */
-  get isometricAngles() {
-    return this.#angles.current;
+  get isometricAngles(): IsometricAngles {
+    return this.#angles?.current ?? this.#propAngles;
   }
 
   /**
