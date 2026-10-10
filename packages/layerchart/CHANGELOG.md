@@ -1,5 +1,15 @@
 # LayerChart
 
+## 2.6.1
+
+### Patch Changes
+
+- fix(TransformContext): Don't click what a pan, rotate, or pinch is released over ([#936](https://github.com/techniq/layerchart/pull/936))
+
+- fix(Chart): Don't ease an `isometric` view's angles while dragging ([#936](https://github.com/techniq/layerchart/pull/936))
+
+- fix(Chart): Ease an `isometric` view added after the chart was created, starting it at its own angles ([#936](https://github.com/techniq/layerchart/pull/936))
+
 ## 2.6.0
 
 ### Minor Changes
