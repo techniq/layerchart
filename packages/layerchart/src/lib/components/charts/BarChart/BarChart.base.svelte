@@ -124,10 +124,10 @@
         <Bars
           seriesKey={s.key}
           x1={valueAxis === 'y' && isGroupSeries && restProps.x1 == null
-            ? (d: any) => s.value ?? s.key
+            ? (d: any) => s.key
             : undefined}
           y1={valueAxis === 'x' && isGroupSeries && restProps.y1 == null
-            ? (d: any) => s.value ?? s.key
+            ? (d: any) => s.key
             : undefined}
           rounded={context.series.stackLayout != null
             ? // Per row rather than per series: a sub-band or a gap in the data can leave the

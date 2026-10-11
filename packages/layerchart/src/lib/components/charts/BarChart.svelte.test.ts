@@ -381,6 +381,56 @@ describe('BarChart', () => {
       expect(barsGroups.length).toBe(4);
     });
 
+    it('should give a grouped series with a `value` accessor its own sub-band', async () => {
+      const { container } = render(BarChart, {
+        data: wideData,
+        x: 'year',
+        series: [
+          { key: 'apples' },
+          { key: 'scaledBananas', value: (d: (typeof wideData)[number]) => d.bananas * 2 },
+        ],
+        seriesLayout: 'group',
+        height: 300,
+        width: 400,
+      });
+
+      // The first bar of each series, left to right
+      const firstBarX = () =>
+        Array.from(container.querySelectorAll('.lc-bars')).map((g) => {
+          const bar = g.querySelector('.lc-bar') as SVGGraphicsElement | null;
+          return bar ? bar.getBBox().x : NaN;
+        });
+
+      await vi.waitFor(() => {
+        const [apples, scaledBananas] = firstBarX();
+        expect(Number.isFinite(apples)).toBe(true);
+        expect(scaledBananas).toBeGreaterThan(apples);
+      });
+    });
+
+    it('should give a grouped series with a string `value` its own sub-band', async () => {
+      const { container } = render(BarChart, {
+        data: wideData,
+        x: 'year',
+        series: [{ key: 'apples' }, { key: 'yellowFruit', value: 'bananas' }],
+        seriesLayout: 'group',
+        height: 300,
+        width: 400,
+      });
+
+      const firstBarX = () =>
+        Array.from(container.querySelectorAll('.lc-bars')).map((g) => {
+          const bar = g.querySelector('.lc-bar') as SVGGraphicsElement | null;
+          return bar ? bar.getBBox().x : NaN;
+        });
+
+      await vi.waitFor(() => {
+        const [apples, yellowFruit] = firstBarX();
+        expect(Number.isFinite(apples)).toBe(true);
+        expect(yellowFruit).toBeGreaterThan(apples);
+      });
+    });
+
     it('should render stackExpand series', async () => {
       const { container } = render(BarChart, {
         data: wideData,
