@@ -2,6 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import { cls } from '@layerstack/tailwind';
 	import CodePanel from './CodePanel.svelte';
+	import PreviewError from './PreviewError.svelte';
 	import { createSandbox } from './state.svelte';
 
 	let {
@@ -23,19 +24,15 @@
 
 	<div class="relative overflow-auto p-4 bg-surface-100">
 		{#if sandbox.live}
-			<div {@attach sandbox.preview}></div>
+			<div class={cls(sandbox.error && 'opacity-40')} {@attach sandbox.preview}></div>
 		{:else}
 			{@render preview?.()}
 		{/if}
 
-		{#if sandbox.status}
-			<div
-				class={cls(
-					'absolute right-2 bottom-1 max-w-[90%] truncate text-[10px]',
-					sandbox.hasError ? 'text-danger' : 'text-surface-content/40'
-				)}
-				title={sandbox.status}
-			>
+		{#if sandbox.error}
+			<PreviewError {...sandbox.error} />
+		{:else if sandbox.status}
+			<div class="absolute right-2 bottom-1 text-[10px] text-surface-content/40">
 				{sandbox.status}
 			</div>
 		{/if}

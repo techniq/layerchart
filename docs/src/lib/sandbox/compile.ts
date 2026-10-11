@@ -6,6 +6,9 @@ export type Diagnostic = {
 	to: number;
 	severity: 'error' | 'warning';
 	message: string;
+	/** 1-based, for the error overlay. Absent when the compiler gave no position. */
+	line?: number;
+	column?: number;
 };
 
 export type CompileResult = {
@@ -39,12 +42,20 @@ export function compileSource(source: string): CompileResult {
 		js = result.js.code;
 		warnings = result.warnings ?? [];
 	} catch (err: any) {
-		// `position` is a `[from, to]` character-offset pair, which is what the editor wants.
+		// `position` is a `[from, to]` character-offset pair, which is what the editor wants;
+		// `start` carries the line/column the overlay reports.
 		const [from, to] = err.position ?? [0, 0];
 		return {
 			url: null,
 			diagnostics: [
-				{ from, to, severity: 'error', message: cleanMessage(err.message ?? String(err)) }
+				{
+					from,
+					to,
+					severity: 'error',
+					message: cleanMessage(err.message ?? String(err)),
+					line: err.start?.line,
+					column: err.start?.column != null ? err.start.column + 1 : undefined
+				}
 			],
 			elapsed: performance.now() - started
 		};

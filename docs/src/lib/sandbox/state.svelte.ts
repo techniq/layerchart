@@ -108,8 +108,17 @@ export function createSandbox(
 		mode = next;
 	}
 
-	/** Compiles the current source and mounts it into the attached element. */
-	const preview: Attachment = (el) => {
+	/**
+	 * Compiling and mounting are deliberately separate.
+	 *
+	 * Compiling on every keystroke but only publishing *successful* builds means a broken
+	 * edit leaves the last good render on screen instead of blanking the preview — you can
+	 * still see what you were working on while you fix the typo, which is the whole point
+	 * of a live editor.
+	 */
+	let build = $state<string | null>(null);
+
+	$effect(() => {
 		const sb = module;
 		const src = debounced;
 		if (!sb || !live) return;
@@ -117,21 +126,30 @@ export function createSandbox(
 		const result = sb.compileSource(transform ? transform(src) : src);
 		diagnostics = result.diagnostics;
 		elapsed = Math.round(result.elapsed);
-		if (!result.url) return;
+		if (result.url) {
+			build = result.url;
+			runtimeError = null;
+		}
+	});
+
+	/** Mounts the newest successful build. Only re-runs when `build` changes. */
+	const preview: Attachment = (el) => {
+		const url = build;
+		if (!url) return;
 
 		let mounted: Record<string, any> | null = null;
 		let disposed = false;
 
-		import(/* @vite-ignore */ result.url)
+		import(/* @vite-ignore */ url)
 			.then((mod) => {
-				URL.revokeObjectURL(result.url!);
+				URL.revokeObjectURL(url);
 				if (disposed) return;
 				runtimeError = null;
 				mounted = mount(mod.default, { target: el as HTMLElement });
 				instance = mounted;
 			})
 			.catch((err) => {
-				URL.revokeObjectURL(result.url!);
+				URL.revokeObjectURL(url);
 				if (!disposed) runtimeError = err instanceof Error ? err.message : String(err);
 			});
 
@@ -145,6 +163,13 @@ export function createSandbox(
 	};
 
 	const errors = $derived(diagnostics.filter((d) => d.severity === 'error'));
+
+	/** The one thing worth surfacing over the preview, or `null` when the build is good. */
+	const error = $derived.by(() => {
+		if (runtimeError) return { message: runtimeError, line: undefined, column: undefined };
+		const first = errors[0];
+		return first ? { message: first.message, line: first.line, column: first.column } : null;
+	});
 
 	return {
 		preview,
@@ -182,12 +207,12 @@ export function createSandbox(
 		set source(next: string) {
 			editorValue = next;
 		},
-		/** `null` until the user has edited — nothing worth reporting before that. */
-		get status() {
-			return runtimeError ?? errors[0]?.message ?? (live ? `${elapsed}ms` : null);
+		get error() {
+			return error;
 		},
-		get hasError() {
-			return runtimeError !== null || errors.length > 0;
+		/** Compile timing, or `null` until the user has edited. */
+		get status() {
+			return live ? `${elapsed}ms` : null;
 		}
 	};
 }

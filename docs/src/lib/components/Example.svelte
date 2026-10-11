@@ -22,6 +22,7 @@
 	import { untrack } from 'svelte';
 	import { Json } from '@layerstack/docs/components';
 	import CodePanel from '$lib/sandbox/CodePanel.svelte';
+	import PreviewError from '$lib/sandbox/PreviewError.svelte';
 	import { createSandbox } from '$lib/sandbox/state.svelte';
 	import { exposeData } from '$lib/utils/exampleSource';
 
@@ -284,7 +285,7 @@
 					<svelte:boundary>
 						{#if sandbox.live}
 							<!-- Edited: render the user's source instead of the shipped component. -->
-							<div {@attach sandbox.preview}></div>
+							<div class={cls(sandbox.error && 'opacity-40')} {@attach sandbox.preview}></div>
 						{:else}
 							<example.component bind:this={ref} />
 						{/if}
@@ -327,21 +328,16 @@
 						<LucideGripVertical class="text-surface-content/50" />
 					</div>
 				{/if}
+
+				{#if sandbox.error}
+					<PreviewError {...sandbox.error} />
+				{/if}
 			</div>
 		</div>
 
 		{#if showCode}
 			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
 				<CodePanel {sandbox} {showLineNumbers} {highlight} />
-			</div>
-		{/if}
-
-		{#if sandbox.status && sandbox.hasError}
-			<div
-				class="mt-0.5 truncate rounded-sm bg-danger/10 px-2 py-1 text-xs text-danger"
-				title={sandbox.status}
-			>
-				{sandbox.status}
 			</div>
 		{/if}
 
