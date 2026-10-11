@@ -35,6 +35,12 @@ When the measures share units — a stack of sales and a sales target — there 
 
 :example{ component="Chart" name="mixed-marks-with-stack" }
 
+A `Spline` given a `seriesKey` instead follows that series' stacked top, which is how a line is drawn along the edge of a stacked `Area`.
+
+The same chart from long data needs no `series` at all — `c` names the layers, so one `Bars` stacks them:
+
+:example{ component="Chart" name="mixed-marks-with-stack-long-data" }
+
 Simplified charts take extra marks through `aboveMarks` / `belowMarks`:
 
 :example{ component="Chart" name="compound-common-scale-with-extra-marks" }
