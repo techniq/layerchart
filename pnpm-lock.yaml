@@ -95,6 +95,9 @@ importers:
       d3-geo-projection:
         specifier: ^4.0.0
         version: 4.0.0
+      es-module-lexer:
+        specifier: ^2.1.0
+        version: 2.1.0
       satori:
         specifier: ^0.26.0
         version: 0.26.0

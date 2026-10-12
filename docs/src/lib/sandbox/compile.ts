@@ -1,4 +1,5 @@
 import { compile } from 'svelte/compiler';
+import { compileOptions } from './compile-options';
 import { link } from './link';
 
 export type Diagnostic = {
@@ -24,7 +25,11 @@ function cleanMessage(message: string) {
 	return message.replace(/\s*https:\/\/svelte\.dev\/[ew]\/\S+\s*$/, '');
 }
 
-export function compileSource(source: string): CompileResult {
+/** `base` is the example's directory, so relative imports of sibling modules resolve. */
+export async function compileSource(
+	source: string,
+	{ base }: { base?: string } = {}
+): Promise<CompileResult> {
 	const started = performance.now();
 	const diagnostics: Diagnostic[] = [];
 
@@ -32,13 +37,7 @@ export function compileSource(source: string): CompileResult {
 	let warnings: { message: string; start?: { character: number }; end?: { character: number } }[];
 
 	try {
-		const result = compile(source, {
-			filename: 'Example.svelte',
-			generate: 'client',
-			css: 'injected',
-			runes: true,
-			dev: false
-		});
+		const result = compile(source, compileOptions);
 		js = result.js.code;
 		warnings = result.warnings ?? [];
 	} catch (err: any) {
@@ -70,16 +69,37 @@ export function compileSource(source: string): CompileResult {
 		});
 	}
 
-	const linked = link(js);
+	const linked = await link(js, base);
 	if (!linked.ok) {
-		// No source position for an unresolved import — pin it to the offending specifier.
-		for (const specifier of linked.unresolved) {
+		const problems = [
+			...linked.unresolved.map((specifier) => ({
+				specifier,
+				message: `'${specifier}' is not available in the sandbox`
+			})),
+			...linked.failed.map(({ specifier, message }) => ({
+				specifier,
+				message: `Couldn't load '${specifier}': ${message}`
+			})),
+			...linked.missing.map(({ specifier, names }) =>
+				specifier === 'svelte/internal/client'
+					? {
+							specifier: '',
+							message: `Uses Svelte features no example uses, so the sandbox doesn't include them (${names.map((name) => `$.${name}`).join(', ')})`
+						}
+					: {
+							specifier: names[0],
+							message: `'${specifier}' doesn't provide ${names.map((name) => `'${name}'`).join(', ')} in the sandbox, which only offers what the examples use`
+						}
+			)
+		];
+		// No source position for an import problem — pin it to the offending specifier.
+		for (const { specifier, message } of problems) {
 			const at = source.indexOf(specifier);
 			diagnostics.push({
 				from: at === -1 ? 0 : at,
 				to: at === -1 ? 0 : at + specifier.length,
 				severity: 'error',
-				message: `'${specifier}' is not available in the sandbox`
+				message
 			});
 		}
 		return { url: null, diagnostics, elapsed: performance.now() - started };

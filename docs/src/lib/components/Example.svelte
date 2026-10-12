@@ -136,7 +136,10 @@
 	 * In-page editing. `example.source` resolves asynchronously, so the sandbox seeds
 	 * itself from the getter rather than a constructor argument.
 	 */
-	const sandbox = createSandbox(() => example?.source ?? '', exposeData);
+	const sandbox = createSandbox(() => example?.source ?? '', {
+		transform: exposeData,
+		base: () => (component ? `/src/examples/components/${component}/` : undefined)
+	});
 
 	let data = $derived.by(() => {
 		try {

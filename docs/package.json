@@ -123,6 +123,7 @@
 		"@resvg/resvg-js": "^2.6.2",
 		"@stackblitz/sdk": "^1.11.0",
 		"d3-geo-projection": "^4.0.0",
+		"es-module-lexer": "^2.1.0",
 		"satori": "^0.26.0",
 		"satori-html": "^0.3.2"
 	}

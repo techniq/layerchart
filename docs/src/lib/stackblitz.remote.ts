@@ -1,4 +1,4 @@
-import { query, getRequestEvent } from '$app/server';
+import { command, getRequestEvent } from '$app/server';
 import { z } from 'zod';
 import stackblitzFiles from '$static/stackblitz-files.json';
 import remoteSources from '$static/remote-sources.json';
@@ -160,7 +160,9 @@ ${functionBodies.join('\n\n')}
 `;
 }
 
-export const getExample = query(
+// A `command` rather than a `query` so the edited source travels in a POST body: queries
+// put their arguments in the URL, and large examples exceed URL length limits.
+export const getExample = command(
 	z.object({
 		component: z.string(),
 		name: z.string(),

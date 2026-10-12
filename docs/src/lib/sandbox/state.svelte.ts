@@ -6,15 +6,21 @@ import type { Diagnostic } from './compile';
 type SandboxModule = typeof import('./lazy');
 
 /**
- * Everything needed to turn a read-only example into an editable one, shared by
- * `Example` (stacked, code behind a disclosure) and `LiveExample` (side-by-side).
+ * Everything `Example` needs to turn a read-only example into an editable one.
  *
  * Must be called during component initialisation — it registers effects.
  */
 export function createSandbox(
 	getSource: () => string,
-	/** Applied to the source before compiling only — never shown in the editor. */
-	transform?: (source: string) => string
+	{
+		transform,
+		base
+	}: {
+		/** Applied to the source before compiling only — never shown in the editor. */
+		transform?: (source: string) => string;
+		/** The example's directory (`/src/examples/components/GeoPath/`), for relative imports. */
+		base?: () => string | undefined;
+	} = {}
 ) {
 	let module = $state<SandboxModule | null>(null);
 	let loading = $state(false);
@@ -25,8 +31,8 @@ export function createSandbox(
 	let live = $state(false);
 
 	/**
-	 * `Example` resolves its source asynchronously, so these are seeded on first sight of a
-	 * non-empty source rather than at construction. Normalised so the editor starts from
+	 * `Example` resolves its source asynchronously, so these are seeded when a non-empty
+	 * source arrives rather than at construction. Normalised so the editor starts from
 	 * exactly the text `Code` displays — otherwise Edit shows a trailing blank line View
 	 * doesn't have.
 	 */
@@ -45,14 +51,21 @@ export function createSandbox(
 	 */
 	let instance = $state.raw<Record<string, any> | null>(null);
 
+	/**
+	 * A different source is a different example: SvelteKit keeps the same `Example` when
+	 * navigating between examples, so start over rather than keep showing (and running)
+	 * the previous one. Edits never change `getSource()`, so typing can't land here.
+	 */
 	$effect(() => {
 		const next = seed();
 		untrack(() => {
-			if (next && !original) {
-				original = next;
-				editorValue = next;
-				debounced = next;
-			}
+			if (!next || next === original) return;
+			original = editorValue = debounced = next;
+			live = false;
+			build = null;
+			diagnostics = [];
+			runtimeError = null;
+			instance = null;
 		});
 	});
 
@@ -123,13 +136,21 @@ export function createSandbox(
 		const src = debounced;
 		if (!sb || !live) return;
 
-		const result = sb.compileSource(transform ? transform(src) : src);
-		diagnostics = result.diagnostics;
-		elapsed = Math.round(result.elapsed);
-		if (result.url) {
-			build = result.url;
-			runtimeError = null;
-		}
+		// Compiling is async (imports load on demand), so a slow build can finish after a
+		// newer one — drop it rather than let it replace what the user typed since.
+		let stale = false;
+		sb.compileSource(transform ? transform(src) : src, { base: base?.() }).then((result) => {
+			if (stale) return;
+			diagnostics = result.diagnostics;
+			elapsed = Math.round(result.elapsed);
+			if (result.url) {
+				build = result.url;
+				runtimeError = null;
+			}
+		});
+		return () => {
+			stale = true;
+		};
 	});
 
 	/** Mounts the newest successful build. Only re-runs when `build` changes. */
