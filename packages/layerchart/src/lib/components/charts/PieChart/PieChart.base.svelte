@@ -56,7 +56,7 @@
     props = {},
     profile = false,
     tooltipContext = true,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
     pie,
     arc,
@@ -226,8 +226,8 @@
   }}
 >
   {#snippet marks(snippetProps: any)}
-    {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp(snippetProps)}
     {:else}
       <Group {...getGroupProps()}>
         <!-- Use `series` instead of `visibleSeries` since data is filtered (legend) instead of series -->

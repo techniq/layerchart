@@ -54,7 +54,7 @@
     props = {},
     profile = false,
     tooltipContext = true,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
     arc,
     labels = false,
@@ -242,8 +242,8 @@
   }}
 >
   {#snippet marks(snippetProps: any)}
-    {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp(snippetProps)}
     {:else}
       <Group {...getGroupProps()}>
         {#each series as s, i (s.key)}
