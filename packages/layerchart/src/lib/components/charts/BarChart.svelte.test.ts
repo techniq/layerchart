@@ -387,7 +387,7 @@ describe('BarChart', () => {
         x: 'year',
         series: [
           { key: 'apples' },
-          { key: 'scaledBananas', value: (d: (typeof wideData)[number]) => d.bananas * 2 },
+          { key: 'scaledBananas', value: (d: any) => d.bananas * 2 },
         ],
         seriesLayout: 'group',
         height: 300,

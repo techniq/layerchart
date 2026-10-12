@@ -272,16 +272,12 @@
       <Tooltip.List {...tooltipProps?.list}>
         {#each seriesFor(data) as s, i (s.key ?? i)}
           <Tooltip.Item
+            seriesKey={s.seriesKey ?? undefined}
             label={s.label}
             value={s.value}
             color={s.color}
-            data-highlighted={s.seriesKey != null
-              ? context.series.isHighlighted(s.seriesKey, true)
-              : undefined}
             {format}
             valueAlign="right"
-            onpointerenter={() => (context.series.highlightKey = s.seriesKey)}
-            onpointerleave={() => (context.series.highlightKey = null)}
             {...tooltipProps?.item}
           />
         {/each}

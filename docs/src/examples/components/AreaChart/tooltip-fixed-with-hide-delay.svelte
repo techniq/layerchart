@@ -36,12 +36,7 @@
 					{#each context.series.visibleSeries as s}
 						{@const valueAccessor = accessor(s.value ?? s.key)}
 						{@const value = valueAccessor(data)}
-						<Tooltip.Item
-							label={s.key}
-							color={s.color}
-							onpointerenter={() => (context.series.highlightKey = s.key)}
-							onpointerleave={() => (context.series.highlightKey = null)}
-						>
+						<Tooltip.Item seriesKey={s.key}>
 							{format(value)}
 						</Tooltip.Item>
 					{/each}

@@ -68,16 +68,10 @@
 			{#snippet children({ data })}
 				<Tooltip.Header value={data.month} />
 				<Tooltip.List>
-					{#each context.series.visibleSeries as s (s.key)}
-						<!-- Read the field rather than `s.value`, which holds efficiency's remapped value -->
-						<Tooltip.Item
-							label={s.label}
-							value={data[s.key]}
-							format={s.key === 'efficiency' ? undefined : 'integer'}
-							color={s.color}
-							valueAlign="right"
-						/>
-					{/each}
+					<Tooltip.Item seriesKey="energy" format="integer" valueAlign="right" />
+					<Tooltip.Item seriesKey="peakPower" format="integer" valueAlign="right" />
+					<!-- The series' value is remapped onto the left axis, so read the field -->
+					<Tooltip.Item seriesKey="efficiency" value={data.efficiency} valueAlign="right" />
 				</Tooltip.List>
 			{/snippet}
 		</Tooltip.Root>
