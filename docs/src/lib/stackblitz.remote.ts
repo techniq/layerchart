@@ -163,18 +163,22 @@ ${functionBodies.join('\n\n')}
 export const getExample = query(
 	z.object({
 		component: z.string(),
-		name: z.string()
+		name: z.string(),
+		/** In-page edits, used in place of the example file (supporting files follow its imports) */
+		source: z.string().optional()
 	}),
-	async ({ component, name }) => {
+	async ({ component, name, source }) => {
 		// Construct the path to match import.meta.glob pattern
 		const examplePath = `/src/examples/components/${component}/${name}.svelte`;
 
 		// Get the source code from the pre-loaded modules
-		const code = exampleModules[examplePath] as string | undefined;
+		const exampleCode = exampleModules[examplePath] as string | undefined;
 
-		if (!code) {
+		if (!exampleCode) {
 			throw new Error('Example not found');
 		}
+
+		const code = source ?? exampleCode;
 
 		// Remove `export { data };` from the code
 		const cleanCode = code.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');

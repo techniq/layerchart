@@ -1,26 +1,58 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { Code } from '@layerstack/docs/components';
-	import { Button, CopyButton, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
+	import {
+		Button,
+		CopyButton,
+		Menu,
+		MenuItem,
+		Toggle,
+		ToggleGroup,
+		ToggleOption,
+		Tooltip
+	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 	import LucideCode from '~icons/lucide/code';
+	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
 	import LucideFilePen from '~icons/lucide/file-pen';
+	import LucideListOrdered from '~icons/lucide/list-ordered';
 	import LucideLoaderCircle from '~icons/lucide/loader-circle';
 	import LucideRotateCcw from '~icons/lucide/rotate-ccw';
+	import SimpleIconsStackblitz from '~icons/simple-icons/stackblitz';
 	import type { Sandbox } from './state.svelte';
 
 	let {
 		sandbox,
 		showLineNumbers = false,
 		highlight,
+		onopenstackblitz,
 		class: className
 	}: {
 		sandbox: Sandbox;
 		showLineNumbers?: boolean;
 		highlight?: string;
+		/** Adds "Open in StackBlitz" to the menu when set. */
+		onopenstackblitz?: () => Promise<void>;
 		class?: string;
 	} = $props();
 
+	let opening = $state(false);
+
 	const editing = $derived(sandbox.mode === 'edit' && sandbox.module);
+
+	// Seeded from the prop, then owned here: one toggle drives both View and Edit, so
+	// switching modes never adds or drops the gutter.
+	let lineNumbers = $state(untrack(() => showLineNumbers));
+
+	// `surface-content` rather than a surface shade, so the hover reads on the translucent
+	// toolbar in both themes.
+	const iconButton =
+		'text-surface-content/70 hover:text-surface-content hover:bg-surface-content/10 p-0.5';
+
+	async function openStackBlitz() {
+		opening = true;
+		await onopenstackblitz?.().finally(() => (opening = false));
+	}
 </script>
 
 <!--
@@ -34,7 +66,7 @@
 		<sandbox.module.CodeEditor
 			bind:value={sandbox.source}
 			diagnostics={sandbox.diagnostics}
-			lineNumbers={showLineNumbers}
+			{lineNumbers}
 			autofocus
 			class="h-full"
 		/>
@@ -42,7 +74,7 @@
 		<!-- `Code`'s own copy button is off; the toolbar below serves both modes. -->
 		<Code
 			source={sandbox.source}
-			{showLineNumbers}
+			showLineNumbers={lineNumbers}
 			{highlight}
 			copyButton={false}
 			class="outline-none h-full"
@@ -65,19 +97,14 @@
 					icon={LucideRotateCcw}
 					size="sm"
 					iconOnly
-					class="text-surface-content/70 hover:bg-surface-100/20 p-0.5"
+					class={iconButton}
 					on:click={() => sandbox.reset()}
 				/>
 			</Tooltip>
 		{/if}
 
 		<Tooltip title="Copy source">
-			<CopyButton
-				value={sandbox.source}
-				size="sm"
-				iconOnly
-				class="text-surface-content/70 hover:bg-surface-100/20 p-0.5"
-			/>
+			<CopyButton value={sandbox.source} size="sm" iconOnly class={iconButton} />
 		</Tooltip>
 
 		<!--
@@ -110,6 +137,30 @@
 				Edit
 			</ToggleOption>
 		</ToggleGroup>
+
+		<!-- Occasional actions and set-once preferences, kept off the strip that covers the code. -->
+		<Toggle let:on={open} let:toggle let:toggleOff>
+			<Button
+				icon={LucideEllipsisVertical}
+				size="sm"
+				iconOnly
+				loading={opening}
+				aria-label="More options"
+				class={cls(iconButton, 'ml-0.5')}
+				on:click={toggle}
+			>
+				<Menu {open} on:close={toggleOff} placement="bottom-end" classes={{ menu: 'p-1' }}>
+					<MenuItem icon={LucideListOrdered} on:click={() => (lineNumbers = !lineNumbers)}>
+						{lineNumbers ? 'Hide line numbers' : 'Show line numbers'}
+					</MenuItem>
+					{#if onopenstackblitz}
+						<MenuItem icon={SimpleIconsStackblitz} on:click={openStackBlitz}>
+							{sandbox.dirty ? 'Open edits in StackBlitz' : 'Open in StackBlitz'}
+						</MenuItem>
+					{/if}
+				</Menu>
+			</Button>
+		</Toggle>
 	</div>
 
 	{#if sandbox.loadError}

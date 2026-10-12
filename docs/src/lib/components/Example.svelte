@@ -27,10 +27,8 @@
 	import { exposeData } from '$lib/utils/exampleSource';
 
 	import LucideCode from '~icons/lucide/code';
-	import LucideRotateCcw from '~icons/lucide/rotate-ccw';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
-	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
 	import LucideImageDown from '~icons/lucide/image-down';
 	import LucideCopy from '~icons/lucide/copy';
@@ -337,7 +335,14 @@
 
 		{#if showCode}
 			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
-				<CodePanel {sandbox} {showLineNumbers} {highlight} />
+				<CodePanel
+					{sandbox}
+					{showLineNumbers}
+					{highlight}
+					onopenstackblitz={component && name
+						? () => openInStackBlitz(component, name, sandbox.dirty ? sandbox.source : undefined)
+						: undefined}
+				/>
 			</div>
 		{/if}
 
@@ -350,20 +355,6 @@
 						on:click={() => (showCode = !showCode)}
 					>
 						{showCode ? 'Hide' : ''} Code
-					</Button>
-				{/if}
-
-				<!--
-					Without this, hiding the code after an edit leaves the example permanently
-					showing the user's version with nothing on screen explaining why.
-				-->
-				{#if sandbox.dirty}
-					<Button
-						icon={LucideRotateCcw}
-						class="text-surface-content/70 py-1"
-						on:click={() => sandbox.reset()}
-					>
-						Reset
 					</Button>
 				{/if}
 
@@ -409,16 +400,6 @@
 						class="text-surface-content/70 py-1"
 					>
 						View
-					</Button>
-				{/if}
-
-				{#if component && name}
-					<Button
-						icon={LucideFilePen}
-						class="text-surface-content/70 py-1"
-						on:click={() => openInStackBlitz(component, name)}
-					>
-						Edit
 					</Button>
 				{/if}
 

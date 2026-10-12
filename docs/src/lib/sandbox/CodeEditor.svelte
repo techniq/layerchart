@@ -11,12 +11,7 @@
 		lineNumbers as lineNumbersExt
 	} from '@codemirror/view';
 	import { EditorState, Compartment } from '@codemirror/state';
-	import {
-		defaultKeymap,
-		history,
-		historyKeymap,
-		indentWithTab
-	} from '@codemirror/commands';
+	import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 	import {
 		indentOnInput,
 		indentUnit,
@@ -38,6 +33,7 @@
 		/**
 		 * Mirrors the `Code` block's `showLineNumbers`, so the gutter is there in Edit
 		 * exactly when it was in View — adding or dropping one shifts every line sideways.
+		 * Reactive, so it can be toggled without rebuilding the editor.
 		 */
 		lineNumbers = false,
 		oninput,
@@ -56,6 +52,8 @@
 	let view = $state<EditorView | null>(null);
 
 	const themeCompartment = new Compartment();
+	const gutterCompartment = new Compartment();
+	const gutter = (show: boolean) => (show ? lineNumbersExt() : []);
 	const { currentTheme } = getSettings();
 
 	/**
@@ -146,8 +144,9 @@
 				'.cm-cursor, .cm-dropCursor': {
 					borderLeftColor: dark ? palette.dark.plain : palette.light.plain
 				},
-				'&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection':
-					{ backgroundColor: 'color-mix(in oklab, var(--color-primary) 22%, transparent)' },
+				'&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
+					backgroundColor: 'color-mix(in oklab, var(--color-primary) 22%, transparent)'
+				},
 				'.cm-matchingBracket, .cm-nonmatchingBracket': {
 					backgroundColor: 'color-mix(in oklab, currentColor 12%, transparent)',
 					outline: 'none'
@@ -157,14 +156,20 @@
 		);
 	}
 
-	const theme = (dark: boolean) => [chrome(dark), syntaxHighlighting(styles[dark ? 'dark' : 'light'])];
+	const theme = (dark: boolean) => [
+		chrome(dark),
+		syntaxHighlighting(styles[dark ? 'dark' : 'light'])
+	];
 
 	/**
 	 * Matched to the read-only `Code` component so swapping one for the other doesn't
 	 * move a single character: same mono stack, `text-sm` metrics (14px/20px), the same
 	 * 1rem padding, and `tab-size: 2`. The background is left transparent so the
-	 * surrounding panel supplies it, and there's no gutter — `Code` has no line numbers,
-	 * and a gutter would shift every line sideways on activation.
+	 * surrounding panel supplies it.
+	 *
+	 * The gutter copies `Code`'s `.show-line-numbers` numbers: a right-aligned 2rem column
+	 * with a 1rem gap, inside the same 1rem padding, so the code starts 4rem in for both.
+	 * These are hand-copied from `Code`, so they need re-checking if its highlighter changes.
 	 */
 	const appearance = EditorView.theme({
 		// `!important` because the github theme sets its own `&` background and CodeMirror
@@ -185,18 +190,19 @@
 		'.cm-gutters': {
 			backgroundColor: 'transparent !important',
 			border: 'none',
-			color: 'color-mix(in oklab, currentColor 35%, transparent)'
-		}
+			paddingLeft: '1rem',
+			color: 'rgba(115, 138, 148, 0.4)'
+		},
+		'.cm-lineNumbers .cm-gutterElement': { minWidth: '2rem', padding: '0' }
 	});
 
 	/**
-	 * `basicSetup` minus the fold gutter, active-line highlight and search panel, with line
-	 * numbers only on request — the things that would either shift the layout or bloat the
-	 * chunk. Lint state
-	 * isn't listed because `setDiagnostics` appends it on first use.
+	 * `basicSetup` minus the fold gutter, active-line highlight and search panel (line
+	 * numbers live in their own compartment) — the things that would either shift the
+	 * layout or bloat the chunk. Lint state isn't listed because `setDiagnostics` appends
+	 * it on first use.
 	 */
 	const setup = [
-		...(untrack(() => lineNumbers) ? [lineNumbersExt()] : []),
 		highlightSpecialChars(),
 		history(),
 		drawSelection(),
@@ -233,6 +239,7 @@
 					svelte(),
 					keymap.of([indentWithTab]),
 					themeCompartment.of(theme(untrack(() => $currentTheme.dark))),
+					gutterCompartment.of(gutter(untrack(() => lineNumbers))),
 					appearance,
 					EditorView.updateListener.of((update) => {
 						if (update.docChanged) {
@@ -265,6 +272,11 @@
 	$effect(() => {
 		const dark = $currentTheme.dark;
 		view?.dispatch({ effects: themeCompartment.reconfigure(theme(dark)) });
+	});
+
+	$effect(() => {
+		const show = lineNumbers;
+		view?.dispatch({ effects: gutterCompartment.reconfigure(gutter(show)) });
 	});
 
 	$effect(() => {
