@@ -273,8 +273,12 @@
   }
 
   /**
-   * `[min, max]` narrowed to the visible `[visibleMin, visibleMax]`, unless the tooltip wouldn't
-   * fit in what's left (including when none of it is visible).
+   * `[min, max]` narrowed to the visible `[visibleMin, visibleMax]` when the tooltip fits there.
+   *
+   * When it doesn't (ex. a tooltip wider than a phone-width chart), staying on screen matters more
+   * than staying within the chart, so it gets the whole visible range — but only while some of
+   * the chart is visible.  One scrolled out of view keeps `[min, max]`, so its tooltip stays
+   * beside it rather than pinned to the screen's edge.
    */
   function visibleBounds(
     min: number,
@@ -285,15 +289,39 @@
   ) {
     const narrowedMin = Math.max(min, visibleMin);
     const narrowedMax = Math.min(max, visibleMax);
-    return narrowedMax - narrowedMin >= tooltipSize ? [narrowedMin, narrowedMax] : [min, max];
+    if (narrowedMax - narrowedMin >= tooltipSize) return [narrowedMin, narrowedMax];
+    return narrowedMax > narrowedMin ? [visibleMin, visibleMax] : [min, max];
   }
 
   /**
-   * The visible part of the page, in the layout viewport coordinates `getBoundingClientRect()`
-   * and `position: fixed` use.  Pinch-zoom shrinks and pans this within the layout viewport,
-   * which `innerWidth` / `innerHeight` don't reflect, so bounding by those can place the tooltip
-   * off screen.
+   * The visible part of the page, in the layout viewport coordinates `position: fixed` uses.
+   * Pinch-zoom shrinks and pans this within the layout viewport, which `innerWidth` /
+   * `innerHeight` don't reflect, so bounding by those can place the tooltip off screen.
    */
+  /**
+   * Converts a `getBoundingClientRect()` rect to the layout viewport coordinates
+   * `position: fixed` uses.
+   *
+   * They're the same until pinch-zoomed.  Chromium and Firefox measure client coordinates from
+   * the layout viewport too, but WebKit (every iOS browser) measures them from the visual
+   * viewport, which put a fixed tooltip up and to the left of the pointer by however far the
+   * zoomed view was panned.
+   *
+   * Measured rather than detecting WebKit: `scrollX` / `scrollY` follow the same viewport client
+   * coordinates do, while `pageLeft - offsetLeft` is always the layout viewport's scroll, so the
+   * difference is zero wherever the two already agree.
+   */
+  function toLayoutViewport(rect: DOMRect) {
+    const vv = window.visualViewport;
+    if (!vv) return rect;
+    return new DOMRect(
+      rect.x + window.scrollX - (vv.pageLeft - vv.offsetLeft),
+      rect.y + window.scrollY - (vv.pageTop - vv.offsetTop),
+      rect.width,
+      rect.height
+    );
+  }
+
   function getVisibleViewport() {
     const vv = window.visualViewport;
     return vv
@@ -355,7 +383,8 @@
     if (isPortaled) subscribeToViewport();
 
     // When portaled, we need the container's viewport rect to convert coordinates
-    const containerRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
+    const clientRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
+    const containerRect = clientRect ? toLayoutViewport(clientRect) : null;
     // If portaled but the container rect is not available yet, bail
     if (isPortaled && !containerRect) {
       return { x: null, y: null };
@@ -538,7 +567,9 @@
         // Original non-portaled window containment
         // Root <div> won't be available on initial mount
         if (rootRef?.parentElement) {
-          const parentViewportRect = rootRef.parentElement.getBoundingClientRect();
+          const parentViewportRect = toLayoutViewport(
+            rootRef.parentElement.getBoundingClientRect()
+          );
 
           // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
           if (typeof x !== 'number') {

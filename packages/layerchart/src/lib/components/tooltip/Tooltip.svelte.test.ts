@@ -76,6 +76,8 @@ function getTooltipRoot(target: ParentNode = document.body) {
 /**
  * Pinch-zoom shrinks and pans the visible viewport inside the layout viewport, which
  * `innerWidth` / `innerHeight` don't reflect.  Stubbed, since a test can't pinch.
+ *
+ * `rect` is relative to the layout viewport, which is where Chromium keeps `scrollX` / `scrollY`.
  */
 function stubVisualViewport(rect: { left: number; top: number; width: number; height: number }) {
   vi.stubGlobal(
@@ -83,6 +85,8 @@ function stubVisualViewport(rect: { left: number; top: number; width: number; he
     Object.assign(new EventTarget(), {
       offsetLeft: rect.left,
       offsetTop: rect.top,
+      pageLeft: window.scrollX + rect.left,
+      pageTop: window.scrollY + rect.top,
       width: rect.width,
       height: rect.height,
     })
@@ -381,6 +385,43 @@ describe('Tooltip', () => {
       );
     });
 
+    it('should stay on screen when wider than the chart', async () => {
+      // A narrow chart near the right edge of the screen (ex. a phone), with room to its left
+      document.body.style.paddingLeft = '200px';
+      onTestFinished(() => {
+        document.body.style.paddingLeft = '';
+      });
+
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          width: 200,
+          props: { tooltip: { root: { props: { root: { style: 'width: 300px' } } } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+
+      const visibleRight = ctxRect.right + 20;
+      stubVisualViewport({ left: 0, top: 0, width: visibleRight, height: window.innerHeight });
+
+      await waitForTooltip(
+        tooltipCtx,
+        { clientX: ctxRect.right - 5, clientY: ctxRect.top + ctxRect.height / 2 },
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+          expect(tooltipRoot.offsetWidth).toBe(300);
+
+          const tooltipLeft = parseFloat(tooltipRoot.style.left);
+          expect(tooltipLeft).toBeGreaterThanOrEqual(-1);
+          expect(tooltipLeft + tooltipRoot.offsetWidth).toBeLessThanOrEqual(visibleRight + 1);
+        }
+      );
+    });
+
     it('should stay beside a chart that is scrolled out of view', async () => {
       const { container } = render(LineChart, { props: baseProps });
 
@@ -616,6 +657,46 @@ describe('Tooltip', () => {
   });
 
   describe('touch', () => {
+    /**
+     * WebKit (every iOS browser) measures client coordinates from the visual viewport, and moves
+     * `scrollX` / `scrollY` with it, while `position: fixed` stays on the layout viewport.
+     */
+    it('should stay over the finger when pinch-zoomed in WebKit', async () => {
+      const { container } = render(LineChart, { props: baseProps });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+
+      // Zoomed in and panned 30px right and 20px down within the layout viewport
+      const pan = { x: 30, y: 20 };
+      stubVisualViewport({
+        left: pan.x,
+        top: pan.y,
+        width: window.innerWidth - pan.x,
+        height: window.innerHeight - pan.y,
+      });
+      vi.stubGlobal('scrollX', window.scrollX + pan.x);
+      vi.stubGlobal('scrollY', window.scrollY + pan.y);
+
+      const pointer = { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.bottom - 20 };
+      await waitForTooltip(
+        tooltipCtx,
+        pointer,
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          // Placed in layout viewport coordinates, so offset by the pan from the client position
+          const top = parseFloat(tooltipRoot.style.top);
+          const left = parseFloat(tooltipRoot.style.left);
+          expect(top + tooltipRoot.offsetHeight).toBeCloseTo(pointer.clientY + pan.y - 32, 0);
+          expect(left + tooltipRoot.offsetWidth / 2).toBeCloseTo(pointer.clientX + pan.x, 0);
+        },
+        'touch'
+      );
+    });
+
     it.each(['touch', 'pen'])('should sit centered above a %s', async (pointerType) => {
       const { container } = render(LineChart, { props: baseProps });
 
