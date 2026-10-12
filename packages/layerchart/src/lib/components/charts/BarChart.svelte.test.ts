@@ -385,10 +385,7 @@ describe('BarChart', () => {
       const { container } = render(BarChart, {
         data: wideData,
         x: 'year',
-        series: [
-          { key: 'apples' },
-          { key: 'scaledBananas', value: (d: any) => d.bananas * 2 },
-        ],
+        series: [{ key: 'apples' }, { key: 'scaledBananas', value: (d: any) => d.bananas * 2 }],
         seriesLayout: 'group',
         height: 300,
         width: 400,

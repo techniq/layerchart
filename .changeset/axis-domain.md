@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Axis): Add `domain` to tick a different domain across the chart's scale, such as a secondary axis
+feat(Axis): Add `domain` to label the chart's scale in other units, such as a secondary axis

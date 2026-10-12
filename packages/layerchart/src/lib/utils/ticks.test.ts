@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { scaleTime, scaleUtc } from 'd3-scale';
-import { utcDay } from 'd3-time';
+import { utcDay, utcHour, utcYear } from 'd3-time';
 import { PeriodType } from '@layerstack/utils';
 
 import { autoTickFormat, autoTickVals, filterTicksByFormat } from './ticks.js';
@@ -134,6 +134,32 @@ describe('autoTickFormat with a UTC scale', () => {
     expect(fmt(start, 0)).toContain('2');
     // Under TZ=UTC-5 the local day of this instant is Jan 1 — the label must not say that.
     expect(fmt(start, 0)).not.toContain('1/1');
+  });
+
+  it('labels a UTC tick in UTC without an explicit format', () => {
+    const scale = scaleUtc()
+      .domain([start, utcHour.offset(start, 6)])
+      .range([0, 100]);
+    const fmt = autoTickFormat({ scale: scale as any, count: 6 });
+    const local = autoTickFormat({
+      scale: scaleTime()
+        .domain([start, utcHour.offset(start, 6)])
+        .range([0, 100]) as any,
+      count: 6,
+    });
+    // 1 AM UTC, which is 6 AM under the tests' UTC+5
+    expect(fmt(utcHour.offset(start, 1), 1)).toBe(local(new Date(2024, 0, 2, 1), 1));
+    expect(fmt(utcHour.offset(start, 1), 1)).not.toBe(local(utcHour.offset(start, 1), 1));
+  });
+
+  it('labels a UTC year tick with its own year', () => {
+    const year = new Date('2024-01-01T00:00:00Z');
+    const scale = scaleUtc()
+      .domain([utcYear.offset(year, -3), utcYear.offset(year, 3)])
+      .range([0, 100]);
+    const fmt = autoTickFormat({ scale: scale as any, count: 6 });
+    // Midnight Jan 1 UTC is already Jan 1 under the tests' UTC+5, where a year is easy to slip
+    expect(fmt(year, 3)).toBe('2024');
   });
 
   it('still labels a local scale in local time', () => {

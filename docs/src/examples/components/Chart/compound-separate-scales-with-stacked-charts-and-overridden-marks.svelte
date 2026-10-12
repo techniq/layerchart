@@ -5,6 +5,11 @@
 
 <script lang="ts">
 	import { BarChart, ChartGroup, Spline, Tooltip, defaultChartPadding } from 'layerchart';
+	import { scaleUtc } from 'd3-scale';
+	import { utcDay, utcHour } from 'd3-time';
+
+	// Each row is a UTC day; draw lines through the middle of its bar
+	const midday = (d: { date: Date }) => utcHour.offset(d.date, 12);
 
 	export { data };
 </script>
@@ -16,6 +21,8 @@
 		<BarChart
 			{data}
 			x="date"
+			xScale={scaleUtc()}
+			xInterval={utcDay}
 			y="volume"
 			yNice
 			axis={false}
@@ -31,25 +38,27 @@
 		<BarChart
 			{data}
 			x="date"
+			xScale={scaleUtc()}
+			xInterval={utcDay}
 			y={['open', 'close']}
 			yNice
 			yDomain={null}
 			height={300}
 			props={{
-				xAxis: { ticks: 10, rule: true },
+				xAxis: { tickMultiline: true, rule: true },
 				tooltip: { context: { mode: 'band' } }
 			}}
 			padding={defaultChartPadding({ left: 25 })}
 		>
 			{#snippet marks()}
-				<Spline y="open" class="stroke-primary" />
-				<Spline y="close" class="stroke-secondary" />
+				<Spline x={midday} y="open" class="stroke-primary" />
+				<Spline x={midday} y="close" class="stroke-secondary" />
 			{/snippet}
 
 			{#snippet tooltip({ context })}
 				<Tooltip.Root {context}>
 					{#snippet children({ data })}
-						<Tooltip.Header value={data.date} format="day" />
+						<Tooltip.Header value={data.date} format={{ type: 'day', options: { utc: true } }} />
 						<Tooltip.List>
 							<Tooltip.Item label="open" value={data.open} format="currency" />
 							<Tooltip.Item label="close" value={data.close} format="currency" />
