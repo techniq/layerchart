@@ -341,9 +341,9 @@
   /**
    * Makes reading the container's viewport rect reactive to scrolling and resizing.
    *
-   * A portaled tooltip is positioned from the chart container's *viewport* rect, and
-   * `getBoundingClientRect()` is not reactive — scrolling moves the chart out from under a
-   * tooltip that never re-measures.  Pointer-driven tooltips mostly dodge this (scrolling fires
+   * A portaled tooltip is positioned from the chart container's *viewport* rect (and a
+   * `contained="window"` one is bounded by it), and `getBoundingClientRect()` is not reactive —
+   * scrolling moves the chart out from under a tooltip that never re-measures.  Pointer-driven tooltips mostly dodge this (scrolling fires
    * `pointercancel`, or a pointer event as content moves under the cursor), but one shown
    * programmatically — keyboard navigation, a chart group, `locked` — has no pointer to cancel it
    * and must follow the chart.
@@ -379,8 +379,8 @@
       return { x: null, y: null };
     }
 
-    // Only track the viewport while there is a portaled tooltip to keep positioned
-    if (isPortaled) subscribeToViewport();
+    // Only track the viewport while there is a tooltip measured against it to keep positioned
+    if (isPortaled || contained === 'window') subscribeToViewport();
 
     // When portaled, we need the container's viewport rect to convert coordinates
     const clientRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
@@ -641,7 +641,9 @@
      content — used by chart groups sharing a highlight without tooltips -->
 <!--
   `facetAll` renders one of these per panel instead — each with its own row and position, since
-  the size and placement below are per-instance state.
+  the size and placement below are per-instance state.  The props are passed through unresolved
+  (and `facetAll` with them, which `data` keeps from fanning out again) so each copy resolves its
+  placement the same way, including keeping clear of a finger.
 -->
 {#if facetAll && ctx.facet.enabled && dataProp === undefined}
   {#each ctx.facet.panels as panel (panel.key)}
@@ -651,9 +653,10 @@
         data={row}
         x={x === 'pointer' ? 'data' : x}
         y={y === 'pointer' ? 'data' : y}
-        {anchor}
-        {xOffset}
-        {yOffset}
+        {facetAll}
+        anchor={anchorProp}
+        xOffset={xOffsetProp}
+        yOffset={yOffsetProp}
         {classes}
         {contained}
         {fadeDuration}

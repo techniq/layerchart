@@ -3,6 +3,7 @@ import { render } from 'vitest-browser-svelte';
 
 import LineChart from '../charts/LineChart/LineChart.svelte';
 import TooltipLockHarness from '$lib/tests/TooltipLockHarness.svelte';
+import TooltipFacetHarness from '$lib/tests/TooltipFacetHarness.svelte';
 
 const data = [
   { date: 0, value: 10 },
@@ -80,20 +81,19 @@ function getTooltipRoot(target: ParentNode = document.body) {
  * `rect` is relative to the layout viewport, which is where Chromium keeps `scrollX` / `scrollY`.
  */
 function stubVisualViewport(rect: { left: number; top: number; width: number; height: number }) {
-  vi.stubGlobal(
-    'visualViewport',
-    Object.assign(new EventTarget(), {
-      offsetLeft: rect.left,
-      offsetTop: rect.top,
-      pageLeft: window.scrollX + rect.left,
-      pageTop: window.scrollY + rect.top,
-      width: rect.width,
-      height: rect.height,
-    })
-  );
+  const visualViewport = Object.assign(new EventTarget(), {
+    offsetLeft: rect.left,
+    offsetTop: rect.top,
+    pageLeft: window.scrollX + rect.left,
+    pageTop: window.scrollY + rect.top,
+    width: rect.width,
+    height: rect.height,
+  });
+  vi.stubGlobal('visualViewport', visualViewport);
   onTestFinished(() => {
     vi.unstubAllGlobals();
   });
+  return visualViewport;
 }
 
 describe('Tooltip', () => {
@@ -499,6 +499,41 @@ describe('Tooltip', () => {
       );
     });
 
+    it('should follow a pinch without the portal', async () => {
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { contained: 'window' as const, portal: false } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+
+      const visualViewport = stubVisualViewport({
+        left: 0,
+        top: 0,
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+
+      const pointer = { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + 20 };
+      await waitForTooltip(tooltipCtx, pointer, () => {
+        expect(getTooltipRoot(container)).not.toBeNull();
+      });
+
+      // Zoom in until the visible right edge is just past the pointer, with no pointer event
+      const visibleRight = pointer.clientX + 20;
+      visualViewport.width = visibleRight;
+      visualViewport.dispatchEvent(new Event('resize'));
+
+      await vi.waitFor(() => {
+        const tooltipRect = getTooltipRoot(container)!.getBoundingClientRect();
+        expect(tooltipRect.right).toBeLessThanOrEqual(visibleRight + 1);
+      });
+    });
+
     it('should flip tooltip up when it would overflow the bottom of the viewport', async () => {
       const { container } = render(LineChart, {
         props: {
@@ -744,6 +779,73 @@ describe('Tooltip', () => {
 
           const top = parseFloat(tooltipRoot.style.top);
           expect(top + tooltipRoot.offsetHeight).toBeCloseTo(pointer.clientY - 32, 0);
+        },
+        'touch'
+      );
+    });
+
+    it('should rise above the chart with `contained="window"`', async () => {
+      // Room above the chart, so only the viewport would force a flip
+      document.body.style.paddingTop = '200px';
+      onTestFinished(() => {
+        document.body.style.paddingTop = '';
+      });
+
+      const { container } = render(LineChart, {
+        props: {
+          ...baseProps,
+          props: { tooltip: { root: { contained: 'window' as const } } },
+        },
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      const pointer = { clientX: ctxRect.left + ctxRect.width / 2, clientY: ctxRect.top + 5 };
+      await waitForTooltip(
+        tooltipCtx,
+        pointer,
+        () => {
+          const tooltipRoot = getTooltipRoot()!;
+          expect(tooltipRoot).not.toBeNull();
+
+          const top = parseFloat(tooltipRoot.style.top);
+          const left = parseFloat(tooltipRoot.style.left);
+          expect(top + tooltipRoot.offsetHeight).toBeCloseTo(pointer.clientY - 32, 0);
+          expect(left + tooltipRoot.offsetWidth / 2).toBeCloseTo(pointer.clientX, 0);
+        },
+        'touch'
+      );
+    });
+
+    it('should rise above the chart for each `facetAll` panel', async () => {
+      document.body.style.paddingTop = '200px';
+      onTestFinished(() => {
+        document.body.style.paddingTop = '';
+      });
+
+      // Every panel peaks at the middle date, so each point there sits at the top of its panel
+      const facetData = ['A', 'B'].flatMap((region) =>
+        [10, 50, 100, 50, 10].map((value, date) => ({ date, value, region }))
+      );
+      const { container } = render(TooltipFacetHarness, { props: { data: facetData } });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+
+      const ctxRect = tooltipCtx.getBoundingClientRect();
+      // The middle of the first panel
+      const pointer = { clientX: ctxRect.left + ctxRect.width / 4, clientY: ctxRect.top + 20 };
+      await waitForTooltip(
+        tooltipCtx,
+        pointer,
+        () => {
+          const roots = [...document.body.querySelectorAll<HTMLElement>('.lc-tooltip-root')];
+          expect(roots).toHaveLength(2);
+          for (const root of roots) {
+            expect(parseFloat(root.style.top) + root.offsetHeight).toBeLessThan(ctxRect.top);
+          }
         },
         'touch'
       );
