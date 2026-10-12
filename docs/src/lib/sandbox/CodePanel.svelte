@@ -34,6 +34,7 @@
 		<sandbox.module.CodeEditor
 			bind:value={sandbox.source}
 			diagnostics={sandbox.diagnostics}
+			lineNumbers={showLineNumbers}
 			autofocus
 			class="h-full"
 		/>

@@ -8,9 +8,7 @@
 		rectangularSelection,
 		crosshairCursor,
 		highlightSpecialChars,
-		lineNumbers as lineNumbersExt,
-		highlightActiveLine,
-		highlightActiveLineGutter
+		lineNumbers as lineNumbersExt
 	} from '@codemirror/view';
 	import { EditorState, Compartment } from '@codemirror/state';
 	import {
@@ -30,30 +28,22 @@
 	import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 	import { setDiagnostics, lintKeymap } from '@codemirror/lint';
 	import { svelte } from '@replit/codemirror-lang-svelte';
-	import { javascript } from '@codemirror/lang-javascript';
-	import { css } from '@codemirror/lang-css';
-	import { html } from '@codemirror/lang-html';
-	import { json } from '@codemirror/lang-json';
 	import { getSettings } from 'svelte-ux';
 	import type { Diagnostic } from './compile';
 
 	let {
 		value = $bindable(''),
-		/** Drives syntax highlighting. Defaults to Svelte. */
-		filename = 'Example.svelte',
 		diagnostics = [],
 		autofocus = false,
 		/**
-		 * Off by default: inline example editors swap in for a `Code` block that has no
-		 * gutter, and adding one would shift every line sideways on activation. The
-		 * playground, which has no read-only view to match, turns it on.
+		 * Mirrors the `Code` block's `showLineNumbers`, so the gutter is there in Edit
+		 * exactly when it was in View — adding or dropping one shifts every line sideways.
 		 */
 		lineNumbers = false,
 		oninput,
 		class: className
 	}: {
 		value?: string;
-		filename?: string;
 		diagnostics?: Diagnostic[];
 		autofocus?: boolean;
 		lineNumbers?: boolean;
@@ -66,7 +56,6 @@
 	let view = $state<EditorView | null>(null);
 
 	const themeCompartment = new Compartment();
-	const languageCompartment = new Compartment();
 	const { currentTheme } = getSettings();
 
 	/**
@@ -170,16 +159,6 @@
 
 	const theme = (dark: boolean) => [chrome(dark), syntaxHighlighting(styles[dark ? 'dark' : 'light'])];
 
-	function languageFor(name: string) {
-		if (name.endsWith('.svelte')) return svelte();
-		if (name.endsWith('.ts')) return javascript({ typescript: true });
-		if (name.endsWith('.js')) return javascript();
-		if (name.endsWith('.css')) return css();
-		if (name.endsWith('.json')) return json();
-		if (name.endsWith('.html')) return html();
-		return svelte();
-	}
-
 	/**
 	 * Matched to the read-only `Code` component so swapping one for the other doesn't
 	 * move a single character: same mono stack, `text-sm` metrics (14px/20px), the same
@@ -211,14 +190,13 @@
 	});
 
 	/**
-	 * `basicSetup` minus line numbers, fold gutter, active-line highlight and the search
-	 * panel — the things that would either shift the layout or bloat the chunk. Lint state
+	 * `basicSetup` minus the fold gutter, active-line highlight and search panel, with line
+	 * numbers only on request — the things that would either shift the layout or bloat the
+	 * chunk. Lint state
 	 * isn't listed because `setDiagnostics` appends it on first use.
 	 */
 	const setup = [
-		...(untrack(() => lineNumbers)
-			? [lineNumbersExt(), highlightActiveLineGutter(), highlightActiveLine()]
-			: []),
+		...(untrack(() => lineNumbers) ? [lineNumbersExt()] : []),
 		highlightSpecialChars(),
 		history(),
 		drawSelection(),
@@ -252,7 +230,7 @@
 				doc: untrack(() => value),
 				extensions: [
 					setup,
-					languageCompartment.of(languageFor(untrack(() => filename))),
+					svelte(),
 					keymap.of([indentWithTab]),
 					themeCompartment.of(theme(untrack(() => $currentTheme.dark))),
 					appearance,
@@ -287,11 +265,6 @@
 	$effect(() => {
 		const dark = $currentTheme.dark;
 		view?.dispatch({ effects: themeCompartment.reconfigure(theme(dark)) });
-	});
-
-	$effect(() => {
-		const name = filename;
-		view?.dispatch({ effects: languageCompartment.reconfigure(languageFor(name)) });
 	});
 
 	$effect(() => {

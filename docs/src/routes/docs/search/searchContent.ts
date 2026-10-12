@@ -49,13 +49,6 @@ const topLevelPages: SearchEntry[] = [
 		type: 'page'
 	},
 	{
-		title: 'Playground',
-		slug: 'docs/playground',
-		content:
-			'Interactive playground to experiment with LayerChart components. Try code examples in StackBlitz.',
-		type: 'page'
-	},
-	{
 		title: 'Showcase',
 		slug: 'docs/showcase',
 		content:
