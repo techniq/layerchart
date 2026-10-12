@@ -7,12 +7,12 @@ A chart has one `y` scale, so every mark is measured against the same axis. Plot
 
 ## Choosing an approach
 
-|                                                     | Scales                      | Tooltip & highlight            | Use when                                                            |
-| --------------------------------------------------- | --------------------------- | ------------------------------ | ------------------------------------------------------------------- |
-| [One scale, extra marks](#one-scale-extra-marks)    | one                         | one, covers every mark         | the measures share units                                            |
-| [Remapped onto one scale](#remapped-onto-one-scale) | one, plus a hand-built axis | one, covers every mark         | different units, one chart's interactions                           |
-| [Overlaid charts](#overlaid-charts)                 | one per chart               | per chart, synced with a group | different units, and each measure needs its own range or chart type |
-| [Side by side](#side-by-side)                       | one per chart               | per chart, synced with a group | the measures don't need to share a plot                             |
+|                                                     | Scales                     | Tooltip & highlight            | Use when                                                            |
+| --------------------------------------------------- | -------------------------- | ------------------------------ | ------------------------------------------------------------------- |
+| [One scale, extra marks](#one-scale-extra-marks)    | one                        | one, covers every mark         | the measures share units                                            |
+| [Remapped onto one scale](#remapped-onto-one-scale) | one, plus an axis `domain` | one, covers every mark         | different units, one chart's interactions                           |
+| [Overlaid charts](#overlaid-charts)                 | one per chart              | per chart, synced with a group | different units, and each measure needs its own range or chart type |
+| [Side by side](#side-by-side)                       | one per chart              | per chart, synced with a group | the measures don't need to share a plot                             |
 
 A second axis invites readers to compare where two lines cross or which bar is taller, though both depend on the domains you picked. When the measures don't need to share a plot, [side by side](#side-by-side) avoids that.
 
@@ -47,7 +47,7 @@ Simplified charts take extra marks through `aboveMarks` / `belowMarks`:
 
 ## Remapped onto one scale
 
-Map the second measure into the first measure's domain, so it's drawn against the same `y` scale, then draw its axis with a scale of its own. One chart means one tooltip, one highlight, and one legend.
+Map the second measure into the first measure's domain, so it's drawn against the same `y` scale, then give its axis the second measure's `domain`. One chart means one tooltip, one highlight, and one legend.
 
 On `Chart`, `y1` with `y1Range={({ yScale }) => yScale.domain()}` does the mapping — `context.y1Scale` turns an efficiency into its equivalent in sales:
 
@@ -56,7 +56,7 @@ On `Chart`, `y1` with `y1Range={({ yScale }) => yScale.domain()}` does the mappi
 	{#snippet children({ context })}
 		<Layer>
 			<Axis placement="left" />
-			<Axis placement="right" scale={scaleLinear(context.y1Scale.domain(), [context.height, 0])} />
+			<Axis placement="right" domain={context.y1Scale.domain()} />
 			<Spline />
 			<Spline y={(d) => context.y1Scale(d.efficiency)} />
 		</Layer>
@@ -97,7 +97,7 @@ The tooltip reads each series' `value`, so it would show the remapped number —
 Stack two charts in the same grid cell, each with its own scales, marks, and axis. Each measure can have its own range — rainfall hanging from the top while flows rise from the bottom — or its own chart type.
 
 ```svelte
-<ChartGroup>
+<ChartGroup pointer={{ tooltip: false }}>
 	<div class="grid grid-stack">
 		<Chart {data} x="year" y="sales" {padding} height={300}>...</Chart>
 		<Chart {data} x="year" y="efficiency" {padding} height={300}>...</Chart>
@@ -107,7 +107,7 @@ Stack two charts in the same grid cell, each with its own scales, marks, and axi
 
 :example{ component="Chart" name="compound-dual-axis-with-stacked-charts" }
 
-The plot areas only line up if the charts share `height`, `padding`, and `x` domain, so set them on both. The top chart receives the pointer; wrap them in a [`ChartGroup`](/docs/guides/chart-group) and the charts underneath show their highlight too.
+The plot areas only line up if the charts share `height`, `padding`, and `x` domain, so set them on both. The top chart receives the pointer; wrap them in a [`ChartGroup`](/docs/guides/chart-group) and the charts underneath show their highlight too, while `pointer={{ tooltip: false }}` leaves the tooltip to the top one.
 
 :example{ component="Chart" name="compound-separate-scales-with-stacked-charts-and-overridden-marks" }
 

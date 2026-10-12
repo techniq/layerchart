@@ -50,11 +50,11 @@
 	padding={defaultChartPadding({ top: 8, left: 48, right: 48, legend: true })}
 	height={300}
 >
-	{#snippet axis({ context })}
+	{#snippet axis()}
 		<Axis placement="left" rule label="Energy / Peak power" labelPlacement="middle" />
 		<Axis
 			placement="right"
-			scale={scaleLinear(efficiencyScale.domain(), [context.height, 0])}
+			domain={efficiencyScale.domain()}
 			format={(v) => `${v}%`}
 			rule
 			label="Efficiency"

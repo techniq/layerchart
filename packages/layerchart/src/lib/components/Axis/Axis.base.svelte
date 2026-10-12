@@ -52,6 +52,7 @@
     transitionIn,
     transitionInParams,
     scale,
+    domain,
     classes = {},
     class: className,
     tickLabel,
@@ -80,6 +81,7 @@
         fill,
         motion,
         scale,
+        domain,
         classes,
         facetAll,
       }) as AxisProps

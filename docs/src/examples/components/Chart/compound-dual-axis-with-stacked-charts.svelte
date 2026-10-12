@@ -9,8 +9,8 @@
 	export { data };
 </script>
 
-<!-- The group shows each chart's highlight, though only the top one receives the pointer -->
-<ChartGroup>
+<!-- Only the top chart receives the pointer; the group highlights the others, leaving the tooltip to it -->
+<ChartGroup pointer={{ tooltip: false }}>
 	<div class="grid grid-stack p-4 border rounded-sm">
 		<!-- Sales chart-->
 		<Chart

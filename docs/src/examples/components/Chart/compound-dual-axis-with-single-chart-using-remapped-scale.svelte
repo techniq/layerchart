@@ -5,7 +5,6 @@
 
 <script lang="ts">
 	import { Axis, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
-	import { scaleLinear } from 'd3-scale';
 
 	export { data };
 </script>
@@ -35,7 +34,7 @@
 			/>
 			<Axis
 				placement="right"
-				scale={scaleLinear(context.y1Scale?.domain() ?? [], [context.height, 0])}
+				domain={context.y1Scale?.domain()}
 				ticks={context.y1Scale?.ticks?.()}
 				rule
 				label="efficiency (mpg) ↑"

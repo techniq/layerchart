@@ -158,6 +158,12 @@ export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
   scale?: any;
 
   /**
+   * Domain for the axis, on a copy of `scale` (or the chart's scale for this placement) that keeps
+   * its range and type.  Useful for a secondary axis, e.g. `domain={[0, 100]}` on the right.
+   */
+  domain?: any[];
+
+  /**
    * Stroke color for axis rule, grid lines, and tick marks.
    * Useful for server-side rendering where CSS variables are not available.
    */
@@ -297,10 +303,15 @@ export class AxisState {
   });
 
   scale = $derived.by(() => {
-    const scaleProp = this.#props.scale;
-    if (scaleProp) return scaleProp;
-    if (this.orientation === 'back') return this.ctx.zScale;
-    return ['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale;
+    const scale =
+      this.#props.scale ??
+      (this.orientation === 'back'
+        ? this.ctx.zScale
+        : ['horizontal', 'angle'].includes(this.orientation)
+          ? this.ctx.xScale
+          : this.ctx.yScale);
+    const domain = this.#props.domain;
+    return domain && scale ? scale.copy().domain(domain) : scale;
   });
 
   interval = $derived(
