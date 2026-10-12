@@ -1,5 +1,23 @@
 # LayerChart
 
+## 2.7.0
+
+### Minor Changes
+
+- feat(Axis): Add `domain` to label the chart's scale in other units, such as a secondary axis ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- feat(TooltipItem): Add `seriesKey` to simplify setting the label, color, and value from a series ([#941](https://github.com/techniq/layerchart/pull/941))
+
+### Patch Changes
+
+- fix(Axis): Only drop the last tick of an `xInterval` / `yInterval` axis when it falls on the domain's end ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- fix(Axis): Label `scaleUtc()` ticks in UTC when no `format` is given ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- fix(BarChart): Place a grouped series in its own sub-band when its `value` is an accessor or a field other than its `key` ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- fix(AreaChart|BarChart|LineChart|ScatterChart|PieChart|ArcChart|Layer): Render server-side with `ssr` instead of overflowing the stack (#940) ([#943](https://github.com/techniq/layerchart/pull/943))
+
 ## 2.6.1
 
 ### Patch Changes
