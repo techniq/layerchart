@@ -24,6 +24,7 @@ import {
   type FormatConfig,
   DateToken,
 } from '@layerstack/utils';
+import { utcToLocalDate } from '@layerstack/utils/date';
 import { isScaleBand, isScaleTime, isScaleUtc, type AnyScale } from './scales.svelte.js';
 import type { AxisProps } from '$lib/components/Axis/Axis.svelte';
 
@@ -248,15 +249,21 @@ export function autoTickFormat(options: {
 
   // Time scale
   if (isScaleTime(scale) && count) {
+    let durationFormat: ReturnType<typeof getDurationFormat>;
     if (isLiteralObject(ticks) && 'interval' in ticks && ticks.interval != null) {
       const start = ticks.interval.floor(new Date());
       const end = ticks.interval.ceil(new Date());
-      return getDurationFormat(new Duration({ start, end }), { multiline, placement });
+      durationFormat = getDurationFormat(new Duration({ start, end }), { multiline, placement });
     } else {
       // Compare first 2 ticks to determine duration between ticks for formatting
       const [start, end] = timeTicks(scale.domain()[0], scale.domain()[1], count);
-      return getDurationFormat(new Duration({ start, end }), { multiline, placement });
+      durationFormat = getDurationFormat(new Duration({ start, end }), { multiline, placement });
     }
+    // As with an explicit format, a UTC scale's ticks are rendered in UTC.  The duration format
+    // reads local fields throughout, so hand it the local date that shares the tick's UTC fields.
+    return isScaleUtc(scale)
+      ? (tick: Date, i: number) => durationFormat(utcToLocalDate(tick), i)
+      : durationFormat;
   }
 
   // Format from scale

@@ -60,7 +60,7 @@
 					{#each context.series.visibleSeries as s}
 						{@const valueAccessor = accessor(s.value ?? s.key)}
 						{@const value = Math.abs(valueAccessor(data))}
-						<Tooltip.Item label={s.key} color={s.color}>
+						<Tooltip.Item seriesKey={s.key}>
 							{format(value)}
 							<span class="text-xs text-surface-content/50"
 								>({format(value / totalPopulation, 'percent')})</span

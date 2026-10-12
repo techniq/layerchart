@@ -5,6 +5,7 @@
 <script lang="ts">
 	import { Area, BarChart, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
+	import { timeDay, timeHour } from 'd3-time';
 
 	const data = createDateSeries({
 		count: 30,
@@ -20,13 +21,19 @@
 	{data}
 	x="date"
 	y={['baseline', 'value']}
+	xInterval={timeDay}
 	props={{
 		bars: { y: 'baseline' }
 	}}
 	height={300}
 >
 	{#snippet aboveMarks()}
-		<Area y1="value" class="fill-secondary/20" line={{ class: 'stroke-secondary' }} />
+		<Area
+			x={(d) => timeHour.offset(d.date, 12)}
+			y1="value"
+			class="fill-secondary/20"
+			line={{ class: 'stroke-secondary' }}
+		/>
 	{/snippet}
 
 	{#snippet tooltip()}

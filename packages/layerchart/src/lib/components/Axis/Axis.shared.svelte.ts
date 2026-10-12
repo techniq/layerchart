@@ -158,6 +158,12 @@ export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
   scale?: any;
 
   /**
+   * Domain for the axis, on a copy of `scale` (or the chart's scale for this placement) that keeps
+   * its range and type.  Useful for a secondary axis, e.g. `domain={[0, 100]}` on the right.
+   */
+  domain?: any[];
+
+  /**
    * Stroke color for axis rule, grid lines, and tick marks.
    * Useful for server-side rendering where CSS variables are not available.
    */
@@ -297,10 +303,15 @@ export class AxisState {
   });
 
   scale = $derived.by(() => {
-    const scaleProp = this.#props.scale;
-    if (scaleProp) return scaleProp;
-    if (this.orientation === 'back') return this.ctx.zScale;
-    return ['horizontal', 'angle'].includes(this.orientation) ? this.ctx.xScale : this.ctx.yScale;
+    const scale =
+      this.#props.scale ??
+      (this.orientation === 'back'
+        ? this.ctx.zScale
+        : ['horizontal', 'angle'].includes(this.orientation)
+          ? this.ctx.xScale
+          : this.ctx.yScale);
+    const domain = this.#props.domain;
+    return domain && scale ? scale.copy().domain(domain) : scale;
   });
 
   interval = $derived(
@@ -393,8 +404,12 @@ export class AxisState {
     let tickVals = autoTickVals(this.scale, ticks, this.tickCount);
 
     if (this.interval != null) {
-      // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
-      tickVals.pop();
+      // Ticks are centered in their interval (such as for bar charts), so one on the domain's end
+      // would label a bar past the last.  A coarser tick inside the domain — a month on a daily
+      // interval — still labels a bar, so keep it.
+      const last = tickVals[tickVals.length - 1];
+      const domainEnd = this.scale.domain()[1];
+      if (last != null && +last >= +domainEnd) tickVals.pop();
     }
 
     // Filter to the boundary implied by the format, matching the scale's own (local vs UTC)

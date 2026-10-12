@@ -4,6 +4,13 @@
 
   export type TooltipItemPropsWithoutHTML = {
     /**
+     * Series this item shows.  Its `label`, `value` (for the row being shown), and `color` are
+     * used unless passed explicitly, hovering the item highlights the series, and the item isn't
+     * rendered while the series is hidden.
+     */
+    seriesKey?: string;
+
+    /**
      * The label to display in the tooltip item.
      */
     label?: string | number | null | undefined | Snippet;
@@ -78,17 +85,19 @@
   import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     ref: refProp = $bindable(),
     labelRef: labelRefProp = $bindable(),
     valueRef: valueRefProp = $bindable(),
     colorRef: colorRefProp = $bindable(),
-    label,
-    value,
+    seriesKey,
+    label: labelProp,
+    value: valueProp,
     format,
     valueAlign = 'left',
-    color,
+    color: colorProp,
     classes = {
       root: '',
       label: '',
@@ -103,8 +112,31 @@
     },
     class: className,
     children,
+    onpointerenter,
+    onpointerleave,
     ...restProps
   }: TooltipItemProps = $props();
+
+  const ctx = getChartContext();
+
+  /** The series as resolved for the row being shown */
+  const tooltipSeries = $derived(
+    seriesKey == null ? undefined : ctx.tooltip.series.find((s) => s.key === seriesKey)
+  );
+
+  const visible = $derived.by(() => {
+    if (seriesKey == null) return true;
+    // Read live rather than from `tooltipSeries`, which only updates when the pointer moves.  A key
+    // that names no series is a `c` category, which the legend selects directly.
+    if (ctx.series.series.some((s) => s.key === seriesKey)) {
+      return ctx.series.isVisible(seriesKey);
+    }
+    return ctx.series.selectedKeys.isEmpty() || ctx.series.selectedKeys.isSelected(seriesKey);
+  });
+
+  const label = $derived(labelProp ?? tooltipSeries?.label ?? seriesKey);
+  const value = $derived(valueProp !== undefined ? valueProp : tooltipSeries?.value);
+  const color = $derived(colorProp ?? tooltipSeries?.color);
 
   let ref = $state<HTMLElement>();
   let labelRef = $state<HTMLElement>();
@@ -126,46 +158,57 @@
   });
 </script>
 
-<div
-  {...props.root}
-  class={cls('lc-tooltip-item-root', classes.root, className, props.root?.class)}
-  {...restProps}
-  bind:this={ref}
->
+{#if visible}
   <div
-    {...props.label}
-    class={cls('lc-tooltip-item-label', 'label', classes.label, props.label?.class)}
-    bind:this={labelRef}
+    {...props.root}
+    class={cls('lc-tooltip-item-root', classes.root, className, props.root?.class)}
+    data-highlighted={seriesKey != null ? ctx.series.isHighlighted(seriesKey, true) : undefined}
+    {...restProps}
+    onpointerenter={(e) => {
+      if (seriesKey != null) ctx.series.highlightKey = seriesKey;
+      onpointerenter?.(e);
+    }}
+    onpointerleave={(e) => {
+      if (seriesKey != null) ctx.series.highlightKey = null;
+      onpointerleave?.(e);
+    }}
+    bind:this={ref}
   >
-    {#if color}
-      <div
-        {...props.color}
-        class={cls('lc-tooltip-item-color', 'color', classes.color, props.color?.class)}
-        style:--color={color}
-        bind:this={colorRef}
-      ></div>
-    {/if}
-    {#if typeof label === 'function'}
-      {@render label()}
-    {:else}
-      {label}
-    {/if}
-  </div>
+    <div
+      {...props.label}
+      class={cls('lc-tooltip-item-label', 'label', classes.label, props.label?.class)}
+      bind:this={labelRef}
+    >
+      {#if color}
+        <div
+          {...props.color}
+          class={cls('lc-tooltip-item-color', 'color', classes.color, props.color?.class)}
+          style:--color={color}
+          bind:this={colorRef}
+        ></div>
+      {/if}
+      {#if typeof label === 'function'}
+        {@render label()}
+      {:else}
+        {label}
+      {/if}
+    </div>
 
-  <div
-    bind:this={valueRef}
-    {...props.value}
-    class={cls('lc-tooltip-item-value', 'value', classes.value, props.value?.class)}
-    data-align={valueAlign}
-  >
-    {#if children}
-      {@render children()}
-    {:else}
-      <!-- @ts-expect-error - improve types -->
-      {format ? formatUtil(value, asAny(format)) : value}
-    {/if}
+    <div
+      bind:this={valueRef}
+      {...props.value}
+      class={cls('lc-tooltip-item-value', 'value', classes.value, props.value?.class)}
+      data-align={valueAlign}
+    >
+      {#if children}
+        {@render children()}
+      {:else}
+        <!-- @ts-expect-error - improve types -->
+        {format ? formatUtil(value, asAny(format)) : value}
+      {/if}
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
   @layer components {

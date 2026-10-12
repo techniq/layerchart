@@ -234,6 +234,7 @@ A single label-value row. The `color` prop shows a color indicator:
 | `format`     | `FormatType \| FormatConfig`    | Value formatting          |
 | `valueAlign` | `'left' \| 'right' \| 'center'` | Alignment of value column |
 | `color`      | `string`                        | Color dot indicator       |
+| `seriesKey`  | `string`                        | Series the row shows      |
 
 ### `Tooltip.Separator`
 
@@ -308,19 +309,26 @@ When using multi-series charts, the tooltip state includes a `series` array with
 />
 ```
 
-For custom tooltips with series data, iterate over the series in your snippet:
+For custom tooltips, give each `Tooltip.Item` a `seriesKey`. It takes the series' label, color, and value at the hovered point, highlights the series while hovered, and isn't rendered while the series is hidden from the legend. Any of `label`, `value`, or `color` passed explicitly wins:
 
 ```svelte
 <Tooltip.Root>
-	{#snippet children({ data, series })}
+	{#snippet children({ data })}
 		<Tooltip.Header value={data.date} format="day" />
 		<Tooltip.List>
-			{#each series as s}
-				<Tooltip.Item label={s.label} value={s.value} color={s.color} />
-			{/each}
+			<Tooltip.Item seriesKey="apples" />
+			<Tooltip.Item seriesKey="bananas" format="integer" />
 		</Tooltip.List>
 	{/snippet}
 </Tooltip.Root>
+```
+
+Or iterate over the series in your snippet:
+
+```svelte
+{#each context.series.series as s (s.key)}
+	<Tooltip.Item seriesKey={s.key} />
+{/each}
 ```
 
 :example{ component="Tooltip" name="stacked-area" }
