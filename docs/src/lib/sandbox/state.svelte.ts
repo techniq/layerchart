@@ -93,6 +93,10 @@ export function createSandbox(
 	 */
 	let inFlight: Promise<void> | null = null;
 	function load() {
+		// Constant per build, so the server build drops the editor chunk entirely. It only
+		// ever loads on a click, and server-side it would pull the compiler, CodeMirror and
+		// every package an edit can import into the Cloudflare Worker.
+		if (import.meta.env.SSR) return Promise.resolve();
 		if (module) return Promise.resolve();
 		if (!inFlight) {
 			loading = true;
