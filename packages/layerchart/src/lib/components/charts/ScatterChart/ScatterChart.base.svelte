@@ -34,7 +34,7 @@
     props = {},
     profile = false,
     tooltipContext = true,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
     ref = $bindable(),
     context = $bindable(),
@@ -88,8 +88,8 @@
   {props}
 >
   {#snippet marks({ context, facet }: { context: any; facet: any })}
-    {#if typeof marks === 'function'}
-      {@render marks({ context, facet })}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp({ context, facet })}
     {:else}
       {#each context.series.visibleSeries as s, i (s.key)}
         <Points seriesKey={s.key} {...props.points} />

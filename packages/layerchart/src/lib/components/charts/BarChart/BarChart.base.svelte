@@ -39,7 +39,7 @@
     xInterval,
     yInterval,
     tooltipContext = true,
-    marks,
+    marks: marksProp,
     ref = $bindable(),
     context = $bindable(),
     ...restProps
@@ -117,8 +117,8 @@
   {props}
 >
   {#snippet marks({ context, facet }: { context: any; facet: any })}
-    {#if typeof marks === 'function'}
-      {@render marks({ context, facet })}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp({ context, facet })}
     {:else}
       {#each context.series.visibleSeries as s, i (s.key)}
         <Bars

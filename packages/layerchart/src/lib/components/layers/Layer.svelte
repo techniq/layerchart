@@ -35,7 +35,7 @@
   import Frame from '../Frame/Frame.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
 
-  let { type, children, ...restProps }: LayerProps = $props();
+  let { type, children: childrenProp, ...restProps }: LayerProps = $props();
 
   let settings = getSettings();
   let layer = $derived(type ?? settings.layer);
@@ -49,7 +49,7 @@
         <Frame class="lc-debug-frame" full />
       {/if}
 
-      {@render children?.(props)}
+      {@render (childrenProp as CanvasProps['children'])?.(props)}
     {/snippet}
   </Canvas>
 {:else if layer === 'svg'}
@@ -60,7 +60,7 @@
         <Frame class="lc-debug-frame" full />
       {/if}
 
-      {@render children?.(props)}
+      {@render (childrenProp as SVGProps['children'])?.(props)}
     {/snippet}
   </Svg>
 {:else if layer === 'html'}
@@ -71,7 +71,7 @@
         <Frame class="lc-debug-frame" full />
       {/if}
 
-      {@render children?.(props)}
+      {@render (childrenProp as HTMLProps['children'])?.(props)}
     {/snippet}
   </Html>
 {/if}
