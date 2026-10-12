@@ -1,4 +1,4 @@
-import { mount, unmount, untrack } from 'svelte';
+import { mount, settled, unmount, untrack } from 'svelte';
 import type { Attachment } from 'svelte/attachments';
 import { normalizeSource } from '$lib/utils/exampleSource';
 import type { Diagnostic } from './compile';
@@ -157,33 +157,67 @@ export function createSandbox(
 		};
 	});
 
-	/** Mounts the newest successful build. Only re-runs when `build` changes. */
-	const preview: Attachment = (el) => {
-		const url = build;
-		if (!url) return;
+	/** Whether an edited build is on screen. Until then `Example` keeps the real example up. */
+	let showing = $state(false);
 
-		let mounted: Record<string, any> | null = null;
-		let disposed = false;
+	/**
+	 * Mounts each successful build without blanking the preview.
+	 *
+	 * Unmounting the old component and then mounting the new one leaves the preview empty
+	 * for a frame or more (the module import is async, and charts draw only after
+	 * measuring their container), and the collapsed height makes the page jump. Instead
+	 * the new component mounts into a hidden layer the preview's width, gets time to
+	 * finish (async data, then a couple of frames to measure and draw), and replaces
+	 * what's on screen in one step. A build that throws while mounting leaves the last
+	 * one up.
+	 */
+	const preview: Attachment<HTMLElement> = (el) => {
+		let current: Mounted | null = null;
 
-		import(/* @vite-ignore */ url)
-			.then((mod) => {
-				URL.revokeObjectURL(url);
-				if (disposed) return;
+		$effect(() => {
+			const url = build;
+			if (!url) return;
+			let superseded = false;
+
+			(async () => {
+				const layer = document.createElement('div');
+				layer.style.cssText = HIDDEN_LAYER;
+				let next: Mounted | null = null;
+				try {
+					const mod = await import(/* @vite-ignore */ url);
+					if (superseded) return;
+					el.append(layer);
+					next = { layer, component: mount(mod.default, { target: layer }) };
+					await Promise.race([settled(), delay(1000)]);
+					await frames(2);
+				} catch (err) {
+					dispose(next);
+					layer.remove();
+					if (!superseded) runtimeError = err instanceof Error ? err.message : String(err);
+					return;
+				} finally {
+					URL.revokeObjectURL(url);
+				}
+				if (superseded) return dispose(next);
+
+				dispose(current);
+				layer.style.cssText = '';
+				current = next;
+				instance = next.component;
 				runtimeError = null;
-				mounted = mount(mod.default, { target: el as HTMLElement });
-				instance = mounted;
-			})
-			.catch((err) => {
-				URL.revokeObjectURL(url);
-				if (!disposed) runtimeError = err instanceof Error ? err.message : String(err);
-			});
+				showing = true;
+			})();
+
+			return () => {
+				superseded = true;
+			};
+		});
 
 		return () => {
-			disposed = true;
-			if (mounted) {
-				unmount(mounted);
-				if (instance === mounted) instance = null;
-			}
+			dispose(current);
+			current = null;
+			instance = null;
+			showing = false;
 		};
 	};
 
@@ -223,6 +257,9 @@ export function createSandbox(
 		get instance() {
 			return instance;
 		},
+		get showing() {
+			return showing;
+		},
 		get dirty() {
 			return editorValue !== original;
 		},
@@ -243,3 +280,23 @@ export function createSandbox(
 }
 
 export type Sandbox = ReturnType<typeof createSandbox>;
+
+type Mounted = { layer: HTMLElement; component: Record<string, any> };
+
+/** Laid out at the preview's width so charts measure correctly, but not seen or hit. */
+const HIDDEN_LAYER = 'position:absolute;inset-inline:0;top:0;visibility:hidden;pointer-events:none';
+
+function dispose(mounted: Mounted | null) {
+	if (!mounted) return;
+	unmount(mounted.component);
+	mounted.layer.remove();
+}
+
+const delay = (ms: number) => new Promise((done) => setTimeout(done, ms));
+
+function frames(count: number) {
+	return new Promise<void>((done) => {
+		const step = (left: number) => (left ? requestAnimationFrame(() => step(left - 1)) : done());
+		step(count);
+	});
+}

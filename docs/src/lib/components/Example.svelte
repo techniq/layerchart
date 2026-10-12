@@ -144,7 +144,7 @@
 	let data = $derived.by(() => {
 		try {
 			// Once edited, the chart on screen is the sandbox's, so `Data` must read from it.
-			return sandbox.live ? sandbox.instance?.data : ref?.data;
+			return sandbox.showing ? sandbox.instance?.data : ref?.data;
 		} catch {
 			return undefined;
 		}
@@ -285,9 +285,17 @@
 				{#if isVisible}
 					<svelte:boundary>
 						{#if sandbox.live}
-							<!-- Edited: render the user's source instead of the shipped component. -->
-							<div class={cls(sandbox.error && 'opacity-40')} {@attach sandbox.preview}></div>
-						{:else}
+							<!--
+								Edited: render the user's source instead of the shipped component. Each
+								build mounts hidden in here and is swapped in once it has rendered, so
+								the shipped component stays up until the first one is ready.
+							-->
+							<div
+								class={cls('relative', sandbox.error && 'opacity-40')}
+								{@attach sandbox.preview}
+							></div>
+						{/if}
+						{#if !sandbox.showing}
 							<example.component bind:this={ref} />
 						{/if}
 						{#snippet failed(error, reset)}
