@@ -16,6 +16,8 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { cls } from '@layerstack/tailwind';
+  import type { RectProps } from '../Rect/Rect.shared.svelte.js';
+  import type { TextProps } from '../Text/Text.shared.svelte.js';
 
   let {
     LinearGradient,
@@ -28,6 +30,7 @@
     class: className,
     gradient,
     pattern,
+    rect: rectSnippet,
     label,
     labelPlacement = 'center',
     labelXOffset = 0,
@@ -91,15 +94,25 @@
         ? 'end'
         : 'middle',
   });
+
+  const resolvedRectProps = $derived({
+    ...rect,
+    ...props?.rect,
+    fill,
+    class: cls('lc-annotation-range', props?.rect?.class, className),
+  } as RectProps);
+
+  const resolvedLabelProps = $derived({
+    ...labelProps,
+    ...props?.label,
+    class: cls('lc-annotation-range-label', props?.label?.class),
+  } as TextProps);
 </script>
 
-{#if fill || className}
-  <Rect
-    {...rect}
-    {...props?.rect}
-    {fill}
-    class={cls('lc-annotation-range', props?.rect?.class, className)}
-  />
+{#if rectSnippet}
+  {@render rectSnippet({ props: resolvedRectProps })}
+{:else if fill || className}
+  <Rect {...resolvedRectProps} />
 {/if}
 
 {#if gradient}
@@ -118,13 +131,10 @@
   </Pattern>
 {/if}
 
-{#if label}
-  <Text
-    value={label}
-    {...labelProps}
-    {...props?.label}
-    class={cls('lc-annotation-range-label', props?.label?.class)}
-  />
+{#if typeof label === 'function'}
+  {@render label({ props: resolvedLabelProps })}
+{:else if label}
+  <Text value={label} {...resolvedLabelProps} />
 {/if}
 
 <style>
