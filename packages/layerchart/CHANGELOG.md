@@ -1,5 +1,17 @@
 # LayerChart
 
+## 2.8.0
+
+### Minor Changes
+
+- feat(AnnotationLine|AnnotationPoint|AnnotationRange): Accept a `label` snippet and a mark snippet (`line`, `circle`, `rect`) to render custom markup ([#946](https://github.com/techniq/layerchart/pull/946))
+
+- feat(Tooltip): By default place above a finger or pen instead of below, and expose `tooltip.pointerType` ([#927](https://github.com/techniq/layerchart/pull/927))
+
+### Patch Changes
+
+- fix(Tooltip): Fix tooltip pointer location when pinch-zoomed, or when wider than the chart ([#927](https://github.com/techniq/layerchart/pull/927))
+
 ## 2.7.0
 
 ### Minor Changes
