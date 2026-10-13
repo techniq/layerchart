@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Tooltip): Place the tooltip above a finger or pen instead of underneath it, and expose `tooltip.pointerType`
+feat(Tooltip): By default place above a finger or pen instead of below, and expose `tooltip.pointerType`
