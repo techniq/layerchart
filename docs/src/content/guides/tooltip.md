@@ -103,6 +103,12 @@ The tooltip follows the mouse with a small offset to avoid overlapping the curso
 
 :example{ component="Tooltip" name="default-mouse-position-with-offset" }
 
+### Touch and pen
+
+A finger or pen covers whatever is below and to the right of it, so for touch and pen input the tooltip sits centered above the point of contact instead (`anchor="bottom"`, `yOffset={32}`). Near the top of the chart, a portaled tooltip (the default) rises above the chart rather than flipping underneath the finger.
+
+This is decided per interaction from the pointer event, so a touchscreen laptop gets the touch placement for a tap and the usual placement for its mouse. It applies when the tooltip follows the pointer on both axes (or uses `facetAll`). Setting `anchor` opts out, and `xOffset` / `yOffset` still override the offsets.
+
 ### Data snapping
 
 Snap the tooltip to the data point's chart position. Useful when you want the tooltip anchored to the mark:
@@ -137,7 +143,7 @@ You can render multiple `Tooltip.Root` instances. This is useful for placing a t
 
 ### Offsets
 
-`xOffset` and `yOffset` add space between the tooltip and its anchor position. They default to `10` for pointer mode and `0` for data mode:
+`xOffset` and `yOffset` add space between the tooltip and its anchor position. They default to `10` for pointer mode and `0` for data mode (`0` and `32` for [touch and pen](#touch-and-pen)):
 
 ```svelte
 <Tooltip.Root xOffset={16} yOffset={16}>
@@ -145,7 +151,7 @@ You can render multiple `Tooltip.Root` instances. This is useful for placing a t
 
 ### Anchor placement
 
-The `anchor` prop controls which corner of the tooltip aligns to the position point. It accepts placement values like `'top-left'` (default), `'bottom-right'`, `'top'`, `'right'`, etc:
+The `anchor` prop controls which corner of the tooltip aligns to the position point. It accepts placement values like `'top-left'` (default, or `'bottom'` for [touch and pen](#touch-and-pen)), `'bottom-right'`, `'top'`, `'right'`, etc:
 
 ```svelte
 <Tooltip.Root anchor="bottom-right">
@@ -193,6 +199,8 @@ Tooltips are contained within their chart container by default, flipping sides w
 ```svelte
 <Tooltip.Root contained="window">
 ```
+
+Containment only counts the part of the page that is on screen. When the page is pinch-zoomed or scrolled so the chart is partly out of view, or the tooltip is wider than the chart, the tooltip stays within the visible viewport instead of being cut off. With `'container'` this needs the default `portal`, since an inline tooltip can't leave the chart.
 
 ## Display components
 
@@ -427,6 +435,8 @@ The `touchEvents` prop controls how touch interactions behave on mobile. It maps
 | `'none'`  | All touch triggers tooltip (may block scrolling)               |
 | `'auto'`  | Browser default touch behavior                                 |
 
+See [touch and pen](#touch-and-pen) for where the tooltip is placed for a touch.
+
 ## Externally accessing tooltip data
 
 Use `bind:context` on `Chart` to read tooltip state from outside:
@@ -540,14 +550,15 @@ Add an `onclick` handler to `tooltipContext` to respond to clicks on data points
 
 ## TooltipState properties
 
-| Property                   | Type              | Description                                    |
-| -------------------------- | ----------------- | ---------------------------------------------- |
-| `data`                     | `T \| null`       | The hovered data point (or null)               |
-| `x`                        | `number`          | Pointer x position in chart coordinates        |
-| `y`                        | `number`          | Pointer y position in chart coordinates        |
-| `series`                   | `TooltipSeries[]` | Series values at the hovered point             |
-| `isHoveringTooltipArea`    | `boolean`         | Whether the pointer is in the tooltip area     |
-| `isHoveringTooltipContent` | `boolean`         | Whether the pointer is over the tooltip itself |
+| Property                   | Type              | Description                                                                                 |
+| -------------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
+| `data`                     | `T \| null`       | The hovered data point (or null)                                                            |
+| `x`                        | `number`          | Pointer x position in chart coordinates                                                     |
+| `y`                        | `number`          | Pointer y position in chart coordinates                                                     |
+| `series`                   | `TooltipSeries[]` | Series values at the hovered point                                                          |
+| `pointerType`              | `string \| null`  | `'mouse'`, `'pen'`, or `'touch'`; `null` when shown another way (keyboard, `show({ ... })`) |
+| `isHoveringTooltipArea`    | `boolean`         | Whether the pointer is in the tooltip area                                                  |
+| `isHoveringTooltipContent` | `boolean`         | Whether the pointer is over the tooltip itself                                              |
 
 ### Methods
 

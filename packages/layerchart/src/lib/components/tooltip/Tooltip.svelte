@@ -42,19 +42,22 @@
     /**
      * Offset added to `x` position
      *
-     * @default x === 'pointer' ? 10 : 0
+     * @default x === 'pointer' ? 10 : 0 (0 when following a finger or pen)
      */
     xOffset?: number;
 
     /**
      * Offset added to `y` position
      *
-     * @default y === 'pointer' ? 10 : 0
+     * @default y === 'pointer' ? 10 : 0 (32 when following a finger or pen)
      */
     yOffset?: number;
 
     /**
      * Align based on edge of tooltip
+     *
+     * When following a finger or pen, defaults to `'bottom'` (with a larger `yOffset`) so the
+     * tooltip sits above it instead of under the hand.  Setting `anchor` opts out of this.
      *
      * @default 'top-left'
      */
@@ -193,7 +196,7 @@
   import { type Snippet } from 'svelte';
 
   let {
-    anchor = 'top-left',
+    anchor: anchorProp,
     classes = {},
     contained = 'container',
     fadeDuration = 100,
@@ -204,9 +207,9 @@
     data: dataProp,
     facetAll = false,
     x = 'pointer',
-    xOffset = x === 'pointer' || facetAll ? 10 : 0,
+    xOffset: xOffsetProp,
     y = 'pointer',
-    yOffset = y === 'pointer' || facetAll ? 10 : 0,
+    yOffset: yOffsetProp,
     children,
     rootRef: rootRefProp = $bindable(),
     props = {
@@ -226,6 +229,28 @@
   import Self from './Tooltip.svelte';
 
   const ctx = getChartContext();
+
+  /**
+   * Whether to keep the tooltip clear of a finger or pen it is following.  The default below-right
+   * placement puts it under the finger (or pen tip) and the hand behind it, so it moves above
+   * instead.  An explicit `anchor` opts out.
+   *
+   * Driven by the event rather than a `(pointer: coarse)` media query so a touchscreen laptop
+   * gets this for a tap and the usual placement for its mouse.
+   */
+  const avoidPointer = $derived(
+    anchorProp === undefined &&
+      (ctx.tooltip.pointerType === 'touch' || ctx.tooltip.pointerType === 'pen') &&
+      ((x === 'pointer' && y === 'pointer') || facetAll)
+  );
+
+  const anchor = $derived<Placement>(anchorProp ?? (avoidPointer ? 'bottom' : 'top-left'));
+  const xOffset = $derived(
+    xOffsetProp ?? (avoidPointer ? 0 : x === 'pointer' || facetAll ? 10 : 0)
+  );
+  const yOffset = $derived(
+    yOffsetProp ?? (avoidPointer ? 32 : y === 'pointer' || facetAll ? 10 : 0)
+  );
 
   /** The row this tooltip shows — its own when given, else whatever the pointer resolved */
   const tooltipData = $derived(dataProp ?? ctx.tooltip.data);
@@ -247,6 +272,68 @@
     return Math.max(min, Math.min(value, max));
   }
 
+  /**
+   * `[min, max]` narrowed to the visible `[visibleMin, visibleMax]` when the tooltip fits there.
+   *
+   * When it doesn't (ex. a tooltip wider than a phone-width chart), staying on screen matters more
+   * than staying within the chart, so it gets the whole visible range — but only while some of
+   * the chart is visible.  One scrolled out of view keeps `[min, max]`, so its tooltip stays
+   * beside it rather than pinned to the screen's edge.
+   */
+  function visibleBounds(
+    min: number,
+    max: number,
+    visibleMin: number,
+    visibleMax: number,
+    tooltipSize: number
+  ) {
+    const narrowedMin = Math.max(min, visibleMin);
+    const narrowedMax = Math.min(max, visibleMax);
+    if (narrowedMax - narrowedMin >= tooltipSize) return [narrowedMin, narrowedMax];
+    return narrowedMax > narrowedMin ? [visibleMin, visibleMax] : [min, max];
+  }
+
+  /**
+   * The visible part of the page, in the layout viewport coordinates `position: fixed` uses.
+   * Pinch-zoom shrinks and pans this within the layout viewport, which `innerWidth` /
+   * `innerHeight` don't reflect, so bounding by those can place the tooltip off screen.
+   */
+  /**
+   * Converts a `getBoundingClientRect()` rect to the layout viewport coordinates
+   * `position: fixed` uses.
+   *
+   * They're the same until pinch-zoomed.  Chromium and Firefox measure client coordinates from
+   * the layout viewport too, but WebKit (every iOS browser) measures them from the visual
+   * viewport, which put a fixed tooltip up and to the left of the pointer by however far the
+   * zoomed view was panned.
+   *
+   * Measured rather than detecting WebKit: `scrollX` / `scrollY` follow the same viewport client
+   * coordinates do, while `pageLeft - offsetLeft` is always the layout viewport's scroll, so the
+   * difference is zero wherever the two already agree.
+   */
+  function toLayoutViewport(rect: DOMRect) {
+    const vv = window.visualViewport;
+    if (!vv) return rect;
+    return new DOMRect(
+      rect.x + window.scrollX - (vv.pageLeft - vv.offsetLeft),
+      rect.y + window.scrollY - (vv.pageTop - vv.offsetTop),
+      rect.width,
+      rect.height
+    );
+  }
+
+  function getVisibleViewport() {
+    const vv = window.visualViewport;
+    return vv
+      ? {
+          left: vv.offsetLeft,
+          top: vv.offsetTop,
+          right: vv.offsetLeft + vv.width,
+          bottom: vv.offsetTop + vv.height,
+        }
+      : { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+  }
+
   const isPortaled = $derived(
     typeof portalProp === 'boolean' ? portalProp : portalProp?.enabled !== false
   );
@@ -254,9 +341,9 @@
   /**
    * Makes reading the container's viewport rect reactive to scrolling and resizing.
    *
-   * A portaled tooltip is positioned from the chart container's *viewport* rect, and
-   * `getBoundingClientRect()` is not reactive — scrolling moves the chart out from under a
-   * tooltip that never re-measures.  Pointer-driven tooltips mostly dodge this (scrolling fires
+   * A portaled tooltip is positioned from the chart container's *viewport* rect (and a
+   * `contained="window"` one is bounded by it), and `getBoundingClientRect()` is not reactive —
+   * scrolling moves the chart out from under a tooltip that never re-measures.  Pointer-driven tooltips mostly dodge this (scrolling fires
    * `pointercancel`, or a pointer event as content moves under the cursor), but one shown
    * programmatically — keyboard navigation, a chart group, `locked` — has no pointer to cancel it
    * and must follow the chart.
@@ -268,14 +355,21 @@
    * `capture` is what catches scrolling of any *ancestor* (ex. a dashboard inside a scrolling
    * panel), not just the window — which is also why `scrollY` from `svelte/reactivity/window`
    * isn't enough here, and why runed's `ScrollState` (bound to one element) doesn't fit either.
+   *
+   * Pinch-zoom only fires `visualViewport` events, not the window's.
    */
   const subscribeToViewport = createSubscriber((update) => {
     const offScroll = on(window, 'scroll', update, { capture: true, passive: true });
     const offResize = on(window, 'resize', update, { passive: true });
+    const vv = window.visualViewport;
+    const offVisualScroll = vv ? on(vv, 'scroll', update, { passive: true }) : undefined;
+    const offVisualResize = vv ? on(vv, 'resize', update, { passive: true }) : undefined;
 
     return () => {
       offScroll();
       offResize();
+      offVisualScroll?.();
+      offVisualResize?.();
     };
   });
 
@@ -285,15 +379,18 @@
       return { x: null, y: null };
     }
 
-    // Only track the viewport while there is a portaled tooltip to keep positioned
-    if (isPortaled) subscribeToViewport();
+    // Only track the viewport while there is a tooltip measured against it to keep positioned
+    if (isPortaled || contained === 'window') subscribeToViewport();
 
     // When portaled, we need the container's viewport rect to convert coordinates
-    const containerRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
+    const clientRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
+    const containerRect = clientRect ? toLayoutViewport(clientRect) : null;
     // If portaled but the container rect is not available yet, bail
     if (isPortaled && !containerRect) {
       return { x: null, y: null };
     }
+
+    const viewport = getVisibleViewport();
 
     // Container-relative position of the tooltip data, used by the `'data'` placement
     const coords = x === 'data' || y === 'data' ? dataCoords(ctx, tooltipData) : null;
@@ -356,38 +453,45 @@
 
     if (contained === 'container') {
       if (isPortaled && containerRect) {
-        // Containment in viewport coordinates
+        // Container-relative bounds, narrowed to what is on screen (ex. pinch-zoomed in on part of
+        // the chart) when the tooltip fits there.  A chart scrolled out of view (ex. one driven by
+        // a chart group) keeps its tooltip beside it rather than pinned to the screen's edge.
+        const [minX, maxX] = visibleBounds(
+          ctx.padding.left,
+          containerRect.width,
+          viewport.left - containerRect.left,
+          viewport.right - containerRect.left,
+          tooltipWidth
+        );
+        const [minY, maxY] = visibleBounds(
+          // Above a finger, rising past the chart beats flipping underneath it, and the portal
+          // keeps it from being clipped, so only the viewport limits it
+          avoidPointer ? viewport.top - containerRect.top : ctx.padding.top,
+          containerRect.height,
+          viewport.top - containerRect.top,
+          viewport.bottom - containerRect.top,
+          tooltipHeight
+        );
+
         if (typeof x !== 'number') {
-          if (
-            (xAlign === 'start' || xAlign === 'center') &&
-            containerRect.left + rect.right > containerRect.right
-          ) {
+          if ((xAlign === 'start' || xAlign === 'center') && rect.right > maxX) {
             rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
           }
-          if (
-            (xAlign === 'end' || xAlign === 'center') &&
-            containerRect.left + rect.left < containerRect.left + ctx.padding.left
-          ) {
+          if ((xAlign === 'end' || xAlign === 'center') && rect.left < minX) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
-          rect.left = clampToEdges(rect.left, ctx.padding.left, containerRect.width - tooltipWidth);
+          rect.left = clampToEdges(rect.left, minX, maxX - tooltipWidth);
         }
         rect.right = rect.left + tooltipWidth;
 
         if (typeof y !== 'number') {
-          if (
-            (yAlign === 'start' || yAlign === 'center') &&
-            containerRect.top + rect.bottom > containerRect.bottom
-          ) {
+          if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > maxY) {
             rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
           }
-          if (
-            (yAlign === 'end' || yAlign === 'center') &&
-            containerRect.top + rect.top < containerRect.top + ctx.padding.top
-          ) {
+          if ((yAlign === 'end' || yAlign === 'center') && rect.top < minY) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
-          rect.top = clampToEdges(rect.top, ctx.padding.top, containerRect.height - tooltipHeight);
+          rect.top = clampToEdges(rect.top, minY, maxY - tooltipHeight);
         }
         rect.bottom = rect.top + tooltipHeight;
       } else {
@@ -417,21 +521,24 @@
       }
     } else if (contained === 'window') {
       if (isPortaled && containerRect) {
-        // Already in viewport coordinates, just clamp to window
+        // Already in viewport coordinates, just clamp to the visible viewport
         if (typeof x !== 'number') {
           if (
             (xAlign === 'start' || xAlign === 'center') &&
-            containerRect.left + rect.right > window.innerWidth
+            containerRect.left + rect.right > viewport.right
           ) {
             rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
           }
-          if ((xAlign === 'end' || xAlign === 'center') && containerRect.left + rect.left < 0) {
+          if (
+            (xAlign === 'end' || xAlign === 'center') &&
+            containerRect.left + rect.left < viewport.left
+          ) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
           rect.left = clampToEdges(
             rect.left,
-            -containerRect.left,
-            window.innerWidth - containerRect.left - tooltipWidth
+            viewport.left - containerRect.left,
+            viewport.right - containerRect.left - tooltipWidth
           );
         }
         rect.right = rect.left + tooltipWidth;
@@ -439,17 +546,20 @@
         if (typeof y !== 'number') {
           if (
             (yAlign === 'start' || yAlign === 'center') &&
-            containerRect.top + rect.bottom > window.innerHeight
+            containerRect.top + rect.bottom > viewport.bottom
           ) {
             rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
           }
-          if ((yAlign === 'end' || yAlign === 'center') && containerRect.top + rect.top < 0) {
+          if (
+            (yAlign === 'end' || yAlign === 'center') &&
+            containerRect.top + rect.top < viewport.top
+          ) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
           rect.top = clampToEdges(
             rect.top,
-            -containerRect.top,
-            window.innerHeight - containerRect.top - tooltipHeight
+            viewport.top - containerRect.top,
+            viewport.bottom - containerRect.top - tooltipHeight
           );
         }
         rect.bottom = rect.top + tooltipHeight;
@@ -457,26 +567,28 @@
         // Original non-portaled window containment
         // Root <div> won't be available on initial mount
         if (rootRef?.parentElement) {
-          const parentViewportRect = rootRef.parentElement.getBoundingClientRect();
+          const parentViewportRect = toLayoutViewport(
+            rootRef.parentElement.getBoundingClientRect()
+          );
 
           // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
           if (typeof x !== 'number') {
             if (
               (xAlign === 'start' || xAlign === 'center') &&
-              parentViewportRect.left + rect.right > window.innerWidth
+              parentViewportRect.left + rect.right > viewport.right
             ) {
               rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
             }
             if (
               (xAlign === 'end' || xAlign === 'center') &&
-              parentViewportRect.left + rect.left < 0
+              parentViewportRect.left + rect.left < viewport.left
             ) {
               rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
             }
             rect.left = clampToEdges(
               rect.left,
-              -parentViewportRect.left,
-              window.innerWidth - parentViewportRect.left - tooltipWidth
+              viewport.left - parentViewportRect.left,
+              viewport.right - parentViewportRect.left - tooltipWidth
             );
           }
           rect.right = rect.left + tooltipWidth;
@@ -484,20 +596,20 @@
           if (typeof y !== 'number') {
             if (
               (yAlign === 'start' || yAlign === 'center') &&
-              parentViewportRect.top + rect.bottom > window.innerHeight
+              parentViewportRect.top + rect.bottom > viewport.bottom
             ) {
               rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
             }
             if (
               (yAlign === 'end' || yAlign === 'center') &&
-              parentViewportRect.top + rect.top < 0
+              parentViewportRect.top + rect.top < viewport.top
             ) {
               rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
             }
             rect.top = clampToEdges(
               rect.top,
-              -parentViewportRect.top,
-              window.innerHeight - parentViewportRect.top - tooltipHeight
+              viewport.top - parentViewportRect.top,
+              viewport.bottom - parentViewportRect.top - tooltipHeight
             );
           }
           rect.bottom = rect.top + tooltipHeight;
@@ -529,7 +641,9 @@
      content — used by chart groups sharing a highlight without tooltips -->
 <!--
   `facetAll` renders one of these per panel instead — each with its own row and position, since
-  the size and placement below are per-instance state.
+  the size and placement below are per-instance state.  The props are passed through unresolved
+  (and `facetAll` with them, which `data` keeps from fanning out again) so each copy resolves its
+  placement the same way, including keeping clear of a finger.
 -->
 {#if facetAll && ctx.facet.enabled && dataProp === undefined}
   {#each ctx.facet.panels as panel (panel.key)}
@@ -539,9 +653,10 @@
         data={row}
         x={x === 'pointer' ? 'data' : x}
         y={y === 'pointer' ? 'data' : y}
-        {anchor}
-        {xOffset}
-        {yOffset}
+        {facetAll}
+        anchor={anchorProp}
+        xOffset={xOffsetProp}
+        yOffset={yOffsetProp}
         {classes}
         {contained}
         {fadeDuration}
