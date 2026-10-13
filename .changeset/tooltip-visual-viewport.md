@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix(Tooltip): Keep the tooltip beside the pointer and on screen when pinch-zoomed, or wider than the chart
+fix(Tooltip): Fix tooltip pointer location when pinch-zoomed, or when wider than the chart
