@@ -20,6 +20,8 @@
 	import { resolveExamplePath } from '@layerstack/docs/content';
 	import { exampleViewTransitionName } from '@layerstack/docs/utils';
 	import { untrack } from 'svelte';
+	import { MediaQuery } from 'svelte/reactivity';
+	import { Pane, PaneGroup, PaneResizer } from 'paneforge';
 	import { Json } from '@layerstack/docs/components';
 	import CodePanel from '$lib/sandbox/CodePanel.svelte';
 	import PreviewError from '$lib/sandbox/PreviewError.svelte';
@@ -102,6 +104,15 @@
 			}
 		});
 	});
+
+	/**
+	 * Code beside the preview rather than below it. Only offered with room for both, and
+	 * only while the code is showing; the toggle lives in the code panel's toolbar.
+	 */
+	let splitPreferred = $state(false);
+	const wide = new MediaQuery('min-width: 768px');
+	const canSplit = $derived(wide.current);
+	const split = $derived(splitPreferred && showCode && canSplit);
 
 	let containerEl = $state<HTMLElement | null>(null);
 	let containerWidth = $state<number | undefined>(undefined);
@@ -267,94 +278,133 @@
 
 <div class={cls('example relative', clip && 'overflow-clip', className)}>
 	{#if example}
-		<div
-			class={cls(
-				variant === 'default' && 'border rounded-t-sm bg-surface-300',
-				!showCode && 'rounded-b-sm'
-			)}
-		>
+		{#snippet previewBlock()}
 			<div
 				class={cls(
-					'relative max-w-full',
-					variant === 'default' && 'p-4 rounded bg-surface-100 dark:bg-surface-200 shadow-lg'
+					variant === 'default' && 'bg-surface-300',
+					// Beside the code, the pane group draws the border and the preview fills its pane.
+					split
+						? 'h-full'
+						: variant === 'default' && ['border rounded-t-sm', !showCode && 'rounded-b-sm']
 				)}
-				bind:this={containerEl}
-				style:width={containerWidth ? `${containerWidth}px` : undefined}
-				style:view-transition-name={viewTransitionName}
 			>
-				{#if isVisible}
-					<svelte:boundary>
-						{#if sandbox.live}
-							<!--
-								Edited: render the user's source instead of the shipped component. Each
-								build mounts hidden in here and is swapped in once it has rendered, so
-								the shipped component stays up until the first one is ready.
-							-->
-							<div
-								class={cls('relative', sandbox.error && 'opacity-40')}
-								{@attach sandbox.preview}
-							></div>
-						{/if}
-						{#if !sandbox.showing}
-							<example.component bind:this={ref} />
-						{/if}
-						{#snippet failed(error, reset)}
-							<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
-								<div class="font-semibold text-danger mb-2">
-									Example error{#if component && name}: {component}/{name}{/if}
+				<div
+					class={cls(
+						'relative max-w-full',
+						variant === 'default' && 'p-4 rounded bg-surface-100 dark:bg-surface-200 shadow-lg'
+					)}
+					bind:this={containerEl}
+					style:width={!split && containerWidth ? `${containerWidth}px` : undefined}
+					style:view-transition-name={viewTransitionName}
+				>
+					{#if isVisible}
+						<svelte:boundary>
+							{#if sandbox.live}
+								<!--
+									Edited: render the user's source instead of the shipped component. Each
+									build mounts hidden in here and is swapped in once it has rendered, so
+									the shipped component stays up until the first one is ready.
+								-->
+								<div
+									class={cls('relative', sandbox.error && 'opacity-40')}
+									{@attach sandbox.preview}
+								></div>
+							{/if}
+							{#if !sandbox.showing && example}
+								<example.component bind:this={ref} />
+							{/if}
+							{#snippet failed(error, reset)}
+								<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
+									<div class="font-semibold text-danger mb-2">
+										Example error{#if component && name}: {component}/{name}{/if}
+									</div>
+									<pre
+										class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
+									<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}
+										>Retry</Button
+									>
 								</div>
-								<pre
-									class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
-								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}
-									>Retry</Button
-								>
-							</div>
-						{/snippet}
-						{#snippet pending()}
-							<div class="min-h-80 flex items-center justify-center text-surface-content/30">
-								Loading...
-							</div>
-						{/snippet}
-					</svelte:boundary>
-				{:else}
-					<div bind:this={sentinelEl} class="min-h-80"></div>
-				{/if}
+							{/snippet}
+							{#snippet pending()}
+								<div class="min-h-80 flex items-center justify-center text-surface-content/30">
+									Loading...
+								</div>
+							{/snippet}
+						</svelte:boundary>
+					{:else}
+						<div bind:this={sentinelEl} class="min-h-80"></div>
+					{/if}
 
-				{#if canResize}
-					<div
-						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
-						title="Drag to resize"
-						use:movable={{
-							axis: 'x',
-							onMove: (e) => {
-								const newWidth = (containerWidth ?? containerEl?.offsetWidth ?? 0) + e.detail.dx;
-								if (newWidth >= minWidth) {
-									containerWidth = newWidth;
+					<!-- Beside the code, the pane divider sets the width instead. -->
+					{#if canResize && !split}
+						<div
+							class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
+							title="Drag to resize"
+							use:movable={{
+								axis: 'x',
+								onMove: (e) => {
+									const newWidth = (containerWidth ?? containerEl?.offsetWidth ?? 0) + e.detail.dx;
+									if (newWidth >= minWidth) {
+										containerWidth = newWidth;
+									}
 								}
-							}
-						}}
-					>
-						<LucideGripVertical class="text-surface-content/50" />
+							}}
+						>
+							<LucideGripVertical class="text-surface-content/50" />
+						</div>
+					{/if}
+
+					{#if sandbox.error}
+						<PreviewError {...sandbox.error} />
+					{/if}
+				</div>
+			</div>
+		{/snippet}
+
+		{#snippet codeBlock()}
+			<CodePanel
+				{sandbox}
+				{showLineNumbers}
+				{highlight}
+				onopenstackblitz={component && name
+					? () => openInStackBlitz(component, name, sandbox.dirty ? sandbox.source : undefined)
+					: undefined}
+				{split}
+				onsplitchange={canSplit ? (next) => (splitPreferred = next) : undefined}
+			/>
+		{/snippet}
+
+		{#if split}
+			<!--
+				Editor left, preview right. The divider position is remembered (`autoSaveId`)
+				across examples and reloads. The code scrolls inside its pane, capped to the
+				viewport, so its toolbar sticks to the pane's top rather than under the header.
+			-->
+			<PaneGroup
+				direction="horizontal"
+				autoSaveId="layerchart-example-split"
+				class="border rounded-sm overflow-hidden"
+			>
+				<Pane defaultSize={50} minSize={25} class="bg-surface-200 dark:bg-surface-300">
+					<div class="h-full max-h-[80dvh] overflow-auto [--code-toolbar-top:0px]">
+						{@render codeBlock()}
 					</div>
-				{/if}
-
-				{#if sandbox.error}
-					<PreviewError {...sandbox.error} />
-				{/if}
-			</div>
-		</div>
-
-		{#if showCode}
-			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
-				<CodePanel
-					{sandbox}
-					{showLineNumbers}
-					{highlight}
-					onopenstackblitz={component && name
-						? () => openInStackBlitz(component, name, sandbox.dirty ? sandbox.source : undefined)
-						: undefined}
+				</Pane>
+				<PaneResizer
+					class="w-1 bg-surface-content/10 hover:bg-primary/40 data-[active]:bg-primary/60 transition-colors"
 				/>
-			</div>
+				<Pane defaultSize={50} minSize={25}>
+					{@render previewBlock()}
+				</Pane>
+			</PaneGroup>
+		{:else}
+			{@render previewBlock()}
+
+			{#if showCode}
+				<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
+					{@render codeBlock()}
+				</div>
+			{/if}
 		{/if}
 
 		{#if variant === 'default'}
