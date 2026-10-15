@@ -52,6 +52,32 @@
 	const iconButton =
 		'text-surface-content/70 hover:text-surface-content hover:bg-surface-content/10 p-0.5';
 
+	/**
+	 * Clicking into the read-only code switches to Edit, with the caret where you clicked.
+	 * Only a real click counts: a drag that moved the pointer or selected text stays in
+	 * View (so code can still be copied), and a touch scroll never produces a click at all.
+	 */
+	let down: { x: number; y: number } | null = null;
+	let caret = $state<{ x: number; y: number } | null>(null);
+
+	function onpointerdown(e: PointerEvent) {
+		if (sandbox.mode === 'edit' || e.button !== 0) return;
+		down = { x: e.clientX, y: e.clientY };
+		// Start fetching the editor as the click begins. Not for touch, where this is as
+		// likely the start of a scroll.
+		if (e.pointerType === 'mouse') sandbox.load();
+	}
+
+	function onclick(e: MouseEvent) {
+		if (sandbox.mode === 'edit' || !down) return;
+		const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4;
+		down = null;
+		if (moved || !getSelection()?.isCollapsed) return;
+		const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+		caret = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+		sandbox.setMode('edit');
+	}
+
 	async function openStackBlitz() {
 		opening = true;
 		await onopenstackblitz?.().finally(() => (opening = false));
@@ -110,7 +136,10 @@
 				variant="outline"
 				size="xs"
 				inset
-				on:change={(e) => sandbox.setMode(e.detail.value)}
+				on:change={(e) => {
+					caret = null;
+					sandbox.setMode(e.detail.value);
+				}}
 				classes={{ root: 'ml-1.5', option: 'px-1.5 py-0 leading-5 flex items-center gap-1' }}
 			>
 				<ToggleOption value="view">
@@ -165,12 +194,15 @@
 			</Toggle>
 		</div>
 	</div>
-	<div class="-mt-9">
+	<!-- Keyboard users switch with the View/Edit toggle; this is a shortcut for pointers. -->
+	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+	<div class="-mt-9" {onpointerdown} onpointercancel={() => (down = null)} {onclick}>
 		{#if sandbox.mode === 'edit' && sandbox.module}
 			<sandbox.module.CodeEditor
 				bind:value={sandbox.source}
 				diagnostics={sandbox.diagnostics}
 				{lineNumbers}
+				caretAt={caret}
 				autofocus
 			/>
 		{:else}

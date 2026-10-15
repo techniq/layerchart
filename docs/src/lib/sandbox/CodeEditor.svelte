@@ -35,12 +35,19 @@
 		 * exactly when it was in View — adding or dropping one shifts every line sideways.
 		 * Reactive, so it can be toggled without rebuilding the editor.
 		 */
-		lineNumbers = false
+		lineNumbers = false,
+		caretAt = null
 	}: {
 		value?: string;
 		diagnostics?: Diagnostic[];
 		autofocus?: boolean;
 		lineNumbers?: boolean;
+		/**
+		 * Where to put the caret when the editor opens, relative to its top-left corner (ex.
+		 * where the read-only code was clicked — it lays out identically, so the same point
+		 * lands on the same character).
+		 */
+		caretAt?: { x: number; y: number } | null;
 	} = $props();
 
 	let container = $state<HTMLDivElement | null>(null);
@@ -242,6 +249,12 @@
 		});
 		view = instance;
 
+		const at = untrack(() => caretAt);
+		if (at) {
+			const rect = parent.getBoundingClientRect();
+			const pos = instance.posAtCoords({ x: rect.left + at.x, y: rect.top + at.y });
+			if (pos != null) instance.dispatch({ selection: { anchor: pos } });
+		}
 		if (untrack(() => autofocus)) instance.focus();
 
 		return () => {
