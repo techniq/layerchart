@@ -85,6 +85,7 @@
 		"layerchart": "workspace:*",
 		"mathjs": "^15.2.0",
 		"mdsx": "^0.0.7",
+		"paneforge": "^1.0.2",
 		"playwright": "^1.60.0",
 		"posthog-js": "^1.379.0",
 		"prettier": "^3.8.3",
@@ -124,7 +125,6 @@
 		"@stackblitz/sdk": "^1.11.0",
 		"d3-geo-projection": "^4.0.0",
 		"es-module-lexer": "^2.1.0",
-		"paneforge": "^1.0.2",
 		"satori": "^0.26.0",
 		"satori-html": "^0.3.2"
 	}

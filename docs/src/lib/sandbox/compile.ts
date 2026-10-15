@@ -16,8 +16,6 @@ export type CompileResult = {
 	/** Blob URL of the linked module, or `null` when compilation failed. */
 	url: string | null;
 	diagnostics: Diagnostic[];
-	/** Time spent compiling + linking, in ms. */
-	elapsed: number;
 };
 
 /** Strip the trailing `https://svelte.dev/e/...` docs link the compiler appends. */
@@ -30,7 +28,6 @@ export async function compileSource(
 	source: string,
 	{ base }: { base?: string } = {}
 ): Promise<CompileResult> {
-	const started = performance.now();
 	const diagnostics: Diagnostic[] = [];
 
 	let js: string;
@@ -55,8 +52,7 @@ export async function compileSource(
 					line: err.start?.line,
 					column: err.start?.column != null ? err.start.column + 1 : undefined
 				}
-			],
-			elapsed: performance.now() - started
+			]
 		};
 	}
 
@@ -102,8 +98,8 @@ export async function compileSource(
 				message
 			});
 		}
-		return { url: null, diagnostics, elapsed: performance.now() - started };
+		return { url: null, diagnostics };
 	}
 
-	return { url: linked.url, diagnostics, elapsed: performance.now() - started };
+	return { url: linked.url, diagnostics };
 }

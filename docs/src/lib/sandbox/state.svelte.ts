@@ -23,7 +23,6 @@ export function createSandbox(
 	} = {}
 ) {
 	let module = $state<SandboxModule | null>(null);
-	let loading = $state(false);
 	let pending = $state(false);
 	let loadError = $state<string | null>(null);
 
@@ -37,12 +36,12 @@ export function createSandbox(
 	 * doesn't have.
 	 */
 	const seed = () => normalizeSource(getSource());
-	let original = $state(untrack(seed));
-	let editorValue = $state(untrack(seed));
-	let debounced = $state(untrack(seed));
+	const initial = untrack(seed);
+	let original = $state(initial);
+	let editorValue = $state(initial);
+	let debounced = $state(initial);
 
 	let diagnostics = $state<Diagnostic[]>([]);
-	let elapsed = $state(0);
 	let runtimeError = $state<string | null>(null);
 	/**
 	 * `$state.raw` — `mount()` returns an exports object whose properties are getters onto
@@ -98,26 +97,20 @@ export function createSandbox(
 		// every package an edit can import into the Cloudflare Worker.
 		if (import.meta.env.SSR) return Promise.resolve();
 		if (module) return Promise.resolve();
-		if (!inFlight) {
-			loading = true;
-			inFlight = import('./lazy')
-				.then((m) => {
-					module = m;
-				})
-				.catch((err) => {
-					loadError = err instanceof Error ? err.message : String(err);
-				})
-				.finally(() => {
-					loading = false;
-				});
-		}
+		inFlight ??= import('./lazy')
+			.then((m) => {
+				module = m;
+			})
+			.catch((err) => {
+				loadError = err instanceof Error ? err.message : String(err);
+			});
 		return inFlight;
 	}
 
 	async function setMode(next: 'view' | 'edit') {
 		if (next === 'edit' && !module) {
-			// `pending` is distinct from `loading`: the hover prefetch sets `loading` too, and
-			// showing progress for a speculative fetch the user never asked for is just noise.
+			// Only for a load the user asked for: the hover prefetch shows no progress, since
+			// a spinner for a fetch nobody requested is just noise.
 			pending = true;
 			await load();
 			pending = false;
@@ -144,9 +137,11 @@ export function createSandbox(
 		// newer one — drop it rather than let it replace what the user typed since.
 		let stale = false;
 		sb.compileSource(transform ? transform(src) : src, { base: base?.() }).then((result) => {
-			if (stale) return;
+			if (stale) {
+				if (result.url) URL.revokeObjectURL(result.url);
+				return;
+			}
 			diagnostics = result.diagnostics;
-			elapsed = Math.round(result.elapsed);
 			if (result.url) {
 				build = result.url;
 				runtimeError = null;
@@ -223,11 +218,22 @@ export function createSandbox(
 
 	const errors = $derived(diagnostics.filter((d) => d.severity === 'error'));
 
-	/** The one thing worth surfacing over the preview, or `null` when the build is good. */
+	/**
+	 * The one thing worth surfacing over the preview, or `null` when the build is good. A
+	 * compile error wins: it's about the source as typed now, while a runtime error belongs
+	 * to the last build that compiled.
+	 */
 	const error = $derived.by(() => {
-		if (runtimeError) return { message: runtimeError, line: undefined, column: undefined };
 		const first = errors[0];
-		return first ? { message: first.message, line: first.line, column: first.column } : null;
+		if (first) {
+			return {
+				kind: 'compile' as const,
+				message: first.message,
+				line: first.line,
+				column: first.column
+			};
+		}
+		return runtimeError ? { kind: 'runtime' as const, message: runtimeError } : null;
 	});
 
 	return {
@@ -271,10 +277,6 @@ export function createSandbox(
 		},
 		get error() {
 			return error;
-		},
-		/** Compile timing, or `null` until the user has edited. */
-		get status() {
-			return live ? `${elapsed}ms` : null;
 		}
 	};
 }

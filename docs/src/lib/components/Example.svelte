@@ -21,7 +21,6 @@
 	import { exampleViewTransitionName } from '@layerstack/docs/utils';
 	import { untrack } from 'svelte';
 	import { MediaQuery } from 'svelte/reactivity';
-	import { Pane, PaneGroup, PaneResizer } from 'paneforge';
 	import { Json } from '@layerstack/docs/components';
 	import CodePanel from '$lib/sandbox/CodePanel.svelte';
 	import PreviewError from '$lib/sandbox/PreviewError.svelte';
@@ -107,12 +106,21 @@
 
 	/**
 	 * Code beside the preview rather than below it. Only offered with room for both, and
-	 * only while the code is showing; the toggle lives in the code panel's toolbar.
+	 * only while the code is showing; the toggle is in the code panel's menu.
 	 */
 	let splitPreferred = $state(false);
 	const wide = new MediaQuery('min-width: 768px');
-	const canSplit = $derived(wide.current);
-	const split = $derived(splitPreferred && showCode && canSplit);
+	const split = $derived(splitPreferred && showCode && wide.current);
+
+	/** Loaded on first use, and only then switched to, so there's no half-loaded state. */
+	let SplitLayout = $state<typeof import('$lib/sandbox/SplitLayout.svelte').default | null>(null);
+	async function setSplit(next: boolean) {
+		if (next) SplitLayout ??= (await import('$lib/sandbox/SplitLayout.svelte')).default;
+		splitPreferred = next;
+	}
+
+	/** Kept here, not in `CodePanel`, so it survives the panel remounting on a layout change. */
+	let lineNumbers = $state(untrack(() => showLineNumbers));
 
 	let containerEl = $state<HTMLElement | null>(null);
 	let containerWidth = $state<number | undefined>(undefined);
@@ -364,39 +372,18 @@
 		{#snippet codeBlock()}
 			<CodePanel
 				{sandbox}
-				{showLineNumbers}
+				bind:lineNumbers
 				{highlight}
 				onopenstackblitz={component && name
 					? () => openInStackBlitz(component, name, sandbox.dirty ? sandbox.source : undefined)
 					: undefined}
 				{split}
-				onsplitchange={canSplit ? (next) => (splitPreferred = next) : undefined}
+				onsplitchange={wide.current ? setSplit : undefined}
 			/>
 		{/snippet}
 
-		{#if split}
-			<!--
-				Editor left, preview right. The divider position is remembered (`autoSaveId`)
-				across examples and reloads. The code scrolls inside its pane, capped to the
-				viewport, so its toolbar sticks to the pane's top rather than under the header.
-			-->
-			<PaneGroup
-				direction="horizontal"
-				autoSaveId="layerchart-example-split"
-				class="border rounded-sm overflow-hidden"
-			>
-				<Pane defaultSize={50} minSize={25} class="bg-surface-200 dark:bg-surface-300">
-					<div class="h-full max-h-[80dvh] overflow-auto [--code-toolbar-top:0px]">
-						{@render codeBlock()}
-					</div>
-				</Pane>
-				<PaneResizer
-					class="w-1 bg-surface-content/10 hover:bg-primary/40 data-[active]:bg-primary/60 transition-colors"
-				/>
-				<Pane defaultSize={50} minSize={25}>
-					{@render previewBlock()}
-				</Pane>
-			</PaneGroup>
+		{#if split && SplitLayout}
+			<SplitLayout code={codeBlock} preview={previewBlock} />
 		{:else}
 			{@render previewBlock()}
 

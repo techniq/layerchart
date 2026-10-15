@@ -35,16 +35,12 @@
 		 * exactly when it was in View — adding or dropping one shifts every line sideways.
 		 * Reactive, so it can be toggled without rebuilding the editor.
 		 */
-		lineNumbers = false,
-		oninput,
-		class: className
+		lineNumbers = false
 	}: {
 		value?: string;
 		diagnostics?: Diagnostic[];
 		autofocus?: boolean;
 		lineNumbers?: boolean;
-		oninput?: (value: string) => void;
-		class?: string;
 	} = $props();
 
 	let container = $state<HTMLDivElement | null>(null);
@@ -172,11 +168,6 @@
 	 * These are hand-copied from `Code`, so they need re-checking if its highlighter changes.
 	 */
 	const appearance = EditorView.theme({
-		// `!important` because the github theme sets its own `&` background and CodeMirror
-		// injects the two style modules at equal specificity — the panel must win, or the
-		// editor paints a different colour than the `Code` block it replaces.
-		'&': { height: '100%', backgroundColor: 'transparent !important' },
-		'.cm-scroller, .cm-content': { backgroundColor: 'transparent !important' },
 		'&.cm-focused': { outline: 'none' },
 		'.cm-scroller': {
 			overflow: 'auto',
@@ -188,6 +179,8 @@
 		'.cm-content': { padding: '1rem', tabSize: '2' },
 		'.cm-line': { padding: '0' },
 		'.cm-gutters': {
+			// CodeMirror's base theme paints the gutter (`#f5f5f5` / `#333338`) at the same
+			// specificity; the panel has to show through, as it does behind `Code`'s numbers.
 			backgroundColor: 'transparent !important',
 			border: 'none',
 			paddingLeft: '1rem',
@@ -242,11 +235,7 @@
 					gutterCompartment.of(gutter(untrack(() => lineNumbers))),
 					appearance,
 					EditorView.updateListener.of((update) => {
-						if (update.docChanged) {
-							const next = update.state.doc.toString();
-							value = next;
-							oninput?.(next);
-						}
+						if (update.docChanged) value = update.state.doc.toString();
 					})
 				]
 			})
@@ -297,4 +286,4 @@
 	});
 </script>
 
-<div bind:this={container} class={className}></div>
+<div bind:this={container}></div>

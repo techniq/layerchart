@@ -1,14 +1,15 @@
 <script lang="ts">
 	let {
+		kind,
 		message,
 		line,
-		column,
-		filename = 'Example.svelte'
+		column
 	}: {
+		/** A compile error, or one thrown while mounting the build. */
+		kind: 'compile' | 'runtime';
 		message: string;
 		line?: number;
 		column?: number;
-		filename?: string;
 	} = $props();
 </script>
 
@@ -23,7 +24,7 @@
 	role="alert"
 >
 	<div class="text-base font-semibold text-surface-content">
-		Error compiling {filename}
+		Error {kind === 'compile' ? 'compiling' : 'running'} Example.svelte
 	</div>
 
 	<pre

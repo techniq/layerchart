@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { untrack } from 'svelte';
 	import { Code } from '@layerstack/docs/components';
 	import {
 		Button,
@@ -25,15 +24,18 @@
 
 	let {
 		sandbox,
-		showLineNumbers = false,
+		lineNumbers = $bindable(false),
 		highlight,
 		onopenstackblitz,
 		split = false,
-		onsplitchange,
-		class: className
+		onsplitchange
 	}: {
 		sandbox: Sandbox;
-		showLineNumbers?: boolean;
+		/**
+		 * One setting for View and Edit, so switching modes never adds or drops the gutter.
+		 * Bindable so the host keeps it when it remounts this panel (ex. changing layout).
+		 */
+		lineNumbers?: boolean;
 		highlight?: string;
 		/** Adds "Open in StackBlitz" to the menu when set. */
 		onopenstackblitz?: () => Promise<void>;
@@ -41,16 +43,9 @@
 		split?: boolean;
 		/** Shows the layout toggle when set. */
 		onsplitchange?: (split: boolean) => void;
-		class?: string;
 	} = $props();
 
 	let opening = $state(false);
-
-	const editing = $derived(sandbox.mode === 'edit' && sandbox.module);
-
-	// Seeded from the prop, then owned here: one toggle drives both View and Edit, so
-	// switching modes never adds or drops the gutter.
-	let lineNumbers = $state(untrack(() => showLineNumbers));
 
 	// `surface-content` rather than a surface shade, so the hover reads on the translucent
 	// toolbar in both themes.
@@ -69,7 +64,7 @@
 	can't disagree with `Code`), so without this the background disappears on switching to
 	Edit anywhere the host didn't happen to supply one.
 -->
-<div class={cls('code-panel relative bg-surface-200 dark:bg-surface-300', className)}>
+<div class="code-panel relative bg-surface-200 dark:bg-surface-300">
 	<!--
 		Sits where `Code` puts its copy button, and is identical in both modes so nothing
 		moves when they swap. `pointerenter` starts fetching the editor chunk before the
@@ -170,14 +165,13 @@
 			</Toggle>
 		</div>
 	</div>
-	<div class="-mt-9 h-full">
-		{#if editing && sandbox.module}
+	<div class="-mt-9">
+		{#if sandbox.mode === 'edit' && sandbox.module}
 			<sandbox.module.CodeEditor
 				bind:value={sandbox.source}
 				diagnostics={sandbox.diagnostics}
 				{lineNumbers}
 				autofocus
-				class="h-full"
 			/>
 		{:else}
 			<!-- `Code`'s own copy button is off; the toolbar above serves both modes. -->
@@ -186,7 +180,7 @@
 				showLineNumbers={lineNumbers}
 				{highlight}
 				copyButton={false}
-				class="outline-none h-full"
+				class="outline-none"
 			/>
 		{/if}
 	</div>
@@ -199,14 +193,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	/*
-	 * `Code` exposes no hook for its inner scroll container, which is `h-auto` — left
-	 * alone it grows past a height-constrained panel instead of scrolling inside it, so
-	 * activating the editor (which does fill the panel) would resize the whole block.
-	 */
-	.code-panel :global(.Code) {
-		height: 100%;
-	}
-</style>
