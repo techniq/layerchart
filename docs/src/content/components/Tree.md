@@ -12,3 +12,9 @@ related: []
 ### Playground
 
 :example{ name="playground" }
+
+## Isometric
+
+On an [isometric](/docs/guides/isometric) chart, nodes can stand up as prisms (`Polygon`s with a `z`) over links lying on the floor.
+
+:example{ name="isometric" }

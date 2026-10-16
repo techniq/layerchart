@@ -59,13 +59,7 @@
 				<Tooltip.Header>{data.month}</Tooltip.Header>
 				<Tooltip.List>
 					{#each context.series.visibleSeries as s (s.key)}
-						<Tooltip.Item
-							label={s.key}
-							value={data[s.key]}
-							color={s.color}
-							format="integer"
-							valueAlign="right"
-						/>
+						<Tooltip.Item seriesKey={s.key} format="integer" valueAlign="right" />
 					{/each}
 
 					<Tooltip.Separator />

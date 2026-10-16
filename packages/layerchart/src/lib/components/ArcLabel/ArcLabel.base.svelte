@@ -30,6 +30,7 @@
     calloutPadding = 4,
     line,
     offset = 0,
+    z,
     ...restProps
   }: ArcLabelBaseProps = $props();
 
@@ -50,12 +51,17 @@
         calloutPadding,
         line,
         offset,
+        z,
       }) as ArcLabelProps
   );
 </script>
 
 {#if placement === 'callout' && c.calloutGeometry}
-  <Path pathData={c.calloutGeometry.pathData} {...line} />
+  <Path
+    pathData={c.calloutGeometry.pathData}
+    {...line}
+    z={c.labelHeight != null ? [c.labelHeight, c.labelHeight] : line?.z}
+  />
 {/if}
 
-<Text {...c.arcTextProps} {...restProps} />
+<Text {...c.arcTextProps} {...restProps} z={c.labelHeight} />

@@ -50,6 +50,12 @@ export type BaseRulePropsWithoutHTML = {
    * @default 0
    */
   yOffset?: number;
+
+  /**
+   * Series key to follow, fading the rule while another series is highlighted and removing it
+   * while the series is hidden. Only applicable if `<Chart>` uses `series`.
+   */
+  seriesKey?: string;
 };
 
 export type RulePropsWithoutHTML = BaseRulePropsWithoutHTML &

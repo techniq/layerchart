@@ -15,8 +15,10 @@ import {
   type MotionProp,
 } from '$lib/utils/motion.svelte.js';
 import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-import type { ColorProp, StyleProp } from '$lib/utils/dataProp.js';
+import type { ColorProp, DataProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { liftChanged } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -27,18 +29,26 @@ import type { PathProps } from '../Path/Path.shared.svelte.js';
 export type SplinePropsWithoutHTML = {
   /** Override data instead of using context */
   data?: any;
+  /**
+   * Height to raise each point off an `isometric` floor, defaulting to the chart's `z`.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height
+   */
+  z?: DataProp;
+
   /** Override `x` accessor from Chart context */
   x?: Accessor;
   /** Override `y` accessor from Chart context */
   y?: Accessor;
   /**
    * Group the data into a separate line per distinct value, drawing them all from this one mark.
-   * Defaults to the Chart's `z` accessor.
+   * Defaults to the Chart's `g` accessor.
    *
    * Replaces grouping the data and rendering a `Spline` per group — which registers a mark, and
    * rebuilds the chart's domains, once per line.
    */
-  z?: Accessor;
+  g?: Accessor;
   /** Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `x`/`y` are not set. */
   seriesKey?: string;
   /** Function to determine if a point is defined */
@@ -88,6 +98,19 @@ export class SplineState {
   #props: SplineProps = $derived(this.#getProps());
 
   ctx: ChartState = getChartContext();
+  #layerIsometric = getLayerIsometric();
+
+  /** The chart's `isometricLift` when the points have heights, else `null` */
+  lift = $derived.by(() => {
+    if (this.ctx.radial || !this.#layerIsometric()) return null;
+    if (this.#props.z == null && this.ctx.props.z == null) return null;
+    return this.ctx.isometricLift;
+  });
+
+  /** A point's height off the floor, in pixels */
+  height(d: any) {
+    return this.ctx.heightOf(d, this.#props.z)[1];
+  }
 
   markData = getMarkData();
   geo: GeoState = getGeoContext();
@@ -124,7 +147,8 @@ export class SplineState {
     this.#tweenState = createMotion(
       this.#defaultPathData(),
       () => this.d,
-      tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined
+      tween ? { type: 'tween', interpolate: interpolatePath, ...tween.options } : undefined,
+      { instant: liftChanged(() => this.lift) }
     );
 
     // `#tweenState` animates the single-path case; grouped lines each need their own, since the
@@ -136,10 +160,12 @@ export class SplineState {
       // apart from a run of a line being drawn for the first time.  Rebuilt each pass, which
       // prunes lines the data dropped — one that comes back is new again, and enters as one.
       let drawnLines = new Set<any>();
+      const viewTurned = liftChanged(() => this.lift);
 
       $effect(() => {
         const targets = this.#segmentTargets;
         if (!targets) return;
+        const instant = viewTurned();
 
         const active = new Set<any>();
         const lines = new Set<any>();
@@ -151,8 +177,12 @@ export class SplineState {
           const intoDrawnLine = seg.lineKey !== undefined && drawnLines.has(seg.lineKey);
           // `update` reads and writes the tween's own state, so it must not be tracked here
           untrack(() =>
-            tweens.update(seg.key, seg.d, () =>
-              intoDrawnLine ? this.#collapsedPathData(seg.data) : this.#defaultPathData(seg.data)
+            tweens.update(
+              seg.key,
+              seg.d,
+              () =>
+                intoDrawnLine ? this.#collapsedPathData(seg.data) : this.#defaultPathData(seg.data),
+              instant
             )
           );
         }
@@ -207,25 +237,22 @@ export class SplineState {
     return accessor(this.ctx.y);
   });
 
-  /** Kept separate from `lines` so `zAccessor` can read it without a cycle */
+  /** Kept separate from `lines` so `gAccessor` can read it without a cycle */
   resolvedData = $derived(this.markData(this.#props.data ?? this.series?.data));
 
   /**
    * Accessor grouping the data into one line per distinct value, or `null` for a single line.
    *
-   * Resolves in order: this mark's `z`, the chart's `z`, the data property named by `stroke` /
+   * Resolves in order: this mark's `g`, the chart's `g`, the data property named by `stroke` /
    * `fill`, then the chart's `c` — so `stroke="fruit"` alone gives a line per fruit,
    * and so does `<Chart c="fruit">`: what colors the lines splits them.
    *
    * A mark carrying its own rows is left alone — whoever handed them over grouped them already.
-   *
-   * Falls back to the chart's `z` *prop* rather than `ctx.z`: `makeAccessor` returns `null` when
-   * the prop is unset, but isn't typed that way, so the raw prop is the honest check.
    */
-  zAccessor = $derived.by<((d: any) => any) | null>(() => {
+  gAccessor = $derived.by<((d: any) => any) | null>(() => {
     const props = this.#props;
-    const z = props.z ?? this.ctx.props.z;
-    if (z != null) return accessor(z);
+    const g = props.g ?? this.ctx.props.g;
+    if (g != null) return accessor(g);
 
     const first = this.resolvedData?.[0];
     const implied = colorPropDataKey(props.stroke, first) ?? colorPropDataKey(props.fill, first);
@@ -237,8 +264,8 @@ export class SplineState {
 
   /** The data this Spline draws, split into one array per line */
   lines = $derived.by<any[][]>(() => {
-    if (!this.zAccessor) return [this.resolvedData];
-    const grouped = Array.from(d3Group(this.resolvedData, this.zAccessor).values());
+    if (!this.gAccessor) return [this.resolvedData];
+    const grouped = Array.from(d3Group(this.resolvedData, this.gAccessor).values());
     // A line the legend names and has hidden should go with it.  Rows of a hidden `c` category
     // are already gone by here — `ChartState.data` drops those so the scales follow — so this is
     // only about lines this mark split by itself.
@@ -258,6 +285,24 @@ export class SplineState {
           .x((d) => this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) + this.xOffset)
           .y((d) => this.#getScaleValue(d, this.ctx.yScale, this.yAccessor) + this.yOffset);
 
+    const lift = this.lift;
+    if (lift && !this.ctx.radial) {
+      const line = path as Line<any>;
+      line
+        .x(
+          (d) =>
+            this.#getScaleValue(d, this.ctx.xScale, this.xAccessor) +
+            this.xOffset +
+            lift.x * this.height(d)
+        )
+        .y(
+          (d) =>
+            this.#getScaleValue(d, this.ctx.yScale, this.yAccessor) +
+            this.yOffset +
+            lift.y * this.height(d)
+        );
+    }
+
     path.defined(props.defined ?? ((d) => this.xAccessor(d) != null && this.yAccessor(d) != null));
     if (props.curve) path.curve(props.curve);
 
@@ -276,8 +321,8 @@ export class SplineState {
 
   d = $derived.by(() => {
     const props = this.#props;
-    // Both style functions and `z` produce more than one path, which `segments` builds instead
-    if ((this.hasAnyStyleFn || this.zAccessor) && !this.geo.projection) return '';
+    // Both style functions and `g` produce more than one path, which `segments` builds instead
+    if ((this.hasAnyStyleFn || this.gAccessor) && !this.geo.projection) return '';
 
     const resolvedData = this.resolvedData;
 
@@ -303,7 +348,7 @@ export class SplineState {
    * Separate from `segments` so the effect driving the tweens can read the targets without
    * reading the tweens' own output, which would be a cycle.
    *
-   * The key composes both splits: the `z` group, then — where a style function splits that line
+   * The key composes both splits: the `g` group, then — where a style function splits that line
    * further into one path per run of matching style — the style itself plus how many runs of that
    * style came before it. A run's position in the line moves with the data, so a raw index
    * carries no identity, but "the second dashed stretch" does: it tweens to the next render's
@@ -313,7 +358,7 @@ export class SplineState {
   #segmentTargets = $derived.by<
     (SplineSegment & { key?: any; lineKey?: any; data: any[] })[] | null
   >(() => {
-    if (!this.hasAnyStyleFn && !this.zAccessor) return null;
+    if (!this.hasAnyStyleFn && !this.gAccessor) return null;
     const props = this.#props;
     if (this.geo.projection) return null;
 
@@ -340,7 +385,7 @@ export class SplineState {
         // this every run would fall through to `Path`'s unstroked default.  Resolved from the
         // line's first point, as the single-path case is, so the split doesn't recolor anything.
         const lineStroke = this.#colorFromC(lineData[0]) ?? this.series?.color;
-        const lineKey = this.zAccessor ? this.zAccessor(lineData[0]) : '';
+        const lineKey = this.gAccessor ? this.gAccessor(lineData[0]) : '';
         const seen = new Map<string, number>();
 
         groups.forEach((group, index) => {
@@ -372,7 +417,7 @@ export class SplineState {
           class: resolveStyleProp(props.class, lineData[0]),
           d: this.#buildPath(lineData),
           data: lineData,
-          key: this.zAccessor ? this.zAccessor(lineData[0]) : undefined,
+          key: this.gAccessor ? this.gAccessor(lineData[0]) : undefined,
           lineStart: true,
           lineEnd: true,
         });
@@ -419,13 +464,13 @@ export class SplineState {
    * The chart's `c` first, since that is the chart's own channel.  Otherwise the mark's own
    * grouping — `stroke="fruit"` splits the lines, and where a series is declared per fruit the
    * legend is already listing exactly those names, so hovering one should single that line out.
-   * A `z` the legend knows nothing about stays anonymous rather than reacting to unrelated keys.
+   * A `g` the legend knows nothing about stays anonymous rather than reacting to unrelated keys.
    */
   #groupKey(d: any): any {
     const category = this.ctx.cKey(d);
     if (category != null) return category;
-    if (!this.zAccessor || d == null) return null;
-    const key = this.zAccessor(d);
+    if (!this.gAccessor || d == null) return null;
+    const key = this.gAccessor(d);
     return this.#namesSeries(key) ? key : null;
   }
 
@@ -435,8 +480,8 @@ export class SplineState {
 
   /** Whether a line's group is currently shown, for groups the legend names */
   #isShown(d: any) {
-    if (d == null || !this.zAccessor) return true;
-    const key = this.zAccessor(d);
+    if (d == null || !this.gAccessor) return true;
+    const key = this.gAccessor(d);
     if (!this.#namesSeries(key)) return true;
     return this.ctx.series.visibleSeries.some((s) => s.key === key);
   }

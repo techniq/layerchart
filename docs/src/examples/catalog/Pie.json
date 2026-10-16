@@ -139,6 +139,43 @@
       ]
     },
     {
+      "name": "isometric",
+      "title": "isometric",
+      "path": "/docs/components/Pie/isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 42,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 59,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 60,
+          "line": "<Pie z={40} sort={null}>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 64,
+          "line": "<Arc"
+        },
+        {
+          "component": "ArcLabel",
+          "lineNumber": 83,
+          "line": "<ArcLabel"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 104,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "labels",
       "title": "labels",
       "path": "/docs/components/Pie/labels",
@@ -718,6 +755,13 @@
       "line": "<Pie innerRadius={100} />"
     },
     {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 60,
+      "line": "<Pie z={40} sort={null}>"
+    },
+    {
       "example": "labels",
       "component": "Pie",
       "path": "/docs/components/Pie/labels",
@@ -865,5 +909,5 @@
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:38.171Z"
+  "updatedAt": "2026-10-08T16:54:44.071Z"
 }

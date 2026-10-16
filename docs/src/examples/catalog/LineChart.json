@@ -1285,6 +1285,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 23,
+      "line": "<LineChart"
+    },
+    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1810,5 +1817,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.682Z"
+  "updatedAt": "2026-09-25T04:42:18.095Z"
 }

@@ -640,6 +640,13 @@
       "line": "<Arc"
     },
     {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 64,
+      "line": "<Arc"
+    },
+    {
       "example": "labels",
       "component": "Pie",
       "path": "/docs/components/Pie/labels",
@@ -696,5 +703,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:21.734Z"
+  "updatedAt": "2026-10-08T16:54:42.797Z"
 }

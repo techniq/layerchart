@@ -12,3 +12,9 @@ See the [Geo guide](/docs/guides/geo) for a full walkthrough of projections, fit
 ## Usage
 
 :example{ name="tooltip" showCode }
+
+## Isometric
+
+On an [isometric](/docs/guides/isometric) chart, `z` stands each shape up off the floor. Here each state stands at its share of the 2020 presidential vote. Drag to turn it.
+
+:example{ name="election-isometric" }

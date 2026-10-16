@@ -55,6 +55,12 @@ export type GroupPropsWithoutHTML<In extends Transition = Transition> = {
    */
   key?: (d: any, index: number) => any;
 
+  /**
+   * Series key to follow, fading the group while another series is highlighted and removing it
+   * while the series is hidden. Only applicable if `<Chart>` uses `series`.
+   */
+  seriesKey?: string;
+
   /** Center within chart. @default false */
   center?: boolean | 'x' | 'y';
 
@@ -160,6 +166,50 @@ export class GroupState {
     if (props.y == null && (props.center === 'y' || props.center === true))
       return this.chartCtx.height / 2;
     return 0;
+  });
+
+  /**
+   * The series this group follows, or `undefined` when `seriesKey` names none.
+   *
+   * Guarded on the prop rather than looking the key up unconditionally: every layout in the
+   * library is built out of `Group`, so an unset `seriesKey` must not subscribe them all to the
+   * series state.
+   */
+  series = $derived.by(() => {
+    const seriesKey = this.#props.seriesKey;
+    if (seriesKey == null) return undefined;
+    return this.chartCtx.series.series.find((s) => s.key === seriesKey);
+  });
+
+  /**
+   * Whether the legend has this group's series hidden — the marks of a hidden series aren't
+   * drawn, so whatever this group holds for it shouldn't be either.
+   *
+   * A `seriesKey` naming no series leaves the group alone: nothing on the chart claims it, so
+   * there's no state to follow.
+   */
+  hidden = $derived(this.series != null && !this.chartCtx.series.isVisible(this.series.key));
+
+  /** Faded while another series is highlighted, matching what the marks of this series do */
+  seriesOpacity = $derived.by(() => {
+    if (
+      this.series?.key == null ||
+      this.chartCtx.series.visibleSeries.length <= 1 ||
+      this.chartCtx.series.isHighlighted(this.series.key, true)
+    ) {
+      return 1;
+    }
+    return 0.1;
+  });
+
+  /**
+   * The `opacity` to render with, dimmed by the series' state. Stays `undefined` when neither
+   * the prop nor the series asks for one, so the attribute stays off the element.
+   */
+  opacity = $derived.by(() => {
+    const opacity = this.#props.opacity;
+    if (this.seriesOpacity === 1) return opacity;
+    return (opacity ?? 1) * this.seriesOpacity;
   });
 
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;

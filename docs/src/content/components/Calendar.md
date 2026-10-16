@@ -8,3 +8,9 @@ related: [Month]
 ## Usage
 
 :example{ name="basic" showCode }
+
+## Isometric
+
+On an [isometric](/docs/guides/isometric) chart, `z` stands each day up to its value.
+
+:example{ name="isometric" }

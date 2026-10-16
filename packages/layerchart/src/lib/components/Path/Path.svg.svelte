@@ -25,6 +25,8 @@
     endContent,
     draw,
     motion,
+    // Raised by `PathExtruded` (see `Path`), not an SVG attribute
+    z: _z,
     // Extracted out of `rest` so the `<path>` element's `{...rest}`
     // spread doesn't re-evaluate on every frame in mark-heavy scenes
     // (force-simulation graphs with hundreds of links updating per tick).

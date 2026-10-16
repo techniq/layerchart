@@ -30,6 +30,7 @@
     y = false,
     yOffset = 0,
     stroke: strokeProp,
+    seriesKey,
     class: className,
     children,
     ...restProps
@@ -48,7 +49,7 @@
   );
 </script>
 
-<Group class="lc-rule-g">
+<Group class="lc-rule-g" {seriesKey}>
   {#each c.lines as line}
     {@const stroke = line.stroke ?? strokeProp}
 

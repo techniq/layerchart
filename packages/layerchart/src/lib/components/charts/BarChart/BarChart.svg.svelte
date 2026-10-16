@@ -8,7 +8,7 @@
   import Bars from '../../Bars/Bars.svg.svelte';
   import type { BarChartProps } from './BarChart.shared.svelte.js';
 
-  let props: BarChartProps<TData> = $props();
+  let { ref = $bindable(), context = $bindable(), ...props }: BarChartProps<TData> = $props();
 </script>
 
-<BarChartBase {Chart} {Bars} {...props} />
+<BarChartBase {Chart} {Bars} bind:ref bind:context {...props} />

@@ -2794,6 +2794,13 @@
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 56,
+      "line": "<Bars tooltip strokeWidth={1} class=\"stroke-surface-100/40\" />"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -2843,5 +2850,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:25.469Z"
+  "updatedAt": "2026-10-08T16:54:42.995Z"
 }

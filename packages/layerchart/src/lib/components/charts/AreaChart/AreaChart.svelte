@@ -8,7 +8,7 @@
   import Area from '../../Area/Area.svelte';
   import type { AreaChartProps } from './AreaChart.shared.svelte.js';
 
-  let { context = $bindable(), ...props }: AreaChartProps<TData> = $props();
+  let { ref = $bindable(), context = $bindable(), ...props }: AreaChartProps<TData> = $props();
 </script>
 
-<AreaChartBase {Chart} {Area} bind:context {...props} />
+<AreaChartBase {Chart} {Area} bind:ref bind:context {...props} />

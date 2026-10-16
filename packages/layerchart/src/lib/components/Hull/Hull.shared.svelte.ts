@@ -7,6 +7,11 @@ import type { GroupProps } from '../Group/Group.shared.svelte.js';
 
 export type HullPropsWithoutHTML = {
   data?: any;
+  /**
+   * Series key to follow, fading the hull while another series is highlighted and removing it
+   * while the series is hidden. Only applicable if `<Chart>` uses `series`.
+   */
+  seriesKey?: string;
   /** @default curveLinearClosed */
   curve?: ComponentProps<typeof Spline>['curve'];
   classes?: {

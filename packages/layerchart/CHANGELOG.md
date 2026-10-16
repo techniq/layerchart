@@ -1,5 +1,97 @@
 # LayerChart
 
+## 2.8.0
+
+### Minor Changes
+
+- feat(AnnotationLine|AnnotationPoint|AnnotationRange): Accept a `label` snippet and a mark snippet (`line`, `circle`, `rect`) to render custom markup ([#946](https://github.com/techniq/layerchart/pull/946))
+
+- feat(Tooltip): By default place above a finger or pen instead of below, and expose `tooltip.pointerType` ([#927](https://github.com/techniq/layerchart/pull/927))
+
+### Patch Changes
+
+- fix(Tooltip): Fix tooltip pointer location when pinch-zoomed, or when wider than the chart ([#927](https://github.com/techniq/layerchart/pull/927))
+
+## 2.7.0
+
+### Minor Changes
+
+- feat(Axis): Add `domain` to label the chart's scale in other units, such as a secondary axis ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- feat(TooltipItem): Add `seriesKey` to simplify setting the label, color, and value from a series ([#941](https://github.com/techniq/layerchart/pull/941))
+
+### Patch Changes
+
+- fix(Axis): Only drop the last tick of an `xInterval` / `yInterval` axis when it falls on the domain's end ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- fix(Axis): Label `scaleUtc()` ticks in UTC when no `format` is given ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- fix(BarChart): Place a grouped series in its own sub-band when its `value` is an accessor or a field other than its `key` ([#941](https://github.com/techniq/layerchart/pull/941))
+
+- fix(AreaChart|BarChart|LineChart|ScatterChart|PieChart|ArcChart|Layer): Render server-side with `ssr` instead of overflowing the stack (#940) ([#943](https://github.com/techniq/layerchart/pull/943))
+
+## 2.6.1
+
+### Patch Changes
+
+- fix(TransformContext): Don't click what a pan, rotate, or pinch is released over ([#936](https://github.com/techniq/layerchart/pull/936))
+
+- fix(Chart): Don't ease an `isometric` view's angles while dragging ([#936](https://github.com/techniq/layerchart/pull/936))
+
+- fix(Chart): Ease an `isometric` view added after the chart was created, starting it at its own angles ([#936](https://github.com/techniq/layerchart/pull/936))
+
+## 2.6.0
+
+### Minor Changes
+
+- feat(Contour): Stroke unfilled contours in the bands' colors when no `stroke` is given ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(Frame|Grid|Axis|Highlight): Draw an `isometric` chart's back walls, their gridlines (`<Grid z>`), a height axis (`<Axis placement="back">`), and highlights at a point's height ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat: Support `z` heights on an `isometric` chart — boxes (`Rect`, `Cell`, `Calendar`, `Bars` with `valueAxis="z"`), floating `Circle`, `Text`, `Labels` and `ArcLabel`, `Line` stems, and extruded `Polygon`, `Path`, `GeoPath`, `Contour`, `Pie`, `Area` and `Spline` ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- breaking(Chart|Spline|Area): Rename the `z` grouping channel to `g` (ex. `<Spline g="id">`), freeing `z` for a third position ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(TransformContext): Switch `mode` without remounting the chart ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(Chart): Support `view={isometric}` to draw the plot area as a floor seen at an angle, turned with `isometric({ rotate, tilt })` or by dragging (`transform={{ drag: 'rotate' }}`), with `viewport` text facing the viewer ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- feat(Ellipse): Support `rotate` to turn the ellipse about its center ([#934](https://github.com/techniq/layerchart/pull/934))
+
+### Patch Changes
+
+- fix(TransformContext): Zoom in / out about the middle of the plot area, and center a `canvas` zoom without resetting its scale ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(GeoPath): Start a tweened map shape as itself rather than rising from a baseline ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(Axis): Size an `angle` axis' ticks by its circle rather than the chart's width, so a continuous angle scale's tick count no longer changes with width (square charts get more ticks) ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(Link): Draw links whose ends share an `x` or `y` ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(BrushContext): Draw and measure the brush through a `canvas` pan / zoom ([#934](https://github.com/techniq/layerchart/pull/934))
+
+- fix(TooltipContext): Account for `transform.mode: 'canvas'` pan / zoom in bisect modes and `'data'` tooltip placement ([#934](https://github.com/techniq/layerchart/pull/934))
+
+## 2.5.2
+
+### Patch Changes
+
+- fix(ArcChart|AreaChart|BarChart|LineChart|PieChart|ScatterChart): Support `bind:ref`, and `bind:context` on the `.svg` / `.canvas` variants (#930) ([#931](https://github.com/techniq/layerchart/pull/931))
+
+## 2.5.1
+
+### Patch Changes
+
+- fix(Tooltip): Keep a flipped tooltip inside the container (or window) when flipping overflows the other edge (ex. a start-aligned tooltip wider than half a narrow chart opened past its left edge) ([#924](https://github.com/techniq/layerchart/pull/924))
+
+- fix(TooltipContext): Keep a tooltip locked from `onclick` on touch (a tap's `pointerleave` precedes `click`, and its pending hide cleared the data under the lock), and hide it once unlocked if the pointer left while locked ([#924](https://github.com/techniq/layerchart/pull/924))
+
+## 2.5.0
+
+### Minor Changes
+
+- feat(Group|Hull|Rule): Support `seriesKey` prop to fade the mark while another series is highlighted and remove it while the legend has that series hidden ([#917](https://github.com/techniq/layerchart/pull/917))
+
 ## 2.4.1
 
 ### Patch Changes

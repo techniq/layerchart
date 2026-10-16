@@ -250,6 +250,13 @@
       "line": "<Link"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 53,
+      "line": "<Link data={link} orientation=\"vertical\" class=\"stroke-surface-content/40\" />"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -257,5 +264,5 @@
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:19.050Z"
+  "updatedAt": "2026-10-08T16:54:43.910Z"
 }

@@ -51,7 +51,7 @@
 	xDomain={keys}
 	y={(d) => scales.get(d.dimension)?.(d.value)}
 	yDomain={[0, 1]}
-	z="id"
+	g="id"
 	fy="species"
 	{series}
 	padding={{ left: 48, right: 76, top: 32, bottom: 8 }}

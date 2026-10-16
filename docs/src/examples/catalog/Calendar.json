@@ -105,6 +105,33 @@
       ]
     },
     {
+      "name": "isometric",
+      "title": "isometric",
+      "path": "/docs/components/Calendar/isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 40,
+          "line": "<Calendar {start} {end} monthLabel={false} tooltip class=\"stroke-surface-100/30\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 43,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "last-month",
       "title": "last month",
       "path": "/docs/components/Calendar/last-month",
@@ -258,6 +285,13 @@
       "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 40,
+      "line": "<Calendar {start} {end} monthLabel={false} tooltip class=\"stroke-surface-100/30\" />"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -286,5 +320,5 @@
       "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:36.557Z"
+  "updatedAt": "2026-10-08T16:54:43.084Z"
 }

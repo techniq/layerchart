@@ -60,13 +60,13 @@
           resolvedOpacity,
           resolvedClass
         );
-        renderEllipse(ctx, item, styleOpts);
+        renderEllipse(ctx, { ...item, rotate: rest.rotate }, styleOpts);
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
       renderEllipse(
         ctx,
-        { cx: c.motionCx, cy: c.motionCy, rx: c.motionRx, ry: c.motionRy },
+        { cx: c.motionCx, cy: c.motionCy, rx: c.motionRx, ry: c.motionRy, rotate: rest.rotate },
         styleOpts
       );
     }
@@ -89,6 +89,7 @@
         pointerleave: (rest as any).onpointerleave,
       },
       deps: () => [
+        rest.rotate,
         c.dataMode,
         c.dataMode ? c.resolvedItems : null,
         c.motionCx,

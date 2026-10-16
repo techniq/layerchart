@@ -190,7 +190,7 @@ function isCSSColor(value: string): boolean {
  * nothing in the data).
  *
  * Marks that draw one shape per series use this to infer their grouping from `stroke` / `fill`,
- * without also having to also use `z="fruit"`.
+ * without also having to also use `g="fruit"`.
  */
 export function colorPropDataKey<T>(
   value: ColorProp<T> | undefined | null,

@@ -334,3 +334,184 @@ export function flattenPathData(pathData: string, yOverride = 0) {
 
   return result;
 }
+
+/** Points along an SVG elliptical arc, via the SVG spec's endpoint-to-centre conversion */
+function arcPoints(
+  x0: number,
+  y0: number,
+  rx: number,
+  ry: number,
+  rotation: number,
+  largeArc: boolean,
+  sweep: boolean,
+  x1: number,
+  y1: number
+): Array<[number, number]> {
+  if (!rx || !ry || (x0 === x1 && y0 === y1)) return [[x1, y1]];
+  const cos = Math.cos(rotation);
+  const sin = Math.sin(rotation);
+  const dx = (x0 - x1) / 2;
+  const dy = (y0 - y1) / 2;
+  const px = cos * dx + sin * dy;
+  const py = -sin * dx + cos * dy;
+  // Radii too small to reach are scaled up until they do
+  const scale = (px * px) / (rx * rx) + (py * py) / (ry * ry);
+  if (scale > 1) {
+    rx *= Math.sqrt(scale);
+    ry *= Math.sqrt(scale);
+  }
+  const sign = largeArc === sweep ? -1 : 1;
+  const num = rx * rx * ry * ry - rx * rx * py * py - ry * ry * px * px;
+  const den = rx * rx * py * py + ry * ry * px * px;
+  const k = sign * Math.sqrt(Math.max(0, num / den));
+  const cxp = (k * rx * py) / ry;
+  const cyp = (-k * ry * px) / rx;
+  const cx = cos * cxp - sin * cyp + (x0 + x1) / 2;
+  const cy = sin * cxp + cos * cyp + (y0 + y1) / 2;
+  const angle = (ux: number, uy: number, vx: number, vy: number) =>
+    Math.atan2(ux * vy - uy * vx, ux * vx + uy * vy);
+  const start = angle(1, 0, (px - cxp) / rx, (py - cyp) / ry);
+  let delta = angle((px - cxp) / rx, (py - cyp) / ry, (-px - cxp) / rx, (-py - cyp) / ry);
+  if (!sweep && delta > 0) delta -= 2 * Math.PI;
+  if (sweep && delta < 0) delta += 2 * Math.PI;
+  // Steps fine enough that each strays at most a quarter pixel from the arc
+  const r = Math.max(rx, ry);
+  const stepAngle = Math.min(Math.PI / 18, 2 * Math.acos(Math.max(-1, 1 - 0.25 / r)));
+  const steps = Math.max(1, Math.ceil(Math.abs(delta) / Math.max(stepAngle, Math.PI / 180)));
+  const points: Array<[number, number]> = [];
+  for (let s = 1; s <= steps; s++) {
+    const t = start + (delta * s) / steps;
+    const ex = rx * Math.cos(t);
+    const ey = ry * Math.sin(t);
+    points.push(s === steps ? [x1, y1] : [cos * ex - sin * ey + cx, sin * ex + cos * ey + cy]);
+  }
+  return points;
+}
+
+/** Fewest steps a curve segment is flattened into by `pathRings` */
+const CURVE_STEPS = 8;
+
+/** The closed rings of an SVG path's `d`, one per subpath, with curves and arcs flattened */
+export function pathRings(d: string): Array<Array<[number, number]>> {
+  const tokens = d.match(/[a-zA-Z]|[-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? [];
+  const rings: Array<Array<[number, number]>> = [];
+  let ring: Array<[number, number]> = [];
+  let x = 0;
+  let y = 0;
+  let start: [number, number] = [0, 0];
+  // The last curve's second control point, for `S` / `T` to reflect
+  let control: [number, number] | null = null;
+  let command = '';
+  let i = 0;
+
+  const num = () => Number(tokens[i++]);
+  const finish = () => {
+    if (ring.length > 2) rings.push(ring);
+    ring = [];
+  };
+  const to = (nx: number, ny: number) => {
+    x = nx;
+    y = ny;
+    ring.push([x, y]);
+  };
+  const curve = (points: Array<[number, number]>) => {
+    // Bézier of any order through `points`, from the current point
+    const all: Array<[number, number]> = [[x, y], ...points];
+    let length = 0;
+    for (let k = 1; k < all.length; k++) {
+      length += Math.hypot(all[k][0] - all[k - 1][0], all[k][1] - all[k - 1][1]);
+    }
+    const steps = Math.min(64, Math.max(CURVE_STEPS, Math.ceil(length / 4)));
+    for (let s = 1; s <= steps; s++) {
+      const t = s / steps;
+      let level = all;
+      while (level.length > 1) {
+        level = level.slice(1).map(([px, py], k) => {
+          const [qx, qy] = level[k];
+          return [qx + (px - qx) * t, qy + (py - qy) * t] as [number, number];
+        });
+      }
+      ring.push(level[0]);
+    }
+    [x, y] = points[points.length - 1];
+    control = points.length > 1 ? points[points.length - 2] : null;
+  };
+
+  while (i < tokens.length) {
+    if (/[a-zA-Z]/.test(tokens[i])) command = tokens[i++];
+    const relative = command === command.toLowerCase();
+    const ox = relative ? x : 0;
+    const oy = relative ? y : 0;
+    const reflected = (): [number, number] =>
+      control ? [2 * x - control[0], 2 * y - control[1]] : [x, y];
+    switch (command.toUpperCase()) {
+      case 'M':
+        finish();
+        start = [ox + num(), oy + num()];
+        to(...start);
+        // Further pairs after a move are lines
+        command = relative ? 'l' : 'L';
+        control = null;
+        break;
+      case 'L':
+        to(ox + num(), oy + num());
+        control = null;
+        break;
+      case 'H':
+        to(ox + num(), y);
+        control = null;
+        break;
+      case 'V':
+        to(x, oy + num());
+        control = null;
+        break;
+      case 'C':
+        curve([
+          [ox + num(), oy + num()],
+          [ox + num(), oy + num()],
+          [ox + num(), oy + num()],
+        ]);
+        break;
+      case 'S':
+        curve([reflected(), [ox + num(), oy + num()], [ox + num(), oy + num()]]);
+        break;
+      case 'Q':
+        curve([
+          [ox + num(), oy + num()],
+          [ox + num(), oy + num()],
+        ]);
+        break;
+      case 'T': {
+        const c = reflected();
+        curve([c, [ox + num(), oy + num()]]);
+        control = c;
+        break;
+      }
+      case 'A': {
+        const rx = Math.abs(num());
+        const ry = Math.abs(num());
+        const rotation = (num() * Math.PI) / 180;
+        const largeArc = num() !== 0;
+        const sweep = num() !== 0;
+        const ex = ox + num();
+        const ey = oy + num();
+        for (const point of arcPoints(x, y, rx, ry, rotation, largeArc, sweep, ex, ey)) {
+          ring.push(point);
+        }
+        x = ex;
+        y = ey;
+        control = null;
+        break;
+      }
+      case 'Z':
+        [x, y] = start;
+        finish();
+        control = null;
+        break;
+      default:
+        i++;
+    }
+  }
+  finish();
+  return rings;
+}

@@ -571,6 +571,13 @@
       "line": "<Text"
     },
     {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 119,
+      "line": "<Text"
+    },
+    {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
@@ -737,6 +744,13 @@
       "path": "/docs/components/Group/data-mode",
       "lineNumber": 27,
       "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-8} class=\"text-xs fill-surface-content\" />"
+    },
+    {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 35,
+      "line": "<Text value={s.key} dx={8} dy={4} class=\"text-xs fill-surface-content\" />"
     },
     {
       "example": "geo",
@@ -935,6 +949,13 @@
       "line": "<Text value=\"end\" verticalAnchor=\"middle\" dx={8} />"
     },
     {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 65,
+      "line": "<Text"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -1023,6 +1044,13 @@
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
       "lineNumber": 44,
+      "line": "<Text"
+    },
+    {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 70,
       "line": "<Text"
     },
     {
@@ -1166,5 +1194,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.583Z"
+  "updatedAt": "2026-10-08T16:54:44.328Z"
 }

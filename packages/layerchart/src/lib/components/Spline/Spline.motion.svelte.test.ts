@@ -163,7 +163,7 @@ describe('Spline tweens style-split runs', () => {
     // Slow, so a handful of frames lands well inside the entrance rather than after it
     const componentProps = {
       motion: { type: 'tween', duration: 2000 },
-      z: 'group',
+      g: 'group',
       class: (d: { gap: boolean }) => (d.gap ? 'gap-run' : 'solid-run'),
     };
 

@@ -168,7 +168,10 @@ export class WaffleState {
     });
   }
 
-  axis = $derived<'x' | 'y'>(this.#props.axis ?? this.ctx.valueAxis);
+  // A waffle fills along `x` or `y`; a `z` value axis still runs up the floor's `y`
+  axis = $derived<'x' | 'y'>(
+    this.#props.axis ?? (this.ctx.valueAxis === 'z' ? 'y' : this.ctx.valueAxis)
+  );
   unit = $derived(Math.max(0, this.#props.unit ?? 1));
   gap = $derived(+(this.#props.gap ?? 1));
   round = $derived(maybeRound(this.#props.round));

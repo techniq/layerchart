@@ -286,6 +286,13 @@
   ],
   "usage": [
     {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 95,
+      "line": "<Treemap hierarchy={root} paddingOuter={4}>"
+    },
+    {
       "example": "basic",
       "component": "Treemap",
       "path": "/docs/components/Treemap/basic",
@@ -328,5 +335,5 @@
       "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.965Z"
+  "updatedAt": "2026-10-08T16:54:44.513Z"
 }

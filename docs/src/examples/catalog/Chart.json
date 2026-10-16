@@ -694,6 +694,329 @@
       ]
     },
     {
+      "name": "isometric-areas",
+      "title": "isometric areas",
+      "path": "/docs/components/Chart/isometric-areas",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 59,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 60,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 61,
+          "line": "<Grid x z />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 62,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 71,
+          "line": "<Area"
+        }
+      ]
+    },
+    {
+      "name": "isometric-columns",
+      "title": "isometric columns",
+      "path": "/docs/components/Chart/isometric-columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 35,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 38,
+          "line": "<Cell"
+        }
+      ]
+    },
+    {
+      "name": "isometric-heatmap",
+      "title": "isometric heatmap",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 34,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 37,
+          "line": "<Cell"
+        }
+      ]
+    },
+    {
+      "name": "isometric-pan-zoom",
+      "title": "isometric pan zoom",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 44,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 45,
+          "line": "<Grid x y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 46,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 49,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 50,
+          "line": "<Circle cx=\"x\" cy=\"y\" r={4} viewport class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "isometric-playground",
+      "title": "isometric playground",
+      "path": "/docs/components/Chart/isometric-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 76,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 112,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 113,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 114,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 116,
+          "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
+        }
+      ]
+    },
+    {
+      "name": "isometric-scatter",
+      "title": "isometric scatter",
+      "path": "/docs/components/Chart/isometric-scatter",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 13,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice view={isometric} padding={24} height={400} />"
+        }
+      ]
+    },
+    {
+      "name": "isometric-scatter-3d",
+      "title": "isometric scatter 3d",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 58,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 59,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 60,
+          "line": "<Grid x y z />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 61,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 66,
+          "line": "<Highlight data={hovered} lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 68,
+          "line": "<Circle cx=\"x\" cy=\"y\" r={6} fill=\"z\" viewport class=\"stroke-surface-100\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 83,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "isometric-stacked-columns",
+      "title": "isometric stacked columns",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 49,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 50,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 51,
+          "line": "<Grid z />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 52,
+          "line": "<Axis placement=\"bottom\" format=\"none\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 56,
+          "line": "<Bars tooltip strokeWidth={1} class=\"stroke-surface-100/40\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 57,
+          "line": "<Highlight points={{ r: 5 }} />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 60,
+          "line": "<Legend placement=\"top-left\" variant=\"swatches\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 62,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "isometric-treemap",
+      "title": "isometric treemap",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 71,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 94,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 95,
+          "line": "<Treemap hierarchy={root} paddingOuter={4}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 103,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 119,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 138,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "mixed-marks-with-stack",
       "title": "mixed marks with stack",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -997,6 +1320,13 @@
       "component": "Area",
       "path": "/docs/components/Area/oscilloscope-ridgeline",
       "lineNumber": 136,
+      "line": "<Chart"
+    },
+    {
+      "example": "oscilloscope-ridgeline-isometric",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline-isometric",
+      "lineNumber": 123,
       "line": "<Chart"
     },
     {
@@ -2253,6 +2583,13 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -2491,6 +2828,62 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 31,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 76,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 31,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 71,
+      "line": "<Chart"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -2677,6 +3070,13 @@
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
       "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "volcano-isometric",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-isometric",
+      "lineNumber": 36,
       "line": "<Chart"
     },
     {
@@ -3083,6 +3483,13 @@
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
       "lineNumber": 60,
+      "line": "<Chart"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 50,
       "line": "<Chart"
     },
     {
@@ -3989,6 +4396,13 @@
       "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
     },
     {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 42,
+      "line": "<Chart"
+    },
+    {
       "example": "labels",
       "component": "Pie",
       "path": "/docs/components/Pie/labels",
@@ -4682,6 +5096,20 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 56,
+      "line": "<Chart"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 45,
+      "line": "<Chart"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -4762,7 +5190,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 14,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
@@ -5095,6 +5523,13 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -5319,5 +5754,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:06.106Z"
+  "updatedAt": "2026-10-08T16:54:43.133Z"
 }

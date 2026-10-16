@@ -14,7 +14,7 @@
   // than creating an element for it
   let { ref: _ref = $bindable(), ...rest }: RectProps = $props();
 
-  const c = new RectState(() => rest as RectProps);
+  const c = new RectState(() => rest as RectProps, 'canvas');
 
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
@@ -80,6 +80,11 @@
           resolvedOpacity,
           resolvedClass
         );
+        // Only when the `isometric` view draws boxes on canvas (see `RectState`)
+        if (item.faces) {
+          c.chartCtx.isometric!.renderBoxFaces!(ctx, item.faces, styleOpts, styleOverrides);
+          continue;
+        }
         renderRect(
           ctx,
           {
@@ -94,6 +99,13 @@
           styleOpts
         );
       }
+    } else if (c.pixelFaces) {
+      c.chartCtx.isometric!.renderBoxFaces!(
+        ctx,
+        c.pixelFaces,
+        getStyleOptions(styleOverrides),
+        styleOverrides
+      );
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
       renderRect(
@@ -122,6 +134,7 @@
     markInfo: () => rectMarkInfo(rest as RectProps, c.dataMode),
     canvasRender: {
       render,
+      depth: () => c.paintDepth,
       events: {
         click: (rest as any).onclick,
         dblclick: (rest as any).ondblclick,
@@ -135,6 +148,7 @@
       deps: () => [
         c.dataMode,
         c.dataMode ? c.resolvedItems : null,
+        c.pixelFaces,
         c.motionX,
         c.motionY,
         c.motionWidth,

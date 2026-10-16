@@ -155,6 +155,33 @@
       ]
     },
     {
+      "name": "election-isometric",
+      "title": "election isometric",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 61,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 69,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 81,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "interpolating-projections",
       "title": "interpolating projections",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -943,6 +970,13 @@
       "line": "<GeoPath"
     },
     {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 69,
+      "line": "<GeoPath"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -1608,5 +1642,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.038Z"
+  "updatedAt": "2026-10-08T16:54:43.565Z"
 }

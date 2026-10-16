@@ -3617,6 +3617,34 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 43,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 45,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 46,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 47,
+      "line": "<Tooltip.Item label=\"contributions\" value={data.value ?? 0} format=\"integer\" />"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -3972,6 +4000,97 @@
       "path": "/docs/components/Chart/facet-tooltip",
       "lineNumber": 39,
       "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 83,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 85,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 86,
+      "line": "<Tooltip.Item label=\"x\" value={data.x} format=\"decimal\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 87,
+      "line": "<Tooltip.Item label=\"y\" value={data.y} format=\"decimal\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 88,
+      "line": "<Tooltip.Item label=\"z\" value={data.z} format=\"decimal\" />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 62,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 64,
+      "line": "<Tooltip.Header>{data.year} · Basket {data.basket}</Tooltip.Header>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 65,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label={data.fruit} value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 138,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 140,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 148,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 149,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
       "example": "mixed-marks-with-stack",
@@ -5031,6 +5150,41 @@
       "line": "<Tooltip.Root>"
     },
     {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 81,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 84,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 85,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 86,
+      "line": "<Tooltip.Item label=\"Democratic\" value={share?.dem} format=\"percent\" />"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 87,
+      "line": "<Tooltip.Item label=\"Republican\" value={share?.gop} format=\"percent\" />"
+    },
+    {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
@@ -6086,6 +6240,34 @@
       "path": "/docs/components/Partition/sunburst",
       "lineNumber": 140,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 104,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 106,
+      "line": "<Tooltip.Header>{data.fruit}</Tooltip.Header>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 107,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 108,
+      "line": "<Tooltip.Item label=\"count\" value={data.count} />"
     },
     {
       "example": "tooltip",
@@ -8027,5 +8209,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.673Z"
+  "updatedAt": "2026-10-08T16:54:44.376Z"
 }

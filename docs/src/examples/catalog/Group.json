@@ -74,6 +74,33 @@
           "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-8} class=\"text-xs fill-surface-content\" />"
         }
       ]
+    },
+    {
+      "name": "series-state",
+      "title": "series state",
+      "path": "/docs/components/Group/series-state",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 23,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 33,
+          "line": "<Group seriesKey={s.key} data={[lastPoint]} x=\"date\" y={s.key}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 34,
+          "line": "<Circle r={4} fill={s.color} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 35,
+          "line": "<Text value={s.key} dx={8} dy={4} class=\"text-xs fill-surface-content\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -230,6 +257,13 @@
       "path": "/docs/components/Group/data-mode",
       "lineNumber": 25,
       "line": "<Group x=\"date\" y=\"value\">"
+    },
+    {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 33,
+      "line": "<Group seriesKey={s.key} data={[lastPoint]} x=\"date\" y={s.key}>"
     },
     {
       "example": "basic",
@@ -442,5 +476,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.773Z"
+  "updatedAt": "2026-09-25T04:42:17.928Z"
 }

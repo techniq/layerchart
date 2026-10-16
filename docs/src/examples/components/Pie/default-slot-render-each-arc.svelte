@@ -36,13 +36,13 @@
 	<Layer center>
 		<Pie>
 			{#snippet children({ arcs })}
-				{#each arcs as arc, index}
+				{#each arcs as arc}
 					<Arc
 						startAngle={arc.startAngle}
 						endAngle={arc.endAngle}
 						padAngle={arc.padAngle}
-						fill={keyColors[index]}
-						offset={index === 0 ? 16 : 0}
+						fill={keyColors[arc.index]}
+						offset={arc.index === 0 ? 16 : 0}
 					/>
 				{/each}
 			{/snippet}

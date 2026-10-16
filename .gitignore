@@ -26,3 +26,4 @@ bench-results/
 **/static/stackblitz-files.json
 
 .playwright-mcp
+.openchamber

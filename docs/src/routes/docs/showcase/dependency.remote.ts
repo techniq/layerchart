@@ -17,10 +17,20 @@ export type Dependent = {
 export const getDependents = prerender(async () => {
 	const featuredSites: Dependent[] = [
 		{
+			name: 'npmchart',
+			description: 'Download trends, releases, and repository activity for any npm package',
+			homepageurl: 'https://www.npmchart.com/'
+		},
+		{
 			name: 'Zipline AI',
 			description: 'Features, context and embeddings for real-time AI/ML',
 			repourl: 'https://zipline.ai/',
 			homepageurl: 'https://github.com/zipline-ai'
+		},
+		{
+			name: 'Sandraviz',
+			description: 'Research reports reimagined as interactive web experiences',
+			homepageurl: 'https://www.sandraviz.com/reports'
 		},
 		{
 			name: 'Github Analysis',

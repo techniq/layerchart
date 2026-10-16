@@ -14,6 +14,7 @@
     cy,
     rx: rxProp,
     ry: ryProp,
+    rotate,
     ...rest
   }: EllipseProps = $props();
 
@@ -47,6 +48,7 @@
       cy={item.cy}
       rx={item.rx}
       ry={item.ry}
+      transform={rotate ? `rotate(${rotate}, ${item.cx}, ${item.cy})` : undefined}
       fill={resolvedFill}
       fill-opacity={resolvedFillOpacity}
       stroke={resolvedStroke}
@@ -63,6 +65,7 @@
     cy={c.motionCy}
     rx={c.motionRx}
     ry={c.motionRy}
+    transform={rotate ? `rotate(${rotate}, ${c.motionCx}, ${c.motionCy})` : undefined}
     fill={c.staticFill}
     fill-opacity={c.staticFillOpacity}
     stroke={c.staticStroke}

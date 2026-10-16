@@ -375,6 +375,55 @@
       "line": "<Grid x y />"
     },
     {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 61,
+      "line": "<Grid x z />"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 35,
+      "line": "<Grid x y bandAlign=\"between\" />"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 34,
+      "line": "<Grid x y bandAlign=\"between\" />"
+    },
+    {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 45,
+      "line": "<Grid x y />"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 113,
+      "line": "<Grid x y bandAlign=\"between\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 60,
+      "line": "<Grid x y z />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 51,
+      "line": "<Grid z />"
+    },
+    {
       "example": "band-scale-between",
       "component": "Grid",
       "path": "/docs/components/Grid/band-scale-between",
@@ -473,5 +522,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.354Z"
+  "updatedAt": "2026-10-08T16:54:43.682Z"
 }

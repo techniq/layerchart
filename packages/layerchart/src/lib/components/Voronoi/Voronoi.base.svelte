@@ -26,8 +26,10 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getFacetPanel } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
+  import { getLayerIsometric } from '$lib/contexts/isometric.js';
   import { accessor } from '$lib/utils/common.js';
-  import type { VoronoiCell } from './Voronoi.shared.svelte.js';
+  import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
+  import { clipToCircle, type VoronoiCell } from './Voronoi.shared.svelte.js';
 
   let {
     Group,
@@ -51,6 +53,15 @@
   // `flatData` rather than the chart's `data`, so marks with their own rows are included
   const facetPanel = getFacetPanel();
   const geo = getGeoContext();
+  const layerIsometric = getLayerIsometric();
+
+  /**
+   * On an isometric chart, the view the layer draws through.  Cells are then measured on screen,
+   * where the points are seen (raised by their height), and mapped back onto the flat plot to draw.
+   */
+  const view = $derived(!geo.projection && layerIsometric() ? ctx.layerMatrix() : null);
+  const toPlot = $derived(view ? invertMatrix(view) : null);
+  const lift = $derived(view && ctx.config.z != null ? ctx.isometricLift : null);
 
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
@@ -82,6 +93,14 @@
       } else {
         point = [x, y];
       }
+      if (view) {
+        const height = lift ? ctx.heightOf(d)[1] : 0;
+        const seen = applyMatrix(view, {
+          x: point[0] + (lift?.x ?? 0) * height,
+          y: point[1] + (lift?.y ?? 0) * height,
+        });
+        point = [seen.x, seen.y];
+      }
       // @ts-expect-error
       point.data = d;
       return point;
@@ -95,8 +114,26 @@
 
   // Compute once and share between cell rendering and the `children` cell payload
   const voronoi = $derived(
-    geo.projection ? null : Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])
+    geo.projection
+      ? null
+      : Delaunay.from(points).voronoi(
+          // On screen, the whole plot area rather than the floor
+          view ? [0, 0, ctx.box.width, ctx.box.height] : [0, 0, boundWidth, boundHeight]
+        )
   );
+
+  /** On an isometric chart, cell `i` cut to `r` on screen and mapped back onto the flat plot */
+  function plotPolygon(i: number): [number, number][] | null {
+    let polygon = voronoi?.cellPolygon(i) as [number, number][] | null;
+    if (!polygon || !toPlot) return polygon;
+    if (!disableClip) polygon = clipToCircle(polygon, points[i], r!);
+    if (polygon.length < 3) return null;
+    return polygon.map(([x, y]) => {
+      const p = applyMatrix(toPlot, { x, y });
+      return [p.x, p.y];
+    });
+  }
+
   const geoPolygons = $derived(geo.projection ? geoVoronoi().polygons(points) : null);
 
   // Cell geometry exposed to the `children` snippet for custom rendering (e.g. labels).
@@ -131,11 +168,12 @@
 
     if (voronoi) {
       return points.map((point: any, index: number): VoronoiCell => {
-        const polygon = voronoi.cellPolygon(index) as [number, number][] | null;
+        const polygon = toPlot ? plotPolygon(index) : (voronoi.cellPolygon(index) as any);
+        const site = toPlot ? applyMatrix(toPlot, { x: point[0], y: point[1] }) : null;
         return {
           data: point.data,
           index,
-          point: [point[0], point[1]],
+          point: site ? [site.x, site.y] : [point[0], point[1]],
           polygon,
           centroid: polygon ? polygonCentroid(polygon) : null,
           area: polygon ? Math.abs(polygonArea(polygon)) : 0,
@@ -178,9 +216,11 @@
     {/if}
   {:else if voronoi}
     {#each points as point, i}
-      {@const pathData = voronoi.renderCell(i)}
+      {@const plotted = toPlot ? plotPolygon(i) : null}
+      {@const pathData = toPlot ? plotted && `M${plotted.join('L')}Z` : voronoi.renderCell(i)}
       {#if pathData}
-        <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip}>
+        <!-- On an isometric chart, already cut to `r` on screen -->
+        <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip || !!toPlot}>
           <Path
             {pathData}
             class={['lc-voronoi-path', classes.path]}

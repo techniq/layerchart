@@ -54,6 +54,15 @@
         };
   }
 
+  /** For `viewport`, cancel the chart's `isometric` view about the text's anchor */
+  function faceViewer(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    const m = c.viewportMatrix;
+    if (!m) return;
+    ctx.translate(x, y);
+    ctx.transform(m.a, m.b, m.c, m.d, 0, 0);
+    ctx.translate(-x, -y);
+  }
+
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
@@ -64,8 +73,6 @@
     const dx = rest.dx ?? 0;
     const dy = rest.dy ?? 0;
     const rotate = rest.rotate;
-    const x = rest.x;
-    const y = rest.y;
 
     if (c.dataMode) {
       const baseStyles = getTextStyles(styleOverrides);
@@ -92,6 +99,7 @@
           resolvedClass
         );
         ctx.save();
+        faceViewer(ctx, item.x + getPixelValue(dx), item.y + getPixelValue(dy));
         if (rotate !== undefined) {
           const radians = degreesToRadians(rotate);
           ctx.translate(item.x, item.y);
@@ -113,10 +121,12 @@
       const baseX = getPixelValue(c.motionX) + getPixelValue(dx);
 
       ctx.save();
+      faceViewer(ctx, baseX, getPixelValue(c.motionY) + getPixelValue(dy));
 
       if (rotate !== undefined) {
-        const centerX = getPixelValue(typeof x === 'function' ? 0 : (x ?? 0));
-        const centerY = getPixelValue(typeof y === 'function' ? 0 : (y ?? 0));
+        // About where the text is drawn, raised by `z`
+        const centerX = getPixelValue(c.motionX);
+        const centerY = getPixelValue(c.motionY);
         const radians = degreesToRadians(rotate);
         ctx.translate(centerX, centerY);
         ctx.rotate(radians);
@@ -188,6 +198,7 @@
         rest.class,
         c.truncateConfig,
         rest.rotate,
+        c.viewportMatrix,
         rest.fontSize,
         rest.lineHeight,
         rest.textAnchor,
