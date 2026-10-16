@@ -16,7 +16,9 @@
           "lineNumber": 7,
           "line": "<CircleLegend title=\"Population\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-08T22:40:53.000Z"
     },
     {
       "name": "label-placement",
@@ -28,7 +30,9 @@
           "lineNumber": 9,
           "line": "<CircleLegend {scale} title=\"Population\" tickFormat=\"metric\" labelPlacement=\"right\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-08T22:40:53.000Z"
     },
     {
       "name": "scale-types",
@@ -40,7 +44,9 @@
           "lineNumber": 12,
           "line": "<CircleLegend scale={sqrt} title=\"Sqrt\" tickFormat=\"metric\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-08T22:40:53.000Z"
     }
   ],
   "usage": [

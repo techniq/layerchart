@@ -16,7 +16,57 @@
           "lineNumber": 18,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
+    },
+    {
+      "name": "custom-label",
+      "title": "custom label",
+      "path": "/docs/components/AnnotationLine/custom-label",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer type=\"html\" class=\"pointer-events-none\">"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 15,
+          "line": "<AnnotationLine"
+        }
+      ],
+      "createdAt": "2026-10-13T12:30:26.000Z",
+      "updatedAt": "2026-10-13T12:30:26.000Z"
+    },
+    {
+      "name": "custom-line",
+      "title": "custom line",
+      "path": "/docs/components/AnnotationLine/custom-line",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 14,
+          "line": "<AnnotationLine y={400} label=\"Target\" props={{ label: { fill: 'var(--color-danger)' } }}>"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 17,
+          "line": "<Line {...props} stroke=\"var(--color-surface-100)\" strokeWidth={6} />"
+        }
+      ],
+      "createdAt": "2026-10-13T12:30:26.000Z",
+      "updatedAt": "2026-10-13T12:30:26.000Z"
     },
     {
       "name": "horizontal",
@@ -33,7 +83,9 @@
           "lineNumber": 14,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "horizontal-placement",
@@ -50,7 +102,9 @@
           "lineNumber": 21,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "horizontal-with-range",
@@ -72,7 +126,9 @@
           "lineNumber": 25,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "playground",
@@ -94,7 +150,9 @@
           "lineNumber": 107,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-04-21T13:52:18.000Z",
+      "updatedAt": "2026-04-21T13:52:18.000Z"
     },
     {
       "name": "sloped",
@@ -111,7 +169,9 @@
           "lineNumber": 21,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-04-21T12:53:10.000Z",
+      "updatedAt": "2026-04-30T15:33:59.000Z"
     },
     {
       "name": "vertical",
@@ -128,7 +188,9 @@
           "lineNumber": 14,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical-placement",
@@ -145,7 +207,9 @@
           "lineNumber": 21,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical-with-rotation",
@@ -162,7 +226,9 @@
           "lineNumber": 14,
           "line": "<AnnotationLine"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -172,6 +238,20 @@
       "path": "/docs/components/AnnotationLine/bar-chart",
       "lineNumber": 18,
       "line": "<AnnotationLine"
+    },
+    {
+      "example": "custom-label",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-label",
+      "lineNumber": 15,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "custom-line",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-line",
+      "lineNumber": 14,
+      "line": "<AnnotationLine y={400} label=\"Target\" props={{ label: { fill: 'var(--color-danger)' } }}>"
     },
     {
       "example": "horizontal",
@@ -349,5 +429,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:21.362Z"
+  "updatedAt": "2026-10-16T16:15:12.598Z"
 }

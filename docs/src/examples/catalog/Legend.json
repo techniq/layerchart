@@ -16,7 +16,9 @@
           "lineNumber": 13,
           "line": "<Legend title=\"I am Legend\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "chart-placement",
@@ -33,7 +35,9 @@
           "lineNumber": 13,
           "line": "<Legend title=\"Top-Left\" placement=\"top-left\" variant=\"swatches\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "children-override",
@@ -45,7 +49,9 @@
           "lineNumber": 7,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "click-handler",
@@ -57,7 +63,9 @@
           "lineNumber": 7,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "diverging",
@@ -69,7 +77,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "diverging-sqrt",
@@ -81,7 +91,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "ordinal",
@@ -93,7 +105,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-20T06:44:56.000Z"
     },
     {
       "name": "quantile",
@@ -105,7 +119,9 @@
           "lineNumber": 12,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "quantize",
@@ -117,7 +133,9 @@
           "lineNumber": 8,
           "line": "<Legend scale={scaleQuantize([1, 10], schemePurples[9])} title=\"Unemployment rate (%)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "responsive-swatches",
@@ -129,7 +147,9 @@
           "lineNumber": 7,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sequential",
@@ -141,7 +161,9 @@
           "lineNumber": 8,
           "line": "<Legend scale={scaleSequential([0, 100], interpolateViridis)} title=\"Temperature (°F)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sequential-log",
@@ -153,7 +175,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sequential-quantile",
@@ -165,7 +189,9 @@
           "lineNumber": 11,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sequential-sqrt",
@@ -177,7 +203,9 @@
           "lineNumber": 8,
           "line": "<Legend scale={scaleSequentialSqrt([0, 1], interpolateTurbo)} title=\"Speed (kts)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sqrt",
@@ -189,7 +217,9 @@
           "lineNumber": 7,
           "line": "<Legend scale={scaleSqrt([-100, 0, 100], ['blue', 'white', 'red'])} title=\"Temperature (°C)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "square-swatch",
@@ -201,7 +231,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling",
@@ -213,7 +245,9 @@
           "lineNumber": 7,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "threshold",
@@ -225,7 +259,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-orientation",
@@ -237,7 +273,9 @@
           "lineNumber": 8,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

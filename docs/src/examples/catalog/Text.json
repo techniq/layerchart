@@ -31,7 +31,9 @@
           "lineNumber": 28,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -68,7 +70,9 @@
           "lineNumber": 43,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "data-mode",
@@ -100,7 +104,9 @@
           "lineNumber": 26,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "playground",
@@ -127,7 +133,9 @@
           "lineNumber": 48,
           "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "segments",
@@ -149,7 +157,9 @@
           "lineNumber": 7,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-04-12T23:31:48.000Z",
+      "updatedAt": "2026-04-17T13:51:25.000Z"
     },
     {
       "name": "truncate-axis-labels",
@@ -161,7 +171,9 @@
           "lineNumber": 28,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "word-wrap-axis-labels",
@@ -173,7 +185,9 @@
           "lineNumber": 23,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "word-wrap-with-explicit-newline",
@@ -195,7 +209,9 @@
           "lineNumber": 10,
           "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

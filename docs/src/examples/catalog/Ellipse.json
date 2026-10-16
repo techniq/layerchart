@@ -26,7 +26,9 @@
           "lineNumber": 29,
           "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} fill=\"category\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -58,7 +60,9 @@
           "lineNumber": 44,
           "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} fill=\"value\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "data-mode",
@@ -85,7 +89,9 @@
           "lineNumber": 27,
           "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "styling-using-attributes",
@@ -112,7 +118,9 @@
           "lineNumber": 14,
           "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} fill=\"var(--color-surface-content)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-classes",
@@ -139,7 +147,9 @@
           "lineNumber": 14,
           "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-css-variables",
@@ -166,7 +176,9 @@
           "lineNumber": 14,
           "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

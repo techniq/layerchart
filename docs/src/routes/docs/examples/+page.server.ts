@@ -8,6 +8,8 @@ interface ExampleInfo {
 		name: string;
 		title: string;
 		path: string;
+		/** The commit that first added the example's file (absent until it's committed) */
+		createdAt?: string;
 	}>;
 }
 
@@ -34,7 +36,8 @@ export async function load() {
 			examples: catalog.examples.map((example) => ({
 				name: example.name,
 				title: example.title,
-				path: `/example/${catalog.component}/${example.name}`
+				path: `/example/${catalog.component}/${example.name}`,
+				createdAt: example.createdAt
 			}))
 		}))
 		.sort((a, b) => a.component.localeCompare(b.component));

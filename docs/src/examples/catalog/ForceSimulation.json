@@ -36,7 +36,9 @@
           "lineNumber": 60,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "collision-detection",
@@ -68,7 +70,9 @@
           "lineNumber": 60,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "disjoint-graph",
@@ -100,7 +104,9 @@
           "lineNumber": 78,
           "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "games-industry-layoffs",
@@ -142,7 +148,9 @@
           "lineNumber": 86,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "graph-drag",
@@ -179,7 +187,9 @@
           "lineNumber": 141,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "graph-playground",
@@ -216,7 +226,9 @@
           "lineNumber": 196,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "group",
@@ -243,7 +255,9 @@
           "lineNumber": 73,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "lattice",
@@ -275,7 +289,9 @@
           "lineNumber": 47,
           "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "layoffs-by-industry",
@@ -312,7 +328,9 @@
           "lineNumber": 132,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:51:04.000Z"
     },
     {
       "name": "text",
@@ -339,7 +357,9 @@
           "lineNumber": 104,
           "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "tree",
@@ -376,7 +396,9 @@
           "lineNumber": 68,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

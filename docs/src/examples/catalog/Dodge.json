@@ -26,7 +26,9 @@
           "lineNumber": 42,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "bank-failures",
@@ -58,7 +60,9 @@
           "lineNumber": 69,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "beeswarm",
@@ -85,7 +89,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "duration-bars-dense-lanes",
@@ -112,7 +118,9 @@
           "lineNumber": 57,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "grouped-horizontal",
@@ -139,7 +147,9 @@
           "lineNumber": 68,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "grouped-vertical",
@@ -166,7 +176,9 @@
           "lineNumber": 67,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "image-beeswarm",
@@ -193,7 +205,9 @@
           "lineNumber": 39,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "penguins",
@@ -220,7 +234,9 @@
           "lineNumber": 55,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "tech-layoffs",
@@ -252,7 +268,9 @@
           "lineNumber": 63,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "text-beeswarm",
@@ -279,7 +297,9 @@
           "lineNumber": 60,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "timeline",
@@ -316,7 +336,9 @@
           "lineNumber": 81,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "timeline-bidirectional",
@@ -348,7 +370,9 @@
           "lineNumber": 101,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "variable-radius",
@@ -375,7 +399,9 @@
           "lineNumber": 79,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-05T17:25:23.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     }
   ],
   "usage": [

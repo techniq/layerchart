@@ -26,7 +26,9 @@
           "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "basic",
@@ -48,7 +50,9 @@
           "lineNumber": 40,
           "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} monthPath />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "fixed-cell-size",
@@ -75,7 +79,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "html-with-padding",
@@ -102,7 +108,9 @@
           "lineNumber": 63,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "isometric",
@@ -129,7 +137,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "last-month",
@@ -156,7 +166,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-years",
@@ -193,7 +205,9 @@
           "lineNumber": 54,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "responsive-cell-size-default",
@@ -220,7 +234,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "rounded-cells",
@@ -252,7 +268,9 @@
           "lineNumber": 60,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

@@ -21,7 +21,9 @@
           "lineNumber": 36,
           "line": "<Pie />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "default-slot-render-each-arc",
@@ -48,7 +50,9 @@
           "lineNumber": 40,
           "line": "<Arc"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "disable-sorting",
@@ -70,7 +74,9 @@
           "lineNumber": 36,
           "line": "<Pie sort={null} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "inner-radius-negative",
@@ -92,7 +98,9 @@
           "lineNumber": 19,
           "line": "<Pie innerRadius={0.9} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "inner-radius-positive",
@@ -114,7 +122,9 @@
           "lineNumber": 19,
           "line": "<Pie innerRadius={100} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "inner-radius-zero-one",
@@ -136,7 +146,9 @@
           "lineNumber": 19,
           "line": "<Pie innerRadius={100} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "isometric",
@@ -173,7 +185,9 @@
           "lineNumber": 104,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "labels",
@@ -205,7 +219,9 @@
           "lineNumber": 31,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "labels-centroid",
@@ -237,7 +253,9 @@
           "lineNumber": 31,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "labels-centroid-multiple",
@@ -269,7 +287,9 @@
           "lineNumber": 35,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "labels-outer",
@@ -301,7 +321,9 @@
           "lineNumber": 31,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "labels-outer-radial",
@@ -333,7 +355,9 @@
           "lineNumber": 31,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "labels-outer-with-padding",
@@ -365,7 +389,9 @@
           "lineNumber": 31,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "multiple-data-prop",
@@ -387,7 +413,9 @@
           "lineNumber": 20,
           "line": "<Pie innerRadius={100} {data} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "offset",
@@ -409,7 +437,9 @@
           "lineNumber": 19,
           "line": "<Pie offset={4} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "outer-radius",
@@ -431,7 +461,9 @@
           "lineNumber": 19,
           "line": "<Pie outerRadius={100} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "pad-angle",
@@ -453,7 +485,9 @@
           "lineNumber": 19,
           "line": "<Pie padAngle={0.05} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "pad-angle-with-inner-radius",
@@ -475,7 +509,9 @@
           "lineNumber": 19,
           "line": "<Pie innerRadius={100} padAngle={0.03} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "partial-range-chart-xrange",
@@ -497,7 +533,9 @@
           "lineNumber": 19,
           "line": "<Pie />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "partial-range-range-prop",
@@ -519,7 +557,9 @@
           "lineNumber": 19,
           "line": "<Pie range={[-90, 90]} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement",
@@ -541,7 +581,9 @@
           "lineNumber": 19,
           "line": "<Pie />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement-center",
@@ -563,7 +605,9 @@
           "lineNumber": 19,
           "line": "<Pie />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement-left",
@@ -590,7 +634,9 @@
           "lineNumber": 21,
           "line": "<Pie />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement-right",
@@ -617,7 +663,9 @@
           "lineNumber": 21,
           "line": "<Pie />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tooltip",
@@ -644,7 +692,9 @@
           "lineNumber": 23,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "tooltip-with-arcs-slot",
@@ -686,7 +736,9 @@
           "lineNumber": 69,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "tweened",
@@ -708,7 +760,9 @@
           "lineNumber": 25,
           "line": "<Pie motion=\"tween\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     }
   ],
   "usage": [

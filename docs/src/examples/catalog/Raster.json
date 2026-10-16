@@ -26,7 +26,9 @@
           "lineNumber": 25,
           "line": "<Raster value={mandelbrot} pixelSize={2} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "math-functions",
@@ -58,7 +60,9 @@
           "lineNumber": 112,
           "line": "<Contour"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-13T12:45:20.000Z"
     },
     {
       "name": "sampled",
@@ -85,7 +89,9 @@
           "lineNumber": 17,
           "line": "<Raster value={(x, y) => Math.sin(x) * Math.cos(y)} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "us-water-vapor",
@@ -127,7 +133,9 @@
           "lineNumber": 66,
           "line": "<GeoPath geojson={nation} class=\"fill-none stroke-[#2f2f2f]\" strokeWidth={1.25} />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T03:22:51.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "volcano",
@@ -154,7 +162,9 @@
           "lineNumber": 20,
           "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "with-contour-overlay",
@@ -186,7 +196,9 @@
           "lineNumber": 21,
           "line": "<Contour"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

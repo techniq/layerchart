@@ -11,7 +11,9 @@
           "lineNumber": 8,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "color",
@@ -23,7 +25,9 @@
           "lineNumber": 8,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "gradient-with-text",
@@ -55,7 +59,9 @@
           "lineNumber": 21,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radius-fixed",
@@ -67,7 +73,9 @@
           "lineNumber": 8,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radius-offset",
@@ -79,7 +87,9 @@
           "lineNumber": 8,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radius-percent",
@@ -91,7 +101,9 @@
           "lineNumber": 8,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series",
@@ -103,7 +115,9 @@
           "lineNumber": 10,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-arc",
@@ -115,7 +129,9 @@
           "lineNumber": 10,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-individual",
@@ -127,7 +143,9 @@
           "lineNumber": 12,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-labels",
@@ -139,7 +157,9 @@
           "lineNumber": 12,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-08T04:18:23.000Z"
     },
     {
       "name": "series-motion-spring",
@@ -151,7 +171,9 @@
           "lineNumber": 20,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "series-motion-tween",
@@ -163,7 +185,9 @@
           "lineNumber": 20,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "series-start-180",
@@ -175,7 +199,9 @@
           "lineNumber": 10,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-start-90",
@@ -187,7 +213,9 @@
           "lineNumber": 10,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-track-color",
@@ -199,7 +227,9 @@
           "lineNumber": 10,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "track-size",
@@ -211,7 +241,9 @@
           "lineNumber": 8,
           "line": "<ArcChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

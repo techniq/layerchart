@@ -383,7 +383,10 @@
 		{/snippet}
 
 		{#if split && SplitLayout}
-			<SplitLayout code={codeBlock} preview={previewBlock} />
+			<SplitLayout>
+				{#snippet code()}{@render codeBlock()}{/snippet}
+				{#snippet preview()}{@render previewBlock()}{/snippet}
+			</SplitLayout>
 		{:else}
 			{@render previewBlock()}
 

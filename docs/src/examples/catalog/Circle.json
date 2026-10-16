@@ -26,7 +26,9 @@
           "lineNumber": 29,
           "line": "<Circle cx=\"date\" cy=\"value\" r={5} fill=\"category\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -58,7 +60,9 @@
           "lineNumber": 44,
           "line": "<Circle cx=\"date\" cy=\"value\" r={5} fill=\"value\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "data-mode",
@@ -85,7 +89,9 @@
           "lineNumber": 27,
           "line": "<Circle cx=\"date\" cy=\"value\" r={5} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "styling-using-attributes",
@@ -112,7 +118,9 @@
           "lineNumber": 14,
           "line": "<Circle cx={100} cy={100} r={20} fill=\"var(--color-surface-content)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-classes",
@@ -139,7 +147,9 @@
           "lineNumber": 14,
           "line": "<Circle cx={100} cy={100} r={20} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-css-variables",
@@ -166,7 +176,9 @@
           "lineNumber": 14,
           "line": "<Circle cx={100} cy={100} r={20} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
@@ -183,6 +195,20 @@
       "path": "/docs/components/AnnotationLine/playground",
       "lineNumber": 121,
       "line": "<Circle"
+    },
+    {
+      "example": "custom-marker",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/custom-marker",
+      "lineNumber": 37,
+      "line": "<Circle {...props} r={r + 4} class=\"fill-primary/20 stroke-primary\" />"
+    },
+    {
+      "example": "custom-marker",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/custom-marker",
+      "lineNumber": 38,
+      "line": "<Circle {...props} class=\"fill-primary stroke-surface-100\" strokeWidth={2} />"
     },
     {
       "example": "playground",
@@ -1242,5 +1268,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.257Z"
+  "updatedAt": "2026-10-16T16:15:13.291Z"
 }

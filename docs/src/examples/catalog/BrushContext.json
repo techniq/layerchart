@@ -21,7 +21,9 @@
           "lineNumber": 14,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "constant-labels",
@@ -48,7 +50,9 @@
           "lineNumber": 19,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "flame-chart",
@@ -100,7 +104,9 @@
           "lineNumber": 194,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-07-21T18:21:59.000Z",
+      "updatedAt": "2026-07-21T18:21:59.000Z"
     },
     {
       "name": "handle-arrows",
@@ -127,7 +133,9 @@
           "lineNumber": 27,
           "line": "<rect"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "handle-labels",
@@ -154,7 +162,9 @@
           "lineNumber": 18,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "integrated-brush-(both-axis-area)",
@@ -191,7 +201,9 @@
           "lineNumber": 47,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "integrated-brush-(x-axis)",
@@ -228,7 +240,9 @@
           "lineNumber": 44,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "integrated-brush-(y-axis)",
@@ -265,7 +279,9 @@
           "lineNumber": 44,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "max-window",
@@ -297,7 +313,9 @@
           "lineNumber": 52,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-07-01T16:26:01.000Z",
+      "updatedAt": "2026-07-01T16:26:01.000Z"
     },
     {
       "name": "min-max-extent",
@@ -324,7 +342,9 @@
           "lineNumber": 47,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-07-01T16:26:01.000Z",
+      "updatedAt": "2026-07-01T16:26:01.000Z"
     },
     {
       "name": "minimap",
@@ -361,7 +381,9 @@
           "lineNumber": 89,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-14T04:35:33.000Z"
     },
     {
       "name": "programmatic-control",
@@ -388,7 +410,9 @@
           "lineNumber": 55,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "selection",
@@ -420,7 +444,9 @@
           "lineNumber": 32,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-14T04:35:33.000Z"
     },
     {
       "name": "separate-chart-(clip-data-y-axis)",
@@ -457,7 +483,9 @@
           "lineNumber": 48,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "separate-chart-(clip-data)",
@@ -494,7 +522,9 @@
           "lineNumber": 38,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "separate-chart-(filter-data)",
@@ -526,7 +556,9 @@
           "lineNumber": 36,
           "line": "<Area"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-14T04:35:33.000Z"
     },
     {
       "name": "simple-styling",
@@ -548,7 +580,9 @@
           "lineNumber": 20,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "snap-to-month",
@@ -575,7 +609,9 @@
           "lineNumber": 54,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-07-01T16:26:01.000Z",
+      "updatedAt": "2026-07-01T16:26:01.000Z"
     },
     {
       "name": "striped-background",
@@ -597,7 +633,9 @@
           "lineNumber": 14,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "synced-brushes",
@@ -639,7 +677,9 @@
           "lineNumber": 71,
           "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-27T02:37:19.000Z"
     },
     {
       "name": "tooltip-interop",
@@ -686,7 +726,9 @@
           "lineNumber": 56,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     }
   ],
   "usage": [],

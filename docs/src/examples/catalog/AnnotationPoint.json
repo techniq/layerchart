@@ -21,7 +21,9 @@
           "lineNumber": 19,
           "line": "<AnnotationPoint"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "band-scale-on-value",
@@ -43,7 +45,33 @@
           "lineNumber": 19,
           "line": "<AnnotationPoint"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
+    },
+    {
+      "name": "custom-marker",
+      "title": "custom marker",
+      "path": "/docs/components/AnnotationPoint/custom-marker",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 20,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 23,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 37,
+          "line": "<Circle {...props} r={r + 4} class=\"fill-primary/20 stroke-primary\" />"
+        }
+      ],
+      "createdAt": "2026-10-13T12:30:26.000Z",
+      "updatedAt": "2026-10-13T12:30:26.000Z"
     },
     {
       "name": "line-to-point",
@@ -75,7 +103,9 @@
           "lineNumber": 82,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "link-callouts",
@@ -92,7 +122,9 @@
           "lineNumber": 59,
           "line": "<AnnotationPoint {...annotation} />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-20T20:21:36.000Z",
+      "updatedAt": "2026-08-04T17:36:56.000Z"
     },
     {
       "name": "on-axis-with-tooltip",
@@ -119,7 +151,9 @@
           "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "on-series-with-line-and-tooltip",
@@ -151,7 +185,9 @@
           "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "on-series-with-tooltip",
@@ -178,7 +214,9 @@
           "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "playground",
@@ -200,7 +238,9 @@
           "lineNumber": 246,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-04-20T20:21:36.000Z",
+      "updatedAt": "2026-08-04T17:36:56.000Z"
     },
     {
       "name": "series-annotation",
@@ -217,7 +257,9 @@
           "lineNumber": 21,
           "line": "<AnnotationPoint"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-cities",
@@ -244,7 +286,9 @@
           "lineNumber": 103,
           "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-21T11:18:12.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "world-landmarks",
@@ -271,7 +315,9 @@
           "lineNumber": 116,
           "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-21T11:18:12.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -287,6 +333,13 @@
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/band-scale-on-value",
       "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "custom-marker",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/custom-marker",
+      "lineNumber": 23,
       "line": "<AnnotationPoint"
     },
     {
@@ -360,5 +413,5 @@
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:29.292Z"
+  "updatedAt": "2026-10-16T16:15:12.621Z"
 }

@@ -26,10 +26,19 @@
           "lineNumber": 12,
           "line": "<Arc"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "custom-label",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-label",
+      "lineNumber": 14,
+      "line": "<Layer type=\"html\" class=\"pointer-events-none\">"
+    },
     {
       "example": "band-scale-on-axis",
       "component": "AnnotationPoint",
@@ -78,6 +87,13 @@
       "path": "/docs/components/AnnotationPoint/world-landmarks",
       "lineNumber": 110,
       "line": "<Layer>"
+    },
+    {
+      "example": "custom-label",
+      "component": "AnnotationRange",
+      "path": "/docs/components/AnnotationRange/custom-label",
+      "lineNumber": 20,
+      "line": "<Layer type=\"html\" class=\"pointer-events-none\">"
     },
     {
       "example": "clock",
@@ -517,7 +533,7 @@
       "example": "multiple-axis-same-placement-right",
       "component": "Axis",
       "path": "/docs/components/Axis/multiple-axis-same-placement-right",
-      "lineNumber": 9,
+      "lineNumber": 7,
       "line": "<Layer>"
     },
     {
@@ -1595,21 +1611,21 @@
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Layer>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 23,
+      "lineNumber": 25,
       "line": "<Layer>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 46,
+      "lineNumber": 48,
       "line": "<Layer>"
     },
     {
@@ -4546,5 +4562,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.809Z"
+  "updatedAt": "2026-10-16T16:15:14.129Z"
 }

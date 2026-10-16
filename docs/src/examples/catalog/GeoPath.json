@@ -36,7 +36,9 @@
           "lineNumber": 161,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "bubble-map",
@@ -83,7 +85,9 @@
           "lineNumber": 142,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "choropleth",
@@ -115,7 +119,9 @@
           "lineNumber": 109,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "eclipses-globe",
@@ -152,7 +158,9 @@
           "lineNumber": 94,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "election-isometric",
@@ -179,7 +187,9 @@
           "lineNumber": 81,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "interpolating-projections",
@@ -206,7 +216,9 @@
           "lineNumber": 183,
           "line": "<Graticule class=\"stroke-surface-content/10\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-03T05:11:09.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "paint-brush-selection",
@@ -243,7 +255,9 @@
           "lineNumber": 451,
           "line": "<Path"
         }
-      ]
+      ],
+      "createdAt": "2026-04-14T03:50:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "sketchy-globe",
@@ -270,7 +284,9 @@
           "lineNumber": 58,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "spike-map",
@@ -302,7 +318,9 @@
           "lineNumber": 119,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "submarine-cables-globe",
@@ -344,7 +362,9 @@
           "lineNumber": 96,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "timezones",
@@ -391,7 +411,9 @@
           "lineNumber": 137,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "tooltip",
@@ -423,7 +445,9 @@
           "lineNumber": 48,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-canvas",
@@ -450,7 +474,9 @@
           "lineNumber": 126,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-canvas-scale-extent",
@@ -472,7 +498,9 @@
           "lineNumber": 38,
           "line": "<GeoPath"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-globe-constrain",
@@ -499,7 +527,9 @@
           "lineNumber": 39,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "transform-globe-inertia",
@@ -526,7 +556,9 @@
           "lineNumber": 53,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "transform-projection",
@@ -553,7 +585,9 @@
           "lineNumber": 124,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-world-canvas",
@@ -585,7 +619,9 @@
           "lineNumber": 117,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-world-projection",
@@ -617,7 +653,9 @@
           "lineNumber": 127,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "translucent-globe",
@@ -654,7 +692,9 @@
           "lineNumber": 80,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-country-map",
@@ -681,7 +721,9 @@
           "lineNumber": 40,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-09-03T14:20:08.000Z"
     },
     {
       "name": "us-state",
@@ -703,7 +745,9 @@
           "lineNumber": 48,
           "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-state-with-counties",
@@ -730,7 +774,9 @@
           "lineNumber": 66,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-state-with-surrounding-states",
@@ -762,7 +808,9 @@
           "lineNumber": 71,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

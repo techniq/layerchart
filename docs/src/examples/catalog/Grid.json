@@ -26,7 +26,9 @@
           "lineNumber": 12,
           "line": "<Axis placement=\"bottom\" rule />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "band-scale-default",
@@ -53,7 +55,9 @@
           "lineNumber": 12,
           "line": "<Axis placement=\"bottom\" rule />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "basic",
@@ -75,7 +79,9 @@
           "lineNumber": 7,
           "line": "<Grid x y />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "dashed-lines",
@@ -97,7 +103,9 @@
           "lineNumber": 7,
           "line": "<Grid y={{ dashArray: [6, 4] }} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "explicit-ticks",
@@ -124,7 +132,9 @@
           "lineNumber": 8,
           "line": "<Axis placement=\"left\" rule ticks={[0, 50, 100]} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "inject-tick-value",
@@ -151,7 +161,9 @@
           "lineNumber": 8,
           "line": "<Axis placement=\"left\" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "integer-only",
@@ -178,7 +190,9 @@
           "lineNumber": 8,
           "line": "<Axis"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "padding",
@@ -200,7 +214,9 @@
           "lineNumber": 12,
           "line": "<Grid x y />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radial",
@@ -222,7 +238,9 @@
           "lineNumber": 7,
           "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radial-linear",
@@ -244,7 +262,9 @@
           "lineNumber": 7,
           "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY=\"linear\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tick-count",
@@ -271,7 +291,9 @@
           "lineNumber": 8,
           "line": "<Axis placement=\"left\" rule ticks={10} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tick-count-null",
@@ -298,7 +320,9 @@
           "lineNumber": 8,
           "line": "<Axis placement=\"left\" rule ticks={null} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "x-only",
@@ -320,7 +344,9 @@
           "lineNumber": 7,
           "line": "<Grid x />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "y-only",
@@ -342,7 +368,9 @@
           "lineNumber": 7,
           "line": "<Grid y />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

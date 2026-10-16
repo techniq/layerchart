@@ -36,7 +36,9 @@
           "lineNumber": 48,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "rotate-object-with-path",
@@ -73,7 +75,9 @@
           "lineNumber": 50,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "sync-with-draw",
@@ -110,7 +114,9 @@
           "lineNumber": 51,
           "line": "<Circle id={objectId} r={5} class=\"fill-surface-100 stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     }
   ],
   "usage": [

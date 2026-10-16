@@ -26,7 +26,9 @@
           "lineNumber": 9,
           "line": "<Rule"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "annotation-y",
@@ -53,7 +55,9 @@
           "lineNumber": 9,
           "line": "<Rule"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "baseline-top-right",
@@ -80,7 +84,9 @@
           "lineNumber": 9,
           "line": "<Rule x=\"$right\" y=\"$top\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "baseline-x-negative",
@@ -107,7 +113,9 @@
           "lineNumber": 9,
           "line": "<Rule x={0} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "baseline-x-y",
@@ -134,7 +142,9 @@
           "lineNumber": 9,
           "line": "<Rule x y />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "baseline-y-negative",
@@ -161,7 +171,9 @@
           "lineNumber": 9,
           "line": "<Rule y={0} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "candlestick",
@@ -198,7 +210,9 @@
           "lineNumber": 34,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "candlestick-open-close-line-color",
@@ -235,7 +249,9 @@
           "lineNumber": 34,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "candlestick-with-brushing",
@@ -277,7 +293,9 @@
           "lineNumber": 70,
           "line": "<Bars insets={{ x: 0.5 }} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "data-x-band",
@@ -304,7 +322,9 @@
           "lineNumber": 44,
           "line": "<Rule class=\"stroke-2 stroke-primary stroke-4\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "data-x-date",
@@ -331,7 +351,9 @@
           "lineNumber": 14,
           "line": "<Rule class=\"stroke-4 stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "data-x-range",
@@ -358,7 +380,9 @@
           "lineNumber": 20,
           "line": "<Rule class=\"stroke-4 stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "data-y-range",
@@ -385,7 +409,9 @@
           "lineNumber": 14,
           "line": "<Rule class=\"stroke-4 stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "lollipop",
@@ -427,7 +453,9 @@
           "lineNumber": 31,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     }
   ],
   "usage": [

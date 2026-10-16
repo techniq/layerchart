@@ -11,7 +11,9 @@
           "lineNumber": 11,
           "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "band-scale",
@@ -23,7 +25,9 @@
           "lineNumber": 10,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "basic",
@@ -35,7 +39,9 @@
           "lineNumber": 9,
           "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "brush",
@@ -47,7 +53,9 @@
           "lineNumber": 11,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "brush-sync",
@@ -59,7 +67,9 @@
           "lineNumber": 23,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "curve",
@@ -71,7 +81,9 @@
           "lineNumber": 10,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "custom",
@@ -108,7 +120,9 @@
           "lineNumber": 27,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "custom-tooltip",
@@ -125,7 +139,9 @@
           "lineNumber": 12,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "default-series-label",
@@ -137,7 +153,9 @@
           "lineNumber": 14,
           "line": "<AreaChart {data} x=\"date\" y=\"visits\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "funnel",
@@ -164,7 +182,9 @@
           "lineNumber": 82,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "gradient",
@@ -186,7 +206,9 @@
           "lineNumber": 13,
           "line": "<Area line={{ class: 'stroke-primary' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "labels",
@@ -198,7 +220,9 @@
           "lineNumber": 9,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "line-annotation",
@@ -210,7 +234,9 @@
           "lineNumber": 12,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "markers",
@@ -237,7 +263,9 @@
           "lineNumber": 49,
           "line": "<Layer type=\"html\">"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-07-01T13:37:08.000Z"
     },
     {
       "name": "motion-tween",
@@ -249,7 +277,9 @@
           "lineNumber": 16,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "null-gaps",
@@ -261,7 +291,9 @@
           "lineNumber": 14,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "point-annotations",
@@ -278,7 +310,9 @@
           "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "point-scale",
@@ -290,7 +324,9 @@
           "lineNumber": 10,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "points",
@@ -302,7 +338,9 @@
           "lineNumber": 9,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radial",
@@ -319,7 +357,9 @@
           "lineNumber": 48,
           "line": "<Spline y=\"avg\" curve={curveCatmullRom} class=\"stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "range-annotation",
@@ -331,7 +371,9 @@
           "lineNumber": 12,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "series",
@@ -343,7 +385,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-individual-tooltip",
@@ -370,7 +414,9 @@
           "lineNumber": 75,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "series-overlap",
@@ -382,7 +428,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-19T14:08:02.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "series-point-annotations",
@@ -394,7 +442,9 @@
           "lineNumber": 38,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-point-click",
@@ -406,7 +456,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-separate-data",
@@ -418,7 +470,9 @@
           "lineNumber": 20,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-stack",
@@ -430,7 +484,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-stack-diverging",
@@ -442,7 +498,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-stack-expand",
@@ -454,7 +512,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-stack-gradient",
@@ -476,7 +536,9 @@
           "lineNumber": 42,
           "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-stack-legend",
@@ -488,7 +550,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-stack-legend-labels",
@@ -500,7 +564,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-stack-legend-placement",
@@ -512,7 +578,9 @@
           "lineNumber": 15,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-stack-separate-data",
@@ -524,7 +592,9 @@
           "lineNumber": 20,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "series-tooltip-click",
@@ -536,7 +606,9 @@
           "lineNumber": 9,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "single-axis-x",
@@ -548,7 +620,9 @@
           "lineNumber": 9,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "single-axis-y",
@@ -560,7 +634,9 @@
           "lineNumber": 9,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sparkline",
@@ -572,7 +648,9 @@
           "lineNumber": 9,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "threshold",
@@ -604,7 +682,9 @@
           "lineNumber": 51,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "threshold-gradient",
@@ -636,7 +716,9 @@
           "lineNumber": 52,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tooltip-external",
@@ -648,7 +730,9 @@
           "lineNumber": 27,
           "line": "<AreaChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "tooltip-fixed-with-hide-delay",
@@ -665,7 +749,9 @@
           "lineNumber": 29,
           "line": "<Tooltip.Root x=\"data\" y={context.height + 24} pointerEvents>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "tooltip-locking",
@@ -682,7 +768,9 @@
           "lineNumber": 38,
           "line": "<Tooltip.Root pointerEvents>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     }
   ],
   "usage": [

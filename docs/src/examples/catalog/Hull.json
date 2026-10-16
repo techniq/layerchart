@@ -41,7 +41,9 @@
           "lineNumber": 49,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "scatter",
@@ -73,7 +75,9 @@
           "lineNumber": 41,
           "line": "<Hull"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T13:13:53.000Z"
     }
   ],
   "usage": [

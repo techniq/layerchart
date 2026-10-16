@@ -31,7 +31,9 @@
           "lineNumber": 44,
           "line": "<Brush bind:state={brush} />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "html",
@@ -63,7 +65,9 @@
           "lineNumber": 48,
           "line": "<Brush bind:state={brush} />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "programmatic",
@@ -95,7 +99,9 @@
           "lineNumber": 52,
           "line": "<Brush bind:state={brush} />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "region",
@@ -127,7 +133,9 @@
           "lineNumber": 53,
           "line": "<Brush"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "two-dimensional",
@@ -164,7 +172,9 @@
           "lineNumber": 61,
           "line": "<Brush bind:state={brush} axis=\"both\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "vertical",
@@ -196,7 +206,9 @@
           "lineNumber": 44,
           "line": "<Brush bind:state={brush} axis=\"y\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     }
   ],
   "usage": [

@@ -51,7 +51,9 @@
           "lineNumber": 145,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "flame-graph",
@@ -108,7 +110,9 @@
           "lineNumber": 176,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-07-21T18:21:59.000Z",
+      "updatedAt": "2026-07-21T18:23:36.000Z"
     },
     {
       "name": "horizontal",
@@ -160,7 +164,9 @@
           "lineNumber": 123,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "sunburst",
@@ -207,7 +213,9 @@
           "lineNumber": 136,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical",
@@ -259,7 +267,9 @@
           "lineNumber": 123,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

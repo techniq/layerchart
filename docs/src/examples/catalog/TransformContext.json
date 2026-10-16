@@ -31,7 +31,9 @@
           "lineNumber": 53,
           "line": "<Axis"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-19T13:24:57.000Z"
     },
     {
       "name": "pan-zoom-html-image",
@@ -51,7 +53,9 @@
       ],
       "tags": [
         "tiger"
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-19T13:24:57.000Z"
     },
     {
       "name": "pan-zoom-svg-image",
@@ -76,7 +80,9 @@
       ],
       "tags": [
         "tiger"
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-19T13:24:57.000Z"
     },
     {
       "name": "planet-distances",
@@ -123,7 +129,9 @@
           "lineNumber": 270,
           "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "playground",
@@ -155,7 +163,9 @@
           "lineNumber": 58,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "scroll-activation-key",
@@ -180,7 +190,9 @@
       ],
       "tags": [
         "tiger"
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-19T13:24:57.000Z"
     }
   ],
   "usage": [],

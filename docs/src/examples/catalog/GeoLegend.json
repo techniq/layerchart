@@ -26,7 +26,9 @@
           "lineNumber": 34,
           "line": "<GeoLegend title=\"Miles\" units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "canvas-mode",
@@ -53,7 +55,9 @@
           "lineNumber": 34,
           "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "stacked-units",
@@ -80,7 +84,9 @@
           "lineNumber": 32,
           "line": "<GeoLegend units=\"km\" labelPlacement=\"top\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "tick-format",
@@ -107,7 +113,9 @@
           "lineNumber": 31,
           "line": "<GeoLegend units=\"km\" tickFormat=\"metric\" placement=\"bottom-left\" class=\"m-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "ticks",
@@ -134,7 +142,9 @@
           "lineNumber": 31,
           "line": "<GeoLegend units=\"mi\" ticks={1} placement=\"bottom-left\" class=\"m-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "variants",
@@ -161,7 +171,9 @@
           "lineNumber": 30,
           "line": "<GeoLegend {variant} units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T22:40:53.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

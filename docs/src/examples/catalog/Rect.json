@@ -26,7 +26,9 @@
           "lineNumber": 33,
           "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} fill=\"group\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -58,7 +60,9 @@
           "lineNumber": 47,
           "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} fill=\"count\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "data-mode-edge",
@@ -85,7 +89,9 @@
           "lineNumber": 30,
           "line": "<Rect x0=\"x0\" y0={(d: any) => 0} x1=\"x1\" y1=\"count\" insets={{ x: 1 }} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "playground",
@@ -112,7 +118,9 @@
           "lineNumber": 151,
           "line": "<Rect {...pixelPosition} {corners} fill=\"var(--color-primary)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-05-09T15:35:17.000Z",
+      "updatedAt": "2026-05-09T15:35:17.000Z"
     },
     {
       "name": "styling-using-attributes",
@@ -139,7 +147,9 @@
           "lineNumber": 14,
           "line": "<Rect x={50} y={50} width={100} height={150} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-classes",
@@ -166,7 +176,9 @@
           "lineNumber": 14,
           "line": "<Rect x={50} y={50} width={100} height={150} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-css-variables",
@@ -193,7 +205,9 @@
           "lineNumber": 14,
           "line": "<Rect x={50} y={50} width={100} height={150} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
