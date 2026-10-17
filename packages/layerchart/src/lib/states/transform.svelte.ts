@@ -953,17 +953,25 @@ export class TransformState {
     const instantMotionOptions = this._instantMotion(this._scale);
 
     if (this.scrollMode === 'scale' || pinchToZoom) {
+      // Holding shift turns a wheel sideways (macOS for a mouse wheel, Firefox everywhere, Chrome
+      // on Windows and Linux), so with `shift` as the activation key a scroll arrives as `deltaX`
+      // alone and would zoom by nothing.  Read it as the vertical scroll it was.  Only then, so a
+      // horizontal trackpad swipe still pans in domain mode rather than zooming.
+      const shifted = this.scrollActivationKey === 'shift' && e.deltaY === 0;
+      const deltaY = shifted ? e.deltaX : e.deltaY;
+      const deltaX = shifted ? 0 : e.deltaX;
+
       // https://github.com/d3/d3-zoom#zoom_wheelDelta
       const scaleBy =
-        -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
+        -deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
 
       this.scaleTo(Math.pow(2, scaleBy), point, instantMotionOptions);
 
       // In domain mode, also handle deltaX as pan (for trackpad horizontal scroll)
-      if (this.mode === 'domain' && e.deltaX !== 0) {
+      if (this.mode === 'domain' && deltaX !== 0) {
         const startTranslate = this._translate.current;
         this.setTranslate(
-          this._applyTranslate(startTranslate.x, startTranslate.y, -e.deltaX, 0),
+          this._applyTranslate(startTranslate.x, startTranslate.y, -deltaX, 0),
           instantMotionOptions
         );
       }

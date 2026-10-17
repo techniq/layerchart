@@ -625,4 +625,189 @@ describe('TransformContext', () => {
       expect(onclick).not.toHaveBeenCalled();
     });
   });
+
+  describe('scroll wheel', () => {
+    /** Render the harness and return the transform state along with a wheel event helper */
+    async function setup(chartProps: Record<string, any>) {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: { height: 300, ...chartProps },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      // TransformContext is lazy-loaded, so wait for it to render
+      const element = await vi.waitFor(() => {
+        const el = document.querySelector<HTMLElement>('.lc-transform-context');
+        expect(el).not.toBeNull();
+        return el!;
+      });
+
+      const rect = element.getBoundingClientRect();
+
+      /** Returns the event, so a test can ask whether the page would have scrolled instead */
+      function wheel(init: WheelEventInit) {
+        const event = new WheelEvent('wheel', {
+          clientX: rect.left + 100,
+          clientY: rect.top + 100,
+          bubbles: true,
+          cancelable: true,
+          ...init,
+        });
+        element.dispatchEvent(event);
+        return event;
+      }
+
+      return {
+        get transform() {
+          return chartContext.transform;
+        },
+        wheel,
+      };
+    }
+
+    /** What scrolling up 100 pixels zooms to: 2 ^ (100 * 0.002), d3-zoom's wheel delta */
+    const ZOOM_IN = Math.pow(2, 0.2);
+
+    const domainChart = {
+      data: [
+        { date: 0, value: 1 },
+        { date: 10, value: 2 },
+      ],
+      x: 'date',
+      y: 'value',
+    };
+
+    it('should zoom on a vertical scroll', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale' },
+      });
+
+      const event = wheel({ deltaY: -100 });
+
+      expect(transform.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('should leave the page to scroll when the activation key is not held', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      const event = wheel({ deltaY: -100 });
+
+      expect(transform.scale).toBe(1);
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('should zoom on a vertical scroll with shift held as the activation key', async () => {
+      // A trackpad: holding shift does not turn its vertical swipe sideways
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      wheel({ deltaY: -100, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(ZOOM_IN, 5);
+    });
+
+    it('should zoom on a scroll that holding shift turned sideways', async () => {
+      // A mouse wheel on macOS, or any wheel in Firefox: shift moves the scroll to `deltaX`
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      const event = wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(event.defaultPrevented).toBe(true);
+
+      // And back out again, the same way
+      wheel({ deltaX: 100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(1, 5);
+    });
+
+    it('should honour `deltaMode` on a scroll that holding shift turned sideways', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      // Three lines, as Firefox reports a mouse wheel notch: 2 ^ (3 * 0.05)
+      wheel({ deltaX: -3, deltaY: 0, deltaMode: WheelEvent.DOM_DELTA_LINE, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(Math.pow(2, 0.15), 5);
+    });
+
+    it('should not zoom on a sideways scroll without an activation key', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0 });
+      wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBe(1);
+    });
+
+    it('should not read a sideways scroll as a zoom for activation keys other than shift', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'alt' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0, altKey: true, shiftKey: true });
+
+      expect(transform.scale).toBe(1);
+    });
+
+    it('should still pan on a horizontal trackpad swipe in domain mode', async () => {
+      const { transform, wheel } = await setup({
+        ...domainChart,
+        transform: { mode: 'domain', scrollMode: 'scale' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0 });
+
+      expect(transform.scale).toBe(1);
+      expect(transform.translate.x).not.toBe(0);
+    });
+
+    it('should zoom rather than also pan on a shift-turned scroll in domain mode', async () => {
+      const { transform, wheel } = await setup({
+        ...domainChart,
+        transform: { mode: 'domain', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      // Where an upright scroll leaves the view...
+      wheel({ deltaY: -100, shiftKey: true });
+      const upright = { scale: transform.scale, translate: { ...transform.translate } };
+      transform.reset({ instant: true });
+      await vi.waitFor(() => expect(transform.scale).toBe(1));
+
+      // ...is where the same scroll, turned sideways by shift, leaves it too
+      wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(upright.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(transform.scale).toBeCloseTo(upright.scale, 5);
+      expect(transform.translate.x).toBeCloseTo(upright.translate.x, 5);
+      expect(transform.translate.y).toBeCloseTo(upright.translate.y, 5);
+    });
+
+    it('should leave a sideways scroll alone in translate mode', async () => {
+      // Panning reads both axes already, and a sideways pan with shift held is a real gesture
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'translate', scrollActivationKey: 'shift' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBe(1);
+      expect(transform.translate.x).not.toBe(0);
+      expect(transform.translate.y).toBe(0);
+    });
+  });
 });
