@@ -16,7 +16,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "bar-chart-(single)",
@@ -33,7 +35,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "bar-chart-(value)",
@@ -50,7 +54,33 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
+    },
+    {
+      "name": "custom-label",
+      "title": "custom label",
+      "path": "/docs/components/AnnotationRange/custom-label",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer type=\"html\" class=\"pointer-events-none\">"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 21,
+          "line": "<AnnotationRange"
+        }
+      ],
+      "createdAt": "2026-10-13T12:30:26.000Z",
+      "updatedAt": "2026-10-13T12:30:26.000Z"
     },
     {
       "name": "hide-tooltip",
@@ -67,7 +97,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "horizontal-with-fill-multiple",
@@ -84,7 +116,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "horizontal-with-pattern-lower-bound",
@@ -101,7 +135,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "horizontal-with-pattern-range",
@@ -118,7 +154,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "horizontal-with-pattern-upper-bound",
@@ -135,7 +173,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "label-placement",
@@ -152,7 +192,9 @@
           "lineNumber": 38,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical-with-gradient-range",
@@ -169,7 +211,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical-with-pattern-lower-bound",
@@ -186,7 +230,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical-with-pattern-range",
@@ -203,7 +249,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "vertical-with-pattern-upper-bound",
@@ -220,7 +268,9 @@
           "lineNumber": 20,
           "line": "<AnnotationRange"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -250,6 +300,13 @@
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/bar-chart-(value)",
       "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "custom-label",
+      "component": "AnnotationRange",
+      "path": "/docs/components/AnnotationRange/custom-label",
+      "lineNumber": 21,
       "line": "<AnnotationRange"
     },
     {
@@ -337,5 +394,5 @@
       "line": "<AnnotationRange"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:21.604Z"
+  "updatedAt": "2026-10-16T16:15:12.643Z"
 }

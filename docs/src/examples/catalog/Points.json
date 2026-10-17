@@ -26,7 +26,9 @@
           "lineNumber": 14,
           "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "color-via-class",
@@ -53,7 +55,9 @@
           "lineNumber": 15,
           "line": "<Points class=\"fill-red-500\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "color-via-fill",
@@ -80,7 +84,9 @@
           "lineNumber": 15,
           "line": "<Points fill=\"red\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "color-via-ordinal-scale",
@@ -112,7 +118,9 @@
           "lineNumber": 31,
           "line": "<Points />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -144,7 +152,9 @@
           "lineNumber": 39,
           "line": "<Points />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "with-labels",
@@ -176,7 +186,9 @@
           "lineNumber": 15,
           "line": "<Labels format=\"integer\" offset={10} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "with-tooltip-and-highlight",
@@ -213,7 +225,9 @@
           "lineNumber": 27,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     }
   ],
   "usage": [

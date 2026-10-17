@@ -36,7 +36,9 @@
           "lineNumber": 41,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "horizontal-basic",
@@ -63,7 +65,9 @@
           "lineNumber": 30,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-calculated-value-domain-negative",
@@ -90,7 +94,9 @@
           "lineNumber": 23,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-calculated-value-domain-positive",
@@ -117,7 +123,9 @@
           "lineNumber": 23,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-candlestick-bars",
@@ -154,7 +162,9 @@
           "lineNumber": 36,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "horizontal-click-handler",
@@ -186,7 +196,9 @@
           "lineNumber": 37,
           "line": "<Highlight area />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-customize-individual-styles",
@@ -218,7 +230,9 @@
           "lineNumber": 32,
           "line": "<Bar"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-gradient",
@@ -250,7 +264,9 @@
           "lineNumber": 32,
           "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-grouped",
@@ -287,7 +303,9 @@
           "lineNumber": 53,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-grouped-and-stacked",
@@ -324,7 +342,9 @@
           "lineNumber": 58,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-grouped-stacked-or-both-transition",
@@ -361,7 +381,9 @@
           "lineNumber": 118,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-highlight-individual-bar",
@@ -398,7 +420,9 @@
           "lineNumber": 39,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-highlight-individual-bar-line",
@@ -430,7 +454,9 @@
           "lineNumber": 31,
           "line": "<Highlight"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "horizontal-inside-labels",
@@ -467,7 +493,9 @@
           "lineNumber": 25,
           "line": "<Labels placement=\"inside\" format=\"integer\" class=\"fill-black\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-limit-ticks-count",
@@ -494,7 +522,9 @@
           "lineNumber": 30,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-limit-ticks-second-scale",
@@ -521,7 +551,9 @@
           "lineNumber": 34,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-multiple-diverging",
@@ -563,7 +595,9 @@
           "lineNumber": 36,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-multiple-overlapping",
@@ -600,7 +634,9 @@
           "lineNumber": 35,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-outside-labels-default",
@@ -637,7 +673,9 @@
           "lineNumber": 26,
           "line": "<Labels format=\"integer\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-rounded-right-only",
@@ -664,7 +702,9 @@
           "lineNumber": 30,
           "line": "<Bars radius={4} rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-stacked",
@@ -701,7 +741,9 @@
           "lineNumber": 50,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-stacked-percent",
@@ -738,7 +780,9 @@
           "lineNumber": 55,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-stagger-tween-on-mount",
@@ -765,7 +809,9 @@
           "lineNumber": 38,
           "line": "<Bar"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "horizontal-time-scale-with-inset",
@@ -792,7 +838,9 @@
           "lineNumber": 30,
           "line": "<Bars class=\"fill-primary\" insets={{ y: 2 }} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-time-scale-with-interval",
@@ -819,7 +867,9 @@
           "lineNumber": 30,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-time-scale-with-missing-data",
@@ -846,7 +896,9 @@
           "lineNumber": 30,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-tooltip-and-bar-highlight",
@@ -883,7 +935,9 @@
           "lineNumber": 35,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
@@ -915,7 +969,9 @@
           "lineNumber": 121,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-tooltip-and-clipped-highlight",
@@ -957,7 +1013,9 @@
           "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-tooltip-and-highlight",
@@ -994,7 +1052,9 @@
           "lineNumber": 34,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "horizontal-tween-on-mount",
@@ -1021,7 +1081,9 @@
           "lineNumber": 37,
           "line": "<Bars"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "horizontal-with-grid-on-top",
@@ -1048,7 +1110,9 @@
           "lineNumber": 29,
           "line": "<Axis placement=\"bottom\" grid={{ class: 'stroke-surface-100' }} rule />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "horizontal-with-grid-on-top-mix-blend",
@@ -1075,7 +1139,9 @@
           "lineNumber": 29,
           "line": "<Axis placement=\"bottom\" grid={{ class: 'mix-blend-multiply' }} rule />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-average-annotation-rule",
@@ -1112,7 +1178,9 @@
           "lineNumber": 39,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "vertical-basic",
@@ -1139,7 +1207,9 @@
           "lineNumber": 27,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-calculated-value-domain-negative",
@@ -1166,7 +1236,9 @@
           "lineNumber": 26,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-calculated-value-domain-positive",
@@ -1193,7 +1265,9 @@
           "lineNumber": 26,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-click-handler",
@@ -1225,7 +1299,9 @@
           "lineNumber": 34,
           "line": "<Highlight area />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-customize-individual-styles",
@@ -1257,7 +1333,9 @@
           "lineNumber": 29,
           "line": "<Bar"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-fixed-width",
@@ -1284,7 +1362,9 @@
           "lineNumber": 27,
           "line": "<Bars width={20} strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-gradient",
@@ -1316,7 +1396,9 @@
           "lineNumber": 25,
           "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-grouped",
@@ -1353,7 +1435,9 @@
           "lineNumber": 44,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-grouped-and-stacked",
@@ -1390,7 +1474,9 @@
           "lineNumber": 49,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-grouped-stacked-or-both-transition",
@@ -1427,7 +1513,9 @@
           "lineNumber": 113,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-highlight-individual-bar",
@@ -1464,7 +1552,9 @@
           "lineNumber": 36,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-highlight-individual-bar-line",
@@ -1496,7 +1586,9 @@
           "lineNumber": 24,
           "line": "<Highlight"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "vertical-inside-labels",
@@ -1533,7 +1625,9 @@
           "lineNumber": 25,
           "line": "<Labels placement=\"inside\" format=\"integer\" class=\"fill-black\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-limit-ticks-count",
@@ -1560,7 +1654,9 @@
           "lineNumber": 27,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-limit-ticks-second-scale",
@@ -1587,7 +1683,9 @@
           "lineNumber": 31,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-multiple-diverging",
@@ -1629,7 +1727,9 @@
           "lineNumber": 34,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-multiple-diverging-rounded-specific",
@@ -1671,7 +1771,9 @@
           "lineNumber": 46,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-multiple-overlapping",
@@ -1708,7 +1810,9 @@
           "lineNumber": 33,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-outside-labels-default",
@@ -1745,7 +1849,9 @@
           "lineNumber": 26,
           "line": "<Labels format=\"integer\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-rounded-top-only",
@@ -1772,7 +1878,9 @@
           "lineNumber": 28,
           "line": "<Bars radius={4} rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-stacked",
@@ -1809,7 +1917,9 @@
           "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-stacked-percent",
@@ -1846,7 +1956,9 @@
           "lineNumber": 45,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-stagger-tween-on-mount",
@@ -1873,7 +1985,9 @@
           "lineNumber": 35,
           "line": "<Bar"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "vertical-stagger-tween-on-mount-rounded-edge",
@@ -1900,7 +2014,9 @@
           "lineNumber": 35,
           "line": "<Bar"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "vertical-time-scale-with-inset",
@@ -1927,7 +2043,9 @@
           "lineNumber": 25,
           "line": "<Bars class=\"fill-primary\" insets={{ x: 2 }} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-time-scale-with-interval",
@@ -1954,7 +2072,9 @@
           "lineNumber": 25,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-time-scale-with-interval-months",
@@ -1981,7 +2101,9 @@
           "lineNumber": 25,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-time-scale-with-missing-data",
@@ -2008,7 +2130,9 @@
           "lineNumber": 25,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-tooltip-and-bar-highlight",
@@ -2045,7 +2169,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
@@ -2077,7 +2203,9 @@
           "lineNumber": 121,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-tooltip-and-clipped-highlight",
@@ -2119,7 +2247,9 @@
           "lineNumber": 40,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-tooltip-and-highlight",
@@ -2156,7 +2286,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "vertical-tween-on-mount",
@@ -2183,7 +2315,9 @@
           "lineNumber": 34,
           "line": "<Bars"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "vertical-tween-on-mount-rounded-edge",
@@ -2210,7 +2344,9 @@
           "lineNumber": 34,
           "line": "<Bars"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "vertical-with-grid-on-top",
@@ -2237,7 +2373,9 @@
           "lineNumber": 25,
           "line": "<Axis placement=\"left\" grid={{ class: 'stroke-surface-100' }} rule />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical-with-grid-on-top-mix-blend",
@@ -2264,7 +2402,9 @@
           "lineNumber": 25,
           "line": "<Axis placement=\"left\" grid={{ class: 'mix-blend-multiply' }} rule />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

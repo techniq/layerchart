@@ -20,12 +20,16 @@
 	import { resolveExamplePath } from '@layerstack/docs/content';
 	import { exampleViewTransitionName } from '@layerstack/docs/utils';
 	import { untrack } from 'svelte';
-	import { Code, Json } from '@layerstack/docs/components';
+	import { MediaQuery } from 'svelte/reactivity';
+	import { Json } from '@layerstack/docs/components';
+	import CodePanel from '$lib/sandbox/CodePanel.svelte';
+	import PreviewError from '$lib/sandbox/PreviewError.svelte';
+	import { createSandbox } from '$lib/sandbox/state.svelte';
+	import { exposeData } from '$lib/utils/exampleSource';
 
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
-	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
 	import LucideImageDown from '~icons/lucide/image-down';
 	import LucideCopy from '~icons/lucide/copy';
@@ -100,6 +104,24 @@
 		});
 	});
 
+	/**
+	 * Code beside the preview rather than below it. Only offered with room for both, and
+	 * only while the code is showing; the toggle is in the code panel's menu.
+	 */
+	let splitPreferred = $state(false);
+	const wide = new MediaQuery('min-width: 768px');
+	const split = $derived(splitPreferred && showCode && wide.current);
+
+	/** Loaded on first use, and only then switched to, so there's no half-loaded state. */
+	let SplitLayout = $state<typeof import('$lib/sandbox/SplitLayout.svelte').default | null>(null);
+	async function setSplit(next: boolean) {
+		if (next) SplitLayout ??= (await import('$lib/sandbox/SplitLayout.svelte')).default;
+		splitPreferred = next;
+	}
+
+	/** Kept here, not in `CodePanel`, so it survives the panel remounting on a layout change. */
+	let lineNumbers = $state(untrack(() => showLineNumbers));
+
 	let containerEl = $state<HTMLElement | null>(null);
 	let containerWidth = $state<number | undefined>(undefined);
 	const minWidth = 200;
@@ -128,9 +150,20 @@
 	}
 
 	let ref = $state<SvelteComponent | null>(null);
+
+	/**
+	 * In-page editing. `example.source` resolves asynchronously, so the sandbox seeds
+	 * itself from the getter rather than a constructor argument.
+	 */
+	const sandbox = createSandbox(() => example?.source ?? '', {
+		transform: exposeData,
+		base: () => (component ? `/src/examples/components/${component}/` : undefined)
+	});
+
 	let data = $derived.by(() => {
 		try {
-			return ref?.data;
+			// Once edited, the chart on screen is the sandbox's, so `Data` must read from it.
+			return sandbox.showing ? sandbox.instance?.data : ref?.data;
 		} catch {
 			return undefined;
 		}
@@ -253,70 +286,115 @@
 
 <div class={cls('example relative', clip && 'overflow-clip', className)}>
 	{#if example}
-		<div
-			class={cls(
-				variant === 'default' && 'border rounded-t-sm bg-surface-300',
-				!showCode && 'rounded-b-sm'
-			)}
-		>
+		{#snippet previewBlock()}
 			<div
 				class={cls(
-					'relative max-w-full',
-					variant === 'default' && 'p-4 rounded bg-surface-100 dark:bg-surface-200 shadow-lg'
+					variant === 'default' && 'bg-surface-300',
+					// Beside the code, the pane group draws the border and the preview fills its pane.
+					split
+						? 'h-full'
+						: variant === 'default' && ['border rounded-t-sm', !showCode && 'rounded-b-sm']
 				)}
-				bind:this={containerEl}
-				style:width={containerWidth ? `${containerWidth}px` : undefined}
-				style:view-transition-name={viewTransitionName}
 			>
-				{#if isVisible}
-					<svelte:boundary>
-						<example.component bind:this={ref} />
-						{#snippet failed(error, reset)}
-							<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
-								<div class="font-semibold text-danger mb-2">
-									Example error{#if component && name}: {component}/{name}{/if}
+				<div
+					class={cls(
+						'relative max-w-full',
+						variant === 'default' && 'p-4 rounded bg-surface-100 dark:bg-surface-200 shadow-lg'
+					)}
+					bind:this={containerEl}
+					style:width={!split && containerWidth ? `${containerWidth}px` : undefined}
+					style:view-transition-name={viewTransitionName}
+				>
+					{#if isVisible}
+						<svelte:boundary>
+							{#if sandbox.live}
+								<!--
+									Edited: render the user's source instead of the shipped component. Each
+									build mounts hidden in here and is swapped in once it has rendered, so
+									the shipped component stays up until the first one is ready.
+								-->
+								<div
+									class={cls('relative', sandbox.error && 'opacity-40')}
+									{@attach sandbox.preview}
+								></div>
+							{/if}
+							{#if !sandbox.showing && example}
+								<example.component bind:this={ref} />
+							{/if}
+							{#snippet failed(error, reset)}
+								<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
+									<div class="font-semibold text-danger mb-2">
+										Example error{#if component && name}: {component}/{name}{/if}
+									</div>
+									<pre
+										class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
+									<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}
+										>Retry</Button
+									>
 								</div>
-								<pre
-									class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
-								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}
-									>Retry</Button
-								>
-							</div>
-						{/snippet}
-						{#snippet pending()}
-							<div class="min-h-80 flex items-center justify-center text-surface-content/30">
-								Loading...
-							</div>
-						{/snippet}
-					</svelte:boundary>
-				{:else}
-					<div bind:this={sentinelEl} class="min-h-80"></div>
-				{/if}
+							{/snippet}
+							{#snippet pending()}
+								<div class="min-h-80 flex items-center justify-center text-surface-content/30">
+									Loading...
+								</div>
+							{/snippet}
+						</svelte:boundary>
+					{:else}
+						<div bind:this={sentinelEl} class="min-h-80"></div>
+					{/if}
 
-				{#if canResize}
-					<div
-						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
-						title="Drag to resize"
-						use:movable={{
-							axis: 'x',
-							onMove: (e) => {
-								const newWidth = (containerWidth ?? containerEl?.offsetWidth ?? 0) + e.detail.dx;
-								if (newWidth >= minWidth) {
-									containerWidth = newWidth;
+					<!-- Beside the code, the pane divider sets the width instead. -->
+					{#if canResize && !split}
+						<div
+							class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
+							title="Drag to resize"
+							use:movable={{
+								axis: 'x',
+								onMove: (e) => {
+									const newWidth = (containerWidth ?? containerEl?.offsetWidth ?? 0) + e.detail.dx;
+									if (newWidth >= minWidth) {
+										containerWidth = newWidth;
+									}
 								}
-							}
-						}}
-					>
-						<LucideGripVertical class="text-surface-content/50" />
-					</div>
-				{/if}
-			</div>
-		</div>
+							}}
+						>
+							<LucideGripVertical class="text-surface-content/50" />
+						</div>
+					{/if}
 
-		{#if showCode}
-			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
-				<Code source={example.source} {showLineNumbers} {highlight} class="outline-none" />
+					{#if sandbox.error}
+						<PreviewError {...sandbox.error} />
+					{/if}
+				</div>
 			</div>
+		{/snippet}
+
+		{#snippet codeBlock()}
+			<CodePanel
+				{sandbox}
+				bind:lineNumbers
+				{highlight}
+				onopenstackblitz={component && name
+					? () => openInStackBlitz(component, name, sandbox.dirty ? sandbox.source : undefined)
+					: undefined}
+				{split}
+				onsplitchange={wide.current ? setSplit : undefined}
+			/>
+		{/snippet}
+
+		{#if split && SplitLayout}
+			<SplitLayout>
+				{#snippet code()}{@render codeBlock()}{/snippet}
+				{#snippet preview()}{@render previewBlock()}{/snippet}
+			</SplitLayout>
+		{:else}
+			{@render previewBlock()}
+
+			{#if showCode}
+				<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
+					{@render codeBlock()}
+				</div>
+			{/if}
 		{/if}
 
 		{#if variant === 'default'}
@@ -373,16 +451,6 @@
 						class="text-surface-content/70 py-1"
 					>
 						View
-					</Button>
-				{/if}
-
-				{#if component && name}
-					<Button
-						icon={LucideFilePen}
-						class="text-surface-content/70 py-1"
-						on:click={() => openInStackBlitz(component, name)}
-					>
-						Edit
 					</Button>
 				{/if}
 

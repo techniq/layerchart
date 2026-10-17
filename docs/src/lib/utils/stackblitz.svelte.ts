@@ -1,9 +1,10 @@
 import sdk from '@stackblitz/sdk';
 import { getExample } from '$lib/stackblitz.remote';
 
-export async function openInStackBlitz(component: string, name: string) {
+/** `source` opens in-page edits instead of the original example. */
+export async function openInStackBlitz(component: string, name: string, source?: string) {
 	try {
-		const { code: exampleCode, files } = await getExample({ component, name });
+		const { code: exampleCode, files } = await getExample({ component, name, source });
 
 		sdk.openProject(
 			{

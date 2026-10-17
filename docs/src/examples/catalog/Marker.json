@@ -21,7 +21,9 @@
           "lineNumber": 41,
           "line": "<Line"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "orientation",
@@ -43,7 +45,9 @@
           "lineNumber": 37,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "spline",
@@ -65,7 +69,9 @@
           "lineNumber": 52,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "spline-w-thicker-stroke",
@@ -87,7 +93,9 @@
           "lineNumber": 44,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling",
@@ -109,7 +117,9 @@
           "lineNumber": 35,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [],

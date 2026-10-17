@@ -11,7 +11,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "arc-props",
@@ -23,7 +25,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "basic",
@@ -35,7 +39,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "colors-data-prop",
@@ -47,7 +53,9 @@
           "lineNumber": 21,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" c=\"color\" height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "colors-interpolator",
@@ -59,7 +67,9 @@
           "lineNumber": 11,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={quantize(interpolateRainbow, 5)} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "colors-scheme",
@@ -71,7 +81,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={schemeTableau10} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "colors-variables",
@@ -83,7 +95,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={fruitColors} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "donut",
@@ -95,7 +109,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "donut-with-text",
@@ -112,7 +128,9 @@
           "lineNumber": 23,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "labels",
@@ -124,7 +142,9 @@
           "lineNumber": 35,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T04:18:23.000Z",
+      "updatedAt": "2026-04-08T04:26:03.000Z"
     },
     {
       "name": "labels-callout",
@@ -136,7 +156,9 @@
           "lineNumber": 21,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-04-08T04:18:23.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "legend",
@@ -148,7 +170,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "legend-custom-label",
@@ -160,7 +184,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "legend-placement",
@@ -172,7 +198,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} legend />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "legend-programmatic-control",
@@ -184,7 +212,9 @@
           "lineNumber": 47,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-18T12:14:54.000Z",
+      "updatedAt": "2026-08-18T12:14:54.000Z"
     },
     {
       "name": "legend-responsive",
@@ -196,7 +226,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "legend-with-padding",
@@ -208,7 +240,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "motion-spring",
@@ -220,7 +254,9 @@
           "lineNumber": 17,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "motion-tween",
@@ -232,7 +268,9 @@
           "lineNumber": 17,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "offset-slice",
@@ -249,7 +287,9 @@
           "lineNumber": 12,
           "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement-custom",
@@ -261,7 +301,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement-left",
@@ -273,7 +315,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "placement-right",
@@ -285,7 +329,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radius-fixed",
@@ -297,7 +343,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={100} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radius-offset",
@@ -309,7 +357,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={-20} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radius-percent",
@@ -321,7 +371,9 @@
           "lineNumber": 10,
           "line": "<PieChart {data} key=\"fruit\" value=\"value\" cRange={fruitColors} height={300} outerRadius={0.8} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "segments",
@@ -338,7 +390,9 @@
           "lineNumber": 37,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "series",
@@ -350,7 +404,9 @@
           "lineNumber": 11,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-click",
@@ -362,7 +418,9 @@
           "lineNumber": 11,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-props",
@@ -374,7 +432,9 @@
           "lineNumber": 11,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tooltip-click",
@@ -386,7 +446,9 @@
           "lineNumber": 10,
           "line": "<PieChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

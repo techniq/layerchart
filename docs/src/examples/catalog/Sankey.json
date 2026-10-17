@@ -46,7 +46,9 @@
           "lineNumber": 125,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "hierarchy",
@@ -88,7 +90,9 @@
           "lineNumber": 108,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "node-select",
@@ -130,7 +134,9 @@
           "lineNumber": 53,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "simple",
@@ -172,7 +178,9 @@
           "lineNumber": 23,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "tooltip",
@@ -219,7 +227,9 @@
           "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

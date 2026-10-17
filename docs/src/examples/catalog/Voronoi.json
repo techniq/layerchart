@@ -36,7 +36,9 @@
           "lineNumber": 37,
           "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

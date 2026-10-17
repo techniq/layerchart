@@ -36,7 +36,9 @@
           "lineNumber": 63,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T04:29:26.000Z",
+      "updatedAt": "2026-04-01T04:29:26.000Z"
     },
     {
       "name": "color-wheel",
@@ -63,7 +65,9 @@
           "lineNumber": 55,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "concentric",
@@ -85,7 +89,9 @@
           "lineNumber": 17,
           "line": "<Arc"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "draggable-arc",
@@ -112,7 +118,9 @@
           "lineNumber": 66,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "gauge",
@@ -159,7 +167,9 @@
           "lineNumber": 89,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T04:29:26.000Z",
+      "updatedAt": "2026-04-01T04:29:26.000Z"
     },
     {
       "name": "gauge-gradient",
@@ -201,7 +211,9 @@
           "lineNumber": 135,
           "line": "<Circle r={6} class=\"fill-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T05:14:50.000Z",
+      "updatedAt": "2026-04-01T13:14:47.000Z"
     },
     {
       "name": "label-direction",
@@ -233,7 +245,9 @@
           "lineNumber": 67,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "partial-arc",
@@ -270,7 +284,9 @@
           "lineNumber": 28,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "playground",
@@ -302,7 +318,9 @@
           "lineNumber": 43,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "segmented-arc",
@@ -329,7 +347,9 @@
           "lineNumber": 34,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "segmented-arc-clip-mask",
@@ -361,7 +381,9 @@
           "lineNumber": 39,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "speedometer",
@@ -403,7 +425,9 @@
           "lineNumber": 107,
           "line": "<Circle r={5} class=\"fill-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T04:29:26.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "tween-value-on-mount",
@@ -425,7 +449,9 @@
           "lineNumber": 23,
           "line": "<Arc"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     }
   ],
   "usage": [

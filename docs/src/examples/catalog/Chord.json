@@ -36,7 +36,9 @@
           "lineNumber": 47,
           "line": "<ArcLabel"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "directed",
@@ -73,7 +75,9 @@
           "lineNumber": 48,
           "line": "<ArcLabel"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "gradient",
@@ -120,7 +124,9 @@
           "lineNumber": 134,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "hover",
@@ -162,7 +168,9 @@
           "lineNumber": 145,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "ticks",
@@ -204,7 +212,9 @@
           "lineNumber": 69,
           "line": "<text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

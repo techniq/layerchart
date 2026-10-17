@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, MenuField, ScrollingValue, TextField } from 'svelte-ux';
-	import { sum } from 'd3-array';
+	import { group, sum } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
 	import { useSearchParams } from 'runed/kit';
 	import { z } from 'zod';
@@ -21,7 +21,9 @@
 	);
 	export const schema = z.object({
 		filter: stringParam,
-		category: stringParam
+		category: stringParam,
+		/** `null` groups by component; `newest` groups by the month each example was added */
+		sort: stringParam
 	});
 	let params = useSearchParams(schema);
 
@@ -80,6 +82,62 @@
 				return null;
 			})
 			.filter((item) => item !== null);
+	});
+
+	const sortOptions = [
+		{ label: 'By component', value: null },
+		{ label: 'Newest', value: 'newest' }
+	];
+
+	const monthFormat = new Intl.DateTimeFormat('en-US', {
+		month: 'long',
+		year: 'numeric',
+		timeZone: 'UTC'
+	});
+
+	/**
+	 * The filtered examples as headed groups: one per component, or with `newest`, one per
+	 * month an example was added, newest first. Git history for most examples starts when they moved into this repo,
+	 * so the oldest month also holds everything older and says so.
+	 */
+	let groups = $derived.by(() => {
+		if (params.sort !== 'newest') {
+			return visibleExamples.map(({ component, examples }) => ({
+				key: component,
+				heading: component,
+				examples: examples.map((example) => ({ ...example, component, label: example.title }))
+			}));
+		}
+
+		const examples = visibleExamples
+			.flatMap(({ component, examples }) =>
+				examples.map((example) => ({
+					...example,
+					component,
+					label: `${component} · ${example.title}`,
+					date: example.createdAt
+				}))
+			)
+			.sort(
+				(a, b) =>
+					// Not yet committed (no date) first, as the newest of all
+					(b.date ?? '9999').localeCompare(a.date ?? '9999') ||
+					a.component.localeCompare(b.component) ||
+					a.name.localeCompare(b.name)
+			);
+
+		const oldest = examples.at(-1)?.date?.slice(0, 7);
+		// Insertion-ordered, so months stay newest first
+		const byMonth = group(examples, (example) => example.date?.slice(0, 7) ?? 'uncommitted');
+		return Array.from(byMonth, ([month, examples]) => {
+			const name =
+				month === 'uncommitted' ? 'Not yet committed' : monthFormat.format(new Date(`${month}-01`));
+			return {
+				key: month,
+				heading: month === oldest && byMonth.size > 1 ? `${name} and earlier` : name,
+				examples
+			};
+		});
 	});
 
 	let totalVisibleExamples = $derived.by(
@@ -153,7 +211,7 @@
 
 <div
 	class={cls(
-		'sticky top-16 grid grid-cols-1 sm:grid-cols-[1fr_200px_auto] items-center gap-3 py-2 z-1',
+		'sticky top-16 grid grid-cols-1 sm:grid-cols-[1fr_200px_180px_auto] items-center gap-3 py-2 z-1',
 		// dot background
 		'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}
@@ -166,6 +224,7 @@
 
 	<div class="flex gap-3 sm:contents">
 		<MenuField options={categoryOptions} bind:value={params.category} class="flex-1" />
+		<MenuField options={sortOptions} bind:value={params.sort} class="flex-1" />
 
 		<div class="flex gap-2">
 			<Button
@@ -187,15 +246,15 @@
 </div>
 
 <div class="grid gap-10">
-	{#each visibleExamples as { component, examples } (component)}
+	{#each groups as { key, heading, examples } (key)}
 		<div>
-			<H2 id={component} class="sticky top-42 sm:top-29 pt-2 pb-1">{component}</H2>
+			<H2 id={key} class="sticky top-42 sm:top-29 pt-2 pb-1">{heading}</H2>
 			<div
 				style:--column-count="repeat({columnCount}, 1fr)"
 				class="grid grid-cols-(--column-count) gap-4"
 			>
-				{#each examples as example (example.name)}
-					<ExampleLink {component} example={example.name} title={example.title} />
+				{#each examples as example (`${example.component}/${example.name}`)}
+					<ExampleLink component={example.component} example={example.name} title={example.label} />
 				{/each}
 			</div>
 		</div>

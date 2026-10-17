@@ -26,7 +26,9 @@
           "lineNumber": 9,
           "line": "<Rect"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-17T13:19:47.000Z"
     },
     {
       "name": "circles-custom-pattern-svg-only",
@@ -58,7 +60,9 @@
           "lineNumber": 52,
           "line": "<rect"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "lineargradient-as-pattern",
@@ -90,7 +94,9 @@
           "lineNumber": 11,
           "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "lines",
@@ -117,7 +123,9 @@
           "lineNumber": 9,
           "line": "<Rect"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-17T13:19:47.000Z"
     },
     {
       "name": "lines-custom-pattern-svg-only",
@@ -149,7 +157,9 @@
           "lineNumber": 13,
           "line": "<rect"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "rects",
@@ -176,7 +186,9 @@
           "lineNumber": 10,
           "line": "<Rect"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "with-fill-color",
@@ -203,7 +215,9 @@
           "lineNumber": 9,
           "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "with-lineargradient",
@@ -235,7 +249,9 @@
           "lineNumber": 11,
           "line": "<Pattern size={4} circles={{ color: 'white', opacity: 0.5 }}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

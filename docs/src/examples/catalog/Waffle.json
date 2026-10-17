@@ -16,7 +16,9 @@
           "lineNumber": 23,
           "line": "<Waffle axis=\"x\" fill=\"var(--color-primary)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "band-padding",
@@ -38,7 +40,9 @@
           "lineNumber": 54,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "basic",
@@ -60,7 +64,9 @@
           "lineNumber": 30,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "circular-cells",
@@ -82,7 +88,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "custom-symbol",
@@ -124,7 +132,9 @@
           "lineNumber": 63,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "horizontal",
@@ -146,7 +156,9 @@
           "lineNumber": 31,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "months",
@@ -168,7 +180,9 @@
           "lineNumber": 51,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "olympians-by-birth-year",
@@ -190,7 +204,9 @@
           "lineNumber": 63,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "olympians-by-sex",
@@ -212,7 +228,9 @@
           "lineNumber": 38,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "olympians-weight-by-sex",
@@ -239,7 +257,9 @@
           "lineNumber": 51,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "penguins",
@@ -266,7 +286,9 @@
           "lineNumber": 50,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "stacked",
@@ -288,7 +310,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "survey",
@@ -315,7 +339,9 @@
           "lineNumber": 47,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     },
     {
       "name": "unit-multiple",
@@ -337,7 +363,9 @@
           "lineNumber": 62,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-05-08T16:22:57.000Z",
+      "updatedAt": "2026-05-08T16:22:57.000Z"
     }
   ],
   "usage": [

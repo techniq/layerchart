@@ -31,7 +31,9 @@
           "lineNumber": 31,
           "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"category\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -68,7 +70,9 @@
           "lineNumber": 45,
           "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"value\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "data-mode",
@@ -100,7 +104,9 @@
           "lineNumber": 29,
           "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "styling-using-attributes",
@@ -127,7 +133,9 @@
           "lineNumber": 14,
           "line": "<Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} stroke=\"var(--color-primary)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-classes",
@@ -154,7 +162,9 @@
           "lineNumber": 14,
           "line": "<Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} class=\"stroke-primary bg-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "styling-using-css-variables",
@@ -181,10 +191,26 @@
           "lineNumber": 14,
           "line": "<Line"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "custom-line",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-line",
+      "lineNumber": 17,
+      "line": "<Line {...props} stroke=\"var(--color-surface-100)\" strokeWidth={6} />"
+    },
+    {
+      "example": "custom-line",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-line",
+      "lineNumber": 18,
+      "line": "<Line {...props} stroke=\"var(--color-danger)\" strokeWidth={2} dashArray={[6, 4]} />"
+    },
     {
       "example": "clock",
       "component": "Arc",
@@ -473,5 +499,5 @@
       "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:02.034Z"
+  "updatedAt": "2026-10-16T16:15:14.178Z"
 }

@@ -26,7 +26,9 @@
           "lineNumber": 25,
           "line": "<Trail r=\"value\" class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-03T20:04:05.000Z",
+      "updatedAt": "2026-04-03T20:04:05.000Z"
     },
     {
       "name": "curves",
@@ -54,7 +56,9 @@
           "line": "<Spline curve={curve.value} class=\"stroke-surface-content/40 stroke-1\" />"
         }
       ],
-      "description": "The trail mark supports round and butt capping and different interpolation methods."
+      "description": "The trail mark supports round and butt capping and different interpolation methods.",
+      "createdAt": "2026-04-03T20:04:05.000Z",
+      "updatedAt": "2026-04-03T20:04:05.000Z"
     },
     {
       "name": "playground",
@@ -86,7 +90,9 @@
           "lineNumber": 52,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-04-03T20:04:05.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "tdf-stage",
@@ -119,7 +125,9 @@
           "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
         }
       ],
-      "description": "Elevation profile of a Tour de France stage using trail width to encode elevation."
+      "description": "Elevation profile of a Tour de France stage using trail width to encode elevation.",
+      "createdAt": "2026-04-03T20:04:05.000Z",
+      "updatedAt": "2026-04-12T22:28:43.000Z"
     }
   ],
   "usage": [
