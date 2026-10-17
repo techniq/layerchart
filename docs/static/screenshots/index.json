@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-08T16:54:42.290Z",
+  "generatedAt": "2026-10-16T16:32:33.350Z",
   "totalComponents": 80,
-  "totalExamples": 1008,
+  "totalExamples": 1013,
   "components": [
     {
       "component": "AnnotationLine",
@@ -10,6 +10,16 @@
           "name": "bar-chart",
           "path": "/example/AnnotationLine/bar-chart",
           "checksum": "b08237abe0d6ca9833cf95441d942a48"
+        },
+        {
+          "name": "custom-label",
+          "path": "/example/AnnotationLine/custom-label",
+          "checksum": "d0219776e4bd15faffec143c8e503faf"
+        },
+        {
+          "name": "custom-line",
+          "path": "/example/AnnotationLine/custom-line",
+          "checksum": "3cfe9ea9220db7fdcddeada02c680db5"
         },
         {
           "name": "horizontal",
@@ -65,6 +75,11 @@
           "name": "band-scale-on-value",
           "path": "/example/AnnotationPoint/band-scale-on-value",
           "checksum": "33a0d2b715cf2ca654d8baa54849bbb8"
+        },
+        {
+          "name": "custom-marker",
+          "path": "/example/AnnotationPoint/custom-marker",
+          "checksum": "f6f825df80bf0240bd712d4746154567"
         },
         {
           "name": "line-to-point",
@@ -130,6 +145,11 @@
           "name": "bar-chart-(value)",
           "path": "/example/AnnotationRange/bar-chart-(value)",
           "checksum": "283526e34b111e6601ff2697f20bd5c0"
+        },
+        {
+          "name": "custom-label",
+          "path": "/example/AnnotationRange/custom-label",
+          "checksum": "d8b3e6ef7651a2049885872f968cd699"
         },
         {
           "name": "hide-tooltip",
@@ -699,12 +719,12 @@
         {
           "name": "tooltip-fixed-with-hide-delay",
           "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
-          "checksum": "95120b8297e3a6c762b8cd8be972469e"
+          "checksum": "8b7be96fca0f59b649cb12be4c48d1dd"
         },
         {
           "name": "tooltip-locking",
           "path": "/example/AreaChart/tooltip-locking",
-          "checksum": "d38c62564f3fb61bb21d122b5e8a5c65"
+          "checksum": "6c0dd00b9d5694451df04de2c2eaedfd"
         }
       ]
     },
@@ -824,7 +844,7 @@
         {
           "name": "multiple-axis-same-placement-right",
           "path": "/example/Axis/multiple-axis-same-placement-right",
-          "checksum": "e2f9d61193404363955864300caa384c"
+          "checksum": "6e21f7c7f80bf48a07c40ba2a1550b1d"
         },
         {
           "name": "override-axis-ticks-scale",
@@ -1117,6 +1137,11 @@
           "checksum": "48ae43258950da0eda36fdd6ce0bac66"
         },
         {
+          "name": "group-series-dual-axis",
+          "path": "/example/BarChart/group-series-dual-axis",
+          "checksum": "7aee480f70365c6158fa2b3a12320e49"
+        },
+        {
           "name": "group-series-horizontal",
           "path": "/example/BarChart/group-series-horizontal",
           "checksum": "0d9276dca37fbb67399c8c1253082a8a"
@@ -1354,12 +1379,12 @@
         {
           "name": "series-horizontal-diverging",
           "path": "/example/BarChart/series-horizontal-diverging",
-          "checksum": "5b3084d1f66cb11ce39d8c9c89c15aa9"
+          "checksum": "3587db93ad38e36d626be8f635cf6a57"
         },
         {
           "name": "series-horizontal-diverging-as-percent",
           "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-          "checksum": "a45af53ba921d1867507ff7ba433b9b8"
+          "checksum": "296f5ab63ff507225431eb349d2a837a"
         },
         {
           "name": "series-horizontal-diverging-label-gap",
@@ -2114,27 +2139,27 @@
         {
           "name": "compound-common-scale-with-extra-marks",
           "path": "/example/Chart/compound-common-scale-with-extra-marks",
-          "checksum": "dc2936a1a1d61bed133357124c858a4f"
+          "checksum": "c1549f98fab112da545cb54a35dc3358"
         },
         {
           "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
           "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-          "checksum": "f0c5c6823e677c270998ff660fa1b89e"
+          "checksum": "054d28930158cc4196471e31b012afec"
         },
         {
           "name": "compound-dual-axis-with-stacked-charts",
           "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
-          "checksum": "0b3080353b317c8b59128a12708dae9a"
+          "checksum": "764bad8831633d7cd0a16960407eabd3"
         },
         {
           "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
           "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-          "checksum": "840780a42729a6bf43f6da0dd9d646c4"
+          "checksum": "d303e883a3a52372b6afbbe178337e46"
         },
         {
           "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
           "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-          "checksum": "bc400cfba22fef3d56536edc14c652cb"
+          "checksum": "1cba09903f6ec5a0831b086bcc65e857"
         },
         {
           "name": "data-chart-multi",
@@ -2314,7 +2339,7 @@
         {
           "name": "mixed-marks-with-stack",
           "path": "/example/Chart/mixed-marks-with-stack",
-          "checksum": "02e00237acf4bdd1ce8cc96e9ca53cee"
+          "checksum": "2e99871e82016041671da7924026ae69"
         },
         {
           "name": "mixed-marks-with-stack-long-data",
@@ -2874,7 +2899,7 @@
         {
           "name": "election-isometric",
           "path": "/example/GeoPath/election-isometric",
-          "checksum": ""
+          "checksum": "b5395a813621a834506b9eea31d43b63"
         },
         {
           "name": "interpolating-projections",
@@ -2954,7 +2979,7 @@
         {
           "name": "us-country-map",
           "path": "/example/GeoPath/us-country-map",
-          "checksum": "d1d2accdb59624b0f354b21da88c5c20"
+          "checksum": "073c23e416688f7492bcd8daf6d8b1b6"
         },
         {
           "name": "us-state",
@@ -5394,7 +5419,7 @@
         {
           "name": "custom-symbol",
           "path": "/example/Waffle/custom-symbol",
-          "checksum": "4a8e5402f981105751da2b6731bef6d4"
+          "checksum": "24bc52e3476bfdccda674d21ce680a48"
         },
         {
           "name": "horizontal",
@@ -5419,17 +5444,17 @@
         {
           "name": "olympians-weight-by-sex",
           "path": "/example/Waffle/olympians-weight-by-sex",
-          "checksum": "c734584751a3757ff5e2c83c06705062"
+          "checksum": "81a9d1f981a45f406a71349f95a5a87e"
         },
         {
           "name": "penguins",
           "path": "/example/Waffle/penguins",
-          "checksum": "37ef784a8bbe188e85fa55277f51b28d"
+          "checksum": "c1c3a9c8ac9b2aa6423a27dae044af0a"
         },
         {
           "name": "stacked",
           "path": "/example/Waffle/stacked",
-          "checksum": "b000d9cb4abd3055da6e49186bb39e65"
+          "checksum": "9d9d0a1d2cdef2949bf135dc68c88aa3"
         },
         {
           "name": "survey",
