@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.8.1
+
+### Patch Changes
+
+- fix(TransformContext): Support `shift` + scroll zoom when the browser reports it as horizontal (`deltaX`) ([#948](https://github.com/techniq/layerchart/pull/948))
+
 ## 2.8.0
 
 ### Minor Changes
