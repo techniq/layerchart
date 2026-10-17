@@ -5,6 +5,14 @@
       "hash": "fa8363b1d3e4db84",
       "elements": 86
     },
+    "AnnotationLine/custom-label": {
+      "hash": "3b0d663866e5289c",
+      "elements": 50
+    },
+    "AnnotationLine/custom-line": {
+      "hash": "84a78f77afd1d57d",
+      "elements": 54
+    },
     "AnnotationLine/horizontal": {
       "hash": "6b63a68145d8edc1",
       "elements": 53
@@ -44,6 +52,10 @@
     "AnnotationPoint/band-scale-on-value": {
       "hash": "179fa4e2232611d9",
       "elements": 86
+    },
+    "AnnotationPoint/custom-marker": {
+      "hash": "bf6135c12ef6eeb2",
+      "elements": 62
     },
     "AnnotationPoint/line-to-point": {
       "hash": "1abafce612cc2275",
@@ -92,6 +104,10 @@
     "AnnotationRange/bar-chart-(value)": {
       "hash": "34c82ec9b5eccab3",
       "elements": 85
+    },
+    "AnnotationRange/custom-label": {
+      "hash": "a1f5c4238a8aebd5",
+      "elements": 50
     },
     "AnnotationRange/hide-tooltip": {
       "hash": "ddf0b4cfb50e2139",
@@ -167,7 +183,8 @@
     },
     "Arc/playground": {
       "hash": "fc37a47a5f9ebe67",
-      "elements": 6
+      "elements": 6,
+      "unstable": true
     },
     "Arc/segmented-arc": {
       "hash": "f9dbb6dab6eb4b8b",
@@ -554,8 +571,8 @@
       "elements": 163
     },
     "Axis/barchart-xinterval-xinset": {
-      "hash": "ca819efecc6dd3a9",
-      "elements": 102
+      "hash": "ce9172e17f9b9372",
+      "elements": 105
     },
     "Axis/explicit-ticks": {
       "hash": "5b0b11a3c0ed5cc5",
@@ -746,16 +763,16 @@
       "elements": 94
     },
     "BarChart/brush": {
-      "hash": "50b2fe338c5a664d",
-      "elements": 272
+      "hash": "bcec051b5ba1d66a",
+      "elements": 275
     },
     "BarChart/brush-band": {
       "hash": "6893e27f67e72f09",
       "elements": 283
     },
     "BarChart/brush-pan-zoom": {
-      "hash": "50b2fe338c5a664d",
-      "elements": 272
+      "hash": "bcec051b5ba1d66a",
+      "elements": 275
     },
     "BarChart/brush-pan-zoom-band": {
       "hash": "6893e27f67e72f09",
@@ -856,6 +873,10 @@
     "BarChart/group-series-bar-click": {
       "hash": "ff1457b0888bb269",
       "elements": 69
+    },
+    "BarChart/group-series-dual-axis": {
+      "hash": "a29e0e46e6d0de48",
+      "elements": 134
     },
     "BarChart/group-series-horizontal": {
       "hash": "d634a27ab9bc3f16",
@@ -958,20 +979,20 @@
       "elements": 275
     },
     "BarChart/pan-zoom": {
-      "hash": "50b2fe338c5a664d",
-      "elements": 272
+      "hash": "bcec051b5ba1d66a",
+      "elements": 275
     },
     "BarChart/pan-zoom-band": {
       "hash": "5dc647cd635f2367",
       "elements": 208
     },
     "BarChart/pan-zoom-domain-extent": {
-      "hash": "50b2fe338c5a664d",
-      "elements": 272
+      "hash": "bcec051b5ba1d66a",
+      "elements": 275
     },
     "BarChart/pan-zoom-scale-extent": {
-      "hash": "cdffb41c185b901c",
-      "elements": 272
+      "hash": "34ada22e77ceecf4",
+      "elements": 275
     },
     "BarChart/point-annotation": {
       "hash": "f866cd6610734303",
@@ -1130,8 +1151,8 @@
       "elements": 73
     },
     "BarChart/time-scale-interval": {
-      "hash": "83f8a72912960de8",
-      "elements": 90
+      "hash": "01e3f8e105c1afec",
+      "elements": 93
     },
     "BarChart/time-scale-interval-horizontal": {
       "hash": "a5b7e3da1716b8f1",
@@ -1174,8 +1195,8 @@
       "elements": 92
     },
     "Bars/horizontal-candlestick-bars": {
-      "hash": "8eda372fbe238c09",
-      "elements": 321
+      "hash": "a1dc54489f335d2e",
+      "elements": 324
     },
     "Bars/horizontal-click-handler": {
       "hash": "196c90fac49ee049",
@@ -1626,8 +1647,8 @@
       "elements": 71
     },
     "Chart/compound-common-scale-with-extra-marks": {
-      "hash": "b458cb753231d553",
-      "elements": 185
+      "hash": "1f93001af0d9b09a",
+      "elements": 140
     },
     "Chart/compound-dual-axis-with-single-chart-using-remapped-scale": {
       "hash": "56abdcf5554c571f",
@@ -1638,8 +1659,8 @@
       "elements": 78
     },
     "Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks": {
-      "hash": "39b9f2c5bbaf2bf2",
-      "elements": 453
+      "hash": "05cf4ae027e134ee",
+      "elements": 441
     },
     "Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down": {
       "hash": "8bed97b6540aa131",
@@ -2058,7 +2079,7 @@
       "elements": 151
     },
     "ForceSimulation/collision-detection": {
-      "hash": "36544fadee3d7deb",
+      "hash": "17551b2b7e0db6fe",
       "elements": 205,
       "settled": false,
       "unstable": true
@@ -2069,12 +2090,12 @@
       "settled": false
     },
     "ForceSimulation/games-industry-layoffs": {
-      "hash": "b7b0d3c1d41904ab",
+      "hash": "3b2c9fd3d195ff1f",
       "elements": 500,
       "settled": false
     },
     "ForceSimulation/graph-drag": {
-      "hash": "ff5aa34105afd370",
+      "hash": "cbf4b482194f0ba1",
       "elements": 37,
       "settled": false,
       "unstable": true
@@ -2085,7 +2106,7 @@
       "settled": false
     },
     "ForceSimulation/group": {
-      "hash": "99f4b784aeed777c",
+      "hash": "45bf3f2deffe318c",
       "elements": 39,
       "settled": false,
       "unstable": true
@@ -2101,7 +2122,7 @@
       "settled": false
     },
     "ForceSimulation/text": {
-      "hash": "616f8890aa3b50b4",
+      "hash": "978b8c5067015b3f",
       "elements": 252,
       "settled": false,
       "unstable": true
@@ -2128,8 +2149,8 @@
       "elements": 58
     },
     "GeoCircle/earthquake-globe": {
-      "hash": "4f5f7909f6c768a7",
-      "elements": 81
+      "hash": "b66fc56bac3ee6f8",
+      "elements": 116
     },
     "GeoCircle/playground": {
       "hash": "c173658e91d8f7d0",
@@ -2184,7 +2205,7 @@
       "elements": 1798
     },
     "GeoPath/interpolating-projections": {
-      "hash": "48bac5ebdcdfd40d",
+      "hash": "5cd9d5f9cb5a958a",
       "elements": 9,
       "settled": false,
       "unstable": true
@@ -2318,15 +2339,16 @@
       "elements": 10
     },
     "GeoRaster/projections": {
-      "hash": "0b7907912facc9bf",
-      "elements": 187
+      "hash": "db2af2bb51bc2a84",
+      "elements": 187,
+      "unstable": true
     },
     "GeoRaster/textures": {
       "hash": "7439cddb6117196b",
       "elements": 10
     },
     "GeoRaster/tiles-globe": {
-      "hash": "3842daf168db0627",
+      "hash": "15411bac0cf55cde",
       "elements": 166,
       "unstable": true
     },
@@ -2840,8 +2862,7 @@
     },
     "LineChart/sparkline-within-a-paragraph": {
       "hash": "57a481bb332f9744",
-      "elements": 9,
-      "settled": false
+      "elements": 9
     },
     "LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight": {
       "hash": "57a481bb332f9744",
@@ -2933,8 +2954,7 @@
     },
     "MotionPath/rotate-object-with-path": {
       "hash": "26459658f89e010e",
-      "elements": 58,
-      "unstable": true
+      "elements": 58
     },
     "MotionPath/sync-with-draw": {
       "hash": "26459658f89e010e",
