@@ -1,3 +1,7 @@
+<script module lang="ts">
+	export const title = 'Bump chart (state population)';
+</script>
+
 <script lang="ts">
 	import { Chart, Axis, LinearGradient, Layer, Spline } from 'layerchart';
 	import { curveBumpX } from 'd3-shape';
