@@ -2847,6 +2847,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 157,
+      "line": "<Layer>"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -2987,10 +2994,17 @@
       "line": "<Layer>"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 196,
+      "line": "<Layer>"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 102,
+      "lineNumber": 106,
       "line": "<Layer>"
     },
     {
@@ -4562,5 +4576,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:14.129Z"
+  "updatedAt": "2026-10-19T19:57:17.329Z"
 }

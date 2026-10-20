@@ -380,6 +380,13 @@
       "line": "<Rect"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 170,
+      "line": "<Rect"
+    },
+    {
       "example": "direction-with-custom-colors",
       "component": "LinearGradient",
       "path": "/docs/components/LinearGradient/direction-with-custom-colors",
@@ -502,7 +509,7 @@
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 151,
+      "lineNumber": 155,
       "line": "<rect"
     },
     {
@@ -1080,5 +1087,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:44.175Z"
+  "updatedAt": "2026-10-19T19:57:17.791Z"
 }

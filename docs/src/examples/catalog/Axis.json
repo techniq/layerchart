@@ -4229,6 +4229,27 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 158,
+      "line": "<Axis placement=\"top\" rule={false} />"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 159,
+      "line": "<Axis placement=\"bottom\" rule={false} />"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 160,
+      "line": "<Axis placement=\"left\" ticks={range(1, maxRank + 1)} format={(d) => `#${d}`} />"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -4362,17 +4383,45 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 206,
+      "line": "<Axis placement=\"top\" rule={false} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 207,
+      "line": "<Axis placement=\"bottom\" rule={false} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 208,
+      "line": "<Axis placement=\"left\" ticks={range(1, data.maxRank + 1)} format={(d) => `#${d}`} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 209,
+      "line": "<Axis"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 112,
+      "lineNumber": 116,
       "line": "<Axis placement=\"top\" rule={false} />"
     },
     {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 113,
+      "lineNumber": 117,
       "line": "<Axis placement=\"bottom\" rule={false} />"
     },
     {
@@ -5902,5 +5951,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:12.838Z"
+  "updatedAt": "2026-10-19T19:57:15.884Z"
 }

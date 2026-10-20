@@ -4047,6 +4047,13 @@
       "line": "<Chart"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 144,
+      "line": "<Chart"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -4187,10 +4194,17 @@
       "line": "<Chart height={320} width={700}>"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 183,
+      "line": "<Chart"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 91,
+      "lineNumber": 95,
       "line": "<Chart"
     },
     {
@@ -5853,5 +5867,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:13.143Z"
+  "updatedAt": "2026-10-19T19:57:16.199Z"
 }

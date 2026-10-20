@@ -58,48 +58,103 @@
       "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
-      "name": "bump-state-population-ranks",
-      "title": "bump state population ranks",
-      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "name": "bump-sports-rankings",
+      "title": "Bump chart (sports rankings)",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 91,
+          "lineNumber": 183,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 102,
+          "lineNumber": 196,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 103,
+          "lineNumber": 197,
           "line": "<LinearGradient"
         },
         {
           "component": "Axis",
-          "lineNumber": 112,
+          "lineNumber": 206,
+          "line": "<Axis placement=\"top\" rule={false} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 218,
+          "line": "<Group"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 223,
+          "line": "<Spline"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 231,
+          "line": "<Circle"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 238,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 251,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ],
+      "description": "Weekly AP Top 25 poll for a college football or basketball season",
+      "createdAt": "2026-10-19T19:53:08.000Z",
+      "updatedAt": "2026-10-19T19:53:08.000Z"
+    },
+    {
+      "name": "bump-state-population-ranks",
+      "title": "Bump chart (state population)",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 95,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 106,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 107,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 116,
           "line": "<Axis placement=\"top\" rule={false} />"
         },
         {
           "component": "Spline",
-          "lineNumber": 123,
+          "lineNumber": 127,
           "line": "<Spline"
         },
         {
           "component": "Rect",
-          "lineNumber": 151,
+          "lineNumber": 155,
           "line": "<rect"
         },
         {
           "component": "Text",
-          "lineNumber": 160,
+          "lineNumber": 164,
           "line": "<text"
         }
       ],
       "createdAt": "2026-04-02T19:13:52.000Z",
-      "updatedAt": "2026-04-02T19:13:52.000Z"
+      "updatedAt": "2026-10-19T19:53:08.000Z"
     },
     {
       "name": "curve",
@@ -1983,5 +2038,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:14.213Z"
+  "updatedAt": "2026-10-19T19:57:17.400Z"
 }
