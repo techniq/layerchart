@@ -897,6 +897,13 @@
       "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 231,
+      "line": "<Circle"
+    },
+    {
       "example": "curves",
       "component": "Link",
       "path": "/docs/components/Link/curves",
@@ -1268,5 +1275,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:13.291Z"
+  "updatedAt": "2026-10-19T19:57:16.344Z"
 }

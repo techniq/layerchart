@@ -41,6 +41,51 @@
       "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
+      "name": "college-football-upsets",
+      "title": "College football upsets",
+      "path": "/docs/components/Image/college-football-upsets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 144,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 157,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 158,
+          "line": "<Axis placement=\"top\" rule={false} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 166,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 170,
+          "line": "<Rect"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 179,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 198,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ],
+      "description": "Every game involving a ranked team, placed at the team",
+      "createdAt": "2026-10-19T19:53:08.000Z",
+      "updatedAt": "2026-10-19T19:53:08.000Z"
+    },
+    {
       "name": "country-flags",
       "title": "country flags",
       "path": "/docs/components/Image/country-flags",
@@ -211,6 +256,20 @@
       "line": "<Image"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 179,
+      "line": "<Image"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 186,
+      "line": "<Image"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -246,6 +305,13 @@
       "line": "<Image"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 238,
+      "line": "<Image"
+    },
+    {
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-svg-image",
@@ -267,5 +333,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:01.813Z"
+  "updatedAt": "2026-10-19T19:57:17.291Z"
 }

@@ -1364,10 +1364,17 @@
       "line": "<Spline"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 223,
+      "line": "<Spline"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 123,
+      "lineNumber": 127,
       "line": "<Spline"
     },
     {
@@ -1819,5 +1826,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:15.002Z"
+  "updatedAt": "2026-10-19T19:57:18.028Z"
 }

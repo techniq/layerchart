@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-16T16:32:33.350Z",
+  "generatedAt": "2026-10-19T19:57:30.652Z",
   "totalComponents": 80,
-  "totalExamples": 1013,
+  "totalExamples": 1015,
   "components": [
     {
       "component": "AnnotationLine",
@@ -3272,6 +3272,11 @@
           "checksum": "77ea4515a0df695b372d5f969fe3188b"
         },
         {
+          "name": "college-football-upsets",
+          "path": "/example/Image/college-football-upsets",
+          "checksum": "0765e3d7a248b59f5bdd52a0c72f302d"
+        },
+        {
           "name": "country-flags",
           "path": "/example/Image/country-flags",
           "checksum": "7eca8e326c25e967421e9d39846c40d4"
@@ -3507,9 +3512,14 @@
           "checksum": "0a8dc843864088f749c64517248c983f"
         },
         {
+          "name": "bump-sports-rankings",
+          "path": "/example/LineChart/bump-sports-rankings",
+          "checksum": "ed13089886181cbe5edef3eee367f53e"
+        },
+        {
           "name": "bump-state-population-ranks",
           "path": "/example/LineChart/bump-state-population-ranks",
-          "checksum": "c8cc292e07a22c5e3395646f254c39bd"
+          "checksum": "9631649a1703f8fa1422cb101c9eafbf"
         },
         {
           "name": "curve",

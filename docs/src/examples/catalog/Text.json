@@ -779,7 +779,7 @@
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 160,
+      "lineNumber": 164,
       "line": "<text"
     },
     {
@@ -1210,5 +1210,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:44.328Z"
+  "updatedAt": "2026-10-19T19:57:18.108Z"
 }

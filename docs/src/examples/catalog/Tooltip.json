@@ -5873,6 +5873,90 @@
       "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 198,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 201,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 207,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 251,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 258,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 264,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 265,
+      "line": "<Tooltip.Item label=\"Week\" value={d.week === 'Pre' ? 'Preseason' : d.week} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 266,
+      "line": "<Tooltip.Item label=\"Rank\" value=\"{d.tied ? 'T-' : '#'}{d.rank}\" />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 268,
+      "line": "<Tooltip.Item label=\"Record\" value={d.record} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 272,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 274,
+      "line": "<Tooltip.Item label=\"Games\" value=\"Loading...\" />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 296,
+      "line": "<Tooltip.Item label=\"Games\" value=\"None\" />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -8295,5 +8379,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:15.158Z"
+  "updatedAt": "2026-10-19T19:57:18.171Z"
 }

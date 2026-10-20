@@ -463,10 +463,17 @@
       "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
     },
     {
-      "example": "bump-state-population-ranks",
+      "example": "bump-sports-rankings",
       "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 103,
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 197,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 201,
       "line": "<LinearGradient"
     },
     {
@@ -474,6 +481,13 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
       "lineNumber": 107,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 111,
       "line": "<LinearGradient"
     },
     {
@@ -596,5 +610,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.738Z"
+  "updatedAt": "2026-10-19T19:57:17.437Z"
 }

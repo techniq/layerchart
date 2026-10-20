@@ -272,6 +272,20 @@
       "line": "<Group seriesKey={s.key} data={[lastPoint]} x=\"date\" y={s.key}>"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 166,
+      "line": "<Group"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 218,
+      "line": "<Group"
+    },
+    {
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
@@ -482,5 +496,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-09-25T04:42:17.928Z"
+  "updatedAt": "2026-10-19T19:57:17.145Z"
 }
