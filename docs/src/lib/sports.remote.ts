@@ -4,8 +4,8 @@ import { z } from 'zod';
 
 // Sports data from ESPN's public (undocumented) APIs
 
+// The core API (`sports.core.api.espn.com`) is avoided as it blocks requests from Cloudflare
 const SITE_API = 'https://site.api.espn.com/apis/site/v2/sports';
-const CORE_API = 'https://sports.core.api.espn.com/v2/sports';
 
 /** Number of past seasons offered in the season picker */
 const SEASON_COUNT = 15;
@@ -22,8 +22,6 @@ type Sport = keyof typeof leagues;
 const sportSchema = z.enum(Object.keys(leagues) as [Sport, ...Sport[]]);
 
 const siteUrl = (sport: Sport) => `${SITE_API}/${leagues[sport].sport}/${leagues[sport].league}`;
-const coreUrl = (sport: Sport) =>
-	`${CORE_API}/${leagues[sport].sport}/leagues/${leagues[sport].league}`;
 
 export type SportsTeam = {
 	id: string;
@@ -73,21 +71,27 @@ export const getSportsRankings = query(
 		season: z.number().int().optional()
 	}),
 	async ({ sport, season }): Promise<SportsRankings> => {
-		// Only waited on first when loading the latest season
-		const latestSeasonRequest = fetchJson(`${siteUrl(sport)}/rankings`).then(
-			(d): number => d.latestSeason.year
-		);
-		season ??= await latestSeasonRequest;
-
-		// AP poll (id: 1) for every week of the season
-		const [latestSeason, index, teamsResponse] = await Promise.all([
-			latestSeasonRequest,
-			fetchJson(`${coreUrl(sport)}/seasons/${season}/rankings/1`),
-			fetchJson(`${siteUrl(sport)}/teams?limit=1000`)
+		// Rankings include the season's weeks (latest season when not specified)
+		const latestRequest = fetchJson(`${siteUrl(sport)}/rankings`);
+		const [latest, seasonResponse] = await Promise.all([
+			latestRequest,
+			season == null ? latestRequest : fetchJson(`${siteUrl(sport)}/rankings?seasons=${season}`)
 		]);
-		const polls: any[] = await Promise.all(
-			(index.rankings as { $ref: string }[]).map((r) => fetchJson(r.$ref))
-		);
+		const latestSeason: number = latest.latestSeason.year;
+		season ??= latestSeason;
+
+		// Each week is fetched individually for the AP poll (id: 1)
+		const polls = (
+			await Promise.all(
+				(seasonResponse.weeks as { type: string; week: string }[]).map(async ({ type, week }) => {
+					const response = await fetchJson(
+						`${siteUrl(sport)}/rankings?seasons=${season}&seasontypes=${type}&weeks=${week}`
+					);
+					const poll = (response.rankings as any[]).find((r) => r.id === '1');
+					return poll && { ...poll, postseason: type === '3' };
+				})
+			)
+		).filter(Boolean);
 
 		// Some polls were later overwritten with another poll's rankings and date (ex. the 2025-26
 		// basketball "Week 2" poll holds the final rankings), so skip any dated after a later poll
@@ -97,36 +101,23 @@ export const getSportsRankings = query(
 
 		const weeks: SportsWeek[] = [];
 		const ranks: SportsRank[] = [];
+		const teamsById = new Map<string, SportsTeam>();
 		for (const poll of validPolls) {
 			const label = pollLabel(poll);
 			if (weeks.some((w) => w.label === label)) continue;
 			weeks.push({ label, date: poll.date });
 
 			for (const [i, r] of (poll.ranks as any[]).entries()) {
+				if (!teamsById.has(r.team.id)) teamsById.set(r.team.id, toTeam(r.team));
 				ranks.push({
 					week: label,
-					teamId: r.team.$ref.match(/teams\/(\d+)/)[1],
+					teamId: r.team.id,
 					position: i + 1,
 					rank: r.current,
 					tied: poll.ranks.some((other: any) => other !== r && other.current === r.current),
-					record: r.record?.summary
+					record: r.recordSummary
 				});
 			}
-		}
-
-		const teamsById = new Map<string, SportsTeam>(
-			teamsResponse.sports[0].leagues[0].teams.map(({ team }: any) => [team.id, toTeam(team)])
-		);
-		const rankedTeamIds = [...new Set(ranks.map((r) => r.teamId))];
-
-		// Look up any teams missing from the current team list (renamed, moved divisions, etc)
-		const missingTeams = await Promise.all(
-			rankedTeamIds
-				.filter((id) => !teamsById.has(id))
-				.map((id) => fetchJson(`${coreUrl(sport)}/seasons/${season}/teams/${id}`))
-		);
-		for (const team of missingTeams) {
-			teamsById.set(team.id, toTeam(team));
 		}
 
 		return {
@@ -134,7 +125,7 @@ export const getSportsRankings = query(
 			seasons: seasonRange(latestSeason),
 			weeks,
 			maxRank: Math.max(25, ...ranks.map((r) => r.position)),
-			teams: rankedTeamIds.map((id) => teamsById.get(id)!),
+			teams: [...teamsById.values()],
 			ranks
 		};
 	}
@@ -306,8 +297,7 @@ export const getRankedMatchups = query(
 
 async function fetchJson(url: string, retries = 1): Promise<any> {
 	const { fetch } = getRequestEvent();
-	// `$ref` links returned by the core API use `http`
-	const response = await fetch(url.replace(/^http:/, 'https:')).catch(() => null);
+	const response = await fetch(url).catch(() => null);
 	// Retry dropped connections and server errors, which ESPN returns occasionally
 	if ((!response || response.status >= 500) && retries > 0) {
 		return fetchJson(url, retries - 1);
@@ -326,7 +316,8 @@ function toTeam(team: any): SportsTeam {
 	const logoDark: string = logos.find((l) => l.rel.includes('dark'))?.href ?? team.logoDark ?? logo;
 	return {
 		id: team.id,
-		name: team.displayName,
+		// Rankings list `location` and `name` (ex. `Miami` `Hurricanes`) without `displayName`
+		name: team.displayName ?? `${team.location} ${team.name}`,
 		abbreviation: team.abbreviation,
 		logo: resizeLogo(logo),
 		logoDark: resizeLogo(logoDark)
@@ -360,7 +351,7 @@ function postseasonRound(headline: string) {
 
 function pollLabel(poll: any) {
 	// Postseason polls are numbered (ex. `Week 3`) for basketball rather than `Final Rankings`
-	if (poll.$ref.includes('/types/3/')) return 'Final';
+	if (poll.postseason) return 'Final';
 	const displayValue: string = poll.occurrence.displayValue;
 	// `occurrence.number` is off by one for basketball, so use the label
 	return displayValue.startsWith('Pre') ? 'Pre' : displayValue.replace('Week ', '');
