@@ -1,0 +1,99 @@
+name: Update Example Catalog and Screenshots
+
+# The example catalog (`docs/src/examples/catalog`) and screenshots (`docs/static/screenshots`) are
+# generated from the examples, and kept out of feature PRs so they stay reviewable.  Regenerate
+# them after a push to main and open (or update) a PR with the result.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/src/examples/**
+      - packages/layerchart/src/lib/components/**
+      # The PR this opens only changes generated files, so merging it shouldn't run this again
+      - '!docs/src/examples/catalog/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-generated-docs:
+    name: Update Example Catalog and Screenshots
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # The catalog's `createdAt` / `updatedAt` come from each example's git history
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm --filter docs exec playwright install --with-deps chromium
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Generate catalog
+        run: pnpm --filter docs generate:catalog
+
+      # A production build rather than `vite dev`: every page is served already compiled, so the
+      # screenshot generator's 5s page timeout isn't spent on Vite transforming modules for the
+      # first pages it loads.  `prebuild` also generates the inputs the server needs (ex. the
+      # gitignored `stackblitz-files.json`).
+      - name: Build docs
+        run: pnpm --filter docs build
+        env:
+          # `generate:releases` only reads public releases, which `GITHUB_TOKEN` covers
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Start the docs server
+        run: |
+          pnpm --filter docs exec vite preview --port 3002 > /tmp/server.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null "http://localhost:3002/docs/screenshot/AnnotationLine/horizontal" && exit 0
+            sleep 2
+          done
+          echo "docs server did not start"; cat /tmp/server.log; exit 1
+
+      # Incremental: only examples whose source changed (per the checksums in `index.json`) are
+      # captured again
+      - name: Generate screenshots
+        run: pnpm --filter docs generate:screenshots
+        env:
+          BASE_URL: http://localhost:3002
+
+      - name: Create or update PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/update-generated-docs
+          title: 'chore: update example catalog and screenshots'
+          body: |
+            ## Example catalog and screenshots
+
+            Regenerated `docs/src/examples/catalog` and `docs/static/screenshots` from `main` after
+            examples or components changed.
+
+            ### How to review
+
+            Catalog changes should match the examples that changed.  Screenshots are only captured
+            for examples whose source changed, so check the new `.webp` files look right.
+          commit-message: 'chore: update example catalog and screenshots'
+          add-paths: |
+            docs/src/examples/catalog
+            docs/static/screenshots
