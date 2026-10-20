@@ -173,6 +173,9 @@
 					on:click={toggle}
 				>
 					<Menu {open} on:close={toggleOff} placement="bottom-end" classes={{ menu: 'p-1' }}>
+						<MenuItem icon={LucideListOrdered} on:click={() => (lineNumbers = !lineNumbers)}>
+							{lineNumbers ? 'Hide line numbers' : 'Show line numbers'}
+						</MenuItem>
 						{#if onsplitchange}
 							<MenuItem
 								icon={split ? LucideRows2 : LucideColumns2}
@@ -181,9 +184,6 @@
 								{split ? 'Show code below' : 'Show code on left'}
 							</MenuItem>
 						{/if}
-						<MenuItem icon={LucideListOrdered} on:click={() => (lineNumbers = !lineNumbers)}>
-							{lineNumbers ? 'Hide line numbers' : 'Show line numbers'}
-						</MenuItem>
 						{#if onopenstackblitz}
 							<MenuItem icon={SimpleIconsStackblitz} on:click={openStackBlitz}>
 								{sandbox.dirty ? 'Open edits in StackBlitz' : 'Open in StackBlitz'}
@@ -225,3 +225,64 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	/*
+		Shared with `CodeEditor`'s gutter, which sits inside this panel: the panel's own
+		background, translucent so the blur shows over code passing beneath.
+	*/
+	.code-panel {
+		--code-gutter-bg: color-mix(in oklab, var(--color-surface-200) 80%, transparent);
+	}
+
+	:global(.dark) .code-panel {
+		--code-gutter-bg: color-mix(in oklab, var(--color-surface-300) 80%, transparent);
+	}
+
+	/*
+		`Code` draws each number as an inline `::before` on its line, so a long line scrolled
+		them out of view. Here they're pinned to the left of the `pre` that scrolls, over a
+		translucent, blurred strip the code passes beneath, matching `CodeEditor`'s gutter:
+		0.5rem + a 2rem column + 0.5rem, then a 1rem gap, so the code still starts 4rem in.
+
+		The strip is one element spanning the panel's padding too (per-line backgrounds would
+		stop short of it), so the panel loses its left padding and the scroller starts at the
+		edge. `isolation` keeps the strip and numbers' z-indexes inside the panel.
+	*/
+	.code-panel :global(.show-line-numbers) {
+		padding-left: 0;
+		isolation: isolate;
+	}
+
+	.code-panel :global(.show-line-numbers::before) {
+		content: '';
+		position: absolute;
+		inset-block: 0;
+		left: 0;
+		z-index: 1;
+		width: 3rem;
+		background-color: var(--code-gutter-bg);
+		backdrop-filter: blur(8px);
+	}
+
+	/*
+		Sticky numbers can't travel past their block, so it has to be as wide as the longest
+		line. The 4rem inset is padding with the number pulled back into it, rather than the
+		number's own width: tab stops count from the start of the line box, so a number taking
+		up room there shifted every indent a few px off the editor's.
+	*/
+	.code-panel :global(.show-line-numbers .shiki) {
+		width: max-content;
+		min-width: 100%;
+		padding-left: 4rem;
+	}
+
+	.code-panel :global(.show-line-numbers .shiki .line::before) {
+		position: sticky;
+		left: 0;
+		z-index: 2;
+		width: 3rem;
+		margin-left: -4rem;
+		padding: 0 0.5rem;
+	}
+</style>

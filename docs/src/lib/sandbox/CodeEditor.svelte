@@ -170,9 +170,10 @@
 	 * 1rem padding, and `tab-size: 2`. The background is left transparent so the
 	 * surrounding panel supplies it.
 	 *
-	 * The gutter copies `Code`'s `.show-line-numbers` numbers: a right-aligned 2rem column
-	 * with a 1rem gap, inside the same 1rem padding, so the code starts 4rem in for both.
-	 * These are hand-copied from `Code`, so they need re-checking if its highlighter changes.
+	 * The gutter matches the one `CodePanel` gives `Code`: a right-aligned 2rem column with
+	 * 0.5rem either side on a translucent, blurred strip that the code scrolls under, then
+	 * the content's 1rem padding, so the code starts 4rem in for both. These are hand-copied,
+	 * so they need re-checking if either side changes.
 	 */
 	const appearance = EditorView.theme({
 		'&.cm-focused': { outline: 'none' },
@@ -187,10 +188,12 @@
 		'.cm-line': { padding: '0' },
 		'.cm-gutters': {
 			// CodeMirror's base theme paints the gutter (`#f5f5f5` / `#333338`) at the same
-			// specificity; the panel has to show through, as it does behind `Code`'s numbers.
-			backgroundColor: 'transparent !important',
+			// specificity; this has to win in both themes. `CodePanel` sets the colour, so
+			// both modes share it.
+			backgroundColor: 'var(--code-gutter-bg, transparent) !important',
+			backdropFilter: 'blur(8px)',
 			border: 'none',
-			paddingLeft: '1rem',
+			padding: '0 0.5rem',
 			color: 'rgba(115, 138, 148, 0.4)'
 		},
 		'.cm-lineNumbers .cm-gutterElement': { minWidth: '2rem', padding: '0' }
