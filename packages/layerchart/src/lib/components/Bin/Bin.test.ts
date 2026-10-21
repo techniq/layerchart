@@ -1,0 +1,74 @@
+import { describe, it, expect } from 'vitest';
+import { polygonArea, polygonContains } from 'd3-polygon';
+import { randomLcg } from 'd3-random';
+import { binCells, type BinShape } from './Bin.shared.svelte.js';
+
+const shapes: BinShape[] = ['hexagon', 'square', 'triangle'];
+
+/** Points spread over `[-50, 350] × [-50, 250]`, so some fall left of and above the origin */
+function randomPoints(n: number) {
+  const random = randomLcg(42);
+  return Array.from({ length: n }, () => [random() * 400 - 50, random() * 300 - 50] as const);
+}
+
+describe('binCells', () => {
+  describe.each(shapes)('%s', (shape) => {
+    const size = 17;
+    const points = randomPoints(5000);
+    const cells = binCells(points, (d) => [d[0], d[1]], { shape, size });
+
+    it('puts every row in the cell containing it', () => {
+      for (const cell of cells) {
+        for (const [x, y] of cell.data) {
+          // Grown a hair, for points exactly on an edge
+          const grown = cell.polygon.map(
+            ([px, py]) =>
+              [cell.x + (px - cell.x) * 1.0001, cell.y + (py - cell.y) * 1.0001] as [number, number]
+          );
+          expect(polygonContains(grown, [x, y])).toBe(true);
+        }
+      }
+    });
+
+    it('counts every row once', () => {
+      expect(cells.reduce((sum, cell) => sum + cell.count, 0)).toBe(points.length);
+      for (const cell of cells) expect(cell.count).toBe(cell.data.length);
+    });
+
+    it('tiles the plane with cells `size` wide', () => {
+      const area = Math.abs(polygonArea(cells[0].polygon));
+      const expected = {
+        hexagon: (size * size * Math.sqrt(3)) / 2,
+        square: size * size,
+        triangle: (size * size * Math.sqrt(3)) / 4,
+      }[shape];
+      expect(area).toBeCloseTo(expected, 6);
+      const xs = cells[0].polygon.map((p) => p[0]);
+      expect(Math.max(...xs) - Math.min(...xs)).toBeCloseTo(size, 6);
+    });
+
+    it('with `empty`, covers the whole plot', () => {
+      const width = 300;
+      const height = 200;
+      const all = binCells([], () => null, { shape, size, empty: { width, height } });
+      expect(all.every((cell) => cell.count === 0)).toBe(true);
+      // Every point in the plot lands in a cell that `empty` already drew
+      const inside = points.filter(([x, y]) => x >= 0 && x < width && y >= 0 && y < height);
+      const binned = binCells(inside, (d) => [d[0], d[1]], {
+        shape,
+        size,
+        empty: { width, height },
+      });
+      expect(binned.length).toBe(all.length);
+    });
+  });
+
+  it('skips rows without a position', () => {
+    const cells = binCells([1, 2, 3], (d) => (d === 2 ? null : d === 3 ? [NaN, 0] : [5, 5]), {
+      shape: 'square',
+      size: 10,
+    });
+    expect(cells).toHaveLength(1);
+    expect(cells[0]).toMatchObject({ x: 5, y: 5, count: 1, data: [1] });
+  });
+});

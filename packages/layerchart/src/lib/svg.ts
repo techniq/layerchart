@@ -161,6 +161,13 @@ export type {
 } from './components/AnnotationRange/AnnotationRange.shared.svelte.js';
 export { default as Hull } from './components/Hull/Hull.svg.svelte';
 export type { HullProps, HullPropsWithoutHTML } from './components/Hull/Hull.shared.svelte.js';
+export { default as Bin } from './components/Bin/Bin.svg.svelte';
+export type {
+  BinCell,
+  BinProps,
+  BinPropsWithoutHTML,
+  BinShape,
+} from './components/Bin/Bin.shared.svelte.js';
 export { default as Density } from './components/Density/Density.svg.svelte';
 export type {
   DensityProps,
