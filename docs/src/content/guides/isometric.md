@@ -208,6 +208,20 @@ To label a node on its top, draw a `Text` right after its `Rect`, with the tier'
 
 :example{ component="Contour" name="volcano-isometric" }
 
+### Bins
+
+`Bin` raises each cell with `z`. With `z="count"`, each cell stands as tall as the rows in it, measured by `zScale` from zero to the largest cell. Its `size` is measured against the floor laid flat, so each cell keeps the same rows as the view turns. See [Bin](/docs/components/Bin#isometric).
+
+:example{ component="Bin" name="isometric" }
+
+On a map, bin longitude and latitude through an equal-area projection, so every cell covers the same ground. Give the view the map's `aspect` so it fills the floor:
+
+:example{ component="Bin" name="walmart-isometric" }
+
+To draw the cells yourself, take them from `children`, give each `Path` its `z`, and place anything on top by moving it up its height along `context.isometricLift`. Draw them back to front, as for any raised shapes. Here, each hexagon stands to its elevation with a terrain tile on top:
+
+:example{ component="Bin" name="images-isometric" }
+
 ### Paths and maps
 
 `Path` takes a `z` in pixels, or `[start, end]` to float it, and stands its shape up with shaded sides. An unfilled path is raised as a line. Marks drawn with `Path` pass it through, so a `GeoPath` can stand a region up:

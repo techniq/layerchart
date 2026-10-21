@@ -18,6 +18,8 @@ export type BinCell<T = any> = {
   count: number;
   /** The cell's vertices in pixels, before any `r` scaling */
   polygon: [number, number][];
+  /** On a globe, the cell's center as `[longitude, latitude]` */
+  center?: [number, number];
 };
 
 export type BinPropsWithoutHTML<T = any> = {
@@ -87,6 +89,49 @@ export type BinPropsWithoutHTML<T = any> = {
 
 export type BinProps<T = any> = BinPropsWithoutHTML<T> &
   Without<SVGAttributes<SVGGElement>, BinPropsWithoutHTML<T>>;
+
+/** A cell stood up off a globe: its sides facing the viewer, each side's shade, and its top */
+export type SphereColumn = {
+  sides: string;
+  shades: { d: string; opacity: number }[];
+  top: string;
+  /** How far toward the viewer it stands, for drawing back to front */
+  depth: number;
+};
+
+/**
+ * Binning on the sphere, which `GeoBin` hands `Bin`'s implementation — kept out of `Bin` itself, so
+ * charts that don't bin on a globe don't load it
+ */
+export type SphereBinning<Grid = any> = {
+  /** The grid of `shape` cells about `size` pixels across, at the center of a globe `scale` in radius */
+  grid(shape: BinShape, scale: number, size: number): Grid;
+  /** `data` grouped into the grid's cells by `[longitude, latitude]` */
+  bin<T>(data: Iterable<T>, lonLat: (d: T) => [number, number], grid: Grid): BinCell<T>[];
+  /** Every cell's outline on the sphere */
+  polygons(grid: Grid): [number, number][][];
+  /** A cell's outline on the sphere */
+  ring(cell: BinCell): [number, number][] | undefined;
+  /** A binned cell placed where `projection` draws its center */
+  show<T>(
+    cell: BinCell<T>,
+    projection: (point: [number, number]) => [number, number] | null
+  ): BinCell<T>;
+  /** Every cell's center on the sphere, in the order of `polygons` */
+  centers(grid: Grid): [number, number][];
+  /** Whether any of a cell, by its center, faces the viewer of `projection` */
+  facing(
+    projection: { rotate?(): number[]; clipAngle?(): number | null },
+    grid: Grid
+  ): (center: [number, number]) => boolean;
+  /** A cell's outline stood up `height` pixels off an orthographic globe, or `null` facing away */
+  column(
+    projection: any,
+    ring: [number, number][],
+    center: [number, number],
+    height: number
+  ): SphereColumn | null;
+};
 
 const SQRT3 = Math.sqrt(3);
 

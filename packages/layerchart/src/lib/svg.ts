@@ -214,6 +214,11 @@ export type {
 } from './components/BoxPlot/BoxPlot.shared.svelte.js';
 
 // Geo components
+export { default as GeoBin } from './components/geo/GeoBin/GeoBin.svg.svelte';
+export type {
+  GeoBinProps,
+  GeoBinPropsWithoutHTML,
+} from './components/geo/GeoBin/GeoBin.shared.svelte.js';
 export { default as GeoPath } from './components/geo/GeoPath/GeoPath.svg.svelte';
 export type {
   GeoPathProps,

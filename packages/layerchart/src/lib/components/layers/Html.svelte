@@ -45,7 +45,10 @@
      * Whether to clip overflow content.
      * When true, sets `overflow: hidden` on the layer.
      *
-     * @default false
+     * Defaults to clipping when the chart has a `transform`, as panning and zooming carry what's
+     * drawn past its edges.
+     *
+     * @default true with a chart `transform`, else false
      */
     clip?: boolean;
 
@@ -73,7 +76,7 @@
     'aria-describedby': describedBy,
     center = false,
     ignoreTransform = false,
-    clip = false,
+    clip,
     class: className,
     children: childrenProp,
     ...restProps
@@ -94,13 +97,15 @@
 
   setLayerContext('html');
   setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
+
+  const clipped = $derived(clip ?? (ctx.props.transform?.mode ?? 'none') !== 'none');
 </script>
 
 <div
   bind:this={ref}
   class={['lc-layout-html', className]}
   class:disablePointerEvents={pointerEvents === false}
-  class:clip
+  class:clip={clipped}
   style:transform
   style:transform-origin="top left"
   style:z-index={zIndex}

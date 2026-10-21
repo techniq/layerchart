@@ -1,11 +1,13 @@
 <script lang="ts" module>
   import type { Component } from 'svelte';
-  import type { BinProps } from './Bin.shared.svelte.js';
+  import type { BinProps, SphereBinning } from './Bin.shared.svelte.js';
 
   export type BinBaseLayerComponents = {
     Group: Component<any>;
     Path: Component<any>;
     ChartClipPath: Component<any>;
+    /** Bins on the sphere instead of the plot — `GeoBin`'s */
+    sphere?: SphereBinning;
   };
 
   export type BinBaseProps = BinProps & BinBaseLayerComponents;
@@ -15,6 +17,7 @@
   import { cls } from '@layerstack/tailwind';
   import { get } from '@layerstack/utils';
   import { extent, max } from 'd3-array';
+  import { geoInterpolate, geoPath } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
 
@@ -44,6 +47,7 @@
     Group,
     Path,
     ChartClipPath,
+    sphere,
     data: dataProp,
     x: xProp,
     y: yProp,
@@ -102,19 +106,64 @@
       [xScale(xAccessor(d)) + xOffset, yScale(yAccessor(d)) + yOffset] as [number, number];
   });
 
+  /**
+   * Binning on the sphere (`GeoBin`), its grid of cells `size` pixels apart at the projection's
+   * center.  The same grid however the globe turns, so its rows are only binned again when the data
+   * or zoom changes.
+   */
+  const globeGrid = $derived.by(() => {
+    const projection = geo.projection;
+    if (!sphere || !projection || !(cellSize > 0)) return null;
+    // `cellSize`, so on an isometric floor — which the projection is fitted to, and refitted as it
+    // turns — the grid keeps its resolution
+    return sphere.grid(shape, projection.scale(), cellSize);
+  });
+
   function bin(rows: Iterable<any>) {
+    if (sphere && globeGrid) {
+      return sphere.bin(rows, (d) => [xAccessor(d), yAccessor(d)], globeGrid);
+    }
     if (!ctx.width || !ctx.height || !(cellSize > 0)) return [];
     return binCells(rows, position, { shape, size: cellSize });
   }
 
   const cells = $derived(bin(data));
 
-  /** Every cell of the plot outlined, when drawing the `grid` */
-  const gridPath = $derived(
-    grid && ctx.width && ctx.height && cellSize > 0
+  /** Draws a ring on the sphere through the projection, clipped at the globe's horizon */
+  const spherePath = $derived(globeGrid && geo.projection ? geoPath(geo.projection) : null);
+
+  /**
+   * On a globe, the cells facing the viewer, placed by the projection — redone as it turns, while
+   * the binning stays.  Elsewhere, the cells as binned.
+   */
+  const shownCells = $derived.by(() => {
+    const projection = geo.projection;
+    if (!sphere || !globeGrid || !projection) return cells;
+    const facing = sphere.facing(projection, globeGrid);
+    const shown: BinCell[] = [];
+    for (const cell of cells) if (facing(cell.center!)) shown.push(sphere.show(cell, projection));
+    return shown;
+  });
+
+  /** Every cell of the plot (or globe) outlined, when drawing the `grid` */
+  const gridPath = $derived.by(() => {
+    if (!grid) return null;
+    if (sphere && globeGrid && geo.projection) {
+      // Only those facing the viewer, as the far side's are clipped away anyway
+      const facing = sphere.facing(geo.projection, globeGrid);
+      const centers = sphere.centers(globeGrid);
+      return spherePath?.({
+        type: 'MultiPolygon',
+        coordinates: sphere
+          .polygons(globeGrid)
+          .filter((_, i) => facing(centers[i]))
+          .map((ring) => [ring]),
+      });
+    }
+    return ctx.width && ctx.height && cellSize > 0
       ? binGridPath(shape, cellSize, ctx.width, ctx.height)
-      : null
-  );
+      : null;
+  });
 
   /**
    * The cells the color ramp, `r`, and `z` are measured against: those of every row, even with
@@ -181,19 +230,70 @@
   /** Cells back to front on an isometric floor, so nearer prisms paint over farther ones */
   const paintedCells = $derived.by(() => {
     const m = layerIsometric();
-    if (!m || !heightOf) return cells;
-    return [...cells].sort((a, b) => m.b * a.x + m.d * a.y - (m.b * b.x + m.d * b.y));
+    if (!m || !heightOf) return shownCells;
+    return [...shownCells].sort((a, b) => m.b * a.x + m.d * a.y - (m.b * b.x + m.d * b.y));
   });
 
   function pathData(cell: BinCell) {
     const k = sizeOf ? sizeOf(cell) : 1;
     if (!(k > 0)) return '';
+    const ring = spherePath && sphere?.ring(cell);
+    if (ring) {
+      // Shrunk toward its center along the sphere, so the projection still clips it at the horizon
+      const center = cell.center!;
+      const scaled = k === 1 ? ring : ring.map((p) => geoInterpolate(center, p)(k));
+      return spherePath({ type: 'Polygon', coordinates: [scaled] }) ?? '';
+    }
     const points =
       k === 1
         ? cell.polygon
         : cell.polygon.map(([x, y]) => [cell.x + (x - cell.x) * k, cell.y + (y - cell.y) * k]);
     return `M${points.join('L')}Z`;
   }
+
+  /**
+   * On a globe with `z`, each cell facing the viewer stood up as a column off the sphere, back to
+   * front so nearer ones paint over farther ones.  (On an isometric floor, `Path` raises cells
+   * instead.)
+   */
+  /**
+   * As many sides as a column can show — the most corners any cell has.  Each column always draws
+   * that many, blank where a side faces away: on canvas, one mounted as the globe turns would paint
+   * after every column, over nearer ones.
+   */
+  const sideSlots = $derived(
+    sphere && globeGrid ? Math.max(...sphere.polygons(globeGrid).map((ring) => ring.length - 1)) : 0
+  );
+
+  const columnItems = $derived.by(() => {
+    const projection = geo.projection;
+    if (!sphere || !heightOf || !projection || layerIsometric()) return null;
+    if (!((projection.clipAngle?.() ?? 0) > 0)) return null;
+    return shownCells
+      .flatMap((cell) => {
+        const k = sizeOf ? sizeOf(cell) : 1;
+        const ring = sphere.ring(cell)!;
+        const center = cell.center!;
+        const shrunk = k === 1 ? ring : ring.map((p) => geoInterpolate(center, p)(k));
+        const column = k > 0 && sphere.column(projection, shrunk, center, heightOf(cell)[1]);
+        return column ? [{ cell, column }] : [];
+      })
+      .sort((a, b) => a.column.depth - b.column.depth)
+      .map(({ cell, column }) => ({
+        cell,
+        ...column,
+        shades: Array.from(
+          { length: sideSlots },
+          (_, i) => column.shades[i] ?? { d: '', opacity: 0 }
+        ),
+        fill: resolveColorProp(fillChannel, cell, fillScale),
+        stroke: stroke == null ? undefined : resolveColorProp(stroke, cell, strokeScale),
+        fillOpacity: resolveStyleProp(fillOpacity, cell),
+        strokeOpacity: resolveStyleProp(strokeOpacity, cell),
+        strokeWidth: resolveStyleProp(strokeWidth, cell),
+        opacity: resolveStyleProp(opacity, cell),
+      }));
+  });
 
   // Resolved together rather than called per attribute, which would cost a derived per cell each
   const items = $derived(
@@ -219,8 +319,47 @@
 {/if}
 
 {#if children}
-  {@render children({ cells })}
-{:else if cells.length > 0}
+  {@render children({ cells: shownCells })}
+{:else if columnItems}
+  <Group {...restProps} class="lc-bin">
+    <!-- Keyed by index, so canvas paints in the order listed here -->
+    {#each columnItems as item, i (i)}
+      {@const cell = item.cell}
+      <!-- The sides take the cell's color but not its stroke, as an isometric chart's do.  Drawn
+           whether or not any face the viewer, so nothing mounts as the globe turns -->
+      <Path
+        pathData={item.sides}
+        fill={item.fill}
+        fillOpacity={item.fillOpacity}
+        opacity={item.opacity}
+        class={cls('lc-bin-side', className)}
+      />
+      {#each item.shades as shade}
+        <Path
+          pathData={shade.d}
+          fill="black"
+          fillOpacity={shade.opacity}
+          opacity={item.opacity}
+          class="lc-bin-side-shade"
+        />
+      {/each}
+      <Path
+        pathData={item.top}
+        fill={item.fill}
+        fillOpacity={item.fillOpacity}
+        stroke={item.stroke}
+        strokeOpacity={item.strokeOpacity}
+        strokeWidth={item.strokeWidth}
+        opacity={item.opacity}
+        class={cls('lc-bin-cell', className)}
+        onclick={onclick && ((e: MouseEvent) => onclick(e, cell))}
+        onpointerenter={onpointerenter && ((e: PointerEvent) => onpointerenter(e, cell))}
+        onpointermove={onpointermove && ((e: PointerEvent) => onpointermove(e, cell))}
+        onpointerleave={onpointerleave && ((e: PointerEvent) => onpointerleave(e, cell))}
+      />
+    {/each}
+  </Group>
+{:else if shownCells.length > 0}
   <Group {...restProps} class="lc-bin">
     <!-- Keyed by index, so canvas paints in the order listed here -->
     {#each items as item, i (i)}
@@ -246,8 +385,12 @@
 
 <style>
   @layer components {
-    :global(:where(.lc-bin-cell)) {
+    :global(:where(.lc-bin-cell, .lc-bin-side, .lc-bin-side-shade)) {
       --stroke-color: none;
+    }
+
+    :global(:where(.lc-bin-side-shade)) {
+      pointer-events: none;
     }
 
     :global(:where(.lc-bin-grid)) {

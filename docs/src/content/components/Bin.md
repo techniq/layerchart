@@ -47,15 +47,33 @@ A `children` snippet receives the cells to draw them yourself, such as with `Tex
 
 :example{ name="labels" }
 
+## Images
+
+Draw each cell as an image, such as a game's terrain tiles. Here, Maunga Whau's elevation picks a tile from [Kenney's Hexagon Pack](https://kenney.nl/assets/hexagon-pack) for each hexagon.
+
+:example{ name="images" }
+
+On an `isometric` chart, draw each cell yourself as a raised `Path` with its tile on top, back to front.
+
+:example{ name="images-isometric" }
+
 ## Isometric
 
 On an `isometric` chart, `z` raises each cell into a prism, measured by `zScale` from zero to the largest cell unless the chart has a `zDomain`. `size` is measured against the floor laid flat, so each cell keeps the same rows as the view turns.
 
 :example{ name="isometric" }
 
+Maps too: here, Walmart stores on an Albers projection, which keeps areas equal so every cell covers the same ground.
+
+:example{ name="walmart-isometric" }
+
 ## Geographic
 
 On a geo chart, `x` and `y` are longitude and latitude, binned where the projection places them. Use an equal-area projection so cells cover the same area of ground.
+
+::tip
+To bin on the sphere itself — on a globe, or so cells cover the same ground however a map is projected — see [GeoBin](/docs/components/GeoBin).
+::
 
 :example{ name="walmart" }
 
