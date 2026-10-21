@@ -23,7 +23,7 @@
 >
 	<Layer>
 		<Bin r="count" fill="currentColor" grid />
-		<Axis placement="left" grid rule />
+		<Axis placement="left" rule />
 		<Axis placement="bottom" rule />
 	</Layer>
 </Chart>

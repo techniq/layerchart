@@ -42,7 +42,7 @@
 >
 	<Layer>
 		<Bin {shape} {size} grid={showGrid} />
-		<Axis placement="left" grid rule />
+		<Axis placement="left" grid={!showGrid} rule />
 		<Axis placement="bottom" rule />
 	</Layer>
 </Chart>
