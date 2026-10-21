@@ -57,11 +57,20 @@ describe('Bin', () => {
     expect(single.width).toBeCloseTo(20 / Math.SQRT2);
   });
 
-  it('with `empty`, tiles the plot', async () => {
+  it('with `grid`, outlines every cell of the plot in one path', async () => {
     const { container } = render(BinChart, {
-      props: { data: [], shape: 'square', empty: true, fill: 'none' },
+      props: { data, shape: 'square', grid: { class: 'test-grid' } },
     } as any);
 
-    await vi.waitFor(() => expect(cells(container)).toHaveLength(100));
+    await vi.waitFor(() => expect(container.querySelectorAll('path.lc-bin-grid')).toHaveLength(1));
+    const grid = container.querySelector('path.lc-bin-grid')!;
+    expect(grid.classList.contains('test-grid')).toBe(true);
+    // A 200px plot in 20px squares
+    expect(grid.getAttribute('d')!.match(/M/g)).toHaveLength(100);
+    // Beneath the cells
+    expect(cells(container)).toHaveLength(2);
+    expect(
+      grid.compareDocumentPosition(cells(container)[0]) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
   });
 });

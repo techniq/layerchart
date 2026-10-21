@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Axis, Bin, Chart, ChartClipPath, Layer } from 'layerchart';
+	import { Axis, Bin, Chart, Layer } from 'layerchart';
 
 	const data = penguins.filter((d) => d.bill_length_mm != null && d.bill_depth_mm != null);
 	export { data };
@@ -22,11 +22,7 @@
 	height={400}
 >
 	<Layer>
-		<!-- Clipped, as the grid's edge cells cross the axes -->
-		<ChartClipPath>
-			<Bin data={[]} empty fill="none" class="stroke-surface-content/10" />
-		</ChartClipPath>
-		<Bin r="count" fill="currentColor" />
+		<Bin r="count" fill="currentColor" grid />
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 	</Layer>

@@ -11,7 +11,7 @@ For a smooth estimate of where points concentrate, see the [Density](/docs/compo
 
 The **bin** mark tiles the plot with cells of one `shape` — hexagons, squares, or triangles — and groups points into the cell they fall in. Binning addresses overplotting in dense scatter plots, and summarizes point data on maps.
 
-Points are binned in pixels, after the chart's scales or geo projection place them, so the cells keep their shape however the data is scaled. The first cell is centered on the plot's top-left corner, and cells only include points (unless `empty` is set).
+Points are binned in pixels, after the chart's scales or geo projection place them, so the cells keep their shape however the data is scaled. The first cell is centered on the plot's top-left corner, and only cells with points are drawn.
 
 Each cell is passed to `fill`, `stroke`, `r`, and `z` as `{ x, y, data, count, polygon }` — so `fill="count"` names its count, and a function can summarize its rows any other way, ex. `fill={(cell) => mean(cell.data, (d) => d.price)}`.
 
@@ -25,7 +25,7 @@ With no `fill`, each cell is colored by its count. Numbers are colored by the ch
 
 `size` is the width of a cell in pixels — the distance between neighboring hexagon centers, a square's side, or a triangle's base. The default is 20.
 
-`empty` also draws the cells nothing fell in. With no `data`, it outlines the grid itself.
+`grid` outlines every cell of the plot beneath the bins, clipped to the plot. Pass props such as `class` to style it, ex. `grid={{ class: 'stroke-primary/20' }}`.
 
 :example{ name="shapes" }
 

@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Axis, Bin, type BinShape, Chart, ChartClipPath, Layer } from 'layerchart';
+	import { Axis, Bin, type BinShape, Chart, Layer } from 'layerchart';
 	import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	const data = olympians.filter((d) => d.weight != null && d.height != null);
@@ -41,13 +41,7 @@
 	height={400}
 >
 	<Layer>
-		<Bin {shape} {size} />
-		{#if showGrid}
-			<!-- Every cell, with nothing in it, outlined — clipped, as the edge cells cross the axes -->
-			<ChartClipPath>
-				<Bin data={[]} {shape} {size} empty fill="none" class="stroke-surface-content/10" />
-			</ChartClipPath>
-		{/if}
+		<Bin {shape} {size} grid={showGrid} />
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 	</Layer>

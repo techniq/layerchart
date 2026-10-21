@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
-import type { Without } from '$lib/utils/types.js';
+import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import type { Accessor } from '$lib/utils/common.js';
 import type { ColorProp, DataProp, StyleProp } from '$lib/utils/dataProp.js';
 
@@ -39,11 +39,14 @@ export type BinPropsWithoutHTML<T = any> = {
    */
   size?: number;
   /**
-   * Also draw the cells no row fell in, tiling the whole plot.  With no `data`, a grid to show how
-   * the plot is divided.
+   * Outline every cell of the grid beneath the bins, clipped to the plot, to show how it is divided.
+   * Pass props (class, style, stroke, strokeWidth, opacity) to forward onto the grid's path.
    * @default false
    */
-  empty?: boolean;
+  grid?:
+    | boolean
+    | (Pick<SVGAttributes<SVGElement>, 'class' | 'style'> &
+        Pick<CommonStyleProps, 'stroke' | 'strokeWidth' | 'strokeOpacity' | 'opacity'>);
   /**
    * Fill color of each cell.
    * - `undefined`: the cell's `count`, through a color ramp
@@ -243,15 +246,11 @@ export function binGrid(shape: BinShape, size: number): Grid {
   }
 }
 
-/**
- * Group `data` into the cells of a `shape` grid by pixel position, in order of each cell's first row.
- * With `empty`, every cell overlapping `[0, width] × [0, height]` is included, in row order, ahead
- * of any outside it.
- */
+/** Group `data` into the cells of a `shape` grid by pixel position, in order of each cell's first row */
 export function binCells<T>(
   data: Iterable<T>,
   position: (d: T) => [number, number] | null | undefined,
-  options: { shape: BinShape; size: number; empty?: { width: number; height: number } }
+  options: { shape: BinShape; size: number }
 ): BinCell<T>[] {
   const grid = binGrid(options.shape, options.size);
   const cells = new Map<string, BinCell<T> & { up?: boolean }>();
@@ -261,10 +260,6 @@ export function binCells<T>(
     cells.set(c.key, cell);
     return cell;
   };
-
-  if (options.empty) {
-    for (const c of grid.cover(options.empty.width, options.empty.height)) add(c);
-  }
 
   for (const d of data) {
     const p = position(d);
@@ -279,4 +274,16 @@ export function binCells<T>(
     cell.polygon = grid.polygon(cell.x, cell.y, up);
     return cell;
   });
+}
+
+/**
+ * Path data outlining every cell of a `shape` grid overlapping `[0, width] × [0, height]`, as one
+ * path — so an edge two cells share is stroked once, rather than darker than the plot's border
+ */
+export function binGridPath(shape: BinShape, size: number, width: number, height: number) {
+  const grid = binGrid(shape, size);
+  return grid
+    .cover(width, height)
+    .map((c) => `M${grid.polygon(c.x, c.y, c.up).join('L')}Z`)
+    .join('');
 }

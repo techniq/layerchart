@@ -7,6 +7,7 @@
   import BinBase from './Bin.base.svelte';
   import Group from '../Group/Group.svg.svelte';
   import Path from '../Path/Path.svg.svelte';
+  import ChartClipPath from '../ChartClipPath/ChartClipPath.svg.svelte';
   import type { BinProps } from './Bin.shared.svelte.js';
 
   let props: BinProps = $props();
@@ -14,4 +15,9 @@
   const ctx = getChartContext();
 </script>
 
-<BinBase {Group} Path={(props.z != null && ctx.isometric?.PathExtruded) || Path} {...props} />
+<BinBase
+  {Group}
+  {ChartClipPath}
+  Path={(props.z != null && ctx.isometric?.PathExtruded) || Path}
+  {...props}
+/>

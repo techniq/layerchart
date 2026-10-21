@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { polygonArea, polygonContains } from 'd3-polygon';
 import { randomLcg } from 'd3-random';
-import { binCells, type BinShape } from './Bin.shared.svelte.js';
+import { binCells, binGrid, binGridPath, type BinShape } from './Bin.shared.svelte.js';
 
 const shapes: BinShape[] = ['hexagon', 'square', 'triangle'];
 
@@ -47,19 +47,19 @@ describe('binCells', () => {
       expect(Math.max(...xs) - Math.min(...xs)).toBeCloseTo(size, 6);
     });
 
-    it('with `empty`, covers the whole plot', () => {
+    it('outlines a grid covering the whole plot', () => {
       const width = 300;
       const height = 200;
-      const all = binCells([], () => null, { shape, size, empty: { width, height } });
-      expect(all.every((cell) => cell.count === 0)).toBe(true);
-      // Every point in the plot lands in a cell that `empty` already drew
-      const inside = points.filter(([x, y]) => x >= 0 && x < width && y >= 0 && y < height);
-      const binned = binCells(inside, (d) => [d[0], d[1]], {
-        shape,
-        size,
-        empty: { width, height },
-      });
-      expect(binned.length).toBe(all.length);
+      const grid = binGrid(shape, size);
+      const covered = new Set(grid.cover(width, height).map((c) => c.key));
+      // Every point in the plot lands in a cell the grid outlines
+      for (const [x, y] of points) {
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+          expect(covered.has(grid.locate(x, y).key)).toBe(true);
+        }
+      }
+      // One subpath per cell
+      expect(binGridPath(shape, size, width, height).match(/M/g)).toHaveLength(covered.size);
     });
   });
 

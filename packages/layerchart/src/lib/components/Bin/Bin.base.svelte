@@ -5,6 +5,7 @@
   export type BinBaseLayerComponents = {
     Group: Component<any>;
     Path: Component<any>;
+    ChartClipPath: Component<any>;
   };
 
   export type BinBaseProps = BinProps & BinBaseLayerComponents;
@@ -17,6 +18,7 @@
   import { scaleSequential } from 'd3-scale';
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
 
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { accessor as resolveAccessor } from '$lib/utils/common.js';
   import {
     colorPropDataKey,
@@ -30,7 +32,7 @@
   import { getFacetPanel, getMarkData } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerIsometric } from '$lib/contexts/isometric.js';
-  import { binCells, binGrid, type BinCell } from './Bin.shared.svelte.js';
+  import { binCells, binGrid, binGridPath, type BinCell } from './Bin.shared.svelte.js';
 
   const ctx = getChartContext();
   const markData = getMarkData();
@@ -41,12 +43,13 @@
   let {
     Group,
     Path,
+    ChartClipPath,
     data: dataProp,
     x: xProp,
     y: yProp,
     shape = 'hexagon',
     size = 20,
-    empty = false,
+    grid = false,
     fill,
     fillOpacity,
     stroke,
@@ -101,14 +104,17 @@
 
   function bin(rows: Iterable<any>) {
     if (!ctx.width || !ctx.height || !(cellSize > 0)) return [];
-    return binCells(rows, position, {
-      shape,
-      size: cellSize,
-      empty: empty ? { width: ctx.width, height: ctx.height } : undefined,
-    });
+    return binCells(rows, position, { shape, size: cellSize });
   }
 
   const cells = $derived(bin(data));
+
+  /** Every cell of the plot outlined, when drawing the `grid` */
+  const gridPath = $derived(
+    grid && ctx.width && ctx.height && cellSize > 0
+      ? binGridPath(shape, cellSize, ctx.width, ctx.height)
+      : null
+  );
 
   /**
    * The cells the color ramp, `r`, and `z` are measured against: those of every row, even with
@@ -205,6 +211,13 @@
   );
 </script>
 
+{#if gridPath}
+  <!-- Its edge cells cross the plot's edges -->
+  <ChartClipPath>
+    <Path pathData={gridPath} {...extractLayerProps(grid, 'lc-bin-grid')} />
+  </ChartClipPath>
+{/if}
+
 {#if children}
   {@render children({ cells })}
 {:else if cells.length > 0}
@@ -235,6 +248,16 @@
   @layer components {
     :global(:where(.lc-bin-cell)) {
       --stroke-color: none;
+    }
+
+    :global(:where(.lc-bin-grid)) {
+      --fill-color: none;
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+      pointer-events: none;
     }
   }
 </style>
