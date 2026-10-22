@@ -1,8 +1,9 @@
 name: Update Visual Baseline
 
 # Fingerprints depend on the rendering environment, so the baseline PRs compare against has to be
-# recorded on a runner rather than a contributor's machine. Runs on demand, and after any push to
-# main that could change what the examples draw.
+# recorded on a runner rather than a contributor's machine, from a production build like
+# visual-regression.yml captures. Runs on demand, and after any push to main that could change what
+# the examples draw (or how they're captured).
 on:
   workflow_dispatch:
   push:
@@ -11,7 +12,10 @@ on:
     paths:
       - packages/layerchart/**
       - docs/src/examples/**
+      # Generated from the examples after merging; captures don't read it
+      - '!docs/src/examples/catalog/**'
       - docs/scripts/visual-snapshot.mjs
+      - .github/workflows/update-visual-baseline.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,22 +49,25 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
 
-      # `stackblitz-files.json` is generated and gitignored, so a fresh checkout has none — and
-      # every example route imports it transitively, through `Example`'s "open in StackBlitz".
-      # `prebuild` covers this for a real build; a bare `vite dev` doesn't.
-      - name: Generate the docs server's inputs
-        run: pnpm --filter docs generate:stackblitz
+      # A production build rather than `vite dev`, which serves each page as hundreds of separate
+      # modules — capturing every example is ~2.5x faster against the build.  `prebuild` also
+      # generates the inputs the server needs (ex. the gitignored `stackblitz-files.json`).
+      - name: Build docs
+        run: pnpm --filter docs build
+        env:
+          # `generate:releases` only reads public releases, which `GITHUB_TOKEN` covers
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Start the docs server
         run: |
-          pnpm --filter docs exec vite dev --port 3002 > /tmp/server.log 2>&1 &
+          pnpm --filter docs exec vite preview --port 3002 > /tmp/server.log 2>&1 &
           for i in $(seq 1 60); do
             curl -sf -o /dev/null "http://localhost:3002/docs/screenshot/AnnotationLine/horizontal" && exit 0
             sleep 2
           done
           echo "docs server did not start"; cat /tmp/server.log; exit 1
 
-      # A full capture takes ~40 minutes, so prove the app renders at all before spending them.
+      # A full capture takes a while, so prove the app renders at all before spending it.
       # `capture` exits non-zero once more than a few examples draw nothing.
       - name: Smoke test the docs server
         working-directory: docs
