@@ -4,31 +4,22 @@
 </script>
 
 <script lang="ts">
-	import { extent } from 'd3-array';
 	import { Axis, Bin, Chart, isometric, Layer } from 'layerchart';
 
 	const data = olympians.filter((d) => d.weight != null && d.height != null);
 	export { data };
-
-	/** `[min, max]` widened by a tenth either side, so no cell reaches the axes */
-	function padded(values: number[]) {
-		const [min, max] = extent(values) as [number, number];
-		const margin = (max - min) * 0.1;
-		return [min - margin, max + margin];
-	}
 </script>
 
-<!-- Each hexagon raised by its count, measured by `zScale`.  Padded in data units rather than
-     pixels (`xPadding`), as the floor is refitted to the view as it turns.  Drag to rotate, and
-     hold shift to zoom, so scrolling the page passes over it. -->
+<!-- Each hexagon raised by its count, measured by `zScale`, and padded by a cell so none reaches
+     the axes.  Drag to rotate, and hold shift to zoom, so scrolling the page passes over it. -->
 <Chart
 	{data}
 	x="weight"
 	y="height"
 	xNice
 	yNice
-	xDomain={padded(data.map((d) => d.weight))}
-	yDomain={padded(data.map((d) => d.height))}
+	xPadding={[24, 24]}
+	yPadding={[24, 24]}
 	zRange={({ height }) => [0, height * 0.4]}
 	view={isometric}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}

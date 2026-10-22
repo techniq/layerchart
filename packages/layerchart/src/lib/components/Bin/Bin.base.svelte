@@ -93,11 +93,7 @@
    * `size` is measured against the floor laid flat — the cells then turn with the floor, holding the
    * same rows, rather than being re-cut at every angle.
    */
-  const cellSize = $derived.by(() => {
-    const floor = ctx.isometricFloor;
-    if (!floor || !ctx.box.width || !ctx.box.height) return size;
-    return size * Math.max(floor.width / ctx.box.width, floor.height / ctx.box.height);
-  });
+  const cellSize = $derived(size * ctx.floorScale);
 
   const position = $derived.by(() => {
     const projection = geo.projection;
