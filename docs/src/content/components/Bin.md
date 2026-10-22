@@ -2,7 +2,7 @@
 description: Composite mark grouping two-dimensional points into a grid of hexagons, squares, or triangles, to count or summarize what falls in each cell.
 category: marks
 layers: [svg, canvas]
-related: [Density, Contour, Cell, Points]
+related: [GeoBin, Density, Contour, Cell, Points]
 ---
 
 ::tip
