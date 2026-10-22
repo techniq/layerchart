@@ -24,7 +24,7 @@
 	y="latitude"
 	geo={{ projection: geoAlbersUsa, fitGeojson: states }}
 	zRange={({ height }) => [0, height * 0.3]}
-	view={isometric({ rotate: 15, tilt: 35, aspect: 975 / 610 })}
+	view={isometric({ rotate: 25, tilt: 50, aspect: 975 / 610 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	height={550}
 >

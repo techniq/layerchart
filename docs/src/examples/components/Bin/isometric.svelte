@@ -21,7 +21,7 @@
 	xPadding={[24, 24]}
 	yPadding={[24, 24]}
 	zRange={({ height }) => [0, height * 0.4]}
-	view={isometric}
+	view={isometric({ rotate: 25, tilt: 60 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	padding={{ left: 30, bottom: 24, top: 8, right: 8 }}
 	height={500}
