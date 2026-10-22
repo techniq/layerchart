@@ -64,6 +64,16 @@ describe('binCells', () => {
     });
   });
 
+  it('bins against the grid scaled down, its cells scaled back up', () => {
+    const points = randomPoints(500);
+    const flat = binCells(points, ([x, y]) => [x / 3, y / 3], { shape: 'hexagon', size: 10 });
+    const scaled = binCells(points, ([x, y]) => [x, y], { shape: 'hexagon', size: 10, scale: 3 });
+    expect(scaled.map((c) => c.count)).toEqual(flat.map((c) => c.count));
+    expect(scaled[0].x).toBeCloseTo(flat[0].x * 3, 9);
+    expect(scaled[0].area).toBeCloseTo(flat[0].area * 9, 6);
+    expect(scaled[0].polygon[0][1]).toBeCloseTo(flat[0].polygon[0][1] * 3, 9);
+  });
+
   it("sums a weight into each cell's count", () => {
     const rows = [
       { at: [5, 5], people: 120 },

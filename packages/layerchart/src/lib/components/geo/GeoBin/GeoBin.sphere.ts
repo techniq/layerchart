@@ -13,6 +13,7 @@ import {
 import { geoGrayFullerRaw } from 'd3-geo-polygon';
 // @ts-expect-error - no types available
 import { geoDelaunay } from 'd3-geo-voronoi';
+import { radiansToDegrees } from '$lib/utils/math.js';
 import { sideShade } from '$lib/utils/isometric.js';
 import { weightOf } from '../../Bin/Bin.shared.svelte.js';
 import type {
@@ -45,14 +46,29 @@ export type SphereGrid = {
   outline(facing: (center: LonLat) => boolean): GeoPermissibleObjects;
 };
 
-/** A grid whose cells are all made up front, as a Voronoi diagram's are */
-function listedGrid(centers: LonLat[], polygons: LonLat[][], find: (point: LonLat) => number) {
+/** The farthest the cells `indices` reach from their centers, and the most corners any has */
+function gridBounds(
+  indices: Iterable<number>,
+  center: (i: number) => LonLat,
+  polygon: (i: number) => LonLat[]
+) {
   let reach = 0;
   let corners = 0;
-  polygons.forEach((ring, i) => {
+  for (const i of indices) {
+    const ring = polygon(i);
     corners = Math.max(corners, ring.length - 1);
-    for (const p of ring) reach = Math.max(reach, geoDistance(centers[i], p));
-  });
+    for (const p of ring) reach = Math.max(reach, geoDistance(center(i), p));
+  }
+  return { reach, corners };
+}
+
+/** A grid whose cells are all made up front, as a Voronoi diagram's are */
+function listedGrid(centers: LonLat[], polygons: LonLat[][], find: (point: LonLat) => number) {
+  const { reach, corners } = gridBounds(
+    polygons.keys(),
+    (i) => centers[i],
+    (i) => polygons[i]
+  );
   return {
     count: polygons.length,
     center: (i: number) => centers[i],
@@ -68,7 +84,7 @@ function listedGrid(centers: LonLat[], polygons: LonLat[][], find: (point: LonLa
 }
 
 /** Angle between neighboring icosahedron vertices, `atan(2)` radians — the grid's spacing at `k = 1` */
-export const ICOSAHEDRON_EDGE = Math.atan(2);
+const ICOSAHEDRON_EDGE = Math.atan(2);
 
 /** Turns the icosahedron so its 12 vertices — the grid's pentagons — fall in the ocean */
 const AIROCEAN_ROTATION: [number, number, number] = [-83.65929, 25.44458, -87.45184];
@@ -76,11 +92,15 @@ const AIROCEAN_ROTATION: [number, number, number] = [-83.65929, 25.44458, -87.45
 /** Most cells a grid on the sphere may have, as fine zooms would otherwise build huge ones */
 const MAX_CELLS = 100_000;
 
-/** For the icosahedron's shapes, the angle between neighboring cells at `k = 1`, and how many cells `k` makes */
-const SHAPES: Record<'hexagon' | 'triangle', { spacing: number; count: (k: number) => number }> = {
-  // Fuller's icosahedron, its faces divided `k` times along each edge
-  hexagon: { spacing: ICOSAHEDRON_EDGE, count: (k) => 10 * k * k + 2 },
-  triangle: { spacing: ICOSAHEDRON_EDGE, count: (k) => 20 * k * k },
+/**
+ * For the icosahedron's shapes — its faces divided `k` times along each edge — the finest `k` within
+ * `MAX_CELLS`
+ */
+const MAX_RESOLUTION = {
+  // `10k² + 2` hexagons
+  hexagon: Math.floor(Math.sqrt((MAX_CELLS - 2) / 10)),
+  // `20k²` triangles
+  triangle: Math.floor(Math.sqrt(MAX_CELLS / 20)),
 };
 
 /**
@@ -100,25 +120,19 @@ const GRATICULE_STEPS = [
 function sphereResolution(shape: BinShape, scale: number, size: number) {
   if (shape === 'square') {
     // The graticule step nearest `size`, as rows from pole to pole
-    const ideal = (size / scale) * (180 / Math.PI);
+    const ideal = radiansToDegrees(size / scale);
     const step = GRATICULE_STEPS.reduce((best, s) =>
       Math.abs(Math.log(s / ideal)) < Math.abs(Math.log(best / ideal)) ? s : best
     );
     return 180 / step;
   }
-  const { spacing, count } = SHAPES[shape];
-  let max = 1;
-  while (count(max + 1) <= MAX_CELLS) max++;
-  const k = Math.min(Math.max((scale * spacing) / size, 1), max);
+  const max = MAX_RESOLUTION[shape];
+  const k = Math.min(Math.max((scale * ICOSAHEDRON_EDGE) / size, 1), max);
   if (k <= 8) return Math.round(k);
   const step = 2 ** (Math.floor(Math.log2(k)) - 2);
   return Math.min(Math.round(k / step) * step, max);
 }
 
-/**
- * Whether any of a ring on the sphere faces the viewer of `projection` — within its `clipAngle` of
- * the globe's center
- */
 /**
  * The grid resolution `k` whose `shape` cells are `step` degrees apart — a square's side, or the
  * distance between hexagon centers or along a triangle's side.  A square's rounded so `step`
@@ -126,10 +140,10 @@ function sphereResolution(shape: BinShape, scale: number, size: number) {
  */
 function stepResolution(shape: BinShape, step: number) {
   if (shape === 'square') return Math.max(1, Math.round(180 / step));
-  const { spacing, count } = SHAPES[shape];
-  let max = 1;
-  while (count(max + 1) <= MAX_CELLS) max++;
-  return Math.min(Math.max(Math.round(spacing / (step * radians)), 1), max);
+  return Math.min(
+    Math.max(Math.round(ICOSAHEDRON_EDGE / (step * radians)), 1),
+    MAX_RESOLUTION[shape]
+  );
 }
 
 /**
@@ -143,10 +157,11 @@ function facingCell(
 ) {
   // A flat map shows the whole sphere — unclipped, its `clipAngle()` is `0` — and a composite one
   // (`geoAlbersUsa`) has neither
-  if (!projection.rotate || !((projection.clipAngle?.() ?? 0) > 0)) return () => true;
+  const clipAngle = projection.clipAngle?.() ?? 0;
+  if (!projection.rotate || !(clipAngle > 0)) return () => true;
   const [lambda, phi] = projection.rotate();
   const view = cartesian([-lambda, -phi]);
-  const reach = ((projection.clipAngle?.() ?? 90) * Math.PI) / 180 + grid.reach;
+  const reach = clipAngle * radians + grid.reach;
   if (reach >= Math.PI) return () => true;
   const least = Math.cos(reach);
   return (center: LonLat) => dot(cartesian(center), view) > least;
@@ -215,7 +230,7 @@ function geodesicPoints(k: number) {
   if (geodesic) return geodesic;
 
   // One icosahedron face, as a spherical triangle
-  const theta = (Math.atan(0.5) * 180) / Math.PI;
+  const theta = radiansToDegrees(Math.atan(0.5));
   const triangle: LonLat[] = [
     [0, theta],
     [36, -theta],
@@ -340,14 +355,14 @@ function triangleGrid(k: number): SphereGrid {
   });
 }
 
+/** How far short of a pole, in degrees, the cells around it stop — about 100m */
+const POLE_GAP = 1e-3;
+
 /**
  * Cells between meridians and parallels `180 / k`° apart — those of a `Graticule` drawn at that
  * step.  Unlike the other shapes, not equal in area: they narrow toward the poles, to triangles
  * around them.
  */
-/** How far short of a pole, in degrees, the cells around it stop — about 100m */
-const POLE_GAP = 1e-3;
-
 function graticuleGrid(k: number): SphereGrid {
   const step = 180 / k;
   const columns = 2 * k;
@@ -381,14 +396,12 @@ function graticuleGrid(k: number): SphereGrid {
   };
 
   // Cells are widest at the equator and most irregular at the poles, so those rows bound them all
-  const sampled = [0, Math.floor(k / 2) * columns, (k - 1) * columns];
-  let reach = 0;
-  let corners = 0;
-  for (const i of sampled) {
-    const ring = polygon(i);
-    corners = Math.max(corners, ring.length - 1);
-    for (const p of ring) reach = Math.max(reach, geoDistance(center(i), p));
-  }
+  const { reach, corners } = gridBounds(
+    [0, Math.floor(k / 2) * columns, (k - 1) * columns],
+    center,
+    polygon
+  );
+  let lines: GeoPermissibleObjects | undefined;
 
   return {
     count: k * columns,
@@ -403,12 +416,12 @@ function graticuleGrid(k: number): SphereGrid {
     corners,
     // The graticule itself, rather than a ring for each of maybe a million cells
     outline: () =>
-      geoGraticule()
+      (lines ??= geoGraticule()
         .extent([
           [-180, -90 + POLE_GAP],
           [180, 90 - POLE_GAP],
         ])
-        .step([step, step])(),
+        .step([step, step])()),
   };
 }
 
@@ -457,7 +470,7 @@ function closed(ring: LonLat[]) {
 }
 
 /**
- * A cell stood up `height` pixels off an orthographic globe, as a column pointing out from its
+ * Stands cells up off an orthographic globe, `height` pixels as a column pointing out from each's
  * center — or `null` when it's on the far side.
  *
  * An orthographic globe is a parallel projection, so a point raised off the sphere lands along the
@@ -465,18 +478,15 @@ function closed(ring: LonLat[]) {
  * the radius.  Its sides are drawn where they face the viewer, shaded by how far they turn, as an
  * `isometric` chart shades a raised shape's.
  */
-function sphereColumn(
-  projection: {
-    (point: LonLat): [number, number] | null;
-    rotate(): number[];
-    scale(): number;
-    translate(): number[];
-  },
-  ring: LonLat[],
-  center: LonLat,
-  height: number
-): SphereColumn | null {
+function sphereColumns(projection: {
+  (point: LonLat): [number, number] | null;
+  rotate(): number[];
+  scale(): number;
+  translate(): number[];
+}) {
   const turn = geoRotation(projection.rotate() as [number, number, number]);
+  const [tx, ty] = projection.translate();
+  const radius = projection.scale();
   // Right, up, and toward the viewer, as the globe is turned to face them
   const facingViewer = (p: LonLat): Vec3 => {
     const [lambda, phi] = turn(p);
@@ -487,41 +497,45 @@ function sphereColumn(
       c * Math.cos(lambda * radians),
     ];
   };
-  const axis = facingViewer(center);
-  if (axis[2] <= 0) return null;
-  // Only while all of its base faces the viewer: a corner past the horizon is drawn as if seen
-  // through the globe, and would stand its sides up across it
-  const corners = ring.slice(0, -1);
-  const around = corners.map(facingViewer);
-  if (around.some((p) => p[2] <= 0)) return null;
-
-  const [tx, ty] = projection.translate();
-  const out = 1 + Math.max(0, height) / projection.scale();
-  const base = corners.map((p): [number, number] => projection(p) ?? [tx, ty]);
-  const top = base.map(([x, y]) => [tx + (x - tx) * out, ty + (y - ty) * out] as [number, number]);
   const polygon = (points: [number, number][]) => `M${points.join('L')}Z`;
 
-  let sides = '';
-  const shades: SphereColumn['shades'] = [];
-  if (height > 0) {
-    for (let i = 0; i < corners.length; i++) {
-      const j = (i + 1) % corners.length;
-      // The side's outward normal: from the column's axis toward the middle of its edge
-      const middle = normalize(add(around[i], around[j]));
-      const along = dot(middle, axis);
-      const normal: Vec3 = [
-        middle[0] - along * axis[0],
-        middle[1] - along * axis[1],
-        middle[2] - along * axis[2],
-      ];
-      if (normal[2] <= 1e-9) continue;
-      const d = polygon([base[i], base[j], top[j], top[i]]);
-      sides += d;
-      shades.push({ d, opacity: sideShade(normal[0], normal[2]) });
-    }
-  }
+  return (ring: LonLat[], center: LonLat, height: number): SphereColumn | null => {
+    const axis = facingViewer(center);
+    if (axis[2] <= 0) return null;
+    // Only while all of its base faces the viewer: a corner past the horizon is drawn as if seen
+    // through the globe, and would stand its sides up across it
+    const corners = ring.slice(0, -1);
+    const around = corners.map(facingViewer);
+    if (around.some((p) => p[2] <= 0)) return null;
 
-  return { sides, shades, top: polygon(top), depth: axis[2] };
+    const out = 1 + Math.max(0, height) / radius;
+    const base = corners.map((p): [number, number] => projection(p) ?? [tx, ty]);
+    const top = base.map(
+      ([x, y]) => [tx + (x - tx) * out, ty + (y - ty) * out] as [number, number]
+    );
+
+    let sides = '';
+    const shades: SphereColumn['shades'] = [];
+    if (height > 0) {
+      for (let i = 0; i < corners.length; i++) {
+        const j = (i + 1) % corners.length;
+        // The side's outward normal: from the column's axis toward the middle of its edge
+        const middle = normalize(add(around[i], around[j]));
+        const along = dot(middle, axis);
+        const normal: Vec3 = [
+          middle[0] - along * axis[0],
+          middle[1] - along * axis[1],
+          middle[2] - along * axis[2],
+        ];
+        if (normal[2] <= 1e-9) continue;
+        const d = polygon([base[i], base[j], top[j], top[i]]);
+        sides += d;
+        shades.push({ d, opacity: sideShade(normal[0], normal[2]) });
+      }
+    }
+
+    return { sides, shades, top: polygon(top), depth: axis[2] };
+  };
 }
 
 /** Each cell's outline on the sphere, for drawing it through the projection */
@@ -607,13 +621,11 @@ export const sphereBinning: SphereBinning<SphereGrid> = {
   grid: (shape, scale, size, step) =>
     sphereGrid(shape, step ? stepResolution(shape, step) : sphereResolution(shape, scale, size)),
   bin: binSphere,
-  outline: (grid, facing) => grid.outline(facing),
-  corners: (grid) => grid.corners,
-  ring: (cell) => ShownCell.ring(cell) ?? sphereRings.get(cell),
+  ring: (cell) => ShownCell.ring(cell),
   show(cell, projection) {
     const [x, y] = projection(cell.center!) ?? [NaN, NaN];
     return new ShownCell(cell, sphereRings.get(cell)!, projection, x, y);
   },
   facing: facingCell,
-  column: sphereColumn,
+  columns: sphereColumns,
 };

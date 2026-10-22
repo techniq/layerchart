@@ -149,11 +149,7 @@
    * any `scale` / `translate` — so the chart doesn't jump once `TransformContext` loads
    */
   const initialTransform = $derived.by(() => {
-    if (
-      transform?.mode !== 'projection' ||
-      !(resolvedApply.translate || resolvedApply.scale) ||
-      !geo?.projection
-    ) {
+    if (transform?.mode !== 'projection' || !(resolvedApply.translate || resolvedApply.scale)) {
       return undefined;
     }
     const projection = chartState.geoState.untransformedProjection;

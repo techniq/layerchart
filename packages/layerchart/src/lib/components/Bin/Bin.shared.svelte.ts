@@ -114,7 +114,14 @@ export type SphereColumn = {
  * Binning on the sphere, which `GeoBin` hands `Bin`'s implementation — kept out of `Bin` itself, so
  * charts that don't bin on a globe don't load it
  */
-export type SphereBinning<Grid = any> = {
+export type SphereBinning<
+  Grid extends {
+    /** Most corners any of its cells has */
+    corners: number;
+    /** Lines outlining its cells — at least those whose centers pass `facing` */
+    outline(facing: (center: [number, number]) => boolean): GeoPermissibleObjects;
+  } = any,
+> = {
   /**
    * The grid of `shape` cells about `size` pixels across, at the center of a globe `scale` in
    * radius — or `step` degrees apart, when given
@@ -127,10 +134,6 @@ export type SphereBinning<Grid = any> = {
     grid: Grid,
     weight?: (d: T) => number
   ): BinCell<T>[];
-  /** Lines outlining the grid's cells — at least those whose centers pass `facing` */
-  outline(grid: Grid, facing: (center: [number, number]) => boolean): GeoPermissibleObjects;
-  /** Most corners any of the grid's cells has */
-  corners(grid: Grid): number;
   /** A cell's outline on the sphere */
   ring(cell: BinCell): [number, number][] | undefined;
   /** A binned cell placed where `projection` draws its center */
@@ -143,13 +146,13 @@ export type SphereBinning<Grid = any> = {
     projection: { rotate?(): number[]; clipAngle?(): number | null },
     grid: Grid
   ): (center: [number, number]) => boolean;
-  /** A cell's outline stood up `height` pixels off an orthographic globe, or `null` facing away */
-  column(
-    projection: any,
-    ring: [number, number][],
-    center: [number, number],
-    height: number
-  ): SphereColumn | null;
+  /**
+   * Stands a cell's outline up `height` pixels off an orthographic globe — `null` facing away —
+   * made once a frame, for every cell drawn
+   */
+  columns(
+    projection: any
+  ): (ring: [number, number][], center: [number, number], height: number) => SphereColumn | null;
 };
 
 const SQRT3 = Math.sqrt(3);
@@ -304,15 +307,36 @@ function triangleGrid(size: number): Grid {
   };
 }
 
-export function binGrid(shape: BinShape, size: number): Grid {
-  switch (shape) {
-    case 'square':
-      return squareGrid(size);
-    case 'triangle':
-      return triangleGrid(size);
-    default:
-      return hexagonGrid(size);
-  }
+/**
+ * A grid of `shape` cells `size` wide, drawn `scale` times larger — on an isometric floor, its scale
+ * from the floor laid flat.  Points are located against the unscaled grid, rounded, so one on a
+ * cell's edge falls the same way however the floor is refitted as the view turns.
+ */
+export function binGrid(shape: BinShape, size: number, scale = 1): Grid {
+  const grid =
+    shape === 'square'
+      ? squareGrid(size)
+      : shape === 'triangle'
+        ? triangleGrid(size)
+        : hexagonGrid(size);
+  return scale === 1 ? grid : scaledGrid(grid, scale);
+}
+
+function scaledGrid(grid: Grid, scale: number): Grid {
+  const snap = (v: number) => Math.round((v / scale) * 1e6) / 1e6;
+  const scaled = <C extends { x: number; y: number }>(c: C) => ({
+    ...c,
+    x: c.x * scale,
+    y: c.y * scale,
+  });
+  return {
+    locate: (x, y) => scaled(grid.locate(snap(x), snap(y))),
+    cover: (width, height) => grid.cover(width / scale, height / scale).map(scaled),
+    polygon: (x, y, up) =>
+      grid.polygon(x / scale, y / scale, up).map(([px, py]) => [px * scale, py * scale]),
+    circumradius: grid.circumradius * scale,
+    area: grid.area * scale * scale,
+  };
 }
 
 /** A row's `weight`, or nothing for one without a finite number */
@@ -325,9 +349,9 @@ export function weightOf<T>(weight: (d: T) => number, d: T) {
 export function binCells<T>(
   data: Iterable<T>,
   position: (d: T) => [number, number] | null | undefined,
-  options: { shape: BinShape; size: number; weight?: (d: T) => number }
+  options: { shape: BinShape; size: number; scale?: number; weight?: (d: T) => number }
 ): BinCell<T>[] {
-  const grid = binGrid(options.shape, options.size);
+  const grid = binGrid(options.shape, options.size, options.scale);
   const cells = new Map<string, BinCell<T> & { up?: boolean }>();
 
   const add = (c: { key: string; x: number; y: number; up?: boolean }) => {
@@ -363,8 +387,14 @@ export function binCells<T>(
  * Path data outlining every cell of a `shape` grid overlapping `[0, width] × [0, height]`, as one
  * path — so an edge two cells share is stroked once, rather than darker than the plot's border
  */
-export function binGridPath(shape: BinShape, size: number, width: number, height: number) {
-  const grid = binGrid(shape, size);
+export function binGridPath(
+  shape: BinShape,
+  size: number,
+  width: number,
+  height: number,
+  scale = 1
+) {
+  const grid = binGrid(shape, size, scale);
   return grid
     .cover(width, height)
     .map((c) => `M${grid.polygon(c.x, c.y, c.up).join('L')}Z`)

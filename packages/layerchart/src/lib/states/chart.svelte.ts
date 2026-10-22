@@ -121,11 +121,6 @@ const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParen
 /** Mark info is "empty" when none of the fields the chart uses for series /
  * domain inference are populated. Pixel-mode primitives produce empty info
  * since they have no string/function accessors and no own data. */
-/** `padding` in pixels scaled by `k`, as is when `k` is `1` */
-function scaleFloorPadding(padding: PaddingArray | undefined, k: number) {
-  return k === 1 || !padding ? padding : padding.map((p) => p * k);
-}
-
 /** The grid's first panel — the one that registers marks on every panel's behalf */
 function isFirstPanel(facet: { column: number; row: number }) {
   return facet.column === 0 && facet.row === 0;
@@ -141,6 +136,11 @@ function isEmptyMarkInfo(info: MarkInfo): boolean {
   // Falsy rather than `!= null`, so `stacks: false` reads as "nothing to say" — which also means
   // a meaningful `0` would need its own case here.
   return Object.values(info).every((value) => !value);
+}
+
+/** `padding` in pixels scaled by `k`, as is when `k` is `1` */
+function scaleFloorPadding(padding: PaddingArray | undefined, k: number) {
+  return k === 1 || !padding ? padding : padding.map((p) => p * k);
 }
 
 /** One axis of {@link transformForBrush}, as a fraction of the base domain */

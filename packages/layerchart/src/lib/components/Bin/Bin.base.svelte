@@ -17,7 +17,6 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { get } from '@layerstack/utils';
   import { extent, max } from 'd3-array';
   import { geoInterpolate, geoPath } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
@@ -26,7 +25,7 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { accessor as resolveAccessor } from '$lib/utils/common.js';
   import {
-    colorPropDataKey,
+    extractRawDataValue,
     resolveColorProp,
     resolveDataProp,
     resolveStyleProp,
@@ -125,30 +124,13 @@
       return sphere.bin(rows, (d) => [xAccessor(d), yAccessor(d)], globeGrid, weightAccessor);
     }
     if (!ctx.width || !ctx.height || !(cellSize > 0)) return [];
-    if (!ctx.isometricFloor) {
-      return binCells(rows, position, { shape, size: cellSize, weight: weightAccessor });
-    }
-    // On an isometric floor, bin against the floor laid flat — each position scaled back by the
-    // floor's scale and rounded — so a point on a cell's edge falls the same way at every angle,
-    // rather than flipping cells with floating-point noise as the floor is refitted mid-turn.  The
-    // cells are then scaled back up onto the floor.
-    const k = ctx.floorScale;
-    const snap = (v: number) => Math.round(v * 1e6) / 1e6;
-    const cells = binCells(
-      rows,
-      (d) => {
-        const p = position(d);
-        return p && [snap(p[0] / k), snap(p[1] / k)];
-      },
-      { shape, size, weight: weightAccessor }
-    );
-    for (const cell of cells) {
-      cell.x *= k;
-      cell.y *= k;
-      cell.area *= k * k;
-      cell.polygon = cell.polygon.map(([x, y]) => [x * k, y * k] as [number, number]);
-    }
-    return cells;
+    // Against the floor laid flat, so a row on a cell's edge stays in it as the floor turns
+    return binCells(rows, position, {
+      shape,
+      size,
+      scale: ctx.floorScale,
+      weight: weightAccessor,
+    });
   }
 
   const cells = $derived(bin(data));
@@ -156,14 +138,18 @@
   /** Draws a ring on the sphere through the projection, clipped at the globe's horizon */
   const spherePath = $derived(globeGrid && geo.projection ? geoPath(geo.projection) : null);
 
+  /** Whether a cell center on the sphere faces the viewer */
+  const facing = $derived(
+    sphere && globeGrid && geo.projection ? sphere.facing(geo.projection, globeGrid) : null
+  );
+
   /**
    * On a globe, the cells facing the viewer, placed by the projection — redone as it turns, while
    * the binning stays.  Elsewhere, the cells as binned.
    */
   const shownCells = $derived.by(() => {
     const projection = geo.projection;
-    if (!sphere || !globeGrid || !projection) return cells;
-    const facing = sphere.facing(projection, globeGrid);
+    if (!sphere || !facing || !projection) return cells;
     const shown: BinCell[] = [];
     for (const cell of cells) if (facing(cell.center!)) shown.push(sphere.show(cell, projection));
     return shown;
@@ -172,12 +158,12 @@
   /** Every cell of the plot (or globe) outlined, when drawing the `grid` */
   const gridPath = $derived.by(() => {
     if (!grid) return null;
-    if (sphere && globeGrid && geo.projection) {
+    if (globeGrid && facing) {
       // Only those facing the viewer, as the far side's are clipped away anyway
-      return spherePath?.(sphere.outline(globeGrid, sphere.facing(geo.projection, globeGrid)));
+      return spherePath?.(globeGrid.outline(facing));
     }
     return ctx.width && ctx.height && cellSize > 0
-      ? binGridPath(shape, cellSize, ctx.width, ctx.height)
+      ? binGridPath(shape, size, ctx.width, ctx.height, ctx.floorScale)
       : null;
   });
 
@@ -194,18 +180,12 @@
     return bin(rows);
   });
 
-  /** The cell's value a color prop names, or `undefined` for a literal color */
-  function colorValue(prop: ColorProp<BinCell> | undefined, cell: BinCell) {
-    if (typeof prop === 'function') return prop(cell);
-    return colorPropDataKey(prop, cell) != null ? get(cell, prop as string) : undefined;
-  }
-
   /**
    * The scale a color prop's values go through: a ramp over their extent when they're numbers, as
    * `Contour` and `Density` do, else the chart's `cScale` for categories
    */
   function colorScaleFor(prop: ColorProp<BinCell> | undefined) {
-    const values = scaledCells.map((cell) => colorValue(prop, cell));
+    const values = scaledCells.map((cell) => extractRawDataValue(prop, cell));
     if (!values.some((v) => typeof v === 'number')) return ctx.cScale;
     // A domain the chart was given already maps these values — as steps (`scaleThreshold`) or a
     // ramp — so it's taken as is
@@ -226,8 +206,10 @@
   /** Each cell's polygon scale, `1` filling it */
   const sizeOf = $derived.by(() => {
     if (r == null) return null;
-    const full = binGrid(shape, cellSize).circumradius;
-    if (typeof r === 'number') return () => r / full;
+    if (typeof r === 'number') {
+      const k = r / binGrid(shape, cellSize).circumradius;
+      return () => k;
+    }
     // Area proportional to the value, so the largest fills its cell
     const largest = max(scaledCells, (cell) => resolveDataProp(r, cell, null, 0)) || 1;
     return (cell: BinCell) => Math.sqrt(Math.max(0, resolveDataProp(r, cell, null, 0)) / largest);
@@ -236,7 +218,10 @@
   /** Each cell's `[start, end]` height when standing on an isometric floor */
   const heightOf = $derived.by(() => {
     if (z == null) return null;
-    if (typeof z === 'number') return () => [0, z] as [number, number];
+    if (typeof z === 'number') {
+      const height: [number, number] = [0, z];
+      return () => height;
+    }
     const zScale = ctx.props.zDomain
       ? ctx.zScale
       : ctx.zScale
@@ -252,15 +237,21 @@
     return [...shownCells].sort((a, b) => m.b * a.x + m.d * a.y - (m.b * b.x + m.d * b.y));
   });
 
+  /**
+   * A cell's ring on the sphere, shrunk `k` toward its center along the sphere so the projection
+   * still clips it at the horizon
+   */
+  function sphereRing(cell: BinCell, k: number) {
+    const ring = sphere!.ring(cell)!;
+    const center = cell.center!;
+    return k === 1 ? ring : ring.map((p) => geoInterpolate(center, p)(k));
+  }
+
   function pathData(cell: BinCell) {
     const k = sizeOf ? sizeOf(cell) : 1;
     if (!(k > 0)) return '';
-    const ring = spherePath && sphere?.ring(cell);
-    if (ring) {
-      // Shrunk toward its center along the sphere, so the projection still clips it at the horizon
-      const center = cell.center!;
-      const scaled = k === 1 ? ring : ring.map((p) => geoInterpolate(center, p)(k));
-      return spherePath({ type: 'Polygon', coordinates: [scaled] }) ?? '';
+    if (spherePath) {
+      return spherePath({ type: 'Polygon', coordinates: [sphereRing(cell, k)] }) ?? '';
     }
     const points =
       k === 1
@@ -270,28 +261,38 @@
   }
 
   /**
-   * On a globe with `z`, each cell facing the viewer stood up as a column off the sphere, back to
-   * front so nearer ones paint over farther ones.  (On an isometric floor, `Path` raises cells
-   * instead.)
-   */
-  /**
    * As many sides as a column can show — the most corners any cell has.  Each column always draws
    * that many, blank where a side faces away: on canvas, one mounted as the globe turns would paint
    * after every column, over nearer ones.
    */
-  const sideSlots = $derived(sphere && globeGrid ? sphere.corners(globeGrid) : 0);
+  const sideSlots = $derived(globeGrid?.corners ?? 0);
 
+  /** A cell's colors and styles */
+  function styleOf(cell: BinCell) {
+    return {
+      fill: resolveColorProp(fillChannel, cell, fillScale),
+      stroke: stroke == null ? undefined : resolveColorProp(stroke, cell, strokeScale),
+      fillOpacity: resolveStyleProp(fillOpacity, cell),
+      strokeOpacity: resolveStyleProp(strokeOpacity, cell),
+      strokeWidth: resolveStyleProp(strokeWidth, cell),
+      opacity: resolveStyleProp(opacity, cell),
+    };
+  }
+
+  /**
+   * On a globe with `z`, each cell facing the viewer stood up as a column off the sphere, back to
+   * front so nearer ones paint over farther ones.  (On an isometric floor, `Path` raises cells
+   * instead.)
+   */
   const columnItems = $derived.by(() => {
     const projection = geo.projection;
     if (!sphere || !heightOf || !projection || layerIsometric()) return null;
     if (!((projection.clipAngle?.() ?? 0) > 0)) return null;
+    const columnOf = sphere.columns(projection);
     return shownCells
       .flatMap((cell) => {
         const k = sizeOf ? sizeOf(cell) : 1;
-        const ring = sphere.ring(cell)!;
-        const center = cell.center!;
-        const shrunk = k === 1 ? ring : ring.map((p) => geoInterpolate(center, p)(k));
-        const column = k > 0 && sphere.column(projection, shrunk, center, heightOf(cell)[1]);
+        const column = k > 0 && columnOf(sphereRing(cell, k), cell.center!, heightOf(cell)[1]);
         return column ? [{ cell, column }] : [];
       })
       .sort((a, b) => a.column.depth - b.column.depth)
@@ -302,12 +303,7 @@
           { length: sideSlots },
           (_, i) => column.shades[i] ?? { d: '', opacity: 0 }
         ),
-        fill: resolveColorProp(fillChannel, cell, fillScale),
-        stroke: stroke == null ? undefined : resolveColorProp(stroke, cell, strokeScale),
-        fillOpacity: resolveStyleProp(fillOpacity, cell),
-        strokeOpacity: resolveStyleProp(strokeOpacity, cell),
-        strokeWidth: resolveStyleProp(strokeWidth, cell),
-        opacity: resolveStyleProp(opacity, cell),
+        ...styleOf(cell),
       }));
   });
 
@@ -317,12 +313,7 @@
       cell,
       pathData: pathData(cell),
       z: heightOf?.(cell),
-      fill: resolveColorProp(fillChannel, cell, fillScale),
-      stroke: stroke == null ? undefined : resolveColorProp(stroke, cell, strokeScale),
-      fillOpacity: resolveStyleProp(fillOpacity, cell),
-      strokeOpacity: resolveStyleProp(strokeOpacity, cell),
-      strokeWidth: resolveStyleProp(strokeWidth, cell),
-      opacity: resolveStyleProp(opacity, cell),
+      ...styleOf(cell),
     }))
   );
 </script>
@@ -334,68 +325,61 @@
   </ChartClipPath>
 {/if}
 
+{#snippet cellPath(
+  item: ReturnType<typeof styleOf> & { cell: BinCell },
+  d: string,
+  z?: [number, number]
+)}
+  {@const cell = item.cell}
+  <Path
+    pathData={d}
+    {z}
+    fill={item.fill}
+    fillOpacity={item.fillOpacity}
+    stroke={item.stroke}
+    strokeOpacity={item.strokeOpacity}
+    strokeWidth={item.strokeWidth}
+    opacity={item.opacity}
+    class={cls('lc-bin-cell', className)}
+    onclick={onclick && ((e: MouseEvent) => onclick(e, cell))}
+    onpointerenter={onpointerenter && ((e: PointerEvent) => onpointerenter(e, cell))}
+    onpointermove={onpointermove && ((e: PointerEvent) => onpointermove(e, cell))}
+    onpointerleave={onpointerleave && ((e: PointerEvent) => onpointerleave(e, cell))}
+  />
+{/snippet}
+
 {#if children}
   {@render children({ cells: shownCells })}
-{:else if columnItems}
+{:else if columnItems || shownCells.length > 0}
   <Group {...restProps} class="lc-bin">
     <!-- Keyed by index, so canvas paints in the order listed here -->
-    {#each columnItems as item, i (i)}
-      {@const cell = item.cell}
-      <!-- The sides take the cell's color but not its stroke, as an isometric chart's do.  Drawn
-           whether or not any face the viewer, so nothing mounts as the globe turns -->
-      <Path
-        pathData={item.sides}
-        fill={item.fill}
-        fillOpacity={item.fillOpacity}
-        opacity={item.opacity}
-        class={cls('lc-bin-side', className)}
-      />
-      {#each item.shades as shade}
+    {#if columnItems}
+      {#each columnItems as item, i (i)}
+        <!-- The sides take the cell's color but not its stroke, as an isometric chart's do.  Drawn
+             whether or not any face the viewer, so nothing mounts as the globe turns -->
         <Path
-          pathData={shade.d}
-          fill="black"
-          fillOpacity={shade.opacity}
+          pathData={item.sides}
+          fill={item.fill}
+          fillOpacity={item.fillOpacity}
           opacity={item.opacity}
-          class="lc-bin-side-shade"
+          class={cls('lc-bin-side', className)}
         />
+        {#each item.shades as shade}
+          <Path
+            pathData={shade.d}
+            fill="black"
+            fillOpacity={shade.opacity}
+            opacity={item.opacity}
+            class="lc-bin-side-shade"
+          />
+        {/each}
+        {@render cellPath(item, item.top)}
       {/each}
-      <Path
-        pathData={item.top}
-        fill={item.fill}
-        fillOpacity={item.fillOpacity}
-        stroke={item.stroke}
-        strokeOpacity={item.strokeOpacity}
-        strokeWidth={item.strokeWidth}
-        opacity={item.opacity}
-        class={cls('lc-bin-cell', className)}
-        onclick={onclick && ((e: MouseEvent) => onclick(e, cell))}
-        onpointerenter={onpointerenter && ((e: PointerEvent) => onpointerenter(e, cell))}
-        onpointermove={onpointermove && ((e: PointerEvent) => onpointermove(e, cell))}
-        onpointerleave={onpointerleave && ((e: PointerEvent) => onpointerleave(e, cell))}
-      />
-    {/each}
-  </Group>
-{:else if shownCells.length > 0}
-  <Group {...restProps} class="lc-bin">
-    <!-- Keyed by index, so canvas paints in the order listed here -->
-    {#each items as item, i (i)}
-      {@const cell = item.cell}
-      <Path
-        pathData={item.pathData}
-        z={item.z}
-        fill={item.fill}
-        fillOpacity={item.fillOpacity}
-        stroke={item.stroke}
-        strokeOpacity={item.strokeOpacity}
-        strokeWidth={item.strokeWidth}
-        opacity={item.opacity}
-        class={cls('lc-bin-cell', className)}
-        onclick={onclick && ((e: MouseEvent) => onclick(e, cell))}
-        onpointerenter={onpointerenter && ((e: PointerEvent) => onpointerenter(e, cell))}
-        onpointermove={onpointermove && ((e: PointerEvent) => onpointermove(e, cell))}
-        onpointerleave={onpointerleave && ((e: PointerEvent) => onpointerleave(e, cell))}
-      />
-    {/each}
+    {:else}
+      {#each items as item, i (i)}
+        {@render cellPath(item, item.pathData, item.z)}
+      {/each}
+    {/if}
   </Group>
 {/if}
 
