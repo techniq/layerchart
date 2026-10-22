@@ -50,8 +50,19 @@ export class GeoState {
   transformApply = $state({ rotation: false, scale: true, translate: true });
 
   // The actual projection instance — derived so it works during SSR
-  projection: GeoProjection | undefined = $derived.by(() => {
+  projection: GeoProjection | undefined = $derived.by(() => this.#build(true));
+
+  /**
+   * The projection as its props set it, before any `projection` transform — what that transform
+   * starts from, so a chart opens where its `scale`, `translate`, `rotate`, or fit put it rather than
+   * jumping once the transform loads.  Only made when read.
+   */
+  untransformedProjection: GeoProjection | undefined = $derived.by(() => this.#build(false));
+
+  /** The projection from its props, and with `transformed` the `projection` transform on top */
+  #build(transformed: boolean) {
     if (!this.props.projection) return undefined;
+    const transform = transformed && this.transformState?.mode === 'projection';
 
     const _projection = this.props.projection();
 
@@ -66,8 +77,8 @@ export class GeoState {
         _projection.scale(this.props.scale);
       }
 
-      if (this.transformState?.mode === 'projection' && this.transformApply.scale) {
-        _projection.scale(this.transformState.scale);
+      if (transform && this.transformApply.scale) {
+        _projection.scale(this.transformState!.scale);
       }
     }
 
@@ -81,10 +92,12 @@ export class GeoState {
         ]);
       }
 
-      if (this.transformState?.mode === 'projection' && this.transformApply.rotation) {
+      if (transform && this.transformApply.rotation) {
         _projection.rotate([
-          this.transformState.translate.x, // yaw
-          this.transformState.translate.y, // pitch
+          this.transformState!.translate.x, // yaw
+          this.transformState!.translate.y, // pitch
+          // Dragging turns yaw and pitch, leaving `rotate`'s roll as it was
+          this.props.rotate?.roll ?? 0,
         ]);
       }
     }
@@ -102,8 +115,8 @@ export class GeoState {
         ]);
       }
 
-      if (this.transformState?.mode === 'projection' && this.transformApply.translate) {
-        _projection.translate([this.transformState.translate.x, this.transformState.translate.y]);
+      if (transform && this.transformApply.translate) {
+        _projection.translate([this.transformState!.translate.x, this.transformState!.translate.y]);
       }
     }
 
@@ -137,7 +150,7 @@ export class GeoState {
     }
 
     return _projection;
-  });
+  }
 
   constructor(
     propsGetter: () => GeoStateProps,

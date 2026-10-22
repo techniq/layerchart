@@ -144,18 +144,22 @@
     }
   });
 
+  /**
+   * Where a `projection` transform starts: the projection as its props place it — fitted, and with
+   * any `scale` / `translate` — so the chart doesn't jump once `TransformContext` loads
+   */
   const initialTransform = $derived.by(() => {
     if (
       transform?.mode !== 'projection' ||
       !(resolvedApply.translate || resolvedApply.scale) ||
-      !geo?.fitGeojson ||
       !geo?.projection
     ) {
       return undefined;
     }
-    const fitted = geo.projection().fitSize([chartState.width, chartState.height], geo.fitGeojson);
-    const t = fitted.translate();
-    return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
+    const projection = chartState.geoState.untransformedProjection;
+    if (!projection) return undefined;
+    const t = projection.translate();
+    return { translate: { x: t[0], y: t[1] }, scale: projection.scale() };
   });
 
   /**
@@ -192,7 +196,13 @@
   const resolvedInitialTransform = $derived(
     transform?.mode === 'projection'
       ? {
-          translate: resolvedApply.translate ? initialTransform?.translate : undefined,
+          // A globe the transform turns starts at its `rotate`, rather than snapping from it to
+          // `[0, 0]` once `TransformContext` loads — translate is its yaw and pitch
+          translate: resolvedApply.translate
+            ? initialTransform?.translate
+            : resolvedApply.rotation && geo?.rotate
+              ? { x: geo.rotate.yaw, y: geo.rotate.pitch }
+              : undefined,
           scale: resolvedApply.scale ? initialTransform?.scale : undefined,
         }
       : { translate: initialZoom?.translate, scale: initialZoom?.scale }
