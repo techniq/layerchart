@@ -77,6 +77,36 @@ export const getWorldLandPoints = prerender(async () => {
 	return data;
 });
 
+/**
+ * People in each 15′ (0.25°) cell of the contiguous US in 2020, as `[longitude, latitude, count]` at
+ * the cell's center — cells inside a state with anyone in them.
+ *
+ * From CIESIN's Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11
+ * (NASA SEDAC, 2018, https://doi.org/10.7927/H4JW8BX5), CC BY 4.0.
+ */
+export const getUsPopulationGrid = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-population-grid.json').then((r) =>
+		r.json()
+	)) as [longitude: number, latitude: number, count: number][];
+	return data;
+});
+
+/**
+ * People in each 1° cell of the world in 2020, as `[longitude, latitude, count]` at the cell's
+ * center — GPWv4's 15′ counts summed, cells with anyone in them.
+ *
+ * From CIESIN's Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11
+ * (NASA SEDAC, 2018, https://doi.org/10.7927/H4JW8BX5), CC BY 4.0.
+ */
+export const getWorldPopulationGrid = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-population-grid.json').then((r) =>
+		r.json()
+	)) as [longitude: number, latitude: number, count: number][];
+	return data;
+});
+
 export const getEclipses = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/eclipses.json').then(async (r) =>

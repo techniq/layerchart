@@ -13,7 +13,7 @@ The **bin** mark tiles the plot with cells of one `shape` — hexagons, squares,
 
 Points are binned in pixels, after the chart's scales or geo projection place them, so the cells keep their shape however the data is scaled. The first cell is centered on the plot's top-left corner, and only cells with points are drawn.
 
-Each cell is passed to `fill`, `stroke`, `r`, and `z` as `{ x, y, data, count, polygon }` — so `fill="count"` names its count, and a function can summarize its rows any other way, ex. `fill={(cell) => mean(cell.data, (d) => d.price)}`.
+Each cell is passed to `fill`, `stroke`, `r`, and `z` as `{ x, y, data, count, polygon, area }` — so `fill="count"` names its count, and a function can summarize its rows any other way, ex. `fill={(cell) => mean(cell.data, (d) => d.price)}`. With a `weight`, `count` is the rows' summed weight rather than how many there are.
 
 ## Usage
 
@@ -72,7 +72,7 @@ Maps too: here, Walmart stores on an Albers projection, which keeps areas equal 
 On a geo chart, `x` and `y` are longitude and latitude, binned where the projection places them. Use an equal-area projection so cells cover the same area of ground.
 
 ::tip
-To bin on the sphere itself — on a globe, or so cells cover the same ground however a map is projected — see [GeoBin](/docs/components/GeoBin).
+To bin on the sphere instead — for a globe, or gridded data such as population — see [GeoBin](/docs/components/GeoBin).
 ::
 
 :example{ name="walmart" }

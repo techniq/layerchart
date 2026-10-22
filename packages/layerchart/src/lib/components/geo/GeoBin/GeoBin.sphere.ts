@@ -2,6 +2,8 @@ import { range } from 'd3-array';
 import {
   geoArea,
   geoCentroid,
+  geoGraticule,
+  type GeoPermissibleObjects,
   geoDistance,
   geoInterpolate,
   geoProjection,
@@ -12,6 +14,7 @@ import { geoGrayFullerRaw } from 'd3-geo-polygon';
 // @ts-expect-error - no types available
 import { geoDelaunay } from 'd3-geo-voronoi';
 import { sideShade } from '$lib/utils/isometric.js';
+import { weightOf } from '../../Bin/Bin.shared.svelte.js';
 import type {
   BinCell,
   BinShape,
@@ -21,15 +24,48 @@ import type {
 
 type LonLat = [number, number];
 
-/** A grid of cells on the sphere: their centers, outlines, and which one a point falls in */
+/**
+ * A grid of cells on the sphere: which one a point falls in, and each one's center and outline — by
+ * index, so a fine grid can make them only for the cells binned
+ */
 export type SphereGrid = {
-  /** `[longitude, latitude]` of each cell's center */
-  centers: LonLat[];
-  /** Each cell's outline as a closed ring of `[longitude, latitude]` */
-  polygons: LonLat[][];
-  /** Index of the cell `[longitude, latitude]` falls in — the one with the nearest center */
+  /** How many cells it has */
+  count: number;
+  /** `[longitude, latitude]` of cell `i`'s center */
+  center(i: number): LonLat;
+  /** Cell `i`'s outline, as a closed ring of `[longitude, latitude]` */
+  polygon(i: number): LonLat[];
+  /** Index of the cell `[longitude, latitude]` falls in */
   find(point: LonLat): number;
+  /** Farthest any cell's outline reaches from its center, in radians */
+  reach: number;
+  /** Most corners any cell has */
+  corners: number;
+  /** Lines outlining every cell, or those whose centers pass `facing` where that's quicker */
+  outline(facing: (center: LonLat) => boolean): GeoPermissibleObjects;
 };
+
+/** A grid whose cells are all made up front, as a Voronoi diagram's are */
+function listedGrid(centers: LonLat[], polygons: LonLat[][], find: (point: LonLat) => number) {
+  let reach = 0;
+  let corners = 0;
+  polygons.forEach((ring, i) => {
+    corners = Math.max(corners, ring.length - 1);
+    for (const p of ring) reach = Math.max(reach, geoDistance(centers[i], p));
+  });
+  return {
+    count: polygons.length,
+    center: (i: number) => centers[i],
+    polygon: (i: number) => polygons[i],
+    find,
+    reach,
+    corners,
+    outline: (facing: (center: LonLat) => boolean): GeoPermissibleObjects => ({
+      type: 'MultiPolygon',
+      coordinates: polygons.filter((_, i) => facing(centers[i])).map((ring) => [ring]),
+    }),
+  } satisfies SphereGrid;
+}
 
 /** Angle between neighboring icosahedron vertices, `atan(2)` radians — the grid's spacing at `k = 1` */
 export const ICOSAHEDRON_EDGE = Math.atan(2);
@@ -48,10 +84,13 @@ const SHAPES: Record<'hexagon' | 'triangle', { spacing: number; count: (k: numbe
 };
 
 /**
- * Graticule steps in degrees that divide 180°, so cells start at the poles and the antimeridian —
- * from the finest within `MAX_CELLS` (`360 / 1 × 180 / 1`)
+ * Graticule steps in degrees that divide 180°, so cells start at the poles and the antimeridian.
+ * Down to 0.25° — the resolution gridded data often comes in — as a graticule grid only makes the
+ * cells it bins
  */
-const GRATICULE_STEPS = [1, 1.5, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 30, 36, 45, 60, 90];
+const GRATICULE_STEPS = [
+  0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 30, 36, 45, 60, 90,
+];
 
 /**
  * The grid resolution `k` whose `shape` cells are about `size` pixels across on a globe of `scale`
@@ -80,19 +119,17 @@ function sphereResolution(shape: BinShape, scale: number, size: number) {
  * Whether any of a ring on the sphere faces the viewer of `projection` — within its `clipAngle` of
  * the globe's center
  */
-/** Farthest any cell's outline reaches from its center, in radians */
-const reaches = new WeakMap<SphereGrid, number>();
-
-function cellReach(grid: SphereGrid) {
-  let reach = reaches.get(grid);
-  if (reach == null) {
-    reach = 0;
-    grid.polygons.forEach((ring, i) => {
-      for (const p of ring) reach = Math.max(reach!, geoDistance(grid.centers[i], p));
-    });
-    reaches.set(grid, reach);
-  }
-  return reach;
+/**
+ * The grid resolution `k` whose `shape` cells are `step` degrees apart — a square's side, or the
+ * distance between hexagon centers or along a triangle's side.  A square's rounded so `step`
+ * divides 180°, keeping cells on the graticule.
+ */
+function stepResolution(shape: BinShape, step: number) {
+  if (shape === 'square') return Math.max(1, Math.round(180 / step));
+  const { spacing, count } = SHAPES[shape];
+  let max = 1;
+  while (count(max + 1) <= MAX_CELLS) max++;
+  return Math.min(Math.max(Math.round(spacing / (step * radians)), 1), max);
 }
 
 /**
@@ -104,11 +141,12 @@ function facingCell(
   projection: { rotate?(): number[]; clipAngle?(): number | null },
   grid: SphereGrid
 ) {
-  // A flat map shows the whole sphere, and a composite one (`geoAlbersUsa`) has neither
-  if (!projection.rotate || projection.clipAngle?.() == null) return () => true;
+  // A flat map shows the whole sphere — unclipped, its `clipAngle()` is `0` — and a composite one
+  // (`geoAlbersUsa`) has neither
+  if (!projection.rotate || !((projection.clipAngle?.() ?? 0) > 0)) return () => true;
   const [lambda, phi] = projection.rotate();
   const view = cartesian([-lambda, -phi]);
-  const reach = ((projection.clipAngle?.() ?? 90) * Math.PI) / 180 + cellReach(grid);
+  const reach = ((projection.clipAngle?.() ?? 90) * Math.PI) / 180 + grid.reach;
   if (reach >= Math.PI) return () => true;
   const least = Math.cos(reach);
   return (center: LonLat) => dot(cartesian(center), view) > least;
@@ -252,15 +290,11 @@ function hexagonGrid(k: number): SphereGrid {
   );
   // Walking from the last cell found, as nearby points tend to arrive together
   let last = 0;
-  return {
-    centers: points,
-    polygons,
-    find([lon, lat]) {
-      const found = delaunay.find(lon, lat, last);
-      if (found != null && found >= 0) last = found;
-      return found;
-    },
-  };
+  return listedGrid(points, polygons, ([lon, lat]) => {
+    const found = delaunay.find(lon, lat, last);
+    if (found != null && found >= 0) last = found;
+    return found;
+  });
 }
 
 /** The geodesic points' spherical Delaunay triangles */
@@ -287,29 +321,23 @@ function triangleGrid(k: number): SphereGrid {
   };
 
   let last = 0;
-  return {
-    centers,
-    polygons,
-    find([lon, lat]) {
-      const nearest = delaunay.find(lon, lat, last);
-      if (nearest == null || nearest < 0) return -1;
-      last = nearest;
-      const p = cartesian([lon, lat]);
-      const candidates = around[nearest];
-      const found =
-        candidates.find((i) => contains(i, p)) ??
-        candidates
-          .flatMap((i) => triangles[i].flatMap((j) => around[j]))
-          .find((i) => contains(i, p));
-      if (found != null) return found;
-      // Numerically on an edge: the candidate whose center is nearest
-      let best = candidates[0];
-      for (const i of candidates) {
-        if (geoDistance(centers[i], [lon, lat]) < geoDistance(centers[best], [lon, lat])) best = i;
-      }
-      return best;
-    },
-  };
+  return listedGrid(centers, polygons, ([lon, lat]) => {
+    const nearest = delaunay.find(lon, lat, last);
+    if (nearest == null || nearest < 0) return -1;
+    last = nearest;
+    const p = cartesian([lon, lat]);
+    const candidates = around[nearest];
+    const found =
+      candidates.find((i) => contains(i, p)) ??
+      candidates.flatMap((i) => triangles[i].flatMap((j) => around[j])).find((i) => contains(i, p));
+    if (found != null) return found;
+    // Numerically on an edge: the candidate whose center is nearest
+    let best = candidates[0];
+    for (const i of candidates) {
+      if (geoDistance(centers[i], [lon, lat]) < geoDistance(centers[best], [lon, lat])) best = i;
+    }
+    return best;
+  });
 }
 
 /**
@@ -322,6 +350,7 @@ const POLE_GAP = 1e-3;
 
 function graticuleGrid(k: number): SphereGrid {
   const step = 180 / k;
+  const columns = 2 * k;
 
   // A parallel drawn as one, rather than the great circle between its ends.  The cells around a pole
   // stop a hair short of it: a globe turned to face the equator has its poles exactly on the horizon,
@@ -332,31 +361,54 @@ function graticuleGrid(k: number): SphereGrid {
     return range(steps + 1).map((i): LonLat => [lon0 + ((lon1 - lon0) * i) / steps, lat]);
   };
 
-  const centers: LonLat[] = [];
-  const polygons: LonLat[][] = [];
-  for (let r = 0; r < k; r++) {
-    const lat0 = -90 + r * step;
-    for (let c = 0; c < 2 * k; c++) {
-      const lon0 = -180 + c * step;
-      centers.push([lon0 + step / 2, lat0 + step / 2]);
-      let ring = closed([
-        ...parallel(lat0 + step, lon0, lon0 + step),
-        ...parallel(lat0, lon0 + step, lon0),
-      ]);
-      // Clockwise seen from outside, as d3-geo takes a polygon's inside
-      if (geoArea({ type: 'Polygon', coordinates: [ring] }) > 2 * Math.PI) ring = ring.reverse();
-      polygons.push(ring);
-    }
+  // Made as they're asked for, as a fine one (0.25° is over a million) bins only a few
+  const corner = (i: number): LonLat => [
+    -180 + (i % columns) * step,
+    -90 + Math.floor(i / columns) * step,
+  ];
+  const center = (i: number): LonLat => {
+    const [lon0, lat0] = corner(i);
+    return [lon0 + step / 2, lat0 + step / 2];
+  };
+  const polygon = (i: number) => {
+    const [lon0, lat0] = corner(i);
+    const ring = closed([
+      ...parallel(lat0 + step, lon0, lon0 + step),
+      ...parallel(lat0, lon0 + step, lon0),
+    ]);
+    // Clockwise seen from outside, as d3-geo takes a polygon's inside
+    return geoArea({ type: 'Polygon', coordinates: [ring] }) > 2 * Math.PI ? ring.reverse() : ring;
+  };
+
+  // Cells are widest at the equator and most irregular at the poles, so those rows bound them all
+  const sampled = [0, Math.floor(k / 2) * columns, (k - 1) * columns];
+  let reach = 0;
+  let corners = 0;
+  for (const i of sampled) {
+    const ring = polygon(i);
+    corners = Math.max(corners, ring.length - 1);
+    for (const p of ring) reach = Math.max(reach, geoDistance(center(i), p));
   }
 
   return {
-    centers,
-    polygons,
+    count: k * columns,
+    center,
+    polygon,
     find([lon, lat]) {
       const r = Math.min(Math.max(Math.floor((lat + 90) / step), 0), k - 1);
       const wrapped = ((((lon + 180) % 360) + 360) % 360) / step;
-      return r * 2 * k + Math.min(Math.floor(wrapped), 2 * k - 1);
+      return r * columns + Math.min(Math.floor(wrapped), columns - 1);
     },
+    reach,
+    corners,
+    // The graticule itself, rather than a ring for each of maybe a million cells
+    outline: () =>
+      geoGraticule()
+        .extent([
+          [-180, -90 + POLE_GAP],
+          [180, 90 - POLE_GAP],
+        ])
+        .step([step, step])(),
   };
 }
 
@@ -479,7 +531,12 @@ const sphereRings = new WeakMap<object, LonLat[]>();
  * Group `data` into the cells of a sphere `grid` by `[longitude, latitude]`, in order of each cell's
  * first row.  Cells have a `center` rather than a position, which only the projection gives.
  */
-function binSphere<T>(data: Iterable<T>, lonLat: (d: T) => LonLat, grid: SphereGrid): BinCell<T>[] {
+function binSphere<T>(
+  data: Iterable<T>,
+  lonLat: (d: T) => LonLat,
+  grid: SphereGrid,
+  weight?: (d: T) => number
+): BinCell<T>[] {
   const cells = new Map<number, BinCell<T>>();
   for (const d of data) {
     const p = lonLat(d);
@@ -487,12 +544,22 @@ function binSphere<T>(data: Iterable<T>, lonLat: (d: T) => LonLat, grid: SphereG
     const i = grid.find(p);
     let cell = cells.get(i);
     if (!cell) {
-      cell = { x: NaN, y: NaN, data: [], count: 0, polygon: [], center: grid.centers[i] };
-      sphereRings.set(cell, grid.polygons[i]);
+      cell = {
+        x: NaN,
+        y: NaN,
+        data: [],
+        count: 0,
+        polygon: [],
+        area: 0,
+        center: grid.center(i),
+      };
+      const ring = grid.polygon(i);
+      cell.area = geoArea({ type: 'Polygon', coordinates: [ring] });
+      sphereRings.set(cell, ring);
       cells.set(i, cell);
     }
     cell.data.push(d);
-    cell.count++;
+    cell.count += weight ? weightOf(weight, d) : 1;
   }
   return Array.from(cells.values());
 }
@@ -505,6 +572,7 @@ function binSphere<T>(data: Iterable<T>, lonLat: (d: T) => LonLat, grid: SphereG
 class ShownCell<T> implements BinCell<T> {
   data: T[];
   count: number;
+  area: number;
   center: LonLat;
   #ring: LonLat[];
   #project: (point: LonLat) => [number, number] | null;
@@ -519,6 +587,7 @@ class ShownCell<T> implements BinCell<T> {
   ) {
     this.data = cell.data;
     this.count = cell.count;
+    this.area = cell.area;
     this.center = cell.center!;
     this.#ring = ring;
     this.#project = project;
@@ -535,10 +604,11 @@ class ShownCell<T> implements BinCell<T> {
 
 /** How `GeoBin` bins on the sphere, given to `Bin`'s implementation so only `GeoBin` loads it */
 export const sphereBinning: SphereBinning<SphereGrid> = {
-  grid: (shape, scale, size) => sphereGrid(shape, sphereResolution(shape, scale, size)),
+  grid: (shape, scale, size, step) =>
+    sphereGrid(shape, step ? stepResolution(shape, step) : sphereResolution(shape, scale, size)),
   bin: binSphere,
-  polygons: (grid) => grid.polygons,
-  centers: (grid) => grid.centers,
+  outline: (grid, facing) => grid.outline(facing),
+  corners: (grid) => grid.corners,
   ring: (cell) => ShownCell.ring(cell) ?? sphereRings.get(cell),
   show(cell, projection) {
     const [x, y] = projection(cell.center!) ?? [NaN, NaN];

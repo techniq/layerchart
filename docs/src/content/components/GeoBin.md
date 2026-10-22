@@ -31,6 +31,16 @@ Here, points spread evenly over the land fill every cell with land in it.
 
 :example{ name="land" }
 
+## Gridded data
+
+Gridded data — values already summed into regular cells, such as population — bins with a `weight`, so each cell's `count` is the sum of its rows' values rather than how many there are. Its `square` cells are the graticule's, so set `step` in degrees to match the data's own grid: each square is then one of its cells, bent by the projection as the map is. Here, 2020's population of each 15′ cell of the contiguous US.
+
+:example{ name="us-population" }
+
+A cell's `area` is in steradians, so `count / (area × 6371²)` is people per km², a density that holds at any size or shape. Here, 2020's population of each 1° cell of the world.
+
+:example{ name="world-population" }
+
 ## Dot globe
 
 A `children` snippet receives the cells facing the viewer, each with its `center` as `[longitude, latitude]` — here, a dot at each cell with land in it. One `Circle` in data mode draws them all on a canvas, rather than a mark per dot, so it turns smoothly with thousands of them. Closer spacing makes for more, smaller cells.

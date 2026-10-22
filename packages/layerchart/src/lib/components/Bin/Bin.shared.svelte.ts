@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte';
+import type { GeoPermissibleObjects } from 'd3-geo';
 import type { SVGAttributes } from 'svelte/elements';
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import type { Accessor } from '$lib/utils/common.js';
@@ -14,10 +15,15 @@ export type BinCell<T = any> = {
   y: number;
   /** Rows that fell in the cell */
   data: T[];
-  /** Number of rows in the cell (`data.length`) */
+  /** Number of rows in the cell — or with a `weight`, their summed weight, ex. its population */
   count: number;
   /** The cell's vertices in pixels, before any `r` scaling */
   polygon: [number, number][];
+  /**
+   * The cell's area, before any `r` scaling: pixels² for `Bin`, steradians on the sphere for
+   * `GeoBin` (× the radius² for ground area, ex. `6371²` km²).  To turn a sum into a density.
+   */
+  area: number;
   /** On a globe, the cell's center as `[longitude, latitude]` */
   center?: [number, number];
 };
@@ -29,6 +35,11 @@ export type BinPropsWithoutHTML<T = any> = {
   x?: Accessor<T>;
   /** Vertical position accessor, or latitude on a geo chart.  Defaults to the chart's `y`. */
   y?: Accessor<T>;
+  /**
+   * How much each row counts toward its cell's `count`, ex. the people in a cell of gridded
+   * population data.  Without it, each row counts once.
+   */
+  weight?: Accessor<T>;
   /**
    * Shape of the cells tiling the plot.
    * @default 'hexagon'
@@ -104,12 +115,22 @@ export type SphereColumn = {
  * charts that don't bin on a globe don't load it
  */
 export type SphereBinning<Grid = any> = {
-  /** The grid of `shape` cells about `size` pixels across, at the center of a globe `scale` in radius */
-  grid(shape: BinShape, scale: number, size: number): Grid;
-  /** `data` grouped into the grid's cells by `[longitude, latitude]` */
-  bin<T>(data: Iterable<T>, lonLat: (d: T) => [number, number], grid: Grid): BinCell<T>[];
-  /** Every cell's outline on the sphere */
-  polygons(grid: Grid): [number, number][][];
+  /**
+   * The grid of `shape` cells about `size` pixels across, at the center of a globe `scale` in
+   * radius — or `step` degrees apart, when given
+   */
+  grid(shape: BinShape, scale: number, size: number, step?: number): Grid;
+  /** `data` grouped into the grid's cells by `[longitude, latitude]`, each counting its `weight` */
+  bin<T>(
+    data: Iterable<T>,
+    lonLat: (d: T) => [number, number],
+    grid: Grid,
+    weight?: (d: T) => number
+  ): BinCell<T>[];
+  /** Lines outlining the grid's cells — at least those whose centers pass `facing` */
+  outline(grid: Grid, facing: (center: [number, number]) => boolean): GeoPermissibleObjects;
+  /** Most corners any of the grid's cells has */
+  corners(grid: Grid): number;
   /** A cell's outline on the sphere */
   ring(cell: BinCell): [number, number][] | undefined;
   /** A binned cell placed where `projection` draws its center */
@@ -117,8 +138,6 @@ export type SphereBinning<Grid = any> = {
     cell: BinCell<T>,
     projection: (point: [number, number]) => [number, number] | null
   ): BinCell<T>;
-  /** Every cell's center on the sphere, in the order of `polygons` */
-  centers(grid: Grid): [number, number][];
   /** Whether any of a cell, by its center, faces the viewer of `projection` */
   facing(
     projection: { rotate?(): number[]; clipAngle?(): number | null },
@@ -144,6 +163,8 @@ type Grid = {
   polygon(x: number, y: number, up?: boolean): [number, number][];
   /** Distance from a cell's center to its vertices */
   circumradius: number;
+  /** Every cell's area */
+  area: number;
 };
 
 /**
@@ -189,6 +210,7 @@ function hexagonGrid(size: number): Grid {
       ];
     },
     circumradius: r,
+    area: (size * size * SQRT3) / 2,
   };
 }
 
@@ -220,6 +242,7 @@ function squareGrid(size: number): Grid {
       ];
     },
     circumradius: size / Math.SQRT2,
+    area: size * size,
   };
 }
 
@@ -277,6 +300,7 @@ function triangleGrid(size: number): Grid {
           ];
     },
     circumradius: size / SQRT3,
+    area: (size * size * SQRT3) / 4,
   };
 }
 
@@ -291,17 +315,31 @@ export function binGrid(shape: BinShape, size: number): Grid {
   }
 }
 
+/** A row's `weight`, or nothing for one without a finite number */
+export function weightOf<T>(weight: (d: T) => number, d: T) {
+  const w = Number(weight(d));
+  return Number.isFinite(w) ? w : 0;
+}
+
 /** Group `data` into the cells of a `shape` grid by pixel position, in order of each cell's first row */
 export function binCells<T>(
   data: Iterable<T>,
   position: (d: T) => [number, number] | null | undefined,
-  options: { shape: BinShape; size: number }
+  options: { shape: BinShape; size: number; weight?: (d: T) => number }
 ): BinCell<T>[] {
   const grid = binGrid(options.shape, options.size);
   const cells = new Map<string, BinCell<T> & { up?: boolean }>();
 
   const add = (c: { key: string; x: number; y: number; up?: boolean }) => {
-    const cell = { x: c.x, y: c.y, data: [] as T[], count: 0, polygon: [], up: c.up };
+    const cell = {
+      x: c.x,
+      y: c.y,
+      data: [] as T[],
+      count: 0,
+      polygon: [],
+      area: grid.area,
+      up: c.up,
+    };
     cells.set(c.key, cell);
     return cell;
   };
@@ -312,7 +350,7 @@ export function binCells<T>(
     const c = grid.locate(p[0], p[1]);
     const cell = cells.get(c.key) ?? add(c);
     cell.data.push(d);
-    cell.count++;
+    cell.count += options.weight ? weightOf(options.weight, d) : 1;
   }
 
   return Array.from(cells.values(), ({ up, ...cell }) => {

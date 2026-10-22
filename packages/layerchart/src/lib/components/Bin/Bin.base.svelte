@@ -8,6 +8,8 @@
     ChartClipPath: Component<any>;
     /** Bins on the sphere instead of the plot — `GeoBin`'s */
     sphere?: SphereBinning;
+    /** Cell spacing in degrees on the sphere — `GeoBin`'s */
+    step?: number;
   };
 
   export type BinBaseProps = BinProps & BinBaseLayerComponents;
@@ -48,9 +50,11 @@
     Path,
     ChartClipPath,
     sphere,
+    step,
     data: dataProp,
     x: xProp,
     y: yProp,
+    weight,
     shape = 'hexagon',
     size = 20,
     grid = false,
@@ -80,6 +84,7 @@
 
   const xAccessor = $derived(xProp != null ? resolveAccessor(xProp) : ctx.x);
   const yAccessor = $derived(yProp != null ? resolveAccessor(yProp) : ctx.y);
+  const weightAccessor = $derived(weight != null ? resolveAccessor(weight) : undefined);
 
   const data = $derived(markData(dataProp));
 
@@ -113,18 +118,18 @@
    */
   const globeGrid = $derived.by(() => {
     const projection = geo.projection;
-    if (!sphere || !projection || !(cellSize > 0)) return null;
+    if (!sphere || !projection || !(cellSize > 0 || (step ?? 0) > 0)) return null;
     // `cellSize`, so on an isometric floor — which the projection is fitted to, and refitted as it
     // turns — the grid keeps its resolution
-    return sphere.grid(shape, projection.scale(), cellSize);
+    return sphere.grid(shape, projection.scale(), cellSize, step);
   });
 
   function bin(rows: Iterable<any>) {
     if (sphere && globeGrid) {
-      return sphere.bin(rows, (d) => [xAccessor(d), yAccessor(d)], globeGrid);
+      return sphere.bin(rows, (d) => [xAccessor(d), yAccessor(d)], globeGrid, weightAccessor);
     }
     if (!ctx.width || !ctx.height || !(cellSize > 0)) return [];
-    return binCells(rows, position, { shape, size: cellSize });
+    return binCells(rows, position, { shape, size: cellSize, weight: weightAccessor });
   }
 
   const cells = $derived(bin(data));
@@ -150,15 +155,7 @@
     if (!grid) return null;
     if (sphere && globeGrid && geo.projection) {
       // Only those facing the viewer, as the far side's are clipped away anyway
-      const facing = sphere.facing(geo.projection, globeGrid);
-      const centers = sphere.centers(globeGrid);
-      return spherePath?.({
-        type: 'MultiPolygon',
-        coordinates: sphere
-          .polygons(globeGrid)
-          .filter((_, i) => facing(centers[i]))
-          .map((ring) => [ring]),
-      });
+      return spherePath?.(sphere.outline(globeGrid, sphere.facing(geo.projection, globeGrid)));
     }
     return ctx.width && ctx.height && cellSize > 0
       ? binGridPath(shape, cellSize, ctx.width, ctx.height)
@@ -191,11 +188,13 @@
   function colorScaleFor(prop: ColorProp<BinCell> | undefined) {
     const values = scaledCells.map((cell) => colorValue(prop, cell));
     if (!values.some((v) => typeof v === 'number')) return ctx.cScale;
+    // A domain the chart was given already maps these values — as steps (`scaleThreshold`) or a
+    // ramp — so it's taken as is
+    if (ctx.props.cDomain && ctx.cScale) return ctx.cScale;
     const [lo = 0, hi = 1] = extent(values as number[]);
     // Not an ordinal scale — `cScale` defaults to a `series` color lookup, which can't ramp
     if (ctx.cScale && !isScaleOrdinal(ctx.cScale)) {
-      const scale = ctx.cScale.copy();
-      return ctx.props.cDomain ? scale : scale.domain([lo, hi]);
+      return ctx.cScale.copy().domain([lo, hi]);
     }
     return scaleSequential([lo, hi], interpolateYlGnBu);
   }
@@ -261,9 +260,7 @@
    * that many, blank where a side faces away: on canvas, one mounted as the globe turns would paint
    * after every column, over nearer ones.
    */
-  const sideSlots = $derived(
-    sphere && globeGrid ? Math.max(...sphere.polygons(globeGrid).map((ring) => ring.length - 1)) : 0
-  );
+  const sideSlots = $derived(sphere && globeGrid ? sphere.corners(globeGrid) : 0);
 
   const columnItems = $derived.by(() => {
     const projection = geo.projection;

@@ -43,6 +43,7 @@ describe('binCells', () => {
         triangle: (size * size * Math.sqrt(3)) / 4,
       }[shape];
       expect(area).toBeCloseTo(expected, 6);
+      expect(cells[0].area).toBeCloseTo(expected, 6);
       const xs = cells[0].polygon.map((p) => p[0]);
       expect(Math.max(...xs) - Math.min(...xs)).toBeCloseTo(size, 6);
     });
@@ -61,6 +62,24 @@ describe('binCells', () => {
       // One subpath per cell
       expect(binGridPath(shape, size, width, height).match(/M/g)).toHaveLength(covered.size);
     });
+  });
+
+  it("sums a weight into each cell's count", () => {
+    const rows = [
+      { at: [5, 5], people: 120 },
+      { at: [6, 6], people: 30 },
+      { at: [25, 5], people: Number.NaN },
+    ];
+    const cells = binCells(rows, (d) => d.at as [number, number], {
+      shape: 'square',
+      size: 10,
+      weight: (d) => d.people,
+    });
+    // A weight that isn't a number counts for nothing
+    expect(cells.map((cell) => [cell.data.length, cell.count])).toEqual([
+      [2, 150],
+      [1, 0],
+    ]);
   });
 
   it('skips rows without a position', () => {

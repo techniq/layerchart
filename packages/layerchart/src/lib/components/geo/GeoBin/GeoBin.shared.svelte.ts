@@ -25,6 +25,12 @@ export type GeoBinPropsWithoutHTML<T = any> = Omit<
    * @default 20
    */
   size?: number;
+  /**
+   * Cell spacing in degrees, rather than `size` in pixels — a square's side, or the distance between
+   * hexagon centers or along a triangle's side.  The grid then stays the same however the map is
+   * sized or zoomed, ex. `step={0.25}` to draw 15′ gridded data cell for cell.
+   */
+  step?: number;
 };
 
 export type GeoBinProps<T = any> = GeoBinPropsWithoutHTML<T> &
