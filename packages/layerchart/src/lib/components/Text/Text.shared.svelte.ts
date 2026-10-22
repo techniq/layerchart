@@ -14,7 +14,7 @@ import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { matrixToString, viewportMatrix as cancelView } from '$lib/utils/isometric.js';
+import { markLift, matrixToString, viewportMatrix as cancelView } from '$lib/utils/isometric.js';
 
 /**
  * Check if a string looks like a CSS/SVG value (percentage, em, px, etc.)
@@ -368,16 +368,9 @@ export class TextState {
   }
 
   /** The chart's `isometricLift` when the text has a height, else `null` */
-  #lift = $derived.by(() => {
-    if (!this.#layerIsometric()) return null;
-    const lift = this.chartCtx.isometricLift;
-    if (!lift || (lift.x === 0 && lift.y === 0)) return null;
-    const z = this.#props.z;
-    const raised = this.dataMode
-      ? z != null || this.chartCtx.props.z != null
-      : typeof z === 'number';
-    return raised ? lift : null;
-  });
+  #lift = $derived.by(() =>
+    markLift(this.chartCtx, this.#layerIsometric, this.#props.z, this.dataMode)
+  );
 
   /** The text's height off the floor, in pixels */
   #resolveZ(d: any) {

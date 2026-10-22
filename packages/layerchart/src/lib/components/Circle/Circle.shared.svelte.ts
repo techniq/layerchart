@@ -11,7 +11,12 @@ import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
-import { matrixToString, viewportMatrix as cancelView } from '$lib/utils/isometric.js';
+import {
+  markLift,
+  matrixToString,
+  raiseItems,
+  viewportMatrix as cancelView,
+} from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 
@@ -61,10 +66,10 @@ export type CirclePropsWithoutHTML = {
   r?: DataProp;
 
   /**
-   * Height to raise the circle off an `isometric` floor (data mode), defaulting to the chart's `z`.
+   * Height to raise the circle off an `isometric` floor, defaulting to the chart's `z` in data mode.
    * - `string`: data property name, resolved via zScale
    * - `function(d)`: accessor called per data item, result passed through zScale
-   * - `number`: pixel height
+   * - `number`: pixel height (also in pixel mode)
    */
   z?: DataProp;
 
@@ -191,13 +196,10 @@ export class CircleState {
   geo = getGeoContext();
   #layerIsometric = getLayerIsometric();
 
-  /** Whether the circles float: data mode, with a height, in a layer drawing the isometric floor */
-  lifted = $derived.by(() => {
-    if (!this.dataMode || !this.#layerIsometric()) return false;
-    const lift = this.chartCtx.isometricLift;
-    if (!lift || (lift.x === 0 && lift.y === 0)) return false;
-    return this.#getProps().z != null || this.chartCtx.props.z != null;
-  });
+  /** The chart's `isometricLift` when the circles float off the floor, else `null` */
+  #lift = $derived.by(() =>
+    markLift(this.chartCtx, this.#layerIsometric, this.#getProps().z, this.dataMode)
+  );
 
   /** The `isometric` view to cancel about each circle for `viewport`, or `null` for none */
   viewportMatrix = $derived(this.#getProps().viewport ? cancelView(this.#layerIsometric()) : null);
@@ -207,11 +209,6 @@ export class CircleState {
     const m = this.viewportMatrix;
     if (!m) return '';
     return `translate(${cx},${cy}) ${matrixToString(m)} translate(${-cx},${-cy})`;
-  }
-
-  /** A circle's height off the floor, in pixels */
-  #resolveZ(d: any) {
-    return this.chartCtx.heightOf(d, this.#getProps().z)[1];
   }
 
   // Reactive derivations
@@ -244,17 +241,15 @@ export class CircleState {
     });
 
     const m = this.#layerIsometric();
-    const lift = this.chartCtx.isometricLift;
-    if (!this.lifted || !m || !lift) return items;
-
-    // Back to front by where each stands on the floor, before it's raised
-    const depth = new Map(items.map((item) => [item, m.b * item.cx + m.d * item.cy]));
-    for (const item of items) {
-      const z = this.#resolveZ(item.d);
-      item.cx += lift.x * z;
-      item.cy += lift.y * z;
-    }
-    return items.sort((a, b) => depth.get(a)! - depth.get(b)!);
+    const lift = this.#lift;
+    if (!m || !lift) return items;
+    return raiseItems(
+      items,
+      ['cx', 'cy'],
+      m,
+      lift,
+      (item) => this.chartCtx.heightOf(item.d, props.z)[1]
+    );
   });
 
   // Pixel-mode motion sources. Initial values are captured at construction;
@@ -331,11 +326,17 @@ export class CircleState {
     }
   }
 
+  /** Pixel mode: raised by `z` on an `isometric` floor */
+  #raise(axis: 'x' | 'y') {
+    const z = this.#getProps().z;
+    return this.#lift && typeof z === 'number' ? this.#lift[axis] * z : 0;
+  }
+
   get motionCx() {
-    return this.#motionCx.current;
+    return this.#motionCx.current + this.#raise('x');
   }
   get motionCy() {
-    return this.#motionCy.current;
+    return this.#motionCy.current + this.#raise('y');
   }
   get motionR() {
     return this.#motionR.current;

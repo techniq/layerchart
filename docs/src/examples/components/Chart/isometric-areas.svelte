@@ -53,7 +53,6 @@
 	clip
 >
 	{#snippet children({ context })}
-		{@const m = context.isometricMatrix}
 		<TransformContextControls />
 
 		<Layer>
@@ -67,7 +66,7 @@
 			<Axis placement="back" />
 
 			<!-- Back to front: each curtain lies in its own row, so the farther rows go first -->
-			{#each [...series].sort( (a, b) => (m ? m.d * (context.yScale(a) - context.yScale(b)) : 0) ) as name}
+			{#each context.backToFront(series, (name) => [0, context.yScale(name)]) as name}
 				<Area
 					data={data.filter((d) => d.series === name)}
 					fill={context.cScale?.(name)}

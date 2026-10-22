@@ -15,10 +15,13 @@
     rx: rxProp,
     ry: ryProp,
     rotate,
+    z,
     ...rest
   }: EllipseProps = $props();
 
-  const c = new EllipseState(() => ({ cx, cy, rx: rxProp, ry: ryProp, ...rest }) as EllipseProps);
+  const c = new EllipseState(
+    () => ({ cx, cy, rx: rxProp, ry: ryProp, z, ...rest }) as EllipseProps
+  );
 
   let ref = $state<SVGEllipseElement>();
 

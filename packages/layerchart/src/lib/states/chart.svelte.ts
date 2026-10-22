@@ -16,7 +16,7 @@ import {
   makeAccessor,
 } from '$lib/utils/scales.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
-import type { Extents } from '$lib/utils/types.js';
+import type { Extents, PaddingArray } from '$lib/utils/types.js';
 import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
 import { colorPropDataKey, resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
@@ -136,6 +136,11 @@ function isEmptyMarkInfo(info: MarkInfo): boolean {
   // Falsy rather than `!= null`, so `stacks: false` reads as "nothing to say" — which also means
   // a meaningful `0` would need its own case here.
   return Object.values(info).every((value) => !value);
+}
+
+/** `padding` in pixels scaled by `k`, as is when `k` is `1` */
+function scaleFloorPadding(padding: PaddingArray | undefined, k: number) {
+  return k === 1 || !padding ? padding : padding.map((p) => p * k);
 }
 
 /** One axis of {@link transformForBrush}, as a fraction of the base domain */
@@ -1263,6 +1268,23 @@ export class ChartState<
     return options && this.isometric ? this.isometric.isometricLift(options) : null;
   });
 
+  /**
+   * `items` in drawing order on an isometric floor: back to front by where `at` places each on the
+   * plot, so nearer ones draw over farther ones.  As given when the chart is flat.
+   */
+  backToFront<T>(items: Iterable<T>, at: (item: T) => [number, number]): T[] {
+    const list = [...items];
+    const m = this.isometricMatrix;
+    if (!m) return list;
+    const depth = new Map(
+      list.map((item) => {
+        const [x, y] = at(item);
+        return [item, m.b * x + m.d * y];
+      })
+    );
+    return list.sort((a, b) => depth.get(a)! - depth.get(b)!);
+  }
+
   /** Whether anything rises off the floor: a `z` channel, or a `zRange` for marks' own heights */
   #hasHeight = $derived(this.props.z != null || this.props.zRange != null);
 
@@ -1742,13 +1764,28 @@ export class ChartState<
   });
 
   snappedPadding = $derived($state.snapshot(this.props.xPadding));
+
+  /**
+   * How much an isometric floor is scaled from the plot laid flat — refitted to the view as it
+   * turns, so this changes with it — or `1` when flat.  What a size in pixels on the floor (a scale's
+   * padding, a `Bin`'s cells) is measured against, so it stays the same share of the floor.
+   */
+  floorScale = $derived.by(() => {
+    const floor = this.isometricFloor;
+    if (!floor || !this.box.width || !this.box.height) return 1;
+    return Math.max(floor.width / this.box.width, floor.height / this.box.height);
+  });
+
+  /** `xPadding` / `yPadding` on the floor, measured against it laid flat (see `floorScale`) */
+  #xPadding = $derived(scaleFloorPadding(this.snappedPadding, this.floorScale));
+  #yPadding = $derived(scaleFloorPadding(this.props.yPadding, this.floorScale));
   snappedExtents = $derived($state.snapshot(this.extents));
 
   xScale = $derived(
     createChartScale('x', {
       scale: this._xScaleProp,
       domain: this.xDomain,
-      padding: this.snappedPadding,
+      padding: this.#xPadding,
       nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
@@ -1765,7 +1802,7 @@ export class ChartState<
     createChartScale('y', {
       scale: this._yScaleProp,
       domain: this.yDomain,
-      padding: this.props.yPadding,
+      padding: this.#yPadding,
       nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
@@ -1783,7 +1820,7 @@ export class ChartState<
     createChartScale('x', {
       scale: this._xScaleProp,
       domain: this._baseXDomain,
-      padding: this.snappedPadding,
+      padding: this.#xPadding,
       nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
@@ -1798,7 +1835,7 @@ export class ChartState<
     createChartScale('y', {
       scale: this._yScaleProp,
       domain: this._baseYDomain,
-      padding: this.props.yPadding,
+      padding: this.#yPadding,
       nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,

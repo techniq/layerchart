@@ -140,7 +140,7 @@ In the playground below, the sliders and dragging set the same angles.
 
 ### 3D scatter
 
-`Circle` floats each point at its `z`. Add `viewport` to keep it round instead of lying flat as an ellipse. To frame the points:
+`Circle` floats each point at its `z`, as do `Points`, `Ellipse`, `Image`, and `Text`, drawn back to front. Add `viewport` to keep a circle round instead of lying flat as an ellipse. A number raises a single mark, and a `Group` with a `z` raises everything in it. To frame the points:
 
 - `Frame` stands walls up the floor's two far edges, as tall as the `z` range.
 - `Grid z` draws gridlines on the walls.
@@ -208,6 +208,20 @@ To label a node on its top, draw a `Text` right after its `Rect`, with the tier'
 
 :example{ component="Contour" name="volcano-isometric" }
 
+### Bins
+
+`Bin` raises each cell with `z`. With `z="count"`, each cell stands as tall as the rows in it, measured by `zScale` from zero to the largest cell. Its `size` is measured against the floor laid flat, so each cell keeps the same rows as the view turns. See [Bin](/docs/components/Bin#isometric).
+
+:example{ component="Bin" name="isometric" }
+
+On a map, bin longitude and latitude through an equal-area projection, so every cell covers the same ground. Give the view the map's `aspect` so it fills the floor:
+
+:example{ component="Bin" name="walmart-isometric" }
+
+To draw the cells yourself, take them from `children`, which passes them back to front. Give each `Path` its `z`, and anything on top (a `Text` or an `Image`) the same `z`. Here, each hexagon stands to its elevation with a terrain tile on top:
+
+:example{ component="Bin" name="images-isometric" }
+
 ### Paths and maps
 
 `Path` takes a `z` in pixels, or `[start, end]` to float it, and stands its shape up with shaded sides. An unfilled path is raised as a line. Marks drawn with `Path` pass it through, so a `GeoPath` can stand a region up:
@@ -216,17 +230,19 @@ To label a node on its top, draw a `Text` right after its `Rect`, with the tier'
 <GeoPath geojson={state} z={share * 60} fill={color} />
 ```
 
-When shapes stand side by side, draw nearer ones last. With `m = context.isometricMatrix`, a point `[x, y]` on the floor is nearer the viewer the larger `m.b * x + m.d * y` is. The map below sorts its states by their centers this way:
+When shapes stand side by side, draw nearer ones last. `context.backToFront(items, at)` puts `items` in that order, by where `at` places each on the floor, and leaves them as they are on a flat chart. The map below sorts its states by their centers:
 
 ```svelte
-{@const m = context.isometricMatrix}
-{@const depth = ([x, y]) => m.b * x + m.d * y}
-{#each states.toSorted((a, b) => depth(geoPath().centroid(a)) - depth(geoPath().centroid(b))) as state}
+{#each context.backToFront(states, (state) => geoPath().centroid(state)) as state}
 ```
 
 Sorting by center works for shapes of similar size. A large shape wrapped around a smaller one can still draw in the wrong order.
 
 :example{ component="GeoPath" name="election-isometric" }
+
+Points on a map stand up the same way. Here each county's pin is a `Line` stem with `z2` and a `Circle` at the same `z`, drawn back to front, and an `AnnotationPoint` with a `z` labels the tallest:
+
+:example{ component="Chart" name="isometric-pin-map" }
 
 ### More marks with height
 

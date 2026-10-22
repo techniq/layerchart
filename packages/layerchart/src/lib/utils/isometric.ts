@@ -312,8 +312,10 @@ export function boxFaces(
     sides.push({
       kind: 'side',
       points: [at(p.x, p.y, z0), at(q.x, q.y, z0), at(q.x, q.y, z1), at(p.x, p.y, z1)],
-      // Lit from the upper left: a side turned to the right sits in more shadow
-      shade: facing.right ? 0.3 : 0.15,
+      // Lit from the upper left: a side turned to the right sits in more shadow.  By how far it's
+      // turned, as `extrudeRings` shades a path's sides, so a side darkens as the view turns rather
+      // than snapping between two shades as it passes the light
+      shade: sideShade(facing.across, facing.toward),
     });
   }
 
@@ -350,7 +352,16 @@ function footprintEdges(x: number, y: number, width: number, height: number): Fo
 function edgeFacing(edge: FootprintEdge, m: AffineMatrix) {
   const sx = m.a * edge.normal.x + m.c * edge.normal.y;
   const sy = m.b * edge.normal.x + m.d * edge.normal.y;
-  return { front: sy > 1e-9, right: sx > 1e-9 };
+  return { front: sy > 1e-9, across: sx, toward: sy };
+}
+
+/**
+ * How much to darken a side whose outward normal points `across` the screen and `toward` the
+ * viewer: `0.15` facing left, to `0.3` facing right
+ */
+export function sideShade(across: number, toward: number) {
+  const t = across / (Math.hypot(across, toward) || 1);
+  return 0.15 + (0.15 * (t + 1)) / 2;
 }
 
 /** The floor's far edges for the view `m`, where the back walls stand */
@@ -541,8 +552,10 @@ export function extrudeRings(
       const bottom = vertices.map((k) => at(ring[k], z0));
       const top = vertices.map((k) => at(ring[k], z1)).reverse();
       const facing = facingOf(ring[vertices[0]], ring[vertices[vertices.length - 1]]);
-      const t = facing.across / (Math.hypot(facing.across, facing.toward) || 1);
-      return { d: `M${bottom.join('L')}L${top.join('L')}Z`, opacity: 0.15 + (0.15 * (t + 1)) / 2 };
+      return {
+        d: `M${bottom.join('L')}L${top.join('L')}Z`,
+        opacity: sideShade(facing.across, facing.toward),
+      };
     };
 
     // Each run of facing edges, starting where one begins (or anywhere, when they all face)
@@ -640,4 +653,45 @@ export function sectorDepth(startAngle: number, endAngle: number, m: AffineMatri
   const past = (((front - a0) % tau) + tau) % tau;
   if (past <= a1 - a0) return Math.hypot(m.b, m.d);
   return Math.max(depth(a0), depth(a1));
+}
+
+type Lift = { x: number; y: number };
+
+/**
+ * How far one pixel of a mark's `z` raises it on the plot — the chart's `isometricLift` — or `null`
+ * when it stands on the floor.  Raised by a numeric `z` in pixel mode, and in data mode by any `z`,
+ * or the chart's when `inherit`.  Reads the view only once there's a `z`, so a mark without one
+ * doesn't follow it.
+ */
+export function markLift(
+  ctx: { isometricLift: Lift | null; props: { z?: unknown } },
+  layerMatrix: () => AffineMatrix | null,
+  z: unknown,
+  dataMode: boolean,
+  inherit = true
+): Lift | null {
+  const raised = dataMode ? z != null || (inherit && ctx.props.z != null) : typeof z === 'number';
+  if (!raised || !layerMatrix()) return null;
+  const lift = ctx.isometricLift;
+  return lift && (lift.x !== 0 || lift.y !== 0) ? lift : null;
+}
+
+/**
+ * Data-mode items moved up their `height` along `lift`, and put back to front by where each stood
+ * on the floor, so nearer ones draw over farther ones
+ */
+export function raiseItems<T extends Record<K, number>, K extends string>(
+  items: T[],
+  [kx, ky]: [K, K],
+  m: AffineMatrix,
+  lift: Lift,
+  height: (item: T) => number
+): T[] {
+  const depth = new Map(items.map((item) => [item, m.b * item[kx] + m.d * item[ky]]));
+  for (const item of items) {
+    const z = height(item);
+    (item as Record<K, number>)[kx] += lift.x * z;
+    (item as Record<K, number>)[ky] += lift.y * z;
+  }
+  return items.sort((a, b) => depth.get(a)! - depth.get(b)!);
 }

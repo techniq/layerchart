@@ -14,6 +14,7 @@ export const getUsStatesTopology = prerender(async () => {
 		r.json()
 	)) as Topology<{
 		states: GeometryCollection<{ name: string }>;
+		nation: GeometryCollection;
 	}>;
 	return data;
 });
@@ -60,6 +61,50 @@ export const getCountriesDetailTopology = prerender(async () => {
 		land: GeometryCollection;
 	}>;
 	return geojson;
+});
+
+/**
+ * Points about 0.5° apart over the whole sphere (closer in longitude toward the poles, to stay even)
+ * that fall on land — for binning into cells that fill wherever there is land.  Tested once against
+ * world-atlas' 110m `land` with `geoContains` (each landmass' `geoBounds` first), as it takes a while.
+ */
+export const getWorldLandPoints = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-land-points.json').then((r) => r.json())) as [
+		longitude: number,
+		latitude: number
+	][];
+	return data;
+});
+
+/**
+ * People in each 15′ (0.25°) cell of the contiguous US in 2020, as `[longitude, latitude, count]` at
+ * the cell's center — cells inside a state with anyone in them.
+ *
+ * From CIESIN's Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11
+ * (NASA SEDAC, 2018, https://doi.org/10.7927/H4JW8BX5), CC BY 4.0.
+ */
+export const getUsPopulationGrid = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-population-grid.json').then((r) =>
+		r.json()
+	)) as [longitude: number, latitude: number, count: number][];
+	return data;
+});
+
+/**
+ * People in each 1° cell of the world in 2020, as `[longitude, latitude, count]` at the cell's
+ * center — GPWv4's 15′ counts summed, cells with anyone in them.
+ *
+ * From CIESIN's Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11
+ * (NASA SEDAC, 2018, https://doi.org/10.7927/H4JW8BX5), CC BY 4.0.
+ */
+export const getWorldPopulationGrid = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-population-grid.json').then((r) =>
+		r.json()
+	)) as [longitude: number, latitude: number, count: number][];
+	return data;
 });
 
 export const getEclipses = prerender(async () => {
