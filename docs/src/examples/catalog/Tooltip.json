@@ -3444,6 +3444,48 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 39,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 43,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 44,
+      "line": "<Tooltip.Item label=\"Athletes\" value={cell.count} />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 45,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 54,
+      "line": "<Tooltip.Item"
+    },
+    {
       "example": "with-tooltip",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/with-tooltip",
@@ -4086,6 +4128,34 @@
       "path": "/docs/components/Chart/facet-tooltip",
       "lineNumber": 39,
       "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 106,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 108,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 109,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 110,
+      "line": "<Tooltip.Item label=\"Population\" value={data.population} format=\"integer\" />"
     },
     {
       "example": "isometric-scatter-3d",
@@ -5096,6 +5166,34 @@
       "line": "<Tooltip.Item label=\"value\" value={data.data.value} format=\"integer\" />"
     },
     {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 45,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 47,
+      "line": "<Tooltip.Header>{data.data[0].name}{data.count > 1 ? ' and nearby' : ''}</Tooltip.Header>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 48,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"Airports\" value={data.count} />"
+    },
+    {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
@@ -5239,35 +5337,35 @@
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 81,
+      "lineNumber": 75,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 84,
+      "lineNumber": 78,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 85,
+      "lineNumber": 79,
       "line": "<Tooltip.List>"
     },
     {
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 86,
+      "lineNumber": 80,
       "line": "<Tooltip.Item label=\"Democratic\" value={share?.dem} format=\"percent\" />"
     },
     {
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 87,
+      "lineNumber": 81,
       "line": "<Tooltip.Item label=\"Republican\" value={share?.gop} format=\"percent\" />"
     },
     {
@@ -8379,5 +8477,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:18.171Z"
+  "updatedAt": "2026-10-22T21:41:14.227Z"
 }

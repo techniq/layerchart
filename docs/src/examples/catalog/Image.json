@@ -82,8 +82,8 @@
         }
       ],
       "description": "Every game involving a ranked team, placed at the team",
-      "createdAt": "2026-10-19T19:53:08.000Z",
-      "updatedAt": "2026-10-19T19:53:08.000Z"
+      "createdAt": "2026-10-20T15:00:01.000Z",
+      "updatedAt": "2026-10-20T15:00:01.000Z"
     },
     {
       "name": "country-flags",
@@ -242,6 +242,20 @@
       "line": "<Image"
     },
     {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 57,
+      "line": "<Image href={tile(cell)} x={cell.x} y={cell.y} width={size} height={(size * 140) / 120} />"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 74,
+      "line": "<Image"
+    },
+    {
       "example": "image-beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/image-beeswarm",
@@ -333,5 +347,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:17.291Z"
+  "updatedAt": "2026-10-22T21:41:13.602Z"
 }

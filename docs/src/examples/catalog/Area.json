@@ -613,17 +613,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 144,
+          "lineNumber": 143,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 147,
+          "lineNumber": 146,
           "line": "<Area"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
       "name": "playground",
@@ -1214,7 +1214,7 @@
       "example": "oscilloscope-ridgeline-isometric",
       "component": "Area",
       "path": "/docs/components/Area/oscilloscope-ridgeline-isometric",
-      "lineNumber": 147,
+      "lineNumber": 146,
       "line": "<Area"
     },
     {
@@ -1599,7 +1599,7 @@
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Area"
     },
     {
@@ -1792,5 +1792,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:12.779Z"
+  "updatedAt": "2026-10-22T21:41:12.534Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-19T19:57:30.652Z",
-  "totalComponents": 80,
-  "totalExamples": 1015,
+  "generatedAt": "2026-10-22T21:43:55.728Z",
+  "totalComponents": 82,
+  "totalExamples": 1033,
   "components": [
     {
       "component": "AnnotationLine",
@@ -439,7 +439,7 @@
         {
           "name": "oscilloscope-ridgeline-isometric",
           "path": "/example/Area/oscilloscope-ridgeline-isometric",
-          "checksum": "a69a43e071db021587ec1a5a493f6927"
+          "checksum": "467cbe5275604c9f9fa7e3b0667a002e"
         },
         {
           "name": "playground",
@@ -1874,6 +1874,66 @@
       ]
     },
     {
+      "component": "Bin",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Bin/basic",
+          "checksum": "7ad2f30f18b9ca0a18058d7722ff8781"
+        },
+        {
+          "name": "categorical",
+          "path": "/example/Bin/categorical",
+          "checksum": "7034b66c49d8f2643c2fc88181aaf7fc"
+        },
+        {
+          "name": "images",
+          "path": "/example/Bin/images",
+          "checksum": "0e17694c307c93a6014cc7a21d6382c7"
+        },
+        {
+          "name": "images-isometric",
+          "path": "/example/Bin/images-isometric",
+          "checksum": "76af31ef97c712c57446b11d6023e125"
+        },
+        {
+          "name": "isometric",
+          "path": "/example/Bin/isometric",
+          "checksum": "43f3283d448f1a6e76a1c3ddbeef55e2"
+        },
+        {
+          "name": "labels",
+          "path": "/example/Bin/labels",
+          "checksum": "ed8691826a8c0685ffe528a6f2de02c3"
+        },
+        {
+          "name": "shapes",
+          "path": "/example/Bin/shapes",
+          "checksum": "4b7e6ac060ef72c114a226ae4c3b1300"
+        },
+        {
+          "name": "size-by-count",
+          "path": "/example/Bin/size-by-count",
+          "checksum": "5bd81c7e3a994ee07c83317ec465a49c"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/Bin/tooltip",
+          "checksum": "545b445965e06ceb3eb21de79dc26fe3"
+        },
+        {
+          "name": "walmart",
+          "path": "/example/Bin/walmart",
+          "checksum": "3ebbcfe87cf22bdf7187401c1c1986f3"
+        },
+        {
+          "name": "walmart-isometric",
+          "path": "/example/Bin/walmart-isometric",
+          "checksum": "78c9d31b528395603805f05ef142d986"
+        }
+      ]
+    },
+    {
       "component": "BoxPlot",
       "examples": [
         {
@@ -2294,7 +2354,7 @@
         {
           "name": "isometric-areas",
           "path": "/example/Chart/isometric-areas",
-          "checksum": "3d03215a32a90450e15ac1436d01e2cb"
+          "checksum": "4f38a9bc7dda0c834eb06ce7f2fa00d2"
         },
         {
           "name": "isometric-columns",
@@ -2310,6 +2370,11 @@
           "name": "isometric-pan-zoom",
           "path": "/example/Chart/isometric-pan-zoom",
           "checksum": "d01d48d2d8e044a26f564140a436813c"
+        },
+        {
+          "name": "isometric-pin-map",
+          "path": "/example/Chart/isometric-pin-map",
+          "checksum": "8c6fdd6e70dd1b36a84fb5d8305c47d7"
         },
         {
           "name": "isometric-playground",
@@ -2814,6 +2879,41 @@
       ]
     },
     {
+      "component": "GeoBin",
+      "examples": [
+        {
+          "name": "columns",
+          "path": "/example/GeoBin/columns",
+          "checksum": "8e13d8ee810b3240e3bfa48d2eb6ab38"
+        },
+        {
+          "name": "dot-globe",
+          "path": "/example/GeoBin/dot-globe",
+          "checksum": "2ab0c4fa15271921e5321bd8c6468011"
+        },
+        {
+          "name": "land",
+          "path": "/example/GeoBin/land",
+          "checksum": "c27959540e5cba3d179a7b7f3b8226fc"
+        },
+        {
+          "name": "us-population",
+          "path": "/example/GeoBin/us-population",
+          "checksum": "61989f8976d6e9a26e226f8ce768787a"
+        },
+        {
+          "name": "world-airports",
+          "path": "/example/GeoBin/world-airports",
+          "checksum": "2f9cc034c3a508bf388870ed7a0c2ef7"
+        },
+        {
+          "name": "world-population",
+          "path": "/example/GeoBin/world-population",
+          "checksum": "eea9838b8bda3231021e637e92cb7df4"
+        }
+      ]
+    },
+    {
       "component": "GeoCircle",
       "examples": [
         {
@@ -2899,7 +2999,7 @@
         {
           "name": "election-isometric",
           "path": "/example/GeoPath/election-isometric",
-          "checksum": "b5395a813621a834506b9eea31d43b63"
+          "checksum": "578259a3eef4c972263840a9b7c2bb6e"
         },
         {
           "name": "interpolating-projections",
@@ -3419,7 +3519,7 @@
         {
           "name": "threshold",
           "path": "/example/Legend/threshold",
-          "checksum": "0041b7cff8dc3eca9749e58ae89f4110"
+          "checksum": "6af1e8c9c4240946b9187ce386bd3301"
         },
         {
           "name": "vertical-orientation",
@@ -5289,7 +5389,7 @@
         {
           "name": "isometric",
           "path": "/example/Tree/isometric",
-          "checksum": "6b5e88bd3ce5d6d6fd490e658cff81b9"
+          "checksum": "66b3c237f82feec0d4fadfaccd1fb121"
         },
         {
           "name": "playground",

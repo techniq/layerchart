@@ -109,8 +109,8 @@
         }
       ],
       "description": "Weekly AP Top 25 poll for a college football or basketball season",
-      "createdAt": "2026-10-19T19:53:08.000Z",
-      "updatedAt": "2026-10-19T19:53:08.000Z"
+      "createdAt": "2026-10-20T15:00:01.000Z",
+      "updatedAt": "2026-10-20T15:00:01.000Z"
     },
     {
       "name": "bump-state-population-ranks",
@@ -154,7 +154,7 @@
         }
       ],
       "createdAt": "2026-04-02T19:13:52.000Z",
-      "updatedAt": "2026-10-19T19:53:08.000Z"
+      "updatedAt": "2026-10-20T15:00:01.000Z"
     },
     {
       "name": "curve",

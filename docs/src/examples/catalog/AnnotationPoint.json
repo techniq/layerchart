@@ -406,6 +406,13 @@
       "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
     },
     {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 86,
+      "line": "<AnnotationPoint"
+    },
+    {
       "example": "svelte-milestones",
       "component": "LineChart",
       "path": "/docs/components/LineChart/svelte-milestones",
@@ -413,5 +420,5 @@
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:12.621Z"
+  "updatedAt": "2026-10-22T21:41:12.402Z"
 }

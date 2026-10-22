@@ -91,32 +91,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 48,
+          "lineNumber": 47,
           "line": "<Layer>"
         },
         {
           "component": "Tree",
-          "lineNumber": 49,
+          "lineNumber": 48,
           "line": "<Tree hierarchy={data} orientation=\"vertical\">"
         },
         {
           "component": "Link",
-          "lineNumber": 53,
+          "lineNumber": 52,
           "line": "<Link data={link} orientation=\"vertical\" class=\"stroke-surface-content/40\" />"
         },
         {
           "component": "Polygon",
-          "lineNumber": 60,
+          "lineNumber": 59,
           "line": "<Polygon"
         },
         {
           "component": "Text",
-          "lineNumber": 70,
+          "lineNumber": 69,
           "line": "<Text"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
       "name": "playground",
@@ -182,7 +182,7 @@
       "example": "isometric",
       "component": "Tree",
       "path": "/docs/components/Tree/isometric",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Tree hierarchy={data} orientation=\"vertical\">"
     },
     {
@@ -193,5 +193,5 @@
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:44.489Z"
+  "updatedAt": "2026-10-22T21:41:14.345Z"
 }
