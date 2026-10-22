@@ -33,6 +33,6 @@
 	<Layer>
 		<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
 		<GeoPath geojson={countries} class="fill-surface-content/10 stroke-none" />
-		<GeoBin size={14} z="count" />
+		<GeoBin size={14} z="count" class="stroke-surface-100/30" />
 	</Layer>
 </Chart>
