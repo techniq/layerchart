@@ -98,7 +98,7 @@
 <Chart
 	geo={{
 		projection,
-		fitGeojson: countriesGeojson
+		fitGeojson: timezoneGeojson
 	}}
 	padding={{ left: 10, right: 10 }}
 	height={600}
