@@ -33,7 +33,7 @@
 	padding={8}
 	height={600}
 >
-	<Layer type="canvas">
+	<Layer>
 		<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-100 stroke-surface-content/20" />
 		<GeoBin size={spacing}>
 			{#snippet children({ cells })}

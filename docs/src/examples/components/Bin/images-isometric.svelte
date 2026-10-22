@@ -61,7 +61,7 @@
 	{#snippet children({ context })}
 		{@const m = context.isometricMatrix}
 		{@const lift = context.isometricLift ?? { x: 0, y: 0 }}
-		<Layer type="canvas">
+		<Layer>
 			<Bin {size}>
 				{#snippet children({ cells })}
 					<!-- As drawn: the floor is refitted as the view turns, and its cells with it — so the

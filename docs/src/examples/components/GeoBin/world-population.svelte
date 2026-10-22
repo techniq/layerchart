@@ -52,7 +52,7 @@
 	height={620}
 >
 	<Legend title="People per km² (2020)" placement="top-left" />
-	<Layer type="canvas">
+	<Layer>
 		<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-100 stroke-surface-content/20" />
 		<GeoPath geojson={land} class="fill-surface-content/10 stroke-none" />
 		<!-- A cell's `area` is in steradians on the sphere: × 6371² for km² -->

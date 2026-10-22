@@ -52,7 +52,7 @@
 		tickValues={[100, 1e3, 1e4, 1e5, 1e6]}
 		tickFormat="metric"
 	/>
-	<Layer type="canvas">
+	<Layer>
 		<GeoPath geojson={borders} class="fill-none stroke-surface-content/30" strokeWidth={0.5} />
 		<!-- 15′ squares, one to each of the grid's cells, counting its people -->
 		<GeoBin shape="square" step={0.25} weight={(d) => d[2]} fill="count" />

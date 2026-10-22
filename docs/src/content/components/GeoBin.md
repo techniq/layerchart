@@ -43,7 +43,7 @@ A cell's `area` is in steradians, so `count / (area × 6371²)` is people per km
 
 ## Dot globe
 
-A `children` snippet receives the cells facing the viewer, each with its `center` as `[longitude, latitude]` — here, a dot at each cell with land in it. One `Circle` in data mode draws them all on a canvas, rather than a mark per dot, so it turns smoothly with thousands of them. Closer spacing makes for more, smaller cells.
+A `children` snippet receives the cells facing the viewer, each with its `center` as `[longitude, latitude]` — here, a dot at each cell with land in it. One `Circle` in data mode draws them all, rather than a mark per dot, so it turns smoothly with thousands of them. Closer spacing makes for more, smaller cells.
 
 :example{ name="dot-globe" }
 
