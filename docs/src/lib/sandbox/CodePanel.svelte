@@ -85,12 +85,11 @@
 </script>
 
 <!--
-	The panel owns the background in both modes. In view mode `Code` paints its own
-	`bg-surface-200 dark:bg-surface-300`, but the editor is deliberately transparent (so it
-	can't disagree with `Code`), so without this the background disappears on switching to
-	Edit anywhere the host didn't happen to supply one.
+	The panel owns the background in both modes: white in light mode, as the preview above
+	it. `Code` paints its own `bg-surface-200 dark:bg-surface-300`, which is cleared below,
+	and the editor is deliberately transparent (so it can't disagree with `Code`).
 -->
-<div class="code-panel relative bg-surface-200 dark:bg-surface-300">
+<div class="code-panel relative bg-surface-100 dark:bg-surface-300">
 	<!--
 		Sits where `Code` puts its copy button, and is identical in both modes so nothing
 		moves when they swap. `pointerenter` starts fetching the editor chunk before the
@@ -108,7 +107,7 @@
 	>
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
-			class="pointer-events-auto mt-1 mr-1 flex h-fit items-center gap-0.5 rounded-sm bg-surface-200/80 dark:bg-surface-300/80 p-0.5 backdrop-blur-sm"
+			class="pointer-events-auto mt-1 mr-1 flex h-fit items-center gap-0.5 rounded-sm bg-surface-100/80 dark:bg-surface-300/80 p-0.5 backdrop-blur-sm"
 			onpointerenter={() => sandbox.load()}
 		>
 			{#if sandbox.dirty}
@@ -232,7 +231,12 @@
 		background, translucent so the blur shows over code passing beneath.
 	*/
 	.code-panel {
-		--code-gutter-bg: color-mix(in oklab, var(--color-surface-200) 80%, transparent);
+		--code-gutter-bg: color-mix(in oklab, var(--color-surface-100) 80%, transparent);
+	}
+
+	/* The panel supplies the background, so `Code` matches the editor in both modes */
+	.code-panel :global(.Code) {
+		background-color: transparent;
 	}
 
 	:global(.dark) .code-panel {
