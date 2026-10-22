@@ -809,7 +809,7 @@
       "example": "isometric",
       "component": "Tree",
       "path": "/docs/components/Tree/isometric",
-      "lineNumber": 60,
+      "lineNumber": 59,
       "line": "<Polygon"
     },
     {
@@ -827,5 +827,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:44.132Z"
+  "updatedAt": "2026-10-22T21:41:13.967Z"
 }

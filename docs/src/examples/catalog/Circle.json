@@ -435,6 +435,20 @@
       "line": "<Circle cx=\"x\" cy=\"y\" r={4} viewport class=\"fill-primary\" />"
     },
     {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 61,
+      "line": "<Circle"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 73,
+      "line": "<Circle"
+    },
+    {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
@@ -733,6 +747,13 @@
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/tree",
       "lineNumber": 53,
+      "line": "<Circle"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 40,
       "line": "<Circle"
     },
     {
@@ -1275,5 +1296,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:16.344Z"
+  "updatedAt": "2026-10-22T21:41:13.017Z"
 }

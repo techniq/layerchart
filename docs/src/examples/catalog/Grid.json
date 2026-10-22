@@ -406,7 +406,7 @@
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 61,
+      "lineNumber": 60,
       "line": "<Grid x z />"
     },
     {
@@ -550,5 +550,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.682Z"
+  "updatedAt": "2026-10-22T21:41:13.504Z"
 }

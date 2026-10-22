@@ -531,6 +531,13 @@
       "line": "<Text"
     },
     {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 30,
+      "line": "<Text"
+    },
+    {
       "example": "constant-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/constant-labels",
@@ -1066,7 +1073,7 @@
       "example": "isometric",
       "component": "Tree",
       "path": "/docs/components/Tree/isometric",
-      "lineNumber": 70,
+      "lineNumber": 69,
       "line": "<Text"
     },
     {
@@ -1210,5 +1217,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:18.108Z"
+  "updatedAt": "2026-10-22T21:41:14.175Z"
 }

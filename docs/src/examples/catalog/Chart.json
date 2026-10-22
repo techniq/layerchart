@@ -782,32 +782,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 59,
+          "lineNumber": 58,
           "line": "<Layer>"
         },
         {
           "component": "Frame",
-          "lineNumber": 60,
+          "lineNumber": 59,
           "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
         },
         {
           "component": "Grid",
-          "lineNumber": 61,
+          "lineNumber": 60,
           "line": "<Grid x z />"
         },
         {
           "component": "Axis",
-          "lineNumber": 62,
+          "lineNumber": 61,
           "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
         },
         {
           "component": "Area",
-          "lineNumber": 71,
+          "lineNumber": 70,
           "line": "<Area"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
       "name": "isometric-columns",
@@ -920,6 +920,50 @@
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
       "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-pin-map",
+      "title": "isometric pin map",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 41,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 52,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-200 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 60,
+          "line": "<Line x1={x} y1={y} x2={x} y2={y} z2={height} class=\"stroke-surface-content/50\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 61,
+          "line": "<Circle"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 86,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 106,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
       "name": "isometric-playground",
@@ -2375,6 +2419,83 @@
     },
     {
       "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 50,
+      "line": "<Chart {data} x=\"x\" y=\"y\" padding={size} height={500} clip>"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 52,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 25,
+      "line": "<Chart"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/basic",
       "lineNumber": 27,
@@ -2955,6 +3076,13 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 41,
+      "line": "<Chart"
+    },
+    {
       "example": "isometric-playground",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-playground",
@@ -3491,6 +3619,48 @@
       "component": "Frame",
       "path": "/docs/components/Frame/gradient",
       "lineNumber": 5,
+      "line": "<Chart"
+    },
+    {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 19,
+      "line": "<Chart"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 34,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 20,
+      "line": "<Chart"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 38,
       "line": "<Chart"
     },
     {
@@ -5867,5 +6037,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:16.199Z"
+  "updatedAt": "2026-10-22T21:41:12.898Z"
 }

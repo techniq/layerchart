@@ -261,7 +261,7 @@
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-02-18T13:27:36.000Z"
+      "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
       "name": "vertical-orientation",
@@ -279,6 +279,20 @@
     }
   ],
   "usage": [
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 32,
+      "line": "<Legend placement=\"top\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 38,
+      "line": "<Legend title=\"Median opening date\" tickFormat=\"year\" placement=\"top-left\" />"
+    },
     {
       "example": "isometric-stacked-columns",
       "component": "Chart",
@@ -299,6 +313,20 @@
       "path": "/docs/components/Chart/mixed-marks-with-stack-long-data",
       "lineNumber": 74,
       "line": "<Legend placement=\"top-right\" />"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 49,
+      "line": "<Legend"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 54,
+      "line": "<Legend title=\"People per km² (2020)\" placement=\"top-left\" />"
     },
     {
       "example": "bubble-map",
@@ -577,8 +605,8 @@
       "example": "threshold",
       "component": "Legend",
       "path": "/docs/components/Legend/threshold",
-      "lineNumber": 14,
-      "line": "<!-- <Legend"
+      "lineNumber": 13,
+      "line": "<Legend"
     },
     {
       "example": "vertical-orientation",
@@ -658,5 +686,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.824Z"
+  "updatedAt": "2026-10-22T21:41:13.650Z"
 }

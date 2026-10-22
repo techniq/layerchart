@@ -295,7 +295,7 @@
       "example": "oscilloscope-ridgeline-isometric",
       "component": "Area",
       "path": "/docs/components/Area/oscilloscope-ridgeline-isometric",
-      "lineNumber": 144,
+      "lineNumber": 143,
       "line": "<Layer>"
     },
     {
@@ -1224,6 +1224,83 @@
     },
     {
       "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 25,
+      "line": "<Layer>"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 51,
+      "line": "<Layer>"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 64,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 29,
+      "line": "<Layer>"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 28,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 31,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/basic",
       "lineNumber": 36,
@@ -1639,7 +1716,7 @@
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 59,
+      "lineNumber": 58,
       "line": "<Layer>"
     },
     {
@@ -1661,6 +1738,13 @@
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
       "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 51,
       "line": "<Layer>"
     },
     {
@@ -2119,6 +2203,48 @@
       "line": "<Layer>"
     },
     {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
@@ -2234,7 +2360,7 @@
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 61,
+      "lineNumber": 59,
       "line": "<Layer>"
     },
     {
@@ -4439,7 +4565,7 @@
       "example": "isometric",
       "component": "Tree",
       "path": "/docs/components/Tree/isometric",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
@@ -4576,5 +4702,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:17.329Z"
+  "updatedAt": "2026-10-22T21:41:13.632Z"
 }

@@ -174,22 +174,22 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 61,
+          "lineNumber": 59,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 69,
+          "lineNumber": 63,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 81,
+          "lineNumber": 75,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
       "name": "interpolating-projections",
@@ -830,6 +830,41 @@
     },
     {
       "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 40,
+      "line": "<GeoPath geojson={nation} class=\"fill-surface-content/5 stroke-none\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 41,
+      "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 32,
+      "line": "<GeoPath geojson={nation} class=\"fill-surface-content/5 stroke-surface-content/30\" />"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 33,
+      "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/20\" />"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 52,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
       "lineNumber": 47,
@@ -841,6 +876,76 @@
       "path": "/docs/components/Density/walmart",
       "lineNumber": 52,
       "line": "<GeoPath"
+    },
+    {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 34,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 35,
+      "line": "<GeoPath geojson={countries} class=\"fill-surface-content/10 stroke-none\" />"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 37,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 44,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 56,
+      "line": "<GeoPath geojson={borders} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 59,
+      "line": "<GeoPath geojson={states} class=\"fill-none stroke-surface-content/20\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 34,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 35,
+      "line": "<GeoPath geojson={countries} class=\"fill-surface-content/10 stroke-none\" />"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 56,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 57,
+      "line": "<GeoPath geojson={land} class=\"fill-surface-content/10 stroke-none\" />"
     },
     {
       "example": "earthquake-globe",
@@ -1021,7 +1126,7 @@
       "example": "election-isometric",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/election-isometric",
-      "lineNumber": 69,
+      "lineNumber": 63,
       "line": "<GeoPath"
     },
     {
@@ -1690,5 +1795,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.565Z"
+  "updatedAt": "2026-10-22T21:41:13.379Z"
 }

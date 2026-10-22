@@ -3040,6 +3040,118 @@
     },
     {
       "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 35,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"left\" grid rule tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"bottom\" rule tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 32,
+      "line": "<Axis placement=\"top\" rule tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 33,
+      "line": "<Axis placement=\"right\" rule tickLabelProps={{ viewport: true }} />"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"left\" grid={!showGrid} rule />"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 46,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 35,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/basic",
       "lineNumber": 37,
@@ -3574,21 +3686,21 @@
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 62,
+      "lineNumber": 61,
       "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
     },
     {
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 65,
+      "lineNumber": 64,
       "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: true }} />"
     },
     {
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 67,
+      "lineNumber": 66,
       "line": "<Axis placement=\"back\" />"
     },
     {
@@ -5951,5 +6063,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:15.884Z"
+  "updatedAt": "2026-10-22T21:41:12.593Z"
 }

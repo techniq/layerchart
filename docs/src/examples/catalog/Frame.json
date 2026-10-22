@@ -163,7 +163,7 @@
       "example": "isometric-areas",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-areas",
-      "lineNumber": 60,
+      "lineNumber": 59,
       "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
     },
     {
@@ -244,5 +244,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.488Z"
+  "updatedAt": "2026-10-22T21:41:13.272Z"
 }

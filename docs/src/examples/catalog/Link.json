@@ -261,7 +261,7 @@
       "example": "isometric",
       "component": "Tree",
       "path": "/docs/components/Tree/isometric",
-      "lineNumber": 53,
+      "lineNumber": 52,
       "line": "<Link data={link} orientation=\"vertical\" class=\"stroke-surface-content/40\" />"
     },
     {
@@ -272,5 +272,5 @@
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.910Z"
+  "updatedAt": "2026-10-22T21:41:13.745Z"
 }

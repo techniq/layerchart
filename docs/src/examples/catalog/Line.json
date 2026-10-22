@@ -303,6 +303,13 @@
       "line": "<Line"
     },
     {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 60,
+      "line": "<Line x1={x} y1={y} x2={x} y2={y} z2={height} class=\"stroke-surface-content/50\" />"
+    },
+    {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
@@ -499,5 +506,5 @@
       "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:14.178Z"
+  "updatedAt": "2026-10-22T21:41:13.665Z"
 }
