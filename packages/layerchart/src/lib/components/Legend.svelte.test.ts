@@ -1,11 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { scaleSequential } from 'd3-scale';
+import { scaleQuantize, scaleSequential, scaleThreshold } from 'd3-scale';
 import { interpolateTurbo } from 'd3-scale-chromatic';
 
 import BarChart from './charts/BarChart/BarChart.svelte';
 import LineChart from './charts/LineChart/LineChart.svelte';
 import ChartWithMarkSeries from '$lib/tests/ChartWithMarkSeries.svelte';
+import Legend from './Legend.svelte';
 
 const longData = [
   { year: 2019, fruit: 'apples', value: 30 },
@@ -72,6 +73,49 @@ describe('Legend variant', () => {
         el.textContent?.trim()
       );
       expect(labels).toEqual(['apples', 'bananas']);
+    });
+  });
+});
+
+describe('Legend threshold scale', () => {
+  const scale = scaleThreshold([2.5, 3.1, 9.5], ['#a', '#b', '#c', '#d']);
+
+  it('labels the ramp with the thresholds rather than swatch indices', async () => {
+    const { container } = render(Legend, { props: { scale, title: 'Rate' } } as any);
+    await vi.waitFor(() => {
+      const ticks = [...container.querySelectorAll('.lc-legend-tick-text')].map((el) =>
+        el.textContent?.trim()
+      );
+      expect(ticks).toEqual(['2.5', '3.1', '9.5']);
+    });
+  });
+
+  it('shows a swatch for each color, labelled with the range it covers', async () => {
+    const { container } = render(Legend, {
+      props: { scale, title: 'Rate', variant: 'swatches' },
+    } as any);
+    await vi.waitFor(() => {
+      const labels = [...container.querySelectorAll('.lc-legend-swatch-label')].map((el) =>
+        el.textContent?.trim()
+      );
+      // One more than the thresholds, the ends open
+      expect(labels).toEqual(['< 2.5', '2.5–3.1', '3.1–9.5', '≥ 9.5']);
+      const colors = [...container.querySelectorAll<HTMLElement>('.lc-legend-swatch')].map(
+        (el) => el.style.backgroundColor
+      );
+      expect(colors).toHaveLength(4);
+    });
+  });
+
+  it('closes the ends of a quantize scale at its domain', async () => {
+    const { container } = render(Legend, {
+      props: { scale: scaleQuantize([0, 30], ['red', 'green', 'blue']), variant: 'swatches' },
+    } as any);
+    await vi.waitFor(() => {
+      const labels = [...container.querySelectorAll('.lc-legend-swatch-label')].map((el) =>
+        el.textContent?.trim()
+      );
+      expect(labels).toEqual(['0–10', '10–20', '20–30']);
     });
   });
 });

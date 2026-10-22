@@ -10,10 +10,9 @@
 		title="Unemployment rate (%)"
 		tickLength={0}
 	/>
-	<!-- TODO: Fix Legend swatches for scaleThreshold -->
-	<!-- <Legend
-      scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])}
-      title="Unemployment rate (%)"
-      variant="swatches"
-    /> -->
+	<Legend
+		scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])}
+		title="Unemployment rate (%)"
+		variant="swatches"
+	/>
 </div>

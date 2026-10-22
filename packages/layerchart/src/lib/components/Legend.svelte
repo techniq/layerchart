@@ -220,6 +220,7 @@
     tickLabelOffset: number;
     tickLine: boolean;
     tickValues: any[] | undefined;
+    tickFormat?: FormatType | FormatConfig | ((value: any) => any);
     tickLength: number;
   };
 
@@ -414,6 +415,41 @@
         },
         selected: selected.length === 0 || selected.includes(series.key),
       }));
+    } else if (scale && (scale as any).invertExtent) {
+      const bucketed = scale as any;
+      // Threshold / quantize / quantile: a swatch for each color, labelled with the range it covers —
+      // one more than there are thresholds, the first and last open unless the domain bounds them
+      const thresholds: number[] = bucketed.thresholds
+        ? bucketed.thresholds()
+        : bucketed.quantiles
+          ? bucketed.quantiles()
+          : bucketed.domain();
+      const domain = bucketed.domain() as number[];
+      const bounded = !!(bucketed.thresholds || bucketed.quantiles);
+      const fmt = (v: number) => (tickFormatProp ? format(v, asAny(tickFormatProp)) : v);
+      const colors = bucketed.range() as string[];
+      return colors.map((color, i) => {
+        const lo = i > 0 ? thresholds[i - 1] : bounded ? Math.min(...domain) : undefined;
+        const hi =
+          i < colors.length - 1 ? thresholds[i] : bounded ? Math.max(...domain) : undefined;
+        const label =
+          lo == null ? `< ${fmt(hi!)}` : hi == null ? `≥ ${fmt(lo)}` : `${fmt(lo)}–${fmt(hi)}`;
+        // Keyed by its index, as series are by name
+        const key = String(i);
+        return {
+          value: key,
+          label,
+          color,
+          onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(key),
+          onpointerenter: (e: MouseEvent) => {
+            ctx.series!.highlightKey = key;
+          },
+          onpointerleave: (e: MouseEvent) => {
+            ctx.series!.highlightKey = null;
+          },
+          selected: selected.length === 0 || selected.includes(key),
+        };
+      });
     } else {
       // Scale-based legend items
       const tickValues = scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [];
@@ -452,6 +488,9 @@
   {:else if variant === 'ramp'}
     {@const indicatorSize = 6}
     {@const tickLabelY = height + tickLengthProp + tickFontSize}
+    <!-- A threshold scale's ticks are the edges between its swatches, by index, each labelled with
+         its threshold -->
+    {@const thresholdTicks = (scale as any)?.invertExtent ? scaleConfig.tickValues : undefined}
     {@const svgHeight = tickLabelY}
     <svg
       {width}
@@ -475,7 +514,7 @@
       </g>
 
       <g class="lc-legend-tick-group">
-        {#each tickValuesProp ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick, i}
+        {#each tickValuesProp ?? thresholdTicks ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick, i}
           <text
             text-anchor="middle"
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
@@ -484,7 +523,11 @@
             class={cls('lc-legend-tick-text', classes.label)}
           >
             <!-- @ts-expect-error - improve types -->
-            {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
+            {thresholdTicks && !tickValuesProp && typeof scaleConfig.tickFormat === 'function'
+              ? scaleConfig.tickFormat(tick)
+              : tickFormatProp
+                ? format(tick, asAny(tickFormatProp))
+                : tick}
           </text>
 
           {#if scaleConfig.tickLine}
