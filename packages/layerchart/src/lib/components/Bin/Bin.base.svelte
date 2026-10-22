@@ -230,10 +230,13 @@
     return (cell: BinCell) => [0, resolveDataProp(z, cell, zScale, 0)] as [number, number];
   });
 
-  /** Cells back to front on an isometric floor, so nearer prisms paint over farther ones */
+  /**
+   * Cells back to front on an isometric floor, so nearer prisms — or whatever `children` stands on
+   * them — paint over farther ones
+   */
   const paintedCells = $derived.by(() => {
     const m = layerIsometric();
-    if (!m || !heightOf) return shownCells;
+    if (!m || !(heightOf || children)) return shownCells;
     return [...shownCells].sort((a, b) => m.b * a.x + m.d * a.y - (m.b * b.x + m.d * b.y));
   });
 
@@ -349,7 +352,7 @@
 {/snippet}
 
 {#if children}
-  {@render children({ cells: shownCells })}
+  {@render children({ cells: paintedCells })}
 {:else if columnItems || shownCells.length > 0}
   <Group {...restProps} class="lc-bin">
     <!-- Keyed by index, so canvas paints in the order listed here -->

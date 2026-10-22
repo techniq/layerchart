@@ -90,7 +90,10 @@ export type BinPropsWithoutHTML<T = any> = {
    */
   z?: DataProp<BinCell<T>>;
   class?: string;
-  /** Render the cells yourself (ex. as `Circle`s or `Text` labels) instead of as polygons */
+  /**
+   * Render the cells yourself (ex. as `Circle`s or `Text` labels) instead of as polygons — back to
+   * front on an isometric floor, so what's drawn on nearer cells stands in front
+   */
   children?: Snippet<[{ cells: BinCell<T>[] }]>;
   onclick?: (e: MouseEvent, cell: BinCell<T>) => void;
   onpointerenter?: (e: PointerEvent, cell: BinCell<T>) => void;

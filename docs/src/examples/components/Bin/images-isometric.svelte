@@ -59,18 +59,15 @@
 	height={550}
 >
 	{#snippet children({ context })}
-		{@const m = context.isometricMatrix}
+		<!-- The floor is refitted as the view turns, its cells with it, so tiles and heights scale too -->
+		{@const scale = context.floorScale}
 		{@const lift = context.isometricLift ?? { x: 0, y: 0 }}
 		<Layer>
 			<Bin {size}>
 				{#snippet children({ cells })}
-					<!-- As drawn: the floor is refitted as the view turns, and its cells with it — so the
-					     tiles and heights follow them rather than staying `size` -->
-					{@const xs = cells[0]?.polygon.map((p) => p[0]) ?? []}
-					{@const scale = xs.length ? (Math.max(...xs) - Math.min(...xs)) / size : 1}
-					<!-- Back to front, each column then its tile, so nearer ones stand in front — keyed by index,
-					     as canvas paints in the order listed -->
-					{#each [...cells].sort( (a, b) => (m ? m.b * (a.x - b.x) + m.d * (a.y - b.y) : 0) ) as cell, i (i)}
+					<!-- Back to front, each column then its tile — keyed by index, as canvas paints in the
+					     order listed -->
+					{#each cells as cell, i (i)}
 						{@const t = terrain(cell)}
 						{@const height = t.height * scale}
 						<Path pathData={`M${cell.polygon.join('L')}Z`} z={height} fill={t.ground} />
