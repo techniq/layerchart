@@ -125,7 +125,30 @@
       return sphere.bin(rows, (d) => [xAccessor(d), yAccessor(d)], globeGrid, weightAccessor);
     }
     if (!ctx.width || !ctx.height || !(cellSize > 0)) return [];
-    return binCells(rows, position, { shape, size: cellSize, weight: weightAccessor });
+    if (!ctx.isometricFloor) {
+      return binCells(rows, position, { shape, size: cellSize, weight: weightAccessor });
+    }
+    // On an isometric floor, bin against the floor laid flat — each position scaled back by the
+    // floor's scale and rounded — so a point on a cell's edge falls the same way at every angle,
+    // rather than flipping cells with floating-point noise as the floor is refitted mid-turn.  The
+    // cells are then scaled back up onto the floor.
+    const k = ctx.floorScale;
+    const snap = (v: number) => Math.round(v * 1e6) / 1e6;
+    const cells = binCells(
+      rows,
+      (d) => {
+        const p = position(d);
+        return p && [snap(p[0] / k), snap(p[1] / k)];
+      },
+      { shape, size, weight: weightAccessor }
+    );
+    for (const cell of cells) {
+      cell.x *= k;
+      cell.y *= k;
+      cell.area *= k * k;
+      cell.polygon = cell.polygon.map(([x, y]) => [x * k, y * k] as [number, number]);
+    }
+    return cells;
   }
 
   const cells = $derived(bin(data));
