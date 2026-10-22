@@ -218,7 +218,7 @@ On a map, bin longitude and latitude through an equal-area projection, so every 
 
 :example{ component="Bin" name="walmart-isometric" }
 
-To draw the cells yourself, take them from `children`, give each `Path` its `z`, and place anything on top by moving it up its height along `context.isometricLift`. Draw them back to front, as for any raised shapes. Here, each hexagon stands to its elevation with a terrain tile on top:
+To draw the cells yourself, take them from `children`, which passes them back to front. Give each `Path` its `z`, and anything on top (a `Text` or an `Image`) the same `z`. Here, each hexagon stands to its elevation with a terrain tile on top:
 
 :example{ component="Bin" name="images-isometric" }
 

@@ -61,7 +61,6 @@
 	{#snippet children({ context })}
 		<!-- The floor is refitted as the view turns, its cells with it, so tiles and heights scale too -->
 		{@const scale = context.floorScale}
-		{@const lift = context.isometricLift ?? { x: 0, y: 0 }}
 		<Layer>
 			<Bin {size}>
 				{#snippet children({ cells })}
@@ -71,11 +70,12 @@
 						{@const t = terrain(cell)}
 						{@const height = t.height * scale}
 						<Path pathData={`M${cell.polygon.join('L')}Z`} z={height} fill={t.ground} />
-						<!-- On the column's top: up its height along the view's lift -->
+						<!-- On the column's top -->
 						<Image
 							href={t.tile}
-							x={cell.x + lift.x * height}
-							y={cell.y + lift.y * height}
+							x={cell.x}
+							y={cell.y}
+							z={height}
 							width={size * scale}
 							height={(size * scale * 140) / 120}
 						/>
