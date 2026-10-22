@@ -140,7 +140,7 @@ In the playground below, the sliders and dragging set the same angles.
 
 ### 3D scatter
 
-`Circle` floats each point at its `z`. Add `viewport` to keep it round instead of lying flat as an ellipse. To frame the points:
+`Circle` floats each point at its `z`, as do `Points`, `Ellipse`, `Image`, and `Text`, drawn back to front. Add `viewport` to keep a circle round instead of lying flat as an ellipse. A number raises a single mark, and a `Group` with a `z` raises everything in it. To frame the points:
 
 - `Frame` stands walls up the floor's two far edges, as tall as the `z` range.
 - `Grid z` draws gridlines on the walls.
@@ -230,17 +230,19 @@ To draw the cells yourself, take them from `children`, which passes them back to
 <GeoPath geojson={state} z={share * 60} fill={color} />
 ```
 
-When shapes stand side by side, draw nearer ones last. With `m = context.isometricMatrix`, a point `[x, y]` on the floor is nearer the viewer the larger `m.b * x + m.d * y` is. The map below sorts its states by their centers this way:
+When shapes stand side by side, draw nearer ones last. `context.backToFront(items, at)` puts `items` in that order, by where `at` places each on the floor, and leaves them as they are on a flat chart. The map below sorts its states by their centers:
 
 ```svelte
-{@const m = context.isometricMatrix}
-{@const depth = ([x, y]) => m.b * x + m.d * y}
-{#each states.toSorted((a, b) => depth(geoPath().centroid(a)) - depth(geoPath().centroid(b))) as state}
+{#each context.backToFront(states, (state) => geoPath().centroid(state)) as state}
 ```
 
 Sorting by center works for shapes of similar size. A large shape wrapped around a smaller one can still draw in the wrong order.
 
 :example{ component="GeoPath" name="election-isometric" }
+
+Points on a map stand up the same way. Here each county's pin is a `Line` stem with `z2` and a `Circle` at the same `z`, drawn back to front, and an `AnnotationPoint` with a `z` labels the tallest:
+
+:example{ component="Chart" name="isometric-pin-map" }
 
 ### More marks with height
 

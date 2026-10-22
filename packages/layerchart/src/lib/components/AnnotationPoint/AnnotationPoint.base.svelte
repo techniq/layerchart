@@ -32,6 +32,7 @@
     Text,
     x,
     y,
+    z,
     r = 4,
     label,
     labelPlacement = 'center',
@@ -122,6 +123,9 @@
 
   const linkProps = $derived(typeof link === 'object' ? link : {});
 
+  /** The point's height off an `isometric` floor, in pixels — its circle, label, and link all rise */
+  const height = $derived(z == null ? undefined : Number(ctx.zScale(z)) || 0);
+
   function onPointerMove(e: PointerEvent | MouseEvent | TouchEvent) {
     if (details) {
       e.stopPropagation();
@@ -141,6 +145,7 @@
   const resolvedCircleProps = $derived({
     cx: point.x,
     cy: point.y,
+    z: height,
     r,
     onpointermove: onPointerMove,
     onmousemove: onPointerMove,
@@ -154,6 +159,7 @@
 
   const resolvedLabelProps = $derived({
     ...labelProps,
+    z: height,
     ...props?.label,
     class: cls('lc-annotation-point-label', props?.label?.class),
   } as TextProps);
@@ -171,6 +177,8 @@
     y1={linkEndpoints.source.y}
     x2={linkEndpoints.target.x}
     y2={linkEndpoints.target.y}
+    z1={height}
+    z2={height}
     type="straight"
     {...linkProps}
     class={cls(

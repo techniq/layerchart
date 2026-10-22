@@ -42,7 +42,6 @@
 	clip
 >
 	{#snippet children({ context })}
-		{@const m = context.isometricMatrix}
 		<TransformContextControls />
 
 		<Layer>
@@ -55,7 +54,7 @@
 
 					<!-- Back to front, so nearer nodes cover farther ones.  Unkeyed, so as the view
 					     turns each row takes its new node -->
-					{#each [...nodes].sort((a, b) => (m ? m.b * (a.x - b.x) + m.d * (a.y - b.y) : 0)) as node}
+					{#each context.backToFront(nodes, (node) => [node.x, node.y]) as node}
 						{@const shape = shapeOf(node)}
 						<Polygon
 							cx={node.x}

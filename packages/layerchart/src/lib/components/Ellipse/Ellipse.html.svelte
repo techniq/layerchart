@@ -7,10 +7,10 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { EllipseState, ellipseMarkInfo, type EllipseProps } from './Ellipse.shared.svelte.js';
 
-  // `rotate` turns the ellipse below, not an HTML attribute
-  let { rotate, ...rest }: EllipseProps = $props();
+  // `rotate` turns the ellipse below, and `z` raises it — not HTML attributes
+  let { rotate, z, ...rest }: EllipseProps = $props();
 
-  const c = new EllipseState(() => rest as EllipseProps);
+  const c = new EllipseState(() => ({ ...rest, z }) as EllipseProps);
 
   c.chartCtx.registerComponent({
     name: 'Ellipse',

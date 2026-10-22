@@ -1268,6 +1268,23 @@ export class ChartState<
     return options && this.isometric ? this.isometric.isometricLift(options) : null;
   });
 
+  /**
+   * `items` in drawing order on an isometric floor: back to front by where `at` places each on the
+   * plot, so nearer ones draw over farther ones.  As given when the chart is flat.
+   */
+  backToFront<T>(items: Iterable<T>, at: (item: T) => [number, number]): T[] {
+    const list = [...items];
+    const m = this.isometricMatrix;
+    if (!m) return list;
+    const depth = new Map(
+      list.map((item) => {
+        const [x, y] = at(item);
+        return [item, m.b * x + m.d * y];
+      })
+    );
+    return list.sort((a, b) => depth.get(a)! - depth.get(b)!);
+  }
+
   /** Whether anything rises off the floor: a `z` channel, or a `zRange` for marks' own heights */
   #hasHeight = $derived(this.props.z != null || this.props.zRange != null);
 

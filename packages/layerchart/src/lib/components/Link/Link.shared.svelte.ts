@@ -5,12 +5,22 @@ import type { MotionNoneOption, MotionTweenOption } from '$lib/utils/motion.svel
 import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
 import type { PathProps, PathPropsWithoutHTML } from '../Path/Path.shared.svelte.js';
 import type { Accessor } from '$lib/utils/common.js';
+import type { DataProp } from '$lib/utils/dataProp.js';
 
 export type LinkPropsWithoutHTML = {
   x1?: Accessor;
   y1?: Accessor;
   x2?: Accessor;
   y2?: Accessor;
+  /**
+   * On an `isometric` chart, the height of the link's start: a data property or accessor of its
+   * row (through zScale), or pixels.  Not with `radial`.
+   *
+   * @default 0
+   */
+  z1?: DataProp;
+  /** The height of the link's end on an `isometric` chart (see `z1`).  @default 0 */
+  z2?: DataProp;
   data?: any;
   /** @default false */
   sankey?: boolean;

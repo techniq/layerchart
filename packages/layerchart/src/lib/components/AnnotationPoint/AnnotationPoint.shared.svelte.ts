@@ -15,6 +15,10 @@ export type AnnotationPointPropsWithoutHTML = {
   /** y value of the point */
   y?: SingleDomainType;
   /**
+   * On an `isometric` chart, z value of the point: raises it, its label, and its link by `zScale`
+   */
+  z?: number;
+  /**
    * The series this annotation belongs to.
    *
    * `ChartAnnotations` hides it while another series is highlighted, and a value on the chart's

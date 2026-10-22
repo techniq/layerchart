@@ -7,6 +7,8 @@ import { accessor, type Accessor } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { markLift } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 import type { CircleProps } from '../Circle/Circle.shared.svelte.js';
@@ -20,6 +22,8 @@ export type Point = {
   data: any;
   /** Index within array accessor (0 = start/low edge, 1 = end/high edge). Undefined for single-value points. */
   edgeIndex?: number;
+  /** Height off an `isometric` floor, in pixels, when the points are raised */
+  z?: number;
 };
 
 type Offset = number | ((value: number, context: any) => number) | undefined;
@@ -63,6 +67,10 @@ export class PointsState {
 
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
+
+  /** The chart's `isometricLift` when the points float off the floor — by `z`, or the chart's */
+  #lift = $derived.by(() => markLift(this.ctx, this.#layerIsometric, this.#props.z, true));
 
   constructor(getProps: () => PointsProps) {
     this.#getProps = getProps;
@@ -167,7 +175,7 @@ export class PointsState {
   }
 
   points = $derived.by<Point[]>(() => {
-    return this.pointsData.flatMap((d: any) => {
+    const points = this.pointsData.flatMap((d: any) => {
       const xValue: number | number[] = this.xAccessor(d);
       const yValue: number | number[] = this.yAccessor(d);
 
@@ -184,5 +192,11 @@ export class PointsState {
       }
       return [];
     });
+
+    const m = this.#layerIsometric();
+    if (!m || !this.#lift) return points;
+    // Each at its height, back to front by where it stands on the floor
+    for (const point of points) point.z = this.ctx.heightOf(point.data, this.#props.z)[1];
+    return points.sort((a, b) => m.b * a.x + m.d * a.y - (m.b * b.x + m.d * b.y));
   });
 }

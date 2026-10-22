@@ -56,15 +56,9 @@
 	clip
 >
 	{#snippet children({ context })}
-		{@const m = context.isometricMatrix}
-
 		<Layer>
-			<!-- Sort back to front by each state's center, so nearer ones cover farther ones. -->
-			{#each [...states.features].sort((a, b) => {
-				const [ax, ay] = centroids.get(a)!;
-				const [bx, by] = centroids.get(b)!;
-				return m ? m.b * (ax - bx) + m.d * (ay - by) : 0;
-			}) as state (state.properties.name)}
+			<!-- Back to front by each state's center, so nearer ones cover farther ones -->
+			{#each context.backToFront(states.features, (state) => centroids.get(state)!) as state (state.properties.name)}
 				{@const share = shares.get(state.properties.name)?.[party] ?? 0}
 				<GeoPath
 					geojson={state}

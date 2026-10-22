@@ -138,12 +138,11 @@
 	clip
 >
 	{#snippet children({ context })}
-		{@const m = context.isometricMatrix}
 		<TransformContextControls />
 
 		<Layer>
 			<!-- Back to front: each curtain lies in its own row, so the farther rows go first -->
-			{#each Array.from({ length: N }, (_, row) => row).sort( (a, b) => (m ? m.d * (context.yScale(a) - context.yScale(b)) : 0) ) as row}
+			{#each context.backToFront( Array.from({ length: N }, (_, row) => row), (row) => [0, context.yScale(row)] ) as row}
 				<Area
 					data={rows.filter((d) => d.row === row)}
 					curve={curveBasis}

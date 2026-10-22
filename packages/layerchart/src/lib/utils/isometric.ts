@@ -654,3 +654,44 @@ export function sectorDepth(startAngle: number, endAngle: number, m: AffineMatri
   if (past <= a1 - a0) return Math.hypot(m.b, m.d);
   return Math.max(depth(a0), depth(a1));
 }
+
+type Lift = { x: number; y: number };
+
+/**
+ * How far one pixel of a mark's `z` raises it on the plot — the chart's `isometricLift` — or `null`
+ * when it stands on the floor.  Raised by a numeric `z` in pixel mode, and in data mode by any `z`,
+ * or the chart's when `inherit`.  Reads the view only once there's a `z`, so a mark without one
+ * doesn't follow it.
+ */
+export function markLift(
+  ctx: { isometricLift: Lift | null; props: { z?: unknown } },
+  layerMatrix: () => AffineMatrix | null,
+  z: unknown,
+  dataMode: boolean,
+  inherit = true
+): Lift | null {
+  const raised = dataMode ? z != null || (inherit && ctx.props.z != null) : typeof z === 'number';
+  if (!raised || !layerMatrix()) return null;
+  const lift = ctx.isometricLift;
+  return lift && (lift.x !== 0 || lift.y !== 0) ? lift : null;
+}
+
+/**
+ * Data-mode items moved up their `height` along `lift`, and put back to front by where each stood
+ * on the floor, so nearer ones draw over farther ones
+ */
+export function raiseItems<T extends Record<K, number>, K extends string>(
+  items: T[],
+  [kx, ky]: [K, K],
+  m: AffineMatrix,
+  lift: Lift,
+  height: (item: T) => number
+): T[] {
+  const depth = new Map(items.map((item) => [item, m.b * item[kx] + m.d * item[ky]]));
+  for (const item of items) {
+    const z = height(item);
+    (item as Record<K, number>)[kx] += lift.x * z;
+    (item as Record<K, number>)[ky] += lift.y * z;
+  }
+  return items.sort((a, b) => depth.get(a)! - depth.get(b)!);
+}

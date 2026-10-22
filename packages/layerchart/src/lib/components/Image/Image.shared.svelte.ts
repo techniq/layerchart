@@ -14,6 +14,7 @@ import {
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { markLift, raiseItems } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -104,16 +105,7 @@ export class ImageState {
   #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
   /** The chart's `isometricLift` when the image has a height, else `null` */
-  #lift = $derived.by(() => {
-    if (!this.#layerIsometric()) return null;
-    const lift = this.chartCtx.isometricLift;
-    if (!lift || (lift.x === 0 && lift.y === 0)) return null;
-    const z = this.#props.z;
-    const raised = this.dataMode
-      ? z != null || this.chartCtx.props.z != null
-      : typeof z === 'number';
-    return raised ? lift : null;
-  });
+  #lift = $derived(markLift(this.chartCtx, this.#layerIsometric, this.#props.z, this.dataMode));
 
   resolveImage(d: any) {
     const props = this.#props;
@@ -177,14 +169,13 @@ export class ImageState {
     const lift = this.#lift;
     if (!m || !lift) return items;
 
-    // Back to front by where each stands on the floor, before it's raised
-    const depth = new Map(items.map((item) => [item, m.b * item.x + m.d * item.y]));
-    for (const item of items) {
-      const z = this.chartCtx.heightOf(item.d, props.z)[1];
-      item.x += lift.x * z;
-      item.y += lift.y * z;
-    }
-    return items.sort((a, b) => depth.get(a)! - depth.get(b)!);
+    return raiseItems(
+      items,
+      ['x', 'y'],
+      m,
+      lift,
+      (item) => this.chartCtx.heightOf(item.d, props.z)[1]
+    );
   });
 
   // Pixel-mode helpers
