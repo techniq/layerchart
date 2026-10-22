@@ -5,7 +5,6 @@
 		CopyButton,
 		Menu,
 		MenuItem,
-		Toggle,
 		ToggleGroup,
 		ToggleOption,
 		Tooltip
@@ -46,6 +45,7 @@
 	} = $props();
 
 	let opening = $state(false);
+	let menuOpen = $state(false);
 
 	// `surface-content` rather than a surface shade, so the hover reads on the translucent
 	// toolbar in both themes.
@@ -160,37 +160,40 @@
 				</ToggleOption>
 			</ToggleGroup>
 
-			<!-- Occasional actions and set-once preferences, kept off the strip that covers the code. -->
-			<Toggle let:on={open} let:toggle let:toggleOff>
-				<Button
-					icon={LucideEllipsisVertical}
-					size="sm"
-					iconOnly
-					loading={opening}
-					aria-label="More options"
-					class={cls(iconButton, 'ml-0.5')}
-					on:click={toggle}
-				>
-					<Menu {open} on:close={toggleOff} placement="bottom-end" classes={{ menu: 'p-1' }}>
-						<MenuItem icon={LucideListOrdered} on:click={() => (lineNumbers = !lineNumbers)}>
-							{lineNumbers ? 'Hide line numbers' : 'Show line numbers'}
+			<!--
+				Occasional actions and set-once preferences, kept off the strip that covers the code.
+				`bind:open` rather than a `Toggle` passing `open` down: the menu also closes itself
+				(a click outside, Escape, an item), and one-way, its own `open` and the toggle's
+				fell out of step, leaving the button unable to reopen it.
+			-->
+			<Button
+				icon={LucideEllipsisVertical}
+				size="sm"
+				iconOnly
+				loading={opening}
+				aria-label="More options"
+				class={cls(iconButton, 'ml-0.5')}
+				on:click={() => (menuOpen = !menuOpen)}
+			>
+				<Menu bind:open={menuOpen} placement="bottom-end" classes={{ menu: 'p-1' }}>
+					<MenuItem icon={LucideListOrdered} on:click={() => (lineNumbers = !lineNumbers)}>
+						{lineNumbers ? 'Hide line numbers' : 'Show line numbers'}
+					</MenuItem>
+					{#if onsplitchange}
+						<MenuItem
+							icon={split ? LucideRows2 : LucideColumns2}
+							on:click={() => onsplitchange(!split)}
+						>
+							{split ? 'Show code below' : 'Show code on left'}
 						</MenuItem>
-						{#if onsplitchange}
-							<MenuItem
-								icon={split ? LucideRows2 : LucideColumns2}
-								on:click={() => onsplitchange(!split)}
-							>
-								{split ? 'Show code below' : 'Show code on left'}
-							</MenuItem>
-						{/if}
-						{#if onopenstackblitz}
-							<MenuItem icon={SimpleIconsStackblitz} on:click={openStackBlitz}>
-								{sandbox.dirty ? 'Open edits in StackBlitz' : 'Open in StackBlitz'}
-							</MenuItem>
-						{/if}
-					</Menu>
-				</Button>
-			</Toggle>
+					{/if}
+					{#if onopenstackblitz}
+						<MenuItem icon={SimpleIconsStackblitz} on:click={openStackBlitz}>
+							{sandbox.dirty ? 'Open edits in StackBlitz' : 'Open in StackBlitz'}
+						</MenuItem>
+					{/if}
+				</Menu>
+			</Button>
 		</div>
 	</div>
 	<!-- Keyboard users switch with the View/Edit toggle; this is a shortcut for pointers. -->
