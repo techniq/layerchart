@@ -19,7 +19,8 @@
 </script>
 
 <!-- Each hexagon raised by its count, measured by `zScale`.  Padded in data units rather than
-     pixels (`xPadding`), as the floor is refitted to the view as it turns -->
+     pixels (`xPadding`), as the floor is refitted to the view as it turns.  Drag to rotate, and
+     hold shift to zoom, so scrolling the page passes over it. -->
 <Chart
 	{data}
 	x="weight"
@@ -30,7 +31,7 @@
 	yDomain={padded(data.map((d) => d.height))}
 	zRange={({ height }) => [0, height * 0.4]}
 	view={isometric}
-	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale' }}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	padding={{ left: 30, bottom: 24, top: 8, right: 8 }}
 	height={500}
 >

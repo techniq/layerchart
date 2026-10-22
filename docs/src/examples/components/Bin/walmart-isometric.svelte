@@ -18,7 +18,8 @@
 </script>
 
 <!-- Each hexagon raised by its number of stores, measured by `zScale`.  The floor takes the map's
-     shape (Albers USA's 975 × 610), rather than a square it would sit small in.  Drag to rotate. -->
+     shape (Albers USA's 975 × 610), rather than a square it would sit small in.  Drag to rotate, and hold
+     shift to zoom. -->
 <Chart
 	data={walmarts}
 	x="longitude"
@@ -26,7 +27,7 @@
 	geo={{ projection: geoAlbersUsa, fitGeojson: states }}
 	zRange={({ height }) => [0, height * 0.3]}
 	view={isometric({ rotate: -15, tilt: 55, aspect: 975 / 610 })}
-	transform={{ mode: 'canvas', drag: 'rotate' }}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	padding={24}
 	height={550}
 >

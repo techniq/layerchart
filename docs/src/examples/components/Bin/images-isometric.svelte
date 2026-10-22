@@ -6,6 +6,7 @@
 <script lang="ts">
 	import { mean } from 'd3-array';
 	import { Bin, type BinCell, Chart, Image, isometric, Layer, Path } from 'layerchart';
+	import { RangeField } from 'svelte-ux';
 
 	const data = volcano.values.map((value, i) => ({
 		x: i % volcano.width,
@@ -14,7 +15,7 @@
 	}));
 	export { data };
 
-	const size = 30;
+	let size = $state(30);
 
 	// Terrain tiles from Kenney's Hexagon Pack (CC0), https://kenney.nl/assets/hexagon-pack, with the
 	// color of the ground each stands on for its sides
@@ -42,13 +43,18 @@
 	}
 </script>
 
-<!-- Each hexagon raised by its mean elevation, with a tile on top.  Drag to rotate. -->
+<div class="mb-4">
+	<RangeField label="Size" bind:value={size} min={16} max={60} step={1} />
+</div>
+
+<!-- Each hexagon raised by its mean elevation, with a tile on top.  Drag to rotate, and hold shift to
+     zoom. -->
 <Chart
 	{data}
 	x="x"
 	y="y"
 	view={isometric({ rotate: -30, tilt: 55 })}
-	transform={{ mode: 'canvas', drag: 'rotate' }}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	padding={24}
 	height={550}
 >
