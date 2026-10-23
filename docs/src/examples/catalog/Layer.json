@@ -1237,6 +1237,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "image-render",
+      "component": "Bin",
+      "path": "/docs/components/Bin/image-render",
+      "lineNumber": 129,
+      "line": "<Layer>"
+    },
+    {
       "example": "images",
       "component": "Bin",
       "path": "/docs/components/Bin/images",
@@ -2416,7 +2423,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 106,
+      "lineNumber": 160,
       "line": "<Layer>"
     },
     {
@@ -4702,5 +4709,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.632Z"
+  "updatedAt": "2026-10-23T06:08:47.479Z"
 }

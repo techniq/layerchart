@@ -200,7 +200,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 129,
+      "lineNumber": 183,
       "line": "<ClipPath useId=\"globe\">"
     },
     {
@@ -211,5 +211,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:24.052Z"
+  "updatedAt": "2026-10-23T06:08:46.880Z"
 }
