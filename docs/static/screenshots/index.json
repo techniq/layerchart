@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-23T06:10:56.582Z",
+  "generatedAt": "2026-10-23T17:09:47.818Z",
   "totalComponents": 82,
-  "totalExamples": 1034,
+  "totalExamples": 1035,
   "components": [
     {
       "component": "AnnotationLine",
@@ -3655,6 +3655,11 @@
           "name": "dynamic-data",
           "path": "/example/LineChart/dynamic-data",
           "checksum": "640297b6c3f12f120424e73c0ac78203"
+        },
+        {
+          "name": "facet-series-data",
+          "path": "/example/LineChart/facet-series-data",
+          "checksum": "3f2a9f9ec1b89dd8daac3ec2e3f03c05"
         },
         {
           "name": "gradient-encoding",
