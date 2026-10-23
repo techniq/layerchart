@@ -211,7 +211,7 @@ export class WaffleState {
   data = $derived.by(() => {
     const dataProp = this.#props.data;
     if (dataProp) return dataProp;
-    return this.markData(this.series?.data);
+    return this.markData(undefined, this.series?.data);
   });
 
   x = $derived.by<Accessor>(() => {

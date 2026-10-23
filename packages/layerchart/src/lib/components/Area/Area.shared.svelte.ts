@@ -224,7 +224,7 @@ export class AreaState {
     return this.ctx.y;
   });
 
-  resolvedData = $derived(this.markData(this.#props.data ?? this.seriesData));
+  resolvedData = $derived(this.markData(this.#props.data, this.seriesData));
 
   /**
    * Accessor grouping the data into one area per distinct value, or `null` for a single area.
