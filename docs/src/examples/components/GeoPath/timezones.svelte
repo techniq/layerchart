@@ -12,12 +12,14 @@
 	import {
 		geoAlbersUsa,
 		geoAlbers,
+		geoArea,
 		geoEqualEarth,
 		geoEquirectangular,
 		geoMercator,
 		geoNaturalEarth1,
 		geoOrthographic
 	} from 'd3-geo';
+	import { geoStitch } from 'd3-geo-projection';
 	import { extent } from 'd3-array';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateRdBu } from 'd3-scale-chromatic';
@@ -33,6 +35,10 @@
 	let enableClip = $state(false);
 	let showDaylight = $state(false);
 
+	// Clip a hair inside the horizon: at exactly 90° d3 decides whether a hidden zone covers the
+	// whole globe by testing a pole, where many of the zones meet
+	const geoOrthographicGlobe = () => geoOrthographic().clipAngle(89.999);
+
 	let projection = $state(geoNaturalEarth1);
 	const projections = [
 		{ label: 'Albers', value: geoAlbers },
@@ -40,15 +46,52 @@
 		{ label: 'Equal Earth', value: geoEqualEarth },
 		{ label: 'Equirectangular', value: geoEquirectangular },
 		{ label: 'Mercator', value: geoMercator },
-		{ label: 'Natural Earth', value: geoNaturalEarth1 }
-		// { label: 'Orthographic', value: geoOrthographic },
+		{ label: 'Natural Earth', value: geoNaturalEarth1 },
+		{ label: 'Orthographic', value: geoOrthographicGlobe }
 	];
 
 	const countriesGeojson = $derived(
 		feature(countriesTopojson, countriesTopojson.objects.countries)
 	);
 	const statesGeojson = $derived(feature(statesTopojson, statesTopojson.objects.states));
-	const timezoneGeojson = $derived(feature(timezonesTopojson, timezonesTopojson.objects.timezones));
+	const timezoneGeojson = $derived.by(() => {
+		const geojson = feature(timezonesTopojson, timezonesTopojson.objects.timezones);
+
+		// Repair the shapefile-derived polygons so d3 can tell their inside from their outside on a
+		// globe, or hidden zones flood it: drop zero-area slivers, move the ±179.99° cut onto the
+		// antimeridian and vertices just off the poles, then stitch the cut back together
+		const hasArea = (ring: number[][]) => {
+			const area = geoArea({ type: 'Polygon', coordinates: [ring] });
+			return area > 1e-10 && area < 4 * Math.PI - 1e-10;
+		};
+		const repair = (ring: number[][]) =>
+			ring.map(([x, y]) => [
+				Math.abs(x) > 179.98 ? Math.sign(x) * 180 : x,
+				Math.max(-89.9999, Math.min(89.9999, y))
+			]);
+
+		return geoStitch({
+			...geojson,
+			features: geojson.features.map((f) => {
+				const { geometry } = f;
+				const polygons =
+					geometry.type === 'Polygon'
+						? [geometry.coordinates]
+						: geometry.type === 'MultiPolygon'
+							? geometry.coordinates
+							: [];
+				return {
+					...f,
+					geometry: {
+						type: 'MultiPolygon',
+						coordinates: polygons
+							.map((polygon) => polygon.filter(hasArea).map(repair))
+							.filter((polygon) => polygon.length)
+					}
+				};
+			})
+		});
+	});
 
 	const colorScale = $derived(
 		scaleSequential(
@@ -100,6 +143,17 @@
 		projection,
 		fitGeojson: timezoneGeojson
 	}}
+	transform={projection === geoOrthographicGlobe
+		? {
+				mode: 'projection',
+				motion: 'spring',
+				inertia: true,
+				constrain: ({ scale, translate }) => ({
+					scale,
+					translate: { x: translate.x, y: Math.max(-90, Math.min(90, translate.y)) }
+				})
+			}
+		: undefined}
 	padding={{ left: 10, right: 10 }}
 	height={600}
 >
