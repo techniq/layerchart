@@ -271,6 +271,20 @@
       "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
+      "name": "facet-series-data",
+      "title": "facet series data",
+      "path": "/docs/components/LineChart/facet-series-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 18,
+          "line": "<LineChart"
+        }
+      ],
+      "createdAt": "2026-10-23T17:06:05.000Z",
+      "updatedAt": "2026-10-23T17:06:05.000Z"
+    },
+    {
       "name": "gradient-encoding",
       "title": "gradient encoding",
       "path": "/docs/components/LineChart/gradient-encoding",
@@ -1583,6 +1597,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "facet-series-data",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/facet-series-data",
+      "lineNumber": 18,
+      "line": "<LineChart"
+    },
+    {
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
@@ -2038,5 +2059,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:17.400Z"
+  "updatedAt": "2026-10-23T17:07:22.510Z"
 }
