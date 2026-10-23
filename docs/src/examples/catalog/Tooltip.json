@@ -5421,42 +5421,42 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 137,
+      "lineNumber": 191,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 140,
+      "lineNumber": 194,
       "line": "<Tooltip.List>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 141,
+      "lineNumber": 195,
       "line": "<Tooltip.Item label=\"Name\" value={tz_name1st} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 142,
+      "lineNumber": 196,
       "line": "<Tooltip.Item label=\"Places\" value={places} classes={{ value: 'max-w-[200px]' }} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 143,
+      "lineNumber": 197,
       "line": "<Tooltip.Item label=\"Timezone\" value={time_zone} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 144,
+      "lineNumber": 198,
       "line": "<Tooltip.Item"
     },
     {
@@ -8477,5 +8477,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:14.227Z"
+  "updatedAt": "2026-10-23T06:08:48.094Z"
 }

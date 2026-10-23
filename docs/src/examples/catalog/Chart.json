@@ -2432,6 +2432,13 @@
       "line": "<Chart"
     },
     {
+      "example": "image-render",
+      "component": "Bin",
+      "path": "/docs/components/Bin/image-render",
+      "lineNumber": 128,
+      "line": "<Chart {data} x=\"x\" y=\"y\" xDomain={[0, width]} yDomain={[height, 0]} clip>"
+    },
+    {
       "example": "images",
       "component": "Bin",
       "path": "/docs/components/Bin/images",
@@ -3800,7 +3807,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 98,
+      "lineNumber": 141,
       "line": "<Chart"
     },
     {
@@ -6037,5 +6044,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:12.898Z"
+  "updatedAt": "2026-10-23T06:08:46.706Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-22T21:43:55.728Z",
+  "generatedAt": "2026-10-23T06:10:56.582Z",
   "totalComponents": 82,
-  "totalExamples": 1033,
+  "totalExamples": 1034,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1887,6 +1887,11 @@
           "checksum": "7034b66c49d8f2643c2fc88181aaf7fc"
         },
         {
+          "name": "image-render",
+          "path": "/example/Bin/image-render",
+          "checksum": "c5035a26aa44024cc5267e1ad0e176c1"
+        },
+        {
           "name": "images",
           "path": "/example/Bin/images",
           "checksum": "0e17694c307c93a6014cc7a21d6382c7"
@@ -3029,7 +3034,7 @@
         {
           "name": "timezones",
           "path": "/example/GeoPath/timezones",
-          "checksum": "2b5b55f02a3df414e76833e9feaeb605"
+          "checksum": "c5bf84810c652460b9ad1910d2281dc4"
         },
         {
           "name": "tooltip",

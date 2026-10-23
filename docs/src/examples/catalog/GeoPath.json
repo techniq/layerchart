@@ -373,47 +373,47 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 98,
+          "lineNumber": 141,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 106,
+          "lineNumber": 160,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 107,
+          "lineNumber": 161,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
           "component": "GeoClipPath",
-          "lineNumber": 109,
+          "lineNumber": 163,
           "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
         },
         {
           "component": "ClipPath",
-          "lineNumber": 129,
+          "lineNumber": 183,
           "line": "<ClipPath useId=\"globe\">"
         },
         {
           "component": "Blur",
-          "lineNumber": 130,
+          "lineNumber": 184,
           "line": "<Blur>"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 131,
+          "lineNumber": 185,
           "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 137,
+          "lineNumber": 191,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-10-23T05:55:47.000Z"
     },
     {
       "name": "tooltip",
@@ -1224,28 +1224,28 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 107,
+      "lineNumber": 161,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 111,
+      "lineNumber": 165,
       "line": "<GeoPath"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 121,
+      "lineNumber": 175,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 fill-gray-900/20 pointer-events-none\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 125,
+      "lineNumber": 179,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 pointer-events-none\" />"
     },
     {
@@ -1795,5 +1795,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.379Z"
+  "updatedAt": "2026-10-23T06:08:47.211Z"
 }

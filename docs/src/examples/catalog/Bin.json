@@ -65,6 +65,30 @@
       "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
+      "name": "image-render",
+      "title": "image render",
+      "path": "/docs/components/Bin/image-render",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 128,
+          "line": "<Chart {data} x=\"x\" y=\"y\" xDomain={[0, width]} yDomain={[height, 0]} clip>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 129,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 131,
+          "line": "<Bin {shape} {size} fill={meanColor} stroke={meanColor} />"
+        }
+      ],
+      "createdAt": "2026-10-23T06:07:27.000Z",
+      "updatedAt": "2026-10-23T06:07:27.000Z"
+    },
+    {
       "name": "images",
       "title": "images",
       "path": "/docs/components/Bin/images",
@@ -362,6 +386,13 @@
       "line": "<Bin r=\"count\" fill={(cell) => mode(cell.data, (d) => d.sex)} />"
     },
     {
+      "example": "image-render",
+      "component": "Bin",
+      "path": "/docs/components/Bin/image-render",
+      "lineNumber": 131,
+      "line": "<Bin {shape} {size} fill={meanColor} stroke={meanColor} />"
+    },
+    {
       "example": "images",
       "component": "Bin",
       "path": "/docs/components/Bin/images",
@@ -432,5 +463,5 @@
       "line": "<Bin size={8} z=\"count\" />"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:12.724Z"
+  "updatedAt": "2026-10-23T06:08:46.520Z"
 }
