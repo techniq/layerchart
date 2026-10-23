@@ -1,12 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand } from 'd3-scale';
+import { curveLinear } from 'd3-shape';
 
 import TestHarness from '$lib/tests/TestHarness.svelte';
 import Circle from '../components/Circle/Circle.svelte';
 import Highlight from '../components/Highlight/Highlight.svelte';
+import Spline from '../components/Spline/Spline.svelte';
 import ScatterChart from '../components/charts/ScatterChart/ScatterChart.svelte';
 import BarChart from '../components/charts/BarChart/BarChart.svelte';
+import LineChart from '../components/charts/LineChart/LineChart.svelte';
 import Axis from '../components/Axis/Axis.svelte';
 import { panelDatum } from '../utils/tooltip.js';
 import type { ChartState } from './chart.svelte.js';
@@ -141,6 +144,68 @@ describe('facets', () => {
       expect(first.getAttribute('cx')).toBe(second.getAttribute('cx'));
       // and the panels themselves are offset from each other
       expect(ctx.facet.panels[1].x).toBeGreaterThan(0);
+    });
+
+    it('draws a mark`s own `data` whole in every panel', async () => {
+      // How a mark opts out of faceting — a backdrop of the whole dataset behind each panel
+      renderChart({ fx: 'g' }, { data });
+      await expect.poll(() => document.querySelectorAll('circle').length).toBe(data.length * 2);
+    });
+
+    it('splits a series` own rows across panels', async () => {
+      let ctx: ChartState<any, any, any> = null!;
+      render(TestHarness, {
+        component: Spline,
+        chartProps: {
+          // no chart rows at all — every row lives on its series
+          data: [],
+          x: 'v',
+          y: 'w',
+          xDomain: [0, 5],
+          yDomain: [0, 50],
+          width: 400,
+          height: 300,
+          padding: 0,
+          fx: 'g',
+          series: [{ key: 's', data }],
+        },
+        componentProps: { seriesKey: 's', curve: curveLinear },
+        oncontext: (c: any) => (ctx = c),
+      });
+
+      await expect.poll(() => ctx?.facet.panels.map((f) => f.fx)).toEqual(['a', 'b']);
+      await expect.poll(() => document.querySelectorAll('path').length).toBe(2);
+      // each panel's line visits that panel's two points, rather than all four
+      const points = Array.from(document.querySelectorAll('path')).map(
+        (path) => path.getAttribute('d')?.match(/[ML]/g)?.length
+      );
+      expect(points).toEqual([2, 2]);
+    });
+
+    it('draws each series` own share in each panel of a `LineChart`', async () => {
+      const rows = (offset: number) =>
+        ['a', 'b'].flatMap((g) => [1, 2, 3].map((v) => ({ g, v, w: v * 10 + offset })));
+      render(LineChart, {
+        props: {
+          x: 'v',
+          y: 'w',
+          fx: 'g',
+          series: [
+            { key: 'one', data: rows(0) },
+            { key: 'two', data: rows(5) },
+          ],
+          curve: curveLinear,
+          width: 400,
+          height: 300,
+        },
+      } as any);
+
+      // a line per series per panel, each through that panel's 3 points rather than all 6
+      await expect.poll(() => document.querySelectorAll('path.lc-path').length).toBe(4);
+      const points = Array.from(document.querySelectorAll('path.lc-path')).map(
+        (path) => path.getAttribute('d')?.match(/[ML]/g)?.length
+      );
+      expect(points).toEqual([3, 3, 3, 3]);
     });
   });
 
@@ -359,6 +424,23 @@ describe('facets', () => {
 
       await hoverPoint(ctx(), 0, 4, 40);
       await expect.poll(() => ctx().tooltip.data?.id).toBe('a4');
+    });
+
+    it('reads a series` own row from the hovered panel', async () => {
+      // `v: 4` is in both panels with different values, so a lookup on `v` alone finds `a`'s
+      const rows = paired.map((d) => ({ ...d, w: d.g === 'b' ? d.w - 5 : d.w }));
+      const ctx = renderPaired({
+        data: [],
+        series: [{ key: 's', data: rows }],
+        tooltipContext: { mode: 'bisect-x' },
+      });
+      await expect.poll(() => ctx()?.facet.panels.length).toBe(2);
+
+      await hoverPoint(ctx(), 1, 4, 35);
+      await expect.poll(() => ctx().tooltip.series[0]?.value).toBe(35);
+
+      await hoverPoint(ctx(), 0, 4, 40);
+      await expect.poll(() => ctx().tooltip.series[0]?.value).toBe(40);
     });
 
     it('marks the same position in every panel with `facetAll`', async () => {

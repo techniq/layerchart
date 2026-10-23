@@ -106,6 +106,10 @@ A mark reads its panel's rows from context. Pass `data` explicitly to opt out, a
 
 :example{ component="Chart" name="facet-non-faceted-marks" }
 
+A series' own `data` is faceted like the chart's, so each panel draws only its rows from every series:
+
+:example{ component="LineChart" name="facet-series-data" }
+
 ## Colouring by panel
 
 `fx` / `fy` are ordinary data properties, so a mark colours by one the same way it colours by anything else — `fill` (or `stroke`) naming the property, resolved through the chart's `c` scale:

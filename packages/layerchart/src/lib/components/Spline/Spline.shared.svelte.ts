@@ -238,7 +238,7 @@ export class SplineState {
   });
 
   /** Kept separate from `lines` so `gAccessor` can read it without a cycle */
-  resolvedData = $derived(this.markData(this.#props.data ?? this.series?.data));
+  resolvedData = $derived(this.markData(this.#props.data, this.series?.data));
 
   /**
    * Accessor grouping the data into one line per distinct value, or `null` for a single line.

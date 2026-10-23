@@ -25,8 +25,11 @@ export function setFacetPanel(getPanel: (() => Facet) | undefined) {
 }
 
 /**
- * Resolves the rows a mark should draw: its own `data` when given, else the panel it's rendering
- * into, else the chart's.
+ * Resolves the rows a mark should draw: its own `data` when given, else its series' `data`
+ * narrowed to the panel it's rendering into, else that panel's rows, else the chart's.
+ *
+ * A mark's own `data` is drawn whole in every panel — that's how a mark opts out of faceting.  A
+ * series' `data` is the chart's rows in another shape, so it's faceted the same way they are.
  *
  * Call during init (a component's setup, or a state class field initializer) — it reads context —
  * then call the returned resolver from wherever the data is needed, including inside a `$derived`.
@@ -34,8 +37,13 @@ export function setFacetPanel(getPanel: (() => Facet) | undefined) {
  * Marks resolve this rather than the chart context being swapped underneath them, so what a mark
  * draws stays visible at its own call site.
  */
-export function getMarkData(): (own?: any) => any[] {
+export function getMarkData(): (own?: any, series?: any[]) => any[] {
   const ctx = getChartContext();
   const panel = getFacetPanel();
-  return (own?: any) => chartDataArray(own ?? panel?.().data ?? ctx.data);
+  return (own?: any, series?: any[]) => {
+    if (own != null) return chartDataArray(own);
+    const p = panel?.();
+    if (series != null) return p ? series.filter((d) => p.has(d)) : series;
+    return chartDataArray(p?.data ?? ctx.data);
+  };
 }

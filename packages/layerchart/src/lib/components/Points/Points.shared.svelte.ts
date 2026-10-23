@@ -118,7 +118,7 @@ export class PointsState {
     return accessor((this.ctx.valueAxis === 'y' ? this.seriesAccessor : undefined) ?? this.ctx.y);
   });
 
-  pointsData = $derived(this.markData(this.#props.data ?? this.series?.data));
+  pointsData = $derived(this.markData(this.#props.data, this.series?.data));
 
   #getOffset(value: any, offset: Offset, scale: AnyScale, subScale?: AnyScale): number {
     const seriesKey = this.#props.seriesKey;

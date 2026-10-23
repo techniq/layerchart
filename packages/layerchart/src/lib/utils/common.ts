@@ -86,13 +86,21 @@ export function isEqualValue(a: any, b: any) {
 /**
  * Find the first instance within `data` with the same value as `original` using prop accessor.
  * Handles complex objects such as `Date` by invoking `.valueOf()`
+ *
+ * `within` narrows the candidates — a facet panel's `has`, where the same value recurs per panel.
  */
-export function findRelatedData(data: any[], original: any, accessor: Function) {
+export function findRelatedData(
+  data: any[],
+  original: any,
+  accessor: Function,
+  within?: (d: any) => boolean
+) {
   if (data.includes(original)) {
     return original;
   }
 
-  return data.find((d) => isEqualValue(accessor(d), accessor(original)));
+  const value = accessor(original);
+  return data.find((d) => isEqualValue(accessor(d), value) && (!within || within(d)));
 }
 
 /**

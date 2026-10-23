@@ -56,7 +56,7 @@ export class BarsState {
     return seriesKey ? this.ctx.series.series.find((s) => s.key === seriesKey) : undefined;
   });
   seriesData = $derived(this.series?.data);
-  data = $derived(this.markData(this.#getProps().data ?? this.seriesData));
+  data = $derived(this.markData(this.#getProps().data, this.seriesData));
 
   #layerIsometric = getLayerIsometric();
 

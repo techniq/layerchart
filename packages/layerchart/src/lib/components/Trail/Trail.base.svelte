@@ -72,7 +72,7 @@
   const resolvedR = $derived(r ?? (ctx.config.r as DataProp | undefined));
 
   const trailPath = $derived.by(() => {
-    const resolvedData = markData(data ?? series?.data);
+    const resolvedData = markData(data, series?.data);
     const definedFn = defined ?? ((d: any) => xAccessor(d) != null && yAccessor(d) != null);
 
     const points = resolvedData
@@ -98,7 +98,7 @@
     if (!extractTweenConfig(motion)) return '';
 
     if (ctx.config.x) {
-      const resolvedData = markData(data ?? series?.data);
+      const resolvedData = markData(data, series?.data);
       const definedFn = defined ?? ((d: any) => xAccessor(d) != null && yAccessor(d) != null);
       const baseline = Math.min(ctx.yScale(0) ?? ctx.yRange[0], ctx.yRange[0]);
 

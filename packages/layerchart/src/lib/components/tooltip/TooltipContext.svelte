@@ -397,6 +397,8 @@
     // so only the owning series should be matched. For bisect and quadtree-x/y modes,
     // the tooltip finds by a single axis position and all series at that position should show values.
     const isSinglePointMode = mode === 'quadtree' || mode === 'voronoi';
+    // The same `x` recurs in every panel, so a series' own rows are matched in the hovered one's
+    const panel = ctx.facet.enabled ? ctx.facet.panels.find((p) => p.has(tooltipData)) : undefined;
 
     return ctx.series.series.map((s) => {
       // Find related data point for this series (if series has its own data)
@@ -409,7 +411,7 @@
             : s.data.includes(tooltipData)
               ? tooltipData
               : undefined
-          : findRelatedData(s.data, tooltipData, ctx.x)
+          : findRelatedData(s.data, tooltipData, ctx.x, panel?.has)
         : tooltipData;
 
       const valueAcc = accessor(
