@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.9.1
+
+### Patch Changes
+
+- fix(Chart): Facet a series' own `data` so each panel shows only its rows ([#964](https://github.com/techniq/layerchart/pull/964))
+
 ## 2.9.0
 
 ### Minor Changes
