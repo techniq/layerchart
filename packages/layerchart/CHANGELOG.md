@@ -1,5 +1,33 @@
 # LayerChart
 
+## 2.9.0
+
+### Minor Changes
+
+- feat(Bin): Add `Bin` mark grouping points into hexagon, square, or triangle cells ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- feat(GeoBin): Add `GeoBin` mark grouping points into hexagon, square, or triangle cells tiling the sphere ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- feat(Image): Add `z` to raise images off an `isometric` floor ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- feat(Chart): Add `backToFront(items, at)` to the chart context, ordering items for drawing on an `isometric` floor ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- feat: Add `z` to `Ellipse`, `Points`, `Group`, and `AnnotationPoint`, `z1` / `z2` to `Link`, and `z` to `Circle` in pixel mode, to raise them off an `isometric` floor ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- feat(Layer): Clip SVG and HTML layers by default when the chart has a `transform`, as panning and zooming carry content past its edges ([#953](https://github.com/techniq/layerchart/pull/953))
+
+### Patch Changes
+
+- fix(Image): Share loaded images across canvas `Image`s, so one remounted or given a loaded URL draws it at once instead of flickering ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- fix(Rect): Shade isometric box sides by how far they turn, rather than snapping between two shades ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- fix(Chart): Measure `xPadding` / `yPadding` on an `isometric` chart against the floor laid flat, so padding stays the same share of the floor as the view turns ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- fix(Legend): Label a threshold scale's ramp with its thresholds, and give its swatches one per color labelled with the range it covers ([#953](https://github.com/techniq/layerchart/pull/953))
+
+- fix(Chart): Start a `projection` transform where the projection's `rotate`, `scale`, `translate`, or fit place it, rather than jumping once the transform loads, and keep a globe's roll while dragging ([#953](https://github.com/techniq/layerchart/pull/953))
+
 ## 2.8.1
 
 ### Patch Changes
