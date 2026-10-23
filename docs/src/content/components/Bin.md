@@ -57,6 +57,12 @@ On an `isometric` chart, draw each cell yourself as a raised `Path` with its til
 
 :example{ name="images-isometric" }
 
+## Image render
+
+Bin an image's pixels — each a point at its place in the image, carrying its color — and fill each cell with the mean color of its pixels. Pick a painting or upload your own.
+
+:example{ name="image-render" }
+
 ## Isometric
 
 On an `isometric` chart, `z` raises each cell into a prism, measured by `zScale` from zero to the largest cell unless the chart has a `zDomain`. `size` is measured against the floor laid flat, so each cell keeps the same rows as the view turns.
