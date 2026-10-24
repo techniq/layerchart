@@ -102,7 +102,7 @@
     "runed": "^0.37.1"
   },
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "^5.57.0"
   },
   "main": "./dist/index.js",
   "exports": {
