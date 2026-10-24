@@ -4,6 +4,8 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+packageExtensionsChecksum: sha256-mEO7dSj9h6u/ukR1WArRpQ3c9a7zXmJ8xSDbry12EWA=
+
 importers:
 
   .:
@@ -134,19 +136,19 @@ importers:
         version: 1.0.0-next.6(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-actions':
         specifier: 1.0.1-next.20
-        version: 1.0.1-next.20
+        version: 1.0.1-next.20(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-state':
         specifier: 0.1.0-next.25
-        version: 0.1.0-next.25
+        version: 0.1.0-next.25(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-table':
         specifier: 1.0.1-next.20
-        version: 1.0.1-next.20
+        version: 1.0.1-next.20(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/tailwind':
         specifier: 2.0.0-next.21
-        version: 2.0.0-next.21
+        version: 2.0.0-next.21(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@layerstack/utils':
         specifier: 2.0.0-next.19
-        version: 2.0.0-next.19
+        version: 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@napi-rs/canvas':
         specifier: ^0.1.97
         version: 0.1.97
@@ -671,7 +673,7 @@ importers:
     devDependencies:
       '@layerstack/tailwind':
         specifier: 2.0.0-next.21
-        version: 2.0.0-next.21
+        version: 2.0.0-next.21(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@sveltejs/adapter-auto':
         specifier: ^7.0.1
         version: 7.0.1(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))
@@ -773,16 +775,16 @@ importers:
         version: 2.0.4
       '@layerstack/svelte-actions':
         specifier: 1.0.1-next.20
-        version: 1.0.1-next.20
+        version: 1.0.1-next.20(svelte@5.57.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-state':
         specifier: 0.1.0-next.25
-        version: 0.1.0-next.25
+        version: 0.1.0-next.25(svelte@5.57.1(@typescript-eslint/types@8.60.1))
       '@layerstack/tailwind':
         specifier: 2.0.0-next.21
-        version: 2.0.0-next.21
+        version: 2.0.0-next.21(svelte@5.57.1(@typescript-eslint/types@8.60.1))
       '@layerstack/utils':
         specifier: 2.0.0-next.19
-        version: 2.0.0-next.19
+        version: 2.0.0-next.19(svelte@5.57.1(@typescript-eslint/types@8.60.1))
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -1926,15 +1928,23 @@ packages:
 
   '@layerstack/svelte-actions@1.0.1-next.14':
     resolution: {integrity: sha512-MPBmVaB+GfNHvBkg5nJkPG18smoXKvsvJRpsdWnrUBfca+TieZLoaEzNxDH+9LG11dIXP9gghsXt1mUqbbyAsA==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@layerstack/svelte-actions@1.0.1-next.18':
     resolution: {integrity: sha512-gxPzCnJ1c9LTfWtRqLUzefCx+k59ZpxDUQ2XB+LokveZQPe7IDSOwHaBOEMlaGoGrtwc3Ft8dSZq+2WT2o9u/g==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@layerstack/svelte-actions@1.0.1-next.20':
     resolution: {integrity: sha512-OtFteDyvTUR6F7dSKPkpD/S77K7vbCHStApSlx8djJBxDKJHU3zxA4gYP6Z71Nc6HB/wLCfjZopkvxnMblbRRw==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@layerstack/svelte-state@0.1.0-next.25':
     resolution: {integrity: sha512-K+SO4dYd2D9OSCnj92Ugo6i5OfVKZoHHA1DA7gs2ynigylRKInicniGI/OmRpp+002n3mhE/i2r3Kfctj8eAdw==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@layerstack/svelte-stores@1.0.2-next.14':
     resolution: {integrity: sha512-UI8VO35hgoG0XOenPgJlieUv6f/1nomFuXnHpFwXj0+OkqIwFoJxdsA8OjbE/gS0lImqv2KKsSCqDpXsKrGi9g==}
@@ -1965,12 +1975,18 @@ packages:
 
   '@layerstack/utils@2.0.0-next.14':
     resolution: {integrity: sha512-1I2CS0Cwgs53W35qVg1eBdYhB/CiPvL3s0XE61b8jWkTHxgjBF65yYNgXjW74kv7WI7GsJcWMNBufPd0rnu9kA==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@layerstack/utils@2.0.0-next.18':
     resolution: {integrity: sha512-EYILHpfBRYMMEahajInu9C2AXQom5IcAEdtCeucD3QIl/fdDgRbtzn6/8QW9ewumfyNZetdUvitOksmI1+gZYQ==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@layerstack/utils@2.0.0-next.19':
     resolution: {integrity: sha512-HyXCEz9pge4rFWklrSgFr3YIwdE1gP8WM6GPetmnKPDfYLF1/oetRFKI9FqiE+dw4brnULGPKJsVhjM3vQfD4A==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@lezer/common@1.4.0':
     resolution: {integrity: sha512-DVeMRoGrgn/k45oQNu189BoW4SZwgZFzJ1+1TV5j2NJ/KFC83oa/enRqZSGshyeMk5cPWMhsKs9nx+8o0unwGg==}
@@ -7071,8 +7087,8 @@ snapshots:
       '@content-collections/markdown': 0.1.4(@content-collections/core@0.14.3(typescript@6.0.3))
       '@iconify-json/lucide': 1.2.111
       '@iconify-json/simple-icons': 1.2.85
-      '@layerstack/tailwind': 2.0.0-next.23
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/tailwind': 2.0.0-next.23(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@shikijs/transformers': 4.3.1
       '@sveltejs/kit': 2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
       '@sveltejs/svelte-json-tree': 2.2.1(svelte@5.56.1(@typescript-eslint/types@8.60.1))
@@ -7106,107 +7122,160 @@ snapshots:
       - sugarss
       - supports-color
 
-  '@layerstack/svelte-actions@1.0.1-next.14':
+  '@layerstack/svelte-actions@1.0.1-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       '@floating-ui/dom': 1.7.6
-      '@layerstack/utils': 2.0.0-next.14
+      '@layerstack/utils': 2.0.0-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-scale: 4.0.2
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
 
-  '@layerstack/svelte-actions@1.0.1-next.18':
+  '@layerstack/svelte-actions@1.0.1-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       '@floating-ui/dom': 1.7.4
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/utils': 2.0.0-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-scale: 4.0.2
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
 
-  '@layerstack/svelte-actions@1.0.1-next.20':
+  '@layerstack/svelte-actions@1.0.1-next.20(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       '@floating-ui/dom': 1.7.6
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-scale: 4.0.2
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
 
-  '@layerstack/svelte-state@0.1.0-next.25':
+  '@layerstack/svelte-actions@1.0.1-next.20(svelte@5.57.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.19
+      '@floating-ui/dom': 1.7.6
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.57.1(@typescript-eslint/types@8.60.1))
+      d3-scale: 4.0.2
+      svelte: 5.57.1(@typescript-eslint/types@8.60.1)
 
-  '@layerstack/svelte-stores@1.0.2-next.14':
+  '@layerstack/svelte-state@0.1.0-next.25(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.14
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
+
+  '@layerstack/svelte-state@0.1.0-next.25(svelte@5.57.1(@typescript-eslint/types@8.60.1))':
+    dependencies:
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.57.1(@typescript-eslint/types@8.60.1))
+      svelte: 5.57.1(@typescript-eslint/types@8.60.1)
+
+  '@layerstack/svelte-stores@1.0.2-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
+    dependencies:
+      '@layerstack/utils': 2.0.0-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       immer: 10.1.3
       lodash-es: 4.17.23
       zod: 3.25.76
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/svelte-stores@1.0.2-next.18':
+  '@layerstack/svelte-stores@1.0.2-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/utils': 2.0.0-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       immer: 10.1.3
       zod: 3.25.76
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/svelte-table@1.0.1-next.14':
+  '@layerstack/svelte-table@1.0.1-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/svelte-actions': 1.0.1-next.14
-      '@layerstack/utils': 2.0.0-next.14
+      '@layerstack/svelte-actions': 1.0.1-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/utils': 2.0.0-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-array: 3.2.4
       lodash-es: 4.17.23
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/svelte-table@1.0.1-next.18':
+  '@layerstack/svelte-table@1.0.1-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/svelte-actions': 1.0.1-next.18
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/svelte-actions': 1.0.1-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/utils': 2.0.0-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-array: 3.2.4
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/svelte-table@1.0.1-next.20':
+  '@layerstack/svelte-table@1.0.1-next.20(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/svelte-actions': 1.0.1-next.20
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/svelte-actions': 1.0.1-next.20(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-array: 3.2.4
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/tailwind@2.0.0-next.17':
+  '@layerstack/tailwind@2.0.0-next.17(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       clsx: 2.1.1
       d3-array: 3.2.4
       lodash-es: 4.17.23
       tailwind-merge: 3.6.0
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/tailwind@2.0.0-next.21':
+  '@layerstack/tailwind@2.0.0-next.21(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       clsx: 2.1.1
       d3-array: 3.2.4
       tailwind-merge: 3.5.0
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/tailwind@2.0.0-next.22':
+  '@layerstack/tailwind@2.0.0-next.21(svelte@5.57.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.57.1(@typescript-eslint/types@8.60.1))
+      clsx: 2.1.1
+      d3-array: 3.2.4
+      tailwind-merge: 3.5.0
+    transitivePeerDependencies:
+      - svelte
+
+  '@layerstack/tailwind@2.0.0-next.22(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
+    dependencies:
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       clsx: 2.1.1
       d3-array: 3.2.4
       tailwind-merge: 3.6.0
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/tailwind@2.0.0-next.23':
+  '@layerstack/tailwind@2.0.0-next.23(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.19
+      '@layerstack/utils': 2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       clsx: 2.1.1
       d3-array: 3.2.4
       tailwind-merge: 3.6.0
+    transitivePeerDependencies:
+      - svelte
 
-  '@layerstack/utils@2.0.0-next.14':
+  '@layerstack/utils@2.0.0-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0
       d3-time-format: 4.1.0
       lodash-es: 4.17.23
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
 
-  '@layerstack/utils@2.0.0-next.18':
+  '@layerstack/utils@2.0.0-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0
       d3-time-format: 4.1.0
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
 
-  '@layerstack/utils@2.0.0-next.19':
+  '@layerstack/utils@2.0.0-next.19(svelte@5.56.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0
       d3-time-format: 4.1.0
+      svelte: 5.56.1(@typescript-eslint/types@8.60.1)
+
+  '@layerstack/utils@2.0.0-next.19(svelte@5.57.1(@typescript-eslint/types@8.60.1))':
+    dependencies:
+      d3-array: 3.2.4
+      d3-time: 3.1.0
+      d3-time-format: 4.1.0
+      svelte: 5.57.1(@typescript-eslint/types@8.60.1)
 
   '@lezer/common@1.4.0': {}
 
@@ -11737,11 +11806,11 @@ snapshots:
   svelte-ux@2.0.0-next.19(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1)):
     dependencies:
       '@floating-ui/dom': 1.7.4
-      '@layerstack/svelte-actions': 1.0.1-next.14
-      '@layerstack/svelte-stores': 1.0.2-next.14
-      '@layerstack/svelte-table': 1.0.1-next.14
-      '@layerstack/tailwind': 2.0.0-next.17
-      '@layerstack/utils': 2.0.0-next.14
+      '@layerstack/svelte-actions': 1.0.1-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/svelte-stores': 1.0.2-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/svelte-table': 1.0.1-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/tailwind': 2.0.0-next.17(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/utils': 2.0.0-next.14(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@lucide/svelte': 0.536.0(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-array: 3.2.4
       d3-scale: 4.0.2
@@ -11768,11 +11837,11 @@ snapshots:
   svelte-ux@2.0.0-next.22(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1)):
     dependencies:
       '@floating-ui/dom': 1.7.6
-      '@layerstack/svelte-actions': 1.0.1-next.18
-      '@layerstack/svelte-stores': 1.0.2-next.18
-      '@layerstack/svelte-table': 1.0.1-next.18
-      '@layerstack/tailwind': 2.0.0-next.22
-      '@layerstack/utils': 2.0.0-next.18
+      '@layerstack/svelte-actions': 1.0.1-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/svelte-stores': 1.0.2-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/svelte-table': 1.0.1-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/tailwind': 2.0.0-next.22(svelte@5.56.1(@typescript-eslint/types@8.60.1))
+      '@layerstack/utils': 2.0.0-next.18(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       '@lucide/svelte': 0.577.0(svelte@5.56.1(@typescript-eslint/types@8.60.1))
       d3-array: 3.2.4
       d3-scale: 4.0.2
