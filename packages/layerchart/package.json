@@ -162,7 +162,12 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*",
+    "!dist/**/*.bench.*",
+    "!dist/**/__screenshots__",
+    "!dist/bench"
   ],
   "svelte": "./dist/index.js"
 }
