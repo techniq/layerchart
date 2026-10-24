@@ -105,7 +105,7 @@
     "d3-tile": "^1.0.0",
     "d3-time": "^3.1.0",
     "memoize": "^10.2.0",
-    "runed": "^0.37.1"
+    "runed": "^0.38.0"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
