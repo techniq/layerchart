@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
-import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { playwright } from '@vitest/browser-playwright';
 
@@ -26,7 +25,6 @@ const config = defineConfig({
           return true;
         },
       },
-      adapter: adapter(),
       alias: {
         $lib: 'src/lib',
         layerchart: 'src/lib/index.js',
