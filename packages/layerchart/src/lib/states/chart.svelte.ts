@@ -304,14 +304,38 @@ export class ChartState<
    * For use in tests or synchronous contexts. In components, use `registerComponent` with `markInfo`.
    */
   registerMark(info: MarkInfo): () => void {
+    return this._addMark(info, () => this._markInfosVersion++);
+  }
+
+  private _addMark(info: MarkInfo, changed: () => void): () => void {
     const id = ++this._nextMarkId;
     this._markInfosRaw.push({ _id: id, info });
-    this._markInfosVersion++;
+    changed();
     return () => {
       const idx = this._markInfosRaw.findIndex((r) => r._id === id);
       if (idx !== -1) this._markInfosRaw.splice(idx, 1);
-      this._markInfosVersion++;
+      changed();
     };
+  }
+
+  private _markInfosBumpQueued = false;
+
+  /**
+   * Bump `_markInfosVersion` once for all the marks that mount or unmount in the same turn.
+   *
+   * Every bump marks `flatData` → `extents` → domains → scales dirty, and with them every effect
+   * of every mark already mounted that reads a scale.  Bumping once per mark made mounting N marks
+   * walk that graph N times, O(N²) — a few hundred `Area`s took seconds.  The marks' effects run
+   * in one flush, so a microtask after it sees them all; it runs before the browser paints, so the
+   * first frame still has every mark in the domain.
+   */
+  private _queueMarkInfosBump() {
+    if (this._markInfosBumpQueued) return;
+    this._markInfosBumpQueued = true;
+    queueMicrotask(() => {
+      this._markInfosBumpQueued = false;
+      this._markInfosVersion++;
+    });
   }
 
   /**
@@ -392,7 +416,7 @@ export class ChartState<
         $effect(() => {
           const info = markInfo();
           if (isEmptyMarkInfo(info)) return;
-          return untrack(() => this.registerMark(info));
+          return untrack(() => this._addMark(info, () => this._queueMarkInfosBump()));
         });
       }
     }
