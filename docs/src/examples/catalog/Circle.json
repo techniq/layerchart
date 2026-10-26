@@ -921,7 +921,7 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 231,
+      "lineNumber": 271,
       "line": "<Circle"
     },
     {
@@ -1296,5 +1296,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.017Z"
+  "updatedAt": "2026-10-26T02:35:35.791Z"
 }
