@@ -104,6 +104,9 @@
 					aria-expanded={open}
 					onclick={toggle}
 				>
+					{#if icon}
+						<PageIcon class="shrink-0 mr-1.5 text-surface-content/50" />
+					{/if}
 					{#each breadcrumbs as crumb, i}
 						{#if i > 0}
 							<LucideChevronRight class="divider shrink-0" />
