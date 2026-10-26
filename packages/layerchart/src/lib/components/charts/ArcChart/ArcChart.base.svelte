@@ -221,6 +221,9 @@
         onclick: onTooltipClick,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
+        // Keyboard navigation places points from the position scales, but a slice's position is
+        // the arc the layout computes — not yet supported
+        keyboard: false,
       }}
   {series}
   legend={typeof legend === 'function'

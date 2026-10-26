@@ -530,6 +530,8 @@ Add an `onclick` handler to `tooltipContext` to respond to clicks on data points
 >
 ```
 
+The same handler is reachable from the keyboard: on a keyboard accessible chart, `Enter` and `Space` activate the focused point. See [Accessibility](/docs/guides/accessibility#keyboard).
+
 ## TooltipState properties
 
 | Property                   | Type              | Description                                    |

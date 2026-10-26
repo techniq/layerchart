@@ -85,6 +85,17 @@
     onclick?: (e: MouseEvent, { data }: { data: any }) => any;
 
     /**
+     * Make the chart keyboard accessible.  The plot area becomes a single tab stop, and once
+     * focused the arrow keys move the tooltip between data points (along the position axis) and
+     * between series (across it), Home / End jump to the first / last point, Enter / Space call
+     * `onclick`, and Escape hides the tooltip.  Each point is announced to screen readers.
+     *
+     * Cartesian charts only — radial and pie charts are not yet supported.
+     * @default false
+     */
+    keyboard?: boolean;
+
+    /**
      * Exposed to allow binding in Chart
      * @default { x: 0, y: 0, data: null, show: showTooltip, hide: hideTooltip, mode }
      */
@@ -135,8 +146,12 @@
   import { raise } from '$lib/utils/chart.js';
   import { TooltipState, type TooltipShowOptions } from '$lib/states/tooltip.svelte.js';
   import { dataCoords, findDatumByValue } from '$lib/utils/tooltip.js';
+  // `TooltipKeyboard` is imported on first focus, so charts pay nothing for keyboard navigation
+  // until a keyboard user arrives
+  import type { TooltipKeyboard } from './TooltipKeyboard.svelte.js';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
   import { getSettings } from '$lib/contexts/settings.js';
+  import { createId } from '$lib/utils/createId.js';
 
   const ctx = getChartContext<any>();
   const geo = getGeoContext();
@@ -147,6 +162,7 @@
     debug: debugProp,
     findTooltipData = 'closest',
     hideDelay = 0,
+    keyboard = false,
     locked = false,
     touchEvents = 'pan-y',
     mode = 'manual',
@@ -797,6 +813,7 @@
   function onPointerEnter(e: PointerEvent | MouseEvent | TouchEvent) {
     if (isTransforming) return;
 
+    releaseKeyboard();
     tooltipState.isHoveringTooltipArea = true;
     if (triggerPointerEvents) {
       showTooltip(e);
@@ -805,6 +822,9 @@
 
   function onPointerMove(e: PointerEvent | MouseEvent | TouchEvent) {
     if (isTransforming) return;
+
+    // The pointer takes over from the keyboard
+    releaseKeyboard();
 
     if (triggerPointerEvents) {
       showTooltip(e);
@@ -823,13 +843,116 @@
     tooltipState.isHoveringTooltipArea = false;
     hideTooltip();
   }
+
+  /**
+   * Keyboard navigation places the tooltip from the position scales, which only describe a point's
+   * position on cartesian charts — a radial chart's (or a pie's) is the arc geometry its marks
+   * compute.
+   */
+  const keyboardEnabled = $derived(keyboard && !ctx.radial);
+
+  const uid = $props.id();
+  const keyboardHelpId = createId('lc-tooltip-keyboard-help', uid);
+
+  /** Instructions read when the chart is focused, built as one string so it reads with real spaces */
+  const keyboardHelp = $derived.by(() => {
+    const [along, across] =
+      ctx.valueAxis === 'x' ? ['up and down', 'left and right'] : ['left and right', 'up and down'];
+    const multipleSeries = ctx.series.visibleSeries.length > 1 || (ctx.cGroups?.length ?? 0) > 1;
+    return multipleSeries
+      ? `Use the ${along} arrow keys to move between data points, and the ${across} arrow keys to move between series.`
+      : `Use the ${along} arrow keys to move between data points.`;
+  });
+
+  /** Loaded on first use — see `loadKeyboard` */
+  let keyboardController = $state<TooltipKeyboard>();
+
+  /**
+   * Keys waiting on the import, run in order once it lands.  Loading only on use keeps the
+   * navigation (and the formatting its announcements need) out of every chart's bundle.
+   */
+  let keyboardQueue: Promise<TooltipKeyboard> | undefined;
+
+  function withKeyboard(action: (keyboard: TooltipKeyboard) => void) {
+    if (keyboardController) {
+      action(keyboardController);
+      return;
+    }
+
+    keyboardQueue ??= import('./TooltipKeyboard.svelte.js').then(({ TooltipKeyboard }) => {
+      keyboardController = new TooltipKeyboard(ctx, tooltipState, {
+        mode,
+        locked: () => locked,
+        onclick: () => onclick,
+        show: (data, point) => showTooltip({ data, point }),
+        hide: hideTooltip,
+      });
+      return keyboardController;
+    });
+    keyboardQueue = keyboardQueue.then((keyboard) => {
+      action(keyboard);
+      return keyboard;
+    });
+  }
+
+  /** Keys the plot area acts on — known up front, so scrolling is prevented before the import lands */
+  const KEYBOARD_KEYS = new Set([
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowDown',
+    'ArrowUp',
+    'PageDown',
+    'PageUp',
+    'Home',
+    'End',
+    'Enter',
+    ' ',
+  ]);
+
+  /** Hand the chart back to the pointer */
+  function releaseKeyboard() {
+    keyboardController?.release();
+  }
+
+  function onKeyDown(e: KeyboardEvent) {
+    // Only keys pressed on the plot area itself — not ones bubbling up from focusable children
+    // rendered inside it (ex. legend buttons)
+    if (!keyboardEnabled || e.target !== e.currentTarget) return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+
+    // Escape only means something while there is a tooltip to hide — otherwise leave it for the
+    // page (ex. closing a dialog the chart is in)
+    if (KEYBOARD_KEYS.has(e.key) || (e.key === 'Escape' && tooltipState.data != null)) {
+      // Keep the arrow, page, and space keys from also scrolling the page
+      e.preventDefault();
+      withKeyboard((keyboard) => keyboard.handle(e.key));
+    }
+  }
+
+  function onFocus() {
+    // Land on the first point when tabbing in.  Not when a click focused the chart, though —
+    // the pointer is already showing what it is over.
+    if (ref?.matches(':focus-visible')) {
+      withKeyboard((keyboard) => {
+        if (tooltipState.data == null) keyboard.navigate('first');
+      });
+    }
+  }
+
+  function onBlur() {
+    keyboardController?.blur();
+  }
 </script>
 
 <!--
   Sized to the whole plot area rather than `ctx.width` / `ctx.height`, which are one panel's box
   on a faceted chart — the pointer has to reach every panel.
 -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!--
+  With `keyboard` the plot area is the chart's single tab stop.  `role` is conditional, which the
+  checker can't follow, so it reads the `tabindex` as being on a non-interactive element.
+-->
+<!-- svelte-ignore a11y_no_static_element_interactions, a11y_no_noninteractive_tabindex -->
 <div
   style:top="{ctx.padding.top}px"
   style:left="{ctx.padding.left}px"
@@ -848,9 +971,23 @@
       onclick(e, { data: tooltipState.data });
     }
   }}
-  onkeydown={() => {}}
+  onkeydown={onKeyDown}
+  onfocus={keyboardEnabled ? onFocus : undefined}
+  onblur={keyboardEnabled ? onBlur : undefined}
+  tabindex={keyboardEnabled ? 0 : undefined}
+  role={keyboardEnabled ? 'application' : undefined}
+  aria-roledescription={keyboardEnabled ? 'chart' : undefined}
+  aria-label={keyboardEnabled ? ((ctx.props as any)['aria-label'] ?? 'Chart') : undefined}
+  aria-describedby={keyboardEnabled ? keyboardHelpId : undefined}
   bind:this={ref}
 >
+  {#if keyboardEnabled}
+    <div id={keyboardHelpId} class="lc-tooltip-keyboard-sr">{keyboardHelp}</div>
+    <div class="lc-tooltip-keyboard-sr" aria-live="assertive" aria-atomic="true">
+      {keyboardController?.announcement}
+    </div>
+  {/if}
+
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
     class="lc-tooltip-context-container"
@@ -975,6 +1112,12 @@
       position: absolute;
       touch-action: var(--touch-action);
 
+      /* The point the keyboard lands on — its highlight and tooltip — is the focus indicator, so
+         the plot area draws no outline of its own */
+      &:focus-visible {
+        outline: none;
+      }
+
       &.debug {
         outline: 1px solid var(--color-danger);
         background-color: color-mix(in oklab, var(--color-danger) 10%, transparent);
@@ -995,6 +1138,19 @@
         stroke: var(--color-danger);
         fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
       }
+    }
+
+    /* Read by screen readers, but not drawn */
+    :where(.lc-tooltip-keyboard-sr) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     :where(.lc-tooltip-quadtree-rect) {

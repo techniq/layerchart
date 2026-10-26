@@ -37,6 +37,7 @@
     props = {},
     profile = false,
     tooltipContext = true,
+    keyboard = true,
     marks,
     context = $bindable(),
     ...restProps
@@ -93,6 +94,7 @@
   {radial}
   {valueAxis}
   {axis}
+  {keyboard}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false

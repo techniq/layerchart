@@ -34,6 +34,7 @@
     props = {},
     profile = false,
     tooltipContext = true,
+    keyboard = true,
     marks,
     tooltip: tooltipProp,
     context = $bindable(),
@@ -60,6 +61,7 @@
   {yDomain}
   c={yProp}
   cRange={['var(--color-primary, currentColor)']}
+  {keyboard}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false

@@ -59,6 +59,7 @@
     children,
     geo,
     tooltipContext,
+    keyboard,
     transform,
     onTransform,
     ondragend,
@@ -103,6 +104,12 @@
     () => resolvedGroup,
     () => groupOptions
   );
+
+  /**
+   * With `keyboard` the chart's name moves to the focusable plot area (`TooltipContext`), so it
+   * isn't read twice — and a `div` with no role can't carry one anyway.
+   */
+  const rootAriaLabel = $derived(keyboard ? undefined : restProps['aria-label']);
 
   const settings = getSettings();
   $effect(() => {
@@ -538,6 +545,7 @@
     bind:clientHeight={chartState._containerHeight}
     class={['lc-root-container', className]}
     {...restProps}
+    aria-label={rootAriaLabel}
   >
     {#if !needsMeasure || chartState.isMeasured}
       {#if transform && TransformContext}
@@ -592,6 +600,7 @@
       <!-- svelte-ignore ownership_invalid_binding -->
       <TooltipContext
         onclick={onTooltipClick}
+        {keyboard}
         {...getObjectOrNull(tooltipContext)}
         bind:state={chartState.tooltipState}
       >
@@ -602,6 +611,7 @@
     <!-- svelte-ignore ownership_invalid_binding -->
     <TooltipContext
       onclick={onTooltipClick}
+      {keyboard}
       {...getObjectOrNull(tooltipContext)}
       bind:state={chartState.tooltipState}
     >

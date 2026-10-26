@@ -39,6 +39,7 @@
     xInterval,
     yInterval,
     tooltipContext = true,
+    keyboard = true,
     marks,
     context = $bindable(),
     ...restProps
@@ -89,6 +90,7 @@
   {valueAxis}
   {bandPadding}
   {groupPadding}
+  {keyboard}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false
