@@ -50,15 +50,12 @@
 	const showScrollToTop = $derived(scrollY > 240);
 
 	let toolbar = $state<HTMLElement>();
-	let heading = $state<HTMLElement>();
-	let headingInView = $state(true);
 	let activeSection = $state<TocItem>();
 
-	/** Track the page heading and current section relative to the bottom of the toolbar */
+	/** Track the current section relative to the bottom of the toolbar */
 	function update(items = toc) {
-		if (!toolbar || !heading) return;
+		if (!toolbar) return;
 		const line = toolbar.getBoundingClientRect().bottom;
-		headingInView = heading.getBoundingClientRect().bottom > line;
 
 		// Last heading scrolled up to the toolbar (with leeway for anchor `scroll-margin`).
 		// At the bottom of the page the last headings can't reach it, so take the last one in view.
@@ -107,27 +104,17 @@
 					{#if icon}
 						<PageIcon class="shrink-0 mr-1.5 text-surface-content/50" />
 					{/if}
-					{#each breadcrumbs as crumb, i}
-						{#if i > 0}
-							<LucideChevronRight class="divider shrink-0" />
-						{/if}
-						<span class={cls('shrink-0 capitalize', !headingInView && 'max-sm:hidden')}>
-							{crumb.label}
-						</span>
+					<!-- Phones only show the most specific segment (the rest are in the menu) -->
+					{#each breadcrumbs as crumb}
+						<span class="shrink-0 capitalize max-sm:hidden">{crumb.label}</span>
+						<LucideChevronRight class="divider shrink-0 max-sm:hidden" />
 					{/each}
 
-					{#if !headingInView}
-						<!-- Phones only show the most specific segment (all of them are in the menu) -->
-						<span
-							class={cls('flex items-center min-w-0', activeSection && 'max-sm:hidden')}
-							transition:fly={{ y: 8, duration: 150 }}
-						>
-							{#if breadcrumbs.length}
-								<LucideChevronRight class="divider shrink-0 max-sm:hidden" />
-							{/if}
-							<span class="text-surface-content truncate">{title}</span>
-						</span>
-					{/if}
+					<span
+						class={cls('text-surface-content truncate min-w-0', activeSection && 'max-sm:hidden')}
+					>
+						{title}
+					</span>
 
 					{#if activeSection}
 						<span class="flex items-center min-w-0" transition:fly={{ y: 8, duration: 150 }}>
@@ -270,7 +257,6 @@
 {/if}
 
 <h1
-	bind:this={heading}
 	class="text-4xl font-bold select-none pb-4"
 	ondblclick={() => {
 		navigator.clipboard.writeText(`[${title}](${url})`);
