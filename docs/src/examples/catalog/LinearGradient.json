@@ -466,14 +466,28 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 197,
+      "lineNumber": 219,
       "line": "<LinearGradient"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 201,
+      "lineNumber": 223,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 227,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 231,
       "line": "<LinearGradient"
     },
     {
@@ -610,5 +624,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:17.437Z"
+  "updatedAt": "2026-10-26T02:35:36.553Z"
 }

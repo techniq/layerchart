@@ -4498,28 +4498,28 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 206,
-      "line": "<Axis placement=\"top\" rule={false} />"
+      "lineNumber": 236,
+      "line": "<Axis"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 207,
-      "line": "<Axis placement=\"bottom\" rule={false} />"
+      "lineNumber": 242,
+      "line": "<Axis"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 208,
+      "lineNumber": 248,
       "line": "<Axis placement=\"left\" ticks={range(1, data.maxRank + 1)} format={(d) => `#${d}`} />"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 209,
+      "lineNumber": 249,
       "line": "<Axis"
     },
     {
@@ -6063,5 +6063,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:12.593Z"
+  "updatedAt": "2026-10-26T02:35:35.342Z"
 }

@@ -5369,6 +5369,20 @@
       "line": "<Tooltip.Item label=\"Republican\" value={share?.gop} format=\"percent\" />"
     },
     {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 308,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 310,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
@@ -5995,63 +6009,63 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 251,
+      "lineNumber": 291,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 258,
+      "lineNumber": 298,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 264,
+      "lineNumber": 304,
       "line": "<Tooltip.List>"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 265,
+      "lineNumber": 305,
       "line": "<Tooltip.Item label=\"Week\" value={d.week === 'Pre' ? 'Preseason' : d.week} />"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 266,
+      "lineNumber": 306,
       "line": "<Tooltip.Item label=\"Rank\" value=\"{d.tied ? 'T-' : '#'}{d.rank}\" />"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 268,
+      "lineNumber": 308,
       "line": "<Tooltip.Item label=\"Record\" value={d.record} />"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 272,
+      "lineNumber": 312,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 274,
+      "lineNumber": 314,
       "line": "<Tooltip.Item label=\"Games\" value=\"Loading...\" />"
     },
     {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 296,
+      "lineNumber": 336,
       "line": "<Tooltip.Item label=\"Games\" value=\"None\" />"
     },
     {
@@ -8477,5 +8491,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-10-23T06:08:48.094Z"
+  "updatedAt": "2026-10-26T02:35:37.082Z"
 }

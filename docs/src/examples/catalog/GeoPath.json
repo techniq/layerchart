@@ -192,6 +192,41 @@
       "updatedAt": "2026-10-22T21:39:57.000Z"
     },
     {
+      "name": "geojson-drilldown",
+      "title": "GeoJSON drilldown",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 253,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 273,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 275,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" onclick={() => select([])} />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 276,
+          "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 308,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "description": "Click to drill down from continents to countries, states, and counties.",
+      "createdAt": "2026-10-26T02:34:19.000Z",
+      "updatedAt": "2026-10-26T02:34:19.000Z"
+    },
+    {
       "name": "interpolating-projections",
       "title": "interpolating projections",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -1130,6 +1165,34 @@
       "line": "<GeoPath"
     },
     {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 275,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" onclick={() => select([])} />"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 282,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 295,
+      "line": "<GeoPath geojson={selected[depth]} class=\"fill-white stroke-white pointer-events-none\" />"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 301,
+      "line": "<GeoPath"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -1795,5 +1858,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-10-23T06:08:47.211Z"
+  "updatedAt": "2026-10-26T02:35:36.178Z"
 }

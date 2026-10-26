@@ -1367,7 +1367,7 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 223,
+      "lineNumber": 263,
       "line": "<Spline"
     },
     {
@@ -1826,5 +1826,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:18.028Z"
+  "updatedAt": "2026-10-26T02:35:36.966Z"
 }
