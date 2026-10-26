@@ -43,6 +43,8 @@
 	const origin = $derived(dev ? 'https://layerchart.com' : page.url.origin);
 	const url = $derived(`${origin}${page.url.pathname}`);
 	const toc = $derived<TocItem[]>(page.data.metadata?.toc ?? []);
+	const parents = $derived(breadcrumbs.filter((crumb) => crumb.href));
+	const PageIcon = $derived(icon ?? LucideArrowUpToLine);
 
 	let scrollY = $state(0);
 	const showScrollToTop = $derived(scrollY > 240);
@@ -140,30 +142,29 @@
 					placement="bottom-start"
 					classes={{ menu: 'py-1 min-w-48 max-h-[70dvh] overflow-auto' }}
 				>
+					<!-- Nearest page: its parent (ex. an example's component), otherwise itself (back to top) -->
 					<nav aria-label="Breadcrumb">
-						{#each breadcrumbs.filter((crumb) => crumb.href) as crumb}
+						{#each parents as crumb}
 							<a
 								href={crumb.href}
 								onclick={toggleOff}
-								class="flex items-center gap-2 px-3 py-1 text-sm text-surface-content/70 hover:text-surface-content"
+								class="flex items-center gap-2 w-full px-3 py-1 text-sm text-left font-medium text-surface-content/80 hover:text-surface-content cursor-pointer"
 							>
-								{#if icon}
-									{@const Icon = icon}
-									<Icon class="shrink-0 text-surface-content/50" />
-								{/if}
+								<PageIcon class="shrink-0 text-surface-content/50" />
 								{crumb.label}
 							</a>
+						{:else}
+							<button
+								onclick={() => {
+									toggleOff();
+									scrollToTop();
+								}}
+								class="flex items-center gap-2 w-full px-3 py-1 text-sm text-left font-medium text-surface-content/80 hover:text-surface-content cursor-pointer"
+							>
+								<PageIcon class="shrink-0 text-surface-content/50" />
+								{title}
+							</button>
 						{/each}
-						<button
-							onclick={() => {
-								toggleOff();
-								scrollToTop();
-							}}
-							class="flex items-center gap-2 w-full px-3 py-1 text-sm text-left font-medium text-surface-content cursor-pointer"
-						>
-							<LucideArrowUpToLine class="shrink-0 text-surface-content/50" />
-							{title}
-						</button>
 					</nav>
 
 					{#if toc.length}

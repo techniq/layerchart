@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { toTitleCase } from '@layerstack/utils';
 	import { LoadingPlaceholder } from '@layerstack/docs/components';
 	import { examples } from '@layerstack/docs/context';
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -71,9 +70,11 @@
 		pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []
 	);
 
+	// Component names as-is (ex. `ArcChart`), example names in sentence case (ex. `Axis labels inside`)
+	const exampleTitle = $derived(page.params.example?.replaceAll('-', ' '));
 	const title = $derived(
 		pageExample?.module?.title ??
-			toTitleCase(page.params.example?.replaceAll('-', ' ') ?? toTitleCase(metadata.name))
+			(exampleTitle ? exampleTitle[0].toUpperCase() + exampleTitle.slice(1) : metadata.name)
 	);
 
 	const breadcrumbs = $derived([
