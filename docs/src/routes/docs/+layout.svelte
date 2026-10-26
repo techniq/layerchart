@@ -278,7 +278,8 @@
 				On this page
 			</div>
 			{#key page.url}
-				<TableOfContents items={page.data.metadata.toc} />
+				<!-- Offset by the site header + sticky page toolbar (`PageHeader`) -->
+				<TableOfContents items={page.data.metadata.toc} scrollOffset={108} />
 			{/key}
 		</div>
 	{/if}

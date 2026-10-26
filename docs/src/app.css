@@ -216,3 +216,8 @@ code[data-line-numbers] > [data-line]::before {
 html:active-view-transition {
 	scroll-behavior: auto;
 }
+
+/* Keep anchor targets clear of the sticky component toolbar */
+html:has([data-docs-toolbar]) {
+	scroll-padding-top: 3rem;
+}

@@ -1,51 +1,14 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import { getSettings, isometric } from 'layerchart';
-	import {
-		Button,
-		Menu,
-		Switch,
-		Toggle,
-		ToggleGroup,
-		ToggleOption,
-		Tooltip,
-		Breadcrumb
-	} from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 	import { LoadingPlaceholder } from '@layerstack/docs/components';
-	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
-	import ScrollToTop from '~icons/lucide/arrow-up-to-line';
-	import { hideybar } from '$lib/attachments/hideybar.js';
 	import { examples } from '@layerstack/docs/context';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { page } from '$app/state';
 
-	import LucideSettings from '~icons/lucide/settings';
-	import { cls } from '@layerstack/tailwind';
+	import LucideBlocks from '~icons/lucide/blocks';
 
-	// TODO: `setSettings({...})` or just use default?
-	const settings = getSettings();
-	const origin = $derived(dev ? 'https://layerchart.com' : page.url.origin);
-	const url = $derived(`${origin}${page.url.pathname}`);
 	let { data, children } = $props();
-
-	let loaded = $state(false);
-	let showScrollToTop = $state(false);
-	onMount(() => {
-		loaded = true;
-		const updateScrollToTop = () => {
-			showScrollToTop = window.scrollY > 240;
-		};
-
-		updateScrollToTop();
-		window.addEventListener('scroll', updateScrollToTop, { passive: true });
-
-		return () => {
-			window.removeEventListener('scroll', updateScrollToTop);
-		};
-	});
 
 	const { metadata } = $derived(data);
 
@@ -117,132 +80,19 @@
 		{ label: metadata.category },
 		...(page.params.example
 			? [{ label: metadata.name, href: `/docs/components/${page.params.name}` }]
-			: []),
-		{
-			label: title,
-			href: `/docs/components/${metadata.name}/${title.toLowerCase().replaceAll(' ', '-')}`
-		}
+			: [])
 	]);
 </script>
 
-<div
-	{@attach hideybar({ offsetTop: '57px', mx: '20px' })}
-	class={cls(
-		loaded ? 'visible' : 'invisible',
-		'flex flex-col z-29 w-full rounded-xl rounded-t-none border-x border-b border-primary/10 shadow-lg px-2 py-1 overflow-hidden',
-		'bg-radial from-black/0 from-[1px] to-surface-100 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
-	)}
->
-	<div class="flex items-center gap-4 px-3 overflow-hidden h-full">
-		<Breadcrumb
-			items={breadcrumbs}
-			class="text-surface-content/50 font-bold capitalize text-xs min-w-0 overflow-hidden [&_.divider]:text-primary-500 [&_.divider]:opacity-70"
-		>
-			{#snippet item({ item }: { item: (typeof breadcrumbs)[number] })}
-				{#if item.href}
-					<a href={item.href} class="text-primary truncate">{item.label}</a>
-				{:else}
-					<span class="truncate">{item.label}</span>
-				{/if}
-			{/snippet}
-		</Breadcrumb>
-		<span class="flex items-center gap-2 ml-auto shrink-0">
-			{#if layers?.length}
-				<ToggleGroup
-					bind:value={settings.layer}
-					variant="outline"
-					color="primary"
-					inset
-					rounded="full"
-					size="sm"
-					class="bg-surface-100 rounded-full"
-					classes={{
-						options: 'bg-surface-100'
-					}}
-				>
-					{#each layers as layer}
-						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
-					{/each}
-				</ToggleGroup>
-			{/if}
-			<OpenWithButton {metadata} />
-			<Toggle let:on={open} let:toggle let:toggleOff>
-				<Tooltip title="Settings">
-					<Button iconOnly on:click={toggle}>
-						<LucideSettings class="text-surface-content" />
-						<Menu
-							{open}
-							on:close={toggleOff}
-							placement="bottom-start"
-							classes={{ menu: 'p-2 grid gap-2' }}
-						>
-							<label class="flex items-center justify-between gap-2">
-								<span class="text-sm text-surface-content">Debug</span>
-								<Switch bind:checked={settings.debug} />
-							</label>
-							<label class="flex items-center justify-between gap-2">
-								<span class="text-sm text-surface-content">Isometric</span>
-								<Switch
-									bind:checked={
-										() => !!settings.view, (on) => (settings.view = on ? isometric : null)
-									}
-								/>
-							</label>
-						</Menu>
-					</Button>
-				</Tooltip>
-			</Toggle>
-		</span>
-	</div>
-</div>
-
-{#if showScrollToTop}
-	<div
-		class="fixed bottom-4 right-4 z-40 md:bottom-6 md:right-6"
-		transition:fly={{ y: 12, duration: 180 }}
-	>
-		<Tooltip title="Scroll to top" placement="top" offset={4}>
-			<Button
-				iconOnly
-				icon={ScrollToTop}
-				class="size-10 text-surface-content bg-surface-100/90 hover:bg-surface-content/10 border border-primary/10 shadow-lg backdrop-blur-lg"
-				onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-			></Button>
-		</Tooltip>
-	</div>
-{/if}
-
-<h1
-	class="text-4xl font-bold select-none pb-4"
-	ondblclick={() => {
-		navigator.clipboard.writeText(`[${title}](${url})`);
-	}}
->
+<PageHeader
 	{title}
-</h1>
-{#if pageExample?.module?.description}
-	<div class="text-sm text-surface-content/70">{pageExample.module.description}</div>
-{/if}
-
-{#if page.params.example == null}
-	<div class="text-sm text-surface-content/70">{metadata.description}</div>
-
-	<!-- <div class="flex gap-2 mt-3">
-	{#if !hideTableOfContents}
-	<Button
-	icon={LucideChevronDown}
-	on:click={() => {
-		showTableOfContents = !showTableOfContents;
-		}}
-		variant="fill-light"
-		color="primary"
-		size="sm"
-		>
-		On this page
-		</Button>
-		{/if}
-		</div>  -->
-{/if}
+	icon={LucideBlocks}
+	{breadcrumbs}
+	{layers}
+	{metadata}
+	description={pageExample?.module?.description ??
+		(page.params.example == null ? metadata.description : undefined)}
+/>
 
 <svelte:boundary>
 	{#snippet pending()}
