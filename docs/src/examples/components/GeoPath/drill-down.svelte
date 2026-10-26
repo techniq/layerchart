@@ -218,7 +218,12 @@
 		<TransformContextControls />
 
 		<Layer>
-			<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-content/5 stroke-none" />
+			<!-- The ocean, clicking which zooms back out to the world -->
+			<GeoPath
+				geojson={{ type: 'Sphere' }}
+				class="fill-surface-content/5 stroke-none"
+				onclick={() => select([])}
+			/>
 
 			<!-- Each level but what is selected in it, which what is inside it takes the place of.
 			     Clicking where there is nothing further in goes back out a level. -->
