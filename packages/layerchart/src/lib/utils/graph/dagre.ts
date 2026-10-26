@@ -52,7 +52,7 @@ export function dagreGraph(
     edgeLabelOffset?: DagreProps['edgeLabelOffset'];
     filterNodes?: DagreProps['filterNodes'];
   } = {}
-) {
+): dagre.graphlib.Graph {
   let g = new dagre.graphlib.Graph({ directed, multigraph, compound });
 
   g.setGraph({

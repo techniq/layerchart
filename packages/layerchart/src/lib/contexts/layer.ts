@@ -1,13 +1,13 @@
-import { Context } from 'runed';
+import { createContext } from 'svelte';
 
 export type LayerContext = 'svg' | 'canvas' | 'html';
 
-const _LayerContext = new Context<LayerContext>('LayerContext');
+const [_getLayer, _setLayer] = createContext<LayerContext>();
 
 export function getLayerContext(): LayerContext {
-  return _LayerContext.get();
+  return _getLayer();
 }
 
 export function setLayerContext(context: LayerContext): LayerContext {
-  return _LayerContext.set(context);
+  return _setLayer(context);
 }

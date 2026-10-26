@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Snippet } from 'svelte';
+  import { createContext, type Snippet } from 'svelte';
   import type { Without } from '$lib/utils/types.js';
   import type { HTMLCanvasAttributes } from 'svelte/elements';
 
@@ -55,22 +55,22 @@
     gl: WebGLRenderingContext | null;
   };
 
-  const _WebGLContext = new Context<WebGLContextValue>('WebGL');
+  const [_getWebGLContext, _setWebGLContext, _hasWebGLContext] = createContext<WebGLContextValue>();
 
   export function setWebGLContext(context: WebGLContextValue) {
-    return _WebGLContext.set(context);
+    return _setWebGLContext(context);
   }
 
   export function getWebGLContext() {
+    if (_hasWebGLContext()) return _getWebGLContext();
     const defaultContext: WebGLContextValue = $state({ gl: null });
-    return _WebGLContext.getOr(defaultContext);
+    return defaultContext;
   }
 </script>
 
 <script lang="ts">
   import { onMount } from 'svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { Context } from 'runed';
 
   let {
     context = $bindable(),

@@ -1,10 +1,11 @@
-import { Context } from 'runed';
+import { createContext } from 'svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { AnyScale } from '$lib/utils/scales.svelte.js';
 
 export type { ChartState };
 
-const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartContext');
+const [_getChartContext, _setChartContext, _hasChartContext] =
+  createContext<ChartState<any, AnyScale, AnyScale>>();
 
 /**
  * Fallback context when used outside of a Chart component.
@@ -56,7 +57,7 @@ export function getChartContext<
   YScale extends AnyScale = AnyScale,
 >(): ChartState<T, XScale, YScale> {
   // @ts-expect-error - Type variance is acceptable here
-  return _ChartContext.getOr(fallbackContext);
+  return _hasChartContext() ? _getChartContext() : fallbackContext;
 }
 
 export function setChartContext<
@@ -65,5 +66,5 @@ export function setChartContext<
   YScale extends AnyScale = AnyScale,
 >(context: ChartState<T, XScale, YScale>): ChartState<T, XScale, YScale> {
   // @ts-expect-error - shh
-  return _ChartContext.set(context);
+  return _setChartContext(context);
 }
