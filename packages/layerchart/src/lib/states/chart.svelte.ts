@@ -16,14 +16,22 @@ import {
   makeAccessor,
 } from '$lib/utils/scales.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
-import type { Extents } from '$lib/utils/types.js';
+import type { Extents, PaddingArray } from '$lib/utils/types.js';
 import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
-import { colorPropDataKey } from '$lib/utils/dataProp.js';
+import { colorPropDataKey, resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
+import {
+  multiplyMatrix,
+  ISOMETRIC_TILT,
+  type AffineMatrix,
+  type IsometricOptions,
+} from '$lib/utils/isometric.js';
+import { resolveView } from '$lib/views/view.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
+import { defaultSettings, type Settings } from './settings.svelte.js';
 import { GeoState } from './geo.svelte.js';
 import { FacetState, facetKey } from './facet.svelte.js';
 import type { TransformState } from './transform.svelte.js';
@@ -71,6 +79,9 @@ export interface MarkInfo {
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
 
+/** An `isometric` view's turn and tip */
+type IsometricAngles = { rotate: number; tilt: number };
+
 export interface ComponentNode {
   id: symbol;
   kind: NodeKind;
@@ -81,6 +92,8 @@ export interface ComponentNode {
   canvasRender?: ComponentRender;
   /** Whether this node has a composite-mark ancestor (computed on creation) */
   insideCompositeMark: boolean;
+  /** Paint children on canvas back to front by their `depth`, rather than in mount order */
+  paintByDepth?: boolean;
 }
 
 export interface RegisterComponentOptions<T extends Element = Element> {
@@ -95,6 +108,11 @@ export interface RegisterComponentOptions<T extends Element = Element> {
    * When provided and not inside a composite mark, automatically registered reactively.
    */
   markInfo?: () => MarkInfo;
+  /**
+   * Paint children on canvas back to front by the `depth` they report (see `ComponentRender`),
+   * for a mark drawing its items keyed, in depth order, on an isometric floor
+   */
+  paintByDepth?: boolean;
 }
 
 /** Svelte context key for tracking the nearest parent ComponentNode. */
@@ -118,6 +136,11 @@ function isEmptyMarkInfo(info: MarkInfo): boolean {
   // Falsy rather than `!= null`, so `stacks: false` reads as "nothing to say" — which also means
   // a meaningful `0` would need its own case here.
   return Object.values(info).every((value) => !value);
+}
+
+/** `padding` in pixels scaled by `k`, as is when `k` is `1` */
+function scaleFloorPadding(padding: PaddingArray | undefined, k: number) {
+  return k === 1 || !padding ? padding : padding.map((p) => p * k);
 }
 
 /** One axis of {@link transformForBrush}, as a fraction of the base domain */
@@ -298,7 +321,7 @@ export class ChartState<
   registerComponent<T extends Element = Element>(
     options: RegisterComponentOptions<T>
   ): ComponentNode {
-    const { name, kind, canvasRender, markInfo } = options;
+    const { name, kind, canvasRender, markInfo, paintByDepth } = options;
     const parent = _ParentNodeContext.getOr(null);
 
     // Walk ancestors to check for composite-mark
@@ -320,6 +343,7 @@ export class ChartState<
       children: [],
       canvasRender: canvasRender as ComponentRender | undefined,
       insideCompositeMark,
+      paintByDepth,
     };
 
     if (parent) parent.children.push(node);
@@ -395,10 +419,34 @@ export class ChartState<
   // Meta data - reactive to props.meta changes
   meta = $derived(this.props.meta ?? {});
 
-  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>) {
+  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>, settings?: Settings) {
     this.props = props;
+    if (settings) this.#settings = settings;
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
+
+    let shown = false;
+    $effect.pre(() => {
+      const options = this.#viewOptions;
+      const angles = this.#propAngles;
+      untrack(() => {
+        // A view that appears starts at its own angles, having none to ease from, and a drag owns
+        // the view while it lasts (ex. its rotation handed back from `onTransform`)
+        const instant = !shown || !!this.transformState?.dragging;
+        // Without a view the angles hold, for one that comes back
+        shown = !!options;
+        if (!options) return;
+        if (!this.#angles && options.motion) {
+          this.#angles = createControlledMotion(angles, options.motion);
+        }
+        const motion = this.#angles;
+        if (!motion) return;
+        motion.set(
+          angles,
+          instant ? (motion.type === 'tween' ? { duration: 0 } : { instant: true }) : undefined
+        );
+      });
+    });
 
     // Create GeoState instance — pass a dimensions getter so projection
     // is available during SSR (where $effect doesn't run)
@@ -422,7 +470,7 @@ export class ChartState<
         // Generate implicit series from registered marks.
         // Use the value axis accessor (y for horizontal charts, x for vertical).
         const valueAxis = this.valueAxis;
-        const chartValueProp = valueAxis === 'y' ? this.props.y : this.props.x;
+        const chartValueProp = this.#valueProp;
         const chartValueKeys = Array.isArray(chartValueProp)
           ? chartValueProp.filter((k): k is string => typeof k === 'string')
           : typeof chartValueProp === 'string'
@@ -433,7 +481,8 @@ export class ChartState<
           (!Array.isArray(this.props.data) || this.props.data.length > 0);
         const implicitSeries: SeriesData<TData, any>[] = [];
         for (const { info } of this._markInfos) {
-          const valueAccessor = valueAxis === 'y' ? info.y : info.x;
+          const valueAccessor =
+            valueAxis === 'y' ? info.y : valueAxis === 'z' ? (info as any).z : info.x;
           const key =
             info.seriesKey ??
             (typeof valueAccessor === 'string' ? (valueAccessor as string) : undefined);
@@ -460,7 +509,8 @@ export class ChartState<
         if (!layout || !layout.startsWith('stack')) return null;
 
         const series = this.props.series ?? [];
-        const keyBy = this.valueAxis === 'y' ? this.props.x : this.props.y;
+        // Stacked along `z`, a stack stands on an `x` category — and a `y` row, see `#stackGroupBy`
+        const keyBy = this.valueAxis === 'x' ? this.props.y : this.props.x;
         const hasSeparateData = series.some((s) => s.data != null);
 
         return {
@@ -472,7 +522,7 @@ export class ChartState<
           // key it wasn't given.
           data: hasSeparateData ? undefined : chartDataArray(this.props.data),
           keyBy: keyBy!,
-          valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
+          valueAccessor: this.#valueProp,
           // Anything that subdivides the plot also subdivides the stack — see `StackConfig.groupBy`
           groupBy: this.#stackGroupBy,
           // Long data stacks by the category its rows carry, since no series names the layers
@@ -728,7 +778,7 @@ export class ChartState<
     // beeswarm placing points along one axis with no accessor on the other — has nothing to
     // stack, and inferring one would give that axis a domain, and so ticks and gridlines.
     const configured = this.props.series ?? [];
-    const valueOf = this.valueAxis === 'y' ? this.props.y : this.props.x;
+    const valueOf = this.#valueProp;
     if (valueOf == null && configured.length === 0) return 'overlap';
 
     // Only layers the chart was *configured* with count.  `SeriesState.series` also holds the
@@ -821,8 +871,8 @@ export class ChartState<
    * key, so a legend backed by an ordinal `c` scale acts on what it names — as `PieChart` already
    * does with its slices.
    *
-   * Distinct from `z`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
-   * (`z="id"` with `c="group"`), and it's `c` the legend names.
+   * Distinct from `g`, which groups the *paths* a `Spline` / `Area` draws: a chart can set both
+   * (`g="id"` with `c="group"`), and it's `c` the legend names.
    */
   cKey = $derived.by<(d: any) => any>(() => (this.cGroups ? (d: any) => this.c(d) : () => null));
 
@@ -984,12 +1034,15 @@ export class ChartState<
   #stackGroupBy = $derived.by<((d: any) => string) | undefined>(() => {
     const facet = this.facetState.enabled ? this.facetState : null;
     const subBand = this.props.x1 != null ? this.x1 : this.props.y1 != null ? this.y1 : null;
-    if (!facet && !subBand) return undefined;
+    // Stacked along `z`, each `y` row holds stacks of its own
+    const row = this.valueAxis === 'z' ? this.y : null;
+    if (!facet && !subBand && !row) return undefined;
 
     return (d: any) =>
       JSON.stringify([
         facet ? facetKey(facet.x?.(d), facet.y?.(d)) : null,
         subBand ? (subBand(d) ?? null) : null,
+        row ? (row(d) ?? null) : null,
       ]);
   });
 
@@ -1091,6 +1144,184 @@ export class ChartState<
 
   width = $derived(this.facetState.width);
   height = $derived(this.facetState.height);
+
+  #settings: Settings = defaultSettings;
+
+  /** How the plot is seen: the `view` prop, else the chart's settings; `null` when flat */
+  view = $derived(
+    resolveView(this.props.view !== undefined ? this.props.view : this.#settings.view)
+  );
+
+  /**
+   * What an `isometric` view draws with (see `isometric`), or `null`.  Marks reach the geometry and
+   * components of height through this, so a chart that never uses `isometric` doesn't bundle them.
+   */
+  isometric = $derived(this.view?.type === 'isometric' ? this.view.impl : null);
+
+  /** The `isometric` view's options as given, or `null` */
+  #viewOptions = $derived(this.view?.type === 'isometric' ? this.view.options : null);
+
+  /**
+   * Whether the transform can rotate the isometric view as well as pan and zoom it.  With a geo
+   * projection, only in `'canvas'` mode, as the others drive the projection.
+   */
+  isometricTransform = $derived(
+    !!this.isometric &&
+      !!this.props.transform?.mode &&
+      this.props.transform.mode !== 'none' &&
+      (!this.props.geo?.projection || this.props.transform.mode === 'canvas')
+  );
+
+  /** The `isometric` options' `rotate` / `tilt`, with their defaults */
+  #propAngles = $derived.by((): IsometricAngles => {
+    const options = this.#viewOptions ?? {};
+    return { rotate: options.rotate ?? -45, tilt: options.tilt ?? ISOMETRIC_TILT };
+  });
+
+  /**
+   * The angles eased by the view's `motion`, read once from the first view that has one (a chart
+   * may start without a view).  `null` until then, following the angles as given.
+   */
+  #angles = $state.raw<ReturnType<typeof createControlledMotion<IsometricAngles>> | null>(null);
+
+  /** The `isometric` angles, eased by their `motion`; a transform rotates the view from these */
+  get isometricAngles(): IsometricAngles {
+    return this.#angles?.current ?? this.#propAngles;
+  }
+
+  /**
+   * The resolved `isometric` options, with the transform's rotation when it drives the view.
+   * `null` when the chart is flat.
+   */
+  #isometricOptions = $derived.by((): IsometricOptions | null => {
+    const isometric = this.isometric;
+    let options = this.#viewOptions;
+    if (!isometric || !options) return null;
+
+    // `TransformContext` loads lazily; until then the props stand
+    const rotation = this.isometricTransform ? this.transformState?.rotation : null;
+    options = rotation
+      ? { ...options, rotate: rotation.x, tilt: rotation.y }
+      : { ...options, ...this.isometricAngles };
+
+    if (typeof options.aspect === 'number') return options;
+    // From the scale types and domains, not the scales, whose ranges depend on the floor
+    return {
+      ...options,
+      aspect: isometric.autoIsometricAspect(
+        { scale: this._xScaleProp, domain: this._baseXDomain },
+        { scale: this._yScaleProp, domain: this._baseYDomain }
+      ),
+    };
+  });
+
+  /** A radial chart draws a circle, which turns without growing — fit it as one */
+  #isometricFootprint = $derived<'rect' | 'disc'>(this.props.radial ? 'disc' : 'rect');
+
+  /**
+   * The floor an `isometric` chart lays out on in place of the plot area, at the view's `aspect` so
+   * resizing scales it rather than stretching it.  `null` when the chart is flat.
+   */
+  isometricFloor = $derived.by(() => {
+    const options = this.#isometricOptions;
+    if (!options || !this.isometric) return null;
+    return this.isometric.fitIsometricFloor(options, this.box.width, this.box.height, {
+      footprint: this.#isometricFootprint,
+      depthAt: (floor) => this.#zDepthFor(floor),
+    });
+  });
+
+  /** The area the scales lay out across: the isometric floor, or the plot area when flat */
+  plot = $derived(this.isometricFloor ?? { width: this.box.width, height: this.box.height });
+
+  /** The matrix every layer draws the floor through, or `null` when the chart is flat */
+  isometricMatrix = $derived.by((): AffineMatrix | null => {
+    const options = this.#isometricOptions;
+    if (!options || !this.isometric) return null;
+    return this.isometric.createIsometricMatrix(options, this.plot, this.box, {
+      depth: this.zDepth,
+      footprint: this.#isometricFootprint,
+    });
+  });
+
+  /**
+   * The tallest height on a floor of this size, from the `z` range props rather than `zScale`,
+   * which depends on the floor this helps size.
+   */
+  #zDepthFor(floor: { width: number; height: number }) {
+    if (!this.#hasHeight) return 0;
+    const range = this.props.zRange;
+    const values =
+      typeof range === 'function'
+        ? range(floor)
+        : (range ?? [0, Math.min(floor.width, floor.height) / 2]);
+    const numbers = (values as unknown[]).filter((v): v is number => typeof v === 'number');
+    return numbers.length ? Math.max(0, ...numbers) : 0;
+  }
+
+  /**
+   * Where raising a point by one pixel of `z` moves it on the flat plot (see `isometricLift`), or
+   * `null` when the chart is flat.
+   */
+  isometricLift = $derived.by(() => {
+    const options = this.#isometricOptions;
+    return options && this.isometric ? this.isometric.isometricLift(options) : null;
+  });
+
+  /**
+   * `items` in drawing order on an isometric floor: back to front by where `at` places each on the
+   * plot, so nearer ones draw over farther ones.  As given when the chart is flat.
+   */
+  backToFront<T>(items: Iterable<T>, at: (item: T) => [number, number]): T[] {
+    const list = [...items];
+    const m = this.isometricMatrix;
+    if (!m) return list;
+    const depth = new Map(
+      list.map((item) => {
+        const [x, y] = at(item);
+        return [item, m.b * x + m.d * y];
+      })
+    );
+    return list.sort((a, b) => depth.get(a)! - depth.get(b)!);
+  }
+
+  /** Whether anything rises off the floor: a `z` channel, or a `zRange` for marks' own heights */
+  #hasHeight = $derived(this.props.z != null || this.props.zRange != null);
+
+  /** The tallest height in pixels anything rises off the floor: the top of the `z` range */
+  zDepth = $derived.by(() => {
+    if (!this.#hasHeight) return 0;
+    const range = this.zScale.range().filter((v: unknown) => typeof v === 'number') as number[];
+    return range.length ? Math.max(0, ...range) : 0;
+  });
+
+  /** Pan / zoom, then the isometric view; cached, as every layer and pointer lookup reads it */
+  #layerMatrix = $derived.by((): AffineMatrix | null => {
+    const isometric = this.isometricMatrix;
+    const transform = this.transform;
+    if (transform.mode !== 'canvas') return isometric;
+
+    const { scale: k, translate } = transform;
+    const zoom = { a: k, b: 0, c: 0, d: k, e: translate.x, f: translate.y };
+    return isometric ? multiplyMatrix(zoom, isometric) : zoom;
+  });
+
+  /**
+   * The matrix a layer draws through: the `canvas` pan and zoom, the `isometric` view, then the
+   * layer's `center` translate (on the floor, so a radial chart turns with the rest).  `null` when
+   * nothing applies.  Inverted, it maps a pointer back to the scales.
+   */
+  layerMatrix({
+    ignoreTransform = false,
+    center = false,
+  }: { ignoreTransform?: boolean; center?: boolean | 'x' | 'y' } = {}): AffineMatrix | null {
+    const base = ignoreTransform ? null : this.#layerMatrix;
+    const x = center === true || center === 'x' ? this.width / 2 : 0;
+    const y = center === true || center === 'y' ? this.height / 2 : 0;
+    if (!x && !y) return base;
+    const translate = { a: 1, b: 0, c: 0, d: 1, e: x, f: y };
+    return base ? multiplyMatrix(base, translate) : translate;
+  }
 
   extents = $derived.by((): Extents => {
     const scaleLookup: Record<string, ScaleEntry> = {
@@ -1437,7 +1668,24 @@ export class ChartState<
     return this._targetYDomain;
   });
 
-  zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
+  /** Heights measure up from the floor, so a `z` domain from the data includes `0` */
+  zDomain = $derived.by(() => {
+    // Stacked along `z`, the domain reaches the tops of the stacks
+    if (this.props.zDomain === undefined && this.valueAxis === 'z' && this.isStacked) {
+      const stacked = this.seriesState.getStackedValues(chartDataArray(this.data));
+      if (stacked.length > 0) {
+        const [min, max] = extent(stacked) as [number, number];
+        return [Math.min(0, min), Math.max(0, max)];
+      }
+    }
+    const domain = calcDomain('z', this.extents, this.props.zDomain);
+    if (this.props.zDomain !== undefined || !Array.isArray(domain) || domain.length !== 2) {
+      return domain;
+    }
+    const [min, max] = domain;
+    if (typeof min !== 'number' || typeof max !== 'number') return domain;
+    return [Math.min(0, min), Math.max(0, max)];
+  });
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
   /**
@@ -1516,13 +1764,28 @@ export class ChartState<
   });
 
   snappedPadding = $derived($state.snapshot(this.props.xPadding));
+
+  /**
+   * How much an isometric floor is scaled from the plot laid flat — refitted to the view as it
+   * turns, so this changes with it — or `1` when flat.  What a size in pixels on the floor (a scale's
+   * padding, a `Bin`'s cells) is measured against, so it stays the same share of the floor.
+   */
+  floorScale = $derived.by(() => {
+    const floor = this.isometricFloor;
+    if (!floor || !this.box.width || !this.box.height) return 1;
+    return Math.max(floor.width / this.box.width, floor.height / this.box.height);
+  });
+
+  /** `xPadding` / `yPadding` on the floor, measured against it laid flat (see `floorScale`) */
+  #xPadding = $derived(scaleFloorPadding(this.snappedPadding, this.floorScale));
+  #yPadding = $derived(scaleFloorPadding(this.props.yPadding, this.floorScale));
   snappedExtents = $derived($state.snapshot(this.extents));
 
   xScale = $derived(
     createChartScale('x', {
       scale: this._xScaleProp,
       domain: this.xDomain,
-      padding: this.snappedPadding,
+      padding: this.#xPadding,
       nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
@@ -1539,7 +1802,7 @@ export class ChartState<
     createChartScale('y', {
       scale: this._yScaleProp,
       domain: this.yDomain,
-      padding: this.props.yPadding,
+      padding: this.#yPadding,
       nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
@@ -1557,7 +1820,7 @@ export class ChartState<
     createChartScale('x', {
       scale: this._xScaleProp,
       domain: this._baseXDomain,
-      padding: this.snappedPadding,
+      padding: this.#xPadding,
       nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
@@ -1572,7 +1835,7 @@ export class ChartState<
     createChartScale('y', {
       scale: this._yScaleProp,
       domain: this._baseYDomain,
-      padding: this.props.yPadding,
+      padding: this.#yPadding,
       nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
@@ -1599,6 +1862,26 @@ export class ChartState<
   );
 
   zGet = $derived(createGetter(this.z, this.zScale));
+
+  /** Along `valueAxis="z"`, a row's stacked `[start, end]`, or `null` when nothing stacks */
+  #zStack = $derived(
+    this.valueAxis === 'z'
+      ? (this.stackAccessorsFor({ stacksImplicitly: true })?.value ?? null)
+      : null
+  );
+
+  /**
+   * A row's `[base, top]` height off an `isometric` floor, in pixels.  From a mark's own `z` when
+   * given (a number is pixels, and `[start, end]` floats it), else the chart's `z`: the row's
+   * stack along `valueAxis="z"`, or a `[start, end]` value.
+   */
+  heightOf(d: any, z?: DataProp | [number, number]): [number, number] {
+    if (Array.isArray(z)) return z;
+    if (z != null) return [0, resolveDataProp(z, d, this.zScale, 0)];
+    const value = this.#zStack?.(d) ?? this.z(d);
+    const pixels = (v: unknown) => Number(this.zScale(Number(v) || 0)) || 0;
+    return Array.isArray(value) ? [pixels(value[0]), pixels(value[1])] : [0, pixels(value)];
+  }
 
   rScale = $derived(
     createChartScale('r', {
@@ -1789,6 +2072,12 @@ export class ChartState<
   get radial() {
     return this.props.radial ?? false;
   }
+  /** The chart's accessor for its value axis */
+  get #valueProp() {
+    const axis = this.valueAxis;
+    return axis === 'y' ? this.props.y : axis === 'z' ? this.props.z : this.props.x;
+  }
+
   get valueAxis() {
     return (
       this.props.valueAxis ??

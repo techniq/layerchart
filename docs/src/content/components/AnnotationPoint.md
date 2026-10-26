@@ -15,6 +15,12 @@ Pass `link` (or `link={{ type: 'swoop', ... }}` etc.) to draw a `<Link>` from
 the ring edge to the label.
 :example{ name="link-callouts" }
 
+### Custom marker
+
+Pass a `circle` snippet to draw your own marker, and a `label` snippet for your own label. Each receives the resolved `props` to spread.
+
+:example{ name="custom-marker" showCode }
+
 ### Geo
 
 Inside a geo `<Chart>`, `x`/`y` are interpreted as `[lon, lat]` and projected directly.

@@ -11,7 +11,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "basic",
@@ -23,7 +25,9 @@
           "lineNumber": 9,
           "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "brush",
@@ -35,7 +39,9 @@
           "lineNumber": 12,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "brush-pan-zoom",
@@ -47,49 +53,107 @@
           "lineNumber": 12,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
-      "name": "bump-state-population-ranks",
-      "title": "bump state population ranks",
-      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "name": "bump-sports-rankings",
+      "title": "Bump chart (sports rankings)",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 91,
+          "lineNumber": 206,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 102,
+          "lineNumber": 218,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 103,
+          "lineNumber": 219,
           "line": "<LinearGradient"
         },
         {
           "component": "Axis",
-          "lineNumber": 112,
+          "lineNumber": 236,
+          "line": "<Axis"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 258,
+          "line": "<Group"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 263,
+          "line": "<Spline"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 271,
+          "line": "<Circle"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 278,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 291,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ],
+      "createdAt": "2026-10-20T15:00:01.000Z",
+      "updatedAt": "2026-10-26T02:29:21.000Z"
+    },
+    {
+      "name": "bump-state-population-ranks",
+      "title": "Bump chart (state population)",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 95,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 106,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 107,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 116,
           "line": "<Axis placement=\"top\" rule={false} />"
         },
         {
           "component": "Spline",
-          "lineNumber": 123,
+          "lineNumber": 127,
           "line": "<Spline"
         },
         {
           "component": "Rect",
-          "lineNumber": 151,
+          "lineNumber": 155,
           "line": "<rect"
         },
         {
           "component": "Text",
-          "lineNumber": 160,
+          "lineNumber": 164,
           "line": "<text"
         }
-      ]
+      ],
+      "createdAt": "2026-04-02T19:13:52.000Z",
+      "updatedAt": "2026-10-20T15:00:01.000Z"
     },
     {
       "name": "curve",
@@ -101,7 +165,9 @@
           "lineNumber": 10,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "custom",
@@ -138,7 +204,9 @@
           "lineNumber": 27,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "custom-tooltip",
@@ -155,7 +223,9 @@
           "lineNumber": 12,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "default-series-label",
@@ -167,7 +237,9 @@
           "lineNumber": 14,
           "line": "<LineChart {data} x=\"date\" y=\"visits\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "draw",
@@ -179,7 +251,9 @@
           "lineNumber": 18,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "dynamic-data",
@@ -191,7 +265,23 @@
           "lineNumber": 17,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
+    },
+    {
+      "name": "facet-series-data",
+      "title": "facet series data",
+      "path": "/docs/components/LineChart/facet-series-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 18,
+          "line": "<LineChart"
+        }
+      ],
+      "createdAt": "2026-10-23T17:06:05.000Z",
+      "updatedAt": "2026-10-23T17:06:05.000Z"
     },
     {
       "name": "gradient-encoding",
@@ -213,7 +303,9 @@
           "lineNumber": 29,
           "line": "<Spline stroke={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "gradient-threshold",
@@ -245,7 +337,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "labels",
@@ -257,7 +351,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "labels-with-points",
@@ -269,7 +365,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "labels-within-points",
@@ -281,7 +379,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "large-radial-series",
@@ -293,7 +393,9 @@
           "lineNumber": 13,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "large-series",
@@ -305,7 +407,9 @@
           "lineNumber": 13,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "legend",
@@ -317,7 +421,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "line-annotation",
@@ -329,7 +435,9 @@
           "lineNumber": 12,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "long-data",
@@ -341,7 +449,9 @@
           "lineNumber": 16,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-19T14:08:02.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "motion-tween",
@@ -353,7 +463,9 @@
           "lineNumber": 16,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "null-dashed-gaps",
@@ -370,7 +482,9 @@
           "lineNumber": 17,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-25T17:48:30.000Z"
     },
     {
       "name": "null-gaps",
@@ -382,7 +496,9 @@
           "lineNumber": 14,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "oscilloscope-time",
@@ -414,7 +530,9 @@
           "lineNumber": 118,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "override-color",
@@ -426,7 +544,9 @@
           "lineNumber": 14,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "pan-zoom",
@@ -438,7 +558,9 @@
           "lineNumber": 12,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "pan-zoom-custom-constrain",
@@ -450,7 +572,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "pan-zoom-domain-extent",
@@ -462,7 +586,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "pan-zoom-dynamic-data",
@@ -474,7 +600,9 @@
           "lineNumber": 56,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "pan-zoom-with-overview",
@@ -501,7 +629,9 @@
           "lineNumber": 54,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "perf-dimension-arrays",
@@ -513,7 +643,9 @@
           "lineNumber": 55,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-07-01T13:37:08.000Z"
     },
     {
       "name": "perf-dimension-arrays-processed",
@@ -525,7 +657,9 @@
           "lineNumber": 61,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-07-01T13:37:08.000Z"
     },
     {
       "name": "perf-series-arrays",
@@ -537,7 +671,9 @@
           "lineNumber": 54,
           "line": "<LineChart data={data.cpu} x=\"x\" y=\"y\" props={chartProps} brush profile />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-07-01T13:37:08.000Z"
     },
     {
       "name": "perf-streaming",
@@ -549,7 +685,9 @@
           "lineNumber": 131,
           "line": "<LineChart x=\"date\" y=\"value\" data={chartData} brush />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "perf-wide-data",
@@ -561,7 +699,9 @@
           "lineNumber": 54,
           "line": "<LineChart {data} x=\"epoch\" y={(d) => 100 - d.idl} props={chartProps} brush profile />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-07-01T13:37:08.000Z"
     },
     {
       "name": "perf-wide-data-processed",
@@ -573,7 +713,9 @@
           "lineNumber": 61,
           "line": "<LineChart data={chartData} x=\"date\" y=\"cpu\" props={chartProps} brush profile />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-07-01T13:37:08.000Z"
     },
     {
       "name": "persist-brush-zoom",
@@ -600,7 +742,9 @@
           "lineNumber": 86,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-09T04:27:28.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "persist-series",
@@ -612,7 +756,9 @@
           "lineNumber": 44,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-04-09T04:27:28.000Z",
+      "updatedAt": "2026-04-09T04:27:28.000Z"
     },
     {
       "name": "point-annotations",
@@ -629,7 +775,9 @@
           "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "points",
@@ -641,7 +789,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radar",
@@ -653,7 +803,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radar-rounded",
@@ -665,7 +817,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "radar-series",
@@ -677,7 +831,9 @@
           "lineNumber": 40,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "range-annotation",
@@ -689,7 +845,9 @@
           "lineNumber": 12,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-12T21:37:32.000Z"
     },
     {
       "name": "series",
@@ -701,7 +859,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-brush",
@@ -713,7 +873,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-custom-highlight-point",
@@ -725,7 +887,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-individual-tooltip",
@@ -752,7 +916,9 @@
           "lineNumber": 64,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "series-labels-hover",
@@ -769,7 +935,9 @@
           "lineNumber": 34,
           "line": "<Labels seriesKey={context.series.highlightKey} offset={10} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "series-point-annotations",
@@ -781,7 +949,9 @@
           "lineNumber": 38,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-point-click",
@@ -793,7 +963,9 @@
           "lineNumber": 15,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-programmatic-control",
@@ -805,7 +977,9 @@
           "lineNumber": 44,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "series-separate-data",
@@ -817,7 +991,9 @@
           "lineNumber": 20,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-separate-data-diff-length",
@@ -829,7 +1005,9 @@
           "lineNumber": 20,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-vertical",
@@ -841,7 +1019,9 @@
           "lineNumber": 16,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "series-with-nulls",
@@ -858,7 +1038,9 @@
           "lineNumber": 37,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "single-axis-x",
@@ -870,7 +1052,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "single-axis-y",
@@ -882,7 +1066,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "smart-labels-with-points",
@@ -894,7 +1080,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T14:27:49.000Z",
+      "updatedAt": "2026-04-01T14:27:49.000Z"
     },
     {
       "name": "sparkline",
@@ -906,7 +1094,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sparkline-fixed-position-tooltip",
@@ -923,7 +1113,9 @@
           "lineNumber": 24,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sparkline-within-a-paragraph",
@@ -935,7 +1127,9 @@
           "lineNumber": 12,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sparkline-within-a-paragraph-with-tooltip-and-highlight",
@@ -952,7 +1146,9 @@
           "lineNumber": 29,
           "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "sparkline-zero-axis",
@@ -964,7 +1160,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "svelte-milestones",
@@ -986,7 +1184,9 @@
           "lineNumber": 100,
           "line": "<AnnotationPoint"
         }
-      ]
+      ],
+      "createdAt": "2026-04-23T03:41:53.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     },
     {
       "name": "threshold",
@@ -1018,7 +1218,9 @@
           "lineNumber": 55,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tooltip-click",
@@ -1030,7 +1232,9 @@
           "lineNumber": 9,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "vertical",
@@ -1042,10 +1246,26 @@
           "lineNumber": 10,
           "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "custom-label",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-label",
+      "lineNumber": 12,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+    },
+    {
+      "example": "custom-line",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-line",
+      "lineNumber": 12,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+    },
     {
       "example": "horizontal",
       "component": "AnnotationLine",
@@ -1103,6 +1323,13 @@
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
+      "example": "custom-marker",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/custom-marker",
+      "lineNumber": 20,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+    },
+    {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
@@ -1141,6 +1368,13 @@
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/series-annotation",
+      "lineNumber": 12,
+      "line": "<LineChart"
+    },
+    {
+      "example": "custom-label",
+      "component": "AnnotationRange",
+      "path": "/docs/components/AnnotationRange/custom-label",
       "lineNumber": 12,
       "line": "<LineChart"
     },
@@ -1285,6 +1519,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 23,
+      "line": "<LineChart"
+    },
+    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1352,6 +1593,13 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/dynamic-data",
       "lineNumber": 17,
+      "line": "<LineChart"
+    },
+    {
+      "example": "facet-series-data",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/facet-series-data",
+      "lineNumber": 18,
       "line": "<LineChart"
     },
     {
@@ -1810,5 +2058,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.682Z"
+  "updatedAt": "2026-10-26T02:35:36.523Z"
 }

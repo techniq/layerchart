@@ -1,5 +1,12 @@
 <script lang="ts" module>
   export type { ImageProps, ImagePropsWithoutHTML } from './Image.shared.svelte.js';
+
+  /**
+   * Images loaded for canvas, by `crossOrigin` and URL — shared by every canvas `Image`, so one
+   * mounted again, or handed a URL another has loaded, draws it at once rather than blanking while
+   * it loads again
+   */
+  const imageCache = new Map<string, HTMLImageElement>();
 </script>
 
 <script lang="ts">
@@ -9,23 +16,33 @@
 
   const c = new ImageState(() => rest as ImageProps);
 
-  // --- Canvas image cache ---
-  const imageCache = new Map<string, HTMLImageElement>();
+  // Redraws once an image this one is waiting on has loaded
   let loadedImageCount = $state(0);
+  const waiting = new Set<HTMLImageElement>();
 
   function getOrLoadImage(src: string): HTMLImageElement | null {
-    const cached = imageCache.get(src);
-    if (cached?.complete) return cached;
-    if (cached) return null; // Still loading
-
-    const img = new window.Image();
-    if (rest.crossOrigin) img.crossOrigin = rest.crossOrigin;
-    img.src = src;
-    img.onload = () => {
-      loadedImageCount++;
-    };
-    imageCache.set(src, img);
-    return img.complete ? img : null;
+    const key = `${rest.crossOrigin ?? ''} ${src}`;
+    let img = imageCache.get(key);
+    if (!img) {
+      img = new window.Image();
+      if (rest.crossOrigin) img.crossOrigin = rest.crossOrigin;
+      img.src = src;
+      imageCache.set(key, img);
+    }
+    if (img.complete) return img;
+    // Still loading, maybe for another `Image`
+    if (!waiting.has(img)) {
+      waiting.add(img);
+      img.addEventListener(
+        'load',
+        () => {
+          waiting.delete(img);
+          loadedImageCount++;
+        },
+        { once: true }
+      );
+    }
+    return null;
   }
 
   function canvasRender(ctx: CanvasRenderingContext2D) {

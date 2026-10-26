@@ -1,6 +1,6 @@
 import { extractTocFromMarkdown } from '@layerstack/docs/markdown';
 
-export const load = async () => {
+export const load = async ({ data }) => {
 	const page = await import('./+page.md?raw');
 	const toc = extractTocFromMarkdown(page.default);
 
@@ -8,6 +8,7 @@ export const load = async () => {
 		metadata: {
 			title: 'Getting Started'
 			//toc
-		}
+		},
+		layers: data.layers
 	};
 };

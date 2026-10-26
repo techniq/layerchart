@@ -21,6 +21,11 @@ export type ComponentRender<T extends Element = Element> = {
    * Optional dependencies to track and invalidate the canvas context when they change.
    */
   deps?: () => any[];
+  /**
+   * How far back the mark stands on an isometric floor, for a parent registered with
+   * `paintByDepth` to paint its children back to front whatever order they mounted in
+   */
+  depth?: () => number | undefined;
 };
 
 export type CanvasContextValue = {

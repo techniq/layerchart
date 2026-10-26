@@ -36,7 +36,9 @@
           "lineNumber": 14,
           "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "data-mode",
@@ -73,7 +75,38 @@
           "lineNumber": 27,
           "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-8} class=\"text-xs fill-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
+    },
+    {
+      "name": "series-state",
+      "title": "series state",
+      "path": "/docs/components/Group/series-state",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 23,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 33,
+          "line": "<Group seriesKey={s.key} data={[lastPoint]} x=\"date\" y={s.key}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 34,
+          "line": "<Circle r={4} fill={s.color} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 35,
+          "line": "<Text value={s.key} dx={8} dy={4} class=\"text-xs fill-surface-content\" />"
+        }
+      ],
+      "createdAt": "2026-09-09T14:47:19.000Z",
+      "updatedAt": "2026-09-09T14:47:19.000Z"
     }
   ],
   "usage": [
@@ -230,6 +263,27 @@
       "path": "/docs/components/Group/data-mode",
       "lineNumber": 25,
       "line": "<Group x=\"date\" y=\"value\">"
+    },
+    {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 33,
+      "line": "<Group seriesKey={s.key} data={[lastPoint]} x=\"date\" y={s.key}>"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 166,
+      "line": "<Group"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 258,
+      "line": "<Group"
     },
     {
       "example": "basic",
@@ -442,5 +496,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.773Z"
+  "updatedAt": "2026-10-26T02:35:36.342Z"
 }

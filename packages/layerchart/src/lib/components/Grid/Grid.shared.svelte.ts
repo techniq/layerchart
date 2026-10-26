@@ -37,6 +37,12 @@ export type GridPropsWithoutHTML<In extends Transition = Transition> = {
   y?: boolean | GridLineProps;
 
   /**
+   * On an `isometric` chart with a `z`, gridlines on the back walls at each `z` tick, and up them at
+   * the `x` / `y` ticks when those are on.
+   */
+  z?: boolean | GridLineProps;
+
+  /**
    * Control the number of x-axis ticks
    */
   xTicks?: TicksConfig;
@@ -47,6 +53,9 @@ export type GridPropsWithoutHTML<In extends Transition = Transition> = {
    * @default !isScaleBand(ctx.yScale) ? 4 : undefined
    */
   yTicks?: TicksConfig;
+
+  /** Control the number of `z` gridlines.  @default 4 */
+  zTicks?: TicksConfig;
 
   /**
    * Line alignment when band scale is used (x or y axis)
@@ -137,6 +146,7 @@ export class GridState {
 
   xTickVals = $derived(autoTickVals(this.ctx.xScale, this.#props.xTicks));
   yTickVals = $derived(autoTickVals(this.ctx.yScale, this.yTicks));
+  zTickVals = $derived(autoTickVals(this.ctx.zScale, this.#props.zTicks ?? 4));
 
   xBandOffset = $derived.by(() => {
     const bandAlign = this.#props.bandAlign ?? 'center';

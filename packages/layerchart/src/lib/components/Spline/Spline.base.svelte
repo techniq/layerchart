@@ -17,7 +17,9 @@
     data,
     x,
     y,
+    // Each point's height, not `Path`'s, which would raise the whole line
     z,
+    g,
     seriesKey,
     defined,
     curve,
@@ -45,6 +47,7 @@
         x,
         y,
         z,
+        g,
         seriesKey,
         defined,
         curve,

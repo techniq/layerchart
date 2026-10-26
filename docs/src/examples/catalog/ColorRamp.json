@@ -16,7 +16,9 @@
           "lineNumber": 24,
           "line": "<ColorRamp {interpolator} {width} {height} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "pixelated",
@@ -33,7 +35,9 @@
           "lineNumber": 28,
           "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "schemes",
@@ -50,7 +54,9 @@
           "lineNumber": 21,
           "line": "<ColorRamp"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [

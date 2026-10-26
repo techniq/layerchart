@@ -56,11 +56,12 @@
     props = {},
     profile = false,
     tooltipContext = true,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
     pie,
     arc,
     labels = false,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: PieChartBaseProps<TData> = $props();
@@ -176,6 +177,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   data={visibleData}
   x={value}
@@ -227,8 +229,8 @@
   }}
 >
   {#snippet marks(snippetProps: any)}
-    {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp(snippetProps)}
     {:else}
       <Group {...getGroupProps()}>
         <!-- Use `series` instead of `visibleSeries` since data is filtered (legend) instead of series -->

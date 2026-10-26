@@ -68,3 +68,46 @@ export type VoronoiPropsWithoutHTML = {
 
 export type VoronoiProps = VoronoiPropsWithoutHTML &
   Without<Omit<GroupProps, 'children'>, VoronoiPropsWithoutHTML>;
+
+/**
+ * `polygon` (convex, as a Voronoi cell is) cut to within `r` of `center`, the circle drawn as a
+ * 48-gon.  For cells measured on screen, where a `CircleClipPath` on the floor would be an ellipse.
+ */
+export function clipToCircle(
+  polygon: [number, number][],
+  center: [number, number],
+  r: number
+): [number, number][] {
+  const steps = 48;
+  const circle = Array.from({ length: steps }, (_, i): [number, number] => {
+    const a = (i / steps) * 2 * Math.PI;
+    return [center[0] + r * Math.cos(a), center[1] + r * Math.sin(a)];
+  });
+  // Sutherland–Hodgman: keep the part of `polygon` inside each edge of the circle in turn
+  let output = polygon;
+  for (let i = 0; i < steps && output.length; i++) {
+    const [ax, ay] = circle[i];
+    const [bx, by] = circle[(i + 1) % steps];
+    const inside = ([x, y]: [number, number]) => (bx - ax) * (y - ay) - (by - ay) * (x - ax) >= 0;
+    const cross = (p: [number, number], q: [number, number]): [number, number] => {
+      const [x1, y1] = p;
+      const [x2, y2] = q;
+      const d = (x1 - x2) * (ay - by) - (y1 - y2) * (ax - bx);
+      const t = ((x1 - ax) * (ay - by) - (y1 - ay) * (ax - bx)) / d;
+      return [x1 + t * (x2 - x1), y1 + t * (y2 - y1)];
+    };
+    const input = output;
+    output = [];
+    for (let j = 0; j < input.length; j++) {
+      const current = input[j];
+      const previous = input[(j + input.length - 1) % input.length];
+      if (inside(current)) {
+        if (!inside(previous)) output.push(cross(previous, current));
+        output.push(current);
+      } else if (inside(previous)) {
+        output.push(cross(previous, current));
+      }
+    }
+  }
+  return output;
+}

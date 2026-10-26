@@ -11,7 +11,7 @@
   import Pie from '../../Pie/Pie.svelte';
   import type { PieChartProps } from './PieChart.shared.svelte.js';
 
-  let { context = $bindable(), ...props }: PieChartProps<TData> = $props();
+  let { ref = $bindable(), context = $bindable(), ...props }: PieChartProps<TData> = $props();
 </script>
 
-<PieChartBase {Chart} {Arc} {ArcLabel} {Group} {Pie} bind:context {...props} />
+<PieChartBase {Chart} {Arc} {ArcLabel} {Group} {Pie} bind:ref bind:context {...props} />

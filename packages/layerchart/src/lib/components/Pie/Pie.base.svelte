@@ -26,6 +26,7 @@
     offset = 0,
     tooltip,
     sort,
+    z,
     children,
   }: PieBaseProps = $props();
 
@@ -51,6 +52,7 @@
 {#if children}
   {@render children({ arcs: c.arcs })}
 {:else}
+  <!-- Unkeyed, as canvas draws in mount order -->
   {#each c.arcs as arc}
     <Arc
       class="lc-pie-arc"
@@ -61,6 +63,7 @@
       {outerRadius}
       {cornerRadius}
       {offset}
+      {z}
       fill={c.ctx.config.c ? c.ctx.cScale?.(c.ctx.c(arc.data)) : null}
       data={arc.data}
       {tooltip}

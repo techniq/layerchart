@@ -12,6 +12,8 @@
 export { default as Html, default as Layer } from './components/layers/Html.svelte';
 export type { HTMLProps } from './components/layers/Html.svelte';
 export { default as Chart } from './components/Chart/Chart.html.svelte';
+// `view={isometric}`, drawing height in html layers only
+export { isometric } from './views/isometric.html.js';
 export { default as ChartCore } from './components/Chart/ChartCore.svelte';
 export type {
   ChartProps,

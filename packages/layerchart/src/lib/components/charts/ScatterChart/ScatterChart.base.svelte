@@ -35,8 +35,9 @@
     profile = false,
     tooltipContext = true,
     keyboard = true,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: ScatterChartBaseProps<TData> = $props();
@@ -53,6 +54,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   x={xProp}
@@ -88,8 +90,8 @@
   {props}
 >
   {#snippet marks({ context, facet }: { context: any; facet: any })}
-    {#if typeof marks === 'function'}
-      {@render marks({ context, facet })}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp({ context, facet })}
     {:else}
       {#each context.series.visibleSeries as s, i (s.key)}
         <Points seriesKey={s.key} {...props.points} />

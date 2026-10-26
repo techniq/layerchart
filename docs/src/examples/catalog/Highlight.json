@@ -342,29 +342,29 @@
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Highlight lines points />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Highlight points={{ class: 'fill-secondary' }} y={(d) => context.y1Scale?.(d.efficiency)} />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 34,
+      "lineNumber": 36,
       "line": "<Highlight lines points />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 56,
-      "line": "<Highlight lines />"
+      "lineNumber": 57,
+      "line": "<Highlight points={{ class: 'fill-secondary' }} />"
     },
     {
       "example": "facet-tooltip",
@@ -372,6 +372,27 @@
       "path": "/docs/components/Chart/facet-tooltip",
       "lineNumber": 31,
       "line": "<Highlight lines points axis=\"both\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 66,
+      "line": "<Highlight data={hovered} lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 71,
+      "line": "<Highlight"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 57,
+      "line": "<Highlight points={{ r: 5 }} />"
     },
     {
       "example": "mixed-marks-with-stack",
@@ -682,5 +703,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.408Z"
+  "updatedAt": "2026-10-16T16:15:13.997Z"
 }

@@ -14,6 +14,8 @@
 export { default as Svg, default as Layer } from './components/layers/Svg.svelte';
 export type { SVGProps } from './components/layers/Svg.svelte';
 export { default as Chart } from './components/Chart/Chart.svg.svelte';
+// `view={isometric}`, drawing height in svg layers only
+export { isometric } from './views/isometric.svg.js';
 export { default as ChartCore } from './components/Chart/ChartCore.svelte';
 export type {
   ChartProps,
@@ -159,6 +161,13 @@ export type {
 } from './components/AnnotationRange/AnnotationRange.shared.svelte.js';
 export { default as Hull } from './components/Hull/Hull.svg.svelte';
 export type { HullProps, HullPropsWithoutHTML } from './components/Hull/Hull.shared.svelte.js';
+export { default as Bin } from './components/Bin/Bin.svg.svelte';
+export type {
+  BinCell,
+  BinProps,
+  BinPropsWithoutHTML,
+  BinShape,
+} from './components/Bin/Bin.shared.svelte.js';
 export { default as Density } from './components/Density/Density.svg.svelte';
 export type {
   DensityProps,
@@ -205,6 +214,11 @@ export type {
 } from './components/BoxPlot/BoxPlot.shared.svelte.js';
 
 // Geo components
+export { default as GeoBin } from './components/geo/GeoBin/GeoBin.svg.svelte';
+export type {
+  GeoBinProps,
+  GeoBinPropsWithoutHTML,
+} from './components/geo/GeoBin/GeoBin.shared.svelte.js';
 export { default as GeoPath } from './components/geo/GeoPath/GeoPath.svg.svelte';
 export type {
   GeoPathProps,

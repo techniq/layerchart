@@ -1,4 +1,5 @@
 import { prerender, getRequestEvent } from '$app/server';
+import { z } from 'zod';
 
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import { geoCentroid } from 'd3-geo';
@@ -7,6 +8,8 @@ import { parse } from '@layerstack/utils';
 
 import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
 import type { WorldLinksData } from '$static/data/examples/geo/world-links.js';
+import type { Admin0Topology, Admin1Topology } from '$static/data/examples/geo/admin.js';
+import admin1Countries from '$static/data/examples/geo/admin1/countries.json';
 
 export const getUsStatesTopology = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -14,6 +17,7 @@ export const getUsStatesTopology = prerender(async () => {
 		r.json()
 	)) as Topology<{
 		states: GeometryCollection<{ name: string }>;
+		nation: GeometryCollection;
 	}>;
 	return data;
 });
@@ -60,6 +64,50 @@ export const getCountriesDetailTopology = prerender(async () => {
 		land: GeometryCollection;
 	}>;
 	return geojson;
+});
+
+/**
+ * Points about 0.5° apart over the whole sphere (closer in longitude toward the poles, to stay even)
+ * that fall on land — for binning into cells that fill wherever there is land.  Tested once against
+ * world-atlas' 110m `land` with `geoContains` (each landmass' `geoBounds` first), as it takes a while.
+ */
+export const getWorldLandPoints = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-land-points.json').then((r) => r.json())) as [
+		longitude: number,
+		latitude: number
+	][];
+	return data;
+});
+
+/**
+ * People in each 15′ (0.25°) cell of the contiguous US in 2020, as `[longitude, latitude, count]` at
+ * the cell's center — cells inside a state with anyone in them.
+ *
+ * From CIESIN's Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11
+ * (NASA SEDAC, 2018, https://doi.org/10.7927/H4JW8BX5), CC BY 4.0.
+ */
+export const getUsPopulationGrid = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-population-grid.json').then((r) =>
+		r.json()
+	)) as [longitude: number, latitude: number, count: number][];
+	return data;
+});
+
+/**
+ * People in each 1° cell of the world in 2020, as `[longitude, latitude, count]` at the cell's
+ * center — GPWv4's 15′ counts summed, cells with anyone in them.
+ *
+ * From CIESIN's Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11
+ * (NASA SEDAC, 2018, https://doi.org/10.7927/H4JW8BX5), CC BY 4.0.
+ */
+export const getWorldPopulationGrid = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-population-grid.json').then((r) =>
+		r.json()
+	)) as [longitude: number, latitude: number, count: number][];
+	return data;
 });
 
 export const getEclipses = prerender(async () => {
@@ -266,3 +314,31 @@ export const getWorldLinks = prerender(async () => {
 	)) as WorldLinksData;
 	return data;
 });
+
+/**
+ * Every country, merged from Natural Earth's 10m admin-1 states and provinces (public domain) by
+ * `scripts/natural-earth-admin.mjs`, so its borders line up with `getAdmin1Topology`'s.
+ */
+export const getAdmin0Topology = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/admin0.json').then((r) =>
+		r.json()
+	)) as Admin0Topology;
+	return data;
+});
+
+/**
+ * One country's admin-1 states and provinces (by its `adm0_a3`, e.g. "ITA"), with its `regions`
+ * where Natural Earth's admin-1 is the second level down.
+ */
+export const getAdmin1Topology = prerender(
+	z.string(),
+	async (country) => {
+		const { fetch } = getRequestEvent();
+		const data = (await fetch(`/data/examples/geo/admin1/${country}.json`).then((r) =>
+			r.json()
+		)) as Admin1Topology;
+		return data;
+	},
+	{ inputs: () => admin1Countries }
+);

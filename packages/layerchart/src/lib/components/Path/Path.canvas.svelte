@@ -5,9 +5,13 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import {
+    renderExtrudedShades,
+    renderPathData,
+    type ComputedStylesOptions,
+  } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { PathState, type PathProps } from './Path.shared.svelte.js';
+  import { PathExtrusion, PathState, type PathProps } from './Path.shared.svelte.js';
 
   let { pathData, ...rest }: PathProps = $props();
 
@@ -15,11 +19,46 @@
     () => pathData,
     () => rest as PathProps
   );
+  const extrusion = new PathExtrusion(
+    () => c.tweenedPathData ?? '',
+    () => rest,
+    rest.motion
+  );
 
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
+    const raised = extrusion.raised;
+    if (raised) {
+      // Extruded: the sides facing the viewer, then the shape on top
+      if (raised.sides) {
+        renderPathData(
+          ctx,
+          raised.sides,
+          styleOverrides ?? {
+            // The shape's colour, but not its outline (see the svg layer)
+            styles: {
+              fill: rest.fill,
+              fillOpacity: rest.fillOpacity,
+              opacity: rest.opacity,
+              stroke: 'none',
+            },
+            classes: cls('lc-path-side', rest.class as string | undefined),
+          }
+        );
+      }
+      // Not on the hit canvas, which needs the flat hit colour
+      if (!styleOverrides) {
+        renderExtrudedShades(
+          ctx,
+          raised.shades,
+          typeof rest.opacity === 'number' ? rest.opacity : 1
+        );
+      }
+      ctx.save();
+      ctx.translate(raised.shift.x, raised.shift.y);
+    }
     renderPathData(
       ctx,
       c.tweenedPathData ?? '',
@@ -38,6 +77,7 @@
             style: (rest as any).style as string | undefined,
           }
     );
+    if (raised) ctx.restore();
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue
@@ -84,6 +124,7 @@
         rest.opacity,
         rest.class,
         c.tweenedPathData,
+        extrusion.raised,
         (rest as any).style,
       ],
     },

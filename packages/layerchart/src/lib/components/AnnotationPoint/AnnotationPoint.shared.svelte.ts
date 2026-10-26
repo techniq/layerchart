@@ -1,10 +1,12 @@
-import type { ComponentProps } from 'svelte';
+import type { ComponentProps, Snippet } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
 import type Circle from '../Circle/Circle.svelte';
+import type { CircleProps } from '../Circle/Circle.shared.svelte.js';
 import type Link from '../Link/Link.svelte';
 import type Text from '../Text/Text.svelte';
+import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type { Placement } from '../types.js';
 
 export type AnnotationPointPropsWithoutHTML = {
@@ -12,6 +14,10 @@ export type AnnotationPointPropsWithoutHTML = {
   x?: SingleDomainType;
   /** y value of the point */
   y?: SingleDomainType;
+  /**
+   * On an `isometric` chart, z value of the point: raises it, its label, and its link by `zScale`
+   */
+  z?: number;
   /**
    * The series this annotation belongs to.
    *
@@ -21,8 +27,13 @@ export type AnnotationPointPropsWithoutHTML = {
   seriesKey?: string;
   /** Radius of the circle */
   r?: number;
-  /** Label to display on circle */
-  label?: string;
+  /**
+   * Label to display on circle.
+   *
+   * Can either be a string or a snippet to render custom content.
+   * The snippet receives spreadable props (position, anchors and `props.label`) to apply to the label.
+   */
+  label?: string | Snippet<[{ props: TextProps }]>;
   /**
    * Where to place the label relative to the point. `'smart'` derives the
    * placement (text anchor + link direction) from the geometry between the
@@ -61,6 +72,11 @@ export type AnnotationPointPropsWithoutHTML = {
    * (e.g. `{ type: 'beveled', radius: 20 }`).
    */
   link?: boolean | Partial<ComponentProps<typeof Link>>;
+  /**
+   * A snippet to render your own marker in place of the default `<Circle>`.
+   * The snippet receives spreadable props (`cx`/`cy`/`r`, tooltip handlers and `props.circle`).
+   */
+  circle?: Snippet<[{ props: CircleProps }]>;
   /** Details (description, etc) useful to display in tooltip */
   details?: any;
   /** Classes for inner elements */

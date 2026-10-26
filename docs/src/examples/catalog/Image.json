@@ -36,7 +36,54 @@
           "lineNumber": 95,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
+    },
+    {
+      "name": "college-football-upsets",
+      "title": "College football upsets",
+      "path": "/docs/components/Image/college-football-upsets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 144,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 157,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 158,
+          "line": "<Axis placement=\"top\" rule={false} />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 166,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 170,
+          "line": "<Rect"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 179,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 198,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ],
+      "description": "Every game involving a ranked team, placed at the team",
+      "createdAt": "2026-10-20T15:00:01.000Z",
+      "updatedAt": "2026-10-20T15:00:01.000Z"
     },
     {
       "name": "country-flags",
@@ -63,7 +110,9 @@
           "lineNumber": 29,
           "line": "<Image"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "pixel-mode",
@@ -85,7 +134,9 @@
           "lineNumber": 7,
           "line": "<Image"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "planets",
@@ -112,7 +163,9 @@
           "lineNumber": 66,
           "line": "<Image"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "sports-logos",
@@ -139,7 +192,9 @@
           "lineNumber": 80,
           "line": "<Image"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-presidents",
@@ -166,7 +221,9 @@
           "lineNumber": 23,
           "line": "<Image"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-05-05T17:25:23.000Z"
     }
   ],
   "usage": [
@@ -185,6 +242,20 @@
       "line": "<Image"
     },
     {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 57,
+      "line": "<Image href={tile(cell)} x={cell.x} y={cell.y} width={size} height={(size * 140) / 120} />"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 74,
+      "line": "<Image"
+    },
+    {
       "example": "image-beeswarm",
       "component": "Dodge",
       "path": "/docs/components/Dodge/image-beeswarm",
@@ -196,6 +267,20 @@
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
       "lineNumber": 85,
+      "line": "<Image"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 179,
+      "line": "<Image"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 186,
       "line": "<Image"
     },
     {
@@ -234,6 +319,13 @@
       "line": "<Image"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 278,
+      "line": "<Image"
+    },
+    {
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-svg-image",
@@ -255,5 +347,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-05-05T17:36:01.813Z"
+  "updatedAt": "2026-10-26T02:35:36.418Z"
 }

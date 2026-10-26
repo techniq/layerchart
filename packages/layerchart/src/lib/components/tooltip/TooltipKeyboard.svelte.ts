@@ -168,13 +168,31 @@ export class TooltipKeyboard {
     } else {
       value = accessor(series.value ?? series.key)(data);
     }
-    if (value == null || Array.isArray(value)) return coords;
+    // A height (`z`) is already where `dataCoords` raises the row to
+    if (value == null || Array.isArray(value) || ctx.valueAxis === 'z') return coords;
 
-    const panel = ctx.facet.enabled ? ctx.facet.panels.find((p) => p.has(data)) : undefined;
-    if (ctx.valueAxis === 'y') {
-      return { x: coords.x, y: ctx.yScale(value) + ctx.padding.top + (panel?.y ?? 0) };
-    }
-    return { x: ctx.xScale(value) + ctx.padding.left + (panel?.x ?? 0), y: coords.y };
+    // The row placed as `dataCoords` places any row — panel, `isometric` lift, pan / zoom — with
+    // its value read as the focused series'
+    const valueAxis = ctx.valueAxis;
+    return dataCoords(
+      {
+        xScale: ctx.xScale,
+        yScale: ctx.yScale,
+        xInterval: ctx.xInterval,
+        yInterval: ctx.yInterval,
+        padding: ctx.padding,
+        facet: ctx.facet,
+        config: ctx.config,
+        isometricLift: ctx.isometricLift,
+        layerMatrix: () => ctx.layerMatrix(),
+        heightOf: (d) => ctx.heightOf(d),
+        x: valueAxis === 'x' ? () => value : ctx.x,
+        y: valueAxis === 'y' ? () => value : ctx.y,
+        xGet: valueAxis === 'x' ? () => ctx.xScale(value) : ctx.xGet,
+        yGet: valueAxis === 'y' ? () => ctx.yScale(value) : ctx.yGet,
+      },
+      data
+    );
   }
 
   /** Read a point the way the tooltip shows it, ex. `Apples, Jan 5, 10. 5 of 30` */
@@ -198,11 +216,11 @@ export class TooltipKeyboard {
         `${axisLabel('y')} ${formatValue(ctx.y(data))}`
       );
     } else {
-      parts.push(formatValue(ctx.valueAxis === 'y' ? ctx.x(data) : ctx.y(data)));
+      parts.push(formatValue(ctx.valueAxis === 'x' ? ctx.y(data) : ctx.x(data)));
 
       if (seriesKey != null) {
         // A `c` category isn't one of the tooltip's series, so its value is read off the row
-        const value = series?.value ?? (ctx.valueAxis === 'y' ? ctx.y(data) : ctx.x(data));
+        const value = series?.value ?? ctx[ctx.valueAxis](data);
         parts.unshift(seriesLabel);
         parts.push(formatValue(value));
       } else {

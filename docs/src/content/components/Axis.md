@@ -137,6 +137,16 @@ Since band padding is not available when not using a band scale, you can leverag
 
 :example{ name="barchart-xinterval-xinset" }
 
+### secondary axes
+
+`domain` ticks a different domain across the chart's own scale, keeping its range and type, so a second axis can label the same space in other units. See [multiple scales](/docs/guides/multiple-scales) for plotting a second measure against it.
+
+```svelte
+<Axis placement="right" domain={[32, 212]} label="Fahrenheit" />
+```
+
+:example{ name="multiple-axis-same-placement-right" }
+
 <!-- ## Examples
 
 ### Placement (bottom / left)

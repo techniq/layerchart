@@ -16,6 +16,8 @@ import { cubicIn } from 'svelte/easing';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { markLift, raiseItems } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 
@@ -41,6 +43,15 @@ export type GroupPropsWithoutHTML<In extends Transition = Transition> = {
 
   /** Initial translate y (pixel mode only). @default y */
   initialY?: number;
+
+  /**
+   * Height to raise the group, and all it holds, off an `isometric` floor.  Unlike a mark's, not
+   * the chart's `z` unless given.
+   * - `number`: pixel height
+   * - `string`: data property name, resolved via zScale (data mode)
+   * - `function(d)`: accessor called per data item, result passed through zScale (data mode)
+   */
+  z?: DataProp;
 
   /**
    * Data array to iterate over in data mode.
@@ -117,17 +128,23 @@ export class GroupState {
 
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
 
   // Data mode detection
   dataMode = $derived(hasAnyDataProp(this.#props.x, this.#props.y));
 
   #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
+  /** The chart's `isometricLift` when the group is raised by its own `z`, else `null` */
+  #lift = $derived(
+    markLift(this.chartCtx, this.#layerIsometric, this.#props.z, this.dataMode, false)
+  );
+
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
     const props = this.#props;
     const keyFn = props.key ?? defaultKey;
-    return this.#resolvedData.map((d, i) => {
+    const items = this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
       const resolved = this.#resolveGroup(d);
       const animated = this.#dataMotionMap?.get(key);
@@ -138,6 +155,17 @@ export class GroupState {
         y: animated?.y ?? resolved.y,
       };
     });
+
+    const m = this.#layerIsometric();
+    const lift = this.#lift;
+    if (!m || !lift) return items;
+    return raiseItems(
+      items,
+      ['x', 'y'],
+      m,
+      lift,
+      (item) => this.chartCtx.heightOf(item.d, props.z)[1]
+    );
   });
 
   #resolveGroup(d: any): { x: number; y: number } {
@@ -216,17 +244,24 @@ export class GroupState {
   #motionX!: ReturnType<typeof createMotion<number | undefined>>;
   #motionY!: ReturnType<typeof createMotion<number | undefined>>;
 
+  /** Pixel mode: `position` raised by `z` on an `isometric` floor */
+  #raise(position: number | undefined, axis: 'x' | 'y') {
+    const z = this.#props.z;
+    if (!this.#lift || typeof z !== 'number') return position;
+    return (position ?? 0) + this.#lift[axis] * z;
+  }
+
   get motionX() {
-    return this.#motionX.current;
+    return this.#raise(this.#motionX.current, 'x');
   }
   get motionY() {
-    return this.#motionY.current;
+    return this.#raise(this.#motionY.current, 'y');
   }
 
   // Transform string for SVG/HTML pixel mode
   transform = $derived.by(() => {
     const props = this.#props;
-    if (props.center || props.x != null || props.y != null) {
+    if (props.center || props.x != null || props.y != null || this.#lift) {
       return `translate(${this.motionX}px, ${this.motionY}px)`;
     }
     return undefined;

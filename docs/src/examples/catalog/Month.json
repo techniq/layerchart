@@ -26,7 +26,9 @@
           "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T17:24:28.000Z",
+      "updatedAt": "2026-04-01T17:24:28.000Z"
     },
     {
       "name": "basic",
@@ -53,7 +55,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T17:24:28.000Z",
+      "updatedAt": "2026-04-01T17:24:28.000Z"
     },
     {
       "name": "custom-cell-size",
@@ -80,7 +84,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T17:24:28.000Z",
+      "updatedAt": "2026-04-01T17:24:28.000Z"
     },
     {
       "name": "multiple-years",
@@ -107,7 +113,9 @@
           "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T17:24:28.000Z",
+      "updatedAt": "2026-04-01T17:24:28.000Z"
     },
     {
       "name": "without-day-numbers",
@@ -134,7 +142,9 @@
           "lineNumber": 42,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T17:24:28.000Z",
+      "updatedAt": "2026-04-01T17:24:28.000Z"
     },
     {
       "name": "without-month-labels",
@@ -161,7 +171,9 @@
           "lineNumber": 42,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-01T17:24:28.000Z",
+      "updatedAt": "2026-04-01T17:24:28.000Z"
     }
   ],
   "usage": [

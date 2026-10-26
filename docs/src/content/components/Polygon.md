@@ -30,3 +30,7 @@ Use `fill` or `stroke` with a data property name to color each item through the 
 Use a threshold scale to color items based on value ranges.
 
 :example{ name="color-via-threshold-scale" showCode }
+
+## Isometric
+
+On an [isometric](/docs/guides/isometric) chart, `z` stands a polygon up into a prism. See the [isometric tree](/docs/components/Tree#isometric).

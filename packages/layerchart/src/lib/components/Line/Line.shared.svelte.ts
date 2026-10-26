@@ -7,6 +7,7 @@ import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/
 import { parseDashArray } from '$lib/utils/path.js';
 import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -62,6 +63,17 @@ export type LinePropsWithoutHTML = {
    * @default y2
    */
   y2: DataProp;
+
+  /**
+   * On an `isometric` chart, the height of the line's start: a data property or accessor (through
+   * zScale), or pixels.
+   *
+   * @default 0
+   */
+  z1?: DataProp;
+
+  /** The height of the line's end on an `isometric` chart (see `z1`).  @default 0 */
+  z2?: DataProp;
 
   /** The initial y-coordinate of the line's ending point (pixel mode only). @default y2 */
   initialY2?: number;
@@ -170,7 +182,37 @@ export class LineState {
     });
   });
 
+  #layerIsometric = getLayerIsometric();
+
+  /** Where raising an end one pixel moves it on the flat plot, when either end has a height */
+  #lift = $derived.by(() => {
+    if (this.#props.z1 == null && this.#props.z2 == null) return null;
+    if (!this.#layerIsometric()) return null;
+    return this.chartCtx.isometricLift;
+  });
+
+  /** An end's height off the floor, in pixels */
+  #height(z: DataProp | undefined, d?: any) {
+    if (z == null) return 0;
+    if (!this.dataMode) return typeof z === 'number' ? z : 0;
+    return resolveDataProp(z, d, this.chartCtx.zScale, 0);
+  }
+
   #resolveLine(d: any): { x1: number; y1: number; x2: number; y2: number } {
+    const flat = this.#resolveFlatLine(d);
+    const lift = this.#lift;
+    if (!lift) return flat;
+    const h1 = this.#height(this.#props.z1, d);
+    const h2 = this.#height(this.#props.z2, d);
+    return {
+      x1: flat.x1 + lift.x * h1,
+      y1: flat.y1 + lift.y * h1,
+      x2: flat.x2 + lift.x * h2,
+      y2: flat.y2 + lift.y * h2,
+    };
+  }
+
+  #resolveFlatLine(d: any): { x1: number; y1: number; x2: number; y2: number } {
     const props = this.#props;
     if (this.geo.projection) {
       const [projX1, projY1] = resolveGeoDataPair(props.x1, props.y1, d, this.geo.projection);
@@ -196,17 +238,18 @@ export class LineState {
   #motionX2!: ReturnType<typeof createMotion<number>>;
   #motionY2!: ReturnType<typeof createMotion<number>>;
 
+  // Pixel mode: each end raised by its height
   get motionX1() {
-    return this.#motionX1.current;
+    return this.#motionX1.current + (this.#lift?.x ?? 0) * this.#height(this.#props.z1);
   }
   get motionY1() {
-    return this.#motionY1.current;
+    return this.#motionY1.current + (this.#lift?.y ?? 0) * this.#height(this.#props.z1);
   }
   get motionX2() {
-    return this.#motionX2.current;
+    return this.#motionX2.current + (this.#lift?.x ?? 0) * this.#height(this.#props.z2);
   }
   get motionY2() {
-    return this.#motionY2.current;
+    return this.#motionY2.current + (this.#lift?.y ?? 0) * this.#height(this.#props.z2);
   }
 
   // Static (non-data-driven) values for SVG/HTML pixel mode

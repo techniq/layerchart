@@ -24,10 +24,13 @@
     // `fontSize` is a typed prop (drives `capHeight` defaults), but on the
     // DOM it must be rendered as the kebab-case `font-size` attribute.
     fontSize,
+    // Not SVG attributes — consumed by `TextState`
+    viewport,
+    z,
     ...rest
   }: TextProps = $props();
 
-  const c = new TextState(() => ({ rotate, dx, dy, fontSize, ...rest }) as TextProps);
+  const c = new TextState(() => ({ rotate, dx, dy, fontSize, viewport, z, ...rest }) as TextProps);
 
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
@@ -62,7 +65,12 @@
         {...rest as any}
         x={item.x}
         y={item.y}
-        transform={(rest.transform as string | undefined) ?? dataRotateTransform}
+        transform={[
+          c.viewportTransform(item.x, item.y),
+          (rest.transform as string | undefined) ?? dataRotateTransform,
+        ]
+          .filter(Boolean)
+          .join(' ') || undefined}
         text-anchor={rest.textAnchor ?? 'start'}
         dominant-baseline={rest.dominantBaseline ?? 'auto'}
         font-size={fontSize}
@@ -126,7 +134,9 @@
         bind:this={ref}
         x={c.motionX}
         y={c.motionY}
-        transform={c.transform}
+        transform={[c.viewportTransform(c.motionX, c.motionY), c.transform]
+          .filter(Boolean)
+          .join(' ')}
         text-anchor={rest.textAnchor ?? 'start'}
         dominant-baseline={rest.dominantBaseline ?? 'auto'}
         font-size={fontSize}

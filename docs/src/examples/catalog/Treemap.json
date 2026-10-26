@@ -36,7 +36,9 @@
           "lineNumber": 49,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "complex",
@@ -83,7 +85,9 @@
           "lineNumber": 148,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "nested-filter",
@@ -125,7 +129,9 @@
           "lineNumber": 163,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "nested-zoom",
@@ -182,7 +188,9 @@
           "lineNumber": 184,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "playground",
@@ -229,7 +237,9 @@
           "lineNumber": 194,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "stacked-zoom",
@@ -281,10 +291,19 @@
           "lineNumber": 115,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 95,
+      "line": "<Treemap hierarchy={root} paddingOuter={4}>"
+    },
     {
       "example": "basic",
       "component": "Treemap",
@@ -328,5 +347,5 @@
       "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.965Z"
+  "updatedAt": "2026-10-08T16:54:44.513Z"
 }

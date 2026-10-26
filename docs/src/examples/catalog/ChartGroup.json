@@ -16,7 +16,9 @@
           "lineNumber": 31,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-13T18:02:33.000Z",
+      "updatedAt": "2026-08-13T18:02:33.000Z"
     },
     {
       "name": "coordinated-views",
@@ -48,7 +50,9 @@
           "lineNumber": 47,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-18T18:09:40.000Z",
+      "updatedAt": "2026-08-18T18:09:40.000Z"
     },
     {
       "name": "faceted-group",
@@ -70,7 +74,9 @@
           "lineNumber": 58,
           "line": "<Tooltip.Root facetAll>"
         }
-      ]
+      ],
+      "createdAt": "2026-08-16T14:55:58.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "highlight-only",
@@ -87,7 +93,9 @@
           "lineNumber": 36,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-13T18:02:33.000Z",
+      "updatedAt": "2026-08-13T18:02:33.000Z"
     },
     {
       "name": "minimap",
@@ -129,7 +137,9 @@
           "lineNumber": 70,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-14T04:35:33.000Z",
+      "updatedAt": "2026-08-14T04:35:33.000Z"
     },
     {
       "name": "programmatic-control",
@@ -141,7 +151,9 @@
           "lineNumber": 87,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-13T18:02:33.000Z",
+      "updatedAt": "2026-08-13T18:02:33.000Z"
     },
     {
       "name": "synced-brushes",
@@ -188,7 +200,9 @@
           "lineNumber": 66,
           "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-14T04:35:33.000Z",
+      "updatedAt": "2026-08-27T02:37:19.000Z"
     },
     {
       "name": "synced-legend",
@@ -210,7 +224,9 @@
           "lineNumber": 26,
           "line": "<AreaChart {data} x=\"date\" {series} {padding} height={200} legend />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-14T17:22:22.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "synced-zoom",
@@ -227,10 +243,33 @@
           "lineNumber": 32,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-14T04:35:33.000Z",
+      "updatedAt": "2026-08-14T04:35:33.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 13,
+      "line": "<ChartGroup pointer={{ tooltip: false }}>"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 18,
+      "line": "<ChartGroup pointer={{ tooltip: false }}>"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 15,
+      "line": "<ChartGroup pointer={{ tooltip: false }}>"
+    },
     {
       "example": "facet-brush-overview",
       "component": "Chart",
@@ -302,5 +341,5 @@
       "line": "<ChartGroup>"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:06.232Z"
+  "updatedAt": "2026-10-16T16:15:13.253Z"
 }

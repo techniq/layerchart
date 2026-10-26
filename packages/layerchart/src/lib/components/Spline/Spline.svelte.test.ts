@@ -28,19 +28,19 @@ function paths() {
 }
 
 describe('Spline', () => {
-  describe('z (grouping)', () => {
+  describe('g (grouping)', () => {
     it('draws one path per group from a single mark', async () => {
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps(),
-        componentProps: { z: 'group' },
+        componentProps: { g: 'group' },
       });
 
       await expect.poll(() => paths().length).toBe(2);
     });
 
     it('splits the data rather than drawing one line through every point', async () => {
-      // Without `z` the interleaved rows are a single zig-zag path
+      // Without `g` the interleaved rows are a single zig-zag path
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps(),
@@ -78,23 +78,23 @@ describe('Spline', () => {
       expect(paths()[0].getAttribute('d')!.split('L')).toHaveLength(data.length);
     });
 
-    it('falls back to the chart`s `z` accessor', async () => {
+    it('falls back to the chart`s `g` accessor', async () => {
       render(TestHarness, {
         component: Spline,
-        chartProps: chartProps({ z: 'group' }),
+        chartProps: chartProps({ g: 'group' }),
         componentProps: {},
       });
 
       await expect.poll(() => paths().length).toBe(2);
     });
 
-    it('takes its own `z` over the chart`s', async () => {
+    it('takes its own `g` over the chart`s', async () => {
       render(TestHarness, {
         component: Spline,
-        chartProps: chartProps({ z: 'group' }),
+        chartProps: chartProps({ g: 'group' }),
         // `kind` is 1:1 with `group` here, so the count matches — what matters is that the
         // override is read at all, which the `null` case below pins down
-        componentProps: { z: () => 'all' },
+        componentProps: { g: () => 'all' },
       });
 
       await expect.poll(() => paths().length).toBe(1);
@@ -130,13 +130,13 @@ describe('Spline', () => {
       await expect.poll(() => paths().length).toBe(1);
     });
 
-    it('an explicit `z` wins over the one `stroke` would imply', async () => {
+    it('an explicit `g` wins over the one `stroke` would imply', async () => {
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps({ c: 'group', cRange: ['red', 'blue'] }),
-        // `kind` splits the same way as `group`, but `z: null`-style single grouping proves
+        // `kind` splits the same way as `group`, but `g: null`-style single grouping proves
         // the explicit prop is what's read
-        componentProps: { z: () => 'all', stroke: 'group' },
+        componentProps: { g: () => 'all', stroke: 'group' },
       });
 
       await expect.poll(() => paths().length).toBe(1);
@@ -147,7 +147,7 @@ describe('Spline', () => {
         component: Spline,
         chartProps: chartProps(),
         componentProps: {
-          z: 'group',
+          g: 'group',
           // alternates every point, so each 3-point line becomes 2 segments
           opacity: (d: any) => (d.value % 20 === 0 ? 1 : 0.5),
         },
@@ -163,7 +163,7 @@ describe('Spline', () => {
         component: Spline,
         chartProps: chartProps(),
         componentProps: {
-          z: 'group',
+          g: 'group',
           class: (d: any) => (d.group === 'a' ? 'first-line' : 'second-line'),
         },
       });
@@ -178,14 +178,14 @@ describe('Spline', () => {
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps(),
-        componentProps: { z: 'group', class: 'shared' },
+        componentProps: { g: 'group', class: 'shared' },
       });
 
       await expect.poll(() => paths().length).toBe(2);
       expect(paths().every((p) => p.getAttribute('class')?.includes('shared'))).toBe(true);
     });
 
-    it('applies a static string without `z`', async () => {
+    it('applies a static string without `g`', async () => {
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps(),
@@ -245,13 +245,13 @@ describe('Spline', () => {
       await expect.poll(() => paths()[0]?.getAttribute('stroke')).toBe('rgb(255, 0, 0)');
     });
 
-    it('leaves a `z` the legend does not name alone', async () => {
+    it('leaves a `g` the legend does not name alone', async () => {
       // Nothing on the legend corresponds to these groups, so they must not react to its keys
       let ctx: any;
       render(TestHarness, {
         component: Spline,
         chartProps: chartProps({ series: [{ key: 'unrelated', color: 'red' }] }),
-        componentProps: { z: 'group' },
+        componentProps: { g: 'group' },
         oncontext: (c: any) => (ctx = c),
       } as any);
 
@@ -271,7 +271,7 @@ describe('Spline', () => {
           c: 'group',
           cRange: ['rgb(255, 0, 0)', 'rgb(0, 0, 255)'],
         }),
-        componentProps: { z: 'group', stroke: 'group' },
+        componentProps: { g: 'group', stroke: 'group' },
       });
 
       await expect.poll(() => paths().length).toBe(2);
@@ -442,11 +442,11 @@ describe('Spline', () => {
         await expect.poll(ends).toEqual({ start: 1, end: 1 });
       });
 
-      it('still renders them per line when `z` splits the mark', async () => {
+      it('still renders them per line when `g` splits the mark', async () => {
         render(TestHarness, {
           component: Spline,
           chartProps: chartProps(),
-          componentProps: { z: 'group', startContent: dot, endContent: dot },
+          componentProps: { g: 'group', startContent: dot, endContent: dot },
         });
 
         await expect.poll(() => paths().length).toBe(2);

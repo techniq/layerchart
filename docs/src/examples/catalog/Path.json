@@ -21,10 +21,19 @@
           "lineNumber": 7,
           "line": "<Path pathData=\"M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80\" strokeWidth={2} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 72,
+      "line": "<Path pathData={`M${cell.polygon.join('L')}Z`} z={height} fill={t.ground} />"
+    },
     {
       "example": "paint-brush-selection",
       "component": "GeoPath",
@@ -54,5 +63,5 @@
       "line": "<ellipse cx=\"39\" cy=\"16.969\" fill=\"currentColor\" rx=\"2\" ry=\"3\" /><path"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:26.885Z"
+  "updatedAt": "2026-10-22T21:41:13.863Z"
 }

@@ -12,8 +12,10 @@ import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 import { isSinglePointMode, panelDatum } from '$lib/utils/tooltip.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
+import type { CommonStyleProps } from '$lib/utils/types.js';
 
 export type HighlightPointData = { x: any; y: any };
 export type HighlightPoint = {
@@ -35,6 +37,11 @@ export type HighlightPropsWithoutHTML = {
   x?: Accessor;
   /** Override `y` from context */
   y?: Accessor;
+  /**
+   * Override `z` from context.  On an `isometric` chart, points float at the row's height;
+   * `z={() => 0}` puts them on the floor beneath instead.
+   */
+  z?: Accessor;
   /**
    * Use the chart's radius scale for highlight point size.
    * When `true`, uses the `r` config from the chart context.
@@ -81,6 +88,13 @@ export type HighlightPropsWithoutHTML = {
     | boolean
     | Partial<ComponentProps<typeof Line>>
     | Snippet<[{ lines: HighlightLineSegment[] }]>;
+
+  /**
+   * On an `isometric` chart with a `z`, mark the point's position on the floor and each back wall.
+   * Pass props to style them, and `r` for their size.
+   * @default false
+   */
+  shadows?: boolean | (CommonStyleProps & { class?: string; r?: number });
 
   /**
    * Show area and pass props to Rect
@@ -142,6 +156,25 @@ export class HighlightState {
 
   highlightData = $derived(this.#props.data ?? this.ctx.tooltip.data);
 
+  #layerIsometric = getLayerIsometric();
+
+  /** The highlight's rise to the row's `z`, as an offset on the flat plot, or `null` */
+  lift = $derived.by(() => {
+    const lift = this.ctx.isometricLift;
+    const height = this.#height;
+    if (!lift || height == null) return null;
+    return { x: lift.x * height, y: lift.y * height };
+  });
+
+  /** The hovered row's height off an `isometric` floor in pixels, or `null` without one */
+  #height = $derived.by(() => {
+    const z = this.#props.z ?? this.ctx.props.z;
+    if (!this.#layerIsometric() || !this.ctx.isometricLift || z == null) return null;
+    if (this.highlightData == null) return null;
+    const own = this.#props.z;
+    return this.ctx.heightOf(this.highlightData, own == null ? undefined : accessor(own))[1];
+  });
+
   /**
    * Whether the highlighted row belongs to the panel this is rendering into.
    *
@@ -200,7 +233,48 @@ export class HighlightState {
     return value != null ? this.ctx.rScale(value) : undefined;
   }
 
+  /**
+   * The row's position traced on the grid: across the plot at its `x` / `y`, and on an `isometric`
+   * chart with a `z`, also up and across each back wall.
+   */
   lines = $derived.by<HighlightLineSegment[]>(() => {
+    const floor = this.#flatLines;
+    const at = this.#isometricAt;
+    return at ? [...floor, ...this.ctx.isometric!.highlightWallLines(at, this.axis)] : floor;
+  });
+
+  /**
+   * For `shadows`: a circle of radius `r` on the floor beneath the point and on each back wall (see
+   * `highlightShadows`)
+   */
+  shadows = $derived.by(() => {
+    const at = this.#isometricAt;
+    if (!at) return [];
+    const shadowsProp = this.#props.shadows;
+    const r = (typeof shadowsProp === 'object' ? shadowsProp.r : undefined) ?? 6;
+    return this.ctx.isometric!.highlightShadows(at, r);
+  });
+
+  /** Where the row sits on an `isometric` floor with walls, or `null` */
+  #isometricAt = $derived.by(() => {
+    const m = this.#layerIsometric();
+    const lift = this.ctx.isometricLift;
+    const height = this.#height;
+    const depth = this.ctx.zDepth;
+    if (!m || !lift || height == null || depth <= 0) return null;
+    if (this.xCoordScalar == null || this.yCoordScalar == null) return null;
+    return {
+      x: (this.xCoordScalar as number) + this.xOffset,
+      y: (this.yCoordScalar as number) + this.yOffset,
+      height,
+      depth,
+      lift,
+      floor: { width: this.ctx.width, height: this.ctx.height },
+      m,
+    };
+  });
+
+  #flatLines = $derived.by<HighlightLineSegment[]>(() => {
     let tmpLines: HighlightLineSegment[] = [];
     if (!this.highlightData) return tmpLines;
     // The crosshair marks a position rather than a row, so `facetAll` draws it in every panel —
@@ -406,7 +480,11 @@ export class HighlightState {
     // to one row by proximity in both axes — a scatter, where the rows sharing an x are unrelated
     // points rather than a category's line, and pointing all of them marks places nothing was
     // hovered.
+    // Along `valueAxis="z"` the value is a height, not a position on the plot: the row's own point
+    // (below), raised to the top of its segment, is the one to mark
+    const valueIsPosition = this.ctx.valueAxis !== 'z';
     if (
+      valueIsPosition &&
       props.data === undefined &&
       this.ctx.cGroups &&
       this.ctx.series.isDefaultSeries &&
@@ -449,7 +527,7 @@ export class HighlightState {
           .filter(notNull) as HighlightPoint[];
     }
 
-    if (props.data === undefined && this.ctx.tooltip.series.length > 0) {
+    if (valueIsPosition && props.data === undefined && this.ctx.tooltip.series.length > 0) {
       tmpPoints = this.ctx.tooltip.series
         .flatMap((seriesInfo) => {
           if (!seriesInfo.visible) return [];
@@ -649,6 +727,11 @@ export class HighlightState {
       if (pointR != null) {
         tmpPoints = tmpPoints.map((p) => ({ ...p, r: pointR }));
       }
+    }
+
+    const lift = this.lift;
+    if (lift) {
+      tmpPoints = tmpPoints.map((p) => ({ ...p, x: p.x + lift.x, y: p.y + lift.y }));
     }
 
     return tmpPoints;

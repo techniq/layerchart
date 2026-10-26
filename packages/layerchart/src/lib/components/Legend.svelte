@@ -130,7 +130,7 @@
   import type { HTMLAttributes, SVGAttributes } from 'svelte/elements';
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { quantize, interpolate, interpolateRound } from 'd3-interpolate';
-  import { quantile, range } from 'd3-array';
+  import { max, min, quantile, range } from 'd3-array';
   import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
 
   import ColorRamp from './ColorRamp.svelte';
@@ -220,7 +220,10 @@
     tickLabelOffset: number;
     tickLine: boolean;
     tickValues: any[] | undefined;
+    tickFormat?: FormatType | FormatConfig | ((value: any) => any);
     tickLength: number;
+    /** A threshold scale's edges between colors */
+    thresholds?: number[];
   };
 
   const scaleConfig: ScaleConfig = $derived.by(() => {
@@ -321,6 +324,7 @@
         tickLine: true,
         tickLength: tickLengthProp,
         interpolator: undefined,
+        thresholds,
       };
     } else {
       // Ordinal
@@ -398,22 +402,44 @@
     return x + scaleConfig.tickLabelOffset;
   });
 
+  /** A swatch that selects and highlights `key`, as a series' does */
+  function keyedItem(key: string, label: any, color: any) {
+    return {
+      value: key,
+      label,
+      color,
+      onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(key),
+      onpointerenter: (e: MouseEvent) => {
+        ctx.series!.highlightKey = key;
+      },
+      onpointerleave: (e: MouseEvent) => {
+        ctx.series!.highlightKey = null;
+      },
+      selected: selected.length === 0 || selected.includes(key),
+    };
+  }
+
   const swatchItems = $derived.by(() => {
     if (seriesItems) {
       // Series-based legend items
-      return seriesItems.map((series) => ({
-        value: series.key,
-        label: series.label,
-        color: series.color,
-        onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(series.key),
-        onpointerenter: (e: MouseEvent) => {
-          ctx.series!.highlightKey = series.key;
-        },
-        onpointerleave: (e: MouseEvent) => {
-          ctx.series!.highlightKey = null;
-        },
-        selected: selected.length === 0 || selected.includes(series.key),
-      }));
+      return seriesItems.map((series) => keyedItem(series.key, series.label, series.color));
+    } else if (scale && scaleConfig.thresholds) {
+      const bucketed = scale as any;
+      // Threshold / quantize / quantile: a swatch for each color, labelled with the range it covers —
+      // one more than there are thresholds, the first and last open unless the domain bounds them
+      const thresholds = scaleConfig.thresholds;
+      const domain = bucketed.domain() as number[];
+      const bounded = !!(bucketed.thresholds || bucketed.quantiles);
+      const fmt = (v: number) => (tickFormatProp ? format(v, asAny(tickFormatProp)) : v);
+      const colors = bucketed.range() as string[];
+      return colors.map((color, i) => {
+        const lo = i > 0 ? thresholds[i - 1] : bounded ? min(domain) : undefined;
+        const hi = i < colors.length - 1 ? thresholds[i] : bounded ? max(domain) : undefined;
+        const label =
+          lo == null ? `< ${fmt(hi!)}` : hi == null ? `≥ ${fmt(lo)}` : `${fmt(lo)}–${fmt(hi)}`;
+        // Keyed by its index, as series are by name
+        return keyedItem(String(i), label, color);
+      });
     } else {
       // Scale-based legend items
       const tickValues = scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [];
@@ -452,6 +478,9 @@
   {:else if variant === 'ramp'}
     {@const indicatorSize = 6}
     {@const tickLabelY = height + tickLengthProp + tickFontSize}
+    <!-- A threshold scale's ticks are the edges between its swatches, by index, each labelled with
+         its threshold -->
+    {@const thresholdTicks = scaleConfig.thresholds ? scaleConfig.tickValues : undefined}
     {@const svgHeight = tickLabelY}
     <svg
       {width}
@@ -475,7 +504,7 @@
       </g>
 
       <g class="lc-legend-tick-group">
-        {#each tickValuesProp ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick, i}
+        {#each tickValuesProp ?? thresholdTicks ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick, i}
           <text
             text-anchor="middle"
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
@@ -484,7 +513,11 @@
             class={cls('lc-legend-tick-text', classes.label)}
           >
             <!-- @ts-expect-error - improve types -->
-            {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
+            {thresholdTicks && !tickValuesProp && typeof scaleConfig.tickFormat === 'function'
+              ? scaleConfig.tickFormat(tick)
+              : tickFormatProp
+                ? format(tick, asAny(tickFormatProp))
+                : tick}
           </text>
 
           {#if scaleConfig.tickLine}

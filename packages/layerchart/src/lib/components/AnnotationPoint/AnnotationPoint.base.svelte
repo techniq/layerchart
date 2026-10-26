@@ -23,6 +23,8 @@
   import { getPointLabelLayout } from '$lib/utils/labelPlacement.js';
   import { getPixelValue } from '../Text/Text.shared.svelte.js';
   import { cls } from '@layerstack/tailwind';
+  import type { CircleProps } from '../Circle/Circle.shared.svelte.js';
+  import type { TextProps } from '../Text/Text.shared.svelte.js';
 
   let {
     Circle,
@@ -30,6 +32,7 @@
     Text,
     x,
     y,
+    z,
     r = 4,
     label,
     labelPlacement = 'center',
@@ -41,6 +44,7 @@
     fontSize = 12,
     labelGap = 2,
     link,
+    circle,
     details,
     props,
   }: AnnotationPointBaseProps = $props();
@@ -119,10 +123,15 @@
 
   const linkProps = $derived(typeof link === 'object' ? link : {});
 
+  /** The point's height off an `isometric` floor, in pixels — its circle, label, and link all rise */
+  const height = $derived(z == null ? undefined : Number(ctx.zScale(z)) || 0);
+
   function onPointerMove(e: PointerEvent | MouseEvent | TouchEvent) {
     if (details) {
       e.stopPropagation();
-      ctx.tooltip.show(e, { annotation: { label, details } });
+      ctx.tooltip.show(e, {
+        annotation: { label: typeof label === 'string' ? label : undefined, details },
+      });
     }
   }
 
@@ -132,21 +141,35 @@
       ctx.tooltip.hide();
     }
   }
+
+  const resolvedCircleProps = $derived({
+    cx: point.x,
+    cy: point.y,
+    z: height,
+    r,
+    onpointermove: onPointerMove,
+    onmousemove: onPointerMove,
+    ontouchmove: onPointerMove,
+    onpointerleave: onPointerLeave,
+    onmouseleave: onPointerLeave,
+    ontouchend: onPointerLeave,
+    ...props?.circle,
+    class: cls('lc-annotation-point', link && 'lc-annotation-point-ring', props?.circle?.class),
+  } as CircleProps);
+
+  const resolvedLabelProps = $derived({
+    ...labelProps,
+    z: height,
+    ...props?.label,
+    class: cls('lc-annotation-point-label', props?.label?.class),
+  } as TextProps);
 </script>
 
-<Circle
-  cx={point.x}
-  cy={point.y}
-  {r}
-  onpointermove={onPointerMove}
-  onmousemove={onPointerMove}
-  ontouchmove={onPointerMove}
-  onpointerleave={onPointerLeave}
-  onmouseleave={onPointerLeave}
-  ontouchend={onPointerLeave}
-  {...props?.circle}
-  class={cls('lc-annotation-point', link && 'lc-annotation-point-ring', props?.circle?.class)}
-/>
+{#if circle}
+  {@render circle({ props: resolvedCircleProps })}
+{:else}
+  <Circle {...resolvedCircleProps} />
+{/if}
 
 {#if linkEndpoints && Link}
   <Link
@@ -154,6 +177,8 @@
     y1={linkEndpoints.source.y}
     x2={linkEndpoints.target.x}
     y2={linkEndpoints.target.y}
+    z1={height}
+    z2={height}
     type="straight"
     {...linkProps}
     class={cls(
@@ -163,13 +188,10 @@
   />
 {/if}
 
-{#if label}
-  <Text
-    value={label}
-    {...labelProps}
-    {...props?.label}
-    class={cls('lc-annotation-point-label', props?.label?.class)}
-  />
+{#if typeof label === 'function'}
+  {@render label({ props: resolvedLabelProps })}
+{:else if label}
+  <Text value={label} {...resolvedLabelProps} />
 {/if}
 
 <style>

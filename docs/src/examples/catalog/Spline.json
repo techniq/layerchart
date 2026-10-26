@@ -26,7 +26,9 @@
           "lineNumber": 14,
           "line": "<Spline class=\"stroke-2 stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "basic-start-and-end-snippets",
@@ -58,7 +60,9 @@
           "lineNumber": 38,
           "line": "<Circle r={5} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "draw",
@@ -85,7 +89,9 @@
           "lineNumber": 36,
           "line": "<Spline curve={config.curve} draw class=\"stroke-primary stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "end-slot-with-draw-with-value",
@@ -122,7 +128,9 @@
           "lineNumber": 45,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "end-snippet-with-draw",
@@ -154,7 +162,9 @@
           "lineNumber": 38,
           "line": "<Circle r={5} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "geo-routes",
@@ -186,7 +196,9 @@
           "lineNumber": 34,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "gradient-encoding",
@@ -223,7 +235,9 @@
           "lineNumber": 30,
           "line": "<Legend"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "gradient-threshold",
@@ -255,7 +269,9 @@
           "lineNumber": 27,
           "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "label-using-start-end-snippets",
@@ -292,7 +308,9 @@
           "lineNumber": 39,
           "line": "<Text value=\"start\" textAnchor=\"start\" verticalAnchor=\"middle\" dx={8} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "markers-arrows",
@@ -319,7 +337,9 @@
           "lineNumber": 36,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "math-formula",
@@ -346,7 +366,82 @@
           "lineNumber": 167,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-13T12:45:20.000Z",
+      "updatedAt": "2026-04-13T13:08:22.000Z"
+    },
+    {
+      "name": "missing-data-dashed",
+      "title": "missing data dashed",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 56,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 68,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 69,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 71,
+          "line": "<Spline"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 77,
+          "line": "<Legend placement=\"bottom\" />"
+        }
+      ],
+      "createdAt": "2026-09-08T14:15:24.000Z",
+      "updatedAt": "2026-09-08T14:15:24.000Z"
+    },
+    {
+      "name": "missing-data-with-markers",
+      "title": "missing data with markers",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 45,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 56,
+          "line": "<Axis placement=\"left\" grid rule format=\"metric\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 58,
+          "line": "<Spline"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 64,
+          "line": "<Circle r={4} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 65,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-09-08T14:15:24.000Z",
+      "updatedAt": "2026-09-08T14:15:24.000Z"
     },
     {
       "name": "multiple-series",
@@ -393,7 +488,9 @@
           "lineNumber": 72,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-series-highlight-on-hover",
@@ -440,7 +537,9 @@
           "lineNumber": 75,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-series-tweened",
@@ -467,7 +566,9 @@
           "lineNumber": 51,
           "line": "<Spline motion=\"tween\" class=\"stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-09-03T19:08:33.000Z",
+      "updatedAt": "2026-09-03T19:08:33.000Z"
     },
     {
       "name": "multiple-series-using-overrides",
@@ -504,7 +605,9 @@
           "lineNumber": 38,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-series-with-labels",
@@ -546,7 +649,9 @@
           "lineNumber": 44,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "parallel-coordinates",
@@ -583,7 +688,9 @@
           "lineNumber": 81,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-08-14T22:11:51.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "parallel-coordinates-brush",
@@ -620,7 +727,9 @@
           "lineNumber": 106,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-08-17T18:59:37.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "parallel-coordinates-faceted",
@@ -647,7 +756,9 @@
           "lineNumber": 80,
           "line": "<Spline stroke=\"species\" strokeWidth={1} opacity={0.4} />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:38:38.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "parallel-coordinates-mixed",
@@ -679,7 +790,9 @@
           "lineNumber": 114,
           "line": "<Spline"
         }
-      ]
+      ],
+      "createdAt": "2026-08-18T03:33:51.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "playground",
@@ -711,7 +824,9 @@
           "lineNumber": 46,
           "line": "<Points"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "radial-line-with-areas",
@@ -743,7 +858,9 @@
           "lineNumber": 38,
           "line": "<Axis placement=\"angle\" grid tickLength={0} format={'month'} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "radial-multi-year-lines",
@@ -752,7 +869,7 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 17,
           "line": "<Chart"
         },
         {
@@ -770,7 +887,9 @@
           "lineNumber": 40,
           "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "radial-radar",
@@ -802,7 +921,9 @@
           "lineNumber": 39,
           "line": "<Points class=\"fill-primary stroke-surface-200\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "stroke-grouping",
@@ -829,7 +950,9 @@
           "lineNumber": 21,
           "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-02T19:13:52.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "stroke-grouping-with-legend",
@@ -861,7 +984,9 @@
           "lineNumber": 42,
           "line": "<Legend placement=\"bottom\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T07:11:37.000Z",
+      "updatedAt": "2026-08-20T07:11:37.000Z"
     },
     {
       "name": "tween-on-mount",
@@ -888,7 +1013,9 @@
           "lineNumber": 18,
           "line": "<Spline motion=\"tween\" class=\"stroke-primary stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "tweened",
@@ -915,7 +1042,9 @@
           "lineNumber": 36,
           "line": "<Spline curve={config.curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T12:19:51.000Z"
     },
     {
       "name": "vertical",
@@ -952,7 +1081,9 @@
           "lineNumber": 28,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "with-labels",
@@ -984,7 +1115,9 @@
           "lineNumber": 15,
           "line": "<Labels format=\"integer\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "with-tooltip-and-highlight",
@@ -1021,7 +1154,9 @@
           "lineNumber": 27,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     }
   ],
   "usage": [
@@ -1064,43 +1199,43 @@
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Spline y={(d) => context.y1Scale?.(d.efficiency)} class=\"stroke-2 stroke-secondary\" />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 33,
+      "lineNumber": 35,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 54,
+      "lineNumber": 56,
       "line": "<Spline class=\"stroke-2 stroke-secondary\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 43,
-      "line": "<Spline y=\"open\" class=\"stroke-primary\" />"
+      "lineNumber": 54,
+      "line": "<Spline x={midday} y=\"open\" class=\"stroke-primary\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 44,
-      "line": "<Spline y=\"close\" class=\"stroke-secondary\" />"
+      "lineNumber": 55,
+      "line": "<Spline x={midday} y=\"close\" class=\"stroke-secondary\" />"
     },
     {
       "example": "data-chart-multi",
@@ -1229,10 +1364,17 @@
       "line": "<Spline"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 263,
+      "line": "<Spline"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 123,
+      "lineNumber": 127,
       "line": "<Spline"
     },
     {
@@ -1453,6 +1595,20 @@
       "line": "<Spline seriesKey={s.key} />"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 71,
+      "line": "<Spline"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 58,
+      "line": "<Spline"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -1670,5 +1826,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.496Z"
+  "updatedAt": "2026-10-26T02:35:36.966Z"
 }

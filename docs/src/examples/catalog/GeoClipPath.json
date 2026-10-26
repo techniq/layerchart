@@ -31,7 +31,9 @@
           "lineNumber": 29,
           "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-12T22:42:54.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -46,7 +48,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 109,
+      "lineNumber": 163,
       "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
     },
     {
@@ -64,5 +66,5 @@
       "line": "<GeoClipPath geojson={nation}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:24.779Z"
+  "updatedAt": "2026-10-23T06:08:47.149Z"
 }

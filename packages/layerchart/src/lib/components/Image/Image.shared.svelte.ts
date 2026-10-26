@@ -13,6 +13,8 @@ import {
   type MotionOptions,
 } from '$lib/utils/motion.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { markLift, raiseItems } from '$lib/utils/isometric.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -35,6 +37,13 @@ export type ImagePropsWithoutHTML = {
   r?: DataProp;
   /** Rotation in degrees clockwise. */
   rotate?: DataProp;
+  /**
+   * Height to raise the image off an `isometric` floor, defaulting to the chart's `z` in data mode.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height (also in pixel mode)
+   */
+  z?: DataProp;
   /** SVG preserveAspectRatio attribute. @default 'xMidYMid meet' */
   preserveAspectRatio?: string;
   /** CORS attribute for the image. */
@@ -81,6 +90,7 @@ export class ImageState {
 
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
 
   dataMode = $derived(
     hasAnyDataProp(
@@ -93,6 +103,9 @@ export class ImageState {
   );
 
   #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
+
+  /** The chart's `isometricLift` when the image has a height, else `null` */
+  #lift = $derived(markLift(this.chartCtx, this.#layerIsometric, this.#props.z, this.dataMode));
 
   resolveImage(d: any) {
     const props = this.#props;
@@ -136,7 +149,7 @@ export class ImageState {
     if (!this.dataMode) return [];
     const props = this.#props;
     const keyFn = props.key ?? defaultKey;
-    return this.#resolvedData.map((d, i) => {
+    const items = this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
       const resolved = this.resolveImage(d);
       const animated = this.#dataMotionMap?.get(key);
@@ -151,6 +164,18 @@ export class ImageState {
         rotate: resolved.rotate,
       };
     });
+
+    const m = this.#layerIsometric();
+    const lift = this.#lift;
+    if (!m || !lift) return items;
+
+    return raiseItems(
+      items,
+      ['x', 'y'],
+      m,
+      lift,
+      (item) => this.chartCtx.heightOf(item.d, props.z)[1]
+    );
   });
 
   // Pixel-mode helpers
@@ -172,11 +197,17 @@ export class ImageState {
   #motionWidth!: ReturnType<typeof createMotion<number>>;
   #motionHeight!: ReturnType<typeof createMotion<number>>;
 
+  /** Pixel mode: raised by `z` on an `isometric` floor */
+  #raise(axis: 'x' | 'y') {
+    const z = this.#props.z;
+    return this.#lift && typeof z === 'number' ? this.#lift[axis] * z : 0;
+  }
+
   get motionX() {
-    return this.#motionX.current;
+    return this.#motionX.current + this.#raise('x');
   }
   get motionY() {
-    return this.#motionY.current;
+    return this.#motionY.current + this.#raise('y');
   }
   get motionWidth() {
     return this.#motionWidth.current;

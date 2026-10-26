@@ -1,0 +1,467 @@
+{
+  "component": "Bin",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Bin/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 26,
+          "line": "<Bin />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"left\" grid rule />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "categorical",
+      "title": "categorical",
+      "path": "/docs/components/Bin/categorical",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 32,
+          "line": "<Legend placement=\"top\" />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 34,
+          "line": "<Bin r=\"count\" fill={(cell) => mode(cell.data, (d) => d.sex)} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "image-render",
+      "title": "image render",
+      "path": "/docs/components/Bin/image-render",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 128,
+          "line": "<Chart {data} x=\"x\" y=\"y\" xDomain={[0, width]} yDomain={[height, 0]} clip>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 129,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 131,
+          "line": "<Bin {shape} {size} fill={meanColor} stroke={meanColor} />"
+        }
+      ],
+      "createdAt": "2026-10-23T06:07:27.000Z",
+      "updatedAt": "2026-10-23T06:07:27.000Z"
+    },
+    {
+      "name": "images",
+      "title": "images",
+      "path": "/docs/components/Bin/images",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart {data} x=\"x\" y=\"y\" padding={size} height={500} clip>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 52,
+          "line": "<Bin {size}>"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 57,
+          "line": "<Image href={tile(cell)} x={cell.x} y={cell.y} width={size} height={(size * 140) / 120} />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "images-isometric",
+      "title": "images isometric",
+      "path": "/docs/components/Bin/images-isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 52,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 64,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 65,
+          "line": "<Bin {size}>"
+        },
+        {
+          "component": "Path",
+          "lineNumber": 72,
+          "line": "<Path pathData={`M${cell.polygon.join('L')}Z`} z={height} fill={t.ground} />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 74,
+          "line": "<Image"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "isometric",
+      "title": "isometric",
+      "path": "/docs/components/Bin/isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"left\" grid rule tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 34,
+          "line": "<Bin size={24} z=\"count\" />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "labels",
+      "title": "labels",
+      "path": "/docs/components/Bin/labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 25,
+          "line": "<Bin size={36} fillOpacity={0.8} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 30,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 42,
+          "line": "<Axis placement=\"left\" grid rule />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "shapes",
+      "title": "shapes",
+      "path": "/docs/components/Bin/shapes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 44,
+          "line": "<Bin {shape} {size} grid={showGrid} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 45,
+          "line": "<Axis placement=\"left\" grid={!showGrid} rule />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "size-by-count",
+      "title": "size by count",
+      "path": "/docs/components/Bin/size-by-count",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 25,
+          "line": "<Bin r=\"count\" fill=\"currentColor\" grid />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 26,
+          "line": "<Axis placement=\"left\" rule />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "tooltip",
+      "title": "tooltip",
+      "path": "/docs/components/Bin/tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 29,
+          "line": "<Bin"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 39,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "walmart",
+      "title": "walmart",
+      "path": "/docs/components/Bin/walmart",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 25,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 38,
+          "line": "<Legend title=\"Median opening date\" tickFormat=\"year\" placement=\"top-left\" />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 40,
+          "line": "<GeoPath geojson={nation} class=\"fill-surface-content/5 stroke-none\" />"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 42,
+          "line": "<Bin"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "walmart-isometric",
+      "title": "walmart isometric",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 32,
+          "line": "<GeoPath geojson={nation} class=\"fill-surface-content/5 stroke-surface-content/30\" />"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 34,
+          "line": "<Bin size={8} z=\"count\" />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 26,
+      "line": "<Bin />"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 34,
+      "line": "<Bin r=\"count\" fill={(cell) => mode(cell.data, (d) => d.sex)} />"
+    },
+    {
+      "example": "image-render",
+      "component": "Bin",
+      "path": "/docs/components/Bin/image-render",
+      "lineNumber": 131,
+      "line": "<Bin {shape} {size} fill={meanColor} stroke={meanColor} />"
+    },
+    {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 52,
+      "line": "<Bin {size}>"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 65,
+      "line": "<Bin {size}>"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 34,
+      "line": "<Bin size={24} z=\"count\" />"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 25,
+      "line": "<Bin size={36} fillOpacity={0.8} />"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 27,
+      "line": "<Bin size={36}>"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 44,
+      "line": "<Bin {shape} {size} grid={showGrid} />"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 25,
+      "line": "<Bin r=\"count\" fill=\"currentColor\" grid />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 29,
+      "line": "<Bin"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 42,
+      "line": "<Bin"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 34,
+      "line": "<Bin size={8} z=\"count\" />"
+    }
+  ],
+  "updatedAt": "2026-10-23T06:08:46.520Z"
+}

@@ -21,7 +21,15 @@ const targets = [
 async function renderMixed(splineProps: Record<string, any>) {
   let ctx: ChartState<any, any, any> | undefined;
   render(MixedMarksHarness, {
-    chartProps: { data, x: 'month', y: 'value', c: 'fruit', bandPadding: 0.3, width: 400, height: 300 },
+    chartProps: {
+      data,
+      x: 'month',
+      y: 'value',
+      c: 'fruit',
+      bandPadding: 0.3,
+      width: 400,
+      height: 300,
+    },
     splineProps,
     oncontext: (c: any) => (ctx = c),
   } as any);

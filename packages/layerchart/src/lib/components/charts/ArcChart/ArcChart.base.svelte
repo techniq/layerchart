@@ -54,10 +54,11 @@
     props = {},
     profile = false,
     tooltipContext = true,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
     arc,
     labels = false,
+    ref = $bindable(),
     context = $bindable(),
     trackCornerRadius,
     trackPadAngle,
@@ -192,6 +193,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   data={visibleData}
   x={value}
@@ -243,8 +245,8 @@
   }}
 >
   {#snippet marks(snippetProps: any)}
-    {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp(snippetProps)}
     {:else}
       <Group {...getGroupProps()}>
         {#each series as s, i (s.key)}

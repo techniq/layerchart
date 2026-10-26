@@ -36,7 +36,9 @@
           "lineNumber": 43,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-13T14:38:57.000Z"
     },
     {
       "name": "area",
@@ -73,7 +75,9 @@
           "lineNumber": 50,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "basic",
@@ -110,7 +114,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "color-swatch",
@@ -147,7 +153,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "color-swatch-using-theme",
@@ -184,7 +192,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "custom-content",
@@ -221,7 +231,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>Anything can go here test</Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "data-snapping",
@@ -258,7 +270,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root x=\"data\" y=\"data\" xOffset={8} yOffset={8}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "default-mouse-position-with-offset",
@@ -295,7 +309,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "disable-motion",
@@ -332,7 +348,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root motion=\"none\">"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "duration",
@@ -374,7 +392,9 @@
           "lineNumber": 62,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "externally-access-tooltip-data",
@@ -411,7 +431,9 @@
           "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "invert-variant",
@@ -448,7 +470,9 @@
           "lineNumber": 32,
           "line": "<Tooltip.Root variant=\"invert\">"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-overlapping-bars",
@@ -485,7 +509,9 @@
           "lineNumber": 60,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-overlapping-durations",
@@ -527,7 +553,9 @@
           "lineNumber": 61,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "multiple-tooltips-with-fixed-single-axis",
@@ -564,7 +592,9 @@
           "lineNumber": 35,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "multiple-tooltips-with-fixed-single-axis-scaleband",
@@ -601,7 +631,9 @@
           "lineNumber": 38,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "portal-overflow",
@@ -638,7 +670,9 @@
           "lineNumber": 41,
           "line": "<Tooltip.Root {portal} contained={false}>"
         }
-      ]
+      ],
+      "createdAt": "2026-04-13T14:38:57.000Z",
+      "updatedAt": "2026-04-13T14:38:57.000Z"
     },
     {
       "name": "programmatic-control",
@@ -650,7 +684,9 @@
           "lineNumber": 70,
           "line": "<LineChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T16:29:32.000Z",
+      "updatedAt": "2026-08-20T16:29:32.000Z"
     },
     {
       "name": "scatter-plot",
@@ -687,7 +723,9 @@
           "lineNumber": 47,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "simple-bars",
@@ -724,7 +762,9 @@
           "lineNumber": 55,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "single-date-time",
@@ -761,7 +801,9 @@
           "lineNumber": 50,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-14T17:26:37.000Z"
     },
     {
       "name": "stacked-area",
@@ -798,7 +840,9 @@
           "lineNumber": 78,
           "line": "<Tooltip.Root"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     }
   ],
   "usage": [
@@ -1381,7 +1425,7 @@
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/tooltip-fixed-with-hide-delay",
       "lineNumber": 39,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key}>"
     },
     {
       "example": "tooltip-locking",
@@ -1409,13 +1453,13 @@
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/tooltip-locking",
       "lineNumber": 48,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key}>"
     },
     {
       "example": "tooltip-locking",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/tooltip-locking",
-      "lineNumber": 72,
+      "lineNumber": 67,
       "line": "<Tooltip.Separator />"
     },
     {
@@ -2014,6 +2058,48 @@
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
+      "example": "group-series-dual-axis",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-series-dual-axis",
+      "lineNumber": 67,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "group-series-dual-axis",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-series-dual-axis",
+      "lineNumber": 69,
+      "line": "<Tooltip.Header value={data.month} />"
+    },
+    {
+      "example": "group-series-dual-axis",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-series-dual-axis",
+      "lineNumber": 70,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "group-series-dual-axis",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-series-dual-axis",
+      "lineNumber": 71,
+      "line": "<Tooltip.Item seriesKey=\"energy\" format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "group-series-dual-axis",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-series-dual-axis",
+      "lineNumber": 72,
+      "line": "<Tooltip.Item seriesKey=\"peakPower\" format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "group-series-dual-axis",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/group-series-dual-axis",
+      "lineNumber": 74,
+      "line": "<Tooltip.Item seriesKey=\"efficiency\" value={data.efficiency} valueAlign=\"right\" />"
+    },
+    {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
@@ -2249,7 +2335,7 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/series-horizontal-diverging",
       "lineNumber": 63,
-      "line": "<Tooltip.Item label={s.key} color={s.color}>"
+      "line": "<Tooltip.Item seriesKey={s.key}>"
     },
     {
       "example": "series-horizontal-diverging-as-percent",
@@ -2277,7 +2363,7 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/series-horizontal-diverging-as-percent",
       "lineNumber": 64,
-      "line": "<Tooltip.Item label={s.key} color={s.color}>"
+      "line": "<Tooltip.Item seriesKey={s.key}>"
     },
     {
       "example": "series-horizontal-diverging-label-gap",
@@ -3358,6 +3444,48 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 39,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 43,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 44,
+      "line": "<Tooltip.Item label=\"Athletes\" value={cell.count} />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 45,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 54,
+      "line": "<Tooltip.Item"
+    },
+    {
       "example": "with-tooltip",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/with-tooltip",
@@ -3617,6 +3745,34 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 43,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 45,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 46,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 47,
+      "line": "<Tooltip.Item label=\"contributions\" value={data.value ?? 0} format=\"integer\" />"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -3732,210 +3888,210 @@
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 33,
+      "lineNumber": 40,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 35,
+      "lineNumber": 42,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 36,
+      "lineNumber": 43,
       "line": "<Tooltip.List>"
     },
     {
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 37,
+      "lineNumber": 44,
       "line": "<Tooltip.Item label=\"baseline\" value={data.baseline} color=\"var(--color-primary)\" />"
     },
     {
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 38,
+      "lineNumber": 45,
       "line": "<Tooltip.Item label=\"value\" value={data.value} color=\"var(--color-secondary)\" />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 55,
+      "lineNumber": 54,
       "line": "<Tooltip.List>"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 56,
+      "lineNumber": 55,
       "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Tooltip.Item label=\"efficiency\" value={data.efficiency} />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 59,
+      "lineNumber": 60,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 61,
+      "lineNumber": 62,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 62,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "compound-dual-axis-with-stacked-charts",
-      "component": "Chart",
-      "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 63,
-      "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 65,
       "line": "<Tooltip.Item label=\"efficiency\" value={data.efficiency} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 48,
+      "lineNumber": 59,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 50,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+      "lineNumber": 61,
+      "line": "<Tooltip.Header value={data.date} format={{ type: 'day', options: { utc: true } }} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 51,
+      "lineNumber": 62,
       "line": "<Tooltip.List>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 52,
+      "lineNumber": 63,
       "line": "<Tooltip.Item label=\"open\" value={data.open} format=\"currency\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 53,
+      "lineNumber": 64,
       "line": "<Tooltip.Item label=\"close\" value={data.close} format=\"currency\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 54,
+      "lineNumber": 65,
       "line": "<Tooltip.Item label=\"high\" value={data.high} format=\"currency\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 55,
+      "lineNumber": 66,
       "line": "<Tooltip.Item label=\"low\" value={data.low} format=\"currency\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 56,
+      "lineNumber": 67,
       "line": "<Tooltip.Item label=\"volume\" value={data.volume} format=\"integer\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 83,
+      "lineNumber": 84,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 85,
+      "lineNumber": 86,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 86,
+      "lineNumber": 87,
       "line": "<Tooltip.List>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 87,
+      "lineNumber": 88,
       "line": "<Tooltip.Item label=\"rain\" color=\"hsl(200 100% 50%)\" value={data.rain} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 88,
+      "lineNumber": 89,
       "line": "<Tooltip.Item"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 93,
+      "lineNumber": 94,
       "line": "<Tooltip.Item label=\"dirtyh2o\" color=\"hsl(0, 84%, 60%)\" value={data.dirtyh2o} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 94,
+      "lineNumber": 95,
       "line": "<Tooltip.Item"
     },
     {
@@ -3974,6 +4130,125 @@
       "line": "<Tooltip.Item label=\"mass\" value={data.body_mass_g} />"
     },
     {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 106,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 108,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 109,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 110,
+      "line": "<Tooltip.Item label=\"Population\" value={data.population} format=\"integer\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 83,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 85,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 86,
+      "line": "<Tooltip.Item label=\"x\" value={data.x} format=\"decimal\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 87,
+      "line": "<Tooltip.Item label=\"y\" value={data.y} format=\"decimal\" />"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 88,
+      "line": "<Tooltip.Item label=\"z\" value={data.z} format=\"decimal\" />"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 62,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 64,
+      "line": "<Tooltip.Header>{data.year} · Basket {data.basket}</Tooltip.Header>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 65,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label={data.fruit} value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 138,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 140,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 148,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 149,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
+    },
+    {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
@@ -3999,27 +4274,27 @@
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
       "lineNumber": 62,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
-      "lineNumber": 71,
+      "lineNumber": 65,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
-      "lineNumber": 73,
+      "lineNumber": 67,
       "line": "<Tooltip.Item"
     },
     {
       "example": "mixed-marks-with-stack",
       "component": "Chart",
       "path": "/docs/components/Chart/mixed-marks-with-stack",
-      "lineNumber": 79,
+      "lineNumber": 73,
       "line": "<Tooltip.Item label=\"target\" value={data.target} format=\"integer\" valueAlign=\"right\" />"
     },
     {
@@ -4891,6 +5166,34 @@
       "line": "<Tooltip.Item label=\"value\" value={data.data.value} format=\"integer\" />"
     },
     {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 45,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 47,
+      "line": "<Tooltip.Header>{data.data[0].name}{data.count > 1 ? ' and nearby' : ''}</Tooltip.Header>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 48,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"Airports\" value={data.count} />"
+    },
+    {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
@@ -5031,6 +5334,55 @@
       "line": "<Tooltip.Root>"
     },
     {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 75,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 78,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 79,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 80,
+      "line": "<Tooltip.Item label=\"Democratic\" value={share?.dem} format=\"percent\" />"
+    },
+    {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 81,
+      "line": "<Tooltip.Item label=\"Republican\" value={share?.gop} format=\"percent\" />"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 308,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 310,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
@@ -5083,42 +5435,42 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 137,
+      "lineNumber": 191,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 140,
+      "lineNumber": 194,
       "line": "<Tooltip.List>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 141,
+      "lineNumber": 195,
       "line": "<Tooltip.Item label=\"Name\" value={tz_name1st} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 142,
+      "lineNumber": 196,
       "line": "<Tooltip.Item label=\"Places\" value={places} classes={{ value: 'max-w-[200px]' }} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 143,
+      "lineNumber": 197,
       "line": "<Tooltip.Item label=\"Timezone\" value={time_zone} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 144,
+      "lineNumber": 198,
       "line": "<Tooltip.Item"
     },
     {
@@ -5633,6 +5985,90 @@
       "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 198,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 201,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 207,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 291,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 298,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 304,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 305,
+      "line": "<Tooltip.Item label=\"Week\" value={d.week === 'Pre' ? 'Preseason' : d.week} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 306,
+      "line": "<Tooltip.Item label=\"Rank\" value=\"{d.tied ? 'T-' : '#'}{d.rank}\" />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 308,
+      "line": "<Tooltip.Item label=\"Record\" value={d.record} />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 312,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 314,
+      "line": "<Tooltip.Item label=\"Games\" value=\"Loading...\" />"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 336,
+      "line": "<Tooltip.Item label=\"Games\" value=\"None\" />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -6086,6 +6522,34 @@
       "path": "/docs/components/Partition/sunburst",
       "lineNumber": 140,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 104,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 106,
+      "line": "<Tooltip.Header>{data.fruit}</Tooltip.Header>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 107,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 108,
+      "line": "<Tooltip.Item label=\"count\" value={data.count} />"
     },
     {
       "example": "tooltip",
@@ -7744,20 +8208,20 @@
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
       "lineNumber": 68,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 76,
+      "lineNumber": 70,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "custom-symbol",
       "component": "Waffle",
       "path": "/docs/components/Waffle/custom-symbol",
-      "lineNumber": 77,
+      "lineNumber": 71,
       "line": "<Tooltip.Item"
     },
     {
@@ -7898,20 +8362,20 @@
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
       "lineNumber": 56,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 64,
+      "lineNumber": 58,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "olympians-weight-by-sex",
       "component": "Waffle",
       "path": "/docs/components/Waffle/olympians-weight-by-sex",
-      "lineNumber": 65,
+      "lineNumber": 59,
       "line": "<Tooltip.Item"
     },
     {
@@ -7940,20 +8404,20 @@
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
       "lineNumber": 55,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 63,
+      "lineNumber": 57,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "penguins",
       "component": "Waffle",
       "path": "/docs/components/Waffle/penguins",
-      "lineNumber": 64,
+      "lineNumber": 58,
       "line": "<Tooltip.Item"
     },
     {
@@ -7982,20 +8446,20 @@
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
       "lineNumber": 48,
-      "line": "<Tooltip.Item"
+      "line": "<Tooltip.Item seriesKey={s.key} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 56,
+      "lineNumber": 50,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "stacked",
       "component": "Waffle",
       "path": "/docs/components/Waffle/stacked",
-      "lineNumber": 57,
+      "lineNumber": 51,
       "line": "<Tooltip.Item"
     },
     {
@@ -8027,5 +8491,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.673Z"
+  "updatedAt": "2026-10-26T02:35:37.082Z"
 }

@@ -26,7 +26,9 @@
           "lineNumber": 9,
           "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "explicit-offsets",
@@ -53,7 +55,9 @@
           "lineNumber": 14,
           "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "tailwind-colors",
@@ -80,7 +84,9 @@
           "lineNumber": 10,
           "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "units",
@@ -107,7 +113,9 @@
           "lineNumber": 11,
           "line": "<Rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
@@ -455,10 +463,31 @@
       "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
     },
     {
-      "example": "bump-state-population-ranks",
+      "example": "bump-sports-rankings",
       "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 103,
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 219,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 223,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 227,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 231,
       "line": "<LinearGradient"
     },
     {
@@ -466,6 +495,13 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
       "lineNumber": 107,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 111,
       "line": "<LinearGradient"
     },
     {
@@ -588,5 +624,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.738Z"
+  "updatedAt": "2026-10-26T02:35:36.553Z"
 }

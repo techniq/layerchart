@@ -1,0 +1,244 @@
+{
+  "component": "GeoBin",
+  "examples": [
+    {
+      "name": "columns",
+      "title": "columns",
+      "path": "/docs/components/GeoBin/columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 34,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoBin",
+          "lineNumber": 36,
+          "line": "<GeoBin size={14} z=\"count\" class=\"stroke-surface-100/30\" />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "dot-globe",
+      "title": "dot globe",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 37,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoBin",
+          "lineNumber": 38,
+          "line": "<GeoBin size={spacing}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 40,
+          "line": "<Circle"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "land",
+      "title": "land",
+      "path": "/docs/components/GeoBin/land",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 44,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoBin",
+          "lineNumber": 46,
+          "line": "<GeoBin"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "us-population",
+      "title": "us population",
+      "path": "/docs/components/GeoBin/us-population",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 49,
+          "line": "<Legend"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 56,
+          "line": "<GeoPath geojson={borders} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+        },
+        {
+          "component": "GeoBin",
+          "lineNumber": 58,
+          "line": "<GeoBin shape=\"square\" step={0.25} weight={(d) => d[2]} fill=\"count\" />"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "world-airports",
+      "title": "world airports",
+      "path": "/docs/components/GeoBin/world-airports",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 34,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoBin",
+          "lineNumber": 36,
+          "line": "<GeoBin"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 45,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "world-population",
+      "title": "world population",
+      "path": "/docs/components/GeoBin/world-population",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 38,
+          "line": "<Chart"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 54,
+          "line": "<Legend title=\"People per km² (2020)\" placement=\"top-left\" />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 56,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoBin",
+          "lineNumber": 59,
+          "line": "<GeoBin"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 36,
+      "line": "<GeoBin size={14} z=\"count\" class=\"stroke-surface-100/30\" />"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 38,
+      "line": "<GeoBin size={spacing}>"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 46,
+      "line": "<GeoBin"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 58,
+      "line": "<GeoBin shape=\"square\" step={0.25} weight={(d) => d[2]} fill=\"count\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 36,
+      "line": "<GeoBin"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 59,
+      "line": "<GeoBin"
+    }
+  ],
+  "updatedAt": "2026-10-22T21:41:13.287Z"
+}

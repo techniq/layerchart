@@ -36,7 +36,9 @@
           "lineNumber": 161,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "bubble-map",
@@ -83,7 +85,9 @@
           "lineNumber": 142,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "choropleth",
@@ -115,7 +119,9 @@
           "lineNumber": 109,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "eclipses-globe",
@@ -152,7 +158,73 @@
           "lineNumber": 94,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
+    },
+    {
+      "name": "election-isometric",
+      "title": "election isometric",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 59,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 63,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 75,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "geojson-drilldown",
+      "title": "GeoJSON drilldown",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 253,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 273,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 275,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" onclick={() => select([])} />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 276,
+          "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 308,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "description": "Click to drill down from continents to countries, states, and counties.",
+      "createdAt": "2026-10-26T02:34:19.000Z",
+      "updatedAt": "2026-10-26T02:34:19.000Z"
     },
     {
       "name": "interpolating-projections",
@@ -179,7 +251,9 @@
           "lineNumber": 183,
           "line": "<Graticule class=\"stroke-surface-content/10\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-03T05:11:09.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "paint-brush-selection",
@@ -216,7 +290,9 @@
           "lineNumber": 451,
           "line": "<Path"
         }
-      ]
+      ],
+      "createdAt": "2026-04-14T03:50:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "sketchy-globe",
@@ -243,7 +319,9 @@
           "lineNumber": 58,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "spike-map",
@@ -275,7 +353,9 @@
           "lineNumber": 119,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "submarine-cables-globe",
@@ -317,7 +397,9 @@
           "lineNumber": 96,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "timezones",
@@ -326,45 +408,47 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 98,
+          "lineNumber": 141,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 106,
+          "lineNumber": 160,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 107,
+          "lineNumber": 161,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
           "component": "GeoClipPath",
-          "lineNumber": 109,
+          "lineNumber": 163,
           "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
         },
         {
           "component": "ClipPath",
-          "lineNumber": 129,
+          "lineNumber": 183,
           "line": "<ClipPath useId=\"globe\">"
         },
         {
           "component": "Blur",
-          "lineNumber": 130,
+          "lineNumber": 184,
           "line": "<Blur>"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 131,
+          "lineNumber": 185,
           "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 137,
+          "lineNumber": 191,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-23T05:55:47.000Z"
     },
     {
       "name": "tooltip",
@@ -396,7 +480,9 @@
           "lineNumber": 48,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-canvas",
@@ -423,7 +509,9 @@
           "lineNumber": 126,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-canvas-scale-extent",
@@ -445,7 +533,9 @@
           "lineNumber": 38,
           "line": "<GeoPath"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-globe-constrain",
@@ -472,7 +562,9 @@
           "lineNumber": 39,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "transform-globe-inertia",
@@ -499,7 +591,9 @@
           "lineNumber": 53,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     },
     {
       "name": "transform-projection",
@@ -526,7 +620,9 @@
           "lineNumber": 124,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-world-canvas",
@@ -558,7 +654,9 @@
           "lineNumber": 117,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "transform-world-projection",
@@ -590,7 +688,9 @@
           "lineNumber": 127,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "translucent-globe",
@@ -627,7 +727,9 @@
           "lineNumber": 80,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-country-map",
@@ -654,7 +756,9 @@
           "lineNumber": 40,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-09-03T14:20:08.000Z"
     },
     {
       "name": "us-state",
@@ -676,7 +780,9 @@
           "lineNumber": 48,
           "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-state-with-counties",
@@ -703,7 +809,9 @@
           "lineNumber": 66,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "us-state-with-surrounding-states",
@@ -735,7 +843,9 @@
           "lineNumber": 71,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -755,6 +865,41 @@
     },
     {
       "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 40,
+      "line": "<GeoPath geojson={nation} class=\"fill-surface-content/5 stroke-none\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 41,
+      "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 32,
+      "line": "<GeoPath geojson={nation} class=\"fill-surface-content/5 stroke-surface-content/30\" />"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 33,
+      "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/20\" />"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 52,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
       "lineNumber": 47,
@@ -766,6 +911,76 @@
       "path": "/docs/components/Density/walmart",
       "lineNumber": 52,
       "line": "<GeoPath"
+    },
+    {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 34,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 35,
+      "line": "<GeoPath geojson={countries} class=\"fill-surface-content/10 stroke-none\" />"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 37,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 44,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 56,
+      "line": "<GeoPath geojson={borders} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 59,
+      "line": "<GeoPath geojson={states} class=\"fill-none stroke-surface-content/20\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 34,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 35,
+      "line": "<GeoPath geojson={countries} class=\"fill-surface-content/10 stroke-none\" />"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 56,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-100 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 57,
+      "line": "<GeoPath geojson={land} class=\"fill-surface-content/10 stroke-none\" />"
     },
     {
       "example": "earthquake-globe",
@@ -943,6 +1158,41 @@
       "line": "<GeoPath"
     },
     {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 63,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 275,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" onclick={() => select([])} />"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 282,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 295,
+      "line": "<GeoPath geojson={selected[depth]} class=\"fill-white stroke-white pointer-events-none\" />"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 301,
+      "line": "<GeoPath"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -1037,28 +1287,28 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 107,
+      "lineNumber": 161,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 111,
+      "lineNumber": 165,
       "line": "<GeoPath"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 121,
+      "lineNumber": 175,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 fill-gray-900/20 pointer-events-none\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 125,
+      "lineNumber": 179,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 pointer-events-none\" />"
     },
     {
@@ -1608,5 +1858,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.038Z"
+  "updatedAt": "2026-10-26T02:35:36.178Z"
 }

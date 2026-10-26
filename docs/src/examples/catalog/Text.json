@@ -31,7 +31,9 @@
           "lineNumber": 28,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -68,7 +70,9 @@
           "lineNumber": 43,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "data-mode",
@@ -100,7 +104,9 @@
           "lineNumber": 26,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-06T12:20:24.000Z"
     },
     {
       "name": "playground",
@@ -127,7 +133,9 @@
           "lineNumber": 48,
           "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "segments",
@@ -149,7 +157,9 @@
           "lineNumber": 7,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-04-12T23:31:48.000Z",
+      "updatedAt": "2026-04-17T13:51:25.000Z"
     },
     {
       "name": "truncate-axis-labels",
@@ -161,7 +171,9 @@
           "lineNumber": 28,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "word-wrap-axis-labels",
@@ -173,7 +185,9 @@
           "lineNumber": 23,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "word-wrap-with-explicit-newline",
@@ -195,7 +209,9 @@
           "lineNumber": 10,
           "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
@@ -515,6 +531,13 @@
       "line": "<Text"
     },
     {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 30,
+      "line": "<Text"
+    },
+    {
       "example": "constant-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/constant-labels",
@@ -568,6 +591,13 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-wrap",
       "lineNumber": 80,
+      "line": "<Text"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 119,
       "line": "<Text"
     },
     {
@@ -739,6 +769,13 @@
       "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-8} class=\"text-xs fill-surface-content\" />"
     },
     {
+      "example": "series-state",
+      "component": "Group",
+      "path": "/docs/components/Group/series-state",
+      "lineNumber": 35,
+      "line": "<Text value={s.key} dx={8} dy={4} class=\"text-xs fill-surface-content\" />"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -749,7 +786,7 @@
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 160,
+      "lineNumber": 164,
       "line": "<text"
     },
     {
@@ -935,6 +972,13 @@
       "line": "<Text value=\"end\" verticalAnchor=\"middle\" dx={8} />"
     },
     {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 65,
+      "line": "<Text"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -1023,6 +1067,13 @@
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
       "lineNumber": 44,
+      "line": "<Text"
+    },
+    {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 69,
       "line": "<Text"
     },
     {
@@ -1166,5 +1217,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:08.583Z"
+  "updatedAt": "2026-10-22T21:41:14.175Z"
 }

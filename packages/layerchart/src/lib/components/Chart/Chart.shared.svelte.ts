@@ -17,6 +17,7 @@ import type {
   YRangeWithScale,
 } from '$lib/utils/types.js';
 import type { GeoStateProps } from '$lib/states/geo.svelte.js';
+import type { ChartViewProp } from '$lib/views/view.js';
 import type { BrushDomainType } from '$lib/states/brush.svelte.js';
 import type { SeriesLayout } from '$lib/states/series.svelte.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
@@ -137,6 +138,11 @@ export type ChartPropsWithoutHTML<
   x1?: Accessor<T>;
   y1?: Accessor<T>;
   c?: Accessor<T>;
+  /**
+   * Split the data into a separate path per distinct value for `Spline` / `Area`.  Only needed when
+   * the split isn't the color (`c`, or a `stroke` / `fill` naming a data property).
+   */
+  g?: Accessor<T>;
 
   /**
    * Partition the data into a column of panels ("small multiples"), one per distinct value.
@@ -214,8 +220,19 @@ export type ChartPropsWithoutHTML<
   yBaseline?: number | null;
   xInterval?: TimeInterval | null;
   yInterval?: TimeInterval | null;
-  valueAxis?: 'x' | 'y';
+  /**
+   * The axis values run along, which `seriesLayout` stacks.  Inferred as `x` / `y` from which scale
+   * is a band; `'z'` stacks heights on an `isometric` chart.
+   */
+  valueAxis?: 'x' | 'y' | 'z';
   radial?: boolean;
+
+  /**
+   * How the plot is seen: `view={isometric}` draws it as a floor seen at an angle (layers with
+   * `ignoreTransform` stay flat), and `view={isometric({ rotate, tilt })}` changes the angle.
+   * Defaults to the `view` setting; `null` opts a chart out.
+   */
+  view?: ChartViewProp | null;
 
   children?: Snippet<[{ context: ChartState<T, XScale, YScale> }]>;
 

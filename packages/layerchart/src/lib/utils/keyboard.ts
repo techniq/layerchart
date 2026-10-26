@@ -39,7 +39,7 @@ export type KeyboardNavTarget = { data: any; seriesKey: string | null };
  */
 export type KeyboardNavContext = {
   flatData: any[];
-  valueAxis: 'x' | 'y';
+  valueAxis: 'x' | 'y' | 'z';
   xGet: (d: any) => any;
   yGet: (d: any) => any;
   cKey: (d: any) => any;
@@ -53,14 +53,15 @@ export type KeyboardNavContext = {
 
 /**
  * Where a row sits visually: the facet panel it belongs to, then its pixel position along the
- * position axis (the one that isn't `valueAxis`).
+ * position axis — `y` on a horizontal chart, and `x` otherwise (including an `isometric` chart whose
+ * value is the height, `z`).
  *
  * Pixels rather than domain values, so the order is the one on screen whatever the scale — a band
  * scale's domain order, a reversed range, dates and numbers alike.
  */
 function positionOf(ctx: KeyboardNavContext, d: any): [panel: number, pixel: number] {
   const panel = ctx.facet?.enabled ? ctx.facet.panels.findIndex((p) => p.has(d)) : 0;
-  const scaled = ctx.valueAxis === 'y' ? ctx.xGet(d) : ctx.yGet(d);
+  const scaled = ctx.valueAxis === 'x' ? ctx.yGet(d) : ctx.xGet(d);
   const pixel = Array.isArray(scaled) ? scaled[0] : scaled;
   return [panel, Number(pixel)];
 }

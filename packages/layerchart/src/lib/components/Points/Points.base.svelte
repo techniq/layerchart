@@ -27,6 +27,7 @@
     stroke,
     strokeWidth,
     opacity,
+    z,
     children,
     ...restProps
   }: PointsBaseProps = $props();
@@ -46,6 +47,7 @@
         stroke,
         strokeWidth,
         opacity,
+        z,
       }) as PointsProps
   );
 
@@ -75,6 +77,7 @@
       cx={point.x}
       cy={point.y}
       r={point.r}
+      z={point.z}
       fill={fill ?? c.series?.color ?? (c.ctx.config.c ? c.ctx.cGet(point.data) : null)}
       {fillOpacity}
       {stroke}

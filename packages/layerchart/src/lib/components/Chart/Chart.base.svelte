@@ -80,8 +80,11 @@
   // nested rest/spread proxies). Brush selections are supplied as getters so
   // the chart's domain calculation can layer them on top of `props.xDomain`
   // / `props.yDomain` at the read sites.
+  const settings = getSettings();
+
   const chartState = new ChartState<TData, XScale, YScale>(
-    props as ChartPropsWithoutHTML<TData, XScale, YScale>
+    props as ChartPropsWithoutHTML<TData, XScale, YScale>,
+    settings
   );
 
   let ref = $state<HTMLElement>();
@@ -111,7 +114,6 @@
    */
   const rootAriaLabel = $derived(keyboard ? undefined : restProps['aria-label']);
 
-  const settings = getSettings();
   $effect(() => {
     settings.debug = debug;
   });
@@ -149,18 +151,18 @@
     }
   });
 
+  /**
+   * Where a `projection` transform starts: the projection as its props place it — fitted, and with
+   * any `scale` / `translate` — so the chart doesn't jump once `TransformContext` loads
+   */
   const initialTransform = $derived.by(() => {
-    if (
-      transform?.mode !== 'projection' ||
-      !(resolvedApply.translate || resolvedApply.scale) ||
-      !geo?.fitGeojson ||
-      !geo?.projection
-    ) {
+    if (transform?.mode !== 'projection' || !(resolvedApply.translate || resolvedApply.scale)) {
       return undefined;
     }
-    const fitted = geo.projection().fitSize([chartState.width, chartState.height], geo.fitGeojson);
-    const t = fitted.translate();
-    return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
+    const projection = chartState.geoState.untransformedProjection;
+    if (!projection) return undefined;
+    const t = projection.translate();
+    return { translate: { x: t[0], y: t[1] }, scale: projection.scale() };
   });
 
   /**
@@ -175,6 +177,21 @@
     return untrack(() => chartState._initialTransform);
   });
 
+  /** The isometric view the transform turns from (the `isometric` angles, eased), or `null` */
+  const isometricView = $derived.by(() => {
+    if (!chartState.isometricTransform) return null;
+    const { rotate, tilt } = chartState.isometricAngles;
+    return { x: rotate, y: tilt };
+  });
+
+  /**
+   * `x` is the turn and `y` the tilt, in degrees.  Dragging right spins the floor with the pointer
+   * across its front edge; dragging up tips it towards edge on.
+   */
+  function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
+    return { x: x - deltaX / 2, y: Math.min(89, Math.max(0, y - deltaY * 0.3)) };
+  }
+
   /**
    * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
    * two are exclusive: one is `mode: 'projection'`, the other `mode: 'domain'`.
@@ -182,7 +199,13 @@
   const resolvedInitialTransform = $derived(
     transform?.mode === 'projection'
       ? {
-          translate: resolvedApply.translate ? initialTransform?.translate : undefined,
+          // A globe the transform turns starts at its `rotate`, rather than snapping from it to
+          // `[0, 0]` once `TransformContext` loads — translate is its yaw and pitch
+          translate: resolvedApply.translate
+            ? initialTransform?.translate
+            : resolvedApply.rotation && geo?.rotate
+              ? { x: geo.rotate.yaw, y: geo.rotate.pitch }
+              : undefined,
           scale: resolvedApply.scale ? initialTransform?.scale : undefined,
         }
       : { translate: initialZoom?.translate, scale: initialZoom?.scale }
@@ -564,6 +587,8 @@
           mode={transform.mode ?? 'none'}
           initialTranslate={resolvedInitialTransform.translate}
           initialScale={resolvedInitialTransform.scale}
+          initialRotation={isometricView}
+          processRotate={processIsometricRotate}
           {processTranslate}
           {...transformProps}
           scaleExtent={resolvedScaleExtent}

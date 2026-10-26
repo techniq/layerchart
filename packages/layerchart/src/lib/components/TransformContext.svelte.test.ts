@@ -3,6 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
 import TransformTestHarness from '$lib/tests/TransformTestHarness.svelte';
+import { isometric } from '$lib/views/isometric.js';
 import { geoMercator, geoOrthographic } from 'd3-geo';
 
 describe('TransformContext', () => {
@@ -465,6 +466,348 @@ describe('TransformContext', () => {
 
       expect(transform.pinching).toBe(false);
       expect(transform.scale).toBe(1);
+    });
+  });
+
+  describe('click after a drag', () => {
+    /** Render the harness with a clickable child inside the transform context */
+    async function setup(chartProps: Record<string, any>) {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: { height: 300, ...chartProps },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      // TransformContext is lazy-loaded, so wait for it to render
+      const element = await vi.waitFor(() => {
+        const el = document.querySelector<HTMLElement>('.lc-transform-context');
+        expect(el).not.toBeNull();
+        return el!;
+      });
+
+      // Stands in for a mark (ex. a treemap node that zooms when clicked)
+      const mark = document.createElement('div');
+      element.append(mark);
+      const onclick = vi.fn();
+      mark.addEventListener('click', onclick);
+
+      const rect = element.getBoundingClientRect();
+      function dispatch(type: string, x: number, y: number, pointerId = 1) {
+        mark.dispatchEvent(
+          new PointerEvent(type, {
+            pointerId,
+            pointerType: 'mouse',
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      }
+
+      /** The `click` the browser fires after `pointerup` (`detail: 0` is a keyboard click) */
+      function click(x: number, y: number, detail = 1) {
+        mark.dispatchEvent(
+          new MouseEvent('click', {
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            detail,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      }
+
+      /** Press, move, and release, followed by the browser's `click` */
+      function drag(from: [number, number], to: [number, number]) {
+        dispatch('pointerdown', ...from);
+        dispatch('pointermove', ...to);
+        dispatch('pointerup', ...to);
+        click(...to);
+      }
+
+      return {
+        get transform() {
+          return chartContext.transform;
+        },
+        dispatch,
+        click,
+        drag,
+        onclick,
+      };
+    }
+
+    it('should not click what a pan is released over', async () => {
+      const { transform, drag, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [150, 120]);
+
+      expect(transform.translate).toEqual({ x: 50, y: 20 });
+      expect(onclick).not.toHaveBeenCalled();
+    });
+
+    it('should not click what a rotate is released over', async () => {
+      const { transform, drag, onclick } = await setup({
+        view: isometric,
+        transform: { mode: 'canvas', drag: 'rotate' },
+      });
+      await vi.waitFor(() => expect(transform.rotation).not.toBeNull());
+      const before = { ...transform.rotation };
+
+      drag([100, 100], [150, 100]);
+
+      expect(transform.rotation.x).not.toBe(before.x);
+      expect(onclick).not.toHaveBeenCalled();
+    });
+
+    it('should click when the pointer stays within `clickDistance`', async () => {
+      const { drag, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [101, 101]);
+
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should click on the next press after a drag that ended without a click', async () => {
+      const { dispatch, click, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      // Released without the browser firing `click` (ex. over another element)
+      dispatch('pointerdown', 100, 100);
+      dispatch('pointermove', 150, 100);
+      dispatch('pointerup', 150, 100);
+
+      dispatch('pointerdown', 150, 100);
+      dispatch('pointerup', 150, 100);
+      click(150, 100);
+
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should only swallow the one click', async () => {
+      const { drag, click, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [150, 100]);
+      expect(onclick).not.toHaveBeenCalled();
+
+      click(150, 100);
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should not swallow a keyboard click', async () => {
+      const { dispatch, click, onclick } = await setup({ transform: { mode: 'canvas' } });
+
+      dispatch('pointerdown', 100, 100);
+      dispatch('pointermove', 150, 100);
+      dispatch('pointerup', 150, 100);
+      click(150, 100, 0);
+
+      expect(onclick).toHaveBeenCalledOnce();
+    });
+
+    it('should not click what a pinch is released over', async () => {
+      const { transform, dispatch, click, onclick } = await setup({
+        transform: { mode: 'canvas' },
+      });
+
+      dispatch('pointerdown', 100, 100, 1);
+      dispatch('pointerdown', 200, 100, 2);
+      dispatch('pointermove', 300, 100, 2);
+      dispatch('pointerup', 300, 100, 2);
+      dispatch('pointerup', 100, 100, 1);
+      click(100, 100);
+
+      expect(transform.scale).toBe(2);
+      expect(onclick).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('scroll wheel', () => {
+    /** Render the harness and return the transform state along with a wheel event helper */
+    async function setup(chartProps: Record<string, any>) {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: { height: 300, ...chartProps },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      // TransformContext is lazy-loaded, so wait for it to render
+      const element = await vi.waitFor(() => {
+        const el = document.querySelector<HTMLElement>('.lc-transform-context');
+        expect(el).not.toBeNull();
+        return el!;
+      });
+
+      const rect = element.getBoundingClientRect();
+
+      /** Returns the event, so a test can ask whether the page would have scrolled instead */
+      function wheel(init: WheelEventInit) {
+        const event = new WheelEvent('wheel', {
+          clientX: rect.left + 100,
+          clientY: rect.top + 100,
+          bubbles: true,
+          cancelable: true,
+          ...init,
+        });
+        element.dispatchEvent(event);
+        return event;
+      }
+
+      return {
+        get transform() {
+          return chartContext.transform;
+        },
+        wheel,
+      };
+    }
+
+    /** What scrolling up 100 pixels zooms to: 2 ^ (100 * 0.002), d3-zoom's wheel delta */
+    const ZOOM_IN = Math.pow(2, 0.2);
+
+    const domainChart = {
+      data: [
+        { date: 0, value: 1 },
+        { date: 10, value: 2 },
+      ],
+      x: 'date',
+      y: 'value',
+    };
+
+    it('should zoom on a vertical scroll', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale' },
+      });
+
+      const event = wheel({ deltaY: -100 });
+
+      expect(transform.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('should leave the page to scroll when the activation key is not held', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      const event = wheel({ deltaY: -100 });
+
+      expect(transform.scale).toBe(1);
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('should zoom on a vertical scroll with shift held as the activation key', async () => {
+      // A trackpad: holding shift does not turn its vertical swipe sideways
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      wheel({ deltaY: -100, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(ZOOM_IN, 5);
+    });
+
+    it('should zoom on a scroll that holding shift turned sideways', async () => {
+      // A mouse wheel on macOS, or any wheel in Firefox: shift moves the scroll to `deltaX`
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      const event = wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(event.defaultPrevented).toBe(true);
+
+      // And back out again, the same way
+      wheel({ deltaX: 100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(1, 5);
+    });
+
+    it('should honour `deltaMode` on a scroll that holding shift turned sideways', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      // Three lines, as Firefox reports a mouse wheel notch: 2 ^ (3 * 0.05)
+      wheel({ deltaX: -3, deltaY: 0, deltaMode: WheelEvent.DOM_DELTA_LINE, shiftKey: true });
+
+      expect(transform.scale).toBeCloseTo(Math.pow(2, 0.15), 5);
+    });
+
+    it('should not zoom on a sideways scroll without an activation key', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0 });
+      wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBe(1);
+    });
+
+    it('should not read a sideways scroll as a zoom for activation keys other than shift', async () => {
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'alt' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0, altKey: true, shiftKey: true });
+
+      expect(transform.scale).toBe(1);
+    });
+
+    it('should still pan on a horizontal trackpad swipe in domain mode', async () => {
+      const { transform, wheel } = await setup({
+        ...domainChart,
+        transform: { mode: 'domain', scrollMode: 'scale' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0 });
+
+      expect(transform.scale).toBe(1);
+      expect(transform.translate.x).not.toBe(0);
+    });
+
+    it('should zoom rather than also pan on a shift-turned scroll in domain mode', async () => {
+      const { transform, wheel } = await setup({
+        ...domainChart,
+        transform: { mode: 'domain', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      // Where an upright scroll leaves the view...
+      wheel({ deltaY: -100, shiftKey: true });
+      const upright = { scale: transform.scale, translate: { ...transform.translate } };
+      transform.reset({ instant: true });
+      await vi.waitFor(() => expect(transform.scale).toBe(1));
+
+      // ...is where the same scroll, turned sideways by shift, leaves it too
+      wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(upright.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(transform.scale).toBeCloseTo(upright.scale, 5);
+      expect(transform.translate.x).toBeCloseTo(upright.translate.x, 5);
+      expect(transform.translate.y).toBeCloseTo(upright.translate.y, 5);
+    });
+
+    it('should leave a sideways scroll alone in translate mode', async () => {
+      // Panning reads both axes already, and a sideways pan with shift held is a real gesture
+      const { transform, wheel } = await setup({
+        transform: { mode: 'canvas', scrollMode: 'translate', scrollActivationKey: 'shift' },
+      });
+
+      wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
+
+      expect(transform.scale).toBe(1);
+      expect(transform.translate.x).not.toBe(0);
+      expect(transform.translate.y).toBe(0);
     });
   });
 });

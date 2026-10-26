@@ -1,3 +1,5 @@
+export { default as GeoBin } from './GeoBin/GeoBin.svelte';
+export * from './GeoBin/GeoBin.svelte';
 export { default as GeoCircle } from './GeoCircle/GeoCircle.svelte';
 export * from './GeoCircle/GeoCircle.svelte';
 export { default as GeoClipPath } from './GeoClipPath/GeoClipPath.svelte';

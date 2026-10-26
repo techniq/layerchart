@@ -470,7 +470,9 @@ function calcBaseRange(
     max = 100;
   } else {
     min = s === 'r' ? 1 : 0;
-    max = s === 'y' ? height : s === 'r' ? 25 : width;
+    // `z` is a height off an `isometric` floor — half the plot's shorter side reads as tall
+    // without towering over it
+    max = s === 'y' ? height : s === 'r' ? 25 : s === 'z' ? Math.min(width, height) / 2 : width;
   }
 
   return reverse === true ? [max, min] : [min, max];

@@ -28,12 +28,12 @@ function areaPaths() {
 }
 
 describe('Area', () => {
-  describe('z (grouping)', () => {
+  describe('g (grouping)', () => {
     it('draws one area per group from a single mark', async () => {
       render(TestHarness, {
         component: Area,
         chartProps: chartProps(),
-        componentProps: { z: 'group' },
+        componentProps: { g: 'group' },
       });
 
       await expect.poll(() => areaPaths().length).toBe(2);
@@ -49,10 +49,10 @@ describe('Area', () => {
       await expect.poll(() => areaPaths().length).toBe(1);
     });
 
-    it('falls back to the chart`s `z` accessor', async () => {
+    it('falls back to the chart`s `g` accessor', async () => {
       render(TestHarness, {
         component: Area,
-        chartProps: chartProps({ z: 'group' }),
+        chartProps: chartProps({ g: 'group' }),
         componentProps: {},
       });
 
@@ -88,7 +88,7 @@ describe('Area', () => {
       render(TestHarness, {
         component: Area,
         chartProps: chartProps(),
-        componentProps: { z: 'group', line: true },
+        componentProps: { g: 'group', line: true },
       });
 
       await expect.poll(() => areaPaths().length).toBe(2);
@@ -102,7 +102,7 @@ describe('Area', () => {
         component: Area,
         chartProps: chartProps(),
         componentProps: {
-          z: 'group',
+          g: 'group',
           class: (d: any) => (d.group === 'a' ? 'first-area' : 'second-area'),
         },
       });

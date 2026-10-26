@@ -40,7 +40,8 @@
     yInterval,
     tooltipContext = true,
     keyboard = true,
-    marks,
+    marks: marksProp,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: BarChartBaseProps<TData> = $props();
@@ -77,6 +78,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   x={xProp}
@@ -117,17 +119,17 @@
   {props}
 >
   {#snippet marks({ context, facet }: { context: any; facet: any })}
-    {#if typeof marks === 'function'}
-      {@render marks({ context, facet })}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp({ context, facet })}
     {:else}
       {#each context.series.visibleSeries as s, i (s.key)}
         <Bars
           seriesKey={s.key}
           x1={valueAxis === 'y' && isGroupSeries && restProps.x1 == null
-            ? (d: any) => s.value ?? s.key
+            ? (d: any) => s.key
             : undefined}
           y1={valueAxis === 'x' && isGroupSeries && restProps.y1 == null
-            ? (d: any) => s.value ?? s.key
+            ? (d: any) => s.key
             : undefined}
           rounded={context.series.stackLayout != null
             ? // Per row rather than per series: a sub-band or a gap in the data can leave the

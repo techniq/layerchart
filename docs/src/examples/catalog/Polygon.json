@@ -21,7 +21,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "12-point-star",
@@ -43,7 +45,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "14-point-star",
@@ -65,7 +69,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "16-point-star",
@@ -87,7 +93,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "18-point-star",
@@ -109,7 +117,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "20-point-star",
@@ -131,7 +141,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "6-point-star",
@@ -153,7 +165,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "8-point-star",
@@ -175,7 +189,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "arrow",
@@ -202,7 +218,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "color-via-ordinal-scale",
@@ -229,7 +247,9 @@
           "lineNumber": 27,
           "line": "<Polygon cx=\"date\" cy=\"value\" r={8} points={6} fill=\"category\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "color-via-threshold-scale",
@@ -261,7 +281,9 @@
           "lineNumber": 42,
           "line": "<Polygon cx=\"date\" cy=\"value\" r={8} points={6} fill=\"value\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "cross",
@@ -288,7 +310,9 @@
           "lineNumber": 18,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "data-mode",
@@ -315,7 +339,9 @@
           "lineNumber": 25,
           "line": "<Polygon cx=\"date\" cy=\"value\" r={8} points={6} class=\"fill-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "diamond",
@@ -337,7 +363,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "hexagon",
@@ -359,7 +387,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "octagon",
@@ -381,7 +411,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "parallelogram",
@@ -403,7 +435,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "pentagon",
@@ -425,7 +459,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "playground",
@@ -447,7 +483,9 @@
           "lineNumber": 24,
           "line": "<Polygon cx={context.width / 2} cy={context.height / 2} r={100} {...config} />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "rectangle",
@@ -469,7 +507,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "rhombus",
@@ -491,7 +531,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "square",
@@ -513,7 +555,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "trapezoid",
@@ -535,7 +579,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
       "name": "triangle",
@@ -557,7 +603,9 @@
           "lineNumber": 14,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
@@ -758,6 +806,13 @@
       "line": "<Polygon"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 59,
+      "line": "<Polygon"
+    },
+    {
       "example": "shapes",
       "component": "Vector",
       "path": "/docs/components/Vector/shapes",
@@ -772,5 +827,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:27.453Z"
+  "updatedAt": "2026-10-22T21:41:13.967Z"
 }

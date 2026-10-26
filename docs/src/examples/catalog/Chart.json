@@ -8,20 +8,22 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 19,
+          "lineNumber": 20,
           "line": "<BarChart"
         },
         {
           "component": "Area",
-          "lineNumber": 29,
-          "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
+          "lineNumber": 31,
+          "line": "<Area"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 33,
+          "lineNumber": 40,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -30,35 +32,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 26,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<Axis"
         },
         {
           "component": "Spline",
-          "lineNumber": 46,
+          "lineNumber": 45,
           "line": "<Spline class=\"stroke-2 stroke-primary\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 48,
+          "lineNumber": 47,
           "line": "<Highlight lines points />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 52,
+          "lineNumber": 51,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "compound-dual-axis-with-stacked-charts",
@@ -66,36 +70,43 @@
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "components": [
         {
+          "component": "ChartGroup",
+          "lineNumber": 13,
+          "line": "<ChartGroup pointer={{ tooltip: false }}>"
+        },
+        {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 16,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 23,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Axis"
         },
         {
           "component": "Spline",
-          "lineNumber": 33,
+          "lineNumber": 35,
           "line": "<Spline class=\"stroke-2 stroke-primary\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 34,
+          "lineNumber": 36,
           "line": "<Highlight lines points />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 59,
+          "lineNumber": 60,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
@@ -103,21 +114,28 @@
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "components": [
         {
+          "component": "ChartGroup",
+          "lineNumber": 18,
+          "line": "<ChartGroup pointer={{ tooltip: false }}>"
+        },
+        {
           "component": "BarChart",
-          "lineNumber": 14,
+          "lineNumber": 21,
           "line": "<BarChart"
         },
         {
           "component": "Spline",
-          "lineNumber": 43,
-          "line": "<Spline y=\"open\" class=\"stroke-primary\" />"
+          "lineNumber": 54,
+          "line": "<Spline x={midday} y=\"open\" class=\"stroke-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 48,
+          "lineNumber": 59,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
@@ -125,21 +143,28 @@
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "components": [
         {
+          "component": "ChartGroup",
+          "lineNumber": 15,
+          "line": "<ChartGroup pointer={{ tooltip: false }}>"
+        },
+        {
           "component": "BarChart",
-          "lineNumber": 17,
+          "lineNumber": 18,
           "line": "<BarChart"
         },
         {
           "component": "Axis",
-          "lineNumber": 68,
+          "lineNumber": 69,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 83,
+          "lineNumber": 84,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "data-chart-multi",
@@ -156,7 +181,9 @@
           "lineNumber": 16,
           "line": "<Spline y=\"apples\" stroke=\"var(--color-apples)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "data-chart-single",
@@ -173,7 +200,9 @@
           "lineNumber": 16,
           "line": "<Spline />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "data-mark-data",
@@ -190,7 +219,9 @@
           "lineNumber": 25,
           "line": "<Spline x=\"date\" y=\"value\" data={temperatureData} stroke=\"var(--color-apples)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "data-primitive-data",
@@ -212,7 +243,9 @@
           "lineNumber": 26,
           "line": "<Circle cx=\"date\" cy=\"value\" data={temperatureData} r={5} fill=\"var(--color-apples)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "data-series-chart-data",
@@ -229,7 +262,9 @@
           "lineNumber": 25,
           "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "data-series-separate-data",
@@ -246,7 +281,9 @@
           "lineNumber": 33,
           "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "facet-annotation",
@@ -268,7 +305,9 @@
           "lineNumber": 41,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-08-16T02:01:54.000Z",
+      "updatedAt": "2026-08-19T14:08:02.000Z"
     },
     {
       "name": "facet-bars",
@@ -280,7 +319,9 @@
           "lineNumber": 36,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-18T18:09:40.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-brush",
@@ -302,7 +343,9 @@
           "lineNumber": 44,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-16T02:01:54.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-brush-band",
@@ -314,7 +357,9 @@
           "lineNumber": 37,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T12:46:36.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-brush-overview",
@@ -346,7 +391,9 @@
           "lineNumber": 76,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T12:46:36.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-brush-summary",
@@ -378,7 +425,9 @@
           "lineNumber": 84,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T12:46:36.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-brush-zoom",
@@ -395,7 +444,9 @@
           "lineNumber": 32,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T12:46:36.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-click",
@@ -407,7 +458,9 @@
           "lineNumber": 37,
           "line": "<BarChart"
         }
-      ]
+      ],
+      "createdAt": "2026-08-25T19:51:23.000Z",
+      "updatedAt": "2026-08-25T19:51:23.000Z"
     },
     {
       "name": "facet-click-panel",
@@ -429,7 +482,9 @@
           "lineNumber": 45,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-25T19:51:23.000Z",
+      "updatedAt": "2026-08-25T19:51:23.000Z"
     },
     {
       "name": "facet-color",
@@ -446,7 +501,9 @@
           "lineNumber": 27,
           "line": "<Circle cx=\"flipper_length_mm\" cy=\"body_mass_g\" r={2.5} fill=\"species\" fillOpacity={0.6} />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-16T02:01:54.000Z",
+      "updatedAt": "2026-08-16T14:55:58.000Z"
     },
     {
       "name": "facet-composed",
@@ -488,7 +545,9 @@
           "lineNumber": 30,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-17T04:05:16.000Z"
     },
     {
       "name": "facet-grid",
@@ -505,7 +564,9 @@
           "lineNumber": 25,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-16T14:55:58.000Z"
     },
     {
       "name": "facet-lines",
@@ -522,7 +583,9 @@
           "lineNumber": 26,
           "line": "<Spline stroke=\"fruit\" class=\"stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-16T14:55:58.000Z"
     },
     {
       "name": "facet-non-faceted-marks",
@@ -544,7 +607,9 @@
           "lineNumber": 29,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-17T18:59:37.000Z"
     },
     {
       "name": "facet-spacing",
@@ -561,7 +626,9 @@
           "lineNumber": 35,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-16T14:55:58.000Z"
     },
     {
       "name": "facet-tooltip",
@@ -608,7 +675,9 @@
           "lineNumber": 34,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-08-16T02:01:54.000Z",
+      "updatedAt": "2026-08-26T18:20:53.000Z"
     },
     {
       "name": "facet-two-dimensional",
@@ -630,7 +699,9 @@
           "lineNumber": 30,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-15T17:24:19.000Z"
     },
     {
       "name": "facet-wrap",
@@ -657,7 +728,9 @@
           "lineNumber": 80,
           "line": "<Text"
         }
-      ]
+      ],
+      "createdAt": "2026-08-16T02:01:54.000Z",
+      "updatedAt": "2026-08-20T12:46:36.000Z"
     },
     {
       "name": "facet-x",
@@ -674,7 +747,9 @@
           "lineNumber": 24,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-15T17:24:19.000Z"
     },
     {
       "name": "facet-y",
@@ -691,7 +766,394 @@
           "lineNumber": 24,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-08-15T17:24:19.000Z",
+      "updatedAt": "2026-08-16T14:55:58.000Z"
+    },
+    {
+      "name": "isometric-areas",
+      "title": "isometric areas",
+      "path": "/docs/components/Chart/isometric-areas",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 58,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 59,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 60,
+          "line": "<Grid x z />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 61,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 70,
+          "line": "<Area"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "isometric-columns",
+      "title": "isometric columns",
+      "path": "/docs/components/Chart/isometric-columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 35,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 38,
+          "line": "<Cell"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-heatmap",
+      "title": "isometric heatmap",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 34,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 37,
+          "line": "<Cell"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-pan-zoom",
+      "title": "isometric pan zoom",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 44,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 45,
+          "line": "<Grid x y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 46,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 49,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 50,
+          "line": "<Circle cx=\"x\" cy=\"y\" r={4} viewport class=\"fill-primary\" />"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-pin-map",
+      "title": "isometric pin map",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 41,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 52,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-200 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 60,
+          "line": "<Line x1={x} y1={y} x2={x} y2={y} z2={height} class=\"stroke-surface-content/50\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 61,
+          "line": "<Circle"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 86,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 106,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-22T21:39:57.000Z",
+      "updatedAt": "2026-10-22T21:39:57.000Z"
+    },
+    {
+      "name": "isometric-playground",
+      "title": "isometric playground",
+      "path": "/docs/components/Chart/isometric-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 76,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 112,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 113,
+          "line": "<Grid x y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 114,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: labels === 'viewport' }} />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 116,
+          "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-scatter",
+      "title": "isometric scatter",
+      "path": "/docs/components/Chart/isometric-scatter",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 13,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice view={isometric} padding={24} height={400} />"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-scatter-3d",
+      "title": "isometric scatter 3d",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 58,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 59,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 60,
+          "line": "<Grid x y z />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 61,
+          "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 66,
+          "line": "<Highlight data={hovered} lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 68,
+          "line": "<Circle cx=\"x\" cy=\"y\" r={6} fill=\"z\" viewport class=\"stroke-surface-100\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 83,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-stacked-columns",
+      "title": "isometric stacked columns",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 49,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 50,
+          "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 51,
+          "line": "<Grid z />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 52,
+          "line": "<Axis placement=\"bottom\" format=\"none\" tickLabelProps={{ viewport: true }} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 56,
+          "line": "<Bars tooltip strokeWidth={1} class=\"stroke-surface-100/40\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 57,
+          "line": "<Highlight points={{ r: 5 }} />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 60,
+          "line": "<Legend placement=\"top-left\" variant=\"swatches\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 62,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
+    },
+    {
+      "name": "isometric-treemap",
+      "title": "isometric treemap",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 71,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 94,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 95,
+          "line": "<Treemap hierarchy={root} paddingOuter={4}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 103,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 119,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 138,
+          "line": "<Tooltip.Root>"
+        }
+      ],
+      "createdAt": "2026-10-08T16:43:08.000Z",
+      "updatedAt": "2026-10-08T16:43:08.000Z"
     },
     {
       "name": "mixed-marks-with-stack",
@@ -738,7 +1200,9 @@
           "lineNumber": 57,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T03:04:59.000Z",
+      "updatedAt": "2026-10-12T02:24:42.000Z"
     },
     {
       "name": "mixed-marks-with-stack-long-data",
@@ -785,7 +1249,9 @@
           "lineNumber": 76,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-08-20T03:04:59.000Z",
+      "updatedAt": "2026-08-20T03:04:59.000Z"
     }
   ],
   "usage": [
@@ -997,6 +1463,13 @@
       "component": "Area",
       "path": "/docs/components/Area/oscilloscope-ridgeline",
       "lineNumber": 136,
+      "line": "<Chart"
+    },
+    {
+      "example": "oscilloscope-ridgeline-isometric",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline-isometric",
+      "lineNumber": 123,
       "line": "<Chart"
     },
     {
@@ -1220,7 +1693,7 @@
       "example": "multiple-axis-same-placement-right",
       "component": "Axis",
       "path": "/docs/components/Axis/multiple-axis-same-placement-right",
-      "lineNumber": 7,
+      "lineNumber": 6,
       "line": "<Chart yDomain={[0, 100]} padding={defaultChartPadding({ right: 90 })} height={300}>"
     },
     {
@@ -1946,6 +2419,90 @@
     },
     {
       "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "image-render",
+      "component": "Bin",
+      "path": "/docs/components/Bin/image-render",
+      "lineNumber": 128,
+      "line": "<Chart {data} x=\"x\" y=\"y\" xDomain={[0, width]} yDomain={[height, 0]} clip>"
+    },
+    {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 50,
+      "line": "<Chart {data} x=\"x\" y=\"y\" padding={size} height={500} clip>"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 52,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 25,
+      "line": "<Chart"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/basic",
       "lineNumber": 27,
@@ -2253,6 +2810,13 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -2319,21 +2883,21 @@
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Chart"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 14,
+      "lineNumber": 16,
       "line": "<Chart"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 39,
+      "lineNumber": 41,
       "line": "<Chart"
     },
     {
@@ -2488,6 +3052,69 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-y",
       "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 31,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 41,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 76,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 31,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 71,
       "line": "<Chart"
     },
     {
@@ -2677,6 +3304,13 @@
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
       "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "volcano-isometric",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-isometric",
+      "lineNumber": 36,
       "line": "<Chart"
     },
     {
@@ -2995,6 +3629,48 @@
       "line": "<Chart"
     },
     {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 19,
+      "line": "<Chart"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 34,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 20,
+      "line": "<Chart"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 38,
+      "line": "<Chart"
+    },
+    {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
@@ -3086,6 +3762,20 @@
       "line": "<Chart"
     },
     {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 50,
+      "line": "<Chart"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 253,
+      "line": "<Chart"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -3124,7 +3814,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 98,
+      "lineNumber": 141,
       "line": "<Chart"
     },
     {
@@ -3541,6 +4231,13 @@
       "line": "<Chart"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 144,
+      "line": "<Chart"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -3681,10 +4378,17 @@
       "line": "<Chart height={320} width={700}>"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 206,
+      "line": "<Chart"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 91,
+      "lineNumber": 95,
       "line": "<Chart"
     },
     {
@@ -3987,6 +4691,13 @@
       "path": "/docs/components/Pie/inner-radius-zero-one",
       "lineNumber": 17,
       "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 42,
+      "line": "<Chart"
     },
     {
       "example": "labels",
@@ -4682,6 +5393,20 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 56,
+      "line": "<Chart"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 45,
+      "line": "<Chart"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -4762,7 +5487,7 @@
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 14,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
@@ -5095,6 +5820,13 @@
       "line": "<Chart"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -5319,5 +6051,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:06.106Z"
+  "updatedAt": "2026-10-26T02:35:35.663Z"
 }

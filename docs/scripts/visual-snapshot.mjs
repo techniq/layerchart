@@ -20,7 +20,9 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
-const CATALOG_DIR = 'src/examples/catalog';
+// Listed from the example sources rather than the catalog, which is regenerated after merging —
+// a PR adding an example is captured before its catalog entry exists
+const EXAMPLES_DIR = 'src/examples/components';
 const DEFAULT_URL = 'http://localhost:3002';
 
 // Above this share of examples failing, the run says more about the environment than the charts
@@ -150,14 +152,16 @@ function extractFingerprint() {
 
 function listExamples(filter) {
 	const examples = [];
-	for (const file of readdirSync(CATALOG_DIR).filter((f) => f.endsWith('.json'))) {
-		const catalog = JSON.parse(readFileSync(join(CATALOG_DIR, file), 'utf8'));
-		const component = catalog.component?.name ?? file.replace(/\.json$/, '');
-		for (const example of catalog.examples ?? []) {
-			if (filter && !`${component}/${example.name}`.toLowerCase().includes(filter.toLowerCase())) {
+	for (const dir of readdirSync(EXAMPLES_DIR, { withFileTypes: true })) {
+		if (!dir.isDirectory()) continue;
+		const component = dir.name;
+		for (const file of readdirSync(join(EXAMPLES_DIR, component))) {
+			if (!file.endsWith('.svelte')) continue;
+			const example = file.replace(/\.svelte$/, '');
+			if (filter && !`${component}/${example}`.toLowerCase().includes(filter.toLowerCase())) {
 				continue;
 			}
-			examples.push({ component, example: example.name });
+			examples.push({ component, example });
 		}
 	}
 	return examples.sort((a, b) => `${a.component}/${a.example}`.localeCompare(`${b.component}/${b.example}`)); // prettier-ignore

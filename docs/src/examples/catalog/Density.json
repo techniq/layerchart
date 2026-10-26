@@ -31,7 +31,9 @@
           "lineNumber": 32,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "basic",
@@ -63,7 +65,9 @@
           "lineNumber": 25,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "stroke-only",
@@ -95,7 +99,9 @@
           "lineNumber": 31,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "thresholds",
@@ -127,7 +133,9 @@
           "lineNumber": 32,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "walmart",
@@ -164,7 +172,9 @@
           "lineNumber": 74,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "weighted",
@@ -201,7 +211,9 @@
           "lineNumber": 37,
           "line": "<Circle"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     }
   ],
   "usage": [

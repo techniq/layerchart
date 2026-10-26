@@ -7,9 +7,10 @@
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { EllipseState, ellipseMarkInfo, type EllipseProps } from './Ellipse.shared.svelte.js';
 
-  let { ...rest }: EllipseProps = $props();
+  // `rotate` turns the ellipse below, and `z` raises it — not HTML attributes
+  let { rotate, z, ...rest }: EllipseProps = $props();
 
-  const c = new EllipseState(() => rest as EllipseProps);
+  const c = new EllipseState(() => ({ ...rest, z }) as EllipseProps);
 
   c.chartCtx.registerComponent({
     name: 'Ellipse',
@@ -45,7 +46,7 @@
       style:border-width={resolvedBorderWidth}
       style:border-color={resolvedStroke}
       style:border-style="solid"
-      style:transform="translate(-50%, -50%)"
+      style:transform="translate(-50%, -50%) rotate({rotate ?? 0}deg)"
       class={cls('lc-ellipse', resolvedClass)}
     ></div>
   {/each}
@@ -64,7 +65,7 @@
     style:border-width={c.staticBorderWidth}
     style:border-color={c.staticStroke}
     style:border-style="solid"
-    style:transform="translate(-50%, -50%)"
+    style:transform="translate(-50%, -50%) rotate({rotate ?? 0}deg)"
     class={cls('lc-ellipse', c.staticClassName)}
   ></div>
 {/if}

@@ -31,7 +31,9 @@
           "lineNumber": 15,
           "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-14T21:40:56.000Z",
+      "updatedAt": "2026-04-14T21:40:56.000Z"
     },
     {
       "name": "clip-snippet",
@@ -73,7 +75,9 @@
           "lineNumber": 15,
           "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-15T15:23:20.000Z",
+      "updatedAt": "2026-04-15T15:23:20.000Z"
     },
     {
       "name": "inverted",
@@ -105,7 +109,9 @@
           "lineNumber": 15,
           "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-14T21:40:56.000Z",
+      "updatedAt": "2026-04-14T21:40:56.000Z"
     },
     {
       "name": "use-id",
@@ -142,7 +148,9 @@
           "lineNumber": 23,
           "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-04-15T15:23:20.000Z",
+      "updatedAt": "2026-04-15T15:23:20.000Z"
     }
   ],
   "usage": [
@@ -192,7 +200,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 129,
+      "lineNumber": 183,
       "line": "<ClipPath useId=\"globe\">"
     },
     {
@@ -203,5 +211,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:24.052Z"
+  "updatedAt": "2026-10-23T06:08:46.880Z"
 }

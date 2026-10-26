@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import contentCollections from '@content-collections/vite';
 import Icons from 'unplugin-icons/vite';
+import { sandboxRegistry } from './src/lib/sandbox/registry-plugin';
 // import devtoolsJson from 'vite-plugin-devtools-json';
 
 const isTest = process.env.VITEST === 'true';
@@ -31,6 +32,7 @@ export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
+		sandboxRegistry(),
 		!isTest && contentCollections(),
 		Icons({
 			compiler: 'svelte',
@@ -50,10 +52,6 @@ export default defineConfig({
 		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
 			allow: ['.live-code']
-		},
-		headers: {
-			'Cross-Origin-Embedder-Policy': 'require-corp',
-			'Cross-Origin-Opener-Policy': 'same-origin'
 		}
 	},
 	test: {

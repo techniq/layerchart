@@ -5,6 +5,8 @@ on:
     paths:
       - packages/layerchart/**
       - docs/src/examples/**
+      # Generated from the examples after merging; captures don't read it
+      - '!docs/src/examples/catalog/**'
       - docs/scripts/visual-snapshot.mjs
     types: [opened, synchronize, reopened]
 
@@ -39,8 +41,9 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
 
-      # Fingerprints depend on the rendering environment, so the baseline has to have been
-      # recorded on a runner too — see update-visual-baseline.yml
+      # Fingerprints depend on the rendering environment and on serving a production build (seeded
+      # randomness is consumed in module load order, which differs from `vite dev`), so the
+      # baseline has to have been recorded the same way — see update-visual-baseline.yml
       - name: Read the baseline from the target branch
         id: baseline
         run: |
@@ -52,17 +55,22 @@ jobs:
             echo "No baseline on ${{ github.base_ref }} — run the Update Visual Baseline workflow." >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      # `stackblitz-files.json` is generated and gitignored, so a fresh checkout has none — and
-      # every example route imports it transitively, through `Example`'s "open in StackBlitz".
-      # `prebuild` covers this for a real build; a bare `vite dev` doesn't.
-      - name: Generate the docs server's inputs
+      # A production build rather than `vite dev`, which serves each page as hundreds of separate
+      # modules — capturing every example is ~2.5x faster against the build.  `prebuild` also
+      # generates the inputs the server needs (ex. the gitignored `stackblitz-files.json`).
+      - name: Build docs
         if: steps.baseline.outputs.found == 'true'
-        run: pnpm --filter docs generate:stackblitz
+        run: pnpm --filter docs build
+        env:
+          # `generate:releases` only reads public releases.  `GITHUB_TOKEN` rather than the
+          # `GH_API_TOKEN` secret, which pull requests from forks don't get — unauthenticated, they'd
+          # share the API's per-IP rate limit with other jobs on GitHub's runners.
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Start the docs server
         if: steps.baseline.outputs.found == 'true'
         run: |
-          pnpm --filter docs exec vite dev --port 3002 > /tmp/visual/server.log 2>&1 &
+          pnpm --filter docs exec vite preview --port 3002 > /tmp/visual/server.log 2>&1 &
           for i in $(seq 1 60); do
             curl -sf -o /dev/null "http://localhost:3002/docs/screenshot/AnnotationLine/horizontal" && exit 0
             sleep 2

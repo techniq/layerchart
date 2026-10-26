@@ -26,10 +26,19 @@
           "lineNumber": 12,
           "line": "<Arc"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-02-18T13:27:36.000Z"
     }
   ],
   "usage": [
+    {
+      "example": "custom-label",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/custom-label",
+      "lineNumber": 14,
+      "line": "<Layer type=\"html\" class=\"pointer-events-none\">"
+    },
     {
       "example": "band-scale-on-axis",
       "component": "AnnotationPoint",
@@ -78,6 +87,13 @@
       "path": "/docs/components/AnnotationPoint/world-landmarks",
       "lineNumber": 110,
       "line": "<Layer>"
+    },
+    {
+      "example": "custom-label",
+      "component": "AnnotationRange",
+      "path": "/docs/components/AnnotationRange/custom-label",
+      "lineNumber": 20,
+      "line": "<Layer type=\"html\" class=\"pointer-events-none\">"
     },
     {
       "example": "clock",
@@ -273,6 +289,13 @@
       "component": "Area",
       "path": "/docs/components/Area/oscilloscope-ridgeline",
       "lineNumber": 147,
+      "line": "<Layer>"
+    },
+    {
+      "example": "oscilloscope-ridgeline-isometric",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline-isometric",
+      "lineNumber": 143,
       "line": "<Layer>"
     },
     {
@@ -510,7 +533,7 @@
       "example": "multiple-axis-same-placement-right",
       "component": "Axis",
       "path": "/docs/components/Axis/multiple-axis-same-placement-right",
-      "lineNumber": 9,
+      "lineNumber": 7,
       "line": "<Layer>"
     },
     {
@@ -1201,6 +1224,90 @@
     },
     {
       "example": "basic",
+      "component": "Bin",
+      "path": "/docs/components/Bin/basic",
+      "lineNumber": 25,
+      "line": "<Layer>"
+    },
+    {
+      "example": "categorical",
+      "component": "Bin",
+      "path": "/docs/components/Bin/categorical",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "image-render",
+      "component": "Bin",
+      "path": "/docs/components/Bin/image-render",
+      "lineNumber": 129,
+      "line": "<Layer>"
+    },
+    {
+      "example": "images",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images",
+      "lineNumber": 51,
+      "line": "<Layer>"
+    },
+    {
+      "example": "images-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/images-isometric",
+      "lineNumber": 64,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/isometric",
+      "lineNumber": 29,
+      "line": "<Layer>"
+    },
+    {
+      "example": "labels",
+      "component": "Bin",
+      "path": "/docs/components/Bin/labels",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "shapes",
+      "component": "Bin",
+      "path": "/docs/components/Bin/shapes",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "size-by-count",
+      "component": "Bin",
+      "path": "/docs/components/Bin/size-by-count",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Bin",
+      "path": "/docs/components/Bin/tooltip",
+      "lineNumber": 28,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart-isometric",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart-isometric",
+      "lineNumber": 31,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/basic",
       "lineNumber": 36,
@@ -1515,6 +1622,13 @@
       "line": "<Layer type=\"html\">"
     },
     {
+      "example": "isometric",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/isometric",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
@@ -1581,21 +1695,21 @@
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Layer>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 23,
+      "lineNumber": 25,
       "line": "<Layer>"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 46,
+      "lineNumber": 48,
       "line": "<Layer>"
     },
     {
@@ -1603,6 +1717,69 @@
       "component": "Chart",
       "path": "/docs/components/Chart/facet-brush-overview",
       "lineNumber": 75,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-areas",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-areas",
+      "lineNumber": 58,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-pan-zoom",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pan-zoom",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-pin-map",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-pin-map",
+      "lineNumber": 51,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 112,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-scatter-3d",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-scatter-3d",
+      "lineNumber": 58,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-stacked-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-stacked-columns",
+      "lineNumber": 49,
+      "line": "<Layer>"
+    },
+    {
+      "example": "isometric-treemap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-treemap",
+      "lineNumber": 94,
       "line": "<Layer>"
     },
     {
@@ -1785,6 +1962,13 @@
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
       "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "volcano-isometric",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-isometric",
+      "lineNumber": 54,
       "line": "<Layer>"
     },
     {
@@ -2026,6 +2210,48 @@
       "line": "<Layer>"
     },
     {
+      "example": "columns",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/columns",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "dot-globe",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/dot-globe",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
+      "example": "land",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/land",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/us-population",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-airports",
+      "lineNumber": 33,
+      "line": "<Layer>"
+    },
+    {
+      "example": "world-population",
+      "component": "GeoBin",
+      "path": "/docs/components/GeoBin/world-population",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
@@ -2138,6 +2364,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "election-isometric",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election-isometric",
+      "lineNumber": 59,
+      "line": "<Layer>"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 273,
+      "line": "<Layer>"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -2190,7 +2430,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 106,
+      "lineNumber": 160,
       "line": "<Layer>"
     },
     {
@@ -2747,6 +2987,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "college-football-upsets",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-upsets",
+      "lineNumber": 157,
+      "line": "<Layer>"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -2887,10 +3134,17 @@
       "line": "<Layer>"
     },
     {
+      "example": "bump-sports-rankings",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-sports-rankings",
+      "lineNumber": 218,
+      "line": "<Layer>"
+    },
+    {
       "example": "bump-state-population-ranks",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-state-population-ranks",
-      "lineNumber": 102,
+      "lineNumber": 106,
       "line": "<Layer>"
     },
     {
@@ -3206,6 +3460,13 @@
       "component": "Pie",
       "path": "/docs/components/Pie/inner-radius-zero-one",
       "lineNumber": 18,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "isometric",
+      "component": "Pie",
+      "path": "/docs/components/Pie/isometric",
+      "lineNumber": 59,
       "line": "<Layer center>"
     },
     {
@@ -3909,6 +4170,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "missing-data-dashed",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-dashed",
+      "lineNumber": 68,
+      "line": "<Layer>"
+    },
+    {
+      "example": "missing-data-with-markers",
+      "component": "Spline",
+      "path": "/docs/components/Spline/missing-data-with-markers",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -4301,6 +4576,13 @@
       "line": "<Layer type=\"html\">"
     },
     {
+      "example": "isometric",
+      "component": "Tree",
+      "path": "/docs/components/Tree/isometric",
+      "lineNumber": 47,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
@@ -4434,5 +4716,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-09-03T20:00:07.575Z"
+  "updatedAt": "2026-10-26T02:35:36.449Z"
 }

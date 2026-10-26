@@ -31,7 +31,9 @@
           "lineNumber": 24,
           "line": "<Vector x={100} y={150} length={40} width={5} {rotate} anchor=\"start\" class=\"stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "basic",
@@ -53,7 +55,9 @@
           "lineNumber": 23,
           "line": "<Vector x={v.cx} y={v.cy} length={30} width={5} rotate={v.rotate} class=\"stroke-primary\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "data-mode",
@@ -80,7 +84,9 @@
           "lineNumber": 38,
           "line": "<Vector"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "election-wind-map",
@@ -112,7 +118,9 @@
           "lineNumber": 114,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "shapes",
@@ -154,7 +162,9 @@
           "lineNumber": 81,
           "line": "<Polygon"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-03-31T15:09:10.000Z"
     },
     {
       "name": "wind-map",
@@ -186,7 +196,9 @@
           "lineNumber": 52,
           "line": "<Tooltip.Root {context}>"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [

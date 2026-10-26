@@ -26,7 +26,9 @@
           "lineNumber": 44,
           "line": "<Cell x=\"day\" y=\"hour\" fill=\"value\" insets={{ all: 1 }} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "circle",
@@ -53,7 +55,9 @@
           "lineNumber": 42,
           "line": "<Cell x=\"day\" y=\"hour\" shape=\"circle\" fill=\"value\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "color-scale",
@@ -80,7 +84,9 @@
           "lineNumber": 42,
           "line": "<Cell x=\"day\" y=\"hour\" fill=\"value\" insets={{ all: 1 }} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "punchcard",
@@ -112,7 +118,9 @@
           "lineNumber": 31,
           "line": "<Cell"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-13T11:30:54.000Z"
     },
     {
       "name": "rounded-insets",
@@ -139,7 +147,9 @@
           "lineNumber": 42,
           "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
         }
-      ]
+      ],
+      "createdAt": "2026-03-31T15:09:10.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -177,7 +187,28 @@
       "path": "/docs/components/Cell/rounded-insets",
       "lineNumber": 42,
       "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
+    },
+    {
+      "example": "isometric-columns",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-columns",
+      "lineNumber": 38,
+      "line": "<Cell"
+    },
+    {
+      "example": "isometric-heatmap",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-heatmap",
+      "lineNumber": 37,
+      "line": "<Cell"
+    },
+    {
+      "example": "isometric-playground",
+      "component": "Chart",
+      "path": "/docs/components/Chart/isometric-playground",
+      "lineNumber": 116,
+      "line": "<Cell x=\"x\" y=\"y\" fill=\"value\" insets={{ all: 1 }} />"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:04.354Z"
+  "updatedAt": "2026-10-08T16:54:43.112Z"
 }

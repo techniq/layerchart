@@ -35,8 +35,9 @@
     onPointClick,
     props = {},
     profile = false,
-    marks,
+    marks: marksProp,
     tooltip: tooltipProp,
+    ref = $bindable(),
     context = $bindable(),
     ...restProps
   }: AreaChartBaseProps<TData> = $props();
@@ -63,6 +64,7 @@
 </script>
 
 <Chart
+  bind:ref
   bind:context
   {data}
   {xDomain}
@@ -104,8 +106,8 @@
   }}
 >
   {#snippet marks({ context, facet }: { context: any; facet: any })}
-    {#if typeof marks === 'function'}
-      {@render marks({ context, facet })}
+    {#if typeof marksProp === 'function'}
+      {@render marksProp({ context, facet })}
     {:else}
       {#each context.series.visibleSeries as s (s.key)}
         <Area

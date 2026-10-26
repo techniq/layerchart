@@ -31,7 +31,9 @@
           "lineNumber": 71,
           "line": "<Tooltip.Root>"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
@@ -69,6 +71,13 @@
       "path": "/docs/components/GeoPath/eclipses-globe",
       "lineNumber": 76,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 276,
+      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
     },
     {
       "example": "interpolating-projections",
@@ -239,5 +248,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.736Z"
+  "updatedAt": "2026-10-26T02:35:36.297Z"
 }

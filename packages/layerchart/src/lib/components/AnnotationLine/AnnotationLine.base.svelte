@@ -13,6 +13,8 @@
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { cls } from '@layerstack/tailwind';
+  import type { LineProps } from '../Line/Line.shared.svelte.js';
+  import type { TextProps } from '../Text/Text.shared.svelte.js';
 
   let {
     Line,
@@ -25,6 +27,7 @@
     y2: y2Prop,
     seriesKey,
     label,
+    line: lineSnippet,
     labelPlacement = 'top-right',
     labelXOffset = 0,
     labelYOffset = 0,
@@ -153,24 +156,30 @@
       verticalAnchor,
     };
   });
+
+  const resolvedLineProps = $derived({
+    ...line,
+    ...props?.line,
+    class: cls('lc-annotation-line', props?.line?.class),
+  } as LineProps);
+
+  const resolvedLabelProps = $derived({
+    ...labelProps,
+    ...props?.label,
+    class: cls('lc-annotation-line-label', props?.label?.class),
+  } as TextProps);
 </script>
 
-<Line
-  x1={line.x1}
-  y1={line.y1}
-  x2={line.x2}
-  y2={line.y2}
-  {...props?.line}
-  class={cls('lc-annotation-line', props?.line?.class)}
-/>
+{#if lineSnippet}
+  {@render lineSnippet({ props: resolvedLineProps })}
+{:else}
+  <Line {...resolvedLineProps} />
+{/if}
 
-{#if label}
-  <Text
-    value={label}
-    {...labelProps}
-    {...props?.label}
-    class={cls('lc-annotation-line-label', props?.label?.class)}
-  />
+{#if typeof label === 'function'}
+  {@render label({ props: resolvedLabelProps })}
+{:else if label}
+  <Text value={label} {...resolvedLabelProps} />
 {/if}
 
 <style>

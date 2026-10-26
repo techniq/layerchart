@@ -8,6 +8,8 @@ import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/m
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getMarkData } from '$lib/contexts/facet.js';
 import { getGeoContext } from '$lib/contexts/geo.js';
+import { getLayerIsometric } from '$lib/contexts/isometric.js';
+import { markLift, raiseItems } from '$lib/utils/isometric.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { GeoState } from '$lib/states/geo.svelte.js';
 
@@ -36,6 +38,16 @@ export type EllipsePropsWithoutHTML = {
   ref?: SVGEllipseElement;
   /** Motion configuration (pixel mode only). */
   motion?: MotionProp;
+  /** Degrees to turn the ellipse clockwise about its centre */
+  rotate?: number;
+  /**
+   * Height to raise the ellipse off an `isometric` floor, defaulting to the chart's `z` in data
+   * mode.
+   * - `string`: data property name, resolved via zScale
+   * - `function(d)`: accessor called per data item, result passed through zScale
+   * - `number`: pixel height (also in pixel mode)
+   */
+  z?: DataProp;
 } & DataDrivenStyleProps;
 
 export type EllipseProps = EllipsePropsWithoutHTML &
@@ -72,6 +84,7 @@ export class EllipseState {
 
   markData = getMarkData();
   geo: GeoState = getGeoContext();
+  #layerIsometric = getLayerIsometric();
 
   dataMode = $derived(
     hasAnyDataProp(this.#props.cx, this.#props.cy, this.#props.rx, this.#props.ry)
@@ -79,11 +92,14 @@ export class EllipseState {
 
   #resolvedData: any[] = $derived(this.dataMode ? this.markData(this.#props.data) : []);
 
+  /** The chart's `isometricLift` when the ellipses float off the floor, else `null` */
+  #lift = $derived(markLift(this.chartCtx, this.#layerIsometric, this.#props.z, this.dataMode));
+
   resolvedItems = $derived.by(() => {
     if (!this.dataMode) return [];
     const props = this.#props;
     const keyFn = props.key ?? defaultKey;
-    return this.#resolvedData.map((d, i) => {
+    const items = this.#resolvedData.map((d, i) => {
       const key = keyFn(d, i);
       const resolved = this.#resolveEllipse(d);
       const animated = this.#dataMotionMap?.get(key);
@@ -96,6 +112,17 @@ export class EllipseState {
         ry: animated?.ry ?? resolved.ry,
       };
     });
+
+    const m = this.#layerIsometric();
+    const lift = this.#lift;
+    if (!m || !lift) return items;
+    return raiseItems(
+      items,
+      ['cx', 'cy'],
+      m,
+      lift,
+      (item) => this.chartCtx.heightOf(item.d, props.z)[1]
+    );
   });
 
   #resolveEllipse(d: any) {
@@ -143,11 +170,17 @@ export class EllipseState {
   #motionRx!: ReturnType<typeof createMotion<number>>;
   #motionRy!: ReturnType<typeof createMotion<number>>;
 
+  /** Pixel mode: raised by `z` on an `isometric` floor */
+  #raise(axis: 'x' | 'y') {
+    const z = this.#props.z;
+    return this.#lift && typeof z === 'number' ? this.#lift[axis] * z : 0;
+  }
+
   get motionCx() {
-    return this.#motionCx.current;
+    return this.#motionCx.current + this.#raise('x');
   }
   get motionCy() {
-    return this.#motionCy.current;
+    return this.#motionCy.current + this.#raise('y');
   }
   get motionRx() {
     return this.#motionRx.current;

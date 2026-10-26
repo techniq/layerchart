@@ -41,7 +41,9 @@
           "lineNumber": 38,
           "line": "<GeoSpline {link} class=\"stroke-gray-500/30 stroke-2\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
       "name": "world-map",
@@ -78,7 +80,9 @@
           "lineNumber": 48,
           "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
         }
-      ]
+      ],
+      "createdAt": "2026-02-18T13:27:36.000Z",
+      "updatedAt": "2026-04-27T16:10:53.000Z"
     }
   ],
   "usage": [
