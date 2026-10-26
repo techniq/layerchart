@@ -272,6 +272,8 @@ export class ChartState<
   // re-run → infinite loop.
   private _markInfosRaw: Array<{ _id: number; info: MarkInfo }> = [];
   private _markInfosVersion = $state(0);
+  /** Bumped by marks registered from components; only the effect that coalesces them reads it */
+  private _markInfosPending = $state(0);
   private _nextMarkId = 0;
 
   /** Reactive accessor — reads _markInfosVersion to create a reactive dependency,
@@ -316,26 +318,6 @@ export class ChartState<
       if (idx !== -1) this._markInfosRaw.splice(idx, 1);
       changed();
     };
-  }
-
-  private _markInfosBumpQueued = false;
-
-  /**
-   * Bump `_markInfosVersion` once for all the marks that mount or unmount in the same turn.
-   *
-   * Every bump marks `flatData` → `extents` → domains → scales dirty, and with them every effect
-   * of every mark already mounted that reads a scale.  Bumping once per mark made mounting N marks
-   * walk that graph N times, O(N²) — a few hundred `Area`s took seconds.  The marks' effects run
-   * in one flush, so a microtask after it sees them all; it runs before the browser paints, so the
-   * first frame still has every mark in the domain.
-   */
-  private _queueMarkInfosBump() {
-    if (this._markInfosBumpQueued) return;
-    this._markInfosBumpQueued = true;
-    queueMicrotask(() => {
-      this._markInfosBumpQueued = false;
-      this._markInfosVersion++;
-    });
   }
 
   /**
@@ -416,7 +398,7 @@ export class ChartState<
         $effect(() => {
           const info = markInfo();
           if (isEmptyMarkInfo(info)) return;
-          return untrack(() => this._addMark(info, () => this._queueMarkInfosBump()));
+          return untrack(() => this._addMark(info, () => this._markInfosPending++));
         });
       }
     }
@@ -448,6 +430,22 @@ export class ChartState<
     if (settings) this.#settings = settings;
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
+
+    // Bump `_markInfosVersion` once for all the marks that mount or unmount in the same flush.
+    //
+    // Every bump marks `flatData` → `extents` → domains → scales dirty, and with them every effect
+    // of every mark already mounted that reads a scale.  Bumping once per mark made mounting N marks
+    // walk that graph N times, O(N²) — a few hundred `Area`s took seconds.  Marks bump
+    // `_markInfosPending` instead, which only this effect reads, and it runs after them in the same
+    // flush — so the chart has every mark by the time `mount()`/`flushSync()` returns, and domain
+    // motion's first domain is the one the marks give.
+    let seenPending = 0;
+    $effect(() => {
+      const pending = this._markInfosPending;
+      if (pending === seenPending) return;
+      seenPending = pending;
+      untrack(() => this._markInfosVersion++);
+    });
 
     let shown = false;
     $effect.pre(() => {
@@ -1463,9 +1461,9 @@ export class ChartState<
   }
 
   /**
-   * Memoized per axis. `resolveDomain` re-runs on every mark registration —
-   * each mounting mark bumps `_markInfosVersion` — so recollecting these
-   * inline made mount cost O(series² × rows). Only the mark loop in
+   * Memoized per axis. `resolveDomain` re-runs whenever the registered marks
+   * change — each `_markInfosVersion` bump — so recollecting these inline
+   * made that cost O(series × rows) every time. Only the mark loop in
    * `resolveDomain` depends on `_markInfos`; these values don't, so the
    * repeated calls reuse them.
    */
