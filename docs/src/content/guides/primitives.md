@@ -246,7 +246,7 @@ In data mode, `fill` and `stroke` can also resolve per-item through the chart's 
 </Chart>
 ```
 
-Each circle's fill is determined by its `category` value, resolved through the chart's color scale. Literal colors like `fill="red"` continue to work as expected.
+Each circle's fill is determined by its `category` value, resolved through the chart's color scale. Literal colors like `fill="red"` continue to work as expected. See [Scales](/docs/guides/scales#how-a-mark-resolves-its-color) for the full resolution order, including series colors.
 
 ---
 
