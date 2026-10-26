@@ -18,12 +18,6 @@ export const sites = [
 		source: 'https://github.com/zipline-ai'
 	},
 	{
-		name: 'Tenzir',
-		description: 'Open source data pipelines for security teams',
-		url: 'https://tenzir.com/',
-		source: 'https://github.com/tenzir'
-	},
-	{
 		name: 'shadcn-svelte',
 		description: 'shadcn/ui, but for Svelte.',
 		url: 'https://shadcn-svelte.com/',
