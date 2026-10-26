@@ -12,7 +12,7 @@
   const c = new CircleState(() => props as CircleProps);
 
   // Not SVG attributes — read by `CircleState`
-  const { z: _z, viewport: _viewport, ...rest } = $derived(props);
+  const { data: _data, z: _z, viewport: _viewport, ...rest } = $derived(props);
 
   let ref = $state<SVGCircleElement>();
 
@@ -23,7 +23,7 @@
   c.chartCtx.registerComponent({
     name: 'Circle',
     kind: 'mark',
-    markInfo: () => circleMarkInfo(rest as CircleProps, c.dataMode),
+    markInfo: () => circleMarkInfo(props as CircleProps, c.dataMode),
   });
 </script>
 

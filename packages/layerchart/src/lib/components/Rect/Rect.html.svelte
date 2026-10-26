@@ -17,9 +17,37 @@
 
   const c = new RectState(() => rest as RectProps, 'html');
 
-  // `z` and `shade` are read by `RectState`, not HTML attributes
+  // Read by `RectState`, which places and paints the `<div>` through its style — not HTML attributes
   const htmlRest = $derived.by(() => {
-    const { z: _z, shade: _shade, ...attrs } = rest;
+    const {
+      data: _data,
+      key: _key,
+      x: _x,
+      initialX: _initialX,
+      y: _y,
+      initialY: _initialY,
+      width: _width,
+      initialWidth: _initialWidth,
+      height: _height,
+      initialHeight: _initialHeight,
+      x0: _x0,
+      x1: _x1,
+      y0: _y0,
+      y1: _y1,
+      z: _z,
+      shade: _shade,
+      insets: _insets,
+      motion: _motion,
+      dashArray: _dashArray,
+      corners: _corners,
+      fill: _fill,
+      stroke: _stroke,
+      fillOpacity: _fillOpacity,
+      strokeOpacity: _strokeOpacity,
+      strokeWidth: _strokeWidth,
+      opacity: _opacity,
+      ...attrs
+    } = rest;
     return attrs as unknown as HTMLAttributes<HTMLDivElement>;
   });
 

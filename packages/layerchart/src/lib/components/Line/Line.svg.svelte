@@ -23,6 +23,7 @@
     markerMid,
     markerEnd,
     // Consumed by `LineState`, not SVG attributes
+    data,
     z1,
     z2,
     ...rest
@@ -39,6 +40,7 @@
         markerStart,
         markerMid,
         markerEnd,
+        data,
         z1,
         z2,
         ...rest,
@@ -52,7 +54,7 @@
   c.chartCtx.registerComponent({
     name: 'Line',
     kind: 'mark',
-    markInfo: () => lineMarkInfo({ x1, y1, x2, y2, ...rest } as LineProps, c.dataMode),
+    markInfo: () => lineMarkInfo({ x1, y1, x2, y2, data, ...rest } as LineProps, c.dataMode),
   });
 </script>
 
