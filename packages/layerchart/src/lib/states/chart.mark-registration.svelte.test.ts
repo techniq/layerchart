@@ -38,4 +38,30 @@ describe('mark registration', () => {
     await expect.poll(() => ctx.xDomain?.[1]).not.toBe(50);
     expect(markInfosVersion(ctx) - before).toBeLessThan(5);
   });
+
+  it('has every mark in the domain as soon as a synchronous mount returns', () => {
+    // Nothing between the mount and the next microtask may see a chart missing its marks — code
+    // that measures or exports a chart right after `mount()`/`flushSync()` reads it there
+    let ctx: ChartState<any, any, any> | undefined;
+    render(ManyMarksHarness, {
+      count: 2,
+      x: (d: { x: number }) => d.x,
+      oncontext: (c: ChartState<any, any, any>) => (ctx = c),
+    });
+    expect(ctx!.xDomain).toEqual([0, 2]);
+  });
+
+  it('starts domain motion at the domain the marks give, when only the marks carry data', async () => {
+    // Domain motion takes its first domain without animating.  Seen before the marks register it
+    // is `[null, null]`, which the spring can't ease out of
+    let ctx: ChartState<any, any, any> | undefined;
+    render(ManyMarksHarness, {
+      count: 10,
+      x: (d: { x: number }) => d.x,
+      motion: { type: 'spring' },
+      oncontext: (c: ChartState<any, any, any>) => (ctx = c),
+    });
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(ctx!.xDomain).toEqual([0, 10]);
+  });
 });
