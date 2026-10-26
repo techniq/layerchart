@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { LoadingPlaceholder } from '@layerstack/docs/components';
-	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+
+	import LucideCirclePlay from '~icons/lucide/circle-play';
 
 	let { data, children } = $props();
 </script>
 
-<h1 class="text-3xl font-bold mb-2">{data.metadata.title}</h1>
-<div class="mb-4">
-	<OpenWithButton />
-</div>
+<PageHeader title={data.metadata.title} icon={LucideCirclePlay} layers={data.layers} />
 
 <svelte:boundary>
 	{#snippet pending()}

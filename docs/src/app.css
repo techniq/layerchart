@@ -10,6 +10,7 @@
 
 @theme {
 	--breakpoint-xs: 30rem; /* 480px */
+	--spacing-header: 4rem; /* 64px, docs top bar */
 
 	--font-sans: 'Inter Variable', sans-serif;
 	/* --font-mono: 'Departure Mono', 'monospace'; */
@@ -214,4 +215,9 @@ code[data-line-numbers] > [data-line]::before {
 ::view-transition-new(*),
 html:active-view-transition {
 	scroll-behavior: auto;
+}
+
+/* Keep anchor targets clear of the sticky component toolbar */
+html:has([data-docs-toolbar]) {
+	scroll-padding-top: 3rem;
 }
