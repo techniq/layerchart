@@ -1,5 +1,5 @@
 <script module lang="ts">
-	export const title = 'Drill down';
+	export const title = 'GeoJSON drilldown';
 	export const description =
 		'Click to drill down from continents to countries, states, and counties.';
 </script>

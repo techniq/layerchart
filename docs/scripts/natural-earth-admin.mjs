@@ -1,5 +1,5 @@
 /**
- * Builds the countries and their states and provinces for the `GeoPath/drill-down` example from
+ * Builds the countries and their states and provinces for the `GeoPath/geojson-drilldown` example from
  * Natural Earth's 10m admin-1 states and provinces (public domain), which is 40MB — too much to
  * commit or fetch on every build.
  *

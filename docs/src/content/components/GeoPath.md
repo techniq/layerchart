@@ -19,8 +19,8 @@ On an [isometric](/docs/guides/isometric) chart, `z` stands each shape up off th
 
 :example{ name="election-isometric" }
 
-## Drill down
+## GeoJSON drilldown
 
 Click a continent (or World Bank region) to zoom to its countries, a country for its states or provinces, then a region or US state for its provinces or counties. Clicking where there is nothing further in zooms back out a level. Each country's shapes load when it is clicked, from Natural Earth's [admin-1 states and provinces](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/), with [US Atlas](https://github.com/topojson/us-atlas) for US counties.
 
-:example{ name="drill-down" }
+:example{ name="geojson-drilldown" }
