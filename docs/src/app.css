@@ -10,6 +10,7 @@
 
 @theme {
 	--breakpoint-xs: 30rem; /* 480px */
+	--spacing-header: 4rem; /* 64px, docs top bar */
 
 	--font-sans: 'Inter Variable', sans-serif;
 	/* --font-mono: 'Departure Mono', 'monospace'; */
