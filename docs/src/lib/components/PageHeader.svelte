@@ -199,6 +199,12 @@
 		</Toggle>
 
 		<span class="flex items-center gap-2 ml-auto shrink-0">
+			{#if showOpenWith}
+				<!-- Not enough room on phones -->
+				<div class="max-sm:hidden">
+					<OpenWithButton {metadata} />
+				</div>
+			{/if}
 			{#if layers.length}
 				<ToggleGroup
 					bind:value={settings.layer}
@@ -216,12 +222,6 @@
 						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
 					{/each}
 				</ToggleGroup>
-			{/if}
-			{#if showOpenWith}
-				<!-- Not enough room on phones -->
-				<div class="max-sm:hidden">
-					<OpenWithButton {metadata} />
-				</div>
 			{/if}
 			<Toggle let:on={open} let:toggle let:toggleOff>
 				<Tooltip title="Settings">
