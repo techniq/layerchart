@@ -393,4 +393,85 @@ describe('TooltipContext keyboard', () => {
     expect(getAnnouncement(container)).toBe('');
     child.remove();
   });
+
+  describe('focus indicator', () => {
+    const outline = (el: Element) => getComputedStyle(el).outlineStyle;
+
+    it('is the point shown, so the plot area draws no outline while one is', async () => {
+      const { container } = render(LineChart, {
+        props: { ...baseProps, data, x: 'date', y: 'value' },
+      });
+
+      const plot = getPlotArea(container);
+      await expect.element(plot).toBeInTheDocument();
+      plot.focus();
+      await vi.waitFor(() => expect(getTooltipRoot()).not.toBeNull());
+      expect(plot.matches(':focus-visible')).toBe(true);
+      expect(outline(plot)).toBe('none');
+    });
+
+    it('outlines the plot area once Escape hides the point', async () => {
+      const { container } = render(LineChart, {
+        props: { ...baseProps, data, x: 'date', y: 'value' },
+      });
+
+      const plot = getPlotArea(container);
+      await expect.element(plot).toBeInTheDocument();
+      plot.focus();
+      await vi.waitFor(() => expect(getTooltipRoot()).not.toBeNull());
+
+      press(plot, 'Escape');
+      await vi.waitFor(() => expect(outline(plot)).not.toBe('none'));
+      expect(document.activeElement).toBe(plot);
+    });
+
+    it('outlines the plot area of a chart with no points to show', async () => {
+      const { container } = render(LineChart, {
+        props: { ...baseProps, data: [], x: 'date', y: 'value' },
+      });
+
+      const plot = getPlotArea(container);
+      await expect.element(plot).toBeInTheDocument();
+      plot.focus();
+      await vi.waitFor(() => expect(outline(plot)).not.toBe('none'));
+    });
+  });
+
+  describe('keys pressed before navigation loads', () => {
+    it('are dropped when focus leaves first', async () => {
+      const { container } = render(LineChart, {
+        props: { ...baseProps, data, x: 'date', y: 'value' },
+      });
+
+      const plot = getPlotArea(container);
+      await expect.element(plot).toBeInTheDocument();
+
+      // Focusing queues the first point, and the key queues behind it — both still waiting on the
+      // import when focus leaves
+      plot.focus();
+      press(plot, 'ArrowRight');
+      plot.blur();
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(getTooltipRoot()).toBeNull();
+      expect(getAnnouncement(container)).toBe('');
+    });
+
+    it('are dropped when the chart is destroyed first', async () => {
+      const onTooltipClick = vi.fn();
+      const { container, unmount } = render(LineChart, {
+        props: { ...baseProps, data, x: 'date', y: 'value', onTooltipClick },
+      });
+
+      const plot = getPlotArea(container);
+      await expect.element(plot).toBeInTheDocument();
+
+      press(plot, 'ArrowRight');
+      press(plot, 'Enter');
+      unmount();
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(onTooltipClick).not.toHaveBeenCalled();
+    });
+  });
 });

@@ -49,7 +49,7 @@ The plot area has `role="application"`, so screen readers pass the arrow keys to
 
 ### Styling
 
-The plot area draws no focus outline. Focusing it with the keyboard shows its first point, and that point's highlight and tooltip mark where focus is. To outline the plot area as well, style `.lc-tooltip-context:focus-visible`:
+Focusing the plot area with the keyboard shows its first point, and that point's highlight and tooltip mark where focus is, so the plot area isn't outlined. It is outlined while it has focus with no point shown, such as after `Escape` or on a chart with no data, so focus is never invisible. To always outline it, style `.lc-tooltip-context:focus-visible`:
 
 ```css
 .lc-tooltip-context:focus-visible {

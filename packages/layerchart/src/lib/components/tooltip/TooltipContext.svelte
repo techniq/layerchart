@@ -941,7 +941,7 @@
       : `Use the ${along} arrow keys to move between data points.`;
   });
 
-  /** Loaded on first use — see `loadKeyboard` */
+  /** Loaded on first use — see `withKeyboard` */
   let keyboardController = $state<TooltipKeyboard>();
 
   /**
@@ -950,11 +950,25 @@
    */
   let keyboardQueue: Promise<TooltipKeyboard> | undefined;
 
+  /**
+   * Bumped when focus leaves the chart or it is destroyed, so keys still waiting on the import are
+   * dropped rather than showing a tooltip nobody is navigating any more.
+   */
+  let keyboardSession = 0;
+
+  $effect(() => {
+    return () => {
+      keyboardSession++;
+    };
+  });
+
   function withKeyboard(action: (keyboard: TooltipKeyboard) => void) {
     if (keyboardController) {
       action(keyboardController);
       return;
     }
+
+    const session = keyboardSession;
 
     keyboardQueue ??= import('./TooltipKeyboard.svelte.js').then(({ TooltipKeyboard }) => {
       keyboardController = new TooltipKeyboard(ctx, tooltipState, {
@@ -967,7 +981,7 @@
       return keyboardController;
     });
     keyboardQueue = keyboardQueue.then((keyboard) => {
-      action(keyboard);
+      if (session === keyboardSession) action(keyboard);
       return keyboard;
     });
   }
@@ -1017,6 +1031,7 @@
   }
 
   function onBlur() {
+    keyboardSession++;
     keyboardController?.blur();
   }
 </script>
@@ -1056,6 +1071,7 @@
   aria-roledescription={keyboardEnabled ? 'chart' : undefined}
   aria-label={keyboardEnabled ? ((ctx.props as any)['aria-label'] ?? 'Chart') : undefined}
   aria-describedby={keyboardEnabled ? keyboardHelpId : undefined}
+  data-point-shown={keyboardEnabled && tooltipState.data != null ? '' : undefined}
   bind:this={ref}
 >
   {#if keyboardEnabled}
@@ -1190,10 +1206,15 @@
       position: absolute;
       touch-action: var(--touch-action);
 
-      /* The point the keyboard lands on — its highlight and tooltip — is the focus indicator, so
-         the plot area draws no outline of its own */
+      /* The point shown — its highlight and tooltip — marks focus, so the plot area outlines itself
+         only while there's none (after Escape, or on a chart with nothing to show) */
       &:focus-visible {
         outline: none;
+      }
+
+      &:focus-visible:not([data-point-shown]) {
+        outline: 2px solid var(--color-primary, currentColor);
+        outline-offset: 2px;
       }
 
       &.debug {
