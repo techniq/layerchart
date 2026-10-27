@@ -266,6 +266,63 @@ export type TextPropsWithoutHTML = {
 export type TextProps = TextPropsWithoutHTML &
   Without<SVGAttributes<SVGTextElement>, TextPropsWithoutHTML>;
 
+/** The props `<text>` renders as its own attributes, under their SVG names, rather than through a spread. */
+type TextAttributeProp =
+  | 'x'
+  | 'y'
+  | 'fill'
+  | 'stroke'
+  | 'fillOpacity'
+  | 'strokeOpacity'
+  | 'strokeWidth'
+  | 'opacity'
+  | 'class';
+
+/**
+ * The text's layout and content options, so the `<text>` element receives only the SVG attributes
+ * passed alongside them. Typed as a record of the props' keys so a new option that is not added
+ * here fails to compile.
+ */
+const textOptionKeys: Record<Exclude<keyof TextPropsWithoutHTML, TextAttributeProp>, true> = {
+  ref: true,
+  data: true,
+  z: true,
+  motion: true,
+  width: true,
+  value: true,
+  segments: true,
+  initialX: true,
+  initialY: true,
+  dx: true,
+  dy: true,
+  lineHeight: true,
+  fontSize: true,
+  capHeight: true,
+  scaleToFit: true,
+  textAnchor: true,
+  verticalAnchor: true,
+  dominantBaseline: true,
+  rotate: true,
+  viewport: true,
+  svgRef: true,
+  svgProps: true,
+  format: true,
+  truncate: true,
+  pathId: true,
+  path: true,
+  startOffset: true,
+  key: true,
+};
+
+/** The SVG attributes among a text's props, without its options. */
+export function textAttributes(props: Record<string, unknown>): Record<string, unknown> {
+  const attributes: Record<string, unknown> = {};
+  for (const key in props) {
+    if (!(key in textOptionKeys)) attributes[key] = props[key];
+  }
+  return attributes;
+}
+
 const defaultKey = (_: any, i: number) => i;
 
 export function getPathLength(pathRef: SVGPathElement | undefined) {

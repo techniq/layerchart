@@ -5,7 +5,13 @@
 <script lang="ts">
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createId } from '$lib/utils/createId.js';
-  import { TextState, textMarkInfo, getPixelValue, type TextProps } from './Text.shared.svelte.js';
+  import {
+    TextState,
+    textAttributes,
+    textMarkInfo,
+    getPixelValue,
+    type TextProps,
+  } from './Text.shared.svelte.js';
 
   const uid = $props.id();
 
@@ -31,6 +37,8 @@
   }: TextProps = $props();
 
   const c = new TextState(() => ({ rotate, dx, dy, fontSize, viewport, z, ...rest }) as TextProps);
+
+  const attributes = $derived(textAttributes(rest));
 
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
@@ -62,7 +70,7 @@
     {@const dataRotateTransform = rotate ? `rotate(${rotate}, ${item.x}, ${item.y})` : ''}
     <svg x={dx ?? 0} y={dy ?? 0} {...rest.svgProps} class={['lc-text-svg', rest.svgProps?.class]}>
       <text
-        {...rest as any}
+        {...attributes}
         x={item.x}
         y={item.y}
         transform={[
@@ -102,7 +110,7 @@
         {/key}
       </defs>
       <text
-        {...rest as any}
+        {...attributes}
         bind:this={ref}
         dy={dy ?? 0}
         font-size={fontSize}
@@ -130,7 +138,7 @@
            inside positioned parents like `<Group>` or `<Arc>` even without
            explicit coordinates (matching `Text.canvas` / `Text.html`). -->
       <text
-        {...rest as any}
+        {...attributes}
         bind:this={ref}
         x={c.motionX}
         y={c.motionY}

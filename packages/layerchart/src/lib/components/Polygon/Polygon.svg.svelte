@@ -11,8 +11,8 @@
 
   const c = new PolygonState(() => props as PolygonProps);
 
-  // Not an SVG attribute — read by `PolygonState`
-  const { z: _z, ...rest } = $derived(props);
+  // Not SVG attributes — read by `PolygonState`
+  const { data: _data, z: _z, ...rest } = $derived(props);
 
   let ref = $state<SVGPathElement>();
 
@@ -23,7 +23,7 @@
   c.chartCtx.registerComponent({
     name: 'Polygon',
     kind: 'mark',
-    markInfo: () => polygonMarkInfo(rest as PolygonProps, c.dataMode),
+    markInfo: () => polygonMarkInfo(props as PolygonProps, c.dataMode),
   });
 </script>
 

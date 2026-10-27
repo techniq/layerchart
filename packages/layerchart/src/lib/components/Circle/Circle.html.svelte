@@ -14,7 +14,7 @@
   const c = new CircleState(() => props as CircleProps);
 
   // Not HTML attributes — read by `CircleState`
-  const { z: _z, viewport: _viewport, ...rest } = $derived(props);
+  const { data: _data, z: _z, viewport: _viewport, ...rest } = $derived(props);
 
   /** For `viewport`, cancels the chart's `isometric` view about each circle's centre */
   const cancelView = $derived(c.viewportMatrix ? matrixToString(c.viewportMatrix) : '');

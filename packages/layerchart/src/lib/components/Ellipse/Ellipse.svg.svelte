@@ -15,12 +15,14 @@
     rx: rxProp,
     ry: ryProp,
     rotate,
+    // Not SVG attributes — consumed by `EllipseState`
+    data,
     z,
     ...rest
   }: EllipseProps = $props();
 
   const c = new EllipseState(
-    () => ({ cx, cy, rx: rxProp, ry: ryProp, z, ...rest }) as EllipseProps
+    () => ({ cx, cy, rx: rxProp, ry: ryProp, data, z, ...rest }) as EllipseProps
   );
 
   let ref = $state<SVGEllipseElement>();
@@ -33,7 +35,10 @@
     name: 'Ellipse',
     kind: 'mark',
     markInfo: () =>
-      ellipseMarkInfo({ cx, cy, rx: rxProp, ry: ryProp, ...rest } as EllipseProps, c.dataMode),
+      ellipseMarkInfo(
+        { cx, cy, rx: rxProp, ry: ryProp, data, ...rest } as EllipseProps,
+        c.dataMode
+      ),
   });
 </script>
 
