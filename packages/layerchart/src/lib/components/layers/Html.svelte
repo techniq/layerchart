@@ -43,7 +43,7 @@
 
     /**
      * Whether to clip overflow content.
-     * When true, sets `overflow: hidden` on the layer.
+     * When true, clips at the chart's edge (the container, padding included), as the SVG layer does.
      *
      * Defaults to clipping when the chart has a `transform`, as panning and zooming carry what's
      * drawn past its edges.
@@ -64,7 +64,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
   import { setLayerIsometric } from '$lib/contexts/isometric.js';
-  import { matrixToString } from '$lib/utils/isometric.js';
+  import { applyMatrix, invertMatrix, matrixToString } from '$lib/utils/isometric.js';
 
   let {
     ref: refProp = $bindable(),
@@ -99,15 +99,34 @@
   setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
 
   const clipped = $derived(clip ?? (ctx.props.transform?.mode ?? 'none') !== 'none');
+
+  // The chart's edge, mapped back into the layer's own space.  `overflow: hidden` would clip the
+  // layer's box, which starts inside the padding and moves and scales with the transform
+  const clipPath = $derived.by(() => {
+    if (!clipped) return undefined;
+    const inverse = matrix ? invertMatrix(matrix) : { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
+    if (!inverse) return undefined; // collapsed to a line, so there's nothing to see
+    const left = -ctx.padding.left;
+    const top = -ctx.padding.top;
+    const right = left + ctx.containerWidth;
+    const bottom = top + ctx.containerHeight;
+    const corners = [
+      { x: left, y: top },
+      { x: right, y: top },
+      { x: right, y: bottom },
+      { x: left, y: bottom },
+    ].map((corner) => applyMatrix(inverse, corner));
+    return `polygon(${corners.map(({ x, y }) => `${x}px ${y}px`).join(', ')})`;
+  });
 </script>
 
 <div
   bind:this={ref}
   class={['lc-layout-html', className]}
   class:disablePointerEvents={pointerEvents === false}
-  class:clip={clipped}
   style:transform
   style:transform-origin="top left"
+  style:clip-path={clipPath}
   style:z-index={zIndex}
   style:top="{ctx.padding.top}px"
   style:bottom="{ctx.padding.bottom}px"
@@ -134,10 +153,6 @@
 
       &.disablePointerEvents {
         pointer-events: none;
-      }
-
-      &.clip {
-        overflow: hidden;
       }
     }
   }
