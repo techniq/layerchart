@@ -7,6 +7,7 @@ import TestHarness, { chartTestId } from '$lib/tests/TestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { multiplyMatrix } from '$lib/utils/isometric.js';
 import Cell from '../Cell/Cell.svelte';
+import Rect from '../Rect/Rect.svelte';
 import { isometric } from '$lib/views/isometric.js';
 
 const data = [
@@ -117,5 +118,48 @@ describe('Layer transform', () => {
     });
     await vi.waitFor(() => expect(ctx?.layerMatrix()).not.toBeNull());
     expect(ctx.layerMatrix({ ignoreTransform: true })).toBeNull();
+  });
+});
+
+describe('Html layer clip', () => {
+  // A 200x150 chart whose plot area starts 40px in
+  const padding = { top: 10, right: 10, bottom: 10, left: 40 };
+
+  /** The element drawn at `x`, `y` from the chart's top-left */
+  function hitAt(x: number, y: number) {
+    const rect = document.querySelector(`[data-testid="${chartTestId}"]`)!.getBoundingClientRect();
+    return document.elementFromPoint(rect.left + x, rect.top + y);
+  }
+
+  async function renderRect(transform: Record<string, any>, rectProps: Record<string, any>) {
+    render(TestHarness, {
+      chartProps: { width: 200, height: 150, padding, transform },
+      layer: 'html',
+      layerProps: { center: false },
+      component: Rect,
+      componentProps: { ...rectProps, class: 'clip-target' },
+    });
+    await vi.waitFor(() => expect(document.querySelector('.clip-target')).not.toBeNull());
+  }
+
+  // Queried each time, as the mark can remount while the transform settles
+  const target = () => document.querySelector('.clip-target');
+
+  it('draws what is laid out in the padding', async () => {
+    await renderRect({ mode: 'canvas' }, { x: -40, y: 0, width: 40, height: 20 });
+    expect(hitAt(20, 20)).toBe(target());
+  });
+
+  it("clips at the chart's edge when zoomed in, not at the scaled plot area", async () => {
+    // Covers the plot area, so at 2x it reaches well past the chart's bottom and right
+    await renderRect({ mode: 'canvas', initialScale: 2 }, { x: 0, y: 0, width: 150, height: 130 });
+    await vi.waitFor(() =>
+      expect((document.querySelector('.lc-layout-html') as HTMLElement).style.transform).toMatch(
+        /^matrix\(2/
+      )
+    );
+
+    expect(hitAt(100, 140)).toBe(target()); // in the bottom padding
+    expect(hitAt(100, 160)).not.toBe(target()); // below the chart
   });
 });
