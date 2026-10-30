@@ -242,6 +242,17 @@ export type ChartPropsWithoutHTML<
 
   tooltipContext?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
+  /**
+   * Make the chart keyboard accessible.  The plot area becomes a single tab stop, and once
+   * focused the arrow keys move the tooltip between data points (along the position axis) and
+   * between series (across it).  See `TooltipContext`'s `keyboard`.
+   *
+   * On by default for `LineChart`, `AreaChart`, `BarChart`, and `ScatterChart`.  Off for `Chart`,
+   * which isn't always cartesian (ex. a map or a treemap).
+   * @default false
+   */
+  keyboard?: boolean;
+
   transform?: Partial<ComponentProps<typeof TransformContext>> & {
     apply?: {
       rotation?: boolean;
