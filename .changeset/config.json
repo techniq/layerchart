@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
   "changelog": ["@svitejs/changesets-changelog-github-compact", { "repo": "techniq/layerchart" }],
   "commit": false,
-  "fixed": [],
+  "fixed": [["layerchart", "@layerchart/3d"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",

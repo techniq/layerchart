@@ -54,7 +54,7 @@ LayerChart also support CSS classes and styling for the `Canvas` layer.
 
 ### WebGL
 
-At the moment LayerChart does not provide WebGL primitive support, but is considering adding in the future, possibly for 3D visualizations.
+WebGL is used for true 3D charts by the separate `@layerchart/3d` package, which draws its own marks with three.js. See [3D (WebGL)](/docs/guides/3d).
 
 > Most browsers limit the number of concurrent WebGL contexts by page/domain (references: [Chromium](https://issues.chromium.org/issues/40543269), [Rive](https://rive.app/docs/runtimes/web/canvas-vs-webgl)) and is why some libraries such as [μPlot](https://github.com/leeoniya/uPlot) do not leverage it.
 
