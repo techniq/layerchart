@@ -17,7 +17,7 @@
   >
     <Scene controls={false}>
       <Axis placement="bottom" ticks={[0, 5, 10]} />
-      <Points r={40} />
+      <Points r={40} tooltip />
     </Scene>
     <Tooltip.Root>
       {#snippet children({ data })}

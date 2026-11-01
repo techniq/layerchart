@@ -45,7 +45,7 @@
 		<Axis placement="bottom" label="x" />
 		<Axis placement="left" label="y" />
 		<Axis placement="back" label="z" />
-		<Points r={6} />
+		<Points r={6} tooltip />
 	</Scene>
 
 	<Tooltip.Root>

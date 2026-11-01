@@ -5,6 +5,9 @@
   import {
     AmbientLight,
     DirectionalLight,
+    MathUtils,
+    MOUSE,
+    TOUCH,
     OrthographicCamera,
     PerspectiveCamera,
     Raycaster,
@@ -12,7 +15,8 @@
     Vector3,
   } from 'three';
   import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-  import { getChartContext } from 'layerchart';
+  import { getChartContext, type ScrollActivationKey } from 'layerchart';
+  import { createControlledMotion, type MotionOptions } from 'layerchart/utils/motion.svelte';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import {
@@ -21,6 +25,7 @@
     viewAngles,
     viewDirection,
   } from '../../utils/camera.js';
+  import { getSphere } from '../../utils/globe.js';
 
   let {
     camera: cameraType,
@@ -29,6 +34,9 @@
     fov,
     margin,
     controls,
+    drag,
+    motion,
+    scrollActivationKey,
     children,
   }: {
     camera: 'perspective' | 'orthographic';
@@ -37,6 +45,9 @@
     fov: number;
     margin: number;
     controls: boolean;
+    drag: 'rotate' | 'pan';
+    motion?: MotionOptions;
+    scrollActivationKey?: ScrollActivationKey;
     children?: Snippet;
   } = $props();
 
@@ -49,11 +60,26 @@
   sceneState.invalidate = invalidate;
   scene.add(sceneState.root);
 
+  // Leaving the page (or scrolling far off it), let the browser have the WebGL context back now,
+  // rather than whenever it collects the canvas
+  $effect(() => {
+    return () => {
+      renderer.dispose();
+      (renderer as { forceContextLoss?: () => void }).forceContextLoss?.();
+    };
+  });
+
   // Even light all round, plus a key light from above and to the left of the camera (it moves
   // with it) so faces turned different ways read apart.  Lambert shading divides by π, so these
   // add to a face lit head on at its full color.
-  scene.add(new AmbientLight(0xffffff, Math.PI * 0.6));
+  // These are the scene's own, until it has a `Light`.
+  const ambientLight = new AmbientLight(0xffffff, Math.PI * 0.6);
+  scene.add(ambientLight);
   const keyLight = new DirectionalLight(0xffffff, Math.PI * 0.45);
+  $effect(() => {
+    ambientLight.visible = keyLight.visible = sceneState.lights === 0;
+    invalidate();
+  });
 
   const camera = $derived(
     cameraType === 'orthographic' ? new OrthographicCamera() : new PerspectiveCamera()
@@ -82,6 +108,15 @@
   /** While `fit` updates the controls, whose `change` would report its own move as an orbit */
   let fitting = false;
 
+  /**
+   * Where the user has zoomed and panned to, from the fitted view: kept when the plot box changes
+   * (ex. a taller `zRange`), so refitting doesn't undo them.  `reset` puts them back.
+   */
+  const fitTarget = new Vector3();
+  const panOffset = new Vector3();
+  /** The camera's distance over the fitted distance (perspective), or its zoom (orthographic) */
+  let zoom = 1;
+
   /** Let the user zoom out a few times past the fitted view, but not past the far plane */
   function limitZoom(controls: OrbitControls) {
     controls.maxDistance = fitted * 5;
@@ -92,24 +127,45 @@
   function fit() {
     const { width, height } = size.current;
     if (!width || !height) return;
+    // The plot box, or the chart's `globe` (and room for anything raised off it), which looks the
+    // same size from every side so is fitted by its radius
+    const sphere = getSphere(ctx);
     const box = { width: ctx.width, height: ctx.height, depth: ctx.zDepth };
+    const radius = sphere ? sphere.radius + ctx.zDepth : null;
     const aspect = width / height;
 
-    sceneState.root.position.set(-box.width / 2, 0, -box.height / 2);
-    target.set(0, box.depth / 2, 0);
+    // The plot's floor centered, and the camera on the middle of the box or the globe
+    sceneState.root.position.set(-ctx.width / 2, 0, -ctx.height / 2);
+    if (sphere) {
+      const [x, up, y] = sphere.center;
+      target.set(x - ctx.width / 2, up, y - ctx.height / 2);
+    } else {
+      target.set(0, ctx.zDepth / 2, 0);
+    }
 
     const cam = camera;
     let distance: number;
     if (cam instanceof PerspectiveCamera) {
-      distance = fitPerspective(box, direction, fov, aspect) * (1 + margin);
+      const vertical = MathUtils.degToRad(viewFov) / 2;
+      const horizontal = Math.atan(Math.tan(vertical) * aspect);
+      distance =
+        (radius != null
+          ? radius / Math.sin(Math.min(vertical, horizontal))
+          : fitPerspective(box, direction, viewFov, aspect)) *
+        (1 + margin);
       // An empty plot box (no room inside the padding) leaves nothing to fit
       if (!(distance > 0)) return;
-      cam.fov = fov;
+      cam.fov = viewFov;
       cam.aspect = aspect;
       cam.near = distance / 100;
       cam.far = distance * 10;
     } else {
-      const { halfWidth, halfHeight } = fitOrthographic(box, direction, aspect);
+      const { halfWidth, halfHeight } =
+        radius != null
+          ? aspect >= 1
+            ? { halfWidth: radius * aspect, halfHeight: radius }
+            : { halfWidth: radius, halfHeight: radius / aspect }
+          : fitOrthographic(box, direction, aspect);
       if (!(halfWidth > 0 && halfHeight > 0)) return;
       const scale = 1 + margin;
       distance = Math.hypot(box.width, box.height, box.depth) * 2;
@@ -123,13 +179,18 @@
         zoom: 1,
       });
     }
+    fitted = distance;
+    fitTarget.copy(target);
+    // Then wherever the user zoomed and panned to
+    target.add(panOffset);
+    if (cam instanceof PerspectiveCamera) distance *= zoom;
+    else cam.zoom = zoom;
     cam.position.copy(direction).multiplyScalar(distance).add(target);
     cam.up.set(0, 1, 0);
     cam.lookAt(target);
     cam.updateProjectionMatrix();
     keyLight.position.set(-0.5, 1, 0).multiplyScalar(distance);
 
-    fitted = distance;
     if (orbit) {
       limitZoom(orbit);
       orbit.target.copy(target);
@@ -159,18 +220,50 @@
 
   /** The angles orbiting last handed back through `bind:rotate` / `bind:tilt` */
   let orbited: { rotate: number; tilt: number } | null = null;
+  /** Whether `rotate` / `tilt` are where orbiting put them (`rotate` the same turn, any way round) */
+  const isOrbited = (r: number, t: number) =>
+    !!orbited && Math.abs((r - orbited.rotate) % 360) < 1e-9 && orbited.tilt === t;
 
-  // A new `rotate` / `tilt` turns the view, but leaves where a user orbited to alone otherwise
+  // A new `rotate`, `tilt`, or `fov` eases there with `motion` (orbiting moves the view itself, so
+  // its angles land at once)
+  // The motion is fixed when the scene mounts, as a mark's `motion` is
+  const view = untrack(() =>
+    motion ? createControlledMotion<number[]>([rotate, tilt, fov], motion) : null
+  );
   $effect.pre(() => {
+    const next = [rotate, tilt, fov];
+    if (!view) return;
+    untrack(() => {
+      // The short way round
+      const from = view.current[0];
+      next[0] = from + ((((next[0] - from) % 360) + 540) % 360) - 180;
+      if (isOrbited(next[0], next[1])) {
+        view.set(next, view.type === 'tween' ? { duration: 0 } : ({ instant: true } as any));
+      } else {
+        view.set(next);
+      }
+    });
+  });
+  const shown = $derived(view ? view.current : [rotate, tilt, fov]);
+  /** The field of view the camera is fitted with, eased with the angles */
+  let viewFov = untrack(() => fov);
+
+  // A new view turns the camera, but leaves where a user orbited to alone otherwise
+  $effect.pre(() => {
+    const [r, t, f] = shown;
+    const fovChanged = f !== viewFov;
+    viewFov = f;
     // Orbiting reports where the camera already is, and refitting would undo a zoom
-    if (orbited && orbited.rotate === rotate && orbited.tilt === tilt) return;
-    viewDirection(rotate, tilt, direction);
+    if (!fovChanged && isOrbited(r, t)) return;
+    viewDirection(r, t, direction);
     untrack(fit);
   });
 
   $effect.pre(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    [ctx.width, ctx.height, ctx.zDepth, size.current, fov, margin, camera];
+    [ctx.width, ctx.height, ctx.zDepth, size.current, margin, camera];
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    ctx.geo.projection;
     untrack(fit);
   });
 
@@ -180,6 +273,9 @@
     const orbitControls = new OrbitControls(cam, renderer.domElement);
     // No further than edge on: charts read from above the floor, and walls and axes assume it
     orbitControls.maxPolarAngle = Math.PI / 2;
+    const pan = untrack(() => drag) === 'pan';
+    orbitControls.mouseButtons.LEFT = pan ? MOUSE.PAN : MOUSE.ROTATE;
+    orbitControls.touches.ONE = pan ? TOUCH.PAN : TOUCH.ROTATE;
     limitZoom(orbitControls);
     orbitControls.target.copy(target);
     fitting = true;
@@ -191,6 +287,9 @@
       // At the target there's no direction to read
       if (offset.lengthSq() === 0) return;
       direction.copy(offset).normalize();
+      // Zooming and panning, kept across refits
+      panOffset.copy(orbitControls.target).sub(fitTarget);
+      zoom = cam instanceof PerspectiveCamera ? offset.length() / (fitted || 1) : cam.zoom;
       orbited = viewAngles(direction);
       rotate = orbited.rotate;
       tilt = orbited.tilt;
@@ -205,8 +304,96 @@
     };
   });
 
+  // A plain drag (and one finger) turns the view or pans it; shift-drag does the other
+  $effect(() => {
+    const pan = drag === 'pan';
+    if (!orbit) return;
+    orbit.mouseButtons.LEFT = pan ? MOUSE.PAN : MOUSE.ROTATE;
+    orbit.touches.ONE = pan ? TOUCH.PAN : TOUCH.ROTATE;
+  });
+
+  /** The view the scene started with, for `reset` */
+  const initial = untrack(() => ({ rotate, tilt }));
+
+  /** The frame of an animation in flight, to cancel when another starts */
+  let animation = 0;
+  /** Run `step` with an eased `t` from 0 to 1 over `duration` milliseconds */
+  function animate(duration: number, step: (t: number) => void) {
+    cancelAnimationFrame(animation);
+    const start = performance.now();
+    const frame = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      // Cubic in-out, as a flat chart's transform eases
+      step(t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+      if (t < 1) animation = requestAnimationFrame(frame);
+    };
+    animation = requestAnimationFrame(frame);
+  }
+
+  const clampZoom = (value: number) =>
+    camera instanceof PerspectiveCamera
+      ? Math.min(5, Math.max(0.05, value))
+      : Math.min(20, Math.max(0.2, value));
+
+  sceneState.zoomBy = (factor, eased = true) => {
+    // Closer is a shorter distance for a perspective camera, and more zoom for an orthographic one
+    const to = clampZoom(camera instanceof PerspectiveCamera ? zoom * factor : zoom / factor);
+    if (!eased) {
+      zoom = to;
+      fit();
+      return;
+    }
+    const from = zoom;
+    animate(300, (t) => {
+      zoom = from + (to - from) * t;
+      fit();
+    });
+  };
+
+  sceneState.resetView = () => {
+    // Back from any zoom or pan, and round to the angles it started at
+    const fromDirection = direction.clone();
+    const toDirection = viewDirection(initial.rotate, initial.tilt, new Vector3());
+    const fromPan = panOffset.clone();
+    const fromZoom = zoom;
+    orbited = { rotate: initial.rotate, tilt: initial.tilt };
+    animate(500, (t) => {
+      direction.lerpVectors(fromDirection, toDirection, t).normalize();
+      panOffset.lerpVectors(fromPan, new Vector3(), t);
+      zoom = fromZoom + (1 - fromZoom) * t;
+      fit();
+      if (t === 1) {
+        rotate = initial.rotate;
+        tilt = initial.tilt;
+      }
+    });
+  };
+
+  // As on a flat chart's `transform`, scrolling only zooms with `scrollActivationKey` held, and
+  // otherwise scrolls the page.  Caught on the way down, before it reaches the controls.
+  $effect(() => {
+    const key = scrollActivationKey;
+    const container = renderer.domElement.parentElement;
+    if (!key || !container) return;
+    const onWheel = (e: WheelEvent) => {
+      // Either way, not the controls': without the key the page scrolls, and with it the scene
+      // zooms here, since some keys change the wheel (shift turns it sideways on macOS, which the
+      // controls don't read)
+      e.stopPropagation();
+      const held = { meta: e.metaKey, alt: e.altKey, control: e.ctrlKey, shift: e.shiftKey }[key];
+      if (!held) return;
+      e.preventDefault();
+      const delta = e.deltaY || e.deltaX;
+      if (delta) sceneState.zoomBy(Math.pow(1.002, delta), false);
+    };
+    container.addEventListener('wheel', onWheel, { capture: true, passive: false });
+    return () => container.removeEventListener('wheel', onWheel, { capture: true });
+  });
+
   // Tooltips: the row under the pointer, from whichever mark it hits first
   const raycaster = new Raycaster();
+  // Lines (ex. `Spline`) are hit within a few pixels of them, as thin ones are hard to land on
+  raycaster.params.Line2 = { threshold: 8 };
   const pointer = new Vector2();
 
   $effect(() => {

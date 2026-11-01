@@ -38,7 +38,7 @@
 		<Axis placement="bottom" format={(d) => 'W' + d} />
 		<Axis placement="left" format={(d) => daysOfWeek[d]} />
 		<Axis placement="back" />
-		<Bars />
+		<Bars tooltip />
 	</Scene>
 
 	<Tooltip.Root>

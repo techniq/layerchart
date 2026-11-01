@@ -1,6 +1,8 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
+  import type { ScrollActivationKey } from 'layerchart';
+  import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 
   export type ScenePropsWithoutHTML = {
     /**
@@ -52,6 +54,28 @@
     controls?: boolean;
 
     /**
+     * What a plain drag (and one finger) does: turn the view, or pan it.  Shift-drag does the
+     * other, as with an `isometric` chart's `transform`.
+     *
+     * @default 'rotate'
+     */
+    drag?: 'rotate' | 'pan';
+
+    /**
+     * Ease to a new `rotate`, `tilt`, or `fov` rather than jumping, ex. `'tween'` or
+     * `{ type: 'spring', stiffness: 0.1 }`.  Orbiting moves the view itself.
+     */
+    motion?: MotionOptions;
+
+    /**
+     * Require a key to be held for scrolling to zoom, as a flat chart's `transform` does, so
+     * scrolling past the chart scrolls the page.
+     *
+     * @default undefined (scrolling always zooms)
+     */
+    scrollActivationKey?: ScrollActivationKey;
+
+    /**
      * The device pixel ratio to render at, or a `[min, max]` to clamp the device's to.
      *
      * @default window.devicePixelRatio
@@ -80,7 +104,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Canvas } from '@threlte/core';
-  import { NoToneMapping } from 'three';
+  import { NoToneMapping, PCFShadowMap } from 'three';
 
   import { SceneState, setSceneContext } from '../../contexts/scene.svelte.js';
   import { ColorResolver } from '../../utils/color.js';
@@ -93,6 +117,9 @@
     fov = 35,
     margin = 0.1,
     controls = true,
+    drag = 'rotate',
+    motion,
+    scrollActivationKey,
     dpr,
     zIndex = 0,
     pointerEvents = true,
@@ -103,7 +130,40 @@
 
   const sceneState = setSceneContext(new SceneState());
 
+  /** Move the camera closer (as a flat chart's `transform.zoomIn()`) */
+  export function zoomIn() {
+    sceneState.zoomBy(1 / 1.25);
+  }
+
+  /** Move the camera farther (as a flat chart's `transform.zoomOut()`) */
+  export function zoomOut() {
+    sceneState.zoomBy(1.25);
+  }
+
+  /** Back to the view the scene started with: its first `rotate` / `tilt`, fitted, unpanned */
+  export function reset() {
+    sceneState.resetView();
+  }
+
   let probe = $state<HTMLElement>();
+  let element = $state<HTMLDivElement>();
+
+  /**
+   * Whether the scene is on screen, or nearly.  Off it, the scene gives up its WebGL context:
+   * browsers only allow a page so many at once (16 in Chromium), and a page of charts can have more.
+   */
+  let onScreen = $state(false);
+  $effect(() => {
+    if (!element) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+      },
+      { rootMargin: '50%' }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  });
 
   onMount(() => {
     if (!probe) return;
@@ -136,20 +196,33 @@
 </script>
 
 <div
+  bind:this={element}
   class={['lc-scene', className]}
   class:disablePointerEvents={pointerEvents === false}
   style:z-index={zIndex}
   {...restProps}
 >
-  <Canvas renderMode="on-demand" toneMapping={NoToneMapping} {dpr}>
-    <SceneSetup {camera} bind:rotate bind:tilt {fov} {margin} {controls}>
-      {@render children?.()}
-    </SceneSetup>
-  </Canvas>
+  {#if onScreen}
+    <Canvas renderMode="on-demand" toneMapping={NoToneMapping} shadows={PCFShadowMap} {dpr}>
+      <SceneSetup
+        {camera}
+        bind:rotate
+        bind:tilt
+        {fov}
+        {margin}
+        {controls}
+        {drag}
+        {motion}
+        {scrollActivationKey}
+      >
+        {@render children?.()}
+      </SceneSetup>
+    </Canvas>
+  {/if}
 
   <div class="lc-scene-labels">
     {#each sceneState.labelSets as labels}
-      {#each labels() as label (label.key)}
+      {#each labels as label (label.key)}
         {@const point = sceneState.project(label.x, label.y, label.z)}
         {#if point}
           <div

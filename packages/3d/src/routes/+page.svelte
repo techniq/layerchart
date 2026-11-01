@@ -1,7 +1,23 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { scaleBand, scaleOrdinal } from 'd3-scale';
-  import { Chart, Axis, Bars, Grid, Points, Spline, Tooltip, Scene } from '../lib/index.js';
+  import {
+    Chart,
+    Axis,
+    Bars,
+    Contour,
+    Grid,
+    Light,
+    Points,
+    Raster,
+    Spline,
+    Surface,
+    Tooltip,
+    Scene,
+  } from '../lib/index.js';
+  import { scaleSequential } from 'd3-scale';
+  import { interpolateViridis, interpolateRdBu } from 'd3-scale-chromatic';
+  import volcano from '../../../../docs/static/data/examples/volcano.json' with { type: 'json' };
 
   const example = $derived(page.url.searchParams.get('example') ?? 'scatter');
   const camera = $derived((page.url.searchParams.get('camera') ?? 'perspective') as any);
@@ -36,7 +52,7 @@
         <Axis placement="bottom" label="x" />
         <Axis placement="left" label="y" />
         <Axis placement="back" label="z" />
-        <Points />
+        <Points tooltip />
       </Scene>
       <Tooltip.Root>
         {#snippet children({ data })}
@@ -66,7 +82,7 @@
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Axis placement="back" />
-        <Bars />
+        <Bars tooltip />
       </Scene>
       <Tooltip.Root>
         {#snippet children({ data })}
@@ -74,6 +90,91 @@
           <Tooltip.List><Tooltip.Item label="value" value={data.value} /></Tooltip.List>
         {/snippet}
       </Tooltip.Root>
+    </Chart>
+  {:else if example === 'surface'}
+    <Chart
+      xDomain={[-1, 1]}
+      yDomain={[-1, 1]}
+      zDomain={[-1, 1]}
+      zRange={({ height }) => [0, height / 2]}
+      cScale={scaleSequential(interpolateRdBu)}
+      tooltipContext
+    >
+      <Scene {camera}>
+        <Grid />
+        <Axis placement="bottom" />
+        <Axis placement="left" />
+        <Axis placement="back" />
+        <Surface
+          tooltip
+          value={(x, y) => Math.sin(x * Math.PI) * Math.sin(y * Math.PI)}
+          wireframe
+          pixelSize={6}
+        />
+      </Scene>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} format="decimal" />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
+    </Chart>
+  {:else if example === 'volcano'}
+    <Chart
+      cScale={scaleSequential(interpolateViridis)}
+      zRange={({ height }) => [0, height * 0.4]}
+      tooltipContext
+    >
+      <Scene {camera}>
+        <Light azimuth={315} altitude={35} shadow />
+        <Light type="ambient" intensity={0.5} />
+        <Surface
+          tooltip
+          data={(volcano as any).values}
+          width={(volcano as any).width}
+          height={(volcano as any).height}
+          contours={10}
+        />
+      </Scene>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.List>
+            <Tooltip.Item label="elevation" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
+    </Chart>
+  {:else if example === 'raster'}
+    <Chart
+      xDomain={[-3, 3]}
+      yDomain={[-3, 3]}
+      cScale={scaleSequential(interpolateRdBu)}
+      tooltipContext
+    >
+      <Scene {camera}>
+        <Raster value={(x, y) => Math.sin(x) * Math.cos(y)} pixelSize={4} />
+        <Contour value={(x, y) => Math.sin(x) * Math.cos(y)} thresholds={8} />
+        <Axis placement="bottom" />
+        <Axis placement="left" />
+      </Scene>
+    </Chart>
+  {:else if example === 'shadows'}
+    <Chart
+      data={columns}
+      x="week"
+      xScale={scaleBand().padding(0.2)}
+      y="day"
+      yScale={scaleBand().padding(0.2)}
+      yDomain={days}
+      z="value"
+      tooltipContext
+    >
+      <Scene {camera} scrollActivationKey="meta">
+        <Light azimuth={300} altitude={40} shadow />
+        <Light type="ambient" intensity={0.45} />
+        <Bars />
+      </Scene>
     </Chart>
   {:else if example === 'lines'}
     <Chart

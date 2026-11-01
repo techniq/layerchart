@@ -66,6 +66,11 @@ export interface MarkInfo {
   /** Label for legend/tooltip */
   label?: string;
   /**
+   * The `[min, max]` of the heights this mark draws from values of its own (ex. a surface's grid),
+   * folded into an automatic `zDomain`.
+   */
+  zExtent?: [number, number];
+  /**
    * Whether this mark reads `SeriesState.getStackAccessors()` rather than the raw accessor — a
    * stack-aware mark type with no explicit value accessor overriding it.  A `Points` placing
    * labels at its own `y` says `false`.
@@ -1701,12 +1706,27 @@ export class ChartState<
       }
     }
     const domain = calcDomain('z', this.extents, this.props.zDomain);
-    if (this.props.zDomain !== undefined || !Array.isArray(domain) || domain.length !== 2) {
-      return domain;
+    if (this.props.zDomain !== undefined) return domain;
+    const marks = this.#markZExtent;
+    if (!Array.isArray(domain) || domain.length !== 2) {
+      return marks ? [Math.min(0, marks[0]), Math.max(0, marks[1])] : domain;
     }
     const [min, max] = domain;
     if (typeof min !== 'number' || typeof max !== 'number') return domain;
-    return [Math.min(0, min), Math.max(0, max)];
+    return [Math.min(0, min, marks?.[0] ?? min), Math.max(0, max, marks?.[1] ?? max)];
+  });
+
+  /** The heights marks draw from values of their own (`MarkInfo.zExtent`), or `null` for none */
+  #markZExtent = $derived.by((): [number, number] | null => {
+    let result: [number, number] | null = null;
+    for (const { info } of this._markInfos) {
+      const range = info.zExtent;
+      if (!range) continue;
+      result = result
+        ? [Math.min(result[0], range[0]), Math.max(result[1], range[1])]
+        : [range[0], range[1]];
+    }
+    return result;
   });
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 

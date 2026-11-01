@@ -27,6 +27,8 @@ export type Instance = {
   depth: number;
   height: number;
   color: string;
+  /** Turned (ex. to stand out from a globe), about the corner at `x` / `y` / `z` */
+  rotation?: Quaternion;
 };
 
 type InstancesOptions = {
@@ -37,6 +39,8 @@ type InstancesOptions = {
   opacity: () => number;
   /** Mark the hovered instance, by changing its color or size in place */
   emphasize: (color: Color, size: Vector3) => void;
+  /** Whether hovering shows the tooltip */
+  tooltip?: () => boolean;
 };
 
 /**
@@ -72,7 +76,13 @@ function createMaterial() {
  * lets the pointer pick rows for the tooltip, and emphasizes the hovered row by rewriting only
  * that instance (and the one it replaces).  Call during component setup.
  */
-export function createInstances({ geometry, instances, opacity, emphasize }: InstancesOptions) {
+export function createInstances({
+  geometry,
+  instances,
+  opacity,
+  emphasize,
+  tooltip,
+}: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
   const material = createMaterial();
@@ -97,6 +107,7 @@ export function createInstances({ geometry, instances, opacity, emphasize }: Ins
     geometry.setAttribute('instanceOpacity', alpha);
     const next = new InstancedMesh(geometry, material, capacity);
     next.count = 0;
+    next.castShadow = next.receiveShadow = true;
     if (mesh) {
       scene.root.remove(mesh);
       mesh.dispose();
@@ -107,7 +118,7 @@ export function createInstances({ geometry, instances, opacity, emphasize }: Ins
 
   $effect(() => {
     const instanced = mesh;
-    if (!instanced) return;
+    if (!instanced || !tooltip?.()) return;
     return scene.addPickable({
       object: instanced,
       datum: (hit) => (hit.instanceId != null ? list[hit.instanceId]?.d : undefined),
@@ -133,7 +144,7 @@ export function createInstances({ geometry, instances, opacity, emphasize }: Ins
     size.set(Math.max(item.width, 1e-6), Math.max(item.height, 1e-6), Math.max(item.depth, 1e-6));
     color.copy(resolved?.color ?? missing);
     if (hovered) emphasize(color, size);
-    instanced.setMatrixAt(i, matrix.compose(position, rotation, size));
+    instanced.setMatrixAt(i, matrix.compose(position, item.rotation ?? rotation, size));
     instanced.setColorAt(i, color);
     return resolved?.opacity ?? 1;
   }

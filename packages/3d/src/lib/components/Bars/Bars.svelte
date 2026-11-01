@@ -27,18 +27,25 @@
      */
     insets?: number;
     /**
-     * A bar's width and depth in pixels along an axis without bands.
+     * A bar's width and depth in pixels along an axis without bands (and on a `globe`).
      *
      * @default 10
      */
     size?: number;
+    /**
+     * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).
+     *
+     * @default false
+     */
+    tooltip?: boolean;
   };
 </script>
 
 <script lang="ts">
-  import { BoxGeometry, Color } from 'three';
+  import { BoxGeometry, Color, Quaternion, Vector3 } from 'three';
   import { getChartContext, isScaleBand } from 'layerchart';
 
+  import { getSphere } from '../../utils/globe.js';
   import { createInstances } from '../../utils/instances.svelte.js';
   import { defined, resolveAccessor, rowColor } from '../../utils/marks.js';
 
@@ -51,6 +58,7 @@
     opacity = 1,
     insets = 0,
     size: sizeProp = 10,
+    tooltip = false,
   }: BarsProps = $props();
 
   const ctx = getChartContext();
@@ -68,6 +76,7 @@
   });
 
   const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  const sphere = $derived(getSphere(ctx));
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
 
@@ -83,12 +92,42 @@
 
   // A unit cube standing on its corner at the origin, so a bar scales out from `(x, y)` up
   createInstances({
+    tooltip: () => tooltip,
     geometry: new BoxGeometry(1, 1, 1).translate(0.5, 0.5, 0.5),
     instances: () =>
       rows.flatMap((d: any) => {
         const xValue = xAccessor(d);
         const yValue = yAccessor(d);
         if (!defined(xValue) || !defined(yValue)) return [];
+        if (sphere) {
+          // Standing out from the globe, `size` across, centered on its longitude / latitude
+          const [z0, z1] = ctx.heightOf(d, z);
+          const base = new Vector3(
+            ...sphere.toScene(Number(xValue), Number(yValue), Math.min(z0, z1))
+          );
+          const outward = base
+            .clone()
+            .sub(new Vector3(...sphere.center))
+            .normalize();
+          const rotation = new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), outward);
+          // The box's corner, half its footprint back from the center
+          const corner = new Vector3(-sizeProp / 2, 0, -sizeProp / 2)
+            .applyQuaternion(rotation)
+            .add(base);
+          return [
+            {
+              d,
+              x: corner.x,
+              y: corner.z,
+              z: corner.y,
+              width: sizeProp,
+              depth: sizeProp,
+              height: Math.abs(z1 - z0),
+              rotation,
+              color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)'),
+            },
+          ];
+        }
         const [x0, width] = extent(ctx.xScale, xValue);
         const [y0, depth] = extent(ctx.yScale, yValue);
         const [z0, z1] = ctx.heightOf(d, z);

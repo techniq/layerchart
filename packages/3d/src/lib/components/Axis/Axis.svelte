@@ -104,5 +104,5 @@
     return result;
   });
 
-  $effect(() => scene.addLabels(() => labels));
+  $effect(() => scene.addLabels(labels));
 </script>

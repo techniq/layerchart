@@ -29,11 +29,15 @@
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@threlte/core": "^8.6.1",
     "@types/d3-array": "^3.2.2",
+    "@types/d3-contour": "^3.0.6",
+    "@types/d3-geo": "^3.1.0",
     "@types/d3-scale": "^4.0.9",
+    "@types/d3-scale-chromatic": "^3.1.0",
+    "@types/d3-shape": "^3.1.8",
+    "@types/geojson": "^7946.0.16",
     "@types/three": "^0.187.0",
     "@vitest/browser": "^4.1.8",
     "@vitest/browser-playwright": "^4.1.8",
-    "d3-scale": "^4.0.2",
     "playwright": "^1.60.0",
     "prettier": "^3.8.3",
     "prettier-plugin-svelte": "^4.1.0",
@@ -66,6 +70,11 @@
   "svelte": "./dist/index.js",
   "dependencies": {
     "d3-array": "^3.2.4",
+    "d3-contour": "^4.0.2",
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "d3-scale-chromatic": "^3.1.0",
+    "d3-shape": "^3.2.0",
     "layerchart": "workspace:^"
   }
 }

@@ -342,3 +342,21 @@ export const getAdmin1Topology = prerender(
 	},
 	{ inputs: () => admin1Countries }
 );
+
+/**
+ * Lower Manhattan's buildings: footprints, with heights in meters where they're tagged (or 3.5m a
+ * floor where only floors are), and names.
+ *
+ * From OpenStreetMap (© OpenStreetMap contributors, ODbL), fetched through the Overpass API in
+ * October 2026.
+ */
+export const getLowerManhattanBuildings = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/lower-manhattan-buildings.json').then((r) =>
+		r.json()
+	)) as import('geojson').FeatureCollection<
+		import('geojson').Polygon,
+		{ height: number | null; name: string | null }
+	>;
+	return data;
+});

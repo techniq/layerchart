@@ -30,6 +30,12 @@
      * @default 1.4
      */
     hoverScale?: number;
+    /**
+     * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).
+     *
+     * @default false
+     */
+    tooltip?: boolean;
   };
 </script>
 
@@ -38,9 +44,20 @@
   import { getChartContext } from 'layerchart';
 
   import { createInstances } from '../../utils/instances.svelte.js';
-  import { defined, resolveAccessor, rowColor, scaled } from '../../utils/marks.js';
+  import { getSphere } from '../../utils/globe.js';
+  import { defined, place, resolveAccessor, rowColor } from '../../utils/marks.js';
 
-  let { data: dataProp, x, y, z, r, fill, opacity = 1, hoverScale = 1.4 }: PointsProps = $props();
+  let {
+    data: dataProp,
+    x,
+    y,
+    z,
+    r,
+    fill,
+    opacity = 1,
+    hoverScale = 1.4,
+    tooltip = false,
+  }: PointsProps = $props();
 
   const ctx = getChartContext();
 
@@ -51,24 +68,28 @@
   });
 
   const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  const sphere = $derived(getSphere(ctx));
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
 
   // A unit sphere, scaled out to each point's radius about its center
   createInstances({
+    tooltip: () => tooltip,
     geometry: new SphereGeometry(1, 24, 16),
     instances: () =>
       rows.flatMap((d: any) => {
         const xValue = xAccessor(d);
         const yValue = yAccessor(d);
         if (!defined(xValue) || !defined(yValue)) return [];
+        const height = ctx.config.z != null || z != null ? ctx.heightOf(d, z)[1] : 0;
+        const [px, up, py] = place(ctx, sphere, xValue, yValue, height);
         const radius = typeof r === 'function' ? r(d) : (r ?? (ctx.config.r ? ctx.rGet(d) : 5));
         return [
           {
             d,
-            x: scaled(ctx.xScale, xValue),
-            y: scaled(ctx.yScale, yValue),
-            z: ctx.config.z != null || z != null ? ctx.heightOf(d, z)[1] : 0,
+            x: px,
+            y: py,
+            z: up,
             width: radius,
             depth: radius,
             height: radius,

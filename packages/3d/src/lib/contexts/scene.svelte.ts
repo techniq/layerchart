@@ -56,7 +56,20 @@ export class SceneState {
   width = $state(0);
   height = $state(0);
 
-  #labels = $state.raw<Array<() => SceneLabel[]>>([]);
+  /**
+   * Zoom the camera in (`factor` below 1) or out from where it is, easing there unless `eased` is
+   * `false` (set by the scene)
+   */
+  zoomBy: (factor: number, eased?: boolean) => void = () => {};
+  /** Back to the view the scene started with, fitted (set by the scene) */
+  resetView: () => void = () => {};
+
+  /** How many `Light`s the scene has; it lights itself until it has one */
+  lights = $state(0);
+
+  // Values, not getters: a scene unmounting off screen would otherwise read a mark's state after
+  // the mark is gone
+  #labels = $state.raw<SceneLabel[][]>([]);
   readonly pickables = new Set<Pickable>();
   #vector = new Vector3();
 
@@ -64,12 +77,15 @@ export class SceneState {
     return this.#labels;
   }
 
-  /** Draw labels from `get` over the scene until the returned cleanup runs */
-  addLabels(get: () => SceneLabel[]) {
+  /**
+   * Draw `labels` over the scene until the returned cleanup runs.  Call from an effect, so new
+   * labels replace the old.
+   */
+  addLabels(labels: SceneLabel[]) {
     // Called from marks' effects, which mustn't come to depend on the list they add to
-    untrack(() => (this.#labels = [...this.#labels, get]));
+    untrack(() => (this.#labels = [...this.#labels, labels]));
     return () => {
-      untrack(() => (this.#labels = this.#labels.filter((g) => g !== get)));
+      untrack(() => (this.#labels = this.#labels.filter((l) => l !== labels)));
     };
   }
 
@@ -86,6 +102,15 @@ export class SceneState {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.themeVersion;
     return this.colors?.resolve(value) ?? null;
+  }
+
+  /** A point in the scene (ex. where the pointer hit a mark) in chart coordinates */
+  toChart(point: Vector3): { x: number; y: number; z: number } {
+    return {
+      x: point.x - this.root.position.x,
+      y: point.z - this.root.position.z,
+      z: point.y - this.root.position.y,
+    };
   }
 
   /** Where a point in chart coordinates lands on the layer, in CSS pixels; `null` behind the camera */

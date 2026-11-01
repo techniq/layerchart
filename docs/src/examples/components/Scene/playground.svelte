@@ -104,7 +104,7 @@
 		<Axis placement="bottom" />
 		<Axis placement="left" />
 		<Axis placement="back" />
-		<Bars />
+		<Bars tooltip />
 	</Scene>
 
 	<Tooltip.Root>

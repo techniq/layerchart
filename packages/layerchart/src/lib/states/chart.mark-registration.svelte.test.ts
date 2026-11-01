@@ -39,6 +39,15 @@ describe('mark registration', () => {
     expect(markInfosVersion(ctx) - before).toBeLessThan(5);
   });
 
+  it('widens an automatic `z` domain to the heights a mark draws from its own values', async () => {
+    const ctx = await mountMarks(1);
+    const unregister = ctx.registerMark({ zExtent: [5, 50] });
+    // Heights measure up from the floor, so the domain still starts at 0
+    await expect.poll(() => ctx.zDomain).toEqual([0, 50]);
+    unregister();
+    await expect.poll(() => ctx.zDomain).not.toEqual([0, 50]);
+  });
+
   it('has every mark in the domain as soon as a synchronous mount returns', () => {
     // Nothing between the mount and the next microtask may see a chart missing its marks — code
     // that measures or exports a chart right after `mount()`/`flushSync()` reads it there
