@@ -1,6 +1,12 @@
 // Everything a 3D chart needs from one import: the chart itself and the pieces that draw outside
 // the scene come from `layerchart`, and the marks drawn in it from here.
-export { Chart, Legend, Tooltip } from 'layerchart';
+export { Chart, Legend, Tooltip, orthographic, perspective } from 'layerchart';
+export type {
+  OrthographicOptions,
+  OrthographicView,
+  PerspectiveOptions,
+  PerspectiveView,
+} from 'layerchart';
 
 export { default as Scene } from './components/Scene/Scene.svelte';
 export type { SceneProps, ScenePropsWithoutHTML } from './components/Scene/Scene.svelte';

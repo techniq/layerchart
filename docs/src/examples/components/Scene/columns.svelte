@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Axis, Bars, Chart, Grid, Tooltip, Scene } from '@layerchart/3d';
+	import { Axis, Bars, Chart, Grid, Scene, Tooltip, perspective } from '@layerchart/3d';
 	import { scaleBand } from 'd3-scale';
 	import { range } from 'd3-array';
 	import { timeWeek, timeYear } from 'd3-time';
@@ -13,6 +13,8 @@
 </script>
 
 <Chart
+	view={perspective}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x={(d) => timeWeek.count(timeYear(d.date), d.date)}
 	xScale={scaleBand().padding(0.2)}

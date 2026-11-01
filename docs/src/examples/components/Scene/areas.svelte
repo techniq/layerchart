@@ -2,7 +2,7 @@
 	import { scaleBand, scaleOrdinal } from 'd3-scale';
 	import { cubicInOut } from 'svelte/easing';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { Area, Axis, Chart, Grid, Scene } from '@layerchart/3d';
+	import { Area, Axis, Chart, Grid, Scene, perspective } from '@layerchart/3d';
 
 	// A few series of rises and falls, one row each
 	const series = ['North', 'East', 'South', 'West'];
@@ -29,6 +29,13 @@
 <!-- Each series a curtain standing in its own row, as tall as its values.  From the front, an
      overlapping area chart -->
 <Chart
+	view={perspective({
+		rotate: view === 'front' ? 0 : -40,
+		tilt: view === 'front' ? 90 : 65,
+		fov: view === 'front' ? 4 : 35,
+		motion: { type: 'tween', duration: 800, easing: cubicInOut }
+	})}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x="x"
 	y="series"
@@ -44,13 +51,7 @@
 >
 	<!-- Front on, a narrow field of view flattens the perspective, so the rows line up like a flat
 	     chart's; the view eases between the two -->
-	<Scene
-		rotate={view === 'front' ? 0 : -40}
-		tilt={view === 'front' ? 90 : 65}
-		fov={view === 'front' ? 4 : 35}
-		motion={{ type: 'tween', duration: 800, easing: cubicInOut }}
-		scrollActivationKey="shift"
-	>
+	<Scene>
 		<Grid y={false} />
 		<Axis placement="bottom" />
 		<Axis placement="left" />

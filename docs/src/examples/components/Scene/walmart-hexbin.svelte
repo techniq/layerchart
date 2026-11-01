@@ -10,7 +10,8 @@
 	import { interpolateYlGnBu } from 'd3-scale-chromatic';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature, mesh } from 'topojson-client';
-	import { Chart, GeoPath, Polygon, Scene, Tooltip, type ChartState } from '@layerchart/3d';
+	import { Chart, GeoPath, Polygon, Scene, Tooltip, perspective } from '@layerchart/3d';
+	import type { ChartState } from 'layerchart';
 
 	const states = feature(topology, topology.objects.states);
 	const nation = feature(topology, topology.objects.nation);
@@ -61,6 +62,8 @@
 
 <!-- Each hexagon raised by its number of stores -->
 <Chart
+	view={perspective({ rotate: 25, tilt: 50 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	data={walmarts}
 	x="longitude"
 	y="latitude"
@@ -76,7 +79,7 @@
 		{@const [fewest, most] = (extent(bins, (b) => b.count) as [number, number]) ?? [0, 1]}
 		<!-- Colored by count as `Bin` colors its cells: yellow-green-blue over the counts' range -->
 		{@const color = scaleSequential([fewest, most], interpolateYlGnBu)}
-		<Scene rotate={25} tilt={50} scrollActivationKey="shift">
+		<Scene>
 			<GeoPath
 				geojson={nation}
 				fill="color-mix(in oklab, var(--color-surface-content) 5%, var(--color-surface-100))"

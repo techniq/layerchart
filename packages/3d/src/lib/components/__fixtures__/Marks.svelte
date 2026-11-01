@@ -31,7 +31,7 @@
 
 <div style="width: 400px; height: 300px; margin-top: {offset}px">
   <Chart {...chart as any}>
-    <Scene controls={false} {...sceneProps}>
+    <Scene {...sceneProps}>
       {#if mark === 'points'}
         <Points {...points} />
       {:else if mark === 'spline'}

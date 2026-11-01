@@ -63,6 +63,7 @@
     scrollActivationKey,
     initialRotation,
     processRotate,
+    pivotRotate,
     drag,
     dragSwitchKey,
     ...restProps
@@ -89,6 +90,7 @@
     scrollActivationKey,
     initialRotation,
     processRotate,
+    pivotRotate,
     drag,
     dragSwitchKey,
   };
@@ -139,6 +141,7 @@
 
   $effect.pre(() => {
     transformState.processRotate = processRotate;
+    transformState.pivotRotate = pivotRotate;
   });
 
   $effect.pre(() => {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { Axis, Bars, Chart, Grid, Legend, Scene, Tooltip } from '@layerchart/3d';
+	import { Axis, Bars, Chart, Grid, Legend, Scene, Tooltip, perspective } from '@layerchart/3d';
 	import { longData } from '$lib/utils/data.js';
 
 	const data = longData;
@@ -9,6 +9,8 @@
 
 <!-- Years across the floor and baskets into it, with each basket's fruit stacked up along `z` -->
 <Chart
+	view={perspective({ rotate: -25, tilt: 65 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x="year"
 	xScale={scaleBand().paddingInner(0.3)}
@@ -29,7 +31,7 @@
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-25} tilt={65} scrollActivationKey="shift">
+	<Scene>
 		<Grid x={false} y={false} />
 		<Axis placement="bottom" format="none" />
 		<Axis placement="left" format={(d) => `Basket ${d}`} />

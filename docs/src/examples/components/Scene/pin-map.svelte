@@ -8,7 +8,7 @@
 	import { geoIdentity, geoPath, type GeoProjection } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Link, Points, Scene, Text, Tooltip } from '@layerchart/3d';
+	import { Chart, GeoPath, Link, Points, Scene, Text, Tooltip, perspective } from '@layerchart/3d';
 
 	const states = feature(topology, topology.objects.states);
 	const counties = feature(topology, topology.objects.counties);
@@ -38,6 +38,8 @@
 
 <!-- Each county's pin stands as tall as its population -->
 <Chart
+	view={perspective({ rotate: -10, tilt: 50 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoIdentity as unknown as () => GeoProjection, fitGeojson: states }}
 	zDomain={[0, largest.population]}
 	zRange={[0, 200]}
@@ -47,7 +49,7 @@
 >
 	{#snippet children({ context })}
 		{@const at = (pin: (typeof pins)[number]) => context.geo.projection?.([pin.x, pin.y]) ?? [0, 0]}
-		<Scene rotate={-10} tilt={50} scrollActivationKey="shift">
+		<Scene>
 			<GeoPath
 				geojson={states}
 				fill="var(--color-surface-200)"

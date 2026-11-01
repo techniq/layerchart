@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Chart, GeoPath, Light, Scene, Tooltip } from '@layerchart/3d';
+	import { Chart, GeoPath, Light, Scene, Tooltip, perspective } from '@layerchart/3d';
 	import { geoMercator } from 'd3-geo';
 	import { Field, RangeField, Switch } from 'svelte-ux';
 	import { pixelsPerMeter } from '$lib/utils/elevation.js';
@@ -31,6 +31,8 @@
 </div>
 
 <Chart
+	view={perspective({ rotate: -30, tilt: 55, margin: -0.35 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoMercator, fitGeojson: buildings }}
 	zDomain={[0, 420]}
 	zRange={({ width, height }) => [
@@ -43,7 +45,7 @@
 	class="cursor-grab active:cursor-grabbing"
 >
 	<!-- The neighborhood is about square and the plot is wide, so frame closer than the plot box -->
-	<Scene rotate={-30} tilt={55} margin={-0.35} scrollActivationKey="shift">
+	<Scene>
 		<Light {azimuth} {altitude} intensity={1.1} {shadow} />
 		<Light type="ambient" intensity={0.5} />
 		<GeoPath

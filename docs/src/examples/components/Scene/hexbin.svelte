@@ -7,7 +7,8 @@
 	import { extent } from 'd3-array';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateYlGnBu } from 'd3-scale-chromatic';
-	import { Axis, Chart, Grid, Polygon, Scene, Tooltip, type ChartState } from '@layerchart/3d';
+	import { Axis, Chart, Grid, Polygon, Scene, Tooltip, perspective } from '@layerchart/3d';
+	import type { ChartState } from 'layerchart';
 
 	const data = olympians.filter((d) => d.weight != null && d.height != null);
 	export { data };
@@ -53,6 +54,8 @@
 
 <!-- Each hexagon raised by its count, measured by `zScale` (`zDomain` is a share of the largest) -->
 <Chart
+	view={perspective({ rotate: 25, tilt: 60 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x="weight"
 	y="height"
@@ -71,7 +74,7 @@
 		{@const [fewest, most] = (extent(bins, (b) => b.count) as [number, number]) ?? [0, 1]}
 		<!-- Colored by count as `Bin` colors its cells: yellow-green-blue over the counts' range -->
 		{@const color = scaleSequential([fewest, most], interpolateYlGnBu)}
-		<Scene rotate={25} tilt={60} scrollActivationKey="shift">
+		<Scene>
 			<Grid z={false} />
 			<Axis placement="bottom" label="weight (kg)" />
 			<Axis placement="left" label="height (m)" />

@@ -170,10 +170,10 @@
     return untrack(() => chartState._initialTransform);
   });
 
-  /** The isometric view the transform turns from (the `isometric` angles, eased), or `null` */
+  /** The view the transform turns from (the view's angles, eased), or `null` */
   const isometricView = $derived.by(() => {
-    if (!chartState.isometricTransform) return null;
-    const { rotate, tilt } = chartState.isometricAngles;
+    if (!chartState.viewTransform) return null;
+    const { rotate, tilt } = chartState.viewAngles;
     return { x: rotate, y: tilt };
   });
 
@@ -182,8 +182,26 @@
    * across its front edge; dragging up tips it towards edge on.
    */
   function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
+    if (!chartState.isometric) {
+      // A 3D view (`perspective`) turns as orbit controls do: a drag the chart's height round a
+      // full circle, and no further than edge on
+      const perPixel = 360 / Math.max(chartState.containerHeight, 1);
+      return { x: x - deltaX * perPixel, y: Math.min(90, Math.max(0, y - deltaY * perPixel)) };
+    }
     return { x: x - deltaX / 2, y: Math.min(89, Math.max(0, y - deltaY * 0.3)) };
   }
+
+  /** An `isometric` view turns about what's in the middle of the plot, wherever it's panned to */
+  const pivotRotate = $derived(
+    chartState.isometric
+      ? (
+          from: { x: number; y: number },
+          to: { x: number; y: number },
+          translate: { x: number; y: number },
+          scale: number
+        ) => chartState.isometricPivot(from, to, translate, scale)
+      : undefined
+  );
 
   /**
    * Where the transform starts — a fitted projection, or the domain a chart opens zoomed to.  The
@@ -581,6 +599,7 @@
           initialScale={resolvedInitialTransform.scale}
           initialRotation={isometricView}
           processRotate={processIsometricRotate}
+          {pivotRotate}
           {processTranslate}
           {...transformProps}
           scaleExtent={resolvedScaleExtent}

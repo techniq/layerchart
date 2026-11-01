@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, GeoRaster, Light, Scene, globe } from '@layerchart/3d';
+	import { Chart, GeoRaster, Light, Scene, globe, perspective } from '@layerchart/3d';
 	import { Button, ButtonGroup, Field, RangeField, SelectField } from 'svelte-ux';
 	import { TimerState } from '@layerstack/svelte-state';
 
@@ -19,10 +19,12 @@
 
 	let planet = $state(planets.find((p) => p.label === 'Jupiter')!.value);
 
-	// Spinning is the camera orbiting: `rotate` is bound, so dragging and the timer share it
+	// Spinning turns the view.  A drag hands its angles back (`onTransform`), so the timer carries
+	// on from wherever it's dragged to
 	let rotate = $state(0);
 	let tilt = $state(80);
 	let velocity = $state(0.5);
+	let dragging = false;
 
 	const timer = new TimerState({
 		delay: 16,
@@ -63,10 +65,19 @@
 
 <Chart
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
+	view={perspective({ rotate, tilt })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	onTransform={({ rotation }) => {
+		if (!dragging || !rotation) return;
+		rotate = rotation.x;
+		tilt = rotation.y;
+	}}
+	ondragstart={() => (dragging = true)}
+	ondragend={() => (dragging = false)}
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene bind:rotate bind:tilt scrollActivationKey="shift">
+	<Scene>
 		<!-- Lit from one side, as the sun would -->
 		<Light azimuth={250} altitude={20} intensity={1.1} />
 		<Light type="ambient" intensity={0.25} />

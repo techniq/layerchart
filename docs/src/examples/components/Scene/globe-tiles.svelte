@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Chart, GeoPath, GeoRaster, Scene, globe } from '@layerchart/3d';
+	import { Chart, GeoPath, GeoRaster, Scene, globe, perspective } from '@layerchart/3d';
 	import { feature } from 'topojson-client';
 	import { RangeField } from 'svelte-ux';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
@@ -82,11 +82,13 @@
 </div>
 
 <Chart
+	view={perspective({ rotate: -20, tilt: 60 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-20} tilt={60} scrollActivationKey="shift">
+	<Scene>
 		<!-- The globe beneath, while the tiles load (and at the poles, past where they stop) -->
 		<GeoPath geojson={{ type: 'Sphere' }} fill="var(--color-surface-200)" />
 		{#if image}

@@ -40,7 +40,7 @@
 </script>
 
 <script lang="ts">
-  import { SphereGeometry } from 'three';
+  import { CircleGeometry, SphereGeometry } from 'three';
   import { getChartContext } from 'layerchart';
 
   import { createInstances } from '../../utils/instances.svelte.js';
@@ -72,10 +72,13 @@
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
 
-  // A unit sphere, scaled out to each point's radius about its center
+  // A unit sphere, scaled out to each point's radius about its center.  Flat (no `view`, seen
+  // from directly above) a disc facing up looks the same, for a fraction of the triangles.
+  const ball = new SphereGeometry(1, 24, 16);
+  const disc = new CircleGeometry(1, 24).rotateX(-Math.PI / 2);
   createInstances({
     tooltip: () => tooltip,
-    geometry: new SphereGeometry(1, 24, 16),
+    geometry: () => (ctx.view ? ball : disc),
     instances: () =>
       rows.flatMap((d: any) => {
         const xValue = xAccessor(d);

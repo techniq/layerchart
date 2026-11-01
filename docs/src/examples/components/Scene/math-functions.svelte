@@ -16,7 +16,7 @@
 		interpolateCubehelixDefault,
 		interpolateRdYlBu
 	} from 'd3-scale-chromatic';
-	import { Axis, Chart, Raster, Scene, Surface } from '@layerchart/3d';
+	import { Axis, Chart, Raster, Scene, Surface, perspective } from '@layerchart/3d';
 	import { Field, MenuField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	const functions = [
@@ -105,6 +105,13 @@
 	</div>
 
 	<Chart
+		view={perspective({ rotate: -30, tilt: 55 })}
+		transform={{
+			mode: 'canvas',
+			drag: 'rotate',
+			scrollMode: 'scale',
+			scrollActivationKey: 'shift'
+		}}
 		cScale={scaleSequential(interp.fn)}
 		xDomain={[-1, 1]}
 		yDomain={[-1, 1]}
@@ -112,7 +119,7 @@
 		height={450}
 		class="cursor-grab active:cursor-grabbing"
 	>
-		<Scene rotate={-30} tilt={55} scrollActivationKey="shift">
+		<Scene>
 			<Axis placement="bottom" label="x" />
 			<Axis placement="left" label="y" />
 			{#if style === 'flat'}

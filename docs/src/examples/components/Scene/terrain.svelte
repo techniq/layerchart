@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Chart, Light, Scene, Surface, Tooltip } from '@layerchart/3d';
+	import { Chart, Light, Scene, Surface, Tooltip, perspective } from '@layerchart/3d';
 	import { extent } from 'd3-array';
 	import { geoMercator } from 'd3-geo';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateRgbBasis } from 'd3-interpolate';
 	import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
-	import SceneControls from '$lib/components/controls/SceneControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { loadElevation, pixelsPerMeter } from '$lib/utils/elevation.js';
 
 	type Place = { label: string; bounds: [[number, number], [number, number]]; zoom: number };
@@ -101,10 +101,6 @@
 	let shadow = $state(true);
 	let exaggeration = $state(1.5);
 
-	// Zoom, reset, and whether a drag turns the view or pans it
-	let scene = $state<ReturnType<typeof Scene>>();
-	let drag = $state<'rotate' | 'pan'>('rotate');
-
 	const tints = interpolateRgbBasis([
 		'#3f6b35',
 		'#8fae62',
@@ -144,6 +140,8 @@
 
 <!-- Heights at true scale to the map (times the exaggeration), lit by a sun you can move -->
 <Chart
+	view={perspective({ rotate: -20, tilt: 50 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoMercator, fitGeojson: box }}
 	cScale={scaleSequential(tints)}
 	zDomain={terrain?.range ?? [0, 1]}
@@ -158,7 +156,7 @@
 	height={550}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene bind:this={scene} rotate={-20} tilt={50} {drag} scrollActivationKey="shift">
+	<Scene>
 		<Light {azimuth} {altitude} intensity={1.2} {shadow} />
 		<Light type="ambient" intensity={0.3} />
 		{#if terrain}
@@ -166,7 +164,7 @@
 		{/if}
 	</Scene>
 
-	<SceneControls {scene} bind:drag />
+	<TransformContextControls />
 
 	<Tooltip.Root>
 		{#snippet children({ data })}

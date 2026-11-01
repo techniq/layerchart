@@ -54,12 +54,18 @@ LayerChart also support CSS classes and styling for the `Canvas` layer.
 
 ### WebGL
 
-WebGL is used for true 3D charts by the separate `@layerchart/3d` package, which draws its own marks with three.js. See [3D (WebGL)](/docs/guides/3d).
+WebGL layers are drawn by the separate `@layerchart/3d` package, whose `Scene` layer and marks are rendered on the GPU. With a `perspective` or `orthographic` chart `view` they're true 3D (lit, shadowed, and orbited); without one they're flat, for charts with far more marks than `Svg` or `Canvas` handle well. See [3D (WebGL)](/docs/guides/3d).
 
-> Most browsers limit the number of concurrent WebGL contexts by page/domain (references: [Chromium](https://issues.chromium.org/issues/40543269), [Rive](https://rive.app/docs/runtimes/web/canvas-vs-webgl)) and is why some libraries such as [μPlot](https://github.com/leeoniya/uPlot) do not leverage it.
+> Most browsers limit the number of concurrent WebGL contexts by page/domain (references: [Chromium](https://issues.chromium.org/issues/40543269), [Rive](https://rive.app/docs/runtimes/web/canvas-vs-webgl)) and is why some libraries such as [μPlot](https://github.com/leeoniya/uPlot) do not leverage it. A `Scene` gives up its context when it's scrolled well off screen, so a page can have more of them than the limit, just not all on screen at once.
 
-- **Stengths:** performance
-- **Weaknesses:** complexity, concurrency limits, styling, interactivity, introspection, text
+- **Stengths:** performance (hundreds of thousands of marks), true 3D, lighting and shadows
+- **Weaknesses:**
+  - nothing rendered on the server (SSR); the layer draws once it's hydrated
+  - not accessible to screen readers, and text can't be selected
+  - increased bundle size
+  - concurrency limits
+  - text (labels are drawn as HTML over the layer)
+  - styling (no CSS on marks), interactivity, introspection
 
 ## Comparison
 

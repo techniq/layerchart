@@ -4,7 +4,16 @@
 </script>
 
 <script lang="ts">
-	import { Chart, Contour, Light, Raster, Scene, Surface, Tooltip } from '@layerchart/3d';
+	import {
+		Chart,
+		Contour,
+		Light,
+		Raster,
+		Scene,
+		Surface,
+		Tooltip,
+		perspective
+	} from '@layerchart/3d';
 	import { extent } from 'd3-array';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateViridis } from 'd3-scale-chromatic';
@@ -22,6 +31,8 @@
 
 <!-- Maungawhau (Mt. Eden), Auckland: an 87 × 61 elevation grid -->
 <Chart
+	view={perspective({ rotate: -25, tilt: 55 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	cScale={scaleSequential(interpolateViridis)}
 	zDomain={extent(volcano.values) as [number, number]}
 	zRange={({ height }) => [0, height * 0.35]}
@@ -29,7 +40,7 @@
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-25} tilt={55} scrollActivationKey="shift">
+	<Scene>
 		<Light azimuth={315} altitude={35} intensity={0.9} shadow />
 		<Light type="ambient" intensity={0.55} />
 		{#if style === 'raised'}

@@ -78,6 +78,18 @@ export type TransformStateOptions = {
   ) => { x: number; y: number };
 
   /**
+   * The translate keeping the view turning about what's in the middle of it, as a drag turns the
+   * view `from` one rotation `to` another from `translate` at `scale`.  Default: the translate
+   * holds, so the view turns about whatever it was laid out around.
+   */
+  pivotRotate?: (
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    translate: { x: number; y: number },
+    scale: number
+  ) => { x: number; y: number };
+
+  /**
    * What a drag does: move the content (`'translate'`) or turn the view (`'rotate'`).  Holding
    * `dragSwitchKey` does the other.
    * @default 'translate'
@@ -150,6 +162,12 @@ export class TransformState {
     deltaX: number,
     deltaY: number
   ) => { x: number; y: number };
+  pivotRotate?: (
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    translate: { x: number; y: number },
+    scale: number
+  ) => { x: number; y: number };
   dragSwitchKey: ScrollActivationKey;
   ondragstart: () => void;
   ondragend: () => void;
@@ -221,6 +239,7 @@ export class TransformState {
     this.onTransform = options.onTransform ?? (() => {});
     this.initialRotation = options.initialRotation ?? null;
     this.processRotate = options.processRotate;
+    this.pivotRotate = options.pivotRotate;
     this.drag = options.drag ?? 'translate';
     this.dragSwitchKey = options.dragSwitchKey ?? 'shift';
     this.ondragstart = options.ondragstart ?? (() => {});
@@ -728,12 +747,21 @@ export class TransformState {
 
       if (this._dragging === 'rotate') {
         const { x, y } = this.startRotation;
-        this.setRotation(
-          this.processRotate
-            ? this.processRotate(x, y, deltaX, deltaY)
-            : { x: x + deltaX, y: y + deltaY },
-          this._instantMotion(this._rotation)
-        );
+        const rotation = this.processRotate
+          ? this.processRotate(x, y, deltaX, deltaY)
+          : { x: x + deltaX, y: y + deltaY };
+        this.setRotation(rotation, this._instantMotion(this._rotation));
+        if (this.pivotRotate) {
+          this.setTranslate(
+            this.pivotRotate(
+              this.startRotation,
+              rotation,
+              this.startTranslate,
+              this._scale.current
+            ),
+            this._instantMotion(this._translate)
+          );
+        }
         return;
       }
 

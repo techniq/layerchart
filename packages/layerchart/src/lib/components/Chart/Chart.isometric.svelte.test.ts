@@ -61,6 +61,13 @@ function pointerEventAt(ctx: ChartState<any, any, any>, x: number, y: number) {
   return e;
 }
 
+/** The share of the floor across and down drawn in the middle of the plot */
+function floorAtMiddle(ctx: ChartState<any>) {
+  const m = invertMatrix(ctx.layerMatrix()!)!;
+  const p = applyMatrix(m, { x: ctx.box.width / 2, y: ctx.box.height / 2 });
+  return { x: p.x / ctx.plot.width, y: p.y / ctx.plot.height };
+}
+
 describe('Chart isometric', () => {
   it('draws the layers through the isometric matrix', async () => {
     const ctx = await renderChart();
@@ -237,21 +244,29 @@ describe('Chart isometric with a transform', () => {
     expect(ctx.transform.translate).toEqual({ x: 60, y: 20 });
     expect(ctx.transform.rotation).toEqual({ x: -30, y: 50 });
 
+    // Turning about what's been panned to the middle, which moves the pan with it
+    const middle = floorAtMiddle(ctx);
     await drag(ctx, 60, 0, true);
-    expect(ctx.transform.translate).toEqual({ x: 60, y: 20 });
+    expect(ctx.transform.translate).not.toEqual({ x: 60, y: 20 });
     expect(ctx.transform.rotation!.x).toBeCloseTo(-60);
+    const turned = floorAtMiddle(ctx);
+    expect(turned.x).toBeCloseTo(middle.x, 3);
+    expect(turned.y).toBeCloseTo(middle.y, 3);
   });
 
   it('turns the view with a drag for `drag: "rotate"`, and pans with shift held', async () => {
     const ctx = await renderTransformed({ mode: 'canvas', drag: 'rotate' });
     await drag(ctx, 60, -20);
-    expect(ctx.transform.translate).toEqual({ x: 0, y: 0 });
+    // Unpanned, it turns about the floor's centre
+    expect(ctx.transform.translate.x).toBeCloseTo(0);
+    expect(ctx.transform.translate.y).toBeCloseTo(0);
     expect(ctx.transform.rotation!.x).toBeCloseTo(-60);
     // Dragging up tips it towards edge on
     expect(ctx.transform.rotation!.y).toBeGreaterThan(50);
 
     await drag(ctx, 40, 10, true);
-    expect(ctx.transform.translate).toEqual({ x: 40, y: 10 });
+    expect(ctx.transform.translate.x).toBeCloseTo(40);
+    expect(ctx.transform.translate.y).toBeCloseTo(10);
   });
 
   it('keeps turning from where it is when a pinch ends mid-drag', async () => {

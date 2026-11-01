@@ -80,6 +80,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
   import { setLayerIsometric } from '$lib/contexts/isometric.js';
+  import { drawsFlatLayers, warnFlatLayer } from '$lib/views/view.js';
   import { matrixToString } from '$lib/utils/isometric.js';
 
   let {
@@ -115,6 +116,11 @@
 
   setLayerContext('svg');
   setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
+
+  // A 3D view (`perspective`) has nothing for a flat layer to draw through
+  $effect(() => {
+    if (!ignoreTransform && !drawsFlatLayers(ctx.view)) warnFlatLayer('svg', ctx.view!);
+  });
 
   const clipped = $derived(clip ?? (ctx.props.transform?.mode ?? 'none') !== 'none');
 </script>

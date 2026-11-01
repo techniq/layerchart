@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { Axis, Bars, Chart, Grid, Scene, Tooltip } from '@layerchart/3d';
+	import {
+		Axis,
+		Bars,
+		Chart,
+		Grid,
+		Scene,
+		Tooltip,
+		orthographic,
+		perspective
+	} from '@layerchart/3d';
 	import { scaleBand, scaleQuantize } from 'd3-scale';
 	import { extent } from 'd3-array';
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -14,7 +23,7 @@
 	});
 
 	let camera = $state<'perspective' | 'orthographic'>('perspective');
-	// Bound, so dragging to orbit moves the sliders too
+	// Dragging hands its angles back (see `onTransform`), so it moves the sliders too
 	let rotate = $state(-45);
 	let tilt = $state(60);
 	let fov = $state(35);
@@ -22,6 +31,8 @@
 	let controls = $state(true);
 	// The top of the `z` range, in pixels
 	let height = $state(150);
+	// Whether the view is being dragged, rather than set by the sliders
+	let dragging = false;
 
 	export { data };
 </script>
@@ -95,11 +106,24 @@
 		'var(--color-primary-500)',
 		'var(--color-primary-700)'
 	]}
+	view={camera === 'orthographic'
+		? orthographic({ rotate, tilt, margin })
+		: perspective({ rotate, tilt, fov, margin })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', disablePointer: !controls }}
+	onTransform={({ rotation }) => {
+		// Keep the sliders in step with a drag
+		if (!dragging || !rotation) return;
+		// Wrapped to the slider's ±180° — the same turn either way round
+		rotate = ((((rotation.x + 180) % 360) + 360) % 360) - 180;
+		tilt = rotation.y;
+	}}
+	ondragstart={() => (dragging = true)}
+	ondragend={() => (dragging = false)}
 	tooltipContext
 	height={500}
 	class={controls ? 'cursor-grab active:cursor-grabbing' : ''}
 >
-	<Scene {camera} bind:rotate bind:tilt {fov} {margin} {controls}>
+	<Scene>
 		<Grid x={false} y={false} />
 		<Axis placement="bottom" />
 		<Axis placement="left" />

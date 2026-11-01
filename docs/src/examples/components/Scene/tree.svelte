@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { hierarchy, tree } from 'd3-hierarchy';
-	import { Chart, Link, Polygon, Scene, Text } from '@layerchart/3d';
+	import { Chart, Link, Polygon, Scene, Text, perspective } from '@layerchart/3d';
 
 	const data = hierarchy({
 		name: 'Root',
@@ -42,6 +42,8 @@
 
 <!-- `zDomain` matching `zRange`, so shapes' heights are in pixels -->
 <Chart
+	view={perspective({ rotate: -30, tilt: 50, margin: 0 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	zDomain={[0, 60]}
 	zRange={[0, 60]}
 	padding={32}
@@ -51,7 +53,7 @@
 	{#snippet children({ context })}
 		{@const layout = tree<any>().size([context.width, context.height])(data.copy())}
 		{@const nodes = layout.descendants()}
-		<Scene rotate={-30} tilt={50} margin={0} scrollActivationKey="shift">
+		<Scene>
 			<!-- Links lie on the floor, under the nodes -->
 			<Link
 				data={layout.links()}

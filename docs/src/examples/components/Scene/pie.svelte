@@ -3,7 +3,7 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { Arc, Chart, Scene, Text, Tooltip } from '@layerchart/3d';
+	import { Arc, Chart, Scene, Text, Tooltip, perspective } from '@layerchart/3d';
 
 	const data = [
 		{ fruit: 'Bananas', count: 8 },
@@ -34,6 +34,8 @@
 
 <!-- Each slice stands 40px tall.  Drag to turn it -->
 <Chart
+	view={perspective({ rotate: 10, tilt: 55 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	c="fruit"
 	cScale={scaleOrdinal()}
@@ -46,7 +48,7 @@
 >
 	{#snippet children({ context })}
 		{@const outer = Math.min(context.width, context.height) / 2}
-		<Scene rotate={10} tilt={55} scrollActivationKey="shift">
+		<Scene>
 			<Arc
 				tooltip
 				data={arcs}

@@ -12,7 +12,7 @@
 	import { feature } from 'topojson-client';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-	import { Chart, GeoPath, Scene, Tooltip } from '@layerchart/3d';
+	import { Chart, GeoPath, Scene, Tooltip, perspective } from '@layerchart/3d';
 
 	const states = feature(topology, topology.objects.states);
 
@@ -47,6 +47,8 @@
 
 <!-- Each state raised by its share of the vote, measured by `zScale` -->
 <Chart
+	view={perspective({ rotate: -2, tilt: 40 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoIdentity as unknown as () => GeoProjection, fitGeojson: states }}
 	zDomain={[0, 1]}
 	zRange={[0, 50]}
@@ -54,7 +56,7 @@
 	height={550}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-2} tilt={40} scrollActivationKey="shift">
+	<Scene>
 		<GeoPath
 			tooltip
 			geojson={states}

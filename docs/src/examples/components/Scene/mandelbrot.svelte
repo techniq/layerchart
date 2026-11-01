@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, Raster, Scene, Surface } from '@layerchart/3d';
+	import { Chart, Raster, Scene, Surface, perspective } from '@layerchart/3d';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateInferno } from 'd3-scale-chromatic';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -29,6 +29,8 @@
 
 <!-- Escape time as height: the set itself is the flat lake in the middle -->
 <Chart
+	view={perspective({ rotate: -15, tilt: 55 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	cScale={scaleSequential(interpolateInferno)}
 	xDomain={[-2, 1]}
 	yDomain={[-1.164, 1.164]}
@@ -37,7 +39,7 @@
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-15} tilt={55} scrollActivationKey="shift">
+	<Scene>
 		{#if style === 'flat'}
 			<Raster value={mandelbrot} pixelSize={2} />
 		{:else}

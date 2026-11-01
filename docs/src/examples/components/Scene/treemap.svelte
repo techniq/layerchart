@@ -10,7 +10,7 @@
 	import { sortFunc } from '@layerstack/utils';
 
 	import { getStringWidth } from 'layerchart';
-	import { Chart, Rect, Scene, Text, Tooltip } from '@layerchart/3d';
+	import { Chart, Rect, Scene, Text, Tooltip, perspective } from '@layerchart/3d';
 
 	const root = hierarchy(data)
 		.sum((d) => d.value)
@@ -56,6 +56,8 @@
 
 <!-- One thin tier per level of the tree, each a `zScale` step tall -->
 <Chart
+	view={perspective({ rotate: -45, tilt: 60 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	zDomain={[0, root.height + 1]}
 	zRange={({ height }) => [0, ((root.height + 1) * height) / 80]}
 	tooltipContext
@@ -64,7 +66,7 @@
 >
 	{#snippet children({ context })}
 		{@const nodes = layout(context.width, context.height)}
-		<Scene rotate={-45} tilt={60} scrollActivationKey="shift">
+		<Scene>
 			<Rect
 				tooltip
 				data={nodes}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Chart, Light, Scene, Surface, Tooltip, globe } from '@layerchart/3d';
+	import { Chart, Light, Scene, Surface, Tooltip, globe, perspective } from '@layerchart/3d';
 	import {
 		geoEqualEarth,
 		geoEquirectangular,
@@ -58,6 +58,8 @@
 </div>
 
 <Chart
+	view={perspective({ rotate: 0, tilt: selected === 'globe' ? 75 : 40 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={projection ? { projection, fitGeojson: { type: 'Sphere' } } : undefined}
 	cScale={tints}
 	cDomain={domain}
@@ -67,7 +69,7 @@
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={0} tilt={selected === 'globe' ? 75 : 40} scrollActivationKey="shift">
+	<Scene>
 		<Light azimuth={315} altitude={35} />
 		<Light type="ambient" intensity={0.45} />
 		{#if elevation}

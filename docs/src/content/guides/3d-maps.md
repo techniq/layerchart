@@ -10,7 +10,7 @@ Maps in [3D](/docs/guides/3d). Set a projection on the chart as for a flat map (
 Features on the floor, extruded `z` tall (a property key or function of the feature, through the chart's `z` scale, or pixels). Lines, and outlines with `stroke`, draw on top. A collection draws as one mark, so thousands of features stay quick, and with `tooltip` the tooltip shows the feature under the pointer. `motion` eases each feature's height and fill to new values.
 
 ```svelte
-<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }}>
+<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} view={perspective}>
 	<Scene>
 		<GeoPath geojson={states} z={(d) => d.properties.population} fill="var(--color-primary)" />
 	</Scene>
@@ -43,10 +43,10 @@ The `globe` projection lays the map on a real sphere you can orbit, rather than 
 
 ```svelte
 <script>
-	import { Chart, GeoPath, GeoRaster, Scene, globe } from '@layerchart/3d';
+	import { Chart, GeoPath, GeoRaster, Scene, globe, perspective } from '@layerchart/3d';
 </script>
 
-<Chart geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}>
+<Chart geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }} view={perspective}>
 	<Scene>
 		<GeoRaster src="/images/blue-marble.jpg" tooltip />
 		<GeoPath geojson={countries} stroke="white" />

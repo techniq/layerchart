@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Axis, Chart, Grid, Points, Tooltip, Scene } from '@layerchart/3d';
+	import { Axis, Chart, Grid, Points, Scene, Tooltip, perspective } from '@layerchart/3d';
 	import { scaleQuantize } from 'd3-scale';
 
 	// Seeded, so the points are the same on every load
@@ -19,6 +19,8 @@
 </script>
 
 <Chart
+	view={perspective}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x="x"
 	y="y"

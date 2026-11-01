@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { Axis, Chart, Grid, Scene, Surface, Tooltip } from '@layerchart/3d';
+	import { Axis, Chart, Grid, Scene, Surface, Tooltip, perspective } from '@layerchart/3d';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateRdYlBu } from 'd3-scale-chromatic';
 </script>
 
 <Chart
+	view={perspective({ rotate: -35, tilt: 60 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	xDomain={[-1, 1]}
 	yDomain={[-1, 1]}
 	zDomain={[-1, 1]}
@@ -14,7 +16,7 @@
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-35} tilt={60} scrollActivationKey="shift">
+	<Scene>
 		<Grid />
 		<Axis placement="bottom" label="x" />
 		<Axis placement="left" label="y" />

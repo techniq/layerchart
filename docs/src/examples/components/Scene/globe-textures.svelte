@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, GeoRaster, Scene, globe } from '@layerchart/3d';
+	import { Chart, GeoRaster, Scene, globe, perspective } from '@layerchart/3d';
 	import { SelectField } from 'svelte-ux';
 
 	// Procedural textures — built on demand into an HTMLCanvasElement and handed
@@ -144,11 +144,13 @@
 
 <!-- Any canvas works as a globe's image -->
 <Chart
+	view={perspective({ rotate: 30, tilt: 65 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={30} tilt={65} scrollActivationKey="shift">
+	<Scene>
 		{#if texture}
 			<GeoRaster src={texture} />
 		{/if}

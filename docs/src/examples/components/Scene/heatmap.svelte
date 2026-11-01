@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Axis, Bars, Chart, Grid, Scene, Tooltip } from '@layerchart/3d';
+	import { Axis, Bars, Chart, Grid, Scene, Tooltip, perspective } from '@layerchart/3d';
 	import { scaleBand } from 'd3-scale';
 	import { range } from 'd3-array';
 	import { timeWeek, timeYear } from 'd3-time';
@@ -14,6 +14,8 @@
 
 <!-- Flat tiles colored by value, a few pixels thick so they read as cells on the floor -->
 <Chart
+	view={perspective({ rotate: -45, tilt: 55 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x={(d) => timeWeek.count(timeYear(d.date), d.date)}
 	xScale={scaleBand()}
@@ -32,7 +34,7 @@
 	height={400}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-45} tilt={55} scrollActivationKey="shift">
+	<Scene>
 		<Grid x={false} y={false} />
 		<Axis placement="bottom" format={(d) => 'W' + d} />
 		<Axis placement="left" format={(d) => daysOfWeek[d]} />

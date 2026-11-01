@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Chart, GeoPath, GeoRaster, Scene } from '@layerchart/3d';
+	import { Chart, GeoPath, GeoRaster, Scene, perspective } from '@layerchart/3d';
 	import {
 		geoEqualEarth,
 		geoEquirectangular,
@@ -48,12 +48,14 @@
 
 <!-- The image is laid over the map through the chart's projection, like the borders -->
 <Chart
+	view={perspective({ rotate: 0, tilt: 35 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection, fitGeojson: { type: 'Sphere' } }}
 	padding={{ top: 10, bottom: 10, left: 10, right: 10 }}
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={0} tilt={35} scrollActivationKey="shift">
+	<Scene>
 		<GeoRaster src="/images/blue-marble.jpg" pixelSize={3} />
 		<GeoPath
 			geojson={geoGraticule10()}

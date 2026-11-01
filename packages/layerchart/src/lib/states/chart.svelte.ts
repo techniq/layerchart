@@ -23,12 +23,15 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 import {
+  applyMatrix,
+  invertMatrix,
   multiplyMatrix,
   ISOMETRIC_TILT,
   type AffineMatrix,
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
 import { resolveView } from '$lib/views/view.js';
+import { CAMERA_ANGLES } from '$lib/views/camera.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { defaultSettings, type Settings } from './settings.svelte.js';
@@ -84,8 +87,8 @@ export interface MarkInfo {
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
 
-/** An `isometric` view's turn and tip */
-type IsometricAngles = { rotate: number; tilt: number };
+/** A view's turn and tip (`isometric`, `perspective`, `orthographic`) */
+type ViewAngles = { rotate: number; tilt: number };
 
 export interface ComponentNode {
   id: symbol;
@@ -1185,35 +1188,56 @@ export class ChartState<
    */
   isometric = $derived(this.view?.type === 'isometric' ? this.view.impl : null);
 
-  /** The `isometric` view's options as given, or `null` */
-  #viewOptions = $derived(this.view?.type === 'isometric' ? this.view.options : null);
+  /** The view's options as given (its angles and `motion` among them), or `null` */
+  #viewOptions = $derived(this.view?.options ?? null);
 
   /**
-   * Whether the transform can rotate the isometric view as well as pan and zoom it.  With a geo
-   * projection, only in `'canvas'` mode, as the others drive the projection.
+   * Whether the transform can rotate the view as well as pan and zoom it.  With a geo projection,
+   * only in `'canvas'` mode, as the others drive the projection.
    */
-  isometricTransform = $derived(
-    !!this.isometric &&
+  viewTransform = $derived(
+    !!this.view &&
       !!this.props.transform?.mode &&
       this.props.transform.mode !== 'none' &&
       (!this.props.geo?.projection || this.props.transform.mode === 'canvas')
   );
 
-  /** The `isometric` options' `rotate` / `tilt`, with their defaults */
-  #propAngles = $derived.by((): IsometricAngles => {
+  /** Whether the transform can rotate the `isometric` view (see `viewTransform`) */
+  get isometricTransform() {
+    return this.viewTransform && !!this.isometric;
+  }
+
+  /** The view's `rotate` / `tilt`, with its defaults */
+  #propAngles = $derived.by((): ViewAngles => {
     const options = this.#viewOptions ?? {};
-    return { rotate: options.rotate ?? -45, tilt: options.tilt ?? ISOMETRIC_TILT };
+    const defaults =
+      this.view?.type === 'isometric' ? { rotate: -45, tilt: ISOMETRIC_TILT } : CAMERA_ANGLES;
+    return { rotate: options.rotate ?? defaults.rotate, tilt: options.tilt ?? defaults.tilt };
   });
 
   /**
    * The angles eased by the view's `motion`, read once from the first view that has one (a chart
    * may start without a view).  `null` until then, following the angles as given.
    */
-  #angles = $state.raw<ReturnType<typeof createControlledMotion<IsometricAngles>> | null>(null);
+  #angles = $state.raw<ReturnType<typeof createControlledMotion<ViewAngles>> | null>(null);
 
-  /** The `isometric` angles, eased by their `motion`; a transform rotates the view from these */
-  get isometricAngles(): IsometricAngles {
+  /** The view's angles, eased by their `motion`; a transform rotates the view from these */
+  get viewAngles(): ViewAngles {
     return this.#angles?.current ?? this.#propAngles;
+  }
+
+  /** The `isometric` angles (see `viewAngles`) */
+  get isometricAngles(): ViewAngles {
+    return this.viewAngles;
+  }
+
+  /**
+   * Where the view is turned to: the transform's rotation while it drives the view, else the
+   * view's angles.  What a 3D layer points its camera along.
+   */
+  get viewRotation(): ViewAngles {
+    const rotation = this.viewTransform ? this.transformState?.rotation : null;
+    return rotation ? { rotate: rotation.x, tilt: rotation.y } : this.viewAngles;
   }
 
   /**
@@ -1222,14 +1246,11 @@ export class ChartState<
    */
   #isometricOptions = $derived.by((): IsometricOptions | null => {
     const isometric = this.isometric;
-    let options = this.#viewOptions;
+    let options = this.view?.type === 'isometric' ? this.view.options : null;
     if (!isometric || !options) return null;
 
     // `TransformContext` loads lazily; until then the props stand
-    const rotation = this.isometricTransform ? this.transformState?.rotation : null;
-    options = rotation
-      ? { ...options, rotate: rotation.x, tilt: rotation.y }
-      : { ...options, ...this.isometricAngles };
+    options = { ...options, ...this.viewRotation };
 
     if (typeof options.aspect === 'number') return options;
     // From the scale types and domains, not the scales, whose ranges depend on the floor
@@ -1241,6 +1262,53 @@ export class ChartState<
       ),
     };
   });
+
+  /**
+   * The translate keeping what's at the middle of the plot there as the `isometric` view turns
+   * `from` one rotation `to` another (`x` the turn, `y` the tilt) under a pan and zoom, so a drag
+   * turns the view about what's been panned to rather than the floor's centre
+   */
+  isometricPivot(
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    translate: { x: number; y: number },
+    scale: number
+  ) {
+    const isometric = this.isometric;
+    const options = this.#isometricOptions;
+    if (!isometric || !options) return translate;
+    const box = this.box;
+    const footprint = this.#isometricFootprint;
+    // The floor (refitted as the view turns) and the matrix drawing it, at a rotation
+    const frame = ({ x, y }: { x: number; y: number }) => {
+      const turned = { ...options, rotate: x, tilt: y };
+      const floor = isometric.fitIsometricFloor(turned, box.width, box.height, {
+        footprint,
+        depthAt: (f) => this.#zDepthFor(f),
+      });
+      const matrix = isometric.createIsometricMatrix(turned, floor, box, {
+        depth: this.#zDepthFor(floor),
+        footprint,
+      });
+      return { floor, matrix };
+    };
+    const before = frame(from);
+    const after = frame(to);
+    const inverse = invertMatrix(before.matrix);
+    if (!inverse || !before.floor.width || !before.floor.height) return translate;
+    // The point on the floor in the middle of the plot, as a share of the floor across and down,
+    // which holds as the floor refits
+    const middle = { x: box.width / 2, y: box.height / 2 };
+    const point = applyMatrix(inverse, {
+      x: (middle.x - translate.x) / scale,
+      y: (middle.y - translate.y) / scale,
+    });
+    const turned = applyMatrix(after.matrix, {
+      x: (point.x / before.floor.width) * after.floor.width,
+      y: (point.y / before.floor.height) * after.floor.height,
+    });
+    return { x: middle.x - scale * turned.x, y: middle.y - scale * turned.y };
+  }
 
   /** A radial chart draws a circle, which turns without growing — fit it as one */
   #isometricFootprint = $derived<'rect' | 'disc'>(this.props.radial ? 'disc' : 'rect');

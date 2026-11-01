@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Axis, Chart, Scene, Spline, Tooltip } from '@layerchart/3d';
+	import { Axis, Chart, Scene, Spline, Tooltip, perspective } from '@layerchart/3d';
 	import { extent } from 'd3-array';
 	import { scaleSequential, scaleUtc } from 'd3-scale';
 	import { interpolatePlasma } from 'd3-scale-chromatic';
@@ -46,6 +46,13 @@
 {#if layout === 'radial'}
 	<!-- Each year's loop raised by year, oldest at the bottom, so warming shows as the tower widens -->
 	<Chart
+		view={perspective({ rotate: -30, tilt: 65 })}
+		transform={{
+			mode: 'canvas',
+			drag: 'rotate',
+			scrollMode: 'scale',
+			scrollActivationKey: 'shift'
+		}}
 		data={rings}
 		x="cx"
 		y="cy"
@@ -63,7 +70,7 @@
 		height={550}
 		class="cursor-grab active:cursor-grabbing"
 	>
-		<Scene rotate={-30} tilt={65} scrollActivationKey="shift">
+		<Scene>
 			<Axis placement="back" format="none" label="Year" />
 			<Spline strokeWidth={1} opacity={0.8} tooltip />
 		</Scene>
@@ -72,6 +79,13 @@
 {:else}
 	<!-- A line per year across the day of the year, years running back, temperature up -->
 	<Chart
+		view={perspective({ rotate: -35, tilt: 60 })}
+		transform={{
+			mode: 'canvas',
+			drag: 'rotate',
+			scrollMode: 'scale',
+			scrollActivationKey: 'shift'
+		}}
 		{data}
 		x="date"
 		xScale={scaleUtc()}
@@ -86,7 +100,7 @@
 		height={550}
 		class="cursor-grab active:cursor-grabbing"
 	>
-		<Scene rotate={-35} tilt={60} scrollActivationKey="shift">
+		<Scene>
 			<Axis placement="bottom" format="month" />
 			<Axis placement="left" format="none" label="Year" />
 			<Axis placement="back" format={(v) => v + '° F'} />

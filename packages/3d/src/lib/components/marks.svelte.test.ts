@@ -1,12 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand, scaleOrdinal } from 'd3-scale';
-import { Matrix4, Ray, Vector3, type InstancedMesh, type Object3D } from 'three';
+import {
+  Matrix4,
+  Ray,
+  Vector3,
+  type InstancedMesh,
+  type Object3D,
+  type PerspectiveCamera,
+} from 'three';
 
 import { geoIdentity } from 'd3-geo';
 import type { ChartState } from 'layerchart';
 import type { SceneState } from '../contexts/scene.svelte.js';
 import { getSphere, globe } from '../utils/globe.js';
+import { viewAngles } from '../utils/camera.js';
+import { perspective } from '../index.js';
 import Marks from './__fixtures__/Marks.svelte';
 
 /** Render, and wait for the marks to add their objects to the scene */
@@ -196,24 +205,34 @@ describe('Scene', () => {
   it('only zooms with `scrollActivationKey` held', async () => {
     const scene = await renderMarks({
       mark: 'points',
-      chart: { data: [{ x: 1, y: 1 }], x: 'x', y: 'y' },
-      scene: { controls: true, scrollActivationKey: 'meta' },
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        view: perspective,
+        transform: { mode: 'canvas', scrollMode: 'scale', scrollActivationKey: 'meta' },
+      },
     });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
+    // The transform loads lazily
+    await expect.poll(() => chart?.transformState).toBeTruthy();
     const canvas = document.querySelector('.lc-scene canvas')!;
-    const distance = () => scene.camera!.position.length();
-    const before = distance();
     const wheel = (metaKey: boolean) =>
       canvas.dispatchEvent(
-        new WheelEvent('wheel', { deltaY: 200, metaKey, bubbles: true, cancelable: true })
+        new WheelEvent('wheel', { deltaY: -200, metaKey, bubbles: true, cancelable: true })
       );
+
+    const distance = () => scene.camera!.position.length();
+    const before = distance();
 
     wheel(false);
     await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(chart!.transform.scale).toBe(1);
     expect(distance()).toBeCloseTo(before);
 
     wheel(true);
-    await expect.poll(distance).not.toBeCloseTo(before);
+    await expect.poll(() => chart!.transform.scale).toBeGreaterThan(1);
+    await expect.poll(distance).toBeLessThan(before * 0.95);
   });
 });
 
@@ -307,48 +326,139 @@ describe('globe', () => {
   });
 });
 
-describe('zoom and reset', () => {
-  it('moves the camera in, and back to where it started', async () => {
-    const scene = await renderMarks({
+describe('view and transform', () => {
+  it("looks from the view's angles, and straight down without one", async () => {
+    const turned = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        view: perspective({ rotate: 30, tilt: 40 }),
+      },
+    });
+    await expect.poll(() => turned.camera?.position.length() ?? 0).toBeGreaterThan(0);
+    const angles = viewAngles(turned.camera!.position.clone().sub(new Vector3(0, 0, 0)));
+    expect(angles.rotate).toBeCloseTo(30, 0);
+    expect(angles.tilt).toBeCloseTo(40, 0);
+    expect((turned.camera as any).isPerspectiveCamera).toBe(true);
+  });
+
+  it('draws flat, from directly above, without a view', async () => {
+    const flat = await renderMarks({
       mark: 'points',
       chart: { data: [{ x: 1, y: 1 }], x: 'x', y: 'y' },
-      scene: { controls: true },
+    });
+    await expect.poll(() => flat.camera?.position.length() ?? 0).toBeGreaterThan(0);
+    expect((flat.camera as any).isOrthographicCamera).toBe(true);
+    expect(viewAngles(flat.camera!.position).tilt).toBeLessThan(1);
+  });
+
+  it('lines up with flat layers without a view: each chart pixel where `Svg` would draw it', async () => {
+    const scene = await renderMarks({
+      mark: 'points',
+      chart: { data: [{ x: 1, y: 1 }], x: 'x', y: 'y', padding: { left: 30, top: 10 } },
     });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
-    const distance = () => scene.camera!.position.distanceTo(scene.root.position);
+    const at = scene.project(50, 20, 0)!;
+    expect(at.x).toBeCloseTo(30 + 50, 0);
+    expect(at.y).toBeCloseTo(10 + 20, 0);
+  });
+
+  it("moves the camera in with the chart's transform's zoom, and back on reset", async () => {
+    const scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        view: perspective,
+        transform: { mode: 'canvas' },
+      },
+    });
+    await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
+    // The transform loads lazily
+    await expect.poll(() => chart?.transformState).toBeTruthy();
+    const distance = () => scene.camera!.position.length();
     const start = distance();
 
-    scene.zoomBy(0.5, false);
-    expect(distance()).toBeLessThan(start * 0.8);
+    chart!.transform.zoomIn();
+    // Dollied in, as orbit controls zoom a perspective camera
+    await expect.poll(distance).toBeLessThan(start * 0.85);
 
-    // Eased back
-    scene.resetView();
+    chart!.transform.reset();
     await expect.poll(() => Math.round(distance())).toBe(Math.round(start));
+  });
+
+  it('turns about where the view has been panned to', async () => {
+    const scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        view: perspective,
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+    });
+    await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
+    // The transform loads lazily
+    await expect.poll(() => chart?.transformState).toBeTruthy();
+    const ray = () => {
+      const camera = scene.camera!;
+      camera.updateMatrixWorld();
+      return new Ray(camera.position.clone(), camera.getWorldDirection(new Vector3()));
+    };
+    /** How near two rays pass each other */
+    const between = (a: Ray, b: Ray) => {
+      const normal = new Vector3().crossVectors(a.direction, b.direction);
+      return Math.abs(b.origin.clone().sub(a.origin).dot(normal)) / normal.length();
+    };
+
+    chart!.transform.setTranslate({ x: 80, y: 0 });
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const panned = ray();
+    // Looking at somewhere other than the middle of the plot
+    expect(panned.distanceToPoint(new Vector3(0, 0, 0))).toBeGreaterThan(10);
+
+    chart!.transform.setRotation({ x: 0, y: 50 });
+    await expect
+      .poll(() => between(panned, ray()) < 1 && panned.direction.angleTo(ray().direction) > 0.2)
+      .toBe(true);
+    // Still looking at what was panned to, not the middle
+    expect(ray().distanceToPoint(new Vector3(0, 0, 0))).toBeGreaterThan(10);
   });
 
   it('keeps a zoom when the plot box changes', async () => {
     let scene: SceneState | undefined;
-    const { rerender } = render(Marks, {
-      mark: 'points',
-      chart: { data: [{ x: 1, y: 1, z: 1 }], x: 'x', y: 'y', z: 'z', zRange: [0, 100] },
-      scene: { controls: true },
-      onScene: (s: SceneState) => (scene = s),
+    const props = (zRange: number[]) => ({
+      mark: 'points' as const,
+      chart: {
+        data: [{ x: 1, y: 1, z: 1 }],
+        x: 'x',
+        y: 'y',
+        z: 'z',
+        zRange,
+        view: perspective,
+        transform: { mode: 'canvas' as const },
+      },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
     });
+    const { rerender } = render(Marks, props([0, 100]));
     await expect.poll(() => scene?.camera?.position.length() ?? 0).toBeGreaterThan(0);
-    const camera = () => scene!.camera!;
-    const fittedAt = () => camera().position.distanceTo(scene!.root.position);
+    await expect.poll(() => chart?.transformState).toBeTruthy();
+    const fitted = scene!.camera!.position.length();
+    chart!.transform.zoomIn();
+    await expect.poll(() => scene!.camera!.position.length()).toBeLessThan(fitted * 0.85);
+    const zoomed = scene!.camera!.position.length();
 
-    scene!.zoomBy(0.5, false);
-    const zoomed = fittedAt();
-    // A taller box refits the camera, still zoomed in by as much
-    await rerender({
-      chart: { data: [{ x: 1, y: 1, z: 1 }], x: 'x', y: 'y', z: 'z', zRange: [0, 140] },
-    });
-    await expect.poll(fittedAt).not.toBeCloseTo(zoomed, 0);
-    scene!.resetView();
-    await new Promise((resolve) => setTimeout(resolve, 700));
-    // Reset is farther than the zoomed view at either height
-    expect(fittedAt()).toBeGreaterThan(zoomed * 1.4);
+    // A taller box refits the camera farther out, still zoomed in by as much
+    await rerender(props([0, 140]));
+    await expect.poll(() => scene!.camera!.position.length()).toBeGreaterThan(zoomed * 1.05);
+    expect(scene!.camera!.position.length()).toBeLessThan(fitted);
   });
 });
 

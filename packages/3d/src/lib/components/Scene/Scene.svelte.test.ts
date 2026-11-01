@@ -26,16 +26,17 @@ describe('Scene', () => {
     await expect.element(page.getByTestId('tooltip')).toHaveTextContent('center');
   });
 
-  it('hands orbiting back through `bind:rotate` / `bind:tilt`', async () => {
+  it('turns the view with a drag, reporting its angles through `onTransform`', async () => {
     const { container } = render(Orbit);
     const angles = page.getByTestId('angles');
-    await expect
-      .poll(() => container.querySelector('.lc-scene-label, .lc-scene canvas'))
-      .toBeTruthy();
-    await expect.element(angles).toHaveTextContent('-45,60');
     await expect.poll(() => container.querySelector('.lc-scene canvas')).toBeTruthy();
+    await expect.element(angles).toHaveTextContent('-45,60');
 
+    // The transform loads lazily
+    await expect.poll(() => container.querySelector('.lc-transform-context')).toBeTruthy();
     const canvas = container.querySelector<HTMLCanvasElement>('.lc-scene canvas')!;
+    // Synthetic pointers can't be captured
+    canvas.setPointerCapture = () => {};
     const rect = canvas.getBoundingClientRect();
     const at = (dx: number, dy: number) => ({
       clientX: rect.left + rect.width / 2 + dx,
@@ -48,6 +49,7 @@ describe('Scene', () => {
     });
     // A drag across turns the view, and one upwards tips it
     canvas.dispatchEvent(new PointerEvent('pointerdown', at(0, 0)));
+    canvas.dispatchEvent(new PointerEvent('pointermove', at(30, -20)));
     canvas.dispatchEvent(new PointerEvent('pointermove', at(60, -40)));
     canvas.dispatchEvent(new PointerEvent('pointerup', at(60, -40)));
 
@@ -55,15 +57,5 @@ describe('Scene', () => {
     const [rotate, tilt] = angles.element().textContent!.split(',').map(Number);
     expect(rotate).toBeLessThan(-45);
     expect(tilt).toBeGreaterThan(60);
-  });
-
-  it("doesn't write the view back when it only refits", async () => {
-    const { container, rerender } = render(Orbit);
-    await expect.poll(() => container.querySelector('.lc-scene canvas')).toBeTruthy();
-    // Refits on resize, which moves the camera without anyone orbiting it
-    await rerender({ width: 300 });
-    await rerender({ width: 500 });
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    await expect.element(page.getByTestId('angles')).toHaveTextContent('-45,60');
   });
 });

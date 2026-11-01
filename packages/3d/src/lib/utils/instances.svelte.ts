@@ -32,8 +32,11 @@ export type Instance = {
 };
 
 type InstancesOptions = {
-  /** The shape every instance draws, scaled by its `width` / `height` / `depth` */
-  geometry: BufferGeometry;
+  /**
+   * The shape every instance draws, scaled by its `width` / `height` / `depth`, or a function
+   * returning it when it changes (ex. with the chart's `view`)
+   */
+  geometry: BufferGeometry | (() => BufferGeometry);
   instances: () => Instance[];
   /** Multiplies each instance's own color alpha */
   opacity: () => number;
@@ -98,10 +101,17 @@ export function createInstances({
   let mesh = $state.raw<InstancedMesh | null>(null);
   let alpha: BufferAttribute | null = null;
 
-  // An instanced mesh can't grow, so make a bigger one when the rows outgrow it
+  const shape = $derived(typeof geometry === 'function' ? geometry() : geometry);
+  /** Every shape drawn, to dispose of at the end */
+  const shapes = new Set<BufferGeometry>();
+
+  // An instanced mesh can't grow, so make a bigger one when the rows outgrow it (or the shape
+  // changes)
   $effect.pre(() => {
     const count = list.length;
-    if (mesh && mesh.instanceMatrix.count >= count) return;
+    const geometry = shape;
+    shapes.add(geometry);
+    if (mesh && mesh.geometry === geometry && mesh.instanceMatrix.count >= count) return;
     const capacity = Math.max(1, Math.ceil(count * 1.5));
     alpha = new InstancedBufferAttribute(new Float32Array(capacity).fill(1), 1);
     geometry.setAttribute('instanceOpacity', alpha);
@@ -212,7 +222,7 @@ export function createInstances({
     return () => {
       if (mesh) scene.root.remove(mesh);
       mesh?.dispose();
-      geometry.dispose();
+      for (const shape of shapes) shape.dispose();
       material.dispose();
       scene.invalidate();
     };

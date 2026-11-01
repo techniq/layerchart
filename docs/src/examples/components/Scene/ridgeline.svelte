@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Area, Chart, Scene, Spline } from '@layerchart/3d';
+	import { Area, Chart, Scene, Spline, perspective } from '@layerchart/3d';
 	import { scaleBand, scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { Field, RangeField, Switch } from 'svelte-ux';
@@ -121,6 +121,8 @@
 <!-- Each frame a curtain standing in its own row, the newest at the front.  The fill and the line
      along its top are drawn separately, so an opaque fill can still show the frame's color -->
 <Chart
+	view={perspective({ rotate: -20, tilt: 60 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	data={rows}
 	x="key"
 	xDomain={[0, FFT_SIZE - 1]}
@@ -133,7 +135,7 @@
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-20} tilt={60} scrollActivationKey="shift">
+	<Scene>
 		{#each rowIndexes as row (row)}
 			{@const frame = rows.filter((d) => d.row === row)}
 			<Area

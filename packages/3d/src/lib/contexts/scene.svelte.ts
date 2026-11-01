@@ -56,14 +56,6 @@ export class SceneState {
   width = $state(0);
   height = $state(0);
 
-  /**
-   * Zoom the camera in (`factor` below 1) or out from where it is, easing there unless `eased` is
-   * `false` (set by the scene)
-   */
-  zoomBy: (factor: number, eased?: boolean) => void = () => {};
-  /** Back to the view the scene started with, fitted (set by the scene) */
-  resetView: () => void = () => {};
-
   /** How many `Light`s the scene has; it lights itself until it has one */
   lights = $state(0);
 

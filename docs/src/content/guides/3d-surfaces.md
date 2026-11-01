@@ -16,7 +16,12 @@ Values are colored through the chart's continuous color scale (`cScale`), else y
 Heights from the values, through the chart's `z` scale (whose domain widens to reach them). `wireframe` draws grid lines over it, and `contours` draws contour lines at their heights. With `tooltip`, the tooltip shows the value at the pointer.
 
 ```svelte
-<Chart xDomain={[-1, 1]} yDomain={[-1, 1]} cScale={scaleSequential(interpolateRdYlBu)}>
+<Chart
+	xDomain={[-1, 1]}
+	yDomain={[-1, 1]}
+	cScale={scaleSequential(interpolateRdYlBu)}
+	view={perspective}
+>
 	<Scene>
 		<Surface value={(x, y) => Math.sin(x * Math.PI) * Math.sin(y * Math.PI)} wireframe />
 	</Scene>

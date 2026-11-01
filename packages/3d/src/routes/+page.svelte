@@ -14,13 +14,17 @@
     Surface,
     Tooltip,
     Scene,
+    orthographic,
+    perspective,
   } from '../lib/index.js';
   import { scaleSequential } from 'd3-scale';
   import { interpolateViridis, interpolateRdBu } from 'd3-scale-chromatic';
   import volcano from '../../../../docs/static/data/examples/volcano.json' with { type: 'json' };
 
   const example = $derived(page.url.searchParams.get('example') ?? 'scatter');
-  const camera = $derived((page.url.searchParams.get('camera') ?? 'perspective') as any);
+  const camera = $derived(page.url.searchParams.get('camera') ?? 'perspective');
+  const view = $derived(camera === 'orthographic' ? orthographic() : perspective());
+  const transform = { mode: 'canvas', drag: 'rotate', scrollMode: 'scale' } as const;
 
   const scatter = Array.from({ length: 200 }, (_, i) => ({
     x: Math.sin(i) * 10,
@@ -46,8 +50,17 @@
 
 <div style="height: 500px">
   {#if example === 'scatter'}
-    <Chart data={scatter} x="x" y="y" z="z" zRange={({ height }) => [0, height]} tooltipContext>
-      <Scene {camera}>
+    <Chart
+      {view}
+      {transform}
+      data={scatter}
+      x="x"
+      y="y"
+      z="z"
+      zRange={({ height }) => [0, height]}
+      tooltipContext
+    >
+      <Scene>
         <Grid />
         <Axis placement="bottom" label="x" />
         <Axis placement="left" label="y" />
@@ -66,6 +79,8 @@
     </Chart>
   {:else if example === 'bars'}
     <Chart
+      {view}
+      {transform}
       data={columns}
       x="week"
       xScale={scaleBand().padding(0.2)}
@@ -77,7 +92,7 @@
       c="value"
       tooltipContext
     >
-      <Scene {camera}>
+      <Scene>
         <Grid />
         <Axis placement="bottom" />
         <Axis placement="left" />
@@ -93,6 +108,8 @@
     </Chart>
   {:else if example === 'surface'}
     <Chart
+      {view}
+      {transform}
       xDomain={[-1, 1]}
       yDomain={[-1, 1]}
       zDomain={[-1, 1]}
@@ -100,7 +117,7 @@
       cScale={scaleSequential(interpolateRdBu)}
       tooltipContext
     >
-      <Scene {camera}>
+      <Scene>
         <Grid />
         <Axis placement="bottom" />
         <Axis placement="left" />
@@ -122,11 +139,13 @@
     </Chart>
   {:else if example === 'volcano'}
     <Chart
+      {view}
+      {transform}
       cScale={scaleSequential(interpolateViridis)}
       zRange={({ height }) => [0, height * 0.4]}
       tooltipContext
     >
-      <Scene {camera}>
+      <Scene>
         <Light azimuth={315} altitude={35} shadow />
         <Light type="ambient" intensity={0.5} />
         <Surface
@@ -147,12 +166,14 @@
     </Chart>
   {:else if example === 'raster'}
     <Chart
+      {view}
+      {transform}
       xDomain={[-3, 3]}
       yDomain={[-3, 3]}
       cScale={scaleSequential(interpolateRdBu)}
       tooltipContext
     >
-      <Scene {camera}>
+      <Scene>
         <Raster value={(x, y) => Math.sin(x) * Math.cos(y)} pixelSize={4} />
         <Contour value={(x, y) => Math.sin(x) * Math.cos(y)} thresholds={8} />
         <Axis placement="bottom" />
@@ -161,6 +182,8 @@
     </Chart>
   {:else if example === 'shadows'}
     <Chart
+      {view}
+      {transform}
       data={columns}
       x="week"
       xScale={scaleBand().padding(0.2)}
@@ -170,7 +193,7 @@
       z="value"
       tooltipContext
     >
-      <Scene {camera} scrollActivationKey="meta">
+      <Scene>
         <Light azimuth={300} altitude={40} shadow />
         <Light type="ambient" intensity={0.45} />
         <Bars />
@@ -178,6 +201,8 @@
     </Chart>
   {:else if example === 'lines'}
     <Chart
+      {view}
+      {transform}
       data={lines}
       x="t"
       y="key"
@@ -189,7 +214,7 @@
       cScale={scaleOrdinal()}
       cRange={['oklch(0.62 0.19 259)', 'oklch(0.7 0.18 50)', 'oklch(0.65 0.2 150)']}
     >
-      <Scene {camera}>
+      <Scene>
         <Grid />
         <Axis placement="bottom" />
         <Axis placement="left" />

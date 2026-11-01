@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Axis, Chart, Grid, Scene, Spline } from '@layerchart/3d';
+	import { Axis, Chart, Grid, Scene, Spline, orthographic } from '@layerchart/3d';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateViridis } from 'd3-scale-chromatic';
 
@@ -14,6 +14,8 @@
 </script>
 
 <Chart
+	view={orthographic({ rotate: -30, tilt: 70 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x="x"
 	y="y"
@@ -24,7 +26,7 @@
 	height={550}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene camera="orthographic" rotate={-30} tilt={70} scrollActivationKey="shift">
+	<Scene>
 		<Grid />
 		<Axis placement="bottom" />
 		<Axis placement="left" />

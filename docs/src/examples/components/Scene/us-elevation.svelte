@@ -5,13 +5,13 @@
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Chart, Light, Scene, Surface, Tooltip } from '@layerchart/3d';
+	import { Chart, Light, Scene, Surface, Tooltip, perspective } from '@layerchart/3d';
 	import { geoAlbers } from 'd3-geo';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateRgbBasis } from 'd3-interpolate';
 	import { feature } from 'topojson-client';
 	import { Field, RangeField, Switch } from 'svelte-ux';
-	import SceneControls from '$lib/components/controls/SceneControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { createMask, loadElevation } from '$lib/utils/elevation.js';
 
 	const states = feature(topology, topology.objects.states);
@@ -45,10 +45,6 @@
 	let shadow = $state(true);
 	let exaggeration = $state(8);
 
-	// Zoom, reset, and whether a drag turns the view or pans it
-	let scene = $state<ReturnType<typeof Scene>>();
-	let drag = $state<'rotate' | 'pan'>('rotate');
-
 	// Hypsometric tints: lowland green through desert tan to snowy peaks
 	const tints = interpolateRgbBasis([
 		'#4a7c3f',
@@ -71,6 +67,8 @@
 
 <!-- Elevation from AWS's open terrain tiles, raised and lit like a shaded relief map -->
 <Chart
+	view={perspective({ rotate: 0, tilt: 45 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoAlbers, fitGeojson: conus }}
 	cScale={scaleSequential(tints)}
 	zDomain={[0, 4400]}
@@ -79,7 +77,7 @@
 	height={550}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene bind:this={scene} rotate={0} tilt={45} {drag} scrollActivationKey="shift">
+	<Scene>
 		<Light {azimuth} {altitude} intensity={1.1} {shadow} />
 		<Light type="ambient" intensity={0.35} />
 		{#if elevation}
@@ -87,7 +85,7 @@
 		{/if}
 	</Scene>
 
-	<SceneControls {scene} bind:drag />
+	<TransformContextControls />
 
 	<Tooltip.Root>
 		{#snippet children({ data })}

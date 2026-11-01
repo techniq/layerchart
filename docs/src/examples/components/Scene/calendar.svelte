@@ -2,7 +2,7 @@
 	import { scaleBand, scaleThreshold } from 'd3-scale';
 	import { range } from 'd3-array';
 	import { timeWeek, timeYear } from 'd3-time';
-	import { Bars, Chart, Scene, Tooltip } from '@layerchart/3d';
+	import { Bars, Chart, Scene, Tooltip, perspective } from '@layerchart/3d';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const end = new Date();
@@ -21,6 +21,8 @@
 
 <!-- A year of days, each as tall as its count: weeks across, Sundays at the back -->
 <Chart
+	view={perspective({ rotate: -20, tilt: 55, margin: 0 })}
+	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x={week}
 	xScale={scaleBand()}
@@ -39,7 +41,7 @@
 	height={260}
 	class="cursor-grab active:cursor-grabbing"
 >
-	<Scene rotate={-20} tilt={55} margin={0} scrollActivationKey="shift">
+	<Scene>
 		<!-- Every day a thin tile on the floor, so days off still show -->
 		<Bars z={1.5} insets={1} fill="var(--color-surface-200)" />
 		<Bars insets={1} tooltip />

@@ -590,7 +590,7 @@
 
     // Turning the view moves every point; like the hit canvas, wait for the drag to end (no one
     // can hover meanwhile) rather than rebuilding every frame
-    if (ctx.isometricTransform && ctx.transform.dragging) return;
+    if (ctx.viewTransform && ctx.transform.dragging) return;
 
     const m = mode;
     const xAcc = xAccessorOverride;
