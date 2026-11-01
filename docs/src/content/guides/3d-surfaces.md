@@ -22,19 +22,19 @@ Heights from the values, through the chart's `z` scale (whose domain widens to r
 	cScale={scaleSequential(interpolateRdYlBu)}
 	view={perspective}
 >
-	<Scene>
+	<WebGL>
 		<Surface value={(x, y) => Math.sin(x * Math.PI) * Math.sin(y * Math.PI)} wireframe />
-	</Scene>
+	</WebGL>
 </Chart>
 ```
 
-:example{ component="Scene" name="surface" }
+:example{ component="WebGL" name="surface" }
 
-:example{ component="Scene" name="volcano" }
+:example{ component="WebGL" name="volcano" }
 
-:example{ component="Scene" name="math-functions" }
+:example{ component="WebGL" name="math-functions" }
 
-:example{ component="Scene" name="mandelbrot" }
+:example{ component="WebGL" name="mandelbrot" }
 
 | Prop        | What it does                                                        | Default                |
 | ----------- | ------------------------------------------------------------------- | ---------------------- |

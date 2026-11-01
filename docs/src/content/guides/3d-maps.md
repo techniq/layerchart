@@ -11,19 +11,19 @@ Features on the floor, extruded `z` tall (a property key or function of the feat
 
 ```svelte
 <Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} view={perspective}>
-	<Scene>
+	<WebGL>
 		<GeoPath geojson={states} z={(d) => d.properties.population} fill="var(--color-primary)" />
-	</Scene>
+	</WebGL>
 </Chart>
 ```
 
-:example{ component="Scene" name="election" }
+:example{ component="WebGL" name="election" }
 
-:example{ component="Scene" name="pin-map" }
+:example{ component="WebGL" name="pin-map" }
 
-:example{ component="Scene" name="walmart-hexbin" }
+:example{ component="WebGL" name="walmart-hexbin" }
 
-:example{ component="Scene" name="buildings" }
+:example{ component="WebGL" name="buildings" }
 
 d3-geo reads a polygon's outside ring clockwise, and the other way round as the rest of the world, so rewind rings from other sources (ex. OpenStreetMap) before drawing them.
 
@@ -31,11 +31,11 @@ d3-geo reads a polygon's outside ring clockwise, and the other way round as the 
 
 A `Surface` sampling a function of longitude and latitude is terrain. These load elevation from the open terrain tiles AWS hosts (see the examples' `loadElevation`), and light it with a sun you can move.
 
-:example{ component="Scene" name="us-elevation" }
+:example{ component="WebGL" name="us-elevation" }
 
-:example{ component="Scene" name="terrain" }
+:example{ component="WebGL" name="terrain" }
 
-:example{ component="Scene" name="world-elevation" }
+:example{ component="WebGL" name="world-elevation" }
 
 ## Globe
 
@@ -43,27 +43,27 @@ The `globe` projection lays the map on a real sphere you can orbit, rather than 
 
 ```svelte
 <script>
-	import { Chart, GeoPath, GeoRaster, Scene, globe, perspective } from '@layerchart/3d';
+	import { Chart, GeoPath, GeoRaster, WebGL, globe, perspective } from '@layerchart/webgl';
 </script>
 
 <Chart geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }} view={perspective}>
-	<Scene>
+	<WebGL>
 		<GeoRaster src="/images/blue-marble.jpg" tooltip />
 		<GeoPath geojson={countries} stroke="white" />
-	</Scene>
+	</WebGL>
 </Chart>
 ```
 
-:example{ component="Scene" name="globe" }
+:example{ component="WebGL" name="globe" }
 
-:example{ component="Scene" name="planets" }
+:example{ component="WebGL" name="planets" }
 
-:example{ component="Scene" name="globe-textures" }
+:example{ component="WebGL" name="globe-textures" }
 
-:example{ component="Scene" name="globe-tiles" }
+:example{ component="WebGL" name="globe-tiles" }
 
 ## GeoRaster
 
 An equirectangular image laid over the map through the chart's projection, as LayerChart's [GeoRaster](/docs/components/GeoRaster) reprojects one. Give it `elevation` (a function of longitude and latitude) to raise it into terrain, and `tooltip` to show the longitude and latitude under the pointer.
 
-:example{ component="Scene" name="projections" }
+:example{ component="WebGL" name="projections" }

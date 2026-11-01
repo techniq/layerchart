@@ -129,9 +129,9 @@ importers:
       '@iconify-json/vscode-icons':
         specifier: ^1.2.53
         version: 1.2.53
-      '@layerchart/3d':
+      '@layerchart/webgl':
         specifier: workspace:*
-        version: link:../packages/3d
+        version: link:../packages/webgl
       '@layerstack/docs':
         specifier: 1.0.0-next.6
         version: 1.0.0-next.6(@sveltejs/kit@2.62.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
@@ -784,106 +784,6 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
 
-  packages/3d:
-    dependencies:
-      d3-array:
-        specifier: ^3.2.4
-        version: 3.2.4
-      d3-contour:
-        specifier: ^4.0.2
-        version: 4.0.2
-      d3-geo:
-        specifier: ^3.1.1
-        version: 3.1.1
-      d3-scale:
-        specifier: ^4.0.2
-        version: 4.0.2
-      d3-scale-chromatic:
-        specifier: ^3.1.0
-        version: 3.1.0
-      d3-shape:
-        specifier: ^3.2.0
-        version: 3.2.0
-      layerchart:
-        specifier: workspace:^
-        version: link:../layerchart
-    devDependencies:
-      '@sveltejs/adapter-auto':
-        specifier: ^8.0.0
-        version: 8.0.0(@sveltejs/kit@3.0.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))
-      '@sveltejs/kit':
-        specifier: ^3.0.0
-        version: 3.0.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
-      '@sveltejs/package':
-        specifier: ^3.0.0
-        version: 3.0.0(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
-      '@sveltejs/vite-plugin-svelte':
-        specifier: ^7.1.2
-        version: 7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
-      '@threlte/core':
-        specifier: ^8.6.1
-        version: 8.6.1(svelte@5.57.1(@typescript-eslint/types@8.60.1))(three@0.187.0)
-      '@types/d3-array':
-        specifier: ^3.2.2
-        version: 3.2.2
-      '@types/d3-contour':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/d3-geo':
-        specifier: ^3.1.0
-        version: 3.1.0
-      '@types/d3-scale':
-        specifier: ^4.0.9
-        version: 4.0.9
-      '@types/d3-scale-chromatic':
-        specifier: ^3.1.0
-        version: 3.1.0
-      '@types/d3-shape':
-        specifier: ^3.1.8
-        version: 3.1.8
-      '@types/geojson':
-        specifier: ^7946.0.16
-        version: 7946.0.16
-      '@types/three':
-        specifier: ^0.187.0
-        version: 0.187.0
-      '@vitest/browser':
-        specifier: ^4.1.8
-        version: 4.1.8(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))(vitest@4.1.8)
-      '@vitest/browser-playwright':
-        specifier: ^4.1.8
-        version: 4.1.8(playwright@1.60.0)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))(vitest@4.1.8)
-      playwright:
-        specifier: ^1.60.0
-        version: 1.60.0
-      prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
-      prettier-plugin-svelte:
-        specifier: ^4.1.0
-        version: 4.1.0(prettier@3.8.3)(svelte@5.57.1(@typescript-eslint/types@8.60.1))
-      svelte:
-        specifier: 5.57.1
-        version: 5.57.1(@typescript-eslint/types@8.60.1)
-      svelte-check:
-        specifier: ^4.5.0
-        version: 4.5.0(picomatch@4.0.4)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
-      three:
-        specifier: ^0.187.0
-        version: 0.187.0
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      vite:
-        specifier: ^8.0.16
-        version: 8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)
-      vitest:
-        specifier: ^4.1.8
-        version: 4.1.8(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/browser-playwright@4.1.8)(@vitest/ui@4.1.8)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
-      vitest-browser-svelte:
-        specifier: ^2.1.1
-        version: 2.1.1(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vitest@4.1.8)
-
   packages/layerchart:
     dependencies:
       '@dagrejs/dagre':
@@ -1091,6 +991,106 @@ importers:
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vite:
+        specifier: ^8.0.16
+        version: 8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)
+      vitest:
+        specifier: ^4.1.8
+        version: 4.1.8(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/browser-playwright@4.1.8)(@vitest/ui@4.1.8)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
+      vitest-browser-svelte:
+        specifier: ^2.1.1
+        version: 2.1.1(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vitest@4.1.8)
+
+  packages/webgl:
+    dependencies:
+      d3-array:
+        specifier: ^3.2.4
+        version: 3.2.4
+      d3-contour:
+        specifier: ^4.0.2
+        version: 4.0.2
+      d3-geo:
+        specifier: ^3.1.1
+        version: 3.1.1
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      d3-scale-chromatic:
+        specifier: ^3.1.0
+        version: 3.1.0
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      layerchart:
+        specifier: workspace:^
+        version: link:../layerchart
+    devDependencies:
+      '@sveltejs/adapter-auto':
+        specifier: ^8.0.0
+        version: 8.0.0(@sveltejs/kit@3.0.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))
+      '@sveltejs/kit':
+        specifier: ^3.0.0
+        version: 3.0.0(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
+      '@sveltejs/package':
+        specifier: ^3.0.0
+        version: 3.0.0(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^7.1.2
+        version: 7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
+      '@threlte/core':
+        specifier: ^8.6.1
+        version: 8.6.1(svelte@5.57.1(@typescript-eslint/types@8.60.1))(three@0.187.0)
+      '@types/d3-array':
+        specifier: ^3.2.2
+        version: 3.2.2
+      '@types/d3-contour':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/d3-geo':
+        specifier: ^3.1.0
+        version: 3.1.0
+      '@types/d3-scale':
+        specifier: ^4.0.9
+        version: 4.0.9
+      '@types/d3-scale-chromatic':
+        specifier: ^3.1.0
+        version: 3.1.0
+      '@types/d3-shape':
+        specifier: ^3.1.8
+        version: 3.1.8
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
+      '@types/three':
+        specifier: ^0.187.0
+        version: 0.187.0
+      '@vitest/browser':
+        specifier: ^4.1.8
+        version: 4.1.8(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))(vitest@4.1.8)
+      '@vitest/browser-playwright':
+        specifier: ^4.1.8
+        version: 4.1.8(playwright@1.60.0)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))(vitest@4.1.8)
+      playwright:
+        specifier: ^1.60.0
+        version: 1.60.0
+      prettier:
+        specifier: ^3.8.3
+        version: 3.8.3
+      prettier-plugin-svelte:
+        specifier: ^4.1.0
+        version: 4.1.0(prettier@3.8.3)(svelte@5.57.1(@typescript-eslint/types@8.60.1))
+      svelte:
+        specifier: 5.57.1
+        version: 5.57.1(@typescript-eslint/types@8.60.1)
+      svelte-check:
+        specifier: ^4.5.0
+        version: 4.5.0(picomatch@4.0.5)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+      three:
+        specifier: ^0.187.0
+        version: 0.187.0
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -3230,9 +3230,6 @@ packages:
 
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
-
-  '@types/geojson@7946.0.14':
-    resolution: {integrity: sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==}
 
   '@types/geojson@7946.0.16':
     resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
@@ -7283,7 +7280,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.31':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/sourcemap-codec': 1.6.0
 
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
@@ -8468,8 +8465,6 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
-  '@types/geojson@7946.0.14': {}
-
   '@types/geojson@7946.0.16': {}
 
   '@types/hast@3.0.4':
@@ -8496,7 +8491,7 @@ snapshots:
 
   '@types/shapefile@0.6.4':
     dependencies:
-      '@types/geojson': 7946.0.14
+      '@types/geojson': 7946.0.16
       '@types/node': 25.9.1
 
   '@types/stats.js@0.17.4': {}
@@ -8512,22 +8507,22 @@ snapshots:
 
   '@types/topojson-client@3.1.5':
     dependencies:
-      '@types/geojson': 7946.0.14
+      '@types/geojson': 7946.0.16
       '@types/topojson-specification': 1.0.5
 
   '@types/topojson-server@3.0.4':
     dependencies:
-      '@types/geojson': 7946.0.14
+      '@types/geojson': 7946.0.16
       '@types/topojson-specification': 1.0.5
 
   '@types/topojson-simplify@3.0.3':
     dependencies:
-      '@types/geojson': 7946.0.14
+      '@types/geojson': 7946.0.16
       '@types/topojson-specification': 1.0.5
 
   '@types/topojson-specification@1.0.5':
     dependencies:
-      '@types/geojson': 7946.0.14
+      '@types/geojson': 7946.0.16
 
   '@types/trusted-types@2.0.7': {}
 
@@ -9707,9 +9702,9 @@ snapshots:
 
   '@zag-js/utils@1.42.0': {}
 
-  acorn-jsx@5.3.2(acorn@8.16.0):
+  acorn-jsx@5.3.2(acorn@8.18.0):
     dependencies:
-      acorn: 8.16.0
+      acorn: 8.18.0
 
   acorn@8.16.0: {}
 
@@ -10288,14 +10283,14 @@ snapshots:
 
   espree@10.4.0:
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.18.0
+      acorn-jsx: 5.3.2(acorn@8.18.0)
       eslint-visitor-keys: 4.2.1
 
   espree@11.2.0:
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.18.0
+      acorn-jsx: 5.3.2(acorn@8.18.0)
       eslint-visitor-keys: 5.0.1
 
   esprima@4.0.1: {}
@@ -10306,7 +10301,7 @@ snapshots:
 
   esrap@1.4.9:
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/sourcemap-codec': 1.6.0
 
   esrap@2.2.11(@typescript-eslint/types@8.60.1):
     dependencies:
@@ -11980,7 +11975,7 @@ snapshots:
   sveld@0.22.1(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15):
     dependencies:
       '@rollup/plugin-node-resolve': 13.3.0(rollup@2.79.2)
-      acorn: 8.16.0
+      acorn: 8.18.0
       comment-parser: 1.4.1
       prettier: 3.8.3
       rollup: 2.79.2
@@ -11999,18 +11994,6 @@ snapshots:
       - sass
       - stylus
       - sugarss
-
-  svelte-check@4.5.0(picomatch@4.0.4)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.31
-      chokidar: 4.0.3
-      fdir: 6.5.0(picomatch@4.0.4)
-      picocolors: 1.1.1
-      sade: 1.8.1
-      svelte: 5.57.1(@typescript-eslint/types@8.60.1)
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - picomatch
 
   svelte-check@4.5.0(picomatch@4.0.5)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
     dependencies:
@@ -12418,12 +12401,12 @@ snapshots:
   unplugin-utils@0.3.1:
     dependencies:
       pathe: 2.0.3
-      picomatch: 4.0.4
+      picomatch: 4.0.5
 
   unplugin@2.3.11:
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      acorn: 8.16.0
+      acorn: 8.18.0
       picomatch: 4.0.4
       webpack-virtual-modules: 0.6.2
 
@@ -12502,7 +12485,7 @@ snapshots:
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
-      picomatch: 4.0.4
+      picomatch: 4.0.5
       std-env: 4.1.0
       tinybench: 2.9.0
       tinyexec: 1.2.4

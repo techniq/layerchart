@@ -1,0 +1,80 @@
+{
+  "name": "@layerchart/webgl",
+  "description": "3D marks for LayerChart, drawn with three.js",
+  "author": "Sean Lynch <techniq35@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/techniq/layerchart",
+    "directory": "packages/webgl"
+  },
+  "homepage": "https://layerchart.com",
+  "version": "2.9.1",
+  "scripts": {
+    "dev": "pnpm package:watch",
+    "build": "svelte-package",
+    "package": "svelte-package",
+    "package:watch": "svelte-package --watch --preserve-output",
+    "prepublishOnly": "svelte-package",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test:unit": "vitest",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "prepare": "svelte-kit sync"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^8.0.0",
+    "@sveltejs/kit": "^3.0.0",
+    "@sveltejs/package": "^3.0.0",
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@threlte/core": "^8.6.1",
+    "@types/d3-array": "^3.2.2",
+    "@types/d3-contour": "^3.0.6",
+    "@types/d3-geo": "^3.1.0",
+    "@types/d3-scale": "^4.0.9",
+    "@types/d3-scale-chromatic": "^3.1.0",
+    "@types/d3-shape": "^3.1.8",
+    "@types/geojson": "^7946.0.16",
+    "@types/three": "^0.187.0",
+    "@vitest/browser": "^4.1.8",
+    "@vitest/browser-playwright": "^4.1.8",
+    "playwright": "^1.60.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-svelte": "^4.1.0",
+    "svelte": "5.57.1",
+    "svelte-check": "^4.5.0",
+    "three": "^0.187.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8",
+    "vitest-browser-svelte": "^2.1.1"
+  },
+  "peerDependencies": {
+    "@threlte/core": "^8.6.0",
+    "svelte": "^5.0.0",
+    "three": ">=0.172.0"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "svelte": "./dist/index.js",
+  "dependencies": {
+    "d3-array": "^3.2.4",
+    "d3-contour": "^4.0.2",
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "d3-scale-chromatic": "^3.1.0",
+    "d3-shape": "^3.2.0",
+    "layerchart": "workspace:^"
+  }
+}

@@ -28,15 +28,15 @@ export default defineConfig({
 			'd3-shape',
 			'layerchart > d3-interpolate-path',
 			// Its own dependencies, as the package itself isn't pre-bundled (below)
-			'@layerchart/3d > three',
-			'@layerchart/3d > @threlte/core',
-			'@layerchart/3d > d3-contour',
-			'@layerchart/3d > d3-geo'
+			'@layerchart/webgl > three',
+			'@layerchart/webgl > @threlte/core',
+			'@layerchart/webgl > d3-contour',
+			'@layerchart/webgl > d3-geo'
 		],
 		// Pre-bundled, it would carry a copy of `layerchart` of its own (linked from the workspace,
 		// `layerchart` itself isn't pre-bundled), and its charts' context wouldn't reach the docs'
 		// own LayerChart components (ex. `TransformContextControls`)
-		exclude: ['@layerchart/3d']
+		exclude: ['@layerchart/webgl']
 	},
 	plugins: [
 		tailwindcss(),
