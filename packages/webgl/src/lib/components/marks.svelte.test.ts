@@ -227,6 +227,31 @@ describe('GeoPath', () => {
   });
 });
 
+describe('Bin', () => {
+  // Five rows in one corner, one in the other
+  const rows = [...Array.from({ length: 5 }, () => ({ x: 1, y: 1 })), { x: 9, y: 9 }];
+
+  it('stands a prism per cell, as tall as `z` puts its count', async () => {
+    const scene = await renderMarks({
+      mark: 'bin',
+      chart: { data: rows, x: 'x', y: 'y', xDomain: [0, 10], yDomain: [0, 10], zRange: [0, 100] },
+      bin: { size: 40, z: 'count' },
+    });
+    await expect
+      .poll(() => (children(scene, 'isInstancedMesh')[0] as InstancedMesh)?.count)
+      .toBe(2);
+    const mesh = children(scene, 'isInstancedMesh')[0] as InstancedMesh;
+    const heights = [0, 1].map((i) => {
+      const matrix = new Matrix4();
+      mesh.getMatrixAt(i, matrix);
+      return new Vector3().setFromMatrixScale(matrix).y;
+    });
+    // The `z` domain reaches the fullest cell, five
+    expect(Math.max(...heights)).toBeCloseTo(100);
+    expect(Math.min(...heights)).toBeCloseTo(20);
+  });
+});
+
 describe('Light', () => {
   it("turns off the scene's own lights", async () => {
     const scene = await renderMarks({

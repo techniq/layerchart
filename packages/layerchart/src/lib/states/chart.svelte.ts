@@ -300,6 +300,8 @@ export class ChartState<
           seriesKey: info.seriesKey,
           color: info.color,
           label: info.label,
+          // Heights aren't projected, so a map's marks still widen the `z` domain
+          zExtent: info.zExtent,
         } as MarkInfo,
       }));
     }

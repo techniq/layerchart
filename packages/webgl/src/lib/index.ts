@@ -13,6 +13,8 @@ export type { WebGLProps, WebGLPropsWithoutHTML } from './components/WebGL/WebGL
 export { default as Axis } from './components/Axis/Axis.svelte';
 export type { AxisProps } from './components/Axis/Axis.svelte';
 export { default as Bars } from './components/Bars/Bars.svelte';
+export { default as Bin } from './components/Bin/Bin.svelte';
+export type { BinProps } from './components/Bin/Bin.svelte';
 export type { BarsProps } from './components/Bars/Bars.svelte';
 export { default as Grid } from './components/Grid/Grid.svelte';
 export type { GridProps } from './components/Grid/Grid.svelte';

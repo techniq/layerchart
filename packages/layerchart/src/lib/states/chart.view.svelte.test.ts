@@ -7,6 +7,7 @@ import { isometric } from '$lib/views/isometric.js';
 import { orthographic, perspective } from '$lib/views/camera.js';
 import { drawsFlatLayers } from '$lib/views/view.js';
 import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
+import { geoIdentity } from 'd3-geo';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 
 function chartState(props: Partial<ChartPropsWithoutHTML<any>>, settings?: Settings) {
@@ -111,6 +112,15 @@ describe('ChartState `view`', () => {
     expect(b.y).toBeCloseTo(a.y, 4);
     before.cleanup();
     after.cleanup();
+  });
+
+  it("widens a map's `z` domain to its marks' heights, which aren't projected", () => {
+    const { state, cleanup } = chartState({ geo: { projection: geoIdentity } });
+    const unregister = state.registerMark({ zExtent: [5, 50] });
+    flushSync();
+    expect(state.zDomain).toEqual([0, 50]);
+    unregister();
+    cleanup();
   });
 
   it('lets flat layers draw under no view or `isometric`, not a 3D one', () => {

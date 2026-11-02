@@ -25,6 +25,27 @@ Features on the floor, extruded `z` tall (a property key or function of the feat
 
 :example{ component="WebGL" name="buildings" }
 
+## Bin
+
+`Bin` groups rows into hexagons (or squares, or triangles) of the map as projected, and stands each up `z` tall, as LayerChart's [Bin](/docs/components/Bin) fills them. Every cell is the same shape, so thousands draw as one. Below, each hexagon's people over its ground area, binned from Kontur's population of each state, and lit by a low sun so the cities cast long shadows.
+
+```svelte
+<Chart
+	{data}
+	x="lon"
+	y="lat"
+	geo={{ projection: geoMercator, fitGeojson: state }}
+	view={perspective}
+>
+	<WebGL>
+		<Light azimuth={315} altitude={22} shadow />
+		<Bin size={14} gap={1} weight="people" z="count" fill="count" />
+	</WebGL>
+</Chart>
+```
+
+:example{ component="WebGL" name="state-population" }
+
 d3-geo reads a polygon's outside ring clockwise, and the other way round as the rest of the world, so rewind rings from other sources (ex. OpenStreetMap) before drawing them.
 
 ## Elevation
