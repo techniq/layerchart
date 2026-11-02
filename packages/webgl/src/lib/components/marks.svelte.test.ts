@@ -34,6 +34,26 @@ async function renderMarks(props: Omit<Parameters<typeof render<typeof Marks>>[1
 
 let chart: ChartState<any> | undefined;
 
+/** `read()` once it stops changing (ex. the camera, once the chart has laid out and fitted it) */
+async function settled(read: () => number) {
+  let last = NaN;
+  await expect
+    .poll(
+      () => {
+        const value = read();
+        const same = Math.abs(value - last) < 1e-6;
+        last = value;
+        return same;
+      },
+      { interval: 50 }
+    )
+    .toBe(true);
+  return read();
+}
+
+/** How far a perspective camera is from what it looks at (its near plane is a hundredth of it) */
+const reach = (scene: SceneState) => (scene.camera as PerspectiveCamera).near * 100;
+
 const children = (scene: SceneState, is: 'isLine2' | 'isInstancedMesh') =>
   scene.root.children.filter((o: Object3D) => (o as any)[is]);
 
@@ -109,6 +129,38 @@ describe('Surface', () => {
       surface: { value: (x: number, y: number) => 10 + 30 * x * y, pixelSize: 20 },
     });
     await expect.poll(() => chart?.zScale.domain()[1]).toBeGreaterThan(35);
+  });
+
+  it('eases to a new function with `motion`, rather than jumping', async () => {
+    let scene: SceneState | undefined;
+    const props = (value: (x: number, y: number) => number) => ({
+      mark: 'surface' as const,
+      chart: { xDomain: [0, 1], yDomain: [0, 1], zDomain: [0, 10], zRange: [0, 100] },
+      surface: { value, pixelSize: 40, motion: { type: 'tween' as const, duration: 400 } },
+      onScene: (s: SceneState) => (scene = s),
+    });
+    // Taking both `x` and `y`, so they're sampled as functions
+    const { rerender } = render(
+      Marks,
+      props((x, _y) => x)
+    );
+    /** The surface's highest point */
+    const top = () => {
+      const mesh = scene?.root.children.find((o: any) => o.isMesh) as any;
+      const position = mesh?.geometry.getAttribute('position');
+      if (!position) return NaN;
+      let max = -Infinity;
+      for (let i = 0; i < position.count; i++) max = Math.max(max, position.getY(i));
+      return max;
+    };
+    await expect.poll(() => top() > 0).toBe(true);
+    const start = top();
+
+    await rerender(props((x, _y) => x * 10));
+    // On its way up...
+    await expect.poll(() => top() > start * 1.5 && top() < start * 9.5).toBe(true);
+    // ...and there
+    await expect.poll(top).toBeCloseTo(start * 10);
   });
 
   it('draws many contour lines without overflowing the stack', async () => {
@@ -222,8 +274,8 @@ describe('WebGL', () => {
         new WheelEvent('wheel', { deltaY: -200, metaKey, bubbles: true, cancelable: true })
       );
 
-    const distance = () => scene.camera!.position.length();
-    const before = distance();
+    const distance = () => reach(scene);
+    const before = await settled(distance);
 
     wheel(false);
     await new Promise((resolve) => setTimeout(resolve, 50));
@@ -338,7 +390,7 @@ describe('view and transform', () => {
       },
     });
     await expect.poll(() => turned.camera?.position.length() ?? 0).toBeGreaterThan(0);
-    const angles = viewAngles(turned.camera!.position.clone().sub(new Vector3(0, 0, 0)));
+    const angles = viewAngles(turned.camera!.getWorldDirection(new Vector3()).negate());
     expect(angles.rotate).toBeCloseTo(30, 0);
     expect(angles.tilt).toBeCloseTo(40, 0);
     expect((turned.camera as any).isPerspectiveCamera).toBe(true);
@@ -379,8 +431,8 @@ describe('view and transform', () => {
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
     // The transform loads lazily
     await expect.poll(() => chart?.transformState).toBeTruthy();
-    const distance = () => scene.camera!.position.length();
-    const start = distance();
+    const distance = () => reach(scene);
+    const start = await settled(distance);
 
     chart!.transform.zoomIn();
     // Dollied in, as orbit controls zoom a perspective camera
@@ -450,15 +502,18 @@ describe('view and transform', () => {
     const { rerender } = render(Marks, props([0, 100]));
     await expect.poll(() => scene?.camera?.position.length() ?? 0).toBeGreaterThan(0);
     await expect.poll(() => chart?.transformState).toBeTruthy();
-    const fitted = scene!.camera!.position.length();
+    const fitted = await settled(() => reach(scene!));
     chart!.transform.zoomIn();
-    await expect.poll(() => scene!.camera!.position.length()).toBeLessThan(fitted * 0.85);
-    const zoomed = scene!.camera!.position.length();
+    await expect.poll(() => reach(scene!)).toBeLessThan(fitted * 0.85);
+    const scale = chart!.transform.scale;
 
-    // A taller box refits the camera farther out, still zoomed in by as much
-    await rerender(props([0, 140]));
-    await expect.poll(() => scene!.camera!.position.length()).toBeGreaterThan(zoomed * 1.05);
-    expect(scene!.camera!.position.length()).toBeLessThan(fitted);
+    // A taller box refits the camera, still zoomed in by as much
+    await rerender(props([0, 300]));
+    await expect.poll(() => reach(scene!)).not.toBeCloseTo(fitted / scale, 0);
+    const zoomed = reach(scene!);
+    chart!.transform.reset();
+    await expect.poll(() => chart!.transform.scale).toBe(1);
+    await expect.poll(() => reach(scene!)).toBeCloseTo(zoomed * scale, 0);
   });
 });
 

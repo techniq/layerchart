@@ -8,7 +8,16 @@
 	import { geoIdentity, geoPath, type GeoProjection } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Link, Points, WebGL, Text, Tooltip, perspective } from '@layerchart/webgl';
+	import {
+		Chart,
+		GeoPath,
+		Link,
+		Points,
+		WebGL,
+		Text,
+		Tooltip,
+		perspective
+	} from '@layerchart/webgl';
 
 	const states = feature(topology, topology.objects.states);
 	const counties = feature(topology, topology.objects.counties);

@@ -16,7 +16,9 @@
 		interpolateCubehelixDefault,
 		interpolateRdYlBu
 	} from 'd3-scale-chromatic';
-	import { Axis, Chart, Raster, WebGL, Surface, perspective } from '@layerchart/webgl';
+	import { Axis, Chart, WebGL, Surface, perspective } from '@layerchart/webgl';
+	import { Tween } from 'svelte/motion';
+	import { cubicInOut } from 'svelte/easing';
 	import { Field, MenuField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	const functions = [
@@ -75,6 +77,11 @@
 	let interp = $derived(interpolators.find((i) => i.value === selectedInterp)!);
 	let style = $state<'flat' | 'raised'>('raised');
 	let showContours = $state(false);
+	// Flat to raised eases the `z` range, so the surface (and its contours) rise and fall
+	const raised = Tween.of(() => (style === 'raised' ? 1 : 0), {
+		duration: 800,
+		easing: cubicInOut
+	});
 </script>
 
 <div class="grid gap-2">
@@ -115,18 +122,20 @@
 		cScale={scaleSequential(interp.fn)}
 		xDomain={[-1, 1]}
 		yDomain={[-1, 1]}
-		zRange={({ height }) => [0, height * 0.3]}
+		zRange={({ height }) => [0, height * 0.3 * raised.current]}
 		height={450}
 		class="cursor-grab active:cursor-grabbing"
 	>
 		<WebGL>
 			<Axis placement="bottom" label="x" />
 			<Axis placement="left" label="y" />
-			{#if style === 'flat'}
-				<Raster value={fn.fn} pixelSize={2} />
-			{:else}
-				<Surface value={fn.fn} pixelSize={4} contours={showContours ? 20 : undefined} />
-			{/if}
+			<!-- `motion` morphs one function into the next -->
+			<Surface
+				value={fn.fn}
+				pixelSize={4}
+				contours={showContours ? 20 : undefined}
+				motion={{ type: 'tween', duration: 800, easing: cubicInOut }}
+			/>
 		</WebGL>
 	</Chart>
 </div>

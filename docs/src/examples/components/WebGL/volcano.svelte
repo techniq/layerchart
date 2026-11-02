@@ -4,22 +4,21 @@
 </script>
 
 <script lang="ts">
-	import {
-		Chart,
-		Contour,
-		Light,
-		Raster,
-		WebGL,
-		Surface,
-		Tooltip,
-		perspective
-	} from '@layerchart/webgl';
+	import { Chart, Light, WebGL, Surface, Tooltip, perspective } from '@layerchart/webgl';
+	import { Tween } from 'svelte/motion';
+	import { cubicInOut } from 'svelte/easing';
 	import { extent } from 'd3-array';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateViridis } from 'd3-scale-chromatic';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	let style = $state<'raised' | 'flat'>('raised');
+	// How far raised, eased between flat (`0`) and raised (`1`): the `z` range grows and shrinks,
+	// so the surface, its contours, and the view's fit all follow it
+	const raised = Tween.of(() => (style === 'raised' ? 1 : 0), {
+		duration: 800,
+		easing: cubicInOut
+	});
 </script>
 
 <Field label="Style">
@@ -35,7 +34,7 @@
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	cScale={scaleSequential(interpolateViridis)}
 	zDomain={extent(volcano.values) as [number, number]}
-	zRange={({ height }) => [0, height * 0.35]}
+	zRange={({ height }) => [0, height * 0.35 * raised.current]}
 	tooltipContext
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
@@ -43,24 +42,13 @@
 	<WebGL>
 		<Light azimuth={315} altitude={35} intensity={0.9} shadow />
 		<Light type="ambient" intensity={0.55} />
-		{#if style === 'raised'}
-			<Surface
-				data={volcano.values}
-				width={volcano.width}
-				height={volcano.height}
-				contours={10}
-				tooltip
-			/>
-		{:else}
-			<Raster data={volcano.values} width={volcano.width} height={volcano.height} tooltip />
-			<Contour
-				data={volcano.values}
-				width={volcano.width}
-				height={volcano.height}
-				thresholds={10}
-				stroke="color-mix(in oklab, white 70%, transparent)"
-			/>
-		{/if}
+		<Surface
+			data={volcano.values}
+			width={volcano.width}
+			height={volcano.height}
+			contours={10}
+			tooltip
+		/>
 	</WebGL>
 
 	<Tooltip.Root>

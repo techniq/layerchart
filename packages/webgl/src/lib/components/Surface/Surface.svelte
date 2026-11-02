@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { GridDataProps } from '../../utils/grid.js';
+  import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 
   export type SurfaceProps = GridDataProps & {
     /**
@@ -37,6 +38,12 @@
      * @default false
      */
     tooltip?: boolean;
+    /**
+     * Ease to new values (ex. a new `value` function, or `data`) rather than jumping, ex. `'tween'`
+     * or `{ type: 'tween', duration: 800 }`: heights, colors, and contours move together.  Values
+     * on a different grid (ex. a new `pixelSize`) jump.
+     */
+    motion?: MotionOptions;
   };
 </script>
 
@@ -50,7 +57,9 @@
     Mesh,
     MeshLambertMaterial,
   } from 'three';
+  import { untrack } from 'svelte';
   import { getChartContext } from 'layerchart';
+  import { createControlledMotion } from 'layerchart/utils/motion.svelte';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { cellCenter, contourSegments } from '../../utils/contours.js';
@@ -72,6 +81,7 @@
     contours,
     stroke = 'color-mix(in oklab, var(--color-surface-content, currentColor) 40%, transparent)',
     tooltip = false,
+    motion,
     ...gridProps
   }: SurfaceProps = $props();
 
@@ -83,7 +93,28 @@
   const sphereSamples = $derived(
     sphere ? sphereValues(sphere, gridProps, sphereSegments(sphere.radius, pixelSize)) : null
   );
-  const grid = $derived(sphere ? null : sampleGrid(ctx, gridProps, pixelSize));
+  const sampled = $derived(sphere ? null : sampleGrid(ctx, gridProps, pixelSize));
+
+  // The motion is fixed when the mark mounts, as LayerChart's marks' is
+  const eased = untrack(() => (motion ? createControlledMotion<number[]>([], motion) : null));
+  $effect.pre(() => {
+    const next = sampled ? Array.from(sampled.values) : [];
+    if (!eased) return;
+    untrack(() => {
+      // A new grid (or the first) has nothing to ease from
+      if (eased.current.length !== next.length) {
+        eased.set(next, eased.type === 'tween' ? { duration: 0 } : ({ instant: true } as any));
+      } else {
+        eased.set(next);
+      }
+    });
+  });
+  /** The grid as drawn: its values eased by `motion` */
+  const grid = $derived(
+    sampled && eased && eased.current.length === sampled.values.length
+      ? { ...sampled, values: Float64Array.from(eased.current) }
+      : sampled
+  );
   const extent = $derived(
     sphereSamples ? gridExtent(sphereSamples.values) : grid ? gridExtent(grid.values) : null
   );

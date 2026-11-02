@@ -1,8 +1,5 @@
 import { MathUtils, Vector3 } from 'three';
 
-/** The plot box in chart pixels: `width` × `height` on the floor, `depth` up off it */
-export type PlotBox = { width: number; height: number; depth: number };
-
 /**
  * The direction from the plot's center to the camera for `rotate` / `tilt`, as `isometric` reads
  * them: `rotate` turns the floor clockwise (seen from above) in degrees, and `tilt` tips it away
@@ -28,15 +25,6 @@ export function viewAngles(direction: Vector3): { rotate: number; tilt: number }
   };
 }
 
-/** The box's eight corners about its center, in the scene's axes (`y` up) */
-function corners({ width, height, depth }: PlotBox) {
-  const result: Vector3[] = [];
-  for (const x of [-width / 2, width / 2])
-    for (const y of [-depth / 2, depth / 2])
-      for (const z of [-height / 2, height / 2]) result.push(new Vector3(x, y, z));
-  return result;
-}
-
 /** The camera's right and up axes looking along `-direction` with `y` up */
 function cameraAxes(direction: Vector3) {
   const forward = direction.clone().normalize().negate();
@@ -45,41 +33,110 @@ function cameraAxes(direction: Vector3) {
   return { forward, right, up };
 }
 
-/**
- * How far from the box's center a perspective camera looking along `-direction` has to be for
- * the whole box to fit a `fov` (vertical, in degrees) at `aspect`.
- */
-export function fitPerspective(box: PlotBox, direction: Vector3, fov: number, aspect: number) {
+/** The corners of the box from `min` to `max`, in the scene's axes (`y` up) */
+function cornersOf(min: Vector3, max: Vector3) {
+  const result: Vector3[] = [];
+  for (const x of [min.x, max.x])
+    for (const y of [min.y, max.y])
+      for (const z of [min.z, max.z]) result.push(new Vector3(x, y, z));
+  return result;
+}
+
+/** Each corner along the camera's right, up, and forward, from the box's middle */
+function project(min: Vector3, max: Vector3, direction: Vector3) {
   const { forward, right, up } = cameraAxes(direction);
-  const tanV = Math.tan(MathUtils.degToRad(fov) / 2);
-  const tanH = tanV * aspect;
-  let distance = 0;
-  for (const corner of corners(box)) {
-    // How much nearer the camera this corner is than the center
-    const nearer = -corner.dot(forward);
-    distance = Math.max(
-      distance,
-      nearer + Math.abs(corner.dot(right)) / tanH,
-      nearer + Math.abs(corner.dot(up)) / tanV
-    );
-  }
-  return distance;
+  const middle = min.clone().add(max).multiplyScalar(0.5);
+  const points = cornersOf(min, max).map((corner) => {
+    const offset = corner.sub(middle);
+    return { across: offset.dot(right), above: offset.dot(up), deeper: offset.dot(forward) };
+  });
+  return { points, middle, right, up };
 }
 
 /**
- * The half width and height an orthographic camera looking along `-direction` needs for the
- * whole box to fit at `aspect`.
+ * Where a perspective camera looking along `-direction` sees the box from `min` to `max` as large
+ * as it fits a `fov` (vertical, in degrees) at `aspect`, centered: what it looks at, and from how
+ * far.  Seen at an angle a box's near side looks larger than its far one, so this frames what's
+ * seen rather than looking at the box's middle.
  */
-export function fitOrthographic(box: PlotBox, direction: Vector3, aspect: number) {
-  const { right, up } = cameraAxes(direction);
-  let halfWidth = 0;
-  let halfHeight = 0;
-  for (const corner of corners(box)) {
-    halfWidth = Math.max(halfWidth, Math.abs(corner.dot(right)));
-    halfHeight = Math.max(halfHeight, Math.abs(corner.dot(up)));
+export function framePerspective(
+  min: Vector3,
+  max: Vector3,
+  direction: Vector3,
+  fov: number,
+  aspect: number
+) {
+  const { points, middle, right, up } = project(min, max, direction);
+  const tanV = Math.tan(MathUtils.degToRad(fov) / 2);
+  const tanH = tanV * aspect;
+  // From `distance` behind the middle (and moved across / up), a corner `deeper` farther away
+  // is seen at `(across - x) / (distance + deeper)`, which has to be within `tan` either way.
+  // Each pair of corners sets how far back the camera has to be for both to fit.
+  let distance = 0;
+  for (const a of points) {
+    for (const b of points) {
+      distance = Math.max(
+        distance,
+        ((a.across - b.across) / tanH - a.deeper - b.deeper) / 2,
+        ((a.above - b.above) / tanV - a.deeper - b.deeper) / 2
+      );
+    }
   }
+  // Then moved across and up until what's seen is centered: the far side looks smaller, so
+  // that's not the box's middle
+  const centered = (value: (p: (typeof points)[number]) => number) => {
+    /** How far off center what's seen is, moved by `offset`: its two edges summed */
+    const off = (offset: number) => {
+      let low = Infinity;
+      let high = -Infinity;
+      for (const p of points) {
+        const at = (value(p) - offset) / (distance + p.deeper);
+        low = Math.min(low, at);
+        high = Math.max(high, at);
+      }
+      return low + high;
+    };
+    // Moving one way moves every corner the other, so halve towards balanced
+    let lo = Math.min(...points.map(value)) - 1;
+    let hi = Math.max(...points.map(value)) + 1;
+    for (let i = 0; i < 60; i++) {
+      const mid = (lo + hi) / 2;
+      if (off(mid) > 0) lo = mid;
+      else hi = mid;
+    }
+    return (lo + hi) / 2;
+  };
+  const target = middle
+    .clone()
+    .addScaledVector(
+      right,
+      centered((p) => p.across)
+    )
+    .addScaledVector(
+      up,
+      centered((p) => p.above)
+    );
+  return { target, distance };
+}
+
+/**
+ * What an orthographic camera looking along `-direction` looks at, and the half width and height
+ * it needs, for the box from `min` to `max` to fit at `aspect`, centered
+ */
+export function frameOrthographic(min: Vector3, max: Vector3, direction: Vector3, aspect: number) {
+  const { points, middle, right, up } = project(min, max, direction);
+  const across = points.map((p) => p.across);
+  const above = points.map((p) => p.above);
+  const [left, rightmost] = [Math.min(...across), Math.max(...across)];
+  const [bottom, top] = [Math.min(...above), Math.max(...above)];
+  let halfWidth = (rightmost - left) / 2;
+  let halfHeight = (top - bottom) / 2;
   // Grow whichever side the aspect leaves short
   if (halfWidth / halfHeight > aspect) halfHeight = halfWidth / aspect;
   else halfWidth = halfHeight * aspect;
-  return { halfWidth, halfHeight };
+  const target = middle
+    .clone()
+    .addScaledVector(right, (left + rightmost) / 2)
+    .addScaledVector(up, (bottom + top) / 2);
+  return { target, halfWidth, halfHeight };
 }

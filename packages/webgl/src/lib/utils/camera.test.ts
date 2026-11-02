@@ -1,14 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { Vector3 } from 'three';
 
-import { fitOrthographic, fitPerspective, viewAngles, viewDirection } from './camera.js';
+import { frameOrthographic, framePerspective, viewAngles, viewDirection } from './camera.js';
 
-const box = { width: 400, height: 300, depth: 150 };
+// A plot box 400 × 300, 150 tall, standing on the floor
+const min = new Vector3(-200, 0, -150);
+const max = new Vector3(200, 150, 150);
 
 function corners() {
   const result: Vector3[] = [];
   for (const x of [-200, 200])
-    for (const y of [-75, 75]) for (const z of [-150, 150]) result.push(new Vector3(x, y, z));
+    for (const y of [0, 150]) for (const z of [-150, 150]) result.push(new Vector3(x, y, z));
   return result;
 }
 
@@ -34,45 +36,56 @@ describe('viewDirection', () => {
   });
 });
 
-describe('fitPerspective', () => {
-  it('puts every corner of the box inside the frustum, one of them on its edge', () => {
+/** The camera's axes looking along `-direction` */
+function axes(direction: Vector3) {
+  const forward = direction.clone().negate();
+  const right = new Vector3().crossVectors(forward, new Vector3(0, 1, 0)).normalize();
+  const up = new Vector3().crossVectors(right, forward);
+  return { forward, right, up };
+}
+
+describe('framePerspective', () => {
+  it('fits every corner of the box in view, centered, as large as it fits', () => {
     const fov = 35;
     const aspect = 16 / 9;
     const direction = viewDirection(-45, 60);
-    const distance = fitPerspective(box, direction, fov, aspect);
-
-    const forward = direction.clone().negate();
-    const right = new Vector3().crossVectors(forward, new Vector3(0, 1, 0)).normalize();
-    const up = new Vector3().crossVectors(right, forward);
+    const { target, distance } = framePerspective(min, max, direction, fov, aspect);
+    const { forward, right, up } = axes(direction);
+    const camera = target.clone().addScaledVector(direction, distance);
     const tanV = Math.tan(((fov / 2) * Math.PI) / 180);
     const tanH = tanV * aspect;
 
-    let tightest = 0;
+    const across: number[] = [];
+    const above: number[] = [];
     for (const corner of corners()) {
-      const depth = distance + corner.dot(forward);
+      const offset = corner.clone().sub(camera);
+      const depth = offset.dot(forward);
       expect(depth).toBeGreaterThan(0);
-      const h = Math.abs(corner.dot(right)) / depth / tanH;
-      const v = Math.abs(corner.dot(up)) / depth / tanV;
-      expect(h).toBeLessThanOrEqual(1 + 1e-9);
-      expect(v).toBeLessThanOrEqual(1 + 1e-9);
-      tightest = Math.max(tightest, h, v);
+      across.push(offset.dot(right) / depth / tanH);
+      above.push(offset.dot(up) / depth / tanV);
     }
-    expect(tightest).toBeCloseTo(1);
+    // Inside the frame, and as wide (or tall) as it
+    for (const v of [...across, ...above]) expect(Math.abs(v)).toBeLessThanOrEqual(1 + 1e-9);
+    expect(
+      Math.max(Math.max(...across) - Math.min(...across), Math.max(...above) - Math.min(...above))
+    ).toBeCloseTo(2);
+    // Centered both ways
+    expect(Math.max(...across) + Math.min(...across)).toBeCloseTo(0);
+    expect(Math.max(...above) + Math.min(...above)).toBeCloseTo(0);
   });
 });
 
-describe('fitOrthographic', () => {
-  it('matches the layer aspect and covers every corner', () => {
+describe('frameOrthographic', () => {
+  it('matches the layer aspect and covers every corner, centered', () => {
     const direction = viewDirection(-45, 60);
-    const { halfWidth, halfHeight } = fitOrthographic(box, direction, 2);
+    const { target, halfWidth, halfHeight } = frameOrthographic(min, max, direction, 2);
     expect(halfWidth / halfHeight).toBeCloseTo(2);
 
-    const forward = direction.clone().negate();
-    const right = new Vector3().crossVectors(forward, new Vector3(0, 1, 0)).normalize();
-    const up = new Vector3().crossVectors(right, forward);
+    const { right, up } = axes(direction);
     for (const corner of corners()) {
-      expect(Math.abs(corner.dot(right))).toBeLessThanOrEqual(halfWidth + 1e-9);
-      expect(Math.abs(corner.dot(up))).toBeLessThanOrEqual(halfHeight + 1e-9);
+      const offset = corner.clone().sub(target);
+      expect(Math.abs(offset.dot(right))).toBeLessThanOrEqual(halfWidth + 1e-9);
+      expect(Math.abs(offset.dot(up))).toBeLessThanOrEqual(halfHeight + 1e-9);
     }
   });
 });

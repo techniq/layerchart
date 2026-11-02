@@ -16,7 +16,8 @@
   import { createControlledMotion } from 'layerchart/utils/motion.svelte';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
-  import { fitOrthographic, fitPerspective, viewDirection } from '../../utils/camera.js';
+  import { frameOrthographic, framePerspective, viewDirection } from '../../utils/camera.js';
+  import { geoPath } from 'd3-geo';
   import { getSphere } from '../../utils/globe.js';
 
   let { children }: { children?: Snippet } = $props();
@@ -69,6 +70,11 @@
   const margin = $derived((view?.options as { margin?: number } | undefined)?.margin ?? 0.1);
   /** The angles the camera looks from: the view's, or the transform's while it turns the view */
   const angles = $derived(view ? ctx.viewRotation : { rotate: 0, tilt: 0 });
+  /**
+   * The view's own angles, which the plot box is framed for.  A drag turns the camera about that
+   * frame, as orbit controls turn about their target, rather than reframing as it goes.
+   */
+  const framedAngles = $derived(view ? ctx.viewAngles : { rotate: 0, tilt: 0 });
   const fov = $derived(view?.type === 'perspective' ? (view.options.fov ?? 35) : 35);
 
   // A new `fov` eases with the view's `motion`, as its angles do (fixed when the scene mounts)
@@ -96,8 +102,10 @@
     };
   });
 
-  /** From the plot's center towards the camera, from the view's angles */
+  /** From the plot towards the camera: where the camera is turned to */
   const direction = new Vector3();
+  /** From the plot towards the camera, for the view's own angles: what it's framed for */
+  const framedDirection = new Vector3();
   /** What the fitted camera looks at: the middle of the plot box, or of the globe */
   const fitTarget = new Vector3();
   /** How far the fitted camera is from `fitTarget` */
@@ -118,6 +126,26 @@
     return transform.mode === 'canvas'
       ? { scale: transform.scale, x: transform.translate.x, y: transform.translate.y }
       : { scale: 1, x: 0, y: 0 };
+  }
+
+  /**
+   * The part of the floor that's drawn on, `[[x0, y0], [x1, y1]]` in chart pixels: a map's
+   * `fitGeojson` as projected, else the whole plot
+   */
+  function floorBounds(): [[number, number], [number, number]] {
+    const whole: [[number, number], [number, number]] = [
+      [0, 0],
+      [ctx.width, ctx.height],
+    ];
+    const projection = ctx.geo.projection;
+    const fitted = (ctx.props.geo as { fitGeojson?: unknown } | undefined)?.fitGeojson;
+    if (!projection || !fitted) return whole;
+    const [[x0, y0], [x1, y1]] = geoPath(projection).bounds(fitted as any);
+    if (![x0, y0, x1, y1].every(Number.isFinite) || !(x1 > x0) || !(y1 > y0)) return whole;
+    return [
+      [Math.max(0, x0), Math.max(0, y0)],
+      [Math.min(ctx.width, x1), Math.min(ctx.height, y1)],
+    ];
   }
 
   /** Fit the camera along `direction` to see the whole plot box, then place it */
@@ -167,14 +195,23 @@
       return;
     }
     cam.clearViewOffset();
+    // What's drawn: a map's own bounds on the floor (it rarely fills the plot), else the plot box
+    const floor = floorBounds();
+    const min = new Vector3(floor[0][0] - ctx.width / 2, 0, floor[0][1] - ctx.height / 2);
+    const max = new Vector3(floor[1][0] - ctx.width / 2, box.depth, floor[1][1] - ctx.height / 2);
     if (cam instanceof PerspectiveCamera) {
       const vertical = MathUtils.degToRad(shownFov) / 2;
       const horizontal = Math.atan(Math.tan(vertical) * aspect);
-      const distance =
-        (radius != null
-          ? radius / Math.sin(Math.min(vertical, horizontal))
-          : fitPerspective(box, direction, shownFov, aspect)) *
-        (1 + margin);
+      let distance: number;
+      if (radius != null) {
+        distance = (radius / Math.sin(Math.min(vertical, horizontal))) * (1 + margin);
+      } else {
+        // Framed in a field of view narrowed by the margin, so there's that much room around it
+        const narrowed = MathUtils.radToDeg(2 * Math.atan(Math.tan(vertical) / (1 + margin)));
+        const framed = framePerspective(min, max, framedDirection, narrowed, aspect);
+        fitTarget.copy(framed.target);
+        distance = framed.distance;
+      }
       // An empty plot box (no room inside the padding) leaves nothing to fit
       if (!(distance > 0)) return;
       cam.fov = shownFov;
@@ -182,12 +219,18 @@
       fitDistance = distance;
       fitUnit = (2 * distance * Math.tan(vertical)) / height;
     } else {
-      const { halfWidth, halfHeight } =
-        radius != null
-          ? aspect >= 1
+      let halfWidth: number;
+      let halfHeight: number;
+      if (radius != null) {
+        ({ halfWidth, halfHeight } =
+          aspect >= 1
             ? { halfWidth: radius * aspect, halfHeight: radius }
-            : { halfWidth: radius, halfHeight: radius / aspect }
-          : fitOrthographic(box, direction, aspect);
+            : { halfWidth: radius, halfHeight: radius / aspect });
+      } else {
+        const framed = frameOrthographic(min, max, framedDirection, aspect);
+        fitTarget.copy(framed.target);
+        ({ halfWidth, halfHeight } = framed);
+      }
       if (!(halfWidth > 0 && halfHeight > 0)) return;
       const scale = 1 + margin;
       fitDistance = Math.hypot(box.width, box.height, box.depth) * 2;
@@ -313,13 +356,23 @@
 
   // A new view, or the plot box changing, refits the camera
   $effect.pre(() => {
-    const { rotate, tilt } = angles;
-    viewDirection(rotate, tilt, direction);
+    const { rotate, tilt } = framedAngles;
+    viewDirection(rotate, tilt, framedDirection);
+    untrack(() => viewDirection(angles.rotate, angles.tilt, direction));
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     [ctx.width, ctx.height, ctx.zDepth, size.current, margin, camera, shownFov];
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     ctx.geo.projection;
     untrack(fit);
+  });
+
+  // Turning (ex. a drag) moves the camera round what it's framed on
+  $effect.pre(() => {
+    const { rotate, tilt } = angles;
+    viewDirection(rotate, tilt, direction);
+    untrack(() => {
+      if (sceneState.width && view) place();
+    });
   });
 
   // Panning moves the camera's target, and zooming moves the camera in (or, flat, both only move

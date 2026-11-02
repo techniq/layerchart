@@ -34,8 +34,6 @@ Heights from the values, through the chart's `z` scale (whose domain widens to r
 
 :example{ component="WebGL" name="math-functions" }
 
-:example{ component="WebGL" name="mandelbrot" }
-
 | Prop        | What it does                                                        | Default                |
 | ----------- | ------------------------------------------------------------------- | ---------------------- |
 | `pixelSize` | Pixels between samples of a function, scattered rows, or a map grid | `8`                    |
@@ -44,11 +42,14 @@ Heights from the values, through the chart's `z` scale (whose domain widens to r
 | `contours`  | Contour lines: a count of thresholds, or the values                 |                        |
 | `stroke`    | The lines' CSS color                                                | surface content at 40% |
 | `opacity`   |                                                                     | `1`                    |
+| `motion`    | Ease to new values (ex. a new `value` function), ex. `'tween'`      |                        |
+
+`motion` morphs heights, colors, and contours together, as switching functions in the math functions above does. To raise or flatten a surface, ease the chart's `zRange` (ex. with a `Tween`), which the surface, its contours, and the view's fit all follow, as the volcano does.
 
 ## Raster
 
-The values as an image on the floor (or `z` pixels above it). `imageRendering="pixelated"` shows each cell with hard edges. The volcano, mandelbrot, and math functions above draw one in their flat style.
+The values as an image on the floor (or `z` pixels above it), sampled as finely as the image allows rather than at a surface's vertices. `imageRendering="pixelated"` shows each cell with hard edges.
 
 ## Contour
 
-Contour lines on their own: flat at `z` pixels, or each raised to its threshold's height with `z="value"`. The volcano above draws them over a `Raster` in its flat style.
+Contour lines on their own: flat at `z` pixels (ex. over a `Raster`), or each raised to its threshold's height with `z="value"`.
