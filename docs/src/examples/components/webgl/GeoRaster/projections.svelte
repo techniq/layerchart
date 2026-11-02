@@ -49,7 +49,14 @@
 <!-- The image is laid over the map through the chart's projection, like the borders -->
 <Chart
 	view={perspective({ rotate: 0, tilt: 35 })}
-	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	transform={{
+		mode: 'canvas',
+		drag: 'rotate',
+		scrollMode: 'scale',
+		scrollActivationKey: 'shift',
+		// Zoom in no further than the camera stays above the map
+		scaleExtent: [0.5, 3]
+	}}
 	geo={{ projection, fitGeojson: { type: 'Sphere' } }}
 	padding={{ top: 10, bottom: 10, left: 10, right: 10 }}
 	height={500}

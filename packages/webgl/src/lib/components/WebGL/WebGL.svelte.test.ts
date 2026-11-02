@@ -32,9 +32,10 @@ describe('WebGL', () => {
     await expect.poll(() => container.querySelector('.lc-layout-webgl canvas')).toBeTruthy();
     await expect.element(angles).toHaveTextContent('-45,60');
 
-    // The transform loads lazily
-    await expect.poll(() => container.querySelector('.lc-transform-context')).toBeTruthy();
-    const canvas = container.querySelector<HTMLCanvasElement>('.lc-layout-webgl canvas')!;
+    // The transform loads lazily, remounting the layer inside it
+    const selector = '.lc-transform-context .lc-layout-webgl canvas';
+    await expect.poll(() => container.querySelector(selector)).toBeTruthy();
+    const canvas = container.querySelector<HTMLCanvasElement>(selector)!;
     // Synthetic pointers can't be captured
     canvas.setPointerCapture = () => {};
     const rect = canvas.getBoundingClientRect();

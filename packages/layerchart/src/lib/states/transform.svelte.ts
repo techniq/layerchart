@@ -24,6 +24,11 @@ export type TransformAxis = 'x' | 'y' | 'both';
 export type TransformConstraint = {
   scale: number;
   translate: { x: number; y: number };
+  /**
+   * The view's rotation (see `initialRotation`), when there's one to turn.  Return a new one to
+   * limit how far a drag turns it.
+   */
+  rotation?: { x: number; y: number } | null;
 };
 
 export type TransformDetails = {
@@ -122,9 +127,21 @@ export type TransformStateOptions = {
   translateExtent?: [[number, number], [number, number]];
 
   /**
+   * How far a drag turns the view, in degrees: [[minRotate, minTilt], [maxRotate, maxTilt]].
+   * Default: no limit.
+   */
+  rotationExtent?: [[number, number], [number, number]];
+
+  /** Min/max turn [minRotate, maxRotate], in degrees.  Overrides `rotationExtent`'s. */
+  rotateExtent?: [number, number];
+
+  /** Min/max tilt [minTilt, maxTilt], in degrees.  Overrides `rotationExtent`'s. */
+  tiltExtent?: [number, number];
+
+  /**
    * Custom constraint function called after every transform update.
-   * Return corrected scale/translate values.
-   * Called after scaleExtent and translateExtent are applied.
+   * Return corrected scale/translate (and, as a drag turns the view, rotation) values.
+   * Called after scaleExtent, translateExtent, and the rotation extents are applied.
    */
   constrain?: (transform: TransformConstraint) => TransformConstraint;
 };
@@ -174,6 +191,9 @@ export class TransformState {
   scrollActivationKey: ScrollActivationKey | undefined;
   scaleExtent: [number, number] | undefined;
   translateExtent: [[number, number], [number, number]] | undefined;
+  rotationExtent: [[number, number], [number, number]] | undefined;
+  rotateExtent: [number, number] | undefined;
+  tiltExtent: [number, number] | undefined;
   constrain: ((transform: TransformConstraint) => TransformConstraint) | undefined;
   inertia: {
     enabled: boolean;
@@ -247,6 +267,9 @@ export class TransformState {
     this.scrollActivationKey = options.scrollActivationKey;
     this.scaleExtent = options.scaleExtent;
     this.translateExtent = options.translateExtent;
+    this.rotationExtent = options.rotationExtent;
+    this.rotateExtent = options.rotateExtent;
+    this.tiltExtent = options.tiltExtent;
     this.constrain = options.constrain;
     this.pinch = options.pinch ?? true;
 
@@ -345,11 +368,34 @@ export class TransformState {
     scale = this._clampScale(scale);
     translate = this._clampTranslate(translate);
     if (this.constrain) {
-      const constrained = this.constrain({ scale, translate });
+      const constrained = this.constrain({ scale, translate, rotation: this.rotation });
       scale = constrained.scale;
       translate = constrained.translate;
     }
     return { scale, translate };
+  }
+
+  /** Clamp a rotation a drag turns to, using the rotation extents and custom constrain. */
+  private _constrainRotation(rotation: { x: number; y: number }): { x: number; y: number } {
+    const [[minX, minY], [maxX, maxY]] = this.rotationExtent ?? [
+      [-Infinity, -Infinity],
+      [Infinity, Infinity],
+    ];
+    const [x0, x1] = this.rotateExtent ?? [minX, maxX];
+    const [y0, y1] = this.tiltExtent ?? [minY, maxY];
+    rotation = {
+      x: Math.max(x0, Math.min(x1, rotation.x)),
+      y: Math.max(y0, Math.min(y1, rotation.y)),
+    };
+    if (this.constrain) {
+      const constrained = this.constrain({
+        scale: this._scale.current,
+        translate: this._translate.current,
+        rotation,
+      });
+      rotation = constrained.rotation ?? rotation;
+    }
+    return rotation;
   }
 
   /**
@@ -747,9 +793,11 @@ export class TransformState {
 
       if (this._dragging === 'rotate') {
         const { x, y } = this.startRotation;
-        const rotation = this.processRotate
-          ? this.processRotate(x, y, deltaX, deltaY)
-          : { x: x + deltaX, y: y + deltaY };
+        const rotation = this._constrainRotation(
+          this.processRotate
+            ? this.processRotate(x, y, deltaX, deltaY)
+            : { x: x + deltaX, y: y + deltaY }
+        );
         this.setRotation(rotation, this._instantMotion(this._rotation));
         if (this.pivotRotate) {
           this.setTranslate(

@@ -26,6 +26,7 @@ async function renderMarks(props: Omit<Parameters<typeof render<typeof Marks>>[1
     onScene: (s: SceneState, c: ChartState<any>) => {
       scene = s;
       chart = c;
+      latest = s;
     },
   });
   await expect.poll(() => scene?.root.children.length ?? 0).toBeGreaterThan(0);
@@ -33,6 +34,15 @@ async function renderMarks(props: Omit<Parameters<typeof render<typeof Marks>>[1
 }
 
 let chart: ChartState<any> | undefined;
+/** The scene most recently set up: a chart's lazily loaded transform remounts its layers */
+let latest: SceneState | undefined;
+
+/** The scene once the chart's transform has loaded (and remounted the layer), with its marks */
+async function withTransform() {
+  await expect.poll(() => chart?.transformState).toBeTruthy();
+  await expect.poll(() => latest?.root.children.length ?? 0).toBeGreaterThan(0);
+  return latest!;
+}
 
 /** `read()` once it stops changing (ex. the camera, once the chart has laid out and fitted it) */
 async function settled(read: () => number) {
@@ -334,7 +344,7 @@ describe('WebGL', () => {
   });
 
   it('only zooms with `scrollActivationKey` held', async () => {
-    const scene = await renderMarks({
+    let scene = await renderMarks({
       mark: 'points',
       chart: {
         data: [{ x: 1, y: 1 }],
@@ -345,8 +355,8 @@ describe('WebGL', () => {
       },
     });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
-    // The transform loads lazily
-    await expect.poll(() => chart?.transformState).toBeTruthy();
+    // The transform loads lazily, remounting the layer
+    scene = await withTransform();
     const canvas = document.querySelector('.lc-layout-webgl canvas')!;
     const wheel = (metaKey: boolean) =>
       canvas.dispatchEvent(
@@ -363,7 +373,9 @@ describe('WebGL', () => {
 
     wheel(true);
     await expect.poll(() => chart!.transform.scale).toBeGreaterThan(1);
-    await expect.poll(distance).toBeLessThan(before * 0.95);
+    // Dollied in by as much as the transform zoomed
+    await expect.poll(() => distance() * chart!.transform.scale).toBeCloseTo(before, 0);
+    expect(distance()).toBeLessThan(before);
   });
 });
 
@@ -497,7 +509,7 @@ describe('view and transform', () => {
   });
 
   it("moves the camera in with the chart's transform's zoom, and back on reset", async () => {
-    const scene = await renderMarks({
+    let scene = await renderMarks({
       mark: 'points',
       chart: {
         data: [{ x: 1, y: 1 }],
@@ -508,8 +520,8 @@ describe('view and transform', () => {
       },
     });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
-    // The transform loads lazily
-    await expect.poll(() => chart?.transformState).toBeTruthy();
+    // The transform loads lazily, remounting the layer
+    scene = await withTransform();
     const distance = () => reach(scene);
     const start = await settled(distance);
 
@@ -521,8 +533,32 @@ describe('view and transform', () => {
     await expect.poll(() => Math.round(distance())).toBe(Math.round(start));
   });
 
+  it("stops the camera where the transform's `scaleExtent` stops its zoom", async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        view: perspective,
+        transform: { mode: 'canvas', scaleExtent: [0.5, 2] },
+      },
+    });
+    scene = await withTransform();
+    const distance = () => reach(scene);
+    const start = await settled(distance);
+
+    for (let i = 0; i < 10; i++) chart!.transform.zoomIn();
+    await expect.poll(() => chart!.transform.scale).toBe(2);
+    await expect.poll(distance).toBeCloseTo(start / 2, 0);
+
+    for (let i = 0; i < 10; i++) chart!.transform.zoomOut();
+    await expect.poll(() => chart!.transform.scale).toBe(0.5);
+    await expect.poll(distance).toBeCloseTo(start * 2, 0);
+  });
+
   it('turns about where the view has been panned to', async () => {
-    const scene = await renderMarks({
+    let scene = await renderMarks({
       mark: 'points',
       chart: {
         data: [{ x: 1, y: 1 }],
@@ -533,8 +569,8 @@ describe('view and transform', () => {
       },
     });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
-    // The transform loads lazily
-    await expect.poll(() => chart?.transformState).toBeTruthy();
+    // The transform loads lazily, remounting the layer
+    scene = await withTransform();
     const ray = () => {
       const camera = scene.camera!;
       camera.updateMatrixWorld();

@@ -359,7 +359,7 @@ Using `'data'` for `min`/`max` is the most common pattern — it prevents pannin
 
 ### `constrain` — custom constraint function
 
-For full control, provide a `constrain` function that receives the proposed `{ scale, translate }` and returns corrected values. Called after `scaleExtent` and `translateExtent` are applied.
+For full control, provide a `constrain` function that receives the proposed `{ scale, translate }` and returns corrected values. Called after `scaleExtent` and `translateExtent` are applied. As a drag turns a `view`, it also receives the proposed `rotation` (`x` the turn, `y` the tilt), and can return a corrected one.
 
 ```svelte
 <LineChart
@@ -384,7 +384,16 @@ For full control, provide a `constrain` function that receives the proposed `{ s
 
 #### Globe rotation constraints
 
-For globe projections using rotation, the translate values represent rotation angles (yaw/pitch in degrees). A custom `constrain` function can clamp the pitch to prevent flipping the globe:
+For globe projections using rotation, the translate values represent rotation angles (yaw/pitch in degrees). `tiltExtent` clamps the pitch to prevent flipping the globe, and `rotateExtent` the yaw (see [`rotationExtent`](#rotationextent--limit-how-far-a-drag-turns-the-view)):
+
+```svelte
+<Chart
+	geo={{ projection: geoOrthographic, fitGeojson: countries }}
+	transform={{ mode: 'projection', tiltExtent: [-90, 90] }}
+/>
+```
+
+A custom `constrain` function does the same, given the angles as `translate`:
 
 ```svelte
 <Chart
@@ -424,14 +433,36 @@ For `domain` mode, prefer `domainExtent` which lets you express bounds in data u
 
 In `projection` mode with flat maps, `translateExtent` defines pan bounds **relative to the initial fitted position**, and the allowed range scales with zoom level. For globe projections using rotation, values are passed through as degrees (yaw/pitch).
 
+### `rotationExtent` — limit how far a drag turns the view
+
+On a chart with a [`view`](/docs/guides/isometric#dragging-the-view) to turn, `rotationExtent` bounds the angles a drag turns it to, in degrees: `[[minRotate, minTilt], [maxRotate, maxTilt]]`. `rotateExtent` and `tiltExtent` set one of them as `[min, max]`, overriding `rotationExtent`'s:
+
+```svelte
+<Chart
+	view={isometric}
+	transform={{
+		mode: 'canvas',
+		drag: 'rotate',
+		// Keep the front facing the viewer, and never look straight down
+		rotateExtent: [-90, 0],
+		tiltExtent: [30, 80]
+	}}
+/>
+```
+
+Without them, a drag tips the view from `0` (seen from directly above) to edge on. An `isometric` floor can't go further, but a 3D view (`@layerchart/webgl`) can: `tiltExtent: [0, 180]` turns it on round to look from beneath, ex. a [globe](/docs/components/webgl/GeoRaster)'s south pole. The view's own `rotate` and `tilt` aren't limited, only where a drag takes them.
+
+On a globe projection (`mode: 'projection'`), they bound its yaw and pitch instead: `tiltExtent: [-90, 90]` stops it at the poles (see [Globe rotation constraints](#globe-rotation-constraints)).
+
 ### How constraints compose
 
 When multiple constraint options are provided, they are applied in order:
 
 1. `scaleExtent` — clamps scale (relative multipliers in projection mode)
 2. `translateExtent` — clamps translate (zoom-aware bounds in projection mode)
-3. `domainExtent` — clamps in domain space (converted to a `constrain` function internally)
-4. `constrain` — final custom adjustment
+3. `rotationExtent` / `rotateExtent` / `tiltExtent` — clamp a view's rotation as a drag turns it
+4. `domainExtent` — clamps in domain space (converted to a `constrain` function internally)
+5. `constrain` — final custom adjustment
 
 A user-provided `constrain` function runs after all other constraints, giving it the final say.
 
@@ -539,7 +570,8 @@ On an `isometric` chart, it also has a menu to pick what a drag does: pan or tur
 | World map (geo)        | Projection mode + world countries                         | [transform-world-projection](/docs/components/GeoPath/transform-world-projection)       |
 | Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)      | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                     | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
-| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                     | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
+| Globe pitch clamping   | `tiltExtent: [-90, 90]`                                   | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
+| Limit turning a view   | `rotateExtent: [-90, 0]`, `tiltExtent: [30, 80]`          | [isometric](/docs/guides/isometric#dragging-the-view)                                   |
 | Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
 | Brush-to-zoom (band)   | `brush` + `transform` on band scale                       | [brush-pan-zoom-band](/docs/components/BarChart/brush-pan-zoom-band)                    |
 | Overview brush         | Separate chart with `brush.x` synced to `context.xDomain` | [pan-zoom-with-overview](/docs/components/LineChart/pan-zoom-with-overview)             |

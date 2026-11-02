@@ -39,7 +39,10 @@
 	let palette = $state('Earth');
 	const colors = $derived(palettes.find((p) => p.label === palette)!.value);
 
-	const population = $derived(await getStatePopulation(selected));
+	// `.current` rather than `await`: an awaited derived holds back every other update on the page
+	// until it lands, stalling an animated chart beside it (https://github.com/sveltejs/svelte/issues/18997)
+	const loading = $derived(getStatePopulation(selected));
+	const population = $derived(loading.current ?? { cells: [], cities: [] });
 	const outline = $derived(
 		feature(topology, topology.objects.states).features.find(
 			(f) => f.properties.name === stateOptions.find((s) => s.value === selected)?.label

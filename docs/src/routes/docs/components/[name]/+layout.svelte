@@ -16,8 +16,8 @@
 		const base = data.examples ?? {};
 
 		// If there's an example from page data (for individual example pages), merge it in
-		if (page.data.example && page.params.name && page.params.example) {
-			const componentName = page.params.name;
+		if (page.data.example && page.params.example) {
+			const componentName = data.componentName;
 			const exampleName = page.params.example;
 			return {
 				...base,
@@ -53,8 +53,8 @@
 
 	// Determine available layers from per-example (<script module>) or component metadata (markdown frontmatter)
 	const pageExample = $derived.by(() => {
-		const { name, example } = page.params;
-		return name && example ? currentExamples[name]?.[example] : null;
+		const { example } = page.params;
+		return example ? currentExamples[data.componentName]?.[example] : null;
 	});
 	// For example pages, intersect the supported layers of every component used.
 	// A Spline in an otherwise Html-capable example narrows the toggle to [svg, canvas].
@@ -80,7 +80,7 @@
 	const breadcrumbs = $derived([
 		{ label: metadata.category },
 		...(page.params.example
-			? [{ label: metadata.name, href: `/docs/components/${page.params.name}` }]
+			? [{ label: metadata.name, href: `/docs/components/${data.componentName}` }]
 			: [])
 	]);
 </script>

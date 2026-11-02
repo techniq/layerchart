@@ -66,7 +66,16 @@
 <Chart
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	view={perspective({ rotate, tilt })}
-	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	transform={{
+		mode: 'canvas',
+		drag: 'rotate',
+		scrollMode: 'scale',
+		scrollActivationKey: 'shift',
+		// Zoom in no further than the camera stays outside the globe
+		scaleExtent: [0.5, 3],
+		// Tip on round to the south pole, rather than stopping edge on
+		tiltExtent: [0, 180]
+	}}
 	onTransform={({ rotation }) => {
 		if (!dragging || !rotation) return;
 		rotate = rotation.x;

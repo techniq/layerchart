@@ -33,6 +33,7 @@
   import { ChartState } from '$lib/states/chart.svelte.js';
   import { connectToChartGroup } from '$lib/states/group.svelte.js';
   import type { ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
+  import type { TransformConstraint } from '$lib/states/transform.svelte.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
   import {
@@ -184,11 +185,44 @@
   function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
     if (!chartState.isometric) {
       // A 3D view (`perspective`) turns as orbit controls do: a drag the chart's height round a
-      // full circle, and no further than edge on
+      // full circle
       const perPixel = 360 / Math.max(chartState.containerHeight, 1);
-      return { x: x - deltaX * perPixel, y: Math.min(90, Math.max(0, y - deltaY * perPixel)) };
+      return { x: x - deltaX * perPixel, y: y - deltaY * perPixel };
     }
-    return { x: x - deltaX / 2, y: Math.min(89, Math.max(0, y - deltaY * 0.3)) };
+    return { x: x - deltaX / 2, y: y - deltaY * 0.3 };
+  }
+
+  /**
+   * How far a drag turns the view: the transform's rotation extents (by default, no further than
+   * edge on, as charts read from above the floor), within what the view can show.  An isometric
+   * floor stops short of edge on; a 3D view turns on round to look from beneath (ex. a globe's
+   * south pole).
+   */
+  const resolvedRotationExtent = $derived.by((): [[number, number], [number, number]] => {
+    const [[rotate0, tilt0], [rotate1, tilt1]] = turnExtent([
+      [-Infinity, 0],
+      [Infinity, 90],
+    ]);
+    return [
+      [rotate0, Math.max(0, tilt0)],
+      [rotate1, Math.min(chartState.isometric ? 89 : 180, tilt1)],
+    ];
+  });
+
+  /**
+   * The transform's `rotationExtent`, with `rotateExtent` / `tiltExtent` over it, and `fallback`
+   * for what none of them give
+   */
+  function turnExtent(
+    fallback: [[number, number], [number, number]]
+  ): [[number, number], [number, number]] {
+    const [[minRotate, minTilt], [maxRotate, maxTilt]] = transform?.rotationExtent ?? fallback;
+    const [rotate0, rotate1] = transform?.rotateExtent ?? [minRotate, maxRotate];
+    const [tilt0, tilt1] = transform?.tiltExtent ?? [minTilt, maxTilt];
+    return [
+      [rotate0, tilt0],
+      [rotate1, tilt1],
+    ];
   }
 
   /** An `isometric` view turns about what's in the middle of the plot, wherever it's panned to */
@@ -385,10 +419,25 @@
   });
 
   const resolvedTranslateExtent = $derived.by(() => {
-    if (transform?.mode === 'projection' && transform?.translateExtent) {
-      if (resolvedApply.rotation) {
+    if (transform?.mode === 'projection' && resolvedApply.rotation) {
+      // A globe's translate is its yaw and pitch, so its turn's extents bound it too
+      if (!transform.rotationExtent && !transform.rotateExtent && !transform.tiltExtent) {
         return transform.translateExtent;
       }
+      const [[x0, y0], [x1, y1]] = transform.translateExtent ?? [
+        [-Infinity, -Infinity],
+        [Infinity, Infinity],
+      ];
+      const [[yaw0, pitch0], [yaw1, pitch1]] = turnExtent([
+        [-Infinity, -Infinity],
+        [Infinity, Infinity],
+      ]);
+      return [
+        [Math.max(x0, yaw0), Math.max(y0, pitch0)],
+        [Math.min(x1, yaw1), Math.min(y1, pitch1)],
+      ] as [[number, number], [number, number]];
+    }
+    if (transform?.mode === 'projection' && transform?.translateExtent) {
       return undefined;
     }
     return transform?.translateExtent;
@@ -447,17 +496,11 @@
       domainExtentConstrain,
       projectionTranslateConstrain,
       userConstrain,
-    ].filter(Boolean) as Array<
-      (t: { scale: number; translate: { x: number; y: number } }) => {
-        scale: number;
-        translate: { x: number; y: number };
-      }
-    >;
+    ].filter(Boolean) as Array<(t: TransformConstraint) => TransformConstraint>;
     if (constrains.length === 0) return undefined;
     if (constrains.length === 1) return constrains[0];
-    return (t: { scale: number; translate: { x: number; y: number } }) => {
-      return constrains.reduce((acc, fn) => fn(acc), t);
-    };
+    // Each passes on what it doesn't constrain (ex. a drag's `rotation`)
+    return (t: TransformConstraint) => constrains.reduce((acc, fn) => ({ ...acc, ...fn(acc) }), t);
   });
 
   const enhancedBrushProps = $derived.by(() => {
@@ -589,6 +632,9 @@
           apply: _apply,
           scaleExtent: _se,
           translateExtent: _te,
+          rotationExtent: _re,
+          rotateExtent: _rte,
+          tiltExtent: _tie,
           ...transformProps
         } = transform}
         <!-- svelte-ignore ownership_invalid_binding -->
@@ -604,6 +650,7 @@
           {...transformProps}
           scaleExtent={resolvedScaleExtent}
           translateExtent={resolvedTranslateExtent}
+          rotationExtent={resolvedRotationExtent}
           constrain={composedConstrain}
           disablePointer={brush === true ||
             (typeof brush === 'object' && !brush.disabled) ||

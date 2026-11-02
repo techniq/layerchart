@@ -16,6 +16,7 @@
 	import LucideGlobe from '~icons/lucide/globe';
 	import LucideNotebookPen from '~icons/lucide/notebook-pen';
 	import LucideBlocks from '~icons/lucide/blocks';
+	import LucideBox from '~icons/lucide/box';
 	import LucideFileCode2 from '~icons/lucide/file-code-2';
 	import LucideCirclePlay from '~icons/lucide/circle-play';
 	import LucideParentheses from '~icons/lucide/parentheses';
@@ -29,8 +30,20 @@
 
 	const collapsibleCategories = ['migrations'];
 
-	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
-		.filter(([category]) => category !== 'examples')
+	/** `@layerchart/webgl`'s categories, in its own section, named there without the prefix */
+	const webglCategories: Record<string, string> = {
+		webgl: 'Common',
+		'webgl marks': 'Marks',
+		'webgl surfaces': 'Surfaces',
+		'webgl maps': 'Maps'
+	};
+
+	const byCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase()).filter(
+		([category]) => category !== 'examples'
+	);
+
+	const componentsByCategory = byCategory
+		.filter(([category]) => !(category in webglCategories))
 		.sort(
 			sortFunc(([category]) =>
 				[
@@ -49,6 +62,10 @@
 				].indexOf(category)
 			)
 		);
+
+	const webglByCategory = byCategory
+		.filter(([category]) => category in webglCategories)
+		.sort(sortFunc(([category]) => Object.keys(webglCategories).indexOf(category)));
 </script>
 
 <nav class={cls('grid gap-6', className)}>
@@ -120,14 +137,19 @@
 			<LucideBlocks class="size-4 text-surface-content/70" /> Components
 		</h2>
 		{#each componentsByCategory as [category, components]}
-			<div class="ml-2 mb-6 last:mb-0">
-				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
-				<div class="border-l border-surface-content/10">
-					{#each sortCollection(components) as component}
-						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
-					{/each}
-				</div>
-			</div>
+			{@render componentGroup(category, components)}
+		{/each}
+	</section>
+
+	<section>
+		<h2 class="flex gap-2 items-center mb-4 text-base font-semibold">
+			<LucideBox class="size-4 text-surface-content/70" /> WebGL
+		</h2>
+		<div class="ml-2 mb-6 border-l border-surface-content/10">
+			{@render navItem({ label: 'Guide', path: '/docs/guides/webgl' })}
+		</div>
+		{#each webglByCategory as [category, components]}
+			{@render componentGroup(webglCategories[category], components)}
 		{/each}
 	</section>
 
@@ -142,6 +164,17 @@
 		</div>
 	</section>
 </nav>
+
+{#snippet componentGroup(category: string, components: typeof allComponents)}
+	<div class="ml-2 mb-6 last:mb-0">
+		<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
+		<div class="border-l border-surface-content/10">
+			{#each sortCollection(components) as component}
+				{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
+			{/each}
+		</div>
+	</div>
+{/snippet}
 
 {#snippet navItem({ label, path, icon }: { label: string; path: string; icon?: IconProp })}
 	<NavItem

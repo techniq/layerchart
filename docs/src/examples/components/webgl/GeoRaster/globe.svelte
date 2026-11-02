@@ -17,7 +17,16 @@
 <!-- NASA Blue Marble wrapped around a sphere, with country borders and a graticule over it -->
 <Chart
 	view={perspective({ rotate: 20, tilt: 70 })}
-	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	transform={{
+		mode: 'canvas',
+		drag: 'rotate',
+		scrollMode: 'scale',
+		scrollActivationKey: 'shift',
+		// Zoom in no further than the camera stays outside the globe
+		scaleExtent: [0.5, 3],
+		// Tip on round to the south pole, rather than stopping edge on
+		tiltExtent: [0, 180]
+	}}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	tooltipContext
 	height={500}

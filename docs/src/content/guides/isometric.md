@@ -107,7 +107,7 @@ With a `transform`, an isometric chart can pan and zoom, and it can also turn: d
 <Chart view={isometric} transform={{ mode: 'canvas', drag: 'rotate' }}>
 ```
 
-The view starts at its `rotate` and `tilt`, and moves to new values when they change. `onTransform` reports the current angles as `rotation` (`x` is the turn, `y` the tilt, in degrees). `reset()` restores them along with the pan and zoom. `transform.drag` is reactive, so a control can switch it. `TransformContextControls` has one built in.
+The view starts at its `rotate` and `tilt`, and moves to new values when they change. `onTransform` reports the current angles as `rotation` (`x` is the turn, `y` the tilt, in degrees). `reset()` restores them along with the pan and zoom. `transform.drag` is reactive, so a control can switch it. `TransformContextControls` has one built in. A drag tips the floor from directly above to just short of edge on; `rotateExtent` and `tiltExtent` narrow that (see [constraints](/docs/guides/transform#constraints)).
 
 In the playground below, the sliders and dragging set the same angles.
 

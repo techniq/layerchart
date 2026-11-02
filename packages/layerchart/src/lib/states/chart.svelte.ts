@@ -24,6 +24,7 @@ import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$l
 import { printDebug } from '$lib/utils/debug.js';
 import {
   applyMatrix,
+  autoIsometricAspect,
   invertMatrix,
   multiplyMatrix,
   ISOMETRIC_TILT,
@@ -1329,7 +1330,34 @@ export class ChartState<
   });
 
   /** The area the scales lay out across: the isometric floor, or the plot area when flat */
-  plot = $derived(this.isometricFloor ?? { width: this.box.width, height: this.box.height });
+  /**
+   * The floor a 3D view (`perspective`, `orthographic`) lays out on: as large as fits the plot area
+   * at the view's `aspect`, so resizing scales it rather than stretching it.  `null` otherwise.
+   */
+  #cameraFloor = $derived.by(() => {
+    const view = this.view;
+    if (!view || view.type === 'isometric') return null;
+    const option = view.options.aspect ?? 'auto';
+    // A map's projection fits it to the plot in its own proportions already
+    if (option === 'auto' && this.props.geo?.projection) return null;
+    const aspect = this.props.radial
+      ? 1
+      : typeof option === 'number'
+        ? Math.max(option, 1e-6)
+        : autoIsometricAspect(
+            { scale: this._xScaleProp, domain: this._baseXDomain },
+            { scale: this._yScaleProp, domain: this._baseYDomain }
+          );
+    const { width, height } = this.box;
+    if (!(width > 0 && height > 0)) return { width, height };
+    return width / height > aspect
+      ? { width: height * aspect, height }
+      : { width, height: width / aspect };
+  });
+
+  plot = $derived(
+    this.isometricFloor ?? this.#cameraFloor ?? { width: this.box.width, height: this.box.height }
+  );
 
   /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {

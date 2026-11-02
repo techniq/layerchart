@@ -172,6 +172,42 @@ describe('TransformContext', () => {
       });
     });
 
+    it("should bound a globe's yaw and pitch with `rotateExtent` and `tiltExtent`", async () => {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: {
+          height: 300,
+          geo: {
+            projection: geoOrthographic,
+            fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
+          },
+          transform: {
+            mode: 'projection' as const,
+            rotationExtent: [
+              [-90, -60],
+              [90, 60],
+            ] as [[number, number], [number, number]],
+            tiltExtent: [-30, 30] as [number, number],
+          },
+        },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext?.transformState).toBeTruthy());
+
+      // The globe's translate is its yaw and pitch, in degrees
+      chartContext.transform.setTranslate({ x: 200, y: 80 }, { instant: true });
+      await vi.waitFor(() => expect(chartContext.transform.translate).toEqual({ x: 90, y: 30 }));
+      chartContext.transform.setTranslate({ x: -200, y: -80 }, { instant: true });
+      await vi.waitFor(() => expect(chartContext.transform.translate).toEqual({ x: -90, y: -30 }));
+      const [yaw, pitch] = chartContext.geo.projection!.rotate();
+      expect(yaw).toBeCloseTo(-90);
+      expect(pitch).toBeCloseTo(-30);
+    });
+
     it('should sync disablePointer reactively', async () => {
       let chartContext: any;
 

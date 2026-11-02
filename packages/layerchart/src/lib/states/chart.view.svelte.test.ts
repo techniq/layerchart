@@ -115,12 +115,60 @@ describe('ChartState `view`', () => {
   });
 
   it("widens a map's `z` domain to its marks' heights, which aren't projected", () => {
-    const { state, cleanup } = chartState({ geo: { projection: geoIdentity } });
+    const { state, cleanup } = chartState({ geo: { projection: geoIdentity as any } });
     const unregister = state.registerMark({ zExtent: [5, 50] });
     flushSync();
     expect(state.zDomain).toEqual([0, 50]);
     unregister();
     cleanup();
+  });
+
+  it("keeps a 3D view's floor at its aspect, so resizing scales it rather than stretching it", () => {
+    // Continuous axes in equal units: twice as wide as deep
+    const wide = chartState({
+      view: perspective,
+      width: 600,
+      height: 300,
+      padding: 0,
+      xDomain: [0, 20],
+      yDomain: [0, 10],
+    });
+    expect(wide.state.width).toBeCloseTo(600);
+    expect(wide.state.height).toBeCloseTo(300);
+    wide.cleanup();
+
+    const narrow = chartState({
+      view: perspective,
+      width: 300,
+      height: 300,
+      padding: 0,
+      xDomain: [0, 20],
+      yDomain: [0, 10],
+    });
+    expect(narrow.state.width).toBeCloseTo(300);
+    expect(narrow.state.height).toBeCloseTo(150);
+    narrow.cleanup();
+
+    // A map keeps the whole plot: its projection fits it in its own proportions
+    const map = chartState({
+      view: perspective,
+      geo: { projection: geoIdentity as any },
+      width: 600,
+      height: 300,
+      padding: 0,
+    });
+    expect(map.state.width).toBeCloseTo(600);
+    map.cleanup();
+
+    const given = chartState({
+      view: perspective({ aspect: 1 }),
+      width: 600,
+      height: 300,
+      padding: 0,
+    });
+    expect(given.state.width).toBeCloseTo(300);
+    expect(given.state.height).toBeCloseTo(300);
+    given.cleanup();
   });
 
   it('lets flat layers draw under no view or `isometric`, not a 3D one', () => {

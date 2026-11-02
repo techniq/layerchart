@@ -30,7 +30,7 @@
 
 <!-- Maungawhau (Mt. Eden), Auckland: an 87 × 61 elevation grid -->
 <Chart
-	view={perspective({ rotate: -25, tilt: 55 })}
+	view={perspective({ rotate: -25, tilt: 55, aspect: volcano.width / volcano.height })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	cScale={scaleSequential(interpolateViridis)}
 	zDomain={extent(volcano.values) as [number, number]}

@@ -59,7 +59,16 @@
 
 <Chart
 	view={perspective({ rotate: 0, tilt: selected === 'globe' ? 75 : 40 })}
-	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	transform={{
+		mode: 'canvas',
+		drag: 'rotate',
+		scrollMode: 'scale',
+		scrollActivationKey: 'shift',
+		// Zoom in no further than the camera stays clear of the map (or globe)
+		scaleExtent: [0.5, 3],
+		// Round the globe to the south pole; a flat map stops edge on
+		tiltExtent: [0, selected === 'globe' ? 180 : 90]
+	}}
 	geo={projection ? { projection, fitGeojson: { type: 'Sphere' } } : undefined}
 	cScale={tints}
 	cDomain={domain}

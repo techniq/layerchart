@@ -26,6 +26,15 @@ type CameraOptions = {
 
   /** Ease the view to new angles (and `fov`) rather than jumping, ex. `'tween'` */
   motion?: MotionProp;
+
+  /**
+   * The floor's width over its depth, kept however the chart is sized, so resizing scales the
+   * whole chart rather than stretching it.  `'auto'` picks it as `isometric` does: band cells
+   * square, continuous axes in equal units (unless one spans over 4× the other), else square.
+   *
+   * @default 'auto'
+   */
+  aspect?: number | 'auto';
 };
 
 export type PerspectiveOptions = CameraOptions & {

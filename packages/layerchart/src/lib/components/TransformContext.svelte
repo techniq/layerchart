@@ -57,6 +57,9 @@
     ondragend,
     scaleExtent,
     translateExtent,
+    rotationExtent,
+    rotateExtent,
+    tiltExtent,
     constrain,
     inertia,
     pinch,
@@ -84,6 +87,9 @@
     ondragend,
     scaleExtent,
     translateExtent,
+    rotationExtent,
+    rotateExtent,
+    tiltExtent,
     constrain,
     inertia,
     pinch,
@@ -176,6 +182,12 @@
 
   $effect.pre(() => {
     transformState.translateExtent = translateExtent;
+  });
+
+  $effect.pre(() => {
+    transformState.rotationExtent = rotationExtent;
+    transformState.rotateExtent = rotateExtent;
+    transformState.tiltExtent = tiltExtent;
   });
 
   $effect.pre(() => {

@@ -22,4 +22,4 @@ npm i @layerchart/webgl
 </Chart>
 ```
 
-See the [3D guide](https://layerchart.com/docs/guides/3d).
+See the [WebGL guide](https://layerchart.com/docs/guides/webgl).

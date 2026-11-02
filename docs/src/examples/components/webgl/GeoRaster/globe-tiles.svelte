@@ -83,7 +83,16 @@
 
 <Chart
 	view={perspective({ rotate: -20, tilt: 60 })}
-	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	transform={{
+		mode: 'canvas',
+		drag: 'rotate',
+		scrollMode: 'scale',
+		scrollActivationKey: 'shift',
+		// Zoom in no further than the camera stays outside the globe
+		scaleExtent: [0.5, 3],
+		// Tip on round to the south pole, rather than stopping edge on
+		tiltExtent: [0, 180]
+	}}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	height={500}
 	class="cursor-grab active:cursor-grabbing"
