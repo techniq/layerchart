@@ -33,15 +33,13 @@
 
 	type Node = ReturnType<ReturnType<typeof treemap<any>>>;
 
-	/** Laid out across the plot, a tier per level of the tree */
-	function layout(width: number, height: number) {
-		return treemap<any>().size([width, height]).paddingOuter(4)(root.copy()).descendants();
-	}
+	/** Laid out across a unit square, the chart's `x` and `y` domains */
+	const nodes = treemap<any>().size([1, 1]).paddingOuter(0.006)(root.copy()).descendants();
 
-	/** A leaf's label: along its longer side, as large as fits */
-	function leafLabel(node: Node) {
-		const width = node.x1 - node.x0;
-		const height = node.y1 - node.y0;
+	/** A leaf's label on a plot `size` pixels across: along its longer side, as large as fits */
+	function leafLabel(node: Node, size: { width: number; height: number }) {
+		const width = (node.x1 - node.x0) * size.width;
+		const height = (node.y1 - node.y0) * size.height;
 		const vertical = height > width;
 		const name = node.data.name.toUpperCase();
 		const along = vertical ? height : width;
@@ -58,6 +56,9 @@
 <Chart
 	view={perspective({ rotate: -45, tilt: 60 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
+	xDomain={[0, 1]}
+	yDomain={[0, 1]}
+	yReverse={false}
 	zDomain={[0, root.height + 1]}
 	zRange={({ height }) => [0, ((root.height + 1) * height) / 80]}
 	tooltipContext
@@ -65,28 +66,27 @@
 	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
-		{@const nodes = layout(context.width, context.height)}
+		{@const label = (d: Node) => leafLabel(d, context)}
 		<WebGL>
 			<Rect
 				tooltip
 				data={nodes}
-				x={(d) => d.x0}
-				y={(d) => d.y0}
-				width={(d) => d.x1 - d.x0}
-				height={(d) => d.y1 - d.y0}
-				z={(d) => [context.zScale(d.depth), context.zScale(d.depth + 1)]}
+				x0="x0"
+				x1="x1"
+				y0="y0"
+				y1="y1"
+				z={(d) => [d.depth, d.depth + 1]}
 				fill={(d) => nodeColor(d).toString()}
 			/>
 			<!-- Lying on the leaves' tops, so nearer boxes cover them as the view turns -->
 			<Text
-				data={nodes.filter((d) => !d.children && leafLabel(d).fontSize >= 2)}
-				facing="up"
+				data={nodes.filter((d) => !d.children && label(d).fontSize >= 2)}
 				x={(d) => (d.x0 + d.x1) / 2}
 				y={(d) => (d.y0 + d.y1) / 2}
-				z={(d) => context.zScale(d.depth + 1)}
-				value={(d) => leafLabel(d).name}
-				fontSize={(d) => leafLabel(d).fontSize}
-				rotate={(d) => (leafLabel(d).vertical ? 90 : 0)}
+				z={(d) => d.depth + 1}
+				value={(d) => label(d).name}
+				fontSize={(d) => label(d).fontSize}
+				rotate={(d) => (label(d).vertical ? 90 : 0)}
 				// Lit along with the tops they lie on, so a shade darker than the flat chart's to read
 				fill={(d) => nodeColor(d).darker(2).toString()}
 			/>

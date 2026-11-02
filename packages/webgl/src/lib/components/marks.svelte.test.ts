@@ -3,6 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { scaleBand, scaleOrdinal } from 'd3-scale';
 import {
   Matrix4,
+  Quaternion,
   Ray,
   Vector3,
   type InstancedMesh,
@@ -15,7 +16,7 @@ import type { ChartState } from 'layerchart';
 import type { SceneState } from '../contexts/scene.svelte.js';
 import { getSphere, globe } from '../utils/globe.js';
 import { viewAngles } from '../utils/camera.js';
-import { perspective } from '../index.js';
+import { orthographic, perspective } from '../index.js';
 import Marks from './__fixtures__/Marks.svelte';
 
 /** Render, and wait for the marks to add their objects to the scene */
@@ -262,6 +263,40 @@ describe('Bin', () => {
   });
 });
 
+describe('Points hover', () => {
+  it('keeps a whole rewrite whole when a hover lands before it is drawn', async () => {
+    const rows = Array.from({ length: 20 }, (_, i) => ({ x: i % 5, y: Math.floor(i / 5) }));
+    let scene: SceneState | undefined;
+    let ctx: ChartState<any> | undefined;
+    const props = (r: number) => ({
+      mark: 'points' as const,
+      chart: { data: rows, x: 'x', y: 'y', xDomain: [0, 5], yDomain: [0, 5], tooltipContext: true },
+      points: { r, tooltip: true },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        ctx = c;
+      },
+    });
+    const { rerender } = render(Marks, props(2) as any);
+    await expect.poll(() => scene && children(scene, 'isInstancedMesh').length).toBe(1);
+    const mesh = () => children(scene!, 'isInstancedMesh')[0] as InstancedMesh;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    // Every row rewritten (a new size), and a hover, before the next frame draws
+    rerender(props(3) as any);
+    const rect = ctx!.containerRef!.getBoundingClientRect();
+    const e = new PointerEvent('pointermove', { clientX: rect.x + 10, clientY: rect.y + 10 });
+    Object.defineProperty(e, 'target', { value: ctx!.containerRef });
+    ctx!.tooltip.show(e, rows[7]);
+    await Promise.resolve();
+    await Promise.resolve();
+
+    // The whole buffer goes to the GPU, not only the hovered rows
+    expect(ctx!.tooltip.data).toBe(rows[7]);
+    expect(mesh().instanceMatrix.updateRanges).toHaveLength(0);
+  });
+});
+
 describe('Points glow and image', () => {
   it('draws glowing points unlit, in their own color', async () => {
     const scene = await renderMarks({
@@ -300,6 +335,195 @@ describe('Points glow and image', () => {
     expect((Math.acos(axis.y) * 180) / Math.PI).toBeCloseTo(30);
     const [instanced] = children(scene, 'isInstancedMesh') as InstancedMesh[];
     await expect.poll(() => instanced.count).toBe(1);
+  });
+});
+
+describe('placed as LayerChart places its namesakes', () => {
+  const rows = [
+    { x: 2, y: 8, h: 5, name: 'a' },
+    { x: 6, y: 4, h: 0, name: 'b' },
+  ];
+  const chartProps = {
+    data: rows,
+    x: 'x',
+    y: 'y',
+    xDomain: [0, 10],
+    yDomain: [0, 10],
+    zDomain: [0, 10],
+    zRange: [0, 100],
+    view: perspective,
+  };
+
+  it("labels each row through the chart's scales with `Text`, facing the viewer with `viewport`", async () => {
+    const scene = await renderMarks({
+      mark: 'text',
+      chart: chartProps,
+      text: { data: rows, x: 'x', y: 'y', z: 'h', value: 'name', viewport: true },
+    });
+    await expect.poll(() => scene.labelSets.flat().length).toBe(2);
+    const [a, b] = scene.labelSets.flat();
+    expect([a.text, b.text]).toEqual(['a', 'b']);
+    expect(a.x).toBeCloseTo(chart!.xScale(2));
+    expect(a.y).toBeCloseTo(chart!.yScale(8));
+    expect(a.z).toBeCloseTo(50);
+    // Numbers are pixels
+    expect(b.z).toBe(0);
+  });
+
+  it("lays `Text` on the surface without `viewport`, labelling the chart's rows", async () => {
+    // `x` / `y` reading rows, so it labels the chart's
+    const scene = await renderMarks({
+      mark: 'text',
+      chart: chartProps,
+      text: { x: 'x', y: 'y', value: 'name' },
+    });
+    await expect
+      .poll(() => {
+        let planes = 0;
+        scene.root.traverse((o) => {
+          if ((o as any).isMesh && (o as any).material?.map) planes++;
+        });
+        return planes;
+      })
+      .toBe(2);
+    expect(scene.labelSets.flat()).toHaveLength(0);
+    // Each at its row's place, `z` through the chart's `z` scale (the chart's `z` is unset: 0)
+    const planes: Object3D[] = [];
+    scene.root.traverse((o) => {
+      if ((o as any).isMesh && (o as any).material?.map) planes.push(o);
+    });
+    const [a] = planes;
+    expect(a.position.x).toBeCloseTo(chart!.xScale(2));
+    expect(a.position.z).toBeCloseTo(chart!.yScale(8));
+    expect(a.position.y).toBeLessThan(1);
+  });
+
+  it('stands a `Rect` between its sides through the scales, floated by a `z` pair', async () => {
+    const scene = await renderMarks({
+      mark: 'rect',
+      chart: chartProps,
+      rect: {
+        data: [{ x0: 1, x1: 3, y0: 6, y1: 8, depth: 2 }],
+        x0: 'x0',
+        x1: 'x1',
+        y0: 'y0',
+        y1: 'y1',
+        z: (d: any) => [d.depth, d.depth + 1],
+      },
+    });
+    const [mesh] = children(scene, 'isInstancedMesh') as InstancedMesh[];
+    const matrix = new Matrix4();
+    mesh.getMatrixAt(0, matrix);
+    const position = new Vector3();
+    const size = new Vector3();
+    matrix.decompose(position, new Quaternion(), size);
+    expect(position.x).toBeCloseTo(chart!.xScale(1));
+    expect(position.z).toBeCloseTo(chart!.yScale(8));
+    expect(size.x).toBeCloseTo(chart!.xScale(3) - chart!.xScale(1));
+    expect(size.z).toBeCloseTo(chart!.yScale(6) - chart!.yScale(8));
+    // Floats from 2 to 3 of the `z` domain's 10
+    expect(position.y).toBeCloseTo(20);
+    expect(size.y).toBeCloseTo(10);
+  });
+
+  it('draws a `Link` from `x1` / `y1` up to `z2`, its end defaulting to its start', async () => {
+    const scene = await renderMarks({
+      mark: 'link',
+      chart: chartProps,
+      link: { data: rows, x1: 'x', y1: 'y', z2: 'h' },
+    });
+    const segments = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
+    expect(ends.slice(0, 6).map((v) => Math.round(v))).toEqual([
+      Math.round(chart!.xScale(2)),
+      0,
+      Math.round(chart!.yScale(8)),
+      Math.round(chart!.xScale(2)),
+      50,
+      Math.round(chart!.yScale(8)),
+    ]);
+  });
+
+  it("links a hierarchy's `source` and `target` nodes at their pixels", async () => {
+    const scene = await renderMarks({
+      mark: 'link',
+      chart: chartProps,
+      link: { data: [{ source: { x: 10, y: 20 }, target: { x: 30, y: 40 } }] },
+    });
+    const segments = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
+    expect(ends.slice(0, 6)).toEqual([10, 0, 20, 30, 0, 40]);
+  });
+});
+
+describe('Axis', () => {
+  const chartProps = {
+    data: [{ x: 1, y: 1, z: 1 }],
+    x: 'x',
+    y: 'y',
+    z: 'z',
+    xDomain: [0, 10],
+    yDomain: [0, 10],
+    zDomain: [0, 10],
+    view: perspective,
+    transform: { mode: 'domain' as const },
+  };
+  /** The labels lying in the scene, rather than over it */
+  const planes = (scene: SceneState) => {
+    const found: Object3D[] = [];
+    scene.root.traverse((o) => {
+      if ((o as any).isMesh && (o as any).material?.map) found.push(o);
+    });
+    return found;
+  };
+
+  it('lays the floor’s tick labels on it, as an `isometric` chart’s', async () => {
+    const scene = await renderMarks({
+      mark: 'axis',
+      chart: chartProps,
+      axis: { placement: 'bottom', ticks: [0, 5, 10], label: 'x' },
+    });
+    await expect.poll(() => planes(scene).length).toBe(4);
+    expect(scene.labelSets.flat()).toHaveLength(0);
+    // Beside the plot box, so not clipped to it in `domain` mode
+    expect(planes(scene).every((p) => p.parent!.userData.unclipped)).toBe(true);
+  });
+
+  it('faces the viewer with `tickLabelProps` / `labelProps` `viewport`', async () => {
+    let scene = await renderMarks({
+      mark: 'axis',
+      chart: chartProps,
+      axis: {
+        placement: 'left',
+        ticks: [0, 10],
+        label: 'y',
+        tickLabelProps: { viewport: true },
+        labelProps: { viewport: true },
+      },
+    });
+    await expect.poll(() => scene.labelSets.flat().map((l) => l.text)).toEqual(['0', '10', 'y']);
+    expect(planes(scene)).toHaveLength(0);
+  });
+
+  it('stands the height axis’ labels on the back wall, turning with it', async () => {
+    const scene = await renderMarks({
+      mark: 'axis',
+      chart: chartProps,
+      axis: { placement: 'back', ticks: [0, 10] },
+    });
+    await expect.poll(() => planes(scene).length).toBe(2);
+    expect(scene.labelSets.flat()).toHaveLength(0);
+    // Upright on the wall where the far side across meets the near side down the plot
+    const far = scene.far.x === 'min' ? 0 : chart!.width;
+    for (const plane of planes(scene)) {
+      expect(Math.abs(plane.position.x - far)).toBeLessThan(1);
+      // Facing across the plot (towards the near side), not up
+      const normal = (plane as any).geometry.attributes.normal;
+      expect(Math.abs(normal.getX(0))).toBeCloseTo(1);
+      expect(normal.getY(0)).toBeCloseTo(0);
+    }
+    const heights = planes(scene).map((p) => Math.round(p.position.y));
+    expect(heights).toEqual([0, Math.round(chart!.zDepth)]);
   });
 });
 
@@ -531,6 +755,148 @@ describe('view and transform', () => {
 
     chart!.transform.reset();
     await expect.poll(() => Math.round(distance())).toBe(Math.round(start));
+  });
+
+  it('clips to the plot box when the transform zooms the domain, as `Svg` does', async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+        view: perspective,
+        transform: { mode: 'domain' },
+      },
+    });
+    scene = await withTransform();
+    expect(scene.clip).toBe(true);
+    expect(scene.plot).toEqual({ width: chart!.width, height: chart!.height });
+    expect(scene.clipped(-5, 10)).toBe(true);
+    expect(scene.clipped(10, chart!.height + 5)).toBe(true);
+    expect(scene.clipped(10, 10)).toBe(false);
+  });
+
+  it("tells a `domain` transform where the floor is on screen, so it pans where it's dragged", async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1 }],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+        view: orthographic({ rotate: -30, tilt: 50 }),
+        transform: { mode: 'domain' },
+      },
+    });
+    scene = await withTransform();
+    await expect.poll(() => chart!.viewFloorMatrix).toBeTruthy();
+    // Orthographic lays the floor flat on screen, so the matrix holds across it
+    const m = chart!.viewFloorMatrix!;
+    const { left, top } = chart!.padding;
+    for (const [x, y] of [
+      [0, 0],
+      [chart!.width, 30],
+      [80, chart!.height],
+    ]) {
+      const drawn = scene.project(x, y, 0)!;
+      expect(m.a * x + m.c * y + m.e + left).toBeCloseTo(drawn.x, 1);
+      expect(m.b * x + m.d * y + m.f + top).toBeCloseTo(drawn.y, 1);
+    }
+  });
+
+  it('draws shifted points where the scales put them, at every step of a pan and zoom', async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [
+          { x: 2, y: 3 },
+          { x: 8, y: 7 },
+        ],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+        transform: { mode: 'domain' },
+      },
+    });
+    scene = await withTransform();
+    const mesh = () => children(scene, 'isInstancedMesh')[0] as InstancedMesh;
+    await new Promise((r) => setTimeout(r, 300));
+    /** Where row `i` is drawn: placed, then shifted */
+    const drawn = (i: number) => {
+      const matrix = new Matrix4();
+      mesh().getMatrixAt(i, matrix);
+      const p = new Vector3().setFromMatrixPosition(matrix);
+      const k = (mesh().material as any).userData.shift;
+      return [p.x * k.x + k.y, p.z * k.z + k.w];
+    };
+    const steps: [number, { x: number; y: number }][] = [
+      [1, { x: 30, y: 0 }],
+      [2, { x: -50, y: 20 }],
+      [1.5, { x: 10, y: -40 }],
+    ];
+    for (const [scale, translate] of steps) {
+      chart!.transform.setScale(scale, { instant: true });
+      chart!.transform.setTranslate(translate, { instant: true });
+      await new Promise((r) => setTimeout(r, 30));
+      for (const [i, d] of [
+        [0, { x: 2, y: 3 }],
+        [1, { x: 8, y: 7 }],
+      ] as const) {
+        const [x, y] = drawn(i);
+        expect(x).toBeCloseTo(chart!.xScale(d.x), 0);
+        expect(y).toBeCloseTo(chart!.yScale(d.y), 0);
+      }
+    }
+  });
+
+  it('moves points on the GPU as a linear domain pans, placing them again once it rests', async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: Array.from({ length: 50 }, (_, i) => ({ x: i % 10, y: Math.floor(i / 10) })),
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+        transform: { mode: 'domain' },
+      },
+    });
+    scene = await withTransform();
+    const mesh = () => children(scene, 'isInstancedMesh')[0] as InstancedMesh;
+    const placed = () => mesh().instanceMatrix.version;
+    // Settled first
+    await new Promise((r) => setTimeout(r, 300));
+    const before = placed();
+
+    // A pan step: drawn shifted, the rows where they were placed
+    chart!.transform.setTranslate({ x: 40, y: 0 }, { instant: true });
+    await expect.poll(() => mesh().frustumCulled).toBe(false);
+    expect(placed()).toBe(before);
+
+    // At rest, placed again where the scales now put them
+    await expect.poll(placed, { timeout: 2000 }).toBeGreaterThan(before);
+    const matrix = new Matrix4();
+    mesh().getMatrixAt(0, matrix);
+    expect(new Vector3().setFromMatrixPosition(matrix).x).toBeCloseTo(chart!.xScale(0));
+  });
+
+  it('leaves other transforms unclipped (the camera moves instead), unless `clip` is set', async () => {
+    const chartProps = {
+      data: [{ x: 1, y: 1 }],
+      x: 'x',
+      y: 'y',
+      view: perspective,
+      transform: { mode: 'canvas' as const },
+    };
+    await renderMarks({ mark: 'points', chart: chartProps });
+    expect((await withTransform()).clipped(-5, 10)).toBe(false);
+
+    await renderMarks({ mark: 'points', chart: chartProps, scene: { clip: true } });
+    expect((await withTransform()).clipped(-5, 10)).toBe(true);
   });
 
   it("stops the camera where the transform's `scaleExtent` stops its zoom", async () => {

@@ -1,7 +1,20 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import type { ChartState } from 'layerchart';
-  import { Bin, Chart, GeoPath, Light, Points, WebGL, Spline, Surface } from '../../index.js';
+  import {
+    Axis,
+    Bin,
+    Chart,
+    GeoPath,
+    Light,
+    Link,
+    Points,
+    Rect,
+    WebGL,
+    Spline,
+    Surface,
+    Text,
+  } from '../../index.js';
   import type { SceneState } from '../../contexts/scene.svelte.js';
   import Probe from './Probe.svelte';
 
@@ -15,10 +28,24 @@
     geopath,
     bin,
     light,
+    text,
+    rect,
+    link,
+    axis,
     offset = 0,
     onScene,
   }: {
-    mark: 'points' | 'spline' | 'surface' | 'geopath' | 'light' | 'bin';
+    mark:
+      | 'points'
+      | 'spline'
+      | 'surface'
+      | 'geopath'
+      | 'light'
+      | 'bin'
+      | 'text'
+      | 'rect'
+      | 'link'
+      | 'axis';
     chart: Partial<ComponentProps<typeof Chart>>;
     scene?: Partial<ComponentProps<typeof WebGL>>;
     points?: ComponentProps<typeof Points>;
@@ -27,6 +54,10 @@
     geopath?: ComponentProps<typeof GeoPath>;
     bin?: ComponentProps<typeof Bin>;
     light?: ComponentProps<typeof Light>;
+    text?: ComponentProps<typeof Text>;
+    rect?: ComponentProps<typeof Rect>;
+    link?: ComponentProps<typeof Link>;
+    axis?: ComponentProps<typeof Axis>;
     /** Pixels down the page to put the chart, to test it off screen */
     offset?: number;
     onScene: (scene: SceneState, chart: ChartState<any>) => void;
@@ -46,6 +77,16 @@
         <GeoPath {...geopath!} />
       {:else if mark === 'bin'}
         <Bin {...bin} />
+      {:else if mark === 'text'}
+        <Text {...text!} />
+      {:else if mark === 'rect'}
+        <Rect {...rect} />
+      {:else if mark === 'link'}
+        <Link {...link} />
+      {:else if mark === 'axis'}
+        <!-- A point too, so the scene has something in it however the axis draws -->
+        <Axis {...axis!} />
+        <Points />
       {:else if mark === 'light'}
         <Light shadow {...light} />
         <Points />

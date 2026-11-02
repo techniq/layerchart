@@ -24,6 +24,7 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   import { HighlightState } from './Highlight.shared.svelte.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     Circle,
@@ -37,7 +38,7 @@
     area = false,
     bar = false,
     opacity,
-    motion = 'spring',
+    motion: motionProp,
     onAreaClick,
     onBarClick,
     onPointClick,
@@ -45,6 +46,13 @@
     onPointLeave,
     ...rest
   }: HighlightBaseProps = $props();
+
+  // A spring glides between highlighted points, but on a `domain` transform the point itself
+  // moves with every step of a pan or zoom, and a spring would only chase it
+  const chart = getChartContext();
+  const motion = $derived(
+    motionProp ?? (chart.props.transform?.mode === 'domain' ? 'none' : 'spring')
+  );
 
   const c = new HighlightState(
     () =>

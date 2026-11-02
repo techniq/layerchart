@@ -16,7 +16,7 @@
     tooltipContext
   >
     <WebGL>
-      <Axis placement="bottom" ticks={[0, 5, 10]} />
+      <Axis placement="bottom" ticks={[0, 5, 10]} tickLabelProps={{ viewport: true }} />
       <Points r={40} tooltip />
     </WebGL>
     <Tooltip.Root>

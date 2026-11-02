@@ -277,14 +277,17 @@
 					strokeWidth={1}
 				/>
 
-				<Text
-					data={planets.filter((p) => named.has(p.name))}
-					x={(d) => context.xScale(d.x)}
-					y={(d) => context.yScale(d.y)}
-					z={(d) => Number(context.zScale(d.z)) + radiusOf(d) + 10}
-					value={(d: Planet) => d.name}
-					class="text-[11px] font-semibold uppercase tracking-wider text-white/85"
-				/>
+				<!-- Each name a little above its planet, however large it's drawn -->
+				{#each planets.filter((p) => named.has(p.name)) as planet (planet.name)}
+					<Text
+						x={context.xScale(planet.x)}
+						y={context.yScale(planet.y)}
+						z={Number(context.zScale(planet.z)) + radiusOf(planet) + 10}
+						value={planet.name}
+						viewport
+						class="text-[11px] font-semibold uppercase tracking-wider text-white/85"
+					/>
+				{/each}
 			</WebGL>
 
 			<Tooltip.Root>

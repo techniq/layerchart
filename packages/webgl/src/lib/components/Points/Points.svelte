@@ -78,6 +78,7 @@
     Vector3,
     type Texture,
   } from 'three';
+  import { untrack } from 'svelte';
   import { getChartContext } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
@@ -85,7 +86,14 @@
   import { loadTexture } from '../../utils/texture.js';
   import { valueOf } from '../../utils/values.js';
   import { getSphere } from '../../utils/globe.js';
-  import { defined, place, resolveAccessor, rowColor } from '../../utils/marks.js';
+  import {
+    colorer,
+    defined,
+    isLinearScale,
+    linearShift,
+    placer,
+    resolveAccessor,
+  } from '../../utils/marks.js';
 
   let {
     data: dataProp,
@@ -117,15 +125,56 @@
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
 
-  /** Where a row's sphere is in the scene, how large, and its color; `null` off the chart */
-  function pointOf(d: any) {
-    const xValue = xAccessor(d);
-    const yValue = yAccessor(d);
-    if (!defined(xValue) || !defined(yValue)) return null;
-    const height = ctx.config.z != null || z != null ? ctx.heightOf(d, z)[1] : 0;
-    const [px, up, py] = place(ctx, sphere, xValue, yValue, height);
-    const radius = typeof r === 'function' ? r(d) : (r ?? (ctx.config.r ? ctx.rGet(d) : 5));
-    return { d, x: px, y: py, z: up, radius };
+  /**
+   * Panning and zooming a linear `domain` moves every row's pixels by one scale and offset an
+   * axis, so while it moves the GPU moves the rows, and they're placed again once it rests (for
+   * picking the right one): a great many rows pan and zoom as fast as a few
+   */
+  const shiftable = $derived(
+    ctx.transform.mode === 'domain' &&
+      !sphere &&
+      !ctx.geo.projection &&
+      image == null &&
+      isLinearScale(ctx.xScale) &&
+      isLinearScale(ctx.yScale)
+  );
+  /** The scales rows were last placed through, while they can be shifted */
+  let placedScales = $state.raw<{ x: any; y: any } | null>(null);
+  $effect(() => {
+    const scales = { x: ctx.xScale, y: ctx.yScale };
+    if (!shiftable) {
+      placedScales = null;
+      return;
+    }
+    if (!untrack(() => placedScales)) {
+      placedScales = scales;
+      return;
+    }
+    const timer = setTimeout(() => (placedScales = scales), 150);
+    return () => clearTimeout(timer);
+  });
+  const shift = $derived.by((): [number, number, number, number] | null => {
+    if (!placedScales) return null;
+    return [...linearShift(placedScales.x, ctx.xScale), ...linearShift(placedScales.y, ctx.yScale)];
+  });
+
+  /**
+   * Where each row's sphere is in the scene and how large (`null` off the chart), with what it
+   * reads of the chart read once: there can be a great many rows
+   */
+  function pointer() {
+    const [xOf, yOf] = [xAccessor, yAccessor];
+    const at = placer(ctx, sphere, placedScales ?? undefined);
+    const raised = ctx.config.z != null || z != null;
+    const sized =
+      typeof r === 'function' ? r : r != null ? () => r : ctx.config.r ? ctx.rGet : () => 5;
+    return (d: any) => {
+      const xValue = xOf(d);
+      const yValue = yOf(d);
+      if (!defined(xValue) || !defined(yValue)) return null;
+      const [px, up, py] = at(xValue, yValue, raised ? ctx.heightOf(d, z)[1] : 0);
+      return { d, x: px, y: py, z: up, radius: sized(d) as number };
+    };
   }
 
   const imageOf = (d: any) => (image == null ? null : valueOf(image, d));
@@ -138,9 +187,11 @@
     tooltip: () => tooltip,
     glow: () => glow,
     geometry: () => (ctx.view ? ball : disc),
-    instances: () =>
-      rows.flatMap((d: any) => {
-        if (imageOf(d)) return [];
+    instances: () => {
+      const pointOf = pointer();
+      const colorOf = colorer(ctx, fill, 'var(--color-primary, currentColor)');
+      return rows.flatMap((d: any) => {
+        if (image != null && imageOf(d)) return [];
         const point = pointOf(d);
         if (!point) return [];
         return [
@@ -152,24 +203,26 @@
             width: point.radius,
             depth: point.radius,
             height: point.radius,
-            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)'),
+            color: colorOf(d),
           },
         ];
-      }),
+      });
+    },
     opacity: () => opacity,
+    shift: () => shift,
     emphasize: (_color, size) => size.multiplyScalar(hoverScale),
   });
 
   // Rows wrapped in an image: a sphere each, from a pool reused as they move (ex. orbiting)
-  const textured = $derived(
-    image == null
-      ? []
-      : rows.flatMap((d) => {
-          const source = imageOf(d);
-          const point = source ? pointOf(d) : null;
-          return point ? [{ ...point, source: source! }] : [];
-        })
-  );
+  const textured = $derived.by(() => {
+    if (image == null) return [];
+    const pointOf = pointer();
+    return rows.flatMap((d) => {
+      const source = imageOf(d);
+      const point = source ? pointOf(d) : null;
+      return point ? [{ ...point, source: source! }] : [];
+    });
+  });
   const detailed = new SphereGeometry(1, 64, 32);
   const pool: Mesh[] = [];
   const textures = new Map<unknown, Texture>();

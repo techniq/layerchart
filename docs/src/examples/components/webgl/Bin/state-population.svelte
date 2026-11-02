@@ -124,7 +124,6 @@
 		<!-- A hexagon's people over its ground area -->
 		{@const density = (cell: { count: number; area: number }) =>
 			cell.count / ((cell.area / pixelsPerSqMeter) * SQ_MI)}
-		{@const at = (city: City) => project?.([city[1], city[2]]) ?? [0, 0]}
 		<WebGL>
 			<Light azimuth={315} altitude={22} intensity={1.1} shadow />
 			<Light type="ambient" intensity={0.65} />
@@ -153,16 +152,18 @@
 			<!-- Each city on a stem above its densest hexagons -->
 			<Link
 				data={population.cities}
-				source={(city: City) => [...at(city), 0]}
-				target={(city: City) => [...at(city), context.zDepth * 0.9]}
+				x1={(city: City) => city[1]}
+				y1={(city: City) => city[2]}
+				z2={context.zDepth * 0.9}
 				stroke="color-mix(in oklab, var(--color-surface-content) 60%, transparent)"
 			/>
 			<Text
 				data={population.cities}
-				x={(city: City) => at(city)[0]}
-				y={(city: City) => at(city)[1]}
+				x={(city: City) => city[1]}
+				y={(city: City) => city[2]}
 				z={context.zDepth * 0.9 + 10}
 				value={(city: City) => city[0]}
+				viewport
 				class="rounded-sm bg-surface-100/90 px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-surface-content shadow-sm ring-1 ring-surface-content/15"
 			/>
 		</WebGL>

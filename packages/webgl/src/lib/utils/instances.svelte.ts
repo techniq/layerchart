@@ -8,6 +8,7 @@ import {
   MeshLambertMaterial,
   Quaternion,
   Vector3,
+  Vector4,
   type BufferAttribute,
   type BufferGeometry,
 } from 'three';
@@ -47,7 +48,16 @@ type InstancesOptions = {
   tooltip?: () => boolean;
   /** Draw each instance in its own color, unlit (ex. a star) */
   glow?: () => boolean;
+  /**
+   * Move every instance's center across (`x`) and down (`y`) the plot by a scale and offset each,
+   * `[kx, tx, ky, ty]`, on the GPU: ex. as a `domain` transform pans and zooms linear scales,
+   * without placing every row again.  `null` for none.
+   */
+  shift?: () => [kx: number, tx: number, ky: number, ty: number] | null;
 };
+
+/** The `shift` a material draws with, shared by its compiled program */
+const shifts = new WeakMap<MeshLambertMaterial | MeshBasicMaterial, { value: Vector4 }>();
 
 /**
  * Lambert shading, with each instance's alpha from an `instanceOpacity` attribute, since
@@ -56,15 +66,31 @@ type InstancesOptions = {
 function createMaterial(lit: boolean) {
   // Unlit, each instance shows its own color whatever the lights (ex. a star)
   const material = lit ? new MeshLambertMaterial() : new MeshBasicMaterial();
+  const shift = { value: new Vector4(1, 0, 1, 0) };
+  shifts.set(material, shift);
+  material.userData.shift = shift.value;
   material.onBeforeCompile = (shader) => {
+    shader.uniforms.uShift = shift;
     shader.vertexShader = shader.vertexShader
       .replace(
         '#include <common>',
-        '#include <common>\nattribute float instanceOpacity;\nvarying float vInstanceOpacity;'
+        '#include <common>\nattribute float instanceOpacity;\nvarying float vInstanceOpacity;\nuniform vec4 uShift;'
       )
       .replace(
         '#include <begin_vertex>',
         '#include <begin_vertex>\nvInstanceOpacity = instanceOpacity;'
+      )
+      // Each instance's center moved by `shift` (chart `x` is the scene's `x`, chart `y` its `z`)
+      .replace(
+        '#include <project_vertex>',
+        `vec4 mvPosition = vec4( transformed, 1.0 );
+#ifdef USE_INSTANCING
+	mvPosition = instanceMatrix * mvPosition;
+	vec2 lcCenter = instanceMatrix[3].xz;
+	mvPosition.xz += vec2( lcCenter.x * uShift.x + uShift.y, lcCenter.y * uShift.z + uShift.w ) - lcCenter;
+#endif
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;`
       );
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', '#include <common>\nvarying float vInstanceOpacity;')
@@ -90,6 +116,7 @@ export function createInstances({
   emphasize,
   tooltip,
   glow,
+  shift,
 }: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
@@ -140,6 +167,16 @@ export function createInstances({
     mesh = next;
   });
 
+  // Moved on the GPU, so the instances' bounds (from where they were placed) don't say where they
+  // are drawn
+  $effect(() => {
+    const value = shift?.() ?? null;
+    const [kx, tx, ky, ty] = value ?? [1, 0, 1, 0];
+    for (const m of [litMaterial, glowMaterial]) if (m) shifts.get(m)!.value.set(kx, tx, ky, ty);
+    if (mesh) mesh.frustumCulled = !value;
+    scene.invalidate();
+  });
+
   // Lit, or glowing in its own colors
   $effect(() => {
     const instanced = mesh;
@@ -168,6 +205,12 @@ export function createInstances({
   /** Each row's index, to find the hovered one */
   const index = new Map<any, number>();
   let emphasized = -1;
+  /**
+   * Every row has been written and not yet drawn, so the whole buffer goes to the GPU: a hover
+   * before then mustn't narrow it to the rows it changed (three.js uploads only the ranges given),
+   * or every other row would keep where it was last drawn
+   */
+  let wholePending = false;
 
   /** Write instance `i`, returning its color's alpha */
   function write(instanced: InstancedMesh, i: number, item: Instance, hovered: boolean) {
@@ -206,6 +249,10 @@ export function createInstances({
       buffer.clearUpdateRanges();
       buffer.needsUpdate = true;
     }
+    wholePending = true;
+    instanced.onAfterRender = () => {
+      wholePending = false;
+    };
     instanced.computeBoundingSphere();
 
     const o = opacity();
@@ -231,9 +278,11 @@ export function createInstances({
         write(instanced, emphasized, list[emphasized], false);
       if (next >= 0) write(instanced, next, list[next], true);
       emphasized = next;
-      for (const i of changed) {
-        instanced.instanceMatrix.addUpdateRange(i * 16, 16);
-        instanced.instanceColor?.addUpdateRange(i * 3, 3);
+      if (!wholePending) {
+        for (const i of changed) {
+          instanced.instanceMatrix.addUpdateRange(i * 16, 16);
+          instanced.instanceColor?.addUpdateRange(i * 3, 3);
+        }
       }
       instanced.instanceMatrix.needsUpdate = true;
       if (instanced.instanceColor) instanced.instanceColor.needsUpdate = true;

@@ -12,17 +12,10 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-A box per row from pixel `x` / `y` / `width` / `height`, `z` tall: ex. a treemap's tiles.
+A box per row, `z` tall, placed as LayerChart's [`Rect`](/docs/components/Rect) places it: by its sides `x0` / `x1` and `y0` / `y1`, or by `x` / `y` and a `width` / `height` in pixels. Sides and positions are data properties or functions of the row through the chart's scales, or numbers in pixels. A `z` function can return `[start, end]` to float a box between two values (ex. a treemap's tiers).
 
 ```svelte
-<Rect
-	data={tiles}
-	x={(d) => d.x0}
-	y={(d) => d.y0}
-	width={(d) => d.x1 - d.x0}
-	height={(d) => d.y1 - d.y0}
-	z={(d) => d.depth * 12}
-/>
+<Rect data={tiles} x0="x0" x1="x1" y0="y0" y1="y1" z={(d) => [d.depth, d.depth + 1]} />
 ```
 
 :example{ name="treemap" }

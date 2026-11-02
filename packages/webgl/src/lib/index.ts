@@ -11,7 +11,7 @@ export type {
 export { default as WebGL } from './components/WebGL/WebGL.svelte';
 export type { WebGLProps, WebGLPropsWithoutHTML } from './components/WebGL/WebGL.svelte';
 export { default as Axis } from './components/Axis/Axis.svelte';
-export type { AxisProps } from './components/Axis/Axis.svelte';
+export type { AxisProps, AxisLabelProps } from './components/Axis/Axis.svelte';
 export { default as Bars } from './components/Bars/Bars.svelte';
 export { default as Bin } from './components/Bin/Bin.svelte';
 export type { BinProps } from './components/Bin/Bin.svelte';
@@ -44,7 +44,6 @@ export { default as Area } from './components/Area/Area.svelte';
 export type { AreaProps } from './components/Area/Area.svelte';
 export { default as Link } from './components/Link/Link.svelte';
 export type { LinkProps } from './components/Link/Link.svelte';
-export type { LinkPoint } from './components/Link/Link.svelte';
 export { default as GeoRaster } from './components/GeoRaster/GeoRaster.svelte';
 export type { GeoRasterProps } from './components/GeoRaster/GeoRaster.svelte';
 

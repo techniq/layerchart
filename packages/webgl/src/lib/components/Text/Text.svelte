@@ -1,71 +1,81 @@
 <script lang="ts" module>
+  import type { DataProp } from 'layerchart';
   import type { ValueProp } from '../../utils/values.js';
 
   export type TextProps = {
-    /** Rows to draw a label each for.  Without them, one label. */
+    /** Rows to draw a label each for.  Falls back to the chart's data when `x` / `y` read rows. */
     data?: any[];
-    /** The text, or a function of the row */
-    value: ValueProp<string | number | null | undefined>;
-    /** Across the plot, in pixels, or a function of the row */
-    x: ValueProp<number>;
-    /** Down the plot, in pixels, or a function of the row */
-    y: ValueProp<number>;
+    /** The text: a data property name (with rows), a function of the row, or the text itself */
+    value: string | number | ((d: any) => string | number | null | undefined);
     /**
-     * Height off the floor, in pixels, or a function of the row.
-     *
-     * @default 0
+     * Across the plot: a data property name or function of the row through the chart's `x` scale
+     * (longitude on a map), or pixels.  Defaults to the chart's `x` with rows.
      */
-    z?: ValueProp<number>;
+    x?: DataProp;
     /**
-     * `'camera'` draws labels over the scene, upright and crisp however the view turns (styled
-     * with `class`).  `'up'` lays them on the surface at their height (ex. the tops of boxes),
-     * turning and tipping with the view, and hidden behind whatever's nearer.
-     *
-     * @default 'camera'
+     * Down the plot: a data property name or function of the row through the chart's `y` scale
+     * (latitude on a map), or pixels.  Defaults to the chart's `y` with rows.
      */
-    facing?: 'camera' | 'up';
+    y?: DataProp;
     /**
-     * Font size in pixels of the plot, for labels facing `up`.
+     * Height off the floor: a data property name or function of the row through the chart's `z`
+     * scale, or pixels.  Defaults to the chart's `z` with rows, else `0`.
+     */
+    z?: DataProp;
+    /**
+     * Keep each label facing the viewer, drawn over the scene upright and crisp however the view
+     * turns (styled with `class`).  Otherwise it lies on the surface at its height (ex. the tops
+     * of boxes), turning and tipping with the view, and hidden behind whatever's nearer.
+     *
+     * @default false
+     */
+    viewport?: boolean;
+    /**
+     * Which end of a label lying on the surface is at its point: its `start`, `middle`, or `end`
+     * as it reads.  It stays on that side of the point as the view turns.
+     *
+     * @default 'middle'
+     */
+    textAnchor?: 'start' | 'middle' | 'end';
+    /**
+     * Font size in pixels of the plot, for labels lying on the surface.
      *
      * @default 12
      */
     fontSize?: ValueProp<number>;
     /**
-     * Font weight, for labels facing `up`.
+     * Font weight, for labels lying on the surface.
      *
      * @default 600
      */
     fontWeight?: number | string;
     /**
-     * Which way labels facing `up` run, in degrees clockwise from left to right across the plot.
+     * Which way labels lying on the surface run, in degrees clockwise from left to right across the plot.
      * Turned half round whenever they'd read backwards from where the view is.
      *
      * @default 0
      */
     rotate?: ValueProp<number>;
     /**
-     * The CSS color of labels facing `up`.
+     * The CSS color of labels lying on the surface.
      *
      * @default 'var(--color-surface-content)'
      */
     fill?: ValueProp<string>;
-    /** Class added to each label facing the `camera` */
+    /** Class added to each `viewport` label */
     class?: string;
   };
 </script>
 
 <script lang="ts">
-  import {
-    CanvasTexture,
-    Group,
-    Mesh,
-    MeshLambertMaterial,
-    PlaneGeometry,
-    SRGBColorSpace,
-    Vector3,
-  } from 'three';
+  import { Group, Mesh, Vector3 } from 'three';
 
-  import { getSceneContext, type SceneLabel } from '../../contexts/scene.svelte.js';
+  import { extractRawDataValue, getChartContext, isDataProp } from 'layerchart';
+
+  import { getSceneContext, isUnclipped, type SceneLabel } from '../../contexts/scene.svelte.js';
+  import { getSphere } from '../../utils/globe.js';
+  import { disposeLabel, labelPlane } from '../../utils/labels.js';
+  import { markRows, placeOf } from '../../utils/marks.js';
   import { valueOf } from '../../utils/values.js';
 
   let {
@@ -73,8 +83,9 @@
     value,
     x,
     y,
-    z = 0,
-    facing = 'camera',
+    z,
+    viewport = false,
+    textAnchor = 'middle',
     fontSize = 12,
     fontWeight = 600,
     rotate = 0,
@@ -82,26 +93,42 @@
     class: className,
   }: TextProps = $props();
 
+  const ctx = getChartContext();
   const scene = getSceneContext();
+  const sphere = $derived(getSphere(ctx));
+
+  /** With rows (`data`, or `x` / `y` reading the chart's), as LayerChart's `Text` */
+  const dataMode = $derived(data != null || isDataProp(x) || isDataProp(y));
+  const xProp = $derived(x ?? (dataMode ? (ctx.config.x as DataProp) : undefined));
+  const yProp = $derived(y ?? (dataMode ? (ctx.config.y as DataProp) : undefined));
+  const zProp = $derived(z ?? (dataMode ? (ctx.config.z as DataProp) : undefined));
 
   const rows = $derived(
-    (data ?? [undefined]).flatMap((d) => {
-      const text = valueOf(value, d);
-      return text == null || text === '' ? [] : [{ d, text: String(text) }];
+    (dataMode ? markRows(ctx, data, xProp, yProp) : [undefined]).flatMap((d) => {
+      const text =
+        typeof value === 'function'
+          ? value(d)
+          : typeof value === 'string' && dataMode
+            ? extractRawDataValue(value, d)
+            : value;
+      if (text == null || text === '') return [];
+      const [px, height, py] = placeOf(ctx, sphere, xProp, yProp, zProp, d);
+      return [{ d, text: String(text), x: px, y: py, z: height }];
     })
   );
 
-  // Facing the camera: drawn over the scene, so text stays crisp and upright however it turns
+  // Facing the viewer: drawn over the scene, so text stays crisp and upright however it turns
   const labels = $derived(
-    facing === 'camera'
+    viewport
       ? rows.map(
-          ({ d, text }, i): SceneLabel => ({
+          ({ text, x, y, z }, i): SceneLabel => ({
             key: String(i),
-            x: valueOf(x, d),
-            y: valueOf(y, d),
-            z: valueOf(z, d),
+            x,
+            y,
+            z,
             text,
             class: className,
+            clip: true,
           })
         )
       : []
@@ -109,10 +136,9 @@
 
   $effect(() => scene.addLabels(labels));
 
-  // Facing up: each label painted onto a plane lying at its height
-  /** Canvas pixels per pixel of the plot, so text stays sharp up close */
-  const RESOLUTION = 4;
+  // Lying on the surface: each label painted onto a plane at its height
   const group = new Group();
+  group.userData.unclipped = isUnclipped();
   scene.root.add(group);
   /** Each plane's turn as given, before any half turn to read the right way round */
   const turns = new Map<Mesh, number>();
@@ -120,57 +146,26 @@
   $effect(() => {
     const planes: Mesh[] = [];
     turns.clear();
-    if (facing === 'up') {
-      const family =
-        typeof document === 'undefined' ? 'sans-serif' : getComputedStyle(document.body).fontFamily;
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d')!;
-      for (const { d, text } of rows) {
-        const size = valueOf(fontSize, d);
-        if (!(size > 0)) continue;
-        const resolved = scene.color(valueOf(fill, d));
-        const font = `${fontWeight} ${size * RESOLUTION}px ${family}`;
-        context.font = font;
-        const width = Math.ceil(context.measureText(text).width) + 2;
-        const height = Math.ceil(size * RESOLUTION * 1.3);
-
-        const label = document.createElement('canvas');
-        label.width = width;
-        label.height = height;
-        const paint = label.getContext('2d')!;
-        paint.font = font;
-        paint.textAlign = 'center';
-        paint.textBaseline = 'middle';
-        const color = resolved?.color.clone().convertLinearToSRGB();
-        paint.fillStyle = color ? `#${color.getHexString()}` : 'black';
-        paint.globalAlpha = resolved?.opacity ?? 1;
-        paint.fillText(text, width / 2, height / 2);
-
-        const texture = new CanvasTexture(label);
-        texture.colorSpace = SRGBColorSpace;
-        // Blended by coverage at the glyphs' edges, rather than against transparent black
-        texture.premultiplyAlpha = true;
-        texture.anisotropy = 8;
+    if (!viewport) {
+      for (const { d, text, x: px, y: py, z: up } of rows) {
+        const label = labelPlane(text, {
+          fontSize: valueOf(fontSize, d),
+          fontWeight,
+          color: scene.color(valueOf(fill, d)),
+        });
+        if (!label) continue;
+        const { mesh: plane, width } = label;
         // Lying face up, reading along `x` with its top towards the plot's far side
-        const geometry = new PlaneGeometry(width / RESOLUTION, height / RESOLUTION).rotateX(
-          -Math.PI / 2
-        );
-        const plane = new Mesh(
-          geometry,
-          // Lit like the surface it lies on, so it shades along with it
-          new MeshLambertMaterial({
-            map: texture,
-            transparent: true,
-            premultipliedAlpha: true,
-            depthWrite: false,
-          })
-        );
-        // Lifted a little off what it lies on
-        plane.position.set(valueOf(x, d), valueOf(z, d) + 0.3, valueOf(y, d));
-        turns.set(plane, (-valueOf(rotate, d) * Math.PI) / 180);
+        plane.geometry.rotateX(-Math.PI / 2);
+        // Lifted a little off what it lies on, and along its baseline by its anchor: kept on the
+        // same side of its point when it turns half round to read the right way
+        const turn = (-valueOf(rotate, d) * Math.PI) / 180;
+        const along = ((textAnchor === 'start' ? 1 : textAnchor === 'end' ? -1 : 0) * width) / 2;
+        plane.position.set(px + Math.cos(turn) * along, up + 0.3, py - Math.sin(turn) * along);
+        turns.set(plane, turn);
         planes.push(plane);
       }
-      group.add(...planes);
+      if (planes.length) group.add(...planes);
     }
     turnToReader();
     scene.invalidate();
@@ -178,10 +173,7 @@
     return () => {
       for (const plane of planes) {
         group.remove(plane);
-        plane.geometry.dispose();
-        const material = plane.material as MeshLambertMaterial;
-        material.map?.dispose();
-        material.dispose();
+        disposeLabel(plane);
       }
     };
   });

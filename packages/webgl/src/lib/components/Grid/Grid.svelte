@@ -28,12 +28,17 @@
     zTicks?: TicksConfig;
     /**
      * Shade the floor and the two walls away from the camera.  The walls turn to stay behind
-     * the plot as the camera orbits, and only stand when the chart has height (`z`).
+     * the plot as the camera orbits, and only stand when the chart has height (`z`).  Flat
+     * (without a `view`), the floor is left clear, as LayerChart's `Grid` leaves it.
      *
-     * @default true
+     * @default true with a `view`, else false
      */
     walls?: boolean;
-    /** The lines' CSS color */
+    /**
+     * The lines' CSS color.
+     *
+     * @default 'color-mix(in oklab, var(--color-surface-content) 10%, transparent)'
+     */
     stroke?: string;
     /** The floor and walls' CSS color */
     fill?: string;
@@ -53,7 +58,7 @@
   import { autoTickVals, getChartContext } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
-  import { scaled } from '../../utils/marks.js';
+  import { scaled, TICK_SPACING, tickCount } from '../../utils/marks.js';
 
   let {
     x = true,
@@ -62,19 +67,19 @@
     xTicks,
     yTicks,
     zTicks,
-    walls = true,
-    stroke = 'color-mix(in oklab, var(--color-surface-content, currentColor) 20%, transparent)',
+    walls: wallsProp,
+    // As LayerChart's `Grid` draws its lines
+    stroke = 'color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent)',
     fill = 'color-mix(in oklab, var(--color-surface-content, currentColor) 4%, transparent)',
   }: GridProps = $props();
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  const walls = $derived(wallsProp ?? !!ctx.view);
 
-  /** About one tick per 60px, if the ticks don't say */
-  function ticks(scale: any, config: TicksConfig | undefined, length: number) {
-    return autoTickVals(scale, config, Math.max(2, Math.round(length / 60))).map((v) =>
-      scaled(scale, v)
-    );
+  /** Spaced as `Axis` spaces them, if the ticks don't say */
+  function ticks(scale: any, config: TicksConfig | undefined, length: number, spacing: number) {
+    return autoTickVals(scale, config, tickCount(length, spacing)).map((v) => scaled(scale, v));
   }
 
   const lineMaterial = new LineBasicMaterial({ transparent: true, depthWrite: false });
@@ -101,9 +106,9 @@
     const segments: number[] = [];
     const segment = (...points: number[]) => segments.push(...points);
 
-    const xs = x ? ticks(ctx.xScale, xTicks, w) : [];
-    const ys = y ? ticks(ctx.yScale, yTicks, h) : [];
-    const zs = z && d > 0 ? ticks(ctx.zScale, zTicks, d) : [];
+    const xs = x ? ticks(ctx.xScale, xTicks, w, TICK_SPACING.x) : [];
+    const ys = y ? ticks(ctx.yScale, yTicks, h, TICK_SPACING.y) : [];
+    const zs = z && d > 0 ? ticks(ctx.zScale, zTicks, d, TICK_SPACING.z) : [];
 
     for (const tx of xs) {
       segment(tx, 0, 0, tx, 0, h);

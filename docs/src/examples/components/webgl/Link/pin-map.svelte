@@ -67,8 +67,9 @@
 			<!-- A stem from the floor up to each pin's head -->
 			<Link
 				data={pins}
-				source={(pin) => [...at(pin), 0]}
-				target={(pin) => [...at(pin), context.zScale(pin.population)]}
+				x1="x"
+				y1="y"
+				z2="population"
 				stroke="color-mix(in oklab, var(--color-surface-content) 50%, var(--color-surface-100))"
 			/>
 			<Points data={pins} x="x" y="y" z="population" r={5} fill="var(--color-primary)" tooltip />
@@ -77,6 +78,7 @@
 				y={at(largest)[1]}
 				z={context.zScale(largest.population) + 24}
 				value={`${largest.name}: ${compact.format(largest.population)}`}
+				viewport
 				class="font-semibold text-xs text-surface-content"
 			/>
 		</WebGL>

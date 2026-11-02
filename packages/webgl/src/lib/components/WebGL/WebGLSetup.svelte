@@ -8,7 +8,10 @@
     MathUtils,
     OrthographicCamera,
     PerspectiveCamera,
+    Plane,
     Raycaster,
+    type Mesh,
+    type Object3D,
     Vector2,
     Vector3,
   } from 'three';
@@ -32,13 +35,43 @@
   scene.add(sceneState.root);
 
   // Leaving the page (or scrolling far off it), let the browser have the WebGL context back now,
-  // rather than whenever it collects the canvas
+  // rather than whenever it collects the canvas.  A new one shows nothing until it's fitted.
   $effect(() => {
     return () => {
+      sceneState.fitted = false;
       renderer.dispose();
       (renderer as { forceContextLoss?: () => void }).forceContextLoss?.();
     };
   });
+
+  // Clipped to the plot box's sides (as `Svg` clips to the plot), each a half pixel out so what's
+  // on its edges (ex. axis lines) stays.  The root stands the plot's `(0, 0)` corner at
+  // `(-width / 2, -height / 2)`, chart `y` along the scene's `z`.  Each material is clipped,
+  // rather than the whole render, so what's marked `unclipped` (ex. an axis' labels) isn't.
+  const clipPlanes = [
+    new Plane(new Vector3(1, 0, 0)),
+    new Plane(new Vector3(-1, 0, 0)),
+    new Plane(new Vector3(0, 0, 1)),
+    new Plane(new Vector3(0, 0, -1)),
+  ];
+  $effect(() => {
+    const { width, height } = ctx;
+    sceneState.plot = { width, height };
+    clipPlanes[0].constant = clipPlanes[1].constant = width / 2 + 0.5;
+    clipPlanes[2].constant = clipPlanes[3].constant = height / 2 + 0.5;
+    invalidate();
+  });
+  renderer.localClippingEnabled = true;
+  /** Clip `object`'s materials, and its children's, unless they're kept from it */
+  function clip(object: Object3D, planes: Plane[] | null) {
+    if (object.userData.unclipped) planes = null;
+    const material = (object as Mesh).material;
+    if (material) {
+      for (const m of Array.isArray(material) ? material : [material]) m.clippingPlanes = planes;
+    }
+    for (const child of object.children) clip(child, planes);
+  }
+  scene.onBeforeRender = () => clip(sceneState.root, sceneState.clip ? clipPlanes : null);
 
   // Even light all round, plus a key light from above and to the left of the camera (it moves
   // with it) so faces turned different ways read apart.  Lambert shading divides by π, so these
@@ -94,6 +127,9 @@
     cam.add(keyLight);
     cameraContext.makeDefaultCameras.add(cam);
     cameraContext.camera.set(cam);
+    // Fitted here as the canvas resizes (see `fit`), so Threlte mustn't reset it to fill the canvas:
+    // it would draw a frame unfitted (ex. as the canvas first takes its size)
+    cameraContext.manual.set(true);
     sceneState.camera = cam;
     return () => {
       cameraContext.makeDefaultCameras.delete(cam);
@@ -202,10 +238,12 @@
       // Up the screen is up the plot (towards its far edge)
       cam.up.set(0, 0, -1);
       cam.lookAt(fitTarget);
+      sceneState.unit = 1;
       panZoomFlat();
       sceneState.width = width;
       sceneState.height = height;
       moved();
+      sceneState.fitted = true;
       return;
     }
     cam.clearViewOffset();
@@ -232,6 +270,7 @@
       cam.aspect = aspect;
       fitDistance = distance;
       fitUnit = (2 * distance * Math.tan(vertical)) / height;
+      sceneState.unit = fitUnit;
     } else {
       let halfWidth: number;
       let halfHeight: number;
@@ -257,10 +296,12 @@
         far: fitDistance * 4,
       });
       fitUnit = (2 * halfHeight * scale) / height;
+      sceneState.unit = fitUnit;
     }
     sceneState.width = width;
     sceneState.height = height;
     place();
+    sceneState.fitted = true;
   }
 
   /**
@@ -407,6 +448,35 @@
     });
   });
 
+  // Where the floor is on screen about the plot's middle, so a `domain` transform pans and zooms
+  // where the pointer is on it, as on an isometric floor (exact for `orthographic`, and near the
+  // middle for `perspective`)
+  $effect(() => {
+    if (!ctx.view || ctx.transform.mode !== 'domain') return;
+    const { width, height } = ctx;
+    const step = Math.min(width, height) / 10;
+    const middle = sceneState.project(width / 2, height / 2, 0);
+    const across = sceneState.project(width / 2 + step, height / 2, 0);
+    const down = sceneState.project(width / 2, height / 2 + step, 0);
+    if (!middle || !across || !down || !(step > 0)) return;
+    const a = (across.x - middle.x) / step;
+    const b = (across.y - middle.y) / step;
+    const c = (down.x - middle.x) / step;
+    const d = (down.y - middle.y) / step;
+    const { left, top } = ctx.padding;
+    ctx.viewFloorMatrix = {
+      a,
+      b,
+      c,
+      d,
+      e: middle.x - left - (a * width) / 2 - (c * height) / 2,
+      f: middle.y - top - (b * width) / 2 - (d * height) / 2,
+    };
+    return () => {
+      ctx.viewFloorMatrix = null;
+    };
+  });
+
   // Tooltips: the row under the pointer, from whichever mark it hits first
   const raycaster = new Raycaster();
   // Lines (ex. `Spline`) are hit within a few pixels of them, as thin ones are hard to land on
@@ -416,6 +486,8 @@
   $effect(() => {
     const element = renderer.domElement;
     const onPointerMove = (e: PointerEvent) => {
+      // Nothing here shows a tooltip, so leave it to the chart's (ex. a `quadtree` over the rows)
+      if (!sceneState.pickables.size) return;
       // A drag turns or pans the view
       if (e.buttons || ctx.transform.dragging) {
         ctx.tooltip.hide(e);
@@ -428,15 +500,22 @@
       );
       raycaster.setFromCamera(pointer, camera);
       const pickables = [...sceneState.pickables];
-      const [hit] = raycaster.intersectObjects(
-        pickables.map((p) => p.object),
-        false
-      );
+      // The nearest hit on what's drawn, not clipped away
+      const hit = raycaster
+        .intersectObjects(
+          pickables.map((p) => p.object),
+          false
+        )
+        .find(
+          ({ point }) => !sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0)
+        );
       const datum = hit ? pickables.find((p) => p.object === hit.object)?.datum(hit) : undefined;
       if (datum != null) ctx.tooltip.show(e, datum);
       else ctx.tooltip.hide(e);
     };
-    const onPointerLeave = (e: PointerEvent) => ctx.tooltip.hide(e);
+    const onPointerLeave = (e: PointerEvent) => {
+      if (sceneState.pickables.size) ctx.tooltip.hide(e);
+    };
     element.addEventListener('pointermove', onPointerMove);
     element.addEventListener('pointerleave', onPointerLeave);
     return () => {

@@ -21,7 +21,7 @@ The floor and the two walls behind the plot, with lines at the scales' ticks. Th
 </WebGL>
 ```
 
-:example{ component="webgl/Points" name="scatter" }
+:example{ component="webgl/Points" name="scatter-3d" }
 
 Set `x`, `y`, or `z` to `false` to leave out a direction's lines (ex. `<Grid z={false} />`).
 

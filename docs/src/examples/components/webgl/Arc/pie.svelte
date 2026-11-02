@@ -58,16 +58,17 @@
 				fill={(arc) => context.cScale?.(arc.data.fruit)}
 			/>
 			<!-- Labels beyond each slice's outer edge, at its middle angle -->
-			<Text
-				data={arcs}
-				x={(arc) =>
-					context.width / 2 + Math.sin((arc.startAngle + arc.endAngle) / 2) * outer * 1.18}
-				y={(arc) =>
-					context.height / 2 - Math.cos((arc.startAngle + arc.endAngle) / 2) * outer * 1.18}
-				z={40}
-				value={(arc) => arc.data.fruit}
-				class="text-xs text-surface-content"
-			/>
+			{#each arcs as arc}
+				{@const angle = (arc.startAngle + arc.endAngle) / 2}
+				<Text
+					x={context.width / 2 + Math.sin(angle) * outer * 1.18}
+					y={context.height / 2 - Math.cos(angle) * outer * 1.18}
+					z={40}
+					value={arc.data.fruit}
+					viewport
+					class="text-xs text-surface-content"
+				/>
+			{/each}
 		</WebGL>
 
 		<Tooltip.Root>

@@ -26,6 +26,13 @@
      */
     pointerEvents?: boolean;
 
+    /**
+     * Clip marks to the plot box, as `Svg` clips them.  On by default when the chart's transform
+     * zooms its domain (`mode: 'domain'`), carrying marks past the plot's edges; other transforms
+     * move the camera instead.
+     */
+    clip?: boolean;
+
     children?: Snippet;
   };
 
@@ -37,6 +44,7 @@
   import { onMount } from 'svelte';
   import { Canvas } from '@threlte/core';
   import { NoToneMapping, PCFShadowMap } from 'three';
+  import { getChartContext } from 'layerchart';
 
   import { SceneState, setSceneContext } from '../../contexts/scene.svelte.js';
   import { ColorResolver } from '../../utils/color.js';
@@ -46,12 +54,17 @@
     dpr,
     zIndex = 0,
     pointerEvents = true,
+    clip,
     class: className,
     children,
     ...restProps
   }: WebGLProps = $props();
 
   const sceneState = setSceneContext(new SceneState());
+  const ctx = getChartContext();
+  $effect.pre(() => {
+    sceneState.clip = clip ?? ctx.props.transform?.mode === 'domain';
+  });
 
   let probe = $state<HTMLElement>();
   let element = $state<HTMLDivElement>();
@@ -61,6 +74,12 @@
    * browsers only allow a page so many at once (16 in Chromium), and a page of charts can have more.
    */
   let onScreen = $state(false);
+
+  /**
+   * A chart with a `transform` lays its layers out again once the transform loads (it's loaded
+   * lazily), so a canvas made before then would be thrown away a moment later, blanking the chart
+   */
+  const transformReady = $derived(!ctx.props.transform || !!ctx.transformState);
   $effect(() => {
     if (!element) return;
     const observer = new IntersectionObserver(
@@ -108,9 +127,10 @@
   class={['lc-layout-webgl', className]}
   class:disablePointerEvents={pointerEvents === false}
   style:z-index={zIndex}
+  style:visibility={sceneState.fitted ? undefined : 'hidden'}
   {...restProps}
 >
-  {#if onScreen}
+  {#if onScreen && transformReady}
     <Canvas renderMode="on-demand" toneMapping={NoToneMapping} shadows={PCFShadowMap} {dpr}>
       <WebGLSetup>
         {@render children?.()}
@@ -122,7 +142,7 @@
     {#each sceneState.labelSets as labels}
       {#each labels as label (label.key)}
         {@const point = sceneState.project(label.x, label.y, label.z)}
-        {#if point}
+        {#if point && !(label.clip && sceneState.clipped(label.x, label.y))}
           <div
             class={['lc-webgl-label', label.class]}
             style:transform="translate({point.x}px, {point.y}px) translate(-50%, -50%)"
@@ -159,10 +179,12 @@
       position: absolute;
       top: 0;
       left: 0;
+      /* As LayerChart's Axis draws its tick labels */
       font-size: 10px;
+      font-weight: 300;
       line-height: 1;
       white-space: nowrap;
-      color: color-mix(in oklab, var(--color-surface-content, currentColor) 70%, transparent);
+      color: var(--color-surface-content, currentColor);
     }
 
     :where(.lc-webgl-axis-label) {

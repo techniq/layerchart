@@ -1,5 +1,5 @@
 ---
-description: 'Labels in a WebGL chart: drawn over the scene facing the camera, or lying face up on the surface beneath them.'
+description: 'Labels in a WebGL chart: lying on the surface beneath them, or facing the viewer over the scene.'
 category: WebGL
 related: [Text, guides/webgl]
 components:
@@ -12,18 +12,15 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-A label at a point (`x` / `y` in pixels, `z` above the floor). By default it's drawn over the scene, upright and crisp however the view turns, styled with `class`. With `facing="up"` it lies on the surface at its height (ex. the tops of boxes), turning and tipping with the view, in `fontSize` and `fill`.
+A label per row, placed as LayerChart's [`Text`](/docs/components/Text) places it: `x`, `y`, and `z` are data properties or functions of the row, through the chart's scales (longitude and latitude on a map), or numbers in pixels. `value` is a property, a function, or the text itself.
+
+By default a label lies on the surface at its height (ex. the tops of boxes), turning and tipping with the view, in `fontSize` and `fill`. With `viewport` it faces the viewer instead, drawn over the scene upright and crisp however the view turns, styled with `class`.
 
 ```svelte
-<Text
-	data={nodes}
-	x={(d) => d.x}
-	y={(d) => d.y}
-	z={40}
-	value={(d) => d.name}
-	class="text-xs font-semibold"
-/>
+<Text data={nodes} x="x" y="y" z={40} value="name" viewport class="text-xs font-semibold" />
 ```
+
+For a layout already in pixels (ex. a tree), place a label per node by numbers.
 
 :example{ component="webgl/Polygon" name="tree" }
 

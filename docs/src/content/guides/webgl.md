@@ -63,9 +63,9 @@ Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are 
 </Chart>
 ```
 
-:example{ component="webgl/Points" name="scatter" }
+:example{ component="webgl/Points" name="scatter-3d" }
 
-Drag to turn the view, and shift-drag to pan. Hold shift and scroll to zoom.
+Drag to turn the view, and shift-drag to pan. Hold shift and scroll to zoom, moving the camera in and out.
 
 ## How it works
 
@@ -74,31 +74,7 @@ The chart lays out exactly as a flat one would: `x` across the plot's width, `y`
 - **The `z` scale** measures up from the floor, as it does for [isometric](/docs/guides/isometric#height). Its range defaults to half the floor's shorter side. Set `zRange={({ height }) => [0, height]}` for a cube.
 - **Color, series, stacking, and domains** work as on any chart: marks register with the chart, and `fill` / `stroke` take a CSS color, or a data key or function run through the color scale (`c`, `cRange`, ...). CSS variables like `var(--color-primary)` resolve against the page, and follow theme changes.
 - **Tooltips** show the row under the pointer, from the nearest mark with `tooltip` set (it's off by default, as for flat marks). Add `tooltipContext` to the chart and a `Tooltip.Root`.
-- **`z` on a mark** takes a data key or function (through the chart's `z` scale), or a number of pixels. Pixel-positioned marks ([`Rect`](/docs/components/webgl/Rect), [`Polygon`](/docs/components/webgl/Polygon), [`Text`](/docs/components/webgl/Text), [`Link`](/docs/components/webgl/Link)) take numbers or functions of the row.
-
-## Components
-
-| Component                                       | Draws                                                                        |
-| ----------------------------------------------- | ---------------------------------------------------------------------------- |
-| [`WebGL`](/docs/components/webgl/WebGL)         | The layer the others draw in                                                 |
-| [`Light`](/docs/components/webgl/Light)         | Directional, point, or ambient light, with shadows                           |
-| [`Grid`](/docs/components/webgl/Grid)           | The floor and the two walls behind the plot, with lines at the scales' ticks |
-| [`Axis`](/docs/components/webgl/Axis)           | Tick labels along an edge: `bottom` for `x`, `left` for `y`, `back` for `z`  |
-| [`Text`](/docs/components/webgl/Text)           | A label at a point, facing the camera or lying face up                       |
-| [`Points`](/docs/components/webgl/Points)       | A sphere per row, glowing or wrapped in an image                             |
-| [`Bars`](/docs/components/webgl/Bars)           | A box per row on its band cell, as tall as its `z` (stacking along `z`)      |
-| [`Bin`](/docs/components/webgl/Bin)             | A prism per hexagon (or square, or triangle) of rows binned together         |
-| [`Rect`](/docs/components/webgl/Rect)           | A box per row from pixel `x` / `y` / `width` / `height`                      |
-| [`Spline`](/docs/components/webgl/Spline)       | A line through the rows, one per series, colored per point                   |
-| [`Area`](/docs/components/webgl/Area)           | A curtain from the floor up to `z` along the rows                            |
-| [`Arc`](/docs/components/webgl/Arc)             | An extruded slice per row (ex. from `d3.pie()`)                              |
-| [`Polygon`](/docs/components/webgl/Polygon)     | An extruded polygon per row                                                  |
-| [`Link`](/docs/components/webgl/Link)           | A line between two points per row, straight or arched                        |
-| [`Surface`](/docs/components/webgl/Surface)     | A grid of values raised into a lit surface                                   |
-| [`Raster`](/docs/components/webgl/Raster)       | A grid of values colored on the floor                                        |
-| [`Contour`](/docs/components/webgl/Contour)     | Contour lines through a grid of values                                       |
-| [`GeoPath`](/docs/components/webgl/GeoPath)     | GeoJSON features through the projection, extruded                            |
-| [`GeoRaster`](/docs/components/webgl/GeoRaster) | An equirectangular image over the map, or around a globe                     |
+- **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as LayerChart's primitives do. [`Text`](/docs/components/webgl/Text), [`Rect`](/docs/components/webgl/Rect), and [`Link`](/docs/components/webgl/Link) place rows just as their LayerChart namesakes; [`Polygon`](/docs/components/webgl/Polygon)'s `points` are in pixels.
 
 ## The view
 
@@ -131,7 +107,7 @@ A chart's `transform` moves a 3D view as it does an [isometric](/docs/guides/iso
 >
 ```
 
-`onTransform` reports the angles a drag turns to as `rotation` (`x` is `rotate`, `y` is `tilt`). Hand them back to the view's options to keep controls in step with a drag. The transform's `zoomIn()`, `zoomOut()`, and `reset()` work as on any chart, so `TransformContextControls` works too; the [terrain](/docs/components/webgl/Surface#terrain) examples have them. Zooming dollies the camera in and out. The transform's [constraints](/docs/guides/transform#constraints) limit how far the view goes: ex. `scaleExtent: [0.5, 3]` keeps the camera outside a globe. A drag tips the view no further than edge on unless `tiltExtent` lets it: `tiltExtent: [0, 180]` turns on round to look from beneath (ex. a globe's south pole).
+`onTransform` reports the angles a drag turns to as `rotation` (`x` is `rotate`, `y` is `tilt`). Hand them back to the view's options to keep controls in step with a drag. The transform's `zoomIn()`, `zoomOut()`, and `reset()` work as on any chart, so `TransformContextControls` works too; the [terrain](/docs/components/webgl/Surface#terrain) examples have them.
 
 ```svelte
 <script>
@@ -155,6 +131,8 @@ In the playground below, the controls and dragging set the same view.
 
 :example{ component="webgl/WebGL" name="playground" }
 
+There are two ways to zoom. `mode: 'domain'` zooms the chart's `x` / `y` domains, as on a flat chart: the camera stays, so the axes keep their place and re-tick, and marks are clipped to the plot box (the `WebGL` layer's `clip`). `mode: 'canvas'` dollies the camera in and out instead, moving up to what's drawn (ex. a globe or a terrain). The transform's [constraints](/docs/guides/transform#constraints) limit how far the view goes: ex. `scaleExtent: [0.5, 3]` keeps the camera outside a globe. A drag tips the view no further than edge on unless `tiltExtent` lets it: `tiltExtent: [0, 180]` turns on round to look from beneath (ex. a globe's south pole).
+
 `Svg`, `Canvas`, and `Html` layers can't draw through a 3D view, and warn when they're given one. A layer with `ignoreTransform` draws over the scene as usual (ex. a title).
 
 ## Flat (2D)
@@ -169,7 +147,11 @@ Without a `view`, a `WebGL` layer is seen from directly above and drawn unshaded
 </Chart>
 ```
 
-:example{ component="webgl/WebGL" name="flat" }
+:example{ component="webgl/Points" name="scatter" }
+
+Only the marks need a `WebGL` layer: the grid, axes, tooltip highlight, and legend can be LayerChart's own, in `Svg` layers above and below it.
+
+:example{ component="webgl/Points" name="scatter-with-svg" }
 
 ## Lights and shadows
 

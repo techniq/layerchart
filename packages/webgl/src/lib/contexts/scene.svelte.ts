@@ -17,6 +17,8 @@ export type SceneLabel = {
   z: number;
   text: string;
   class?: string;
+  /** Hidden outside the plot box when the scene clips to it (unlike an axis's, beside it) */
+  clip?: boolean;
 };
 
 /** A mark's object the pointer can hit, and the data row each hit is on */
@@ -58,6 +60,28 @@ export class SceneState {
 
   /** How many `Light`s the scene has; it lights itself until it has one */
   lights = $state(0);
+
+  /** Whether the camera has been fitted to the chart, so a frame shows it where it belongs */
+  fitted = $state(false);
+
+  /** Whether marks are clipped to the plot box (see `WebGL`'s `clip`) */
+  clip = $state(false);
+
+  /** The plot box's size, in the chart's pixels */
+  plot = $state({ width: 0, height: 0 });
+
+  /**
+   * The chart pixels one pixel on screen spans at the camera's target as fitted (before any
+   * zoom), to size things drawn in the scene to read at a size on screen (ex. an axis' labels)
+   */
+  unit = $state(1);
+
+  /** Whether a point of the plot (`x` across, `y` down) is clipped away */
+  clipped(x: number, y: number) {
+    return (
+      this.clip && (x < -0.5 || x > this.plot.width + 0.5 || y < -0.5 || y > this.plot.height + 0.5)
+    );
+  }
 
   // Values, not getters: a scene unmounting off screen would otherwise read a mark's state after
   // the mark is gone
@@ -115,6 +139,18 @@ export class SceneState {
     if (v.z > 1) return null;
     return { x: ((v.x + 1) / 2) * this.width, y: ((1 - v.y) / 2) * this.height };
   }
+}
+
+const UNCLIPPED = Symbol('LayerChartWebGLUnclipped');
+
+/** Keep what marks inside draw from being clipped to the plot box (ex. an axis' labels beside it) */
+export function setUnclipped() {
+  setContext(UNCLIPPED, true);
+}
+
+/** Whether marks here are kept from being clipped to the plot box (see `setUnclipped`) */
+export function isUnclipped() {
+  return getContext<boolean>(UNCLIPPED) ?? false;
 }
 
 export function setSceneContext(state: SceneState) {

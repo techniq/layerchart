@@ -22,7 +22,7 @@ A sphere per row, at its `x`, `y`, and `z`. `r` sets the radius in pixels, else 
 </Chart>
 ```
 
-:example{ name="scatter" }
+:example{ name="scatter-3d" }
 
 ## Glow and images
 
@@ -34,4 +34,8 @@ A sphere per row, at its `x`, `y`, and `z`. `r` sets the radius in pixels, else 
 
 Without a view, points are discs, for many thousands of them.
 
-:example{ component="webgl/WebGL" name="flat" }
+:example{ name="scatter" }
+
+The grid, axes, and highlight can be LayerChart's own `Svg` layers instead, with only the points in WebGL:
+
+:example{ name="scatter-with-svg" }

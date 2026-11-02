@@ -237,4 +237,57 @@ describe('TooltipState', () => {
       expect(ctx.tooltip.data).toBeNull();
     });
   });
+
+  describe('quadtree on a `domain` transform', () => {
+    // Closer together than the pans, so a stale tree would find a neighbor
+    const points = [40, 45, 50, 55, 60].map((x) => ({ x, y: 50 }));
+
+    /** A pointer event positioned at container-relative `{ x, y }`, targeting the chart root */
+    function pointerEventAt(ctx: ChartState<any, any, any>, x: number, y: number) {
+      const rect = ctx.containerRef!.getBoundingClientRect();
+      const e = new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: rect.x + x,
+        clientY: rect.y + y,
+      });
+      Object.defineProperty(e, 'target', { value: ctx.containerRef });
+      return e;
+    }
+    const at = (ctx: ChartState<any, any, any>, d: { x: number; y: number }) =>
+      [ctx.xScale(d.x) + ctx.padding.left, ctx.yScale(d.y) + ctx.padding.top] as const;
+
+    it('finds the point under the pointer as the domain pans and zooms, before it rebuilds', async () => {
+      const ctx = await renderChart({
+        data: points,
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 100],
+        yDomain: [0, 100],
+        transform: { mode: 'domain' },
+        tooltipContext: { mode: 'quadtree' },
+      });
+      await vi.waitFor(() => {
+        ctx.tooltip.show(pointerEventAt(ctx, ...at(ctx, points[0])));
+        expect(ctx.tooltip.data).toEqual(points[0]);
+      });
+
+      for (const [scale, translate] of [
+        [1, { x: 45, y: 0 }],
+        [1.5, { x: -80, y: -20 }],
+      ] as const) {
+        ctx.transformState!.setScale(scale, { instant: true });
+        ctx.transformState!.setTranslate(translate, { instant: true });
+        // At once, not once the tree has caught up (for the points still in the plot)
+        const shown = points.filter((d) => {
+          const [x, y] = [ctx.xScale(d.x), ctx.yScale(d.y)];
+          return x >= 0 && x <= ctx.width && y >= 0 && y <= ctx.height;
+        });
+        expect(shown.length).toBeGreaterThan(1);
+        for (const d of shown) {
+          ctx.tooltip.show(pointerEventAt(ctx, ...at(ctx, d)));
+          expect(ctx.tooltip.data).toEqual(d);
+        }
+      }
+    });
+  });
 });

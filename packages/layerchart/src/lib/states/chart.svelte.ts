@@ -24,13 +24,13 @@ import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$l
 import { printDebug } from '$lib/utils/debug.js';
 import {
   applyMatrix,
-  autoIsometricAspect,
   invertMatrix,
   multiplyMatrix,
   ISOMETRIC_TILT,
   type AffineMatrix,
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
+import { autoFloorAspect } from '$lib/utils/floorAspect.js';
 import { resolveView } from '$lib/views/view.js';
 import { CAMERA_ANGLES } from '$lib/views/camera.js';
 
@@ -1344,7 +1344,7 @@ export class ChartState<
       ? 1
       : typeof option === 'number'
         ? Math.max(option, 1e-6)
-        : autoIsometricAspect(
+        : autoFloorAspect(
             { scale: this._xScaleProp, domain: this._baseXDomain },
             { scale: this._yScaleProp, domain: this._baseYDomain }
           );
@@ -1358,6 +1358,13 @@ export class ChartState<
   plot = $derived(
     this.isometricFloor ?? this.#cameraFloor ?? { width: this.box.width, height: this.box.height }
   );
+
+  /**
+   * How a 3D layer (`@layerchart/webgl`) lays the floor on screen about the plot's middle, from
+   * plot pixels to pixels from the plot's corner as `isometricMatrix` maps them.  The layer sets it,
+   * so a `domain` transform pans and zooms where the pointer is on the floor.  `null` without one.
+   */
+  viewFloorMatrix = $state<AffineMatrix | null>(null);
 
   /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {

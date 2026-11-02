@@ -54,11 +54,9 @@
 		{@const layout = tree<any>().size([context.width, context.height])(data.copy())}
 		{@const nodes = layout.descendants()}
 		<WebGL>
-			<!-- Links lie on the floor, under the nodes -->
+			<!-- Links lie on the floor, under the nodes: from each link's `source` node to its `target` -->
 			<Link
 				data={layout.links()}
-				source={(link) => [link.source.x, link.source.y, 0]}
-				target={(link) => [link.target.x, link.target.y, 0]}
 				stroke="color-mix(in oklab, var(--color-surface-content) 40%, var(--color-surface-100))"
 				strokeWidth={1.5}
 			/>
@@ -68,14 +66,17 @@
 				z={(node) => shapeOf(node).z}
 				fill={(node) => shapeOf(node).fill}
 			/>
-			<Text
-				data={nodes}
-				x={(node) => node.x}
-				y={(node) => node.y}
-				z={(node) => shapeOf(node).z + 14}
-				value={(node) => node.data.name}
-				class="text-xs font-semibold text-surface-content"
-			/>
+			<!-- The layout is in pixels, so a label per node, placed by numbers -->
+			{#each nodes as node}
+				<Text
+					x={node.x}
+					y={node.y}
+					z={shapeOf(node).z + 14}
+					value={node.data.name}
+					viewport
+					class="text-xs font-semibold text-surface-content"
+				/>
+			{/each}
 		</WebGL>
 	{/snippet}
 </Chart>

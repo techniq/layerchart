@@ -111,7 +111,7 @@
 </script>
 
 <script lang="ts" generics="TData = any">
-  import type { Snippet } from 'svelte';
+  import { untrack, type Snippet } from 'svelte';
   import { max, min } from 'd3-array';
   import type { Facet } from '$lib/states/facet.svelte.js';
   // d3-quadtree (used only for quadtree* tooltip modes) is dynamically
@@ -129,7 +129,12 @@
   // `{#await import(...)}` so non-voronoi/non-radial tooltip users don't pay
   // for them. Voronoi alone pulls in d3-geo-voronoi + d3-geo.
 
-  import { isScaleBand, isScaleTime, scaleInvert } from '$lib/utils/scales.svelte.js';
+  import {
+    isScaleBand,
+    isScaleTime,
+    scaleInvert,
+    type AnyScale,
+  } from '$lib/utils/scales.svelte.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/chart.js';
@@ -308,10 +313,13 @@
       y = (y - ctx.transform.translate.y) / ctx.transform.scale;
     }
 
+    const at = inTree({ x, y }, radius);
+    ({ x, y } = at);
+
     let nearest: any;
     let nearestDistance = Infinity;
     for (const tree of quadtrees.values()) {
-      const found = tree.find(x, y, radius);
+      const found = tree.find(x, y, at.r);
       if (found === undefined) continue;
       const distance = Math.hypot(tree.x()(found) - x, tree.y()(found) - y);
       if (distance < nearestDistance) {
@@ -383,7 +391,8 @@
 
         // One tree per panel — panels share the scales, so their points would otherwise
         // occupy the same coordinates and the nearest could come from any of them
-        return quadtrees.get(panel.key)?.find(q.x, q.y, radius);
+        const at = isometric ? { ...q, r: radius } : inTree(q, radius);
+        return quadtrees.get(panel.key)?.find(at.x, at.y, at.r);
       }
 
       default:
@@ -579,6 +588,38 @@
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
 
   let quadtrees = $state<Map<string, Quadtree<[number, number]>>>(new Map());
+  /**
+   * The scales the trees were built through, while a `domain` pan or zoom moves past them: linear
+   * scales, whose pixels a pan or zoom only scales and shifts, so a pointer maps back into where
+   * the trees hold the points until they're built again
+   */
+  let treeScales = $state.raw<{ x: AnyScale; y: AnyScale } | null>(null);
+
+  /** Whether a scale's pixels a domain's pan or zoom only scales and shifts (linear or time) */
+  const isLinear = (scale: any) =>
+    !isScaleBand(scale) &&
+    typeof scale?.invert === 'function' &&
+    !('base' in scale) &&
+    !('exponent' in scale) &&
+    !('constant' in scale);
+
+  /**
+   * `point` and `radius` where the trees hold them: through the scales they were built with,
+   * when the domain has moved on since
+   */
+  function inTree(point: { x: number; y: number }, r: number) {
+    const built = treeScales;
+    if (!built || (built.x === ctx.xScale && built.y === ctx.yScale)) return { ...point, r };
+    const x = mode === 'quadtree-y' ? point.x : Number(built.x(scaleInvert(ctx.xScale, point.x)));
+    const y = mode === 'quadtree-x' ? point.y : Number(built.y(scaleInvert(ctx.yScale, point.y)));
+    // Distances scale as the zoom does
+    const [scale, current] = mode === 'quadtree-y' ? [built.y, ctx.yScale] : [built.x, ctx.xScale];
+    const [d0, d1] = current.domain();
+    const k = Math.abs(
+      (Number(scale(d1)) - Number(scale(d0))) / (Number(current(d1)) - Number(current(d0)))
+    );
+    return { x, y, r: r * (Number.isFinite(k) ? k : 1) };
+  }
 
   $effect(() => {
     // Touch the dependencies the quadtree is built from so the effect re-runs
@@ -651,31 +692,45 @@
     };
 
     let cancelled = false;
-    import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
-      if (cancelled) return;
-      const build = (flatData: any[], panel: Facet) => {
-        const tree = d3Quadtree<[number, number]>();
-        if (isometric) {
-          // Where they're drawn, since foreshortening changes which is nearest.  Pan / zoom scales
-          // every distance alike, so it's left out and panning needn't rebuild the tree.
-          const at = (d: any) => {
-            const z = lift ? ctx.heightOf(d)[1] : 0;
-            return applyMatrix(isometric, {
-              x: flatX(d) + panel.x + (lift?.x ?? 0) * z,
-              y: flatY(d) + panel.y + (lift?.y ?? 0) * z,
-            });
-          };
-          tree.x((d) => at(d).x).y((d) => at(d).y);
-        } else {
-          tree.x(flatX).y(flatY);
-        }
-        return tree.addAll(flatData as [number, number][]);
-      };
+    // Panning and zooming a linear domain moves every point many times a second.  Build once it
+    // rests rather than for every step, looking up through the scales the trees were built with
+    // meanwhile (see `inTree`).
+    const remappable =
+      ctx.props.transform?.mode === 'domain' &&
+      !isometric &&
+      !projection &&
+      isLinear(xScale) &&
+      isLinear(yScale);
+    const settle = remappable && untrack(() => quadtrees.size) ? 150 : 0;
+    const run = () =>
+      import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
+        if (cancelled) return;
+        const build = (flatData: any[], panel: Facet) => {
+          const tree = d3Quadtree<[number, number]>();
+          if (isometric) {
+            // Where they're drawn, since foreshortening changes which is nearest.  Pan / zoom scales
+            // every distance alike, so it's left out and panning needn't rebuild the tree.
+            const at = (d: any) => {
+              const z = lift ? ctx.heightOf(d)[1] : 0;
+              return applyMatrix(isometric, {
+                x: flatX(d) + panel.x + (lift?.x ?? 0) * z,
+                y: flatY(d) + panel.y + (lift?.y ?? 0) * z,
+              });
+            };
+            tree.x((d) => at(d).x).y((d) => at(d).y);
+          } else {
+            tree.x(flatX).y(flatY);
+          }
+          return tree.addAll(flatData as [number, number][]);
+        };
 
-      quadtrees = new Map(panels.map(([panel, data]) => [panel.key, build(data, panel)]));
-    });
+        quadtrees = new Map(panels.map(([panel, data]) => [panel.key, build(data, panel)]));
+        treeScales = remappable ? { x: xScale, y: yScale } : null;
+      });
+    const timer = settle ? setTimeout(run, settle) : (run(), undefined);
     return () => {
       cancelled = true;
+      clearTimeout(timer);
     };
   });
 

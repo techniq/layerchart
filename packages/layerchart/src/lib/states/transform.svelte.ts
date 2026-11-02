@@ -223,6 +223,11 @@ export class TransformState {
    * `pointerup` is swallowed rather than reaching what's under the pointer (see `onClickCapture`)
    */
   private _suppressClick = false;
+  /**
+   * When the last drag (or pinch) was released.  The browser counts quick presses near each other
+   * as a double click even when they drag, so two quick drags would otherwise zoom in.
+   */
+  private _dragEndedAt = -Infinity;
 
   // Velocity tracking for inertia
   private _pointerSamples: { x: number; y: number; t: number }[] = [];
@@ -414,7 +419,8 @@ export class TransformState {
    * so in domain mode the pointer is mapped back onto it.
    */
   #floorInverse() {
-    const m = this.mode === 'domain' ? this.ctx?.isometricMatrix : null;
+    const m =
+      this.mode === 'domain' ? (this.ctx?.isometricMatrix ?? this.ctx?.viewFloorMatrix) : null;
     return m ? invertMatrix(m) : null;
   }
 
@@ -857,6 +863,7 @@ export class TransformState {
       this.pointerDown = false;
       this.dragging = false;
       this._suppressClick = true;
+      this._dragEndedAt = performance.now();
       this.ondragend?.();
       return;
     }
@@ -864,7 +871,10 @@ export class TransformState {
     const wasDragging = this.dragging;
     this.pointerDown = false;
     this.dragging = false;
-    if (wasDragging) this._suppressClick = true;
+    if (wasDragging) {
+      this._suppressClick = true;
+      this._dragEndedAt = performance.now();
+    }
 
     // Apply inertia if enabled and was dragging with enough velocity
     if (this.inertia.enabled && wasDragging && this._pointerSamples.length >= 2) {
@@ -993,6 +1003,8 @@ export class TransformState {
 
   onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     if (this.mode === 'none') return;
+    // One of its presses dragged (both fall within the double click interval, about this long)
+    if (performance.now() - this._dragEndedAt < 500) return;
     const point = localPoint(e);
     this.scaleTo(e.shiftKey ? 0.5 : 2, point);
   }
@@ -1030,11 +1042,12 @@ export class TransformState {
 
     if (this.scrollMode === 'scale' || pinchToZoom) {
       // Holding shift turns a wheel sideways (macOS for a mouse wheel, Firefox everywhere, Chrome
-      // on Windows and Linux), so with `shift` as the activation key a scroll arrives as `deltaX`
-      // alone and would zoom by nothing.  Read it as the vertical scroll it was.  Only then, so a
-      // horizontal trackpad swipe still pans in domain mode rather than zooming.
-      const shifted = this.scrollActivationKey === 'shift' && e.deltaY === 0;
-      const deltaY = shifted ? e.deltaX : e.deltaY;
+      // on Windows and Linux), so with `shift` as the activation key a scroll arrives mostly as
+      // `deltaX`, and from a trackpad rarely only: a swipe is seldom dead straight.  Zoom by
+      // whichever way it mostly scrolls, and don't also pan by the rest, or a zoom that's a little
+      // off straight pans the domain far sideways.
+      const shifted = this.scrollActivationKey === 'shift';
+      const deltaY = shifted && Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       const deltaX = shifted ? 0 : e.deltaX;
 
       // https://github.com/d3/d3-zoom#zoom_wheelDelta
