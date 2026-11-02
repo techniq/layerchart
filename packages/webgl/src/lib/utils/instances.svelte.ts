@@ -4,6 +4,7 @@ import {
   InstancedBufferAttribute,
   InstancedMesh,
   Matrix4,
+  MeshBasicMaterial,
   MeshLambertMaterial,
   Quaternion,
   Vector3,
@@ -44,14 +45,17 @@ type InstancesOptions = {
   emphasize: (color: Color, size: Vector3) => void;
   /** Whether hovering shows the tooltip */
   tooltip?: () => boolean;
+  /** Draw each instance in its own color, unlit (ex. a star) */
+  glow?: () => boolean;
 };
 
 /**
  * Lambert shading, with each instance's alpha from an `instanceOpacity` attribute, since
  * `InstancedMesh` colors carry no alpha of their own.
  */
-function createMaterial() {
-  const material = new MeshLambertMaterial();
+function createMaterial(lit: boolean) {
+  // Unlit, each instance shows its own color whatever the lights (ex. a star)
+  const material = lit ? new MeshLambertMaterial() : new MeshBasicMaterial();
   material.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader
       .replace(
@@ -70,7 +74,7 @@ function createMaterial() {
       );
   };
   // Keep the patched program apart from plain Lambert materials' in three's cache
-  material.customProgramCacheKey = () => 'lc-instance-opacity';
+  material.customProgramCacheKey = () => `lc-instance-opacity-${lit ? 'lit' : 'unlit'}`;
   return material;
 }
 
@@ -85,10 +89,16 @@ export function createInstances({
   opacity,
   emphasize,
   tooltip,
+  glow,
 }: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
-  const material = createMaterial();
+  const litMaterial = createMaterial(true);
+  /** Made the first time something glows */
+  let glowMaterial: MeshBasicMaterial | null = null;
+  const material = $derived(
+    glow?.() ? (glowMaterial ??= createMaterial(false) as MeshBasicMaterial) : litMaterial
+  );
 
   // Out of a scale's domain (ex. a category a band scale doesn't list) a position is `NaN`, which
   // would poison the bounding sphere every pointer pick tests first
@@ -115,7 +125,11 @@ export function createInstances({
     const capacity = Math.max(1, Math.ceil(count * 1.5));
     alpha = new InstancedBufferAttribute(new Float32Array(capacity).fill(1), 1);
     geometry.setAttribute('instanceOpacity', alpha);
-    const next = new InstancedMesh(geometry, material, capacity);
+    const next = new InstancedMesh(
+      geometry,
+      untrack(() => material),
+      capacity
+    );
     next.count = 0;
     next.castShadow = next.receiveShadow = true;
     if (mesh) {
@@ -124,6 +138,15 @@ export function createInstances({
     }
     scene.root.add(next);
     mesh = next;
+  });
+
+  // Lit, or glowing in its own colors
+  $effect(() => {
+    const instanced = mesh;
+    if (!instanced) return;
+    instanced.material = material;
+    instanced.castShadow = material === litMaterial;
+    scene.invalidate();
   });
 
   $effect(() => {
@@ -223,7 +246,8 @@ export function createInstances({
       if (mesh) scene.root.remove(mesh);
       mesh?.dispose();
       for (const shape of shapes) shape.dispose();
-      material.dispose();
+      litMaterial.dispose();
+      glowMaterial?.dispose();
       scene.invalidate();
     };
   });

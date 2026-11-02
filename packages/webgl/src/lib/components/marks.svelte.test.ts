@@ -252,7 +252,61 @@ describe('Bin', () => {
   });
 });
 
+describe('Points glow and image', () => {
+  it('draws glowing points unlit, in their own color', async () => {
+    const scene = await renderMarks({
+      mark: 'points',
+      chart: { data: [{ x: 1, y: 1 }], x: 'x', y: 'y' },
+      points: { glow: true },
+    });
+    const [mesh] = children(scene, 'isInstancedMesh') as InstancedMesh[];
+    await expect.poll(() => (mesh.material as any).isMeshBasicMaterial).toBe(true);
+  });
+
+  it('wraps rows with an image in it, each its own sphere, and the rest as instances', async () => {
+    // A canvas, drawn already, so nothing has to load
+    const canvas = document.createElement('canvas');
+    canvas.width = 8;
+    canvas.height = 4;
+    const scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [
+          { x: 1, y: 1, image: canvas },
+          { x: 2, y: 2 },
+        ],
+        x: 'x',
+        y: 'y',
+      },
+      points: { image: (d: { image?: HTMLCanvasElement }) => d.image, r: 10, tilt: 30 },
+    });
+    const meshes = () =>
+      scene.root.children.filter((o: any) => o.isMesh && !o.isInstancedMesh && o.material?.map);
+    await expect.poll(() => meshes().length).toBe(1);
+    const [sphere] = meshes() as any[];
+    expect(sphere.scale.x).toBeCloseTo(10);
+    // Leaning 30° from upright
+    const axis = new Vector3(0, 1, 0).applyQuaternion(sphere.quaternion);
+    expect((Math.acos(axis.y) * 180) / Math.PI).toBeCloseTo(30);
+    const [instanced] = children(scene, 'isInstancedMesh') as InstancedMesh[];
+    await expect.poll(() => instanced.count).toBe(1);
+  });
+});
+
 describe('Light', () => {
+  it('shines from a place in the plot as a point light', async () => {
+    const scene = await renderMarks({
+      mark: 'light',
+      chart: { data: [{ x: 1, y: 1 }], x: 'x', y: 'y' },
+      light: { type: 'point', x: 40, y: 60, z: 10, shadow: false },
+    });
+    const light = () => scene.root.children.find((o: any) => o.isPointLight) as any;
+    await expect.poll(() => !!light()).toBe(true);
+    expect(light().position.toArray()).toEqual([40, 10, 60]);
+    // Not fading with distance
+    expect(light().decay).toBe(0);
+  });
+
   it("turns off the scene's own lights", async () => {
     const scene = await renderMarks({
       mark: 'light',

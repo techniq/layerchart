@@ -14,6 +14,7 @@
     surface,
     geopath,
     bin,
+    light,
     offset = 0,
     onScene,
   }: {
@@ -25,6 +26,7 @@
     surface?: ComponentProps<typeof Surface>;
     geopath?: ComponentProps<typeof GeoPath>;
     bin?: ComponentProps<typeof Bin>;
+    light?: ComponentProps<typeof Light>;
     /** Pixels down the page to put the chart, to test it off screen */
     offset?: number;
     onScene: (scene: SceneState, chart: ChartState<any>) => void;
@@ -45,7 +47,7 @@
       {:else if mark === 'bin'}
         <Bin {...bin} />
       {:else if mark === 'light'}
-        <Light shadow />
+        <Light shadow {...light} />
         <Points />
       {/if}
       <Probe {onScene} />

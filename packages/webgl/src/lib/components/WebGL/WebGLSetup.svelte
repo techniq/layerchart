@@ -130,21 +130,35 @@
 
   /**
    * The part of the floor that's drawn on, `[[x0, y0], [x1, y1]]` in chart pixels: a map's
-   * `fitGeojson` as projected, else the whole plot
+   * `fitGeojson` as projected, else what the `x` and `y` scales cover (ex. a square in the middle
+   * of a wide plot, for `xRange` / `yRange` keeping it round), else the whole plot
    */
   function floorBounds(): [[number, number], [number, number]] {
-    const whole: [[number, number], [number, number]] = [
-      [0, 0],
-      [ctx.width, ctx.height],
-    ];
-    const projection = ctx.geo.projection;
-    const fitted = (ctx.props.geo as { fitGeojson?: unknown } | undefined)?.fitGeojson;
-    if (!projection || !fitted) return whole;
-    const [[x0, y0], [x1, y1]] = geoPath(projection).bounds(fitted as any);
-    if (![x0, y0, x1, y1].every(Number.isFinite) || !(x1 > x0) || !(y1 > y0)) return whole;
-    return [
+    const clamp = ([[x0, y0], [x1, y1]]: number[][]): [[number, number], [number, number]] => [
       [Math.max(0, x0), Math.max(0, y0)],
       [Math.min(ctx.width, x1), Math.min(ctx.height, y1)],
+    ];
+    const valid = ([[x0, y0], [x1, y1]]: number[][]) =>
+      [x0, y0, x1, y1].every(Number.isFinite) && x1 > x0 && y1 > y0;
+
+    const projection = ctx.geo.projection;
+    const fitted = (ctx.props.geo as { fitGeojson?: unknown } | undefined)?.fitGeojson;
+    if (projection && fitted) {
+      const bounds = geoPath(projection).bounds(fitted as any);
+      if (valid(bounds)) return clamp(bounds);
+    }
+    if (!projection) {
+      const xs = (ctx.xScale.range() as unknown[]).map(Number);
+      const ys = (ctx.yScale.range() as unknown[]).map(Number);
+      const bounds = [
+        [Math.min(...xs), Math.min(...ys)],
+        [Math.max(...xs), Math.max(...ys)],
+      ];
+      if (valid(bounds)) return clamp(bounds);
+    }
+    return [
+      [0, 0],
+      [ctx.width, ctx.height],
     ];
   }
 

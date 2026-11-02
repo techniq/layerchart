@@ -1,12 +1,31 @@
 <script lang="ts" module>
   export type LightProps = {
     /**
-     * `'directional'` shines from far away in one direction, like the sun; `'ambient'` lights
-     * everything evenly, from no direction.
+     * `'directional'` shines from far away in one direction, like the sun on a map; `'point'`
+     * shines every way from a place in the plot, like a star among its planets; `'ambient'`
+     * lights everything evenly, from no direction.
      *
      * @default 'directional'
      */
-    type?: 'directional' | 'ambient';
+    type?: 'directional' | 'point' | 'ambient';
+    /**
+     * Where a point light is across the plot, in pixels.
+     *
+     * @default the plot's center
+     */
+    x?: number;
+    /**
+     * Where a point light is down the plot, in pixels.
+     *
+     * @default the plot's center
+     */
+    y?: number;
+    /**
+     * How high a point light is off the floor, in pixels.
+     *
+     * @default half the `z` range
+     */
+    z?: number;
     /**
      * Which way a directional light shines from, in degrees clockwise from the plot's top edge (its
      * far edge before the view turns), like a compass bearing on a map.
@@ -33,7 +52,7 @@
      */
     color?: string;
     /**
-     * Cast shadows, onto the marks and the floor.
+     * Cast shadows, onto the marks and the floor (a directional light's).
      *
      * @default false
      */
@@ -45,6 +64,7 @@
   import {
     AmbientLight,
     BufferGeometry,
+    PointLight,
     DirectionalLight,
     Float32BufferAttribute,
     MathUtils,
@@ -57,6 +77,9 @@
 
   let {
     type = 'directional',
+    x,
+    y,
+    z,
     azimuth = 315,
     altitude = 45,
     intensity = 1,
@@ -71,7 +94,14 @@
   scene.lights += 1;
 
   // Lambert shading divides by π, so this many π light a face head on at its full color
-  const light = $derived(type === 'ambient' ? new AmbientLight() : new DirectionalLight());
+  const light = $derived(
+    type === 'ambient'
+      ? new AmbientLight()
+      : type === 'point'
+        ? // Not fading with distance, so it lights near and far alike
+          new PointLight(0xffffff, 1, 0, 0)
+        : new DirectionalLight()
+  );
 
   /** Shows the shadows falling on the floor, and nothing else */
   const floor = new Mesh(new BufferGeometry(), new ShadowMaterial({ opacity: 0.25 }));
@@ -96,6 +126,10 @@
     const resolved = scene.color(color);
     if (resolved) current.color.copy(resolved.color);
 
+    if (current instanceof PointLight) {
+      current.position.set(x ?? ctx.width / 2, z ?? ctx.zDepth / 2, y ?? ctx.height / 2);
+    }
+
     if (current instanceof DirectionalLight) {
       const width = ctx.width;
       const height = ctx.height;
@@ -105,14 +139,14 @@
       const h = MathUtils.degToRad(altitude);
       // From the plot's center towards the light, in chart terms: `y` runs down the plot, so
       // "towards the top edge" is `-y`
-      const x = Math.sin(a) * Math.cos(h);
-      const y = -Math.cos(a) * Math.cos(h);
+      const across = Math.sin(a) * Math.cos(h);
+      const down = -Math.cos(a) * Math.cos(h);
       const up = Math.sin(h);
       current.target.position.set(width / 2, depth / 2, height / 2);
       current.position.set(
-        width / 2 + x * radius * 2,
+        width / 2 + across * radius * 2,
         depth / 2 + up * radius * 2,
-        height / 2 + y * radius * 2
+        height / 2 + down * radius * 2
       );
 
       current.castShadow = shadow;
