@@ -30,6 +30,10 @@ A sphere per row, at its `x`, `y`, and `z`. `r` sets the radius in pixels, else 
 
 :example{ name="solar-system" }
 
+Tens of thousands of glowing points, placed along spiral arms and colored from the middle out, turning slowly (drag to look from another angle).
+
+:example{ name="galaxy" }
+
 ## Flat
 
 Without a view, points are discs, for many thousands of them.

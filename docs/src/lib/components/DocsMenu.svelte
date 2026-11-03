@@ -7,6 +7,7 @@
 	import { page } from '$app/state';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
+	import { webglCategories } from '$lib/webglCategories.js';
 
 	import LucideBot from '~icons/lucide/bot';
 	import LucideCompass from '~icons/lucide/compass';
@@ -29,14 +30,6 @@
 	);
 
 	const collapsibleCategories = ['migrations'];
-
-	/** `@layerchart/webgl`'s categories, in its own section, named there without the prefix */
-	const webglCategories: Record<string, string> = {
-		webgl: 'Common',
-		'webgl marks': 'Marks',
-		'webgl surfaces': 'Surfaces',
-		'webgl maps': 'Maps'
-	};
 
 	const byCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase()).filter(
 		([category]) => category !== 'examples'

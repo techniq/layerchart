@@ -1299,24 +1299,28 @@ describe('view and transform', () => {
       camera.updateMatrixWorld();
       return new Ray(camera.position.clone(), camera.getWorldDirection(new Vector3()));
     };
-    /** How near two rays pass each other */
-    const between = (a: Ray, b: Ray) => {
-      const normal = new Vector3().crossVectors(a.direction, b.direction);
-      return Math.abs(b.origin.clone().sub(a.origin).dot(normal)) / normal.length();
+    /** Where a point in the scene is on screen, from -1 to 1 across and up */
+    const onScreen = (point: Vector3) => {
+      scene.camera!.updateMatrixWorld();
+      return point.clone().project(scene.camera!);
     };
 
+    // A pan moves the camera and what it looks at together: what's been panned to is the plot
+    // box's middle, moved as far
+    const start = scene.camera!.position.clone();
     chart!.transform.setTranslate({ x: 80, y: 0 });
     await new Promise((resolve) => setTimeout(resolve, 50));
-    const panned = ray();
+    const moved = scene.camera!.position.clone().sub(start);
+    const pannedTo = new Vector3(0, chart!.zDepth / 2, 0).add(moved);
     // Looking at somewhere other than the middle of the plot
-    expect(panned.distanceToPoint(new Vector3(0, 0, 0))).toBeGreaterThan(10);
-
-    chart!.transform.setRotation({ x: 0, y: 50 });
-    await expect
-      .poll(() => between(panned, ray()) < 1 && panned.direction.angleTo(ray().direction) > 0.2)
-      .toBe(true);
-    // Still looking at what was panned to, not the middle
     expect(ray().distanceToPoint(new Vector3(0, 0, 0))).toBeGreaterThan(10);
+    const before = onScreen(pannedTo);
+
+    const direction = ray().direction.clone();
+    chart!.transform.setRotation({ x: 0, y: 50 });
+    await expect.poll(() => direction.angleTo(ray().direction)).toBeGreaterThan(0.2);
+    // Turned about what's been panned to: it stays where it was on screen
+    expect(onScreen(pannedTo).distanceTo(before)).toBeLessThan(0.005);
   });
 
   it('keeps a zoom when the plot box changes', async () => {

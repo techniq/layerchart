@@ -1,11 +1,13 @@
 import { untrack } from 'svelte';
 import {
+  AdditiveBlending,
   Color,
   InstancedBufferAttribute,
   InstancedMesh,
   Matrix4,
   MeshBasicMaterial,
   MeshLambertMaterial,
+  NormalBlending,
   Quaternion,
   Vector3,
   Vector4,
@@ -48,6 +50,11 @@ type InstancesOptions = {
   tooltip?: () => boolean;
   /** Draw each instance in its own color, unlit (ex. a star) */
   glow?: () => boolean;
+  /**
+   * Add each instance's light to what's behind it rather than covering it (ex. stars crowding
+   * into a bright core), as CSS' `mix-blend-mode: plus-lighter` does
+   */
+  additive?: () => boolean;
   /**
    * Move every instance's center across (`x`) and down (`y`) the plot by a scale and offset each,
    * `[kx, tx, ky, ty]`, on the GPU: ex. as a `domain` transform pans and zooms linear scales,
@@ -116,6 +123,7 @@ export function createInstances({
   emphasize,
   tooltip,
   glow,
+  additive,
   shift,
 }: InstancesOptions) {
   const ctx = getChartContext();
@@ -260,9 +268,16 @@ export function createInstances({
 
     const o = opacity();
     material.opacity = o;
+    // Adding light, it's drawn over everything else without hiding what's behind it
+    const adds = additive?.() ?? false;
     // Switching blending recompiles, so only when it changes
-    if (material.transparent !== (translucent || o < 1)) {
-      material.transparent = translucent || o < 1;
+    if (
+      material.transparent !== (translucent || o < 1 || adds) ||
+      (material.blending === AdditiveBlending) !== adds
+    ) {
+      material.transparent = translucent || o < 1 || adds;
+      material.blending = adds ? AdditiveBlending : NormalBlending;
+      material.depthWrite = !adds;
       material.needsUpdate = true;
     }
     scene.invalidate();

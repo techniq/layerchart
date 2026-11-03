@@ -26,7 +26,9 @@
     fill?: ColorProp;
     /**
      * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
-     * the fill, stroke, stroke width, and opacity they set, where its props don't say
+     * the fill, stroke, stroke width, and opacity they set, where its props don't say.  A
+     * `mix-blend-mode` of `plus-lighter` or `screen` (ex. `mix-blend-plus-lighter`) adds the
+     * points' light together where they overlap.
      */
     class?: string;
     /** @default 1 */
@@ -75,6 +77,7 @@
 <script lang="ts">
   import {
     CircleGeometry,
+    IcosahedronGeometry,
     Mesh,
     MeshBasicMaterial,
     MeshLambertMaterial,
@@ -190,10 +193,15 @@
   // from directly above) a disc facing up looks the same, for a fraction of the triangles.
   const ball = new SphereGeometry(1, 24, 16);
   const disc = new CircleGeometry(1, 24).rotateX(-Math.PI / 2);
+  // Glowing, a point is unlit, one color all over: only its outline shows, so a tenth of the
+  // triangles look the same (and hundreds of thousands of stars stay quick)
+  const star = new IcosahedronGeometry(1, 1);
   createInstances({
     tooltip: () => tooltip,
     glow: () => glow,
-    geometry: () => (ctx.view ? ball : disc),
+    // A class blending light in (ex. `mix-blend-plus-lighter`), as in an `Svg` layer
+    additive: () => look?.blend === 'plus-lighter' || look?.blend === 'screen',
+    geometry: () => (ctx.view ? (glow ? star : ball) : disc),
     instances: () => {
       const pointOf = pointer();
       const colorOf = colorer(ctx, fill, 'var(--color-primary, currentColor)', look?.fill);

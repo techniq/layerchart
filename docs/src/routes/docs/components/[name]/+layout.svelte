@@ -3,6 +3,7 @@
 	import { examples } from '@layerstack/docs/context';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
+	import { webglCategories } from '$lib/webglCategories.js';
 	import { page } from '$app/state';
 
 	import LucideBlocks from '~icons/lucide/blocks';
@@ -77,8 +78,16 @@
 			(exampleTitle ? exampleTitle[0].toUpperCase() + exampleTitle.slice(1) : metadata.name)
 	);
 
+	// `@layerchart/webgl`'s pages sit under WebGL, in their group there (as in the menu)
+	const webglCategory = $derived(
+		data.componentName.startsWith('webgl/')
+			? webglCategories[metadata.category?.toLowerCase() ?? '']
+			: undefined
+	);
 	const breadcrumbs = $derived([
-		{ label: metadata.category },
+		...(webglCategory
+			? [{ label: 'WebGL', href: '/docs/guides/webgl' }, { label: webglCategory }]
+			: [{ label: metadata.category }]),
 		...(page.params.example
 			? [{ label: metadata.name, href: `/docs/components/${data.componentName}` }]
 			: [])

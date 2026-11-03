@@ -5,10 +5,12 @@
   import {
     AmbientLight,
     DirectionalLight,
+    Euler,
     MathUtils,
     OrthographicCamera,
     PerspectiveCamera,
     Plane,
+    Quaternion,
     Raycaster,
     type Mesh,
     type Object3D,
@@ -142,6 +144,11 @@
   const framedDirection = new Vector3();
   /** What the fitted camera looks at: the middle of the plot box, or of the globe */
   const fitTarget = new Vector3();
+  /**
+   * What the view turns about: the middle of what's framed (the plot box, a map's bounds, or the
+   * globe), which stays where it is on screen as a drag turns the view
+   */
+  const fitCenter = new Vector3();
   /** How far the fitted camera is from `fitTarget` */
   let fitDistance = 0;
   /** At `fitTarget`'s depth, how far a pixel of the layer reaches in the fitted view */
@@ -218,6 +225,7 @@
     } else {
       fitTarget.set(0, ctx.zDepth / 2, 0);
     }
+    fitCenter.copy(fitTarget);
 
     const cam = camera;
     if (!view && cam instanceof OrthographicCamera) {
@@ -253,6 +261,7 @@
     const floor = floorBounds();
     const min = new Vector3(floor[0][0] - ctx.width / 2, 0, floor[0][1] - ctx.height / 2);
     const max = new Vector3(floor[1][0] - ctx.width / 2, box.depth, floor[1][1] - ctx.height / 2);
+    if (radius == null) fitCenter.copy(min).add(max).multiplyScalar(0.5);
     if (cam instanceof PerspectiveCamera) {
       const vertical = MathUtils.degToRad(shownFov) / 2;
       const horizontal = Math.atan(Math.tan(vertical) * aspect);
@@ -313,7 +322,14 @@
   function place() {
     const cam = camera;
     const { scale } = panZoomState();
-    const target = fitTarget.clone().add(pan);
+    // The framed view turned, camera and target together, about the middle of what's framed: so
+    // that stays put on screen as the view turns, as orbit controls turn about what they look at.
+    // (Framing centers what's framed on screen, which for a perspective camera can put the target
+    // a little off its middle.)
+    const turn = orientation(angles).multiply(orientation(framedAngles).invert());
+    // Panned, it turns about what's been panned to: the middle moved by the pan
+    const pivot = fitCenter.clone().add(pan);
+    const target = fitTarget.clone().sub(fitCenter).applyQuaternion(turn).add(pivot);
     let distance = fitDistance;
     if (cam instanceof PerspectiveCamera) {
       distance = fitDistance / scale;
@@ -328,6 +344,13 @@
     cam.updateProjectionMatrix();
     keyLight.position.set(-0.5, 1, 0).multiplyScalar(fitDistance);
     moved();
+  }
+
+  /** The turn taking straight up to the direction a view at `rotate` / `tilt` looks from */
+  function orientation({ rotate, tilt }: { rotate: number; tilt: number }) {
+    // As `viewDirection`: tipped by `tilt` from straight up, then turned by `rotate` about it
+    const theta = MathUtils.degToRad(MathUtils.clamp(tilt, 0.01, 179.99));
+    return new Quaternion().setFromEuler(new Euler(theta, MathUtils.degToRad(rotate), 0, 'YXZ'));
   }
 
   /**

@@ -11,6 +11,8 @@ export type ClassStyle = {
   stroke: string | null;
   strokeWidth: number | null;
   opacity: number;
+  /** Its `mix-blend-mode`, when not `normal` (ex. `plus-lighter`) */
+  blend: string | null;
 };
 
 /**
@@ -82,6 +84,7 @@ export class ColorResolver {
       stroke: set('stroke'),
       strokeWidth: strokeWidth == null ? null : parseFloat(strokeWidth),
       opacity: Number(style.opacity) * Number(style.fillOpacity || 1),
+      blend: style.mixBlendMode && style.mixBlendMode !== 'normal' ? style.mixBlendMode : null,
     };
   }
 
