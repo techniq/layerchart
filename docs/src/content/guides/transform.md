@@ -151,7 +151,7 @@ When set, scroll events without the key held are ignored (no `preventDefault`), 
 ### Pointer interactions
 
 - **Drag** — pan (click and drag to move the view)
-- **Shift + drag** — on an `isometric` chart, turn the view instead. `drag: 'rotate'` swaps the two, and `dragSwitchKey` changes the key (see [Dragging the view](/docs/guides/isometric#dragging-the-view))
+- **Shift + drag** — on a chart with a [`view`](/docs/guides/views) (ex. `isometric`), turn the view instead. `drag: 'rotate'` swaps the two, and `dragSwitchKey` changes the key (see [Dragging the view](/docs/guides/isometric#dragging-the-view))
 - **Double-click** — zoom in 2x at the click point
 - **Shift + double-click** — zoom out 0.5x
 - **Trackpad pinch** — detected as ctrl+wheel events, always zooms regardless of scroll mode

@@ -3,7 +3,7 @@ title: WebGL
 category: state
 ---
 
-`@layerchart/webgl` draws charts with WebGL, using [three.js](https://threejs.org) through [Threlte](https://threlte.xyz): in true 3D, or flat for far more marks than `Svg` or `Canvas` keep up with. It's a separate package, so charts that don't use it never load three.js. For 3D on the existing `Svg`, `Canvas`, and `Html` layers, see [Isometric](/docs/guides/isometric).
+`@layerchart/webgl` draws charts with WebGL, using [three.js](https://threejs.org) through [Threlte](https://threlte.xyz): in true 3D, or flat for far more marks than `Svg` or `Canvas` keep up with. It's a separate package, so charts that don't use it never load three.js. For 3D on the existing `Svg`, `Canvas`, and `Html` layers, see [Isometric](/docs/guides/isometric), and [Views](/docs/guides/views) to compare them.
 
 ## Installation
 
@@ -78,7 +78,7 @@ The chart lays out exactly as a flat one would: `x` across the plot's width, `y`
 
 ## The view
 
-The chart's `view` is the camera. `perspective` draws farther things smaller; `orthographic` keeps sizes true at any depth, as `isometric` does. Call either with options, or pass it as is for the defaults:
+The chart's `view` is the camera. `perspective` draws farther things smaller; `orthographic` keeps sizes true at any depth, as `isometric` does (see [Views](/docs/guides/views) for how they compare). Call either with options, or pass it as is for the defaults:
 
 ```svelte
 <Chart view={perspective({ rotate: -30, tilt: 60, fov: 45 })}>

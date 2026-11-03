@@ -5,6 +5,8 @@ category: state
 
 `view={isometric}` draws a chart's plot area as a floor seen from above at an angle. Works in any layer type (`Svg`, `Canvas`, `Html`) and marks (ex. `Axis`, `Rect`, etc).
 
+It's faux 3D, drawn in 2D. For true 3D (depth, lighting, and perspective) in a `WebGL` layer, see [WebGL](/docs/guides/webgl), and [Views](/docs/guides/views) to compare them.
+
 ## Quick start
 
 Import `isometric` and pass as `view` to `Chart`.
