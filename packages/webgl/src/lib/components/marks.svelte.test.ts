@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand, scaleOrdinal } from 'd3-scale';
+import { curveMonotoneX } from 'd3-shape';
 import {
   Matrix4,
   Quaternion,
@@ -95,6 +96,158 @@ describe('Spline', () => {
       spline: { stroke: 'key' },
     });
     await expect.poll(() => children(scene, 'isLine2').length).toBe(3);
+  });
+});
+
+describe('Spline and Area, as LayerChart draws them', () => {
+  const series = [
+    { x: 0, y: 2 },
+    { x: 1, y: 5 },
+    { x: 2, y: null },
+    { x: 3, y: 4 },
+    { x: 4, y: 7 },
+  ];
+  const chartProps = { data: series, x: 'x', y: 'y', xDomain: [0, 4], yDomain: [0, 10] };
+
+  it('breaks a `Spline` where a row is missing or not `defined`, and curves it with `curve`', async () => {
+    let scene = await renderMarks({ mark: 'spline', chart: chartProps });
+    // Two runs either side of the missing row
+    expect(children(scene, 'isLine2')).toHaveLength(2);
+
+    scene = await renderMarks({
+      mark: 'spline',
+      chart: chartProps,
+      spline: { defined: (d: any) => d.x !== 4 },
+    });
+    await expect.poll(() => children(scene, 'isLine2').length).toBe(1);
+
+    scene = await renderMarks({
+      mark: 'spline',
+      chart: { ...chartProps, data: series.filter((d) => d.y != null) },
+      spline: { curve: curveMonotoneX },
+    });
+    await expect.poll(() => children(scene, 'isLine2').length).toBe(1);
+    const [line] = children(scene, 'isLine2') as any[];
+    // Sampled along the curve: more points than rows
+    expect(line.geometry.attributes.instanceStart.count).toBeGreaterThan(4);
+  });
+
+  it('lays an `Area` on the floor between the plot’s bottom and `y`, without a height', async () => {
+    const scene = await renderMarks({
+      mark: 'area',
+      chart: { ...chartProps, data: series.filter((d) => d.y != null) },
+    });
+    const mesh = scene.root.children.find(
+      (o) => (o as any).isMesh && !(o as any).isInstancedMesh
+    ) as any;
+    const positions = Array.from(mesh.geometry.attributes.position.array as Float32Array);
+    const heights = positions.filter((_, i) => i % 3 === 1);
+    expect(Math.max(...heights)).toBeLessThan(1);
+    const downs = positions.filter((_, i) => i % 3 === 2);
+    expect(Math.max(...downs)).toBeCloseTo(chart!.yScale(0), 0);
+    expect(Math.min(...downs)).toBeCloseTo(chart!.yScale(7), 0);
+  });
+});
+
+describe('Polygon, as LayerChart draws it', () => {
+  const merged = (scene: SceneState) =>
+    scene.root.children.find((o) => (o as any).isMesh && !(o as any).isInstancedMesh) as any;
+  const extent = (scene: SceneState, axis: number) => {
+    const values = Array.from(
+      merged(scene).geometry.attributes.position.array as Float32Array
+    ).filter((_, i) => i % 3 === axis);
+    return [Math.min(...values), Math.max(...values)];
+  };
+
+  it('draws a regular polygon of `points` corners about `cx` / `cy`, flat without `z`', async () => {
+    // A square turned 45°, its corners straight across and down from the center
+    let scene = await renderMarks({
+      mark: 'polygon',
+      chart: {},
+      polygon: { cx: 100, cy: 80, r: 20, points: 4, rotate: 0 },
+    });
+    await expect
+      .poll(() => merged(scene)?.geometry.attributes.position?.count ?? 0)
+      .toBeGreaterThan(0);
+    expect(extent(scene, 0)[0]).toBeCloseTo(80);
+    expect(extent(scene, 0)[1]).toBeCloseTo(120);
+    expect(extent(scene, 2)[0]).toBeCloseTo(60);
+    expect(extent(scene, 2)[1]).toBeCloseTo(100);
+    expect(extent(scene, 1)[1]).toBeLessThan(1);
+
+    scene = await renderMarks({
+      mark: 'polygon',
+      chart: {},
+      polygon: { cx: 100, cy: 80, r: 20, points: 6, z: 30 },
+    });
+    await expect.poll(() => extent(scene, 1)[1]).toBeCloseTo(30);
+  });
+
+  it('places rows through the chart’s scales', async () => {
+    const scene = await renderMarks({
+      mark: 'polygon',
+      chart: { data: [{ x: 5, y: 5 }], x: 'x', y: 'y', xDomain: [0, 10], yDomain: [0, 10] },
+      polygon: { cx: 'x', cy: 'y', r: 10, points: 8 },
+    });
+    await expect
+      .poll(() => merged(scene)?.geometry.attributes.position?.count ?? 0)
+      .toBeGreaterThan(0);
+    const [left, right] = extent(scene, 0);
+    expect((left + right) / 2).toBeCloseTo(chart!.xScale(5), 0);
+  });
+});
+
+describe('Arc, as LayerChart draws it', () => {
+  const meshes = (scene: SceneState) =>
+    scene.root.children.filter(
+      (o) =>
+        (o as any).isMesh &&
+        !(o as any).isInstancedMesh &&
+        !(o as any).isLineSegments2 &&
+        (o as any).geometry.attributes.position
+    ) as any[];
+  /** The widest angle a mesh's vertices sweep clockwise from the top, about the plot's center */
+  const sweep = (mesh: any) => {
+    const p = mesh.geometry.attributes.position.array as Float32Array;
+    let most = 0;
+    for (let i = 0; i < p.length; i += 3) {
+      const angle = Math.atan2(p[i] - 200, -(p[i + 2] - 150));
+      most = Math.max(most, (angle + 2 * Math.PI) % (2 * Math.PI));
+    }
+    return (most * 180) / Math.PI;
+  };
+
+  it('runs to `value` through `domain` into `range`, over its `track`', async () => {
+    const scene = await renderMarks({
+      mark: 'arc',
+      chart: {},
+      arc: { value: 25, innerRadius: 0.5, track: true },
+    });
+    await expect.poll(() => meshes(scene).length).toBe(2);
+    const [arc, track] = meshes(scene);
+    // A quarter of the way round, over a whole track
+    expect(sweep(arc)).toBeCloseTo(90, 0);
+    expect(sweep(track)).toBeGreaterThan(345);
+    expect(track.material.polygonOffset).toBe(true);
+  });
+
+  it('takes its colors and opacity from its `class`, as LayerChart’s `Canvas` does', async () => {
+    const style = document.createElement('style');
+    style.textContent = '.test-arc { fill: rgb(255, 0, 0); opacity: 0.5 }';
+    document.head.append(style);
+    try {
+      const scene = await renderMarks({
+        mark: 'arc',
+        chart: {},
+        arc: { value: 50, class: 'test-arc' },
+      });
+      await expect.poll(() => meshes(scene)[0]?.material.opacity).toBe(0.5);
+      const colors = meshes(scene)[0].geometry.attributes.color.array as Float32Array;
+      expect(colors[0]).toBeCloseTo(1);
+      expect(colors[1]).toBeCloseTo(0);
+    } finally {
+      style.remove();
+    }
   });
 });
 
@@ -368,6 +521,100 @@ describe('placed as LayerChart places its namesakes', () => {
     expect(a.z).toBeCloseTo(50);
     // Numbers are pixels
     expect(b.z).toBe(0);
+  });
+
+  it('formats, offsets, and anchors `Text` as LayerChart’s', async () => {
+    const scene = await renderMarks({
+      mark: 'text',
+      chart: chartProps,
+      text: {
+        data: [{ x: 2, y: 8, share: 0.25 }],
+        x: 'x',
+        y: 'y',
+        value: 'share',
+        format: 'percent',
+        dx: 4,
+        dy: -6,
+        textAnchor: 'start',
+        verticalAnchor: 'end',
+        viewport: true,
+      },
+    });
+    await expect.poll(() => scene.labelSets.flat().length).toBe(1);
+    const [label] = scene.labelSets.flat();
+    expect(label.text).toBe('25.00%');
+    expect([label.dx, label.dy, label.textAnchor, label.verticalAnchor]).toEqual([
+      4,
+      -6,
+      'start',
+      'end',
+    ]);
+  });
+
+  it('wraps `Text` to its `width`, or truncates it', async () => {
+    const long = 'a label much longer than its width';
+    const planes = (scene: SceneState) => {
+      const found: any[] = [];
+      scene.root.traverse((o) => {
+        if ((o as any).isMesh && (o as any).material?.map) found.push(o);
+      });
+      return found;
+    };
+    const size = (mesh: any) => {
+      mesh.geometry.computeBoundingBox();
+      const box = mesh.geometry.boundingBox;
+      return { across: box.max.x - box.min.x, down: box.max.z - box.min.z };
+    };
+    let scene = await renderMarks({
+      mark: 'text',
+      chart: chartProps,
+      text: { x: 10, y: 10, value: long },
+    });
+    await expect.poll(() => planes(scene).length).toBe(1);
+    const one = size(planes(scene)[0]);
+
+    scene = await renderMarks({
+      mark: 'text',
+      chart: chartProps,
+      text: { x: 10, y: 10, value: long, width: 60 },
+    });
+    await expect.poll(() => planes(scene).length).toBe(1);
+    const wrapped = size(planes(scene)[0]);
+    expect(wrapped.across).toBeLessThanOrEqual(62);
+    expect(wrapped.down).toBeGreaterThan(one.down * 2);
+
+    scene = await renderMarks({
+      mark: 'text',
+      chart: chartProps,
+      text: { x: 10, y: 10, value: long, width: 60, truncate: true, viewport: true },
+    });
+    await expect.poll(() => scene.labelSets.flat().length).toBe(1);
+    expect(scene.labelSets.flat()[0].text.endsWith('…')).toBe(true);
+  });
+
+  it('keeps a lying label’s plane when it only moves, painting none anew', async () => {
+    const props = (x: number) => ({
+      mark: 'text' as const,
+      chart: chartProps,
+      text: { x, y: 20, value: 'moving' },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        latest = s;
+        chart = c;
+      },
+    });
+    const { rerender } = render(Marks, props(10) as any);
+    const plane = () => {
+      let found: Object3D | undefined;
+      latest?.root.traverse((o) => {
+        if ((o as any).isMesh && (o as any).material?.map) found = o;
+      });
+      return found;
+    };
+    await expect.poll(plane).toBeTruthy();
+    const first = plane()!;
+    await rerender(props(60) as any);
+    await expect.poll(() => plane()!.position.x).toBeCloseTo(60);
+    expect(plane()).toBe(first);
   });
 
   it("lays `Text` on the surface without `viewport`, labelling the chart's rows", async () => {

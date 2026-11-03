@@ -171,6 +171,9 @@ export function createInstances({
   // are drawn
   $effect(() => {
     const value = shift?.() ?? null;
+    // Again when the material changes, so a glow made mid-pan is shifted too
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    material;
     const [kx, tx, ky, ty] = value ?? [1, 0, 1, 0];
     for (const m of [litMaterial, glowMaterial]) if (m) shifts.get(m)!.value.set(kx, tx, ky, ty);
     if (mesh) mesh.frustumCulled = !value;

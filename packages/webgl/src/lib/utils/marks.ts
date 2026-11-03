@@ -69,20 +69,6 @@ export function placer(
   return (x, y, height) => [Number(xScale(x)) + xBand, height, Number(yScale(y)) + yBand];
 }
 
-/**
- * Whether a scale maps values to pixels linearly (linear or time), so panning and zooming its
- * domain moves every pixel by one scale and offset
- */
-export function isLinearScale(scale: any) {
-  return (
-    !isScaleBand(scale) &&
-    typeof scale?.invert === 'function' &&
-    !('base' in scale) &&
-    !('exponent' in scale) &&
-    !('constant' in scale)
-  );
-}
-
 /** The scale and offset taking `from`'s pixels to `to`'s, two linear scales over the same values */
 export function linearShift(from: any, to: any): [k: number, t: number] {
   const [d0, d1] = to.domain();
@@ -96,10 +82,12 @@ export function linearShift(from: any, to: any): [k: number, t: number] {
 export function colorer(
   ctx: ChartState<any>,
   value: ColorProp<any> | undefined,
-  fallback: string
+  fallback: string,
+  classed?: string | null
 ): (d: any) => string {
   const cScale = ctx.cScale;
   if (value != null) return (d) => resolveColorProp(value, d, cScale) ?? fallback;
+  if (classed) return () => classed;
   if (ctx.config.c != null && cScale) {
     const cGet = ctx.cGet;
     return (d) => String(cGet(d) ?? fallback);
@@ -172,6 +160,14 @@ export function markRows(ctx: ChartState<any>, data: any[] | undefined, ...props
  */
 export const TICK_SPACING = { x: 80, y: 50, z: 50 } as const;
 
+/**
+ * Pixels between ticks along an axis by default: as `TICK_SPACING` on a flat chart, and the same
+ * along every axis in a 3D view, where either of the floor's axes can run across the screen
+ */
+export function tickSpacing(ctx: ChartState<any>, axis: keyof typeof TICK_SPACING) {
+  return ctx.view ? 50 : TICK_SPACING[axis];
+}
+
 /** About one tick per `spacing` pixels along an axis `length` long */
 export function tickCount(length: number, spacing: number) {
   return Math.max(2, Math.round(length / spacing));
@@ -184,15 +180,18 @@ export function resolveAccessor(prop: Accessor | undefined, fallback: Accessor |
 
 /**
  * A row's color: from the mark's `fill` / `stroke` (a CSS color, a data key, or a function, run
- * through the chart's color scale), else the chart's `c`, else `fallback`.
+ * through the chart's color scale), else what its `class` sets (`classed`, see `scene.style`),
+ * else the chart's `c`, else `fallback`.
  */
 export function rowColor(
   ctx: ChartState<any>,
   value: ColorProp<any> | undefined,
   d: any,
-  fallback: string
+  fallback: string,
+  classed?: string | null
 ): string {
   if (value != null) return resolveColorProp(value, d, ctx.cScale) ?? fallback;
+  if (classed) return classed;
   if (ctx.config.c != null && ctx.cScale) return String(ctx.cGet(d) ?? fallback);
   return fallback;
 }

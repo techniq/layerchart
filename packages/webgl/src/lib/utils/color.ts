@@ -3,6 +3,17 @@ import { Color, SRGBColorSpace } from 'three';
 export type ResolvedColor = { color: Color; opacity: number };
 
 /**
+ * What a mark's CSS classes (ex. `fill-red-500 opacity-50`) set, as LayerChart's `Canvas` layer
+ * reads them: `null` for what they leave alone
+ */
+export type ClassStyle = {
+  fill: string | null;
+  stroke: string | null;
+  strokeWidth: number | null;
+  opacity: number;
+};
+
+/**
  * Turns CSS colors — including `var(--color-primary)`, `oklch(...)`, and `color-mix(...)` — into
  * three.js colors, as the browser resolves them for `probe`.  three.js parses neither custom
  * properties nor CSS Color 4 spaces, so each is painted onto a 1×1 canvas and read back as sRGB.
@@ -11,6 +22,10 @@ export class ColorResolver {
   #probe: HTMLElement;
   #context: CanvasRenderingContext2D | null = null;
   #cache = new Map<string, ResolvedColor>();
+  #styles = new Map<string, ClassStyle>();
+  /** An SVG path to give classes to and read back, and one without, to tell what they set */
+  #classed: SVGPathElement | null = null;
+  #plain: SVGPathElement | null = null;
 
   constructor(probe: HTMLElement) {
     this.#probe = probe;
@@ -28,7 +43,46 @@ export class ColorResolver {
       this.#cache.set(value, next);
       changed = true;
     }
+    for (const [classes, previous] of this.#styles) {
+      const next = this.#read(classes);
+      if (JSON.stringify(next) === JSON.stringify(previous)) continue;
+      this.#styles.set(classes, next);
+      changed = true;
+    }
     return changed;
+  }
+
+  /** What `classes` set on an SVG shape here (see `ClassStyle`) */
+  style(classes: string): ClassStyle {
+    let style = this.#styles.get(classes);
+    if (!style) {
+      style = this.#read(classes);
+      this.#styles.set(classes, style);
+    }
+    return style;
+  }
+
+  #read(classes: string): ClassStyle {
+    if (!this.#classed || !this.#plain) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.style.display = 'none';
+      this.#classed = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      this.#plain = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      svg.append(this.#classed, this.#plain);
+      this.#probe.append(svg);
+    }
+    this.#classed.setAttribute('class', classes);
+    const style = getComputedStyle(this.#classed);
+    const plain = getComputedStyle(this.#plain);
+    const set = (key: 'fill' | 'stroke' | 'strokeWidth') =>
+      style[key] !== plain[key] ? style[key] : null;
+    const strokeWidth = set('strokeWidth');
+    return {
+      fill: set('fill'),
+      stroke: set('stroke'),
+      strokeWidth: strokeWidth == null ? null : parseFloat(strokeWidth),
+      opacity: Number(style.opacity) * Number(style.fillOpacity || 1),
+    };
   }
 
   resolve(value: string): ResolvedColor {

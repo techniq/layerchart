@@ -69,6 +69,7 @@
   ],
   "svelte": "./dist/index.js",
   "dependencies": {
+    "@layerstack/utils": "2.0.0-next.19",
     "d3-array": "^3.2.4",
     "d3-contour": "^4.0.2",
     "d3-geo": "^3.1.1",

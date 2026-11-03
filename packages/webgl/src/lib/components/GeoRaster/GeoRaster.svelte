@@ -1,13 +1,37 @@
 <script lang="ts" module>
+  import type { GeoProjection } from 'd3-geo';
   import type { ImageSource } from '../../utils/texture.js';
 
   export type GeoRasterProps = {
     /**
-     * An equirectangular image to lay over the map through the chart's projection (ex. NASA's
-     * Blue Marble), or wrap around its `globe`: a URL, or an image or canvas already drawn.  Longitude runs across it from
-     * -180° to 180°, latitude down it from 90° to -90°.
+     * The image to lay over the map through the chart's projection (ex. NASA's Blue Marble), or
+     * wrap around its `globe`, as LayerChart's `GeoRaster` reprojects it: a URL, or an image,
+     * canvas, or bitmap already drawn.  Equirectangular unless `sourceProjection` says otherwise:
+     * longitude across it from -180° to 180°, latitude down it from 90° to -90°.
      */
-    src: ImageSource;
+    image: ImageSource;
+    /**
+     * The projection the image was drawn in, mapping longitude / latitude to its own pixels (as
+     * LayerChart's `GeoRaster`).  Equirectangular without one.  Not on a `globe`, which wraps an
+     * equirectangular image.
+     */
+    sourceProjection?: () => GeoProjection;
+    /**
+     * How the image is sampled between its pixels: `'nearest'` for crisp, blocky pixels, or
+     * `'bilinear'` to blend them.  LayerChart's `GeoRaster` defaults to `'nearest'`, as blending
+     * costs it ~4x the work; here the GPU blends for free.
+     *
+     * @default 'bilinear'
+     */
+    interpolate?: 'nearest' | 'bilinear';
+    /** Draw the image's pixels as crisp blocks (as `interpolate: 'nearest'`) */
+    pixelated?: boolean;
+    /**
+     * `crossOrigin` for an image loaded from a URL.  `null` for none.
+     *
+     * @default 'anonymous'
+     */
+    crossOrigin?: string | null;
     /**
      * Raise the image into terrain: a function of longitude and latitude returning a value for
      * the chart's `z` scale (ex. elevation in meters).
@@ -36,9 +60,12 @@
     BufferGeometry,
     DoubleSide,
     Float32BufferAttribute,
+    LinearFilter,
+    LinearMipmapLinearFilter,
     Mesh,
     MeshBasicMaterial,
     MeshLambertMaterial,
+    NearestFilter,
   } from 'three';
   import { getChartContext } from 'layerchart';
 
@@ -48,7 +75,30 @@
   import { sphereMesh, sphereSegments, sphereValues } from '../../utils/sphere-surface.js';
   import { loadTexture } from '../../utils/texture.js';
 
-  let { src, elevation, pixelSize = 4, opacity = 1, tooltip = false }: GeoRasterProps = $props();
+  let {
+    image,
+    sourceProjection,
+    interpolate = 'bilinear',
+    pixelated = false,
+    crossOrigin = 'anonymous',
+    elevation,
+    pixelSize = 4,
+    opacity = 1,
+    tooltip = false,
+  }: GeoRasterProps = $props();
+
+  /** The image's size once loaded, for `sourceProjection` to map into */
+  let imageSize = $state<{ width: number; height: number } | null>(null);
+  /** Where longitude / latitude falls on the image, `[0, 1]` across and up */
+  const uvOf = $derived.by(() => {
+    const source = sourceProjection?.();
+    const size = imageSize;
+    if (!source) return (lon: number, lat: number) => [(lon + 180) / 360, (lat + 90) / 180];
+    return (lon: number, lat: number) => {
+      const p = size ? source([lon, lat]) : null;
+      return p ? [p[0] / size!.width, 1 - p[1] / size!.height] : [NaN, NaN];
+    };
+  });
 
   const ctx = getChartContext();
   const scene = getSceneContext();
@@ -134,7 +184,7 @@
             [Math.min(s.width, i * pixelSize), z, Math.min(s.height, j * pixelSize)],
             k * 3
           );
-          uvs.set([(lonLat[k * 2] + 180) / 360, (lonLat[k * 2 + 1] + 90) / 180], k * 2);
+          uvs.set(uvOf(lonLat[k * 2], lonLat[k * 2 + 1]), k * 2);
         }
       }
       // Two triangles a cell, where every corner is on the map and none wraps the antimeridian
@@ -144,7 +194,8 @@
         for (let i = 0; i < columns - 1; i++) {
           const a = j * columns + i;
           const corners = [a, a + 1, a + columns, a + columns + 1];
-          if (!corners.every((k) => Number.isFinite(lonLat[k * 2]))) continue;
+          if (!corners.every((k) => Number.isFinite(lonLat[k * 2]) && Number.isFinite(uvs[k * 2])))
+            continue;
           const us = corners.map(u);
           if (Math.max(...us) - Math.min(...us) > 0.5) continue;
           index.push(a, a + columns, a + 1, a + 1, a + columns, a + columns + 1);
@@ -164,7 +215,23 @@
   });
 
   $effect(() => {
-    const texture = loadTexture(src, () => scene.invalidate());
+    // An image's own size, not as laid out on the page
+    const sizeOf = (source: any) => ({
+      width: source.naturalWidth || source.width,
+      height: source.naturalHeight || source.height,
+    });
+    const texture = loadTexture(
+      image,
+      () => {
+        imageSize = sizeOf(texture.image);
+        scene.invalidate();
+      },
+      { crossOrigin }
+    );
+    imageSize = typeof image === 'string' ? null : sizeOf(image);
+    const crisp = pixelated || interpolate === 'nearest';
+    texture.magFilter = crisp ? NearestFilter : LinearFilter;
+    texture.minFilter = crisp ? NearestFilter : LinearMipmapLinearFilter;
     flat.map = lit.map = texture;
     flat.needsUpdate = lit.needsUpdate = true;
     scene.invalidate();

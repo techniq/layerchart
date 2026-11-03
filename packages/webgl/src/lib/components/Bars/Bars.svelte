@@ -18,6 +18,11 @@
      * chart's `c`, else `var(--color-primary, currentColor)`.
      */
     fill?: ColorProp;
+    /**
+     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * the fill, stroke, stroke width, and opacity they set, where its props don't say
+     */
+    class?: string;
     /** @default 1 */
     opacity?: number;
     /**
@@ -43,6 +48,7 @@
 
 <script lang="ts">
   import { BoxGeometry, Color, Quaternion, Vector3 } from 'three';
+  import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getChartContext, isScaleBand } from 'layerchart';
 
   import { getSphere } from '../../utils/globe.js';
@@ -55,6 +61,7 @@
     y,
     z,
     fill,
+    class: className,
     opacity = 1,
     insets = 0,
     size: sizeProp = 10,
@@ -62,6 +69,9 @@
   }: BarsProps = $props();
 
   const ctx = getChartContext();
+  const scene = getSceneContext();
+  /** What its `class` sets */
+  const look = $derived(scene.style(className));
 
   ctx.registerComponent({
     name: 'Bars',
@@ -124,7 +134,7 @@
               depth: sizeProp,
               height: Math.abs(z1 - z0),
               rotation,
-              color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)'),
+              color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
             },
           ];
         }
@@ -140,11 +150,11 @@
             width,
             depth,
             height: Math.abs(z1 - z0),
-            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)'),
+            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
           },
         ];
       }),
-    opacity: () => opacity,
+    opacity: () => opacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
   });
 </script>

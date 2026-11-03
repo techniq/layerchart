@@ -161,7 +161,7 @@
 >
 	<WebGL>
 		{#if texture}
-			<GeoRaster src={texture} />
+			<GeoRaster image={texture} />
 		{/if}
 	</WebGL>
 </Chart>

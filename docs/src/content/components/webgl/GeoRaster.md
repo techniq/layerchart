@@ -12,7 +12,7 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-An equirectangular image (`src`: a URL, or an image or canvas) laid over the map through the chart's projection, as LayerChart's [GeoRaster](/docs/components/GeoRaster) reprojects one. `elevation` (a function of longitude and latitude) raises it into terrain, and `tooltip` shows the longitude and latitude under the pointer.
+An image (`image`: a URL, or an image, canvas, or bitmap) laid over the map through the chart's projection, as LayerChart's [GeoRaster](/docs/components/GeoRaster) reprojects one, and with the same props: it's equirectangular unless `sourceProjection` gives the projection it was drawn in, and `interpolate` / `pixelated` choose blended or crisp pixels. Unlike LayerChart's, it blends (`'bilinear'`) by default, which costs the GPU nothing. `elevation` (a function of longitude and latitude) raises it into terrain, and `tooltip` shows the longitude and latitude under the pointer.
 
 :example{ name="projections" }
 
@@ -27,7 +27,7 @@ The `globe` projection lays the map on a real sphere you can orbit. Fit it as an
 
 <Chart geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }} view={perspective}>
 	<WebGL>
-		<GeoRaster src="/images/blue-marble.jpg" tooltip />
+		<GeoRaster image="/images/blue-marble.jpg" tooltip />
 		<GeoPath geojson={countries} stroke="white" />
 	</WebGL>
 </Chart>

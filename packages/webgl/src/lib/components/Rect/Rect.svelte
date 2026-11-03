@@ -38,6 +38,11 @@
      * @default 'var(--color-primary)'
      */
     fill?: ColorProp;
+    /**
+     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * the fill, stroke, stroke width, and opacity they set, where its props don't say
+     */
+    class?: string;
     /** @default 1 */
     opacity?: number;
     /**
@@ -51,6 +56,7 @@
 
 <script lang="ts">
   import { BoxGeometry, Color } from 'three';
+  import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
 
   import { createInstances } from '../../utils/instances.svelte.js';
@@ -68,11 +74,15 @@
     y1,
     z,
     fill,
+    class: className,
     opacity = 1,
     tooltip = false,
   }: RectProps = $props();
 
   const ctx = getChartContext();
+  const scene = getSceneContext();
+  /** What its `class` sets */
+  const look = $derived(scene.style(className));
   const highlight = new Color(0xffffff);
 
   /** With rows (`data`, or props reading the chart's), as LayerChart's `Rect` */
@@ -129,11 +139,11 @@
             ...footprint(d),
             z: base,
             height: top - base,
-            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)'),
+            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
           };
         }
       ),
-    opacity: () => opacity,
+    opacity: () => opacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
   });
 </script>

@@ -101,7 +101,7 @@
 		<!-- The globe beneath, while the tiles load (and at the poles, past where they stop) -->
 		<GeoPath geojson={{ type: 'Sphere' }} fill="var(--color-surface-200)" />
 		{#if image}
-			<GeoRaster src={image} />
+			<GeoRaster {image} />
 		{/if}
 		<GeoPath
 			geojson={countries}

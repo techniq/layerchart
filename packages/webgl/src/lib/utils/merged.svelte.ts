@@ -33,6 +33,8 @@ type MergedOptions = {
   tooltip?: () => boolean;
   opacity: () => number;
   strokeWidth: () => number;
+  /** Lose to other shapes in the same place (ex. an arc's track, beneath the arc) */
+  behind?: boolean;
 };
 
 const highlight = new Color(0xffffff);
@@ -47,11 +49,15 @@ function append(target: number[], source: ArrayLike<number>) {
  * of lines, so thousands of shapes cost a draw call or two.  Picks rows for the tooltip from the
  * face hit, and lightens the hovered shape.  Call during component setup.
  */
-export function createMerged({ items, opacity, strokeWidth, tooltip }: MergedOptions) {
+export function createMerged({ items, opacity, strokeWidth, tooltip, behind }: MergedOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
 
-  const material = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide });
+  const material = new MeshLambertMaterial({
+    vertexColors: true,
+    side: DoubleSide,
+    ...(behind && { polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 }),
+  });
   const mesh = new Mesh(new BufferGeometry(), material);
   mesh.castShadow = mesh.receiveShadow = true;
   const lineMaterial = new LineMaterial({ vertexColors: true, transparent: true });

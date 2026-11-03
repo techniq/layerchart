@@ -24,6 +24,11 @@
      * chart's `c`, else `var(--color-primary, currentColor)`.
      */
     fill?: ColorProp;
+    /**
+     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * the fill, stroke, stroke width, and opacity they set, where its props don't say
+     */
+    class?: string;
     /** @default 1 */
     opacity?: number;
     /**
@@ -79,21 +84,14 @@
     type Texture,
   } from 'three';
   import { untrack } from 'svelte';
-  import { getChartContext } from 'layerchart';
+  import { getChartContext, isScaleLinear } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createInstances } from '../../utils/instances.svelte.js';
   import { loadTexture } from '../../utils/texture.js';
   import { valueOf } from '../../utils/values.js';
   import { getSphere } from '../../utils/globe.js';
-  import {
-    colorer,
-    defined,
-    isLinearScale,
-    linearShift,
-    placer,
-    resolveAccessor,
-  } from '../../utils/marks.js';
+  import { colorer, defined, linearShift, placer, resolveAccessor } from '../../utils/marks.js';
 
   let {
     data: dataProp,
@@ -102,6 +100,7 @@
     z,
     r,
     fill,
+    class: className,
     opacity = 1,
     hoverScale = 1.4,
     tooltip = false,
@@ -113,6 +112,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** What its `class` sets */
+  const look = $derived(scene.style(className));
 
   ctx.registerComponent({
     name: 'Points',
@@ -135,8 +136,8 @@
       !sphere &&
       !ctx.geo.projection &&
       image == null &&
-      isLinearScale(ctx.xScale) &&
-      isLinearScale(ctx.yScale)
+      isScaleLinear(ctx.xScale) &&
+      isScaleLinear(ctx.yScale)
   );
   /** The scales rows were last placed through, while they can be shifted */
   let placedScales = $state.raw<{ x: any; y: any } | null>(null);
@@ -155,7 +156,13 @@
   });
   const shift = $derived.by((): [number, number, number, number] | null => {
     if (!placedScales) return null;
-    return [...linearShift(placedScales.x, ctx.xScale), ...linearShift(placedScales.y, ctx.yScale)];
+    const shift = [
+      ...linearShift(placedScales.x, ctx.xScale),
+      ...linearShift(placedScales.y, ctx.yScale),
+    ] as [number, number, number, number];
+    // Placed where they're drawn (at rest): none
+    const [kx, tx, ky, ty] = shift;
+    return kx === 1 && tx === 0 && ky === 1 && ty === 0 ? null : shift;
   });
 
   /**
@@ -189,7 +196,7 @@
     geometry: () => (ctx.view ? ball : disc),
     instances: () => {
       const pointOf = pointer();
-      const colorOf = colorer(ctx, fill, 'var(--color-primary, currentColor)');
+      const colorOf = colorer(ctx, fill, 'var(--color-primary, currentColor)', look?.fill);
       return rows.flatMap((d: any) => {
         if (image != null && imageOf(d)) return [];
         const point = pointOf(d);
@@ -208,7 +215,7 @@
         ];
       });
     },
-    opacity: () => opacity,
+    opacity: () => opacity * (look?.opacity ?? 1),
     shift: () => shift,
     emphasize: (_color, size) => size.multiplyScalar(hoverScale),
   });
@@ -266,8 +273,8 @@
         );
       }
       const material = materialFor(point.source, !glow);
-      material.opacity = opacity;
-      material.transparent = opacity < 1;
+      material.opacity = opacity * (look?.opacity ?? 1);
+      material.transparent = material.opacity < 1;
       mesh.material = material;
       mesh.castShadow = mesh.receiveShadow = !glow;
       mesh.visible = true;

@@ -2,6 +2,8 @@
   import type { ComponentProps } from 'svelte';
   import type { ChartState } from 'layerchart';
   import {
+    Arc,
+    Area,
     Axis,
     Bin,
     Chart,
@@ -9,6 +11,7 @@
     Light,
     Link,
     Points,
+    Polygon,
     Rect,
     WebGL,
     Spline,
@@ -32,6 +35,9 @@
     rect,
     link,
     axis,
+    area,
+    polygon,
+    arc,
     offset = 0,
     onScene,
   }: {
@@ -45,7 +51,10 @@
       | 'text'
       | 'rect'
       | 'link'
-      | 'axis';
+      | 'axis'
+      | 'area'
+      | 'polygon'
+      | 'arc';
     chart: Partial<ComponentProps<typeof Chart>>;
     scene?: Partial<ComponentProps<typeof WebGL>>;
     points?: ComponentProps<typeof Points>;
@@ -58,6 +67,9 @@
     rect?: ComponentProps<typeof Rect>;
     link?: ComponentProps<typeof Link>;
     axis?: ComponentProps<typeof Axis>;
+    area?: ComponentProps<typeof Area>;
+    polygon?: ComponentProps<typeof Polygon>;
+    arc?: ComponentProps<typeof Arc>;
     /** Pixels down the page to put the chart, to test it off screen */
     offset?: number;
     onScene: (scene: SceneState, chart: ChartState<any>) => void;
@@ -83,6 +95,12 @@
         <Rect {...rect} />
       {:else if mark === 'link'}
         <Link {...link} />
+      {:else if mark === 'area'}
+        <Area {...area} />
+      {:else if mark === 'polygon'}
+        <Polygon {...polygon} />
+      {:else if mark === 'arc'}
+        <Arc {...arc} />
       {:else if mark === 'axis'}
         <!-- A point too, so the scene has something in it however the axis draws -->
         <Axis {...axis!} />

@@ -62,7 +62,7 @@
 	height={500}
 >
 	<WebGL>
-		<GeoRaster src="/images/blue-marble.jpg" pixelSize={3} />
+		<GeoRaster image="/images/blue-marble.jpg" pixelSize={3} />
 		<GeoPath
 			geojson={geoGraticule10()}
 			fill={null}

@@ -35,6 +35,13 @@
     label?: string;
     /** A count, values, or an interval */
     ticks?: TicksConfig;
+    /**
+     * Pixels between ticks, picking how many there are as the axis' length changes (as LayerChart's
+     * `Axis`).  `null` leaves the count to the scale.
+     *
+     * @default 50 in a 3D view (80 across a flat one)
+     */
+    tickSpacing?: number | null;
     /** How to format tick values */
     format?: Parameters<typeof autoTickFormat>[0]['formatType'];
     /**
@@ -72,7 +79,7 @@
   import { autoTickFormat as tickFormat, autoTickVals, getChartContext } from 'layerchart';
 
   import { getSceneContext, setUnclipped, type SceneLabel } from '../../contexts/scene.svelte.js';
-  import { scaled, TICK_SPACING, tickCount } from '../../utils/marks.js';
+  import { scaled, tickCount, tickSpacing } from '../../utils/marks.js';
   import {
     BufferGeometry,
     Float32BufferAttribute,
@@ -81,13 +88,14 @@
     LineSegments,
     Mesh,
   } from 'three';
-  import { disposeLabel, labelPlane } from '../../utils/labels.js';
+  import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
   import Text from '../Text/Text.svelte';
 
   let {
     placement,
     label,
     ticks,
+    tickSpacing: tickSpacingProp,
     format,
     rule = false,
     tickMarks = true,
@@ -112,9 +120,12 @@
     placement === 'bottom' ? ctx.width : placement === 'left' ? ctx.height : ctx.zDepth
   );
   // Spaced as LayerChart's `Axis` spaces them
-  const count = $derived(
-    tickCount(length, TICK_SPACING[placement === 'bottom' ? 'x' : placement === 'left' ? 'y' : 'z'])
+  const spacing = $derived(
+    tickSpacingProp !== undefined
+      ? tickSpacingProp
+      : tickSpacing(ctx, placement === 'bottom' ? 'x' : placement === 'left' ? 'y' : 'z')
   );
+  const count = $derived(spacing ? tickCount(length, spacing) : undefined);
   const values = $derived(autoTickVals(scale, ticks, count));
   const formatTick = $derived(tickFormat({ scale, ticks, count, formatType: format }));
 
@@ -141,16 +152,18 @@
     const w = ctx.width;
     const h = ctx.height;
     const { nearX, nearY, outX, outY, farX } = edges;
-    const offset = tickLabelOffset * unit;
-    // Labels are placed by their middle: half a label further out, across or down
-    const half = (placement === 'left' && !tickViewport ? 0 : 6) * unit;
+    // On the floor, labels across are placed by their middle (half a label further out), and the
+    // left axis' by their end.  Facing the viewer, they're at the edge, anchored by their side
+    // nearest it a gap of pixels away on screen, so the gap is the same however the view turns.
+    const half = (placement === 'left' ? 0 : 6) * unit;
+    const tickOut = tickViewport ? 0 : tickLabelOffset * unit + half;
+    const outward = placement === 'left' ? { x: outX, y: 0, z: 0 } : { x: 0, y: outY, z: 0 };
 
     const at = (value: unknown): [number, number, number] => {
       const p = scaled(scale, value);
-      if (placement === 'bottom') return [p, nearY + outY * (offset + half), 0];
-      if (placement === 'left')
-        return [nearX + outX * (offset + (tickViewport ? 12 * unit : 0)), p, 0];
-      return [farX, nearY + outY * (offset + half), p];
+      if (placement === 'bottom') return [p, nearY + outY * tickOut, 0];
+      if (placement === 'left') return [nearX + outX * tickOut, p, 0];
+      return [farX, nearY + outY * tickOut, p];
     };
 
     const result: SceneLabel[] = values.map((value, i) => {
@@ -162,18 +175,21 @@
         z,
         text: String(formatTick(value, i)),
         class: tickLabelProps?.class,
+        ...(tickViewport && { outward, gap: tickLabelOffset }),
       };
     });
 
     if (label) {
-      // Beyond the tick labels
-      const titleOffset = offset + 26 * unit;
+      // Beyond the tick labels (facing the viewer, past as far as they reach out from the edge)
+      const titleOffset = labelViewport
+        ? 0
+        : (tickLabelOffset + (placement === 'bottom' ? 26 : 34)) * unit;
       const [x, y, z] =
         placement === 'bottom'
           ? [w / 2, nearY + outY * titleOffset, 0]
           : placement === 'left'
-            ? [nearX + outX * (titleOffset + 8 * unit), h / 2, 0]
-            : [farX, nearY + outY * (titleOffset + 8 * unit), ctx.zDepth / 2];
+            ? [nearX + outX * titleOffset, h / 2, 0]
+            : [farX, nearY + outY * titleOffset, ctx.zDepth / 2];
       result.push({
         key: `${placement}-label`,
         x,
@@ -181,6 +197,7 @@
         z,
         text: label,
         class: ['lc-webgl-axis-label', labelProps?.class].filter(Boolean).join(' '),
+        ...(labelViewport && { outward, gap: tickLabelOffset + 22 }),
       });
     }
     return result;
@@ -275,8 +292,10 @@
       const outY = nearY === h ? 1 : -1;
       // Facing the near side, where the camera is, so its text reads left to right
       const toward = nearX > farX ? 1 : -1;
+      const family = fontFamily();
       for (const l of floorLabels) {
         const label = labelPlane(l.text, {
+          family,
           fontSize: sizeOf(l),
           fontWeight: weightOf(l),
           color: scene.color(fillOf(l)),

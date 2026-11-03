@@ -142,7 +142,6 @@
 				data={frame}
 				fill={opaque ? 'var(--color-surface-100)' : colorScale(row)}
 				opacity={opaque ? 1 : 0.15}
-				line={false}
 			/>
 			<Spline data={frame} stroke={colorScale(row)} strokeWidth={1.5} />
 		{/each}

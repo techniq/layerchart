@@ -33,7 +33,7 @@
 	height={500}
 >
 	<WebGL>
-		<GeoRaster src="/images/blue-marble.jpg" tooltip />
+		<GeoRaster image="/images/blue-marble.jpg" tooltip />
 		<GeoPath
 			geojson={geoGraticule10()}
 			stroke="color-mix(in oklab, var(--color-surface-content) 15%, transparent)"

@@ -1006,6 +1006,9 @@ importers:
 
   packages/webgl:
     dependencies:
+      '@layerstack/utils':
+        specifier: 2.0.0-next.19
+        version: 2.0.0-next.19
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4

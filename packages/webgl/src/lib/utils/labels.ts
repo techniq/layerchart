@@ -1,6 +1,5 @@
 import {
   CanvasTexture,
-  LinearFilter,
   Mesh,
   MeshLambertMaterial,
   PlaneGeometry,
@@ -26,23 +25,40 @@ export function labelPlane(
     fontSize,
     fontWeight,
     color,
-  }: { fontSize: number; fontWeight: number | string; color: ResolvedColor | null }
-): { mesh: Mesh; width: number } | null {
+    family = fontFamily(),
+    maxWidth,
+    lineHeight = 1.2,
+    align = 'middle',
+  }: {
+    fontSize: number;
+    fontWeight: number | string;
+    color: ResolvedColor | null;
+    /** The font family, if already looked up (ex. once for many labels) */
+    family?: string;
+    /** Wrap words onto more lines to keep within this many pixels of the plot */
+    maxWidth?: number;
+    /** Line spacing, in multiples of the font size */
+    lineHeight?: number;
+    /** How wrapped lines line up with each other */
+    align?: 'start' | 'middle' | 'end';
+  }
+): { mesh: Mesh; width: number; height: number } | null {
   if (typeof document === 'undefined' || !(fontSize > 0)) return null;
-  const family = getComputedStyle(document.body).fontFamily;
   const font = `${fontWeight} ${fontSize * RESOLUTION}px ${family}`;
   measure ??= document.createElement('canvas').getContext('2d');
   if (!measure) return null;
   measure.font = font;
-  const width = Math.ceil(measure.measureText(text).width) + 2;
-  const height = Math.ceil(fontSize * RESOLUTION * 1.3);
+  const lines = maxWidth ? wrap(text, maxWidth * RESOLUTION, measure) : text.split('\n');
+  const width = Math.ceil(Math.max(...lines.map((line) => measure!.measureText(line).width))) + 2;
+  const step = fontSize * RESOLUTION * lineHeight;
+  const height = Math.ceil(fontSize * RESOLUTION * 1.3 + step * (lines.length - 1));
 
   const label = document.createElement('canvas');
   label.width = width;
   label.height = height;
   const paint = label.getContext('2d')!;
   paint.font = font;
-  paint.textAlign = 'center';
+  paint.textAlign = align === 'start' ? 'left' : align === 'end' ? 'right' : 'center';
   paint.textBaseline = 'middle';
   // Painted in the color's linear values, read by the shader as they are (a linear texture), and
   // encoded for the screen with the rest of the scene.  An sRGB texture of sRGB values should do
@@ -52,16 +68,15 @@ export function labelPlane(
     ? `rgb(${Math.round(linear.r * 255)} ${Math.round(linear.g * 255)} ${Math.round(linear.b * 255)})`
     : 'black';
   paint.globalAlpha = color?.opacity ?? 1;
-  paint.fillText(text, width / 2, height / 2);
+  const x = align === 'start' ? 1 : align === 'end' ? width - 1 : width / 2;
+  const first = (fontSize * RESOLUTION * 1.3) / 2;
+  lines.forEach((line, i) => paint.fillText(line, x, first + step * i));
 
   const texture = new CanvasTexture(label);
   texture.colorSpace = LinearSRGBColorSpace;
   // Blended by coverage at the glyphs' edges, rather than against transparent black
   texture.premultiplyAlpha = true;
   texture.anisotropy = 8;
-  // Not averaged down a mip chain, which washes thin strokes out to grey at a label's usual size
-  texture.generateMipmaps = false;
-  texture.minFilter = LinearFilter;
   const mesh = new Mesh(
     new PlaneGeometry(width / RESOLUTION, height / RESOLUTION),
     new MeshLambertMaterial({
@@ -71,7 +86,33 @@ export function labelPlane(
       depthWrite: false,
     })
   );
-  return { mesh, width: width / RESOLUTION };
+  return { mesh, width: width / RESOLUTION, height: height / RESOLUTION };
+}
+
+/** `text`'s words wrapped onto lines `maxWidth` wide (as measured by `context`), as SVG text wraps */
+function wrap(text: string, maxWidth: number, context: CanvasRenderingContext2D) {
+  const lines: string[] = [];
+  for (const paragraph of text.split('\n')) {
+    let line = '';
+    for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+      const next = line ? `${line} ${word}` : word;
+      if (line && context.measureText(next).width > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = next;
+      }
+    }
+    lines.push(line);
+  }
+  return lines;
+}
+
+/** The page's font family, for labels to match its text */
+export function fontFamily() {
+  return typeof document === 'undefined'
+    ? 'sans-serif'
+    : getComputedStyle(document.body).fontFamily;
 }
 
 /** Free a `labelPlane`'s geometry, texture, and material */

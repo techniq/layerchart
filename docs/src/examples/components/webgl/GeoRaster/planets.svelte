@@ -90,6 +90,6 @@
 		<!-- Lit from one side, as the sun would -->
 		<Light azimuth={250} altitude={20} intensity={1.1} />
 		<Light type="ambient" intensity={0.25} />
-		<GeoRaster src={planet} />
+		<GeoRaster image={planet} />
 	</WebGL>
 </Chart>

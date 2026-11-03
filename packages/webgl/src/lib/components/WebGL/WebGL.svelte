@@ -143,9 +143,20 @@
       {#each labels as label (label.key)}
         {@const point = sceneState.project(label.x, label.y, label.z)}
         {#if point && !(label.clip && sceneState.clipped(label.x, label.y))}
+          {@const anchors = { start: 0, middle: -50, end: -100 }}
+          {@const shift = sceneState.outwardShift(label) ?? {
+            x: anchors[label.textAnchor ?? 'middle'],
+            y: anchors[label.verticalAnchor ?? 'middle'],
+            dx: 0,
+            dy: 0,
+          }}
           <div
             class={['lc-webgl-label', label.class]}
-            style:transform="translate({point.x}px, {point.y}px) translate(-50%, -50%)"
+            style:transform="translate({point.x + (label.dx ?? 0) + shift.dx}px, {point.y +
+              (label.dy ?? 0) +
+              shift.dy}px) translate({shift.x}%, {shift.y}%)"
+            style:max-width={label.width ? `${label.width}px` : undefined}
+            style:white-space={label.width ? 'normal' : undefined}
           >
             {label.text}
           </div>

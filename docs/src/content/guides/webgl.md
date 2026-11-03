@@ -74,7 +74,7 @@ The chart lays out exactly as a flat one would: `x` across the plot's width, `y`
 - **The `z` scale** measures up from the floor, as it does for [isometric](/docs/guides/isometric#height). Its range defaults to half the floor's shorter side. Set `zRange={({ height }) => [0, height]}` for a cube.
 - **Color, series, stacking, and domains** work as on any chart: marks register with the chart, and `fill` / `stroke` take a CSS color, or a data key or function run through the color scale (`c`, `cRange`, ...). CSS variables like `var(--color-primary)` resolve against the page, and follow theme changes.
 - **Tooltips** show the row under the pointer, from the nearest mark with `tooltip` set (it's off by default, as for flat marks). Add `tooltipContext` to the chart and a `Tooltip.Root`.
-- **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as LayerChart's primitives do. [`Text`](/docs/components/webgl/Text), [`Rect`](/docs/components/webgl/Rect), and [`Link`](/docs/components/webgl/Link) place rows just as their LayerChart namesakes; [`Polygon`](/docs/components/webgl/Polygon)'s `points` are in pixels.
+- **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as LayerChart's primitives do. Marks take their LayerChart namesakes' props, so a chart moves between `Canvas` and `WebGL` with few changes.
 
 ## The view
 
@@ -177,7 +177,7 @@ The `globe` projection lays the map on a real sphere you can orbit, and the same
 ```svelte
 <Chart geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }} view={perspective}>
 	<WebGL>
-		<GeoRaster src="/images/blue-marble.jpg" />
+		<GeoRaster image="/images/blue-marble.jpg" />
 		<GeoPath geojson={countries} stroke="white" />
 	</WebGL>
 </Chart>

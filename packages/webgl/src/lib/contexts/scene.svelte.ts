@@ -1,7 +1,7 @@
 import { getContext, setContext, untrack } from 'svelte';
 import { Group, Vector3, type Camera, type Intersection, type Object3D } from 'three';
 
-import type { ColorResolver, ResolvedColor } from '../utils/color.js';
+import type { ClassStyle, ColorResolver, ResolvedColor } from '../utils/color.js';
 
 /** Which end of an axis a side of the plot box is at */
 export type Side = 'min' | 'max';
@@ -19,6 +19,22 @@ export type SceneLabel = {
   class?: string;
   /** Hidden outside the plot box when the scene clips to it (unlike an axis's, beside it) */
   clip?: boolean;
+  /** Pixels to move it across and down the screen */
+  dx?: number;
+  dy?: number;
+  /** Which of its ends is at its point, across and down */
+  textAnchor?: 'start' | 'middle' | 'end';
+  verticalAnchor?: 'start' | 'middle' | 'end';
+  /** Wrap onto more lines to keep within this many pixels */
+  width?: number;
+  /**
+   * The way it sits out from its point, in the chart's axes (ex. out from an axis): it's anchored
+   * by its side nearest the point, whichever way the view turns that on screen, so it keeps the
+   * same gap (in place of `textAnchor` / `verticalAnchor`)
+   */
+  outward?: { x: number; y: number; z: number };
+  /** Pixels on screen between its point and its nearest side, along `outward` */
+  gap?: number;
 };
 
 /** A mark's object the pointer can hit, and the data row each hit is on */
@@ -101,7 +117,9 @@ export class SceneState {
     // Called from marks' effects, which mustn't come to depend on the list they add to
     untrack(() => (this.#labels = [...this.#labels, labels]));
     return () => {
-      untrack(() => (this.#labels = this.#labels.filter((l) => l !== labels)));
+      // Not written in the teardown itself: Svelte (5.56) can lose a write made while an effect
+      // tears down, leaving the new labels that replace these undrawn until something else redraws
+      queueMicrotask(() => (this.#labels = this.#labels.filter((l) => l !== labels)));
     };
   }
 
@@ -120,6 +138,16 @@ export class SceneState {
     return this.colors?.resolve(value) ?? null;
   }
 
+  /**
+   * What a mark's CSS `class` sets (its fill, stroke, and opacity, as LayerChart's `Canvas` layer
+   * reads them), re-read when the theme changes.  `null` without one, or before the layer mounts.
+   */
+  style(classes: string | null | undefined): ClassStyle | null {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    this.themeVersion;
+    return classes ? (this.colors?.style(classes) ?? null) : null;
+  }
+
   /** A point in the scene (ex. where the pointer hit a mark) in chart coordinates */
   toChart(point: Vector3): { x: number; y: number; z: number } {
     return {
@@ -127,6 +155,26 @@ export class SceneState {
       y: point.z - this.root.position.z,
       z: point.y - this.root.position.y,
     };
+  }
+
+  /**
+   * How far to shift a label with `outward` back over its point, as percents of its width and
+   * height: by its side nearest the point, sliding round as the view turns
+   */
+  outwardShift(label: SceneLabel): { x: number; y: number; dx: number; dy: number } | null {
+    const outward = label.outward;
+    if (!outward) return null;
+    const from = this.project(label.x, label.y, label.z);
+    const to = this.project(label.x + outward.x, label.y + outward.y, label.z + outward.z);
+    if (!from || !to) return null;
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const length = Math.hypot(dx, dy);
+    if (!length) return { x: -50, y: -50, dx: 0, dy: 0 };
+    // Pointing right, its left side is at the point (0%); left, its right (-100%); between, between
+    const along = (d: number) => -50 + 50 * Math.max(-1, Math.min(1, (d / length) * 1.4));
+    const gap = label.gap ?? 0;
+    return { x: along(dx), y: along(dy), dx: (dx / length) * gap, dy: (dy / length) * gap };
   }
 
   /** Where a point in chart coordinates lands on the layer, in CSS pixels; `null` behind the camera */

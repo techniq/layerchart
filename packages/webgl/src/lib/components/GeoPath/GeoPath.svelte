@@ -43,6 +43,11 @@
      * @default 1
      */
     strokeWidth?: number;
+    /**
+     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * the fill, stroke, stroke width, and opacity they set, where its props don't say
+     */
+    class?: string;
     /** @default 1 */
     opacity?: number;
     /**
@@ -76,9 +81,10 @@
   let {
     geojson,
     z,
-    fill = defaultFill,
-    stroke,
-    strokeWidth = 1,
+    fill: fillProp,
+    stroke: strokeProp,
+    strokeWidth: strokeWidthProp,
+    class: className,
     opacity = 1,
     tooltip = false,
     motion,
@@ -86,6 +92,13 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** What its `class` sets, where its props don't say */
+  const look = $derived(scene.style(className));
+  const fill = $derived(
+    fillProp !== undefined ? fillProp : look?.fill === 'none' ? null : (look?.fill ?? defaultFill)
+  );
+  const stroke = $derived(strokeProp ?? look?.stroke);
+  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** On a `globe`, features draw over it as lines */
   const sphere = $derived(getSphere(ctx));
 
@@ -219,7 +232,7 @@
         };
       });
     },
-    opacity: () => opacity,
+    opacity: () => opacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
   });
 </script>

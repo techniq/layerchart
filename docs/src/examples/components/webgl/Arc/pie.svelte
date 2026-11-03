@@ -48,17 +48,18 @@
 	{#snippet children({ context })}
 		{@const outer = Math.min(context.width, context.height) / 2}
 		<WebGL>
-			<Arc
-				tooltip
-				data={arcs}
-				innerRadius={shape === 'donut' ? outer * 0.5 : 0}
-				outerRadius={outer}
-				z={40}
-				fill={(arc) => context.cScale?.(arc.data.fruit)}
-			/>
-			<!-- Labels beyond each slice's outer edge, at its middle angle -->
+			<!-- A slice per arc, as LayerChart's Arc draws them, labeled beyond its outer edge -->
 			{#each arcs as arc}
 				{@const angle = (arc.startAngle + arc.endAngle) / 2}
+				<Arc
+					startAngle={arc.startAngle}
+					endAngle={arc.endAngle}
+					innerRadius={shape === 'donut' ? 0.5 : 0}
+					z={40}
+					data={arc}
+					fill={context.cScale?.(arc.data.fruit)}
+					tooltip
+				/>
 				<Text
 					x={context.width / 2 + Math.sin(angle) * outer * 1.18}
 					y={context.height / 2 - Math.cos(angle) * outer * 1.18}

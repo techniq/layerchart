@@ -58,7 +58,7 @@
   import { autoTickVals, getChartContext } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
-  import { scaled, TICK_SPACING, tickCount } from '../../utils/marks.js';
+  import { scaled, tickCount, tickSpacing } from '../../utils/marks.js';
 
   let {
     x = true,
@@ -106,9 +106,9 @@
     const segments: number[] = [];
     const segment = (...points: number[]) => segments.push(...points);
 
-    const xs = x ? ticks(ctx.xScale, xTicks, w, TICK_SPACING.x) : [];
-    const ys = y ? ticks(ctx.yScale, yTicks, h, TICK_SPACING.y) : [];
-    const zs = z && d > 0 ? ticks(ctx.zScale, zTicks, d, TICK_SPACING.z) : [];
+    const xs = x ? ticks(ctx.xScale, xTicks, w, tickSpacing(ctx, 'x')) : [];
+    const ys = y ? ticks(ctx.yScale, yTicks, h, tickSpacing(ctx, 'y')) : [];
+    const zs = z && d > 0 ? ticks(ctx.zScale, zTicks, d, tickSpacing(ctx, 'z')) : [];
 
     for (const tx of xs) {
       segment(tx, 0, 0, tx, 0, h);
