@@ -87,6 +87,24 @@ describe('ChartState `view`', () => {
     cleanup();
   });
 
+  it('turns a tall view in place, about the middle of the box rather than of its floor', () => {
+    const { state, cleanup } = chartState({
+      view: isometric,
+      width: 400,
+      height: 300,
+      padding: 0,
+      data: [{ z: 0 }, { z: 10 }],
+      z: 'z',
+      zDomain: [0, 10],
+      zRange: ({ height }: { height: number }) => [0, height],
+    });
+    expect(state.zDepth).toBeGreaterThan(0);
+    const still = state.isometricPivot({ x: -45, y: 50 }, { x: 60, y: 30 }, { x: 0, y: 0 }, 1);
+    expect(still.x).toBeCloseTo(0);
+    expect(still.y).toBeCloseTo(0);
+    cleanup();
+  });
+
   it('keeps the same point of the floor in the middle as it turns', () => {
     const size = { width: 400, height: 300, padding: 0 };
     const before = chartState({ view: isometric({ rotate: -45, tilt: 50 }), ...size });

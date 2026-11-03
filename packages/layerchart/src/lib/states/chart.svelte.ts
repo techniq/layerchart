@@ -1269,7 +1269,9 @@ export class ChartState<
   /**
    * The translate keeping what's at the middle of the plot there as the `isometric` view turns
    * `from` one rotation `to` another (`x` the turn, `y` the tilt) under a pan and zoom, so a drag
-   * turns the view about what's been panned to rather than the floor's centre
+   * turns the view about what's been panned to rather than the floor's centre.  The point it turns
+   * about is halfway up the box, as the view is centred on the box (the floor and what rises off
+   * it): unpanned, the box's middle, so the view turns in place however tall it is.
    */
   isometricPivot(
     from: { x: number; y: number },
@@ -1289,26 +1291,27 @@ export class ChartState<
         footprint,
         depthAt: (f) => this.#zDepthFor(f),
       });
-      const matrix = isometric.createIsometricMatrix(turned, floor, box, {
-        depth: this.#zDepthFor(floor),
-        footprint,
-      });
-      return { floor, matrix };
+      const depth = this.#zDepthFor(floor);
+      const matrix = isometric.createIsometricMatrix(turned, floor, box, { depth, footprint });
+      // Raising a point halfway up the box, on the flat plot
+      const lift = isometric.isometricLift(turned);
+      return { floor, matrix, rise: { x: (lift.x * depth) / 2, y: (lift.y * depth) / 2 } };
     };
     const before = frame(from);
     const after = frame(to);
     const inverse = invertMatrix(before.matrix);
     if (!inverse || !before.floor.width || !before.floor.height) return translate;
-    // The point on the floor in the middle of the plot, as a share of the floor across and down,
-    // which holds as the floor refits
+    // The point halfway up the box in the middle of the plot, by where it is over the floor as a
+    // share of the floor across and down, which holds as the floor refits
     const middle = { x: box.width / 2, y: box.height / 2 };
-    const point = applyMatrix(inverse, {
+    const raised = applyMatrix(inverse, {
       x: (middle.x - translate.x) / scale,
       y: (middle.y - translate.y) / scale,
     });
+    const point = { x: raised.x - before.rise.x, y: raised.y - before.rise.y };
     const turned = applyMatrix(after.matrix, {
-      x: (point.x / before.floor.width) * after.floor.width,
-      y: (point.y / before.floor.height) * after.floor.height,
+      x: (point.x / before.floor.width) * after.floor.width + after.rise.x,
+      y: (point.y / before.floor.height) * after.floor.height + after.rise.y,
     });
     return { x: middle.x - scale * turned.x, y: middle.y - scale * turned.y };
   }
