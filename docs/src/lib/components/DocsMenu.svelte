@@ -138,9 +138,6 @@
 		<h2 class="flex gap-2 items-center mb-4 text-base font-semibold">
 			<LucideBox class="size-4 text-surface-content/70" /> WebGL
 		</h2>
-		<div class="ml-2 mb-6 border-l border-surface-content/10">
-			{@render navItem({ label: 'Guide', path: '/docs/guides/webgl' })}
-		</div>
 		{#each webglByCategory as [category, components]}
 			{@render componentGroup(webglCategories[category], components)}
 		{/each}

@@ -1,6 +1,6 @@
 ---
 description: "Layer drawing its marks with WebGL (three.js), through the chart's perspective or orthographic view in 3D, or flat for many marks in 2D."
-category: WebGL
+category: layers
 related: [Layer, Canvas, guides/webgl, guides/isometric]
 components:
   - { name: webgl/WebGL, label: WebGL }
