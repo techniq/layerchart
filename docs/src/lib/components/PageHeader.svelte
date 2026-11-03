@@ -196,24 +196,6 @@
 					<OpenWithButton {metadata} />
 				</div>
 			{/if}
-			{#if counterpart}
-				<Tooltip
-					title={counterpart.label === 'WebGL'
-						? 'Also drawn with WebGL, by @layerchart/webgl'
-						: 'Also drawn by LayerChart, without WebGL'}
-				>
-					<Button
-						href={counterpart.href}
-						variant="outline"
-						rounded="full"
-						size="sm"
-						class="bg-surface-100 text-surface-content/70 gap-1"
-					>
-						{counterpart.label}
-						<LucideArrowRight class="size-3.5" />
-					</Button>
-				</Tooltip>
-			{/if}
 			{#if layers.length}
 				<ToggleGroup
 					bind:value={settings.layer}
@@ -231,6 +213,24 @@
 						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
 					{/each}
 				</ToggleGroup>
+			{/if}
+			{#if counterpart}
+				<Tooltip
+					title={counterpart.label === 'WebGL'
+						? 'Also drawn with WebGL, by @layerchart/webgl'
+						: 'Also drawn by LayerChart, without WebGL'}
+				>
+					<Button
+						href={counterpart.href}
+						variant="outline"
+						rounded="full"
+						size="sm"
+						class="bg-surface-100 text-surface-content/60 font-normal tracking-normal h-[30px] px-3 gap-1 [--border-color:color-mix(in_oklab,var(--color-surface-content)_20%,transparent)]"
+					>
+						{counterpart.label}
+						<LucideArrowRight class="size-3.5" />
+					</Button>
+				</Tooltip>
 			{/if}
 			<Toggle let:on={open} let:toggle let:toggleOff>
 				<Tooltip title="Settings">
