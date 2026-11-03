@@ -5,6 +5,7 @@
 </script>
 
 <Chart
+	padding={40}
 	view={perspective({ rotate: -35, tilt: 60 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	xDomain={[-1, 1]}

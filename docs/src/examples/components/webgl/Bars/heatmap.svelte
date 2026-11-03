@@ -14,6 +14,7 @@
 
 <!-- Flat tiles colored by value, a few pixels thick so they read as cells on the floor -->
 <Chart
+	padding={40}
 	view={perspective({ rotate: -45, tilt: 55 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}

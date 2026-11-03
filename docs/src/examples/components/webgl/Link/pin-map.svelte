@@ -47,6 +47,7 @@
 
 <!-- Each county's pin stands as tall as its population -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: -10, tilt: 50 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoIdentity as unknown as () => GeoProjection, fitGeojson: states }}

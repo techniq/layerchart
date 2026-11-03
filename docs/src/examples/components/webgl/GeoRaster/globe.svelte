@@ -16,6 +16,7 @@
 
 <!-- NASA Blue Marble wrapped around a sphere, with country borders and a graticule over it -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: 20, tilt: 70 })}
 	transform={{
 		mode: 'canvas',

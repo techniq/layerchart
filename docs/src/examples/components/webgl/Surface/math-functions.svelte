@@ -112,6 +112,7 @@
 	</div>
 
 	<Chart
+		padding={40}
 		view={perspective({ rotate: -30, tilt: 55 })}
 		transform={{
 			mode: 'canvas',

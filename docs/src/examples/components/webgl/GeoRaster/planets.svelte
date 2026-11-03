@@ -64,6 +64,7 @@
 </div>
 
 <Chart
+	padding={24}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	view={perspective({ rotate, tilt })}
 	transform={{

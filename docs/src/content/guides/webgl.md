@@ -90,11 +90,10 @@ The chart's `view` is the camera. `perspective` draws farther things smaller; `o
 | `rotate` | Turns the floor about its center, clockwise, in degrees (as `isometric`)             | `-45`    |
 | `tilt`   | Tips it away from the viewer, from `0` (seen from directly above) towards edge on    | `60`     |
 | `fov`    | `perspective`'s vertical field of view, in degrees                                   | `35`     |
-| `margin` | Room left around the plot box when fitting it into view, as a fraction of its size   | `0.1`    |
 | `aspect` | The floor's width over its depth, kept as the chart resizes; `'auto'` as `isometric` | `'auto'` |
 | `motion` | Ease to new angles (and `fov`), ex. `'tween'`                                        |          |
 
-The camera fits the whole plot box into the scene, and refits when the chart resizes. New angles turn the view to them. Without a `view`, the layer is seen from directly above (see [Flat](#flat-2d)).
+The camera fits the whole plot box into the plot area, inside the chart's `padding` as an `isometric` chart does, and refits when the chart resizes. Give it `padding` for room around the box (ex. for its axes' labels). New angles turn the view to them. Without a `view`, the layer is seen from directly above (see [Flat](#flat-2d)).
 
 ### Turning, panning, and zooming
 

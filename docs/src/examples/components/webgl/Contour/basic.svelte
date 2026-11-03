@@ -12,6 +12,7 @@
 
 <!-- Maungawhau's elevation: each contour line raised to its height, over the values on the floor -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: -25, tilt: 55, aspect: volcano.width / volcano.height })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	cScale={scaleSequential(interpolateViridis)}

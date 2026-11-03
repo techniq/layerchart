@@ -31,7 +31,7 @@
 </div>
 
 <Chart
-	view={perspective({ rotate: -30, tilt: 55, margin: -0.35 })}
+	view={perspective({ rotate: -30, tilt: 55 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoMercator, fitGeojson: buildings }}
 	zDomain={[0, 420]}
@@ -43,7 +43,6 @@
 	tooltipContext
 	height={600}
 >
-	<!-- The neighborhood is about square and the plot is wide, so frame closer than the plot box -->
 	<WebGL>
 		<Light {azimuth} {altitude} intensity={1.1} {shadow} />
 		<Light type="ambient" intensity={0.5} />

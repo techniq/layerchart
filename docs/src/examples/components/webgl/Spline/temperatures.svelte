@@ -46,6 +46,7 @@
 {#if layout === 'radial'}
 	<!-- Each year's loop raised by year, oldest at the bottom, so warming shows as the tower widens -->
 	<Chart
+		padding={40}
 		view={perspective({ rotate: -30, tilt: 65 })}
 		transform={{
 			mode: 'canvas',

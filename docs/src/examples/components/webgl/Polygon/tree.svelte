@@ -42,7 +42,7 @@
 
 <!-- `zDomain` matching `zRange`, so shapes' heights are in pixels -->
 <Chart
-	view={perspective({ rotate: -30, tilt: 50, margin: 0 })}
+	view={perspective({ rotate: -30, tilt: 50 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	zDomain={[0, 60]}
 	zRange={[0, 60]}

@@ -6,6 +6,7 @@
 
 <!-- A function of x and y, colored on the floor -->
 <Chart
+	padding={40}
 	view={perspective({ rotate: -30, tilt: 55 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	xDomain={[-3, 3]}

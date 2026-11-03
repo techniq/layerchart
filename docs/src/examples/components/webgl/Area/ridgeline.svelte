@@ -121,6 +121,7 @@
 <!-- Each frame a curtain standing in its own row, the newest at the front.  The fill and the line
      along its top are drawn separately, so an opaque fill can still show the frame's color -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: -20, tilt: 60 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	data={rows}

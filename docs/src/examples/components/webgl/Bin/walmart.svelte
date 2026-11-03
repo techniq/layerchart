@@ -18,6 +18,7 @@
 
 <!-- Each hexagon raised by its number of stores -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: 25, tilt: 50 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	data={walmarts}

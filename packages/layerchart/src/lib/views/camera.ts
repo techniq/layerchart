@@ -17,13 +17,6 @@ type CameraOptions = {
    */
   tilt?: number;
 
-  /**
-   * Room left around the plot box when fitting it into view, as a fraction of its size.
-   *
-   * @default 0.1
-   */
-  margin?: number;
-
   /** Ease the view to new angles (and `fov`) rather than jumping, ex. `'tween'` */
   motion?: MotionProp;
 

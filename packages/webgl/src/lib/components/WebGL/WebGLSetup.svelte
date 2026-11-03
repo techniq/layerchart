@@ -99,8 +99,6 @@
   const camera = $derived(
     view?.type === 'perspective' ? new PerspectiveCamera() : new OrthographicCamera()
   );
-  /** Room around the plot box when fitting it */
-  const margin = $derived((view?.options as { margin?: number } | undefined)?.margin ?? 0.1);
   /** The angles the camera looks from: the view's, or the transform's while it turns the view */
   const angles = $derived(view ? ctx.viewRotation : { rotate: 0, tilt: 0 });
   /**
@@ -207,7 +205,10 @@
     const sphere = getSphere(ctx);
     const box = { width: ctx.width, height: ctx.height, depth: ctx.zDepth };
     const radius = sphere ? sphere.radius + ctx.zDepth : null;
-    const aspect = width / height;
+    // Fitted into the plot area, inside the chart's `padding`, as an `isometric` chart is (the
+    // floor, `ctx.width` × `ctx.height`, is only as large as fits it at the view's `aspect`)
+    const area = ctx.box;
+    const aspect = area.width / area.height;
 
     // The plot's floor centered, and the camera on the middle of the box or the globe
     sceneState.root.position.set(-ctx.width / 2, 0, -ctx.height / 2);
@@ -246,7 +247,8 @@
       sceneState.fitted = true;
       return;
     }
-    cam.clearViewOffset();
+    // No room inside the padding leaves nothing to fit
+    if (!(area.width > 0 && area.height > 0)) return;
     // What's drawn: a map's own bounds on the floor (it rarely fills the plot), else the plot box
     const floor = floorBounds();
     const min = new Vector3(floor[0][0] - ctx.width / 2, 0, floor[0][1] - ctx.height / 2);
@@ -256,11 +258,9 @@
       const horizontal = Math.atan(Math.tan(vertical) * aspect);
       let distance: number;
       if (radius != null) {
-        distance = (radius / Math.sin(Math.min(vertical, horizontal))) * (1 + margin);
+        distance = radius / Math.sin(Math.min(vertical, horizontal));
       } else {
-        // Framed in a field of view narrowed by the margin, so there's that much room around it
-        const narrowed = MathUtils.radToDeg(2 * Math.atan(Math.tan(vertical) / (1 + margin)));
-        const framed = framePerspective(min, max, framedDirection, narrowed, aspect);
+        const framed = framePerspective(min, max, framedDirection, shownFov, aspect);
         fitTarget.copy(framed.target);
         distance = framed.distance;
       }
@@ -269,7 +269,7 @@
       cam.fov = shownFov;
       cam.aspect = aspect;
       fitDistance = distance;
-      fitUnit = (2 * distance * Math.tan(vertical)) / height;
+      fitUnit = (2 * distance * Math.tan(vertical)) / area.height;
       sceneState.unit = fitUnit;
     } else {
       let halfWidth: number;
@@ -285,19 +285,21 @@
         ({ halfWidth, halfHeight } = framed);
       }
       if (!(halfWidth > 0 && halfHeight > 0)) return;
-      const scale = 1 + margin;
       fitDistance = Math.hypot(box.width, box.height, box.depth) * 2;
       Object.assign(cam, {
-        left: -halfWidth * scale,
-        right: halfWidth * scale,
-        top: halfHeight * scale,
-        bottom: -halfHeight * scale,
+        left: -halfWidth,
+        right: halfWidth,
+        top: halfHeight,
+        bottom: -halfHeight,
         near: 0.1,
         far: fitDistance * 4,
       });
-      fitUnit = (2 * halfHeight * scale) / height;
+      fitUnit = (2 * halfHeight) / area.height;
       sceneState.unit = fitUnit;
     }
+    // The view framed on the plot area, widened by the padding to the whole layer
+    const { left, top } = ctx.padding;
+    cam.setViewOffset(area.width, area.height, -left, -top, width, height);
     sceneState.width = width;
     sceneState.height = height;
     place();
@@ -334,12 +336,11 @@
    * k * p`), which keeps it under the pointer as it zooms
    */
   function panOffset({ scale: k, x, y }: { scale: number; x: number; y: number }) {
-    const { width, height } = size.current;
-    const { left, top } = ctx.padding;
+    // The target is framed in the middle of the plot area
     const unit = fitUnit / k;
     return {
-      right: -unit * (x + (1 - k) * (left - width / 2)),
-      down: -unit * (y + (1 - k) * (top - height / 2)),
+      right: -unit * (x - ((1 - k) * ctx.box.width) / 2),
+      down: -unit * (y - ((1 - k) * ctx.box.height) / 2),
     };
   }
 
@@ -415,7 +416,7 @@
     viewDirection(rotate, tilt, framedDirection);
     untrack(() => viewDirection(angles.rotate, angles.tilt, direction));
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    [ctx.width, ctx.height, ctx.zDepth, size.current, margin, camera, shownFov];
+    [ctx.width, ctx.height, ctx.box, ctx.zDepth, size.current, camera, shownFov];
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     ctx.geo.projection;
     untrack(fit);

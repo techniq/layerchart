@@ -166,7 +166,7 @@
 
 <div class="rounded-sm bg-black text-white">
 	<Chart
-		view={perspective({ rotate: -20, tilt: 62, fov: 35, margin: 0.02 })}
+		view={perspective({ rotate: -20, tilt: 62, fov: 35 })}
 		transform={{
 			mode: 'canvas',
 			drag: 'rotate',

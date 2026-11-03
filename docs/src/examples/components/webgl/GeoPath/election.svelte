@@ -47,6 +47,7 @@
 
 <!-- Each state raised by its share of the vote, measured by `zScale` -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: -2, tilt: 40 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoIdentity as unknown as () => GeoProjection, fitGeojson: states }}

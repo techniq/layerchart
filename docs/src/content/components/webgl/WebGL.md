@@ -28,7 +28,7 @@ A `WebGL` layer draws the `@layerchart/webgl` marks inside it. The chart's `view
 
 ## The view
 
-`perspective` draws farther things smaller; `orthographic` keeps sizes true at any depth. Both take `rotate`, `tilt`, `margin`, and `motion` (and `perspective` a `fov`). Dragging hands its angles back through the chart's `onTransform`.
+`perspective` draws farther things smaller; `orthographic` keeps sizes true at any depth. Both take `rotate`, `tilt`, `aspect`, and `motion` (and `perspective` a `fov`). Dragging hands its angles back through the chart's `onTransform`.
 
 :example{ name="playground" }
 

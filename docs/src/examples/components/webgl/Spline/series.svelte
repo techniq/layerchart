@@ -17,6 +17,7 @@
 </script>
 
 <Chart
+	padding={40}
 	view={perspective({ rotate: -30, tilt: 65 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}

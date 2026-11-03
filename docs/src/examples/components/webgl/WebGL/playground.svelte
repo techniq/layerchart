@@ -27,7 +27,7 @@
 	let rotate = $state(-45);
 	let tilt = $state(60);
 	let fov = $state(35);
-	let margin = $state(0.1);
+	let padding = $state(40);
 	let controls = $state(true);
 	// The top of the `z` range, in pixels
 	let height = $state(150);
@@ -77,15 +77,7 @@
 		step={1}
 		class="w-48"
 	/>
-	<RangeField
-		label="Margin"
-		bind:value={margin}
-		min={0}
-		max={0.5}
-		step={0.05}
-		format="percentRound"
-		class="w-48"
-	/>
+	<RangeField label="Padding" bind:value={padding} min={0} max={120} step={10} class="w-48" />
 	<RangeField label="Height" bind:value={height} min={0} max={300} step={10} class="w-48" />
 </div>
 
@@ -107,8 +99,9 @@
 		'var(--color-primary-700)'
 	]}
 	view={camera === 'orthographic'
-		? orthographic({ rotate, tilt, margin })
-		: perspective({ rotate, tilt, fov, margin })}
+		? orthographic({ rotate, tilt })
+		: perspective({ rotate, tilt, fov })}
+	{padding}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', disablePointer: !controls }}
 	onTransform={({ rotation }) => {
 		// Keep the sliders in step with a drag

@@ -12,6 +12,7 @@
 
 <!-- Athletes binned into hexagons, each raised by (and colored by) its count -->
 <Chart
+	padding={40}
 	view={perspective({ rotate: 25, tilt: 60 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}

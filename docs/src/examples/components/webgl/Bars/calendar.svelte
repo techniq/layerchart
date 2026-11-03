@@ -21,7 +21,8 @@
 
 <!-- A year of days, each as tall as its count: weeks across, Sundays at the back -->
 <Chart
-	view={perspective({ rotate: -20, tilt: 55, margin: 0 })}
+	padding={24}
+	view={perspective({ rotate: -20, tilt: 55 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x={week}

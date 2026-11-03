@@ -14,6 +14,7 @@
 </script>
 
 <Chart
+	padding={40}
 	view={orthographic({ rotate: -30, tilt: 70 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}

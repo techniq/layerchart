@@ -67,6 +67,7 @@
 
 <!-- Elevation from AWS's open terrain tiles, raised and lit like a shaded relief map -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: 0, tilt: 45 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoAlbers, fitGeojson: conus }}

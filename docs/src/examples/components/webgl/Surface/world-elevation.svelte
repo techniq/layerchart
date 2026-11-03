@@ -58,6 +58,7 @@
 </div>
 
 <Chart
+	padding={24}
 	view={perspective({ rotate: 0, tilt: selected === 'globe' ? 75 : 40 })}
 	transform={{
 		mode: 'canvas',

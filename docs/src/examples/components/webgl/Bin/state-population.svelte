@@ -92,7 +92,7 @@
 <!-- People per square mile, binned into hexagons: each stands as tall as it is dense, lit by a low
      sun from the northwest so the cities cast long shadows.  Data: Kontur Population 2023 -->
 <Chart
-	view={perspective({ rotate: 0, tilt: 35, fov: 30, margin: 0.05 })}
+	view={perspective({ rotate: 0, tilt: 35, fov: 30 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	data={population.cells}
 	x={(d: Cell) => d[0]}

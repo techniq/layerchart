@@ -140,6 +140,7 @@
 
 <!-- Heights at true scale to the map (times the exaggeration), lit by a sun you can move -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: -20, tilt: 50 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	geo={{ projection: geoMercator, fitGeojson: box }}

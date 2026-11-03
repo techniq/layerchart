@@ -144,6 +144,7 @@
 
 <!-- Any canvas works as a globe's image -->
 <Chart
+	padding={24}
 	view={perspective({ rotate: 30, tilt: 65 })}
 	transform={{
 		mode: 'canvas',
