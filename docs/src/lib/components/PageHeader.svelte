@@ -13,6 +13,7 @@
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideSettings from '~icons/lucide/settings';
 	import LucideArrowUpToLine from '~icons/lucide/arrow-up-to-line';
+	import LucideArrowRight from '~icons/lucide/arrow-right';
 
 	type Crumb = { label: string; href?: string };
 	type TocItem = { id: string; text: string; level: number };
@@ -24,6 +25,7 @@
 		layers = [],
 		metadata = {},
 		showOpenWith = true,
+		counterpart,
 		icon
 	}: {
 		title: string;
@@ -34,6 +36,8 @@
 		/** Passed to `OpenWithButton` */
 		metadata?: Record<string, any>;
 		showOpenWith?: boolean;
+		/** The same component drawn the other way (LayerChart's, or `@layerchart/webgl`'s), to link to */
+		counterpart?: { href: string; label: string } | null;
 		/** Docs section icon (matching the sidebar), shown on links to parent pages */
 		icon?: Component<{ class?: string }>;
 	} = $props();
@@ -191,6 +195,24 @@
 				<div class="max-sm:hidden">
 					<OpenWithButton {metadata} />
 				</div>
+			{/if}
+			{#if counterpart}
+				<Tooltip
+					title={counterpart.label === 'WebGL'
+						? 'Also drawn with WebGL, by @layerchart/webgl'
+						: 'Also drawn by LayerChart, without WebGL'}
+				>
+					<Button
+						href={counterpart.href}
+						variant="outline"
+						rounded="full"
+						size="sm"
+						class="bg-surface-100 text-surface-content/70 gap-1"
+					>
+						{counterpart.label}
+						<LucideArrowRight class="size-3.5" />
+					</Button>
+				</Tooltip>
 			{/if}
 			{#if layers.length}
 				<ToggleGroup

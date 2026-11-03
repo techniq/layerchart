@@ -91,6 +91,7 @@
 	{breadcrumbs}
 	{layers}
 	{metadata}
+	counterpart={data.counterpart}
 	description={pageExample?.module?.description ??
 		(page.params.example == null ? metadata.description : undefined)}
 />

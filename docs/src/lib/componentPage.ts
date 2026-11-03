@@ -59,7 +59,26 @@ export async function loadComponentPage(
 		PageComponent,
 		metadata,
 		catalog,
-		examples
+		examples,
+		counterpart: counterpartOf(componentName)
+	};
+}
+
+/**
+ * The same-named component on the other side, to link to: `@layerchart/webgl`'s for one of
+ * LayerChart's (ex. `Points` ↔ `webgl/Points`), and LayerChart's for one of its, labeled with its layers
+ */
+function counterpartOf(componentName: string): { href: string; label: string } | null {
+	const webgl = componentName.startsWith('webgl/');
+	const name = webgl ? componentName.slice(6) : `webgl/${componentName}`;
+	const other = allComponents.find((c) => c.slug === name);
+	if (!other) return null;
+	const layers = ((other as { layers?: string[] }).layers ?? []).map(
+		(layer) => layer[0].toUpperCase() + layer.slice(1)
+	);
+	return {
+		href: `/docs/components/${name}`,
+		label: webgl ? layers.join(' / ') || 'LayerChart' : 'WebGL'
 	};
 }
 
