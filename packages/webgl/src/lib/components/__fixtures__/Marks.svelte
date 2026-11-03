@@ -8,11 +8,14 @@
     Bin,
     Chart,
     GeoPath,
+    Highlight,
     Light,
     Link,
     Points,
     Polygon,
     Rect,
+    Rule,
+    Vector,
     WebGL,
     Spline,
     Surface,
@@ -38,6 +41,9 @@
     area,
     polygon,
     arc,
+    rule,
+    vector,
+    highlight,
     offset = 0,
     onScene,
   }: {
@@ -54,7 +60,10 @@
       | 'axis'
       | 'area'
       | 'polygon'
-      | 'arc';
+      | 'arc'
+      | 'rule'
+      | 'vector'
+      | 'highlight';
     chart: Partial<ComponentProps<typeof Chart>>;
     scene?: Partial<ComponentProps<typeof WebGL>>;
     points?: ComponentProps<typeof Points>;
@@ -70,6 +79,9 @@
     area?: ComponentProps<typeof Area>;
     polygon?: ComponentProps<typeof Polygon>;
     arc?: ComponentProps<typeof Arc>;
+    rule?: ComponentProps<typeof Rule>;
+    vector?: ComponentProps<typeof Vector>;
+    highlight?: ComponentProps<typeof Highlight>;
     /** Pixels down the page to put the chart, to test it off screen */
     offset?: number;
     onScene: (scene: SceneState, chart: ChartState<any>) => void;
@@ -101,6 +113,12 @@
         <Polygon {...polygon} />
       {:else if mark === 'arc'}
         <Arc {...arc} />
+      {:else if mark === 'rule'}
+        <Rule {...rule} />
+      {:else if mark === 'vector'}
+        <Vector {...vector} />
+      {:else if mark === 'highlight'}
+        <Highlight {...highlight} />
       {:else if mark === 'axis'}
         <!-- A point too, so the scene has something in it however the axis draws -->
         <Axis {...axis!} />

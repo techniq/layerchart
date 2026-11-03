@@ -44,11 +44,22 @@ export { default as Area } from './components/Area/Area.svelte';
 export type { AreaProps } from './components/Area/Area.svelte';
 export { default as Link } from './components/Link/Link.svelte';
 export type { LinkProps } from './components/Link/Link.svelte';
+export { default as Highlight } from './components/Highlight/Highlight.svelte';
+export type {
+  HighlightProps,
+  HighlightPointProps,
+  HighlightLineProps,
+  HighlightShadowProps,
+} from './components/Highlight/Highlight.svelte';
+export { default as Rule } from './components/Rule/Rule.svelte';
+export type { RuleProps } from './components/Rule/Rule.svelte';
+export { default as Vector } from './components/Vector/Vector.svelte';
+export type { VectorProps } from './components/Vector/Vector.svelte';
 export { default as GeoRaster } from './components/GeoRaster/GeoRaster.svelte';
 export type { GeoRasterProps } from './components/GeoRaster/GeoRaster.svelte';
 
 export { getSceneContext, SceneState } from './contexts/scene.svelte.js';
-export type { Pickable, SceneLabel, Side } from './contexts/scene.svelte.js';
+export type { Pickable, SceneLabel, SceneMarker, Side } from './contexts/scene.svelte.js';
 export { globe } from './utils/globe.js';
 export type { Sphere } from './utils/globe.js';
 export type { ImageSource } from './utils/texture.js';

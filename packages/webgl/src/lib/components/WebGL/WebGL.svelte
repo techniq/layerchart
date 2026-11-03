@@ -138,6 +138,26 @@
     </Canvas>
   {/if}
 
+  <svg class="lc-webgl-markers">
+    {#each sceneState.markerSets as markers}
+      {#each markers as marker (marker.key)}
+        {@const point = sceneState.project(marker.x, marker.y, marker.z)}
+        {#if point}
+          <circle
+            cx={point.x}
+            cy={point.y}
+            r={marker.r}
+            fill={marker.fill}
+            stroke={marker.stroke}
+            stroke-width={marker.strokeWidth}
+            opacity={marker.opacity}
+            class={marker.class}
+          />
+        {/if}
+      {/each}
+    {/each}
+  </svg>
+
   <div class="lc-webgl-labels">
     {#each sceneState.labelSets as labels}
       {#each labels as label (label.key)}
@@ -177,6 +197,21 @@
       &.disablePointerEvents {
         pointer-events: none;
       }
+    }
+
+    :where(.lc-webgl-markers) {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* As LayerChart's `Highlight` draws its point */
+    :where(.lc-webgl-markers .lc-highlight-point) {
+      paint-order: stroke;
+      filter: drop-shadow(var(--drop-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15)));
     }
 
     :where(.lc-webgl-labels) {

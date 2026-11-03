@@ -1,6 +1,17 @@
 <script lang="ts">
-	import { Axis, Chart, Grid, Points, WebGL, Tooltip, perspective } from '@layerchart/webgl';
+	import {
+		Axis,
+		Chart,
+		Grid,
+		Highlight,
+		Points,
+		WebGL,
+		Tooltip,
+		orthographic,
+		perspective
+	} from '@layerchart/webgl';
 	import { scaleQuantize } from 'd3-scale';
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	// Seeded, so the points are the same on every load
 	let seed = 7;
@@ -15,11 +26,33 @@
 		z: random() * 10
 	}));
 
+	// Farther points drawn smaller, or every point its true size at any depth
+	let camera = $state<'perspective' | 'orthographic'>('perspective');
+	// On the plot box's walls and floor, turning with it, or facing the viewer
+	let labels = $state<'default' | 'viewport'>('default');
+	const labelProps = $derived({ viewport: labels === 'viewport' });
+
 	export { data };
 </script>
 
+<div class="flex flex-wrap gap-2">
+	<Field label="Camera" class="w-fit">
+		<ToggleGroup bind:value={camera} variant="outline">
+			<ToggleOption value="perspective">Perspective</ToggleOption>
+			<ToggleOption value="orthographic">Orthographic</ToggleOption>
+		</ToggleGroup>
+	</Field>
+	<Field label="Labels" class="w-fit">
+		<ToggleGroup bind:value={labels} variant="outline">
+			<ToggleOption value="default">Default</ToggleOption>
+			<ToggleOption value="viewport">Viewport</ToggleOption>
+		</ToggleGroup>
+	</Field>
+</div>
+
 <Chart
-	view={perspective}
+	padding={40}
+	view={camera === 'orthographic' ? orthographic : perspective}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}
 	{data}
 	x="x"
@@ -43,10 +76,22 @@
 >
 	<WebGL>
 		<Grid />
-		<Axis placement="bottom" label="x" />
-		<Axis placement="left" label="y" />
-		<Axis placement="back" label="z" />
+		<Axis placement="bottom" label="x" tickLabelProps={labelProps} {labelProps} />
+		<Axis placement="left" label="y" tickLabelProps={labelProps} {labelProps} />
+		<Axis placement="back" label="z" tickLabelProps={labelProps} {labelProps} />
+		<!-- The hovered point traced on the floor and both back walls, with its spot on each -->
+		<Highlight lines={{ strokeWidth: 1 }} shadows axis="both" />
 		<Points r={6} tooltip />
+		<!-- A ring around the hovered point -->
+		<Highlight
+			points={{
+				r: 8,
+				fill: 'none',
+				stroke: 'var(--color-surface-content)',
+				strokeWidth: 1.5,
+				class: 'drop-shadow-none'
+			}}
+		/>
 	</WebGL>
 
 	<Tooltip.Root>

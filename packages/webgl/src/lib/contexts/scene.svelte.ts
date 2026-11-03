@@ -37,6 +37,24 @@ export type SceneLabel = {
   gap?: number;
 };
 
+/**
+ * A circle drawn over the scene at a point in the chart's coordinates (as `SceneLabel`), facing
+ * the viewer: ex. a `Highlight`'s point.  Its props are an SVG `<circle>`'s, so classes style it.
+ */
+export type SceneMarker = {
+  key: string;
+  x: number;
+  y: number;
+  z: number;
+  /** Radius in pixels on screen */
+  r: number;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+  opacity?: number;
+  class?: string;
+};
+
 /** A mark's object the pointer can hit, and the data row each hit is on */
 export type Pickable = {
   object: Object3D;
@@ -102,6 +120,7 @@ export class SceneState {
   // Values, not getters: a scene unmounting off screen would otherwise read a mark's state after
   // the mark is gone
   #labels = $state.raw<SceneLabel[][]>([]);
+  #markers = $state.raw<SceneMarker[][]>([]);
   readonly pickables = new Set<Pickable>();
   #vector = new Vector3();
 
@@ -120,6 +139,19 @@ export class SceneState {
       // Not written in the teardown itself: Svelte (5.56) can lose a write made while an effect
       // tears down, leaving the new labels that replace these undrawn until something else redraws
       queueMicrotask(() => (this.#labels = this.#labels.filter((l) => l !== labels)));
+    };
+  }
+
+  get markerSets() {
+    return this.#markers;
+  }
+
+  /** Draw `markers` over the scene until the returned cleanup runs (as `addLabels`) */
+  addMarkers(markers: SceneMarker[]) {
+    untrack(() => (this.#markers = [...this.#markers, markers]));
+    return () => {
+      // Not written in the teardown itself (see `addLabels`)
+      queueMicrotask(() => (this.#markers = this.#markers.filter((m) => m !== markers)));
     };
   }
 

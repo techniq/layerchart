@@ -251,6 +251,94 @@ describe('Arc, as LayerChart draws it', () => {
   });
 });
 
+describe('Rule and Vector, as LayerChart draws them', () => {
+  /** Every outline segment's end points, `[x, y]` on the floor */
+  const segments = (scene: SceneState) => {
+    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const start = lines?.geometry.attributes.instanceStart;
+    const end = lines?.geometry.attributes.instanceEnd;
+    return Array.from({ length: start?.count ?? 0 }, (_, i) => [
+      [start.getX(i), start.getZ(i)],
+      [end.getX(i), end.getZ(i)],
+    ]);
+  };
+  const chartProps = { data: [{ x: 2, y: 4 }], x: 'x', y: 'y', xDomain: [0, 10], yDomain: [0, 10] };
+
+  it('draws a `Rule` across the plot at a value, and at its edges', async () => {
+    const scene = await renderMarks({ mark: 'rule', chart: chartProps, rule: { x: 5, y: true } });
+    await expect.poll(() => segments(scene).length).toBe(2);
+    const [down, across] = segments(scene);
+    expect(down[0][0]).toBeCloseTo(chart!.xScale(5));
+    expect(down[1][0]).toBeCloseTo(chart!.xScale(5));
+    // `y: true` is the plot's bottom
+    expect(across[0][1]).toBeCloseTo(Math.max(...chart!.yRange));
+  });
+
+  it('draws a `Rule` per row from zero to its values, as LayerChart’s', async () => {
+    const scene = await renderMarks({ mark: 'rule', chart: chartProps, rule: { y: 'y' } });
+    await expect.poll(() => segments(scene).length).toBe(1);
+    const [[from, to]] = segments(scene);
+    expect(from).toEqual([expect.closeTo(chart!.xScale(0)), expect.closeTo(chart!.yScale(0))]);
+    expect(to).toEqual([expect.closeTo(chart!.xScale(2)), expect.closeTo(chart!.yScale(4))]);
+  });
+
+  it('points a `Vector` by `rotate`, `length` long, about its middle', async () => {
+    const scene = await renderMarks({
+      mark: 'vector',
+      chart: {},
+      vector: { x: 100, y: 100, length: 40, rotate: 90 },
+    });
+    await expect.poll(() => segments(scene).length).toBeGreaterThan(0);
+    // The stem, turned to point right: from 20px left of the anchor to 20px right
+    const [[from, to]] = segments(scene);
+    expect(from[0]).toBeCloseTo(80);
+    expect(to[0]).toBeCloseTo(120);
+    expect(from[1]).toBeCloseTo(100);
+  });
+});
+
+describe('Highlight, as LayerChart draws it on an isometric chart', () => {
+  const row = { x: 4, y: 6, z: 5 };
+  const chartProps = {
+    data: [row],
+    x: 'x',
+    y: 'y',
+    z: 'z',
+    xDomain: [0, 10],
+    yDomain: [0, 10],
+    zDomain: [0, 10],
+    view: perspective,
+  };
+
+  it('traces the row on the floor and each back wall, with a spot on each', async () => {
+    const scene = await renderMarks({
+      mark: 'highlight',
+      chart: chartProps,
+      highlight: { data: row, lines: true, shadows: true, points: true, axis: 'both' },
+    });
+    const lines = () => scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    // Across the floor at `x` and `y`, across both walls at its height, and up each at `x` / `y`
+    await expect.poll(() => lines()?.geometry.attributes.instanceStart?.count ?? 0).toBe(6);
+    const spots = scene.root.children.find((o) => (o as any).isGroup && o.children.length) as any;
+    expect(spots.children).toHaveLength(3);
+    // The point, facing the viewer at the row's height
+    const [marker] = scene.markerSets.flat();
+    expect(marker.x).toBeCloseTo(chart!.xScale(4));
+    expect(marker.z).toBeCloseTo(chart!.zScale(5));
+  });
+
+  it('draws nothing without a row', async () => {
+    const scene = await renderMarks({
+      mark: 'highlight',
+      chart: chartProps,
+      highlight: { lines: true, shadows: true, points: true },
+    });
+    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    expect(lines.visible).toBe(false);
+    expect(scene.markerSets.flat()).toHaveLength(0);
+  });
+});
+
 describe('Points', () => {
   it('skips rows outside a band scale, keeping the rest pickable', async () => {
     const scene = await renderMarks({
