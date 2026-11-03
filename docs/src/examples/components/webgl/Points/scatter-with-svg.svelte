@@ -52,7 +52,6 @@
 	tooltipContext={{ mode: 'quadtree' }}
 	padding={{ left: 32, bottom: 24, right: 8, top: 32 }}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<Svg>
 		<Grid x y />

@@ -13,7 +13,6 @@
 	cScale={scaleSequential(interpolateRdYlBu)}
 	tooltipContext
 	height={450}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Axis placement="bottom" label="x" />

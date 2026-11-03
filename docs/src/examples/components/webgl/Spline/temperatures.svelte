@@ -68,7 +68,6 @@
 		g="year"
 		tooltipContext
 		height={550}
-		class="cursor-grab active:cursor-grabbing"
 	>
 		<WebGL>
 			<Axis placement="back" format="none" label="Year" />
@@ -98,7 +97,6 @@
 		g="year"
 		tooltipContext
 		height={550}
-		class="cursor-grab active:cursor-grabbing"
 	>
 		<WebGL>
 			<Axis placement="bottom" format="month" />

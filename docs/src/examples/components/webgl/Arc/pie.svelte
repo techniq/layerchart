@@ -44,7 +44,6 @@
 	tooltipContext
 	padding={{ left: 80, right: 80 }}
 	height={400}
-	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
 		{@const outer = Math.min(context.width, context.height) / 2}

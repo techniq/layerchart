@@ -124,7 +124,6 @@
 		yDomain={[-1, 1]}
 		zRange={({ height }) => [0, height * 0.3 * raised.current]}
 		height={450}
-		class="cursor-grab active:cursor-grabbing"
 	>
 		<WebGL>
 			<Axis placement="bottom" label="x" />

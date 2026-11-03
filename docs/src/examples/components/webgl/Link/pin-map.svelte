@@ -54,7 +54,6 @@
 	zRange={[0, 200]}
 	tooltipContext
 	height={550}
-	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
 		{@const at = (pin: (typeof pins)[number]) => context.geo.projection?.([pin.x, pin.y]) ?? [0, 0]}

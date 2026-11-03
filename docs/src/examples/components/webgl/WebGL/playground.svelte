@@ -121,7 +121,6 @@
 	ondragend={() => (dragging = false)}
 	tooltipContext
 	height={500}
-	class={controls ? 'cursor-grab active:cursor-grabbing' : ''}
 >
 	<WebGL>
 		<Grid x={false} y={false} />

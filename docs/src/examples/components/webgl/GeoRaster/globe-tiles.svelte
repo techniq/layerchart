@@ -95,7 +95,6 @@
 	}}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<!-- The globe beneath, while the tiles load (and at the poles, past where they stop) -->

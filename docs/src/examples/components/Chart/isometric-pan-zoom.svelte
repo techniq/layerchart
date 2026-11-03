@@ -36,7 +36,6 @@
 	padding={{ top: 24, bottom: 40, left: 40, right: 24 }}
 	height={400}
 	clip
-	class="cursor-grab active:cursor-grabbing"
 >
 	<TransformContextControls />
 

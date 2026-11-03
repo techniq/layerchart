@@ -42,7 +42,6 @@
 	]}
 	tooltipContext
 	height={600}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<!-- The neighborhood is about square and the plot is wide, so frame closer than the plot box -->
 	<WebGL>

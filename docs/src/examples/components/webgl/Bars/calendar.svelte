@@ -39,7 +39,6 @@
 	zRange={[0, 60]}
 	tooltipContext
 	height={260}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<!-- Every day a thin tile on the floor, so days off still show -->

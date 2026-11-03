@@ -48,7 +48,6 @@
 	zRange={[0, 60]}
 	padding={32}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
 		{@const layout = tree<any>().size([context.width, context.height])(data.copy())}

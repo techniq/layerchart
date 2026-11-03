@@ -24,7 +24,6 @@
 	zRange={({ height }) => [0, height * 0.4]}
 	tooltipContext
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Grid z={false} />

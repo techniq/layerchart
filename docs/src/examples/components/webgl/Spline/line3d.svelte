@@ -24,7 +24,6 @@
 	c="z"
 	cScale={scaleSequential(interpolateViridis)}
 	height={550}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Grid />

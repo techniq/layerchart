@@ -103,7 +103,6 @@
 	zRange={({ height }) => [0, height * 0.25]}
 	tooltipContext
 	height={600}
-	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
 		{@const project = context.geo.projection}

@@ -157,7 +157,6 @@
 	}}
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		{#if texture}

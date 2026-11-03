@@ -32,7 +32,6 @@
 	]}
 	tooltipContext
 	height={400}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Grid x={false} y={false} />

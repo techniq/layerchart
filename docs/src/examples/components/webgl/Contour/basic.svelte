@@ -18,7 +18,6 @@
 	zDomain={extent(volcano.values) as [number, number]}
 	zRange={({ height }) => [0, height * 0.35]}
 	height={450}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Raster data={volcano.values} width={volcano.width} height={volcano.height} opacity={0.6} />

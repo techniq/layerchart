@@ -36,7 +36,6 @@
 		'var(--color-info)'
 	]}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Grid y={false} />

@@ -76,7 +76,6 @@
 	zRange={({ height }) => [0, (height / 50) * exaggeration]}
 	tooltipContext
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Light azimuth={315} altitude={35} />

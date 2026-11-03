@@ -30,7 +30,6 @@
 	geo={{ projection: globe, fitGeojson: { type: 'Sphere' } }}
 	tooltipContext
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<GeoRaster src="/images/blue-marble.jpg" tooltip />

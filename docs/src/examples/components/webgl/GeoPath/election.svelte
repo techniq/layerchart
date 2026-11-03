@@ -54,7 +54,6 @@
 	zRange={[0, 50]}
 	tooltipContext
 	height={550}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<GeoPath

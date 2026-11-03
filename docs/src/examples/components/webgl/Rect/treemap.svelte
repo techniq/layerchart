@@ -63,7 +63,6 @@
 	zRange={({ height }) => [0, ((root.height + 1) * height) / 80]}
 	tooltipContext
 	height={600}
-	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
 		{@const label = (d: Node) => leafLabel(d, context)}

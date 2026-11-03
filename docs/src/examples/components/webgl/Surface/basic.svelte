@@ -14,7 +14,6 @@
 	cScale={scaleSequential((t) => interpolateRdYlBu(1 - t))}
 	tooltipContext
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<Grid />

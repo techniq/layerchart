@@ -193,7 +193,6 @@
 		}}
 		tooltipContext
 		height={600}
-		class="cursor-grab active:cursor-grabbing"
 	>
 		{#snippet children({ context })}
 			{@const sun = [context.xScale(0), context.yScale(0)] as [number, number]}

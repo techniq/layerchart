@@ -133,7 +133,6 @@
 	zDomain={[0, 128]}
 	zRange={({ height }) => [0, height * 0.6]}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		{#each rowIndexes as row (row)}

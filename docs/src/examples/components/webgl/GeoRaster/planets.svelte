@@ -84,7 +84,6 @@
 	ondragstart={() => (dragging = true)}
 	ondragend={() => (dragging = false)}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<!-- Lit from one side, as the sun would -->

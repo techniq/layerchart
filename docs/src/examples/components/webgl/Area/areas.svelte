@@ -47,7 +47,6 @@
 	cScale={scaleOrdinal()}
 	cRange={['#2caffe', '#544fc5', '#00e272', '#fe6a35']}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<!-- Front on, a narrow field of view flattens the perspective, so the rows line up like a flat
 	     chart's; the view eases between the two -->

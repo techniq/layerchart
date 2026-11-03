@@ -60,7 +60,6 @@
 	geo={{ projection, fitGeojson: { type: 'Sphere' } }}
 	padding={{ top: 10, bottom: 10, left: 10, right: 10 }}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	<WebGL>
 		<GeoRaster src="/images/blue-marble.jpg" pixelSize={3} />
