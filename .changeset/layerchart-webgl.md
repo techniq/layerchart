@@ -2,4 +2,4 @@
 '@layerchart/webgl': minor
 ---
 
-feat: New `@layerchart/webgl` package for charts drawn with WebGL (three.js): a `WebGL` layer drawing through the chart's `perspective` / `orthographic` view (or flat, for many marks in 2D), with marks for points, bars, bins, lines, areas, surfaces, rasters, maps, and globes, and lights with shadows
+feat: New `@layerchart/webgl` package for rendering with WebGL including support for data dense 2d charts and unique 3d features such as perspective, lights/shadows, and 3D surfaces.
