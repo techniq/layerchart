@@ -1,5 +1,5 @@
 ---
-description: "Geographic mark extruding GeoJSON features through the chart's projection in a WebGL chart, or drawing them over a globe."
+description: 'Geographic component which renders shapes such as countries, states, or regions by drawing their boundaries based on coordinate data. In a WebGL layer, features rise by their z, or follow a globe.'
 category: WebGL maps
 related: [GeoPath, guides/webgl, guides/geo]
 components:

@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing arrows or spikes in a WebGL chart, pointing each row a direction, a length long.'
+description: 'Primitive component which draws directional arrows or spikes at data points to show magnitude and direction. In a WebGL layer, they lie on the floor.'
 category: WebGL marks
 related: [Vector, guides/webgl]
 components:

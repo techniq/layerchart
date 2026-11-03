@@ -1,5 +1,5 @@
 ---
-description: 'Composite mark grouping rows into hexagons, squares, or triangles in a WebGL chart, each standing up as tall as its z.'
+description: 'Composite mark grouping two-dimensional points into a grid of hexagons, squares, or triangles, to count or summarize what falls in each cell. In a WebGL layer, each cell stands as tall as its z.'
 category: WebGL marks
 related: [Bin, GeoBin, guides/webgl]
 components:

@@ -1,5 +1,5 @@
 ---
-description: 'Interaction component marking the hovered row in a WebGL chart: a point facing the viewer, and its position traced on the floor and back walls.'
+description: 'Interaction component manages and displays tooltips allowing dynamic information to appear in response to user interactions. In a WebGL layer, it marks the hovered row with a point facing the viewer, traced on the floor and back walls.'
 category: WebGL
 related: [Highlight, Tooltip, guides/webgl]
 components:

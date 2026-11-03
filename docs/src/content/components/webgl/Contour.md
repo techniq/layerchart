@@ -1,5 +1,5 @@
 ---
-description: 'Mark tracing contour lines through a grid of values in a WebGL chart, flat or raised to their heights.'
+description: 'Composite mark drawing isolines to delineate regions above and below a particular continuous value. Supports grid data, scattered data with spatial interpolation, and continuous functions. In a WebGL layer, its lines lie flat or rise to their heights.'
 category: WebGL surfaces
 related: [Contour, guides/webgl]
 components:

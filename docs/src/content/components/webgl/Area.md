@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing a curtain from the floor up to z along the rows in a WebGL chart, one per group.'
+description: 'Marking component which shades the space under a line on a chart to emphasize the magnitude and trend of data over a range. In a WebGL layer, it lies on the floor, or rises as a curtain with a z.'
 category: WebGL marks
 related: [Area, guides/webgl]
 components:

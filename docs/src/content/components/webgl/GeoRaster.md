@@ -1,5 +1,5 @@
 ---
-description: 'Geographic mark laying an equirectangular image over a WebGL map through its projection, or wrapping a globe in it.'
+description: 'Geographic component which reprojects a raster image (such as NASA Blue Marble) onto any d3-geo projection. In a WebGL layer, the image can rise into terrain or wrap a globe.'
 category: WebGL maps
 related: [GeoRaster, guides/webgl, guides/geo]
 components:

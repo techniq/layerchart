@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing an arc in a WebGL chart, standing up by `z`: a slice of a pie, or a gauge running to its `value` over a track.'
+description: 'Primitive component which draws a curved segment on a chart to represent portions of a whole or highlight specific data ranges. In a WebGL layer, it stands up by its z.'
 category: WebGL marks
 related: [Arc, guides/webgl]
 components:

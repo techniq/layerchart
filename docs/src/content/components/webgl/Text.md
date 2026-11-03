@@ -1,5 +1,5 @@
 ---
-description: 'Labels in a WebGL chart: lying on the surface beneath them, or facing the viewer over the scene.'
+description: 'Primitive component which adds custom text for labeling, annotation, or commentary. In a WebGL layer, text lies on the surface beneath it, or faces the viewer.'
 category: WebGL
 related: [Text, guides/webgl]
 components:

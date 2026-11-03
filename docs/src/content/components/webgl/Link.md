@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing a line between two points per row in a WebGL chart, straight or arched.'
+description: 'Marking component which draws a line or curve between two points to highlight or connect data. In a WebGL layer, links can rise or arch between their ends.'
 category: WebGL marks
 related: [Link, guides/webgl]
 components:

@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing reference lines in a WebGL chart: across the plot at a value or its edges, or a line per row.'
+description: 'Commonly used component acting as a visual guideline on a chart that helps align and measure data values along an axis. In a WebGL layer, rules lie on the floor.'
 category: WebGL marks
 related: [Rule, guides/webgl]
 components:

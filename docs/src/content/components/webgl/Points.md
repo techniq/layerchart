@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing a sphere per row in a WebGL chart, or a disc when flat, optionally glowing or wrapped in an image.'
+description: 'Marking component which plots individual data points on a graph to show distribution, relationships, or clusters without connecting lines. In a WebGL layer, each point is a sphere (a disc when flat), and can glow or wear an image.'
 category: WebGL marks
 related: [Points, guides/webgl]
 components:

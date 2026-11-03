@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing a box per row in a WebGL chart, from pixel x, y, width, and height, z tall.'
+description: "Primitive component which draws a rectangle to highlight areas, ranges, or specific regions of interest. In a WebGL layer, it's a box standing as tall as its z."
 category: WebGL marks
 related: [Rect, guides/webgl]
 components:

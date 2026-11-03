@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing an extruded polygon per row in a WebGL chart: regular polygons and stars about a center, or explicit points.'
+description: 'Primitive component which renders a multi-sided shape on a chart to represent complex areas, boundaries, or regions of interest. In a WebGL layer, it stands up by its z.'
 category: WebGL marks
 related: [Polygon, guides/webgl]
 components:

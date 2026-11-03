@@ -1,5 +1,5 @@
 ---
-description: "The floor and walls of a WebGL chart's plot box, with lines at the scales' ticks."
+description: "Commonly used component which draws horizontal and vertical lines respecting scales across a chart to enhance readability and help align data points with axis values. In a WebGL layer, it lines the plot box's floor and back walls."
 category: WebGL
 related: [Grid, guides/webgl]
 components:

@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing a line through the rows in a WebGL chart, one per series, colored per point.'
+description: 'Marking component which applies data points connected by smooth, curved lines to show trends or patterns over a continuous range. In a WebGL layer, lines run through 3D, colored per point.'
 category: WebGL marks
 related: [Spline, guides/webgl]
 components:

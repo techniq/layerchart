@@ -1,5 +1,5 @@
 ---
-description: 'Mark coloring a grid of values on the floor of a WebGL chart, as an image.'
+description: 'Composite mark rendering a pixel-based heatmap where each pixel is colored by a scalar value. Supports grid data, scattered data with spatial interpolation, and continuous functions. In a WebGL layer, it lies on the floor as an image.'
 category: WebGL surfaces
 related: [Raster, guides/webgl]
 components:

@@ -1,5 +1,5 @@
 ---
-description: "Tick labels along an edge of a WebGL chart's plot box: bottom for x, left for y, back for z."
+description: "Commonly used component displays the scale and reference lines on a chart, providing context for interpreting data values. In a WebGL layer, it runs along the plot box's edges: bottom for x, left for y, and back for z."
 category: WebGL
 related: [Axis, guides/webgl]
 components:

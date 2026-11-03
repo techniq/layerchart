@@ -1,5 +1,5 @@
 ---
-description: 'Marking component drawing a box per row in a WebGL chart, standing on its band cell as tall as its z, stacking along z.'
+description: 'Marking component which applies horizontal bars to represent and visually compare discrete data values. In a WebGL layer, each bar is a box standing as tall as its z.'
 category: WebGL marks
 related: [Bars, guides/webgl]
 components:
