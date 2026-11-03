@@ -256,6 +256,76 @@ describe('TooltipState', () => {
     const at = (ctx: ChartState<any, any, any>, d: { x: number; y: number }) =>
       [ctx.xScale(d.x) + ctx.padding.left, ctx.yScale(d.y) + ctx.padding.top] as const;
 
+    it('finds new rows at once, however often the data changes', async () => {
+      let ctx: ChartState<any, any, any> = null!;
+      const props = (data: { x: number; y: number }[]) => ({
+        chartProps: {
+          ...defaultChartProps,
+          data,
+          x: 'x',
+          y: 'y',
+          xDomain: [0, 100],
+          yDomain: [0, 100],
+          transform: { mode: 'domain' },
+          tooltipContext: { mode: 'quadtree' },
+        },
+        oncontext: (c: any) => (ctx = c),
+      });
+      const { rerender } = render(TooltipTestHarness, props([{ x: 10, y: 10 }]));
+      await vi.waitFor(() => expect(ctx?.transformState).toBeTruthy());
+      await vi.waitFor(() => {
+        ctx.tooltip.show(pointerEventAt(ctx, ...at(ctx, { x: 10, y: 10 })));
+        expect(ctx.tooltip.data).toEqual({ x: 10, y: 10 });
+      });
+
+      // New data faster than a pan rests: each found as soon as it lands
+      for (const x of [30, 50, 70]) {
+        const row = { x, y: 60 };
+        await rerender(props([row]));
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        ctx.tooltip.show(pointerEventAt(ctx, ...at(ctx, row)));
+        expect(ctx.tooltip.data).toEqual(row);
+      }
+    });
+
+    it('finds the nearest point at once after zooming one axis', async () => {
+      let ctx: ChartState<any, any, any> = null!;
+      const props = (data: { x: number; y: number }[]) => ({
+        chartProps: {
+          ...defaultChartProps,
+          data,
+          x: 'x',
+          y: 'y',
+          xDomain: [0, 100],
+          yDomain: [0, 100],
+          transform: { mode: 'domain', axis: 'x' },
+          tooltipContext: { mode: 'quadtree' },
+        },
+        oncontext: (c: any) => (ctx = c),
+      });
+      const { rerender } = render(TooltipTestHarness, props([{ x: 0, y: 0 }]));
+      await vi.waitFor(() => expect(ctx?.transformState).toBeTruthy());
+
+      // 10px across from the pointer once zoomed 4x across, and 5px down: the nearer.  Squashed
+      // across in a tree built before the zoom, the first would look nearer.
+      const pxPerX = (4 * ctx.width) / 100;
+      const pxPerY = ctx.height / 100;
+      const across = { x: 50 + 10 / pxPerX, y: 50 };
+      const down = { x: 50, y: 50 - 5 / pxPerY };
+      await rerender(props([across, down]));
+      await vi.waitFor(() => {
+        ctx.tooltip.show(pointerEventAt(ctx, ...at(ctx, across)));
+        expect(ctx.tooltip.data).toEqual(across);
+      });
+
+      // Zoomed across only, about x = 50
+      ctx.transformState!.setScale(4, { instant: true });
+      ctx.transformState!.setTranslate({ x: -1.5 * ctx.width, y: 0 }, { instant: true });
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      ctx.tooltip.show(pointerEventAt(ctx, ...at(ctx, { x: 50, y: 50 })));
+      expect(ctx.tooltip.data).toEqual(down);
+    });
+
     it('finds the point under the pointer as the domain pans and zooms, before it rebuilds', async () => {
       const ctx = await renderChart({
         data: points,

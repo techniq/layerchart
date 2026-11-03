@@ -131,6 +131,7 @@
 
   import {
     isScaleBand,
+    isScaleLinear,
     isScaleTime,
     scaleInvert,
     type AnyScale,
@@ -594,14 +595,15 @@
    * the trees hold the points until they're built again
    */
   let treeScales = $state.raw<{ x: AnyScale; y: AnyScale } | null>(null);
+  /** Everything else the trees were built from: they're built again at once when any changes */
+  let treeInputs: unknown[] | null = null;
 
-  /** Whether a scale's pixels a domain's pan or zoom only scales and shifts (linear or time) */
-  const isLinear = (scale: any) =>
-    !isScaleBand(scale) &&
-    typeof scale?.invert === 'function' &&
-    !('base' in scale) &&
-    !('exponent' in scale) &&
-    !('constant' in scale);
+  /** How much a scale's pixels have grown since `built`, over its current domain */
+  function zoomSince(built: AnyScale, current: AnyScale) {
+    const [d0, d1] = current.domain();
+    const k = (Number(built(d1)) - Number(built(d0))) / (Number(current(d1)) - Number(current(d0)));
+    return Math.abs(k);
+  }
 
   /**
    * `point` and `radius` where the trees hold them: through the scales they were built with,
@@ -614,10 +616,7 @@
     const y = mode === 'quadtree-x' ? point.y : Number(built.y(scaleInvert(ctx.yScale, point.y)));
     // Distances scale as the zoom does
     const [scale, current] = mode === 'quadtree-y' ? [built.y, ctx.yScale] : [built.x, ctx.xScale];
-    const [d0, d1] = current.domain();
-    const k = Math.abs(
-      (Number(scale(d1)) - Number(scale(d0))) / (Number(current(d1)) - Number(current(d0)))
-    );
+    const k = zoomSince(scale, current);
     return { x, y, r: r * (Number.isFinite(k) ? k : 1) };
   }
 
@@ -648,6 +647,7 @@
     // Points raised off the floor by `z` are found where they float
     const lift = isometric && ctx.props.z != null ? ctx.isometricLift : null;
     const panels = ctx.facet.panels.map((panel) => [panel, panelData(panel)] as const);
+    const inputs = [m, xAcc, yAcc, xAccCtx, yAccCtx, projection, isometric, lift, ...panels.flat()];
 
     const flatX = (d: any) => {
       if (m === 'quadtree-y') return 0;
@@ -699,9 +699,19 @@
       ctx.props.transform?.mode === 'domain' &&
       !isometric &&
       !projection &&
-      isLinear(xScale) &&
-      isLinear(yScale);
-    const settle = remappable && untrack(() => quadtrees.size) ? 150 : 0;
+      isScaleLinear(xScale) &&
+      isScaleLinear(yScale);
+    // Only while nothing but the scales has changed (new data or accessors are built at once), and
+    // both axes have zoomed alike: unevenly, nearest in the trees' space isn't nearest on screen
+    const built = untrack(() => treeScales);
+    const unchanged =
+      treeInputs?.length === inputs.length && inputs.every((input, i) => input === treeInputs![i]);
+    const even =
+      m !== 'quadtree' ||
+      (built != null &&
+        Math.abs(zoomSince(built.x, xScale) - zoomSince(built.y, yScale)) <=
+          1e-6 * zoomSince(built.x, xScale));
+    const settle = remappable && unchanged && even && untrack(() => quadtrees.size) ? 150 : 0;
     const run = () =>
       import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
         if (cancelled) return;
@@ -726,6 +736,7 @@
 
         quadtrees = new Map(panels.map(([panel, data]) => [panel.key, build(data, panel)]));
         treeScales = remappable ? { x: xScale, y: yScale } : null;
+        treeInputs = inputs;
       });
     const timer = settle ? setTimeout(run, settle) : (run(), undefined);
     return () => {
