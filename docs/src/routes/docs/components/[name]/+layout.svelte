@@ -3,6 +3,7 @@
 	import { examples } from '@layerstack/docs/context';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
+	import { webglCategories } from '$lib/webglCategories.js';
 	import { page } from '$app/state';
 
 	import LucideBlocks from '~icons/lucide/blocks';
@@ -16,8 +17,8 @@
 		const base = data.examples ?? {};
 
 		// If there's an example from page data (for individual example pages), merge it in
-		if (page.data.example && page.params.name && page.params.example) {
-			const componentName = page.params.name;
+		if (page.data.example && page.params.example) {
+			const componentName = data.componentName;
 			const exampleName = page.params.example;
 			return {
 				...base,
@@ -53,8 +54,8 @@
 
 	// Determine available layers from per-example (<script module>) or component metadata (markdown frontmatter)
 	const pageExample = $derived.by(() => {
-		const { name, example } = page.params;
-		return name && example ? currentExamples[name]?.[example] : null;
+		const { example } = page.params;
+		return example ? currentExamples[data.componentName]?.[example] : null;
 	});
 	// For example pages, intersect the supported layers of every component used.
 	// A Spline in an otherwise Html-capable example narrows the toggle to [svg, canvas].
@@ -77,10 +78,18 @@
 			(exampleTitle ? exampleTitle[0].toUpperCase() + exampleTitle.slice(1) : metadata.name)
 	);
 
+	// `@layerchart/webgl`'s pages sit under WebGL, in their group there (as in the menu)
+	const webglCategory = $derived(
+		data.componentName.startsWith('webgl/')
+			? webglCategories[metadata.category?.toLowerCase() ?? '']
+			: undefined
+	);
 	const breadcrumbs = $derived([
-		{ label: metadata.category },
+		...(webglCategory
+			? [{ label: 'WebGL', href: '/docs/guides/webgl' }, { label: webglCategory }]
+			: [{ label: metadata.category }]),
 		...(page.params.example
-			? [{ label: metadata.name, href: `/docs/components/${page.params.name}` }]
+			? [{ label: metadata.name, href: `/docs/components/${data.componentName}` }]
 			: [])
 	]);
 </script>
@@ -91,6 +100,7 @@
 	{breadcrumbs}
 	{layers}
 	{metadata}
+	counterpart={data.counterpart}
 	description={pageExample?.module?.description ??
 		(page.params.example == null ? metadata.description : undefined)}
 />

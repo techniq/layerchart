@@ -399,6 +399,55 @@ export const other = [
 		}
 	},
 	{
+		feature: 'Server-side rendered (SSR)',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: false,
+			note: 'Draws once hydrated'
+		},
+		webgl: {
+			support: false,
+			note: 'Draws once hydrated'
+		}
+	},
+	{
+		feature: 'Accessible (screen readers)',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: false
+		},
+		webgl: {
+			support: false
+		}
+	},
+	{
+		feature: 'True 3D (perspective, lighting, shadows)',
+		html: {
+			support: false
+		},
+		svg: {
+			support: false,
+			note: 'Faux 3D with `isometric`'
+		},
+		canvas: {
+			support: false,
+			note: 'Faux 3D with `isometric`'
+		},
+		webgl: {
+			support: true
+		}
+	},
+	{
 		feature: 'Marks can contain children',
 		html: {
 			support: true,

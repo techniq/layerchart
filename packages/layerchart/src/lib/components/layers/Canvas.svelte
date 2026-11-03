@@ -117,6 +117,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
   import { setLayerIsometric } from '$lib/contexts/isometric.js';
+  import { drawsFlatLayers, warnFlatLayer } from '$lib/views/view.js';
   import { getPixelColor, scaleCanvas } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { useMutationObserver, watch } from 'runed';
@@ -427,6 +428,11 @@
   setCanvasContext(canvasContext);
   setLayerContext('canvas');
   setLayerIsometric(() => (ignoreTransform ? null : ctx.isometricMatrix));
+
+  // A 3D view (`perspective`) has nothing for a flat layer to draw through
+  $effect(() => {
+    if (!ignoreTransform && !drawsFlatLayers(ctx.view)) warnFlatLayer('canvas', ctx.view!);
+  });
 </script>
 
 <canvas

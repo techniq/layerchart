@@ -78,7 +78,8 @@ export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
 
   /**
    * Width or height of each tick in pixels (enabling responsive count)
-   * @default 80 (top|bottom|angle) or 50 (left|right|radius)
+   * @default 80 (top|bottom|angle) or 50 (left|right|radius|back), and 50 for every axis on a chart
+   * with a `view` (ex. `isometric`), whose floor's axes neither one runs across
    */
   tickSpacing?: number | null;
 
@@ -324,6 +325,8 @@ export class AxisState {
 
   defaultTickSpacing = $derived.by(() => {
     const placement = this.#props.placement;
+    // Turned, either of the floor's axes can run across the screen, so neither gets wider spacing
+    if (this.ctx.view) return 50;
     return ['top', 'bottom', 'angle'].includes(placement)
       ? 80
       : ['left', 'right', 'radius', 'back'].includes(placement)

@@ -20,7 +20,7 @@ bench-results/
 .live-code/
 
 # Generated API documentation
-**/generated/api/*.json
+**/generated/api/**/*.json
 
 # Generated StackBlitz files
 **/static/stackblitz-files.json
