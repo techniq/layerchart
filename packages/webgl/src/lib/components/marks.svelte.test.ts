@@ -282,6 +282,28 @@ describe('Rule and Vector, as LayerChart draws them', () => {
     expect(to).toEqual([expect.closeTo(chart!.xScale(2)), expect.closeTo(chart!.yScale(4))]);
   });
 
+  it('points a `Vector` any way in a 3D view: across by `rotate`, up by `tilt`', async () => {
+    const scene = await renderMarks({
+      mark: 'vector',
+      chart: { view: perspective },
+      vector: { x: 100, y: 100, z: 20, length: 40, rotate: 90, tilt: 90, anchor: 'start' },
+    });
+    const arrow = () => scene.root.children.find((o) => (o as any).isInstancedMesh) as any;
+    await expect.poll(() => arrow()?.count ?? 0).toBe(1);
+    const matrix = new Matrix4();
+    arrow().getMatrixAt(0, matrix);
+    const base = new Vector3().setFromMatrixPosition(matrix);
+    // From its anchor, straight up (the scene's `y`), its length long
+    expect([base.x, base.y, base.z]).toEqual([
+      expect.closeTo(100),
+      expect.closeTo(20),
+      expect.closeTo(100),
+    ]);
+    const tip = new Vector3(0, 1, 0).applyMatrix4(matrix);
+    expect(tip.y - base.y).toBeCloseTo(40);
+    expect(Math.abs(tip.x - base.x)).toBeLessThan(1e-6);
+  });
+
   it('points a `Vector` by `rotate`, `length` long, about its middle', async () => {
     const scene = await renderMarks({
       mark: 'vector',
