@@ -6,8 +6,15 @@
 
 <script lang="ts">
 	import { geoBounds, geoCentroid, geoConicEqualArea } from 'd3-geo';
-	import { interpolateRgbBasis } from 'd3-interpolate';
 	import { scaleSequentialLog, scaleSqrt } from 'd3-scale';
+	import {
+		interpolateBlues,
+		interpolateBuGn,
+		interpolateOrRd,
+		interpolatePurples,
+		interpolateRdPu,
+		interpolateReds
+	} from 'd3-scale-chromatic';
 	import { feature } from 'topojson-client';
 	import { SelectField } from 'svelte-ux';
 	import {
@@ -23,21 +30,20 @@
 		perspective
 	} from '@layerchart/webgl';
 
-	/** Colors from the emptiest hexagons to the densest */
+	/** d3's sequential schemes, from the emptiest hexagons (near white) to the densest */
 	const palettes = [
-		{ label: 'Earth', value: ['#e3cfa4', '#cbb98a', '#a9c49a', '#5fa8a0', '#3a6fb8'] },
-		{ label: 'Rose', value: ['#ece4e2', '#e9b3b8', '#c8505c', '#8c1d2c', '#3b1b1f'] },
-		{ label: 'Teal', value: ['#e4ece9', '#a9d2c4', '#4fa58f', '#1d6a5c', '#0d2f2b'] },
-		{ label: 'Indigo', value: ['#e6e8f2', '#b7c1e3', '#7484c8', '#40409a', '#211646'] },
-		{ label: 'Ember', value: ['#f1e9dc', '#f3c98b', '#e08a3c', '#a8471c', '#4a1f0e'] },
-		{ label: 'Ocean', value: ['#e5ebee', '#a8c8d8', '#5b93b3', '#2b5779', '#132639'] },
-		{ label: 'Plum', value: ['#ede6ef', '#d0b2d8', '#9a62ac', '#5d2a6e', '#2a1232'] }
+		{ label: 'Blues', value: interpolateBlues },
+		{ label: 'Blue Greens', value: interpolateBuGn },
+		{ label: 'Purples', value: interpolatePurples },
+		{ label: 'Reds', value: interpolateReds },
+		{ label: 'Red Purples', value: interpolateRdPu },
+		{ label: 'Orange Reds', value: interpolateOrRd }
 	];
 
 	let selected = $state('west-virginia');
 	// Bound by label: the field drops array values
-	let palette = $state('Earth');
-	const colors = $derived(palettes.find((p) => p.label === palette)!.value);
+	let palette = $state('Blues');
+	const interpolator = $derived(palettes.find((p) => p.label === palette)!.value);
 
 	// `.current` rather than `await`: an awaited derived holds back every other update on the page
 	// until it lands, stalling an animated chart beside it (https://github.com/sveltejs/svelte/issues/18997)
@@ -99,7 +105,7 @@
 	y={(d: Cell) => d[1]}
 	geo={{ projection, fitGeojson: outline }}
 	zScale={scaleSqrt()}
-	cScale={scaleSequentialLog(interpolateRgbBasis(colors))}
+	cScale={scaleSequentialLog(interpolator)}
 	zRange={({ height }) => [0, height * 0.25]}
 	tooltipContext
 	height={600}
