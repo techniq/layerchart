@@ -10,16 +10,24 @@ A chart's `view` says how its plot area is seen. Without one, it's flat: `x` acr
 <Chart view={perspective}>
 ```
 
-There are three views, which differ in how they're drawn and which layers can draw them.
+Besides the flat default, there are three views, which differ in how they're drawn and which layers can draw them.
 
 |            | `isometric`                         | `orthographic`                       | `perspective`                        |
 | ---------- | ----------------------------------- | ------------------------------------ | ------------------------------------ |
 | Projection | Parallel                            | Parallel                             | Far things smaller                   |
-| Drawn by   | `Svg`, `Canvas`, `Html`             | `WebGL`                              | `WebGL`                              |
+| Layers     | `Svg`, `Canvas`, `Html`             | `WebGL`                              | `WebGL`                              |
 | Depth      | Faux (2D, back to front)            | True (depth tested, lit)             | True (depth tested, lit)             |
 | Guide      | [Isometric](/docs/guides/isometric) | [WebGL](/docs/guides/webgl#the-view) | [WebGL](/docs/guides/webgl#the-view) |
 
 `isometric` draws with LayerChart's own marks, from `layerchart`. The two cameras draw with [`@layerchart/webgl`](/docs/guides/webgl)'s marks, which take the same props.
+
+## The flat default
+
+Without a `view`, the plot area is drawn straight on, as every chart is: `x` across and `y` down through their scales, nothing turned or tipped. It's what most charts want, and it's the only view every layer draws: `Svg`, `Canvas`, `Html`, and `WebGL` layers all line up pixel for pixel, so they mix freely (ex. a [`WebGL` layer](/docs/guides/webgl#flat-2d) for 100,000 points under `Svg` axes and a tooltip highlight).
+
+- **Height** (`z`) needs a view: without one, nothing rises off the plot.
+- **A `transform`** pans and zooms. There's nothing to turn, so `drag: 'rotate'` pans as a plain drag does.
+- **Seen from directly above,** a view looks flat too: `isometric({ rotate: 0, tilt: 0 })`. Easing between that and a tilted view animates a chart into 3D and back (see [Animating the view](/docs/guides/isometric#animating-the-view)).
 
 ## Choosing a view
 
@@ -49,6 +57,17 @@ All three views take the same options, so moving a chart between them is mostly 
 - **Turning, panning, and zooming:** a chart's `transform` with `drag: 'rotate'` turns any view, `onTransform` reports the angles as `rotation`, and `rotateExtent` / `tiltExtent` limit them (see [Transform](/docs/guides/transform#constraints), [Dragging the view](/docs/guides/isometric#dragging-the-view), and [Turning, panning, and zooming](/docs/guides/webgl#turning-panning-and-zooming)).
 - **Fit:** the floor, and anything rising off it, is fitted into the plot area inside the chart's `padding`. Give it `padding` for room around it (ex. for axis labels).
 - **Axes:** `Axis placement="bottom"` and `"left"` run along the floor's edges, and `"back"` up its back corner. Tick labels lie on the floor unless `tickLabelProps={{ viewport: true }}` turns them to face the viewer.
+
+## Views and geo projections
+
+A [geo projection](/docs/guides/geo) and a view do different jobs, and they combine. The projection maps longitude and latitude to the plot area, in place of the `x` / `y` scales: it decides where places are on the flat map. The view then decides how that plot area is seen: straight on without one, or as a floor seen at an angle with one.
+
+So any projection can be the floor of any view, with `z` raising features, points, or bins off the map: ex. [an election map](/docs/components/GeoPath/election-isometric) or [pins](/docs/components/Chart/isometric-pin-map) on an `isometric` floor (see [Paths and maps](/docs/guides/isometric#paths-and-maps)), or [population bins](/docs/components/webgl/Bin/state-population) under a `perspective` camera.
+
+Two things look alike but aren't:
+
+- **A globe as a projection** (ex. `geoOrthographic`) is a flat drawing of a sphere: a disk on the plot. Turning it changes the projection's `rotate` (see [Globe rotation](/docs/guides/geo#globe-rotation)), and it works in any layer, with or without a view.
+- **A globe in a view** is a real sphere: `@layerchart/webgl`'s `globe` projection under a `perspective` or `orthographic` camera lays the map around it, and the view orbits it (see [Maps and globes](/docs/guides/webgl#maps-and-globes)).
 
 ## Mixing layers
 
