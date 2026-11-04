@@ -19,6 +19,7 @@
     rx: rxProp,
     ry: ryProp,
     // Not SVG attributes — consumed by `RectState`
+    data,
     z,
     shade,
     children,
@@ -34,6 +35,7 @@
         height,
         rx: rxProp,
         ry: ryProp,
+        data,
         z,
         shade,
         ...rest,
@@ -52,7 +54,7 @@
     kind: 'mark',
     markInfo: () =>
       rectMarkInfo(
-        { x, y, width, height, rx: rxProp, ry: ryProp, ...rest } as RectProps,
+        { x, y, width, height, rx: rxProp, ry: ryProp, data, ...rest } as RectProps,
         c.dataMode
       ),
   });

@@ -32,7 +32,7 @@
   import { getChartGroup } from '$lib/contexts/group.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
   import { connectToChartGroup } from '$lib/states/group.svelte.js';
-  import type { ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
+  import { chartRootAttributes, type ChartPropsWithoutHTML } from './Chart.shared.svelte.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
   import {
@@ -73,6 +73,8 @@
     class: className,
     ...restProps
   } = $derived(props);
+
+  const rootAttributes = $derived(chartRootAttributes(restProps));
 
   // Pass the `$props()` proxy directly — `props.X` reads stay reactive and
   // don't pay the cost of an `{...props}` spread (recursive `ownKeys` across
@@ -560,7 +562,7 @@
     bind:clientWidth={chartState._containerWidth}
     bind:clientHeight={chartState._containerHeight}
     class={['lc-root-container', className]}
-    {...restProps}
+    {...rootAttributes}
   >
     {#if !needsMeasure || chartState.isMeasured}
       {#if transform && TransformContext}
