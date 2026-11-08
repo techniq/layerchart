@@ -70,11 +70,6 @@ export const getDependents = prerender(async () => {
 	// These do not have a GH repo, but will be promoted by adding to the top of popular sites.
 	const highlightedSites: Dependent[] = [
 		{
-			name: 'GEO audit',
-			description: 'GEO / AI audit that tracks your visibility impact',
-			homepageurl: 'https://www.geoaud.it/'
-		},
-		{
 			name: 'RetireNumber',
 			description: 'Get a second opinion on your retirement number.',
 			homepageurl: 'https://retirenumber.com/'
