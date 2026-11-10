@@ -2,7 +2,6 @@ import { createContext, untrack } from 'svelte';
 import { scaleBand, scaleOrdinal, scaleSqrt, scaleTime } from 'd3-scale';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
-import { useDebounce } from 'runed';
 import type { ComponentRender } from '$lib/contexts/canvas.js';
 import { getCanvasContext } from '$lib/contexts/canvas.js';
 
@@ -536,8 +535,6 @@ export class ChartState<
       }
     );
 
-    const logDebug = useDebounce(printDebug, 200);
-
     // Set mounted state once component initializes
     $effect(() => {
       this.isMounted = true;
@@ -567,7 +564,7 @@ export class ChartState<
       });
     });
 
-    // Debug logging when mounted
+    // Debug logging when mounted, debounced by cancelling the pending log on each re-run
     $effect(() => {
       if (
         !this.isMounted ||
@@ -578,7 +575,7 @@ export class ChartState<
       }
 
       if (this.box) {
-        logDebug({
+        const debugInfo = {
           data: this.data,
           flatData: this.flatData,
           boundingBox: this.box,
@@ -591,7 +588,9 @@ export class ChartState<
           yScale: this.yScale,
           zScale: this.zScale,
           rScale: this.rScale,
-        });
+        };
+        const timeout = setTimeout(() => printDebug(debugInfo), 200);
+        return () => clearTimeout(timeout);
       }
     });
 
