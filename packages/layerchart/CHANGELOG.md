@@ -1,5 +1,19 @@
 # LayerChart
 
+## 2.10.0
+
+### Minor Changes
+
+- chore: Require Svelte `^5.57.0`, using Svelte's `createContext` in place of runed's `Context` ([#969](https://github.com/techniq/layerchart/pull/969))
+
+### Patch Changes
+
+- fix(dagre): Publish type declarations for `dagreGraph`, `dagreAncestors`, and `dagreDescendants` ([#969](https://github.com/techniq/layerchart/pull/969))
+
+- chore: Exclude tests, benchmarks, and screenshots from the published package (1.5 MB → 550 KB packed) ([#969](https://github.com/techniq/layerchart/pull/969))
+
+- fix: Remove the `runed` dependency so npm installs work with both SvelteKit 2 and 3 ([#969](https://github.com/techniq/layerchart/pull/969))
+
 ## 2.9.2
 
 ### Patch Changes
