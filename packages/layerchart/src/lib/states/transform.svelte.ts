@@ -1,3 +1,4 @@
+import { untrack } from 'svelte';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
 import {
   createControlledMotion,
@@ -6,7 +7,6 @@ import {
 } from '$lib/utils/motion.svelte.js';
 import { localPoint } from '@layerstack/utils';
 import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
-import { watch } from 'runed';
 import type { ChartState } from './chart.svelte.js';
 
 export type TransformMode = 'canvas' | 'domain' | 'projection' | 'none';
@@ -268,17 +268,15 @@ export class TransformState {
     this._translating = createMotionTracker();
     this._scaling = createMotionTracker();
 
-    // Watch for transform changes
-    watch(
-      [() => this._scale.current, () => this._translate.current, () => this._rotation.current],
-      () => {
-        this.onTransform({
-          scale: this._scale.current,
-          translate: this._translate.current,
-          rotation: this.rotation,
-        });
-      }
-    );
+    // Notify on transform changes
+    $effect(() => {
+      const scale = this._scale.current;
+      const translate = this._translate.current;
+      this._rotation.current;
+      untrack(() => {
+        this.onTransform({ scale, translate, rotation: this.rotation });
+      });
+    });
   }
 
   private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {

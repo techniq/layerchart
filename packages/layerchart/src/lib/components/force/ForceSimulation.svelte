@@ -193,7 +193,7 @@
   generics="NodeDatum extends SimulationNodeDatum,
     LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,"
 >
-  import { watch } from 'runed';
+  import { untrack } from 'svelte';
 
   let {
     forces,
@@ -235,24 +235,24 @@
 
   // MARK: Reactivity Effects
 
-  watch.pre(
-    () => stopped,
-    () => {
-      // Any time the `stopped` prop gets toggled we
-      // update the running state of the simulation:
+  $effect.pre(() => {
+    // Any time the `stopped` prop gets toggled we
+    // update the running state of the simulation:
+    stopped;
+    untrack(() => {
       if (stopped) {
         pauseDynamicSimulation();
       } else {
         runOrResumeSimulation();
       }
-    }
-  );
+    });
+  });
 
-  watch.pre(
-    () => staticProp,
-    () => {
-      // Any time the `static` prop gets toggled we
-      // either attach or detach our internal event listeners:
+  $effect.pre(() => {
+    // Any time the `static` prop gets toggled we
+    // either attach or detach our internal event listeners:
+    staticProp;
+    untrack(() => {
       if (staticProp) {
         simulation.on('tick', null).on('end', null);
       } else {
@@ -260,64 +260,69 @@
       }
 
       runOrResumeSimulation();
-    }
-  );
+    });
+  });
 
-  watch.pre(
-    () => data,
-    () => {
-      // Any time the `nodes` prop, or the `data` store gets changed
-      // we pass them to the internal d3 simulation object:
+  $effect.pre(() => {
+    // Any time the `nodes` prop, or the `data` store gets changed
+    // we pass them to the internal d3 simulation object:
+    data;
+    untrack(() => {
       onNodesChange();
       pushNodesToSimulation(data.nodes);
       runOrResumeSimulation();
-    }
-  );
+    });
+  });
 
-  watch.pre(
-    () => forces,
-    () => {
-      // Any time the `forces` prop gets changed we
-      // pass them to the internal d3 simulation object:
+  $effect.pre(() => {
+    // Any time the `forces` prop gets changed we
+    // pass them to the internal d3 simulation object:
+    forces;
+    untrack(() => {
       pushForcesToSimulation(forces);
       runOrResumeSimulation();
-    }
-  );
+    });
+  });
 
-  watch.pre(
-    () => alpha,
-    () => {
-      // Any time the `alpha` prop gets changed we
-      // pass it to the internal d3 simulation object:
+  $effect.pre(() => {
+    // Any time the `alpha` prop gets changed we
+    // pass it to the internal d3 simulation object:
+    alpha;
+    untrack(() => {
       pushAlphaToSimulation(alpha);
 
       // Then we attempt to resume the simulation:
       runOrResumeSimulation();
-    }
-  );
+    });
+  });
 
-  watch.pre([() => alphaTarget, () => alphaMin, () => alphaDecay, () => velocityDecay], () => {
+  $effect.pre(() => {
     // Any time any of the the alpha props get changed we
     // pass them all to the internal d3 simulation object
     // (they are cheap, so passing them as a batch is fine!):
+    alphaTarget;
+    alphaMin;
+    alphaDecay;
+    velocityDecay;
+    untrack(() => {
+      // We read `simulation.alpha()` instead of `alpha` here, so
+      // Svelte does not trigger this block on any change to `alpha`:
+      let alphaValue = simulation.alpha();
+      if (alphaTarget > alphaValue && alphaValue < alphaMin) {
+        // Lift `alpha` from below `alphaMin` in order to give the simulation
+        // a chance to get revived if an `alphaTarget > alpha` is provided:
+        alphaValue = alphaMin;
+      }
 
-    // We read `simulation.alpha()` instead of `alpha` here, so
-    // Svelte does not trigger this block on any change to `alpha`:
-    let alphaValue = simulation.alpha();
-    if (alphaTarget > alphaValue && alphaValue < alphaMin) {
-      // Lift `alpha` from below `alphaMin` in order to give the simulation
-      // a chance to get revived if an `alphaTarget > alpha` is provided:
-      alphaValue = alphaMin;
-    }
+      simulation
+        .alpha(alphaValue)
+        .alphaTarget(alphaTarget)
+        .alphaMin(alphaMin)
+        .alphaDecay(alphaDecay)
+        .velocityDecay(velocityDecay);
 
-    simulation
-      .alpha(alphaValue)
-      .alphaTarget(alphaTarget)
-      .alphaMin(alphaMin)
-      .alphaDecay(alphaDecay)
-      .velocityDecay(velocityDecay);
-
-    runOrResumeSimulation();
+      runOrResumeSimulation();
+    });
   });
 
   // MARK: Push State
