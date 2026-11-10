@@ -5,7 +5,6 @@
 	import { allComponents } from 'content-collections';
 
 	import { ComponentLink, ExampleListing } from '@layerstack/docs/components';
-	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data } = $props();
 
@@ -16,10 +15,6 @@
 	const resolveComponentExample = (component: string) =>
 		allComponents.find((c) => c.name === component)?.defaultExample;
 </script>
-
-<div class="mb-4">
-	<OpenWithButton />
-</div>
 
 <Example name={example} {component} showCode />
 

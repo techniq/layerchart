@@ -282,7 +282,7 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 218,
+      "lineNumber": 258,
       "line": "<Group"
     },
     {
@@ -496,5 +496,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:17.145Z"
+  "updatedAt": "2026-10-26T02:35:36.342Z"
 }

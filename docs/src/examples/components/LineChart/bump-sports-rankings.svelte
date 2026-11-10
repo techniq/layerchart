@@ -1,6 +1,5 @@
 <script module lang="ts">
 	export const title = 'Bump chart (sports rankings)';
-	export const description = 'Weekly AP Top 25 poll for a college football or basketball season';
 </script>
 
 <script lang="ts">
@@ -17,7 +16,6 @@
 	} from 'layerchart';
 	import { Kbd, SelectField, getSettings } from 'svelte-ux';
 	import { curveBumpX } from 'd3-shape';
-	import { scalePoint } from 'd3-scale';
 	import { index, range } from 'd3-array';
 	import { cls } from '@layerstack/tailwind';
 	import {
@@ -59,6 +57,12 @@
 
 	const teamsById = $derived(index(data.teams, (d) => d.id));
 	const weekLabels = $derived(data.weeks.map((w) => w.label));
+	const weekIndex = $derived(new Map(weekLabels.map((label, i) => [label, i])));
+
+	/** A rank's horizontal position, by week index (`offset` places a point between weeks) */
+	function weekX(d: SportsRank & { offset?: number }) {
+		return weekIndex.get(d.week)! + (d.offset ?? 0);
+	}
 
 	/** Team abbreviations for the right axis, by position in the latest poll */
 	const finalAbbreviations = $derived(
@@ -77,11 +81,16 @@
 		)
 	);
 
+	/** Where lines enter from / exit to when a team joins or falls out of the poll (bottom edge) */
+	const unrankedPosition = $derived(data.maxRank + 0.5);
+
 	/** Color each segment by the move into the next week's poll */
 	function lineColor(d: SportsRank) {
+		if (d.position === unrankedPosition) return 'url(#gradient-entered)';
 		const nextWeek = weekLabels[weekLabels.indexOf(d.week) + 1];
 		const next = rankByTeamWeek.get(d.teamId)?.get(nextWeek);
-		if (next == null || next.position === d.position) {
+		if (next == null) return 'url(#gradient-dropped)';
+		if (next.position === d.position) {
 			return 'color-mix(in srgb, var(--color-surface-content) 30%, transparent)';
 		}
 		return next.position < d.position ? 'url(#gradient-improved)' : 'url(#gradient-declined)';
@@ -96,6 +105,22 @@
 			else if (segments.at(-1)!.length) segments.push([]);
 		}
 		return segments.filter((segment) => segment.length);
+	}
+
+	/**
+	 * Extend a run up from the bottom edge, halfway from the week before a team enters the poll, and
+	 * back down to it halfway to the week after it falls out
+	 */
+	function withUnranked(segment: SportsRank[]) {
+		const first = segment[0];
+		const last = segment.at(-1)!;
+		const entered = first.week !== weekLabels[0];
+		const dropped = last.week !== weekLabels.at(-1);
+		return [
+			...(entered ? [{ ...first, offset: -0.5, position: unrankedPosition }] : []),
+			...segment,
+			...(dropped ? [{ ...last, offset: 0.5, position: unrankedPosition }] : [])
+		];
 	}
 
 	/** Draw the highlighted team last so it is on top */
@@ -178,13 +203,10 @@
 	/>
 </div>
 
-<div class="text-sm text-surface-content/50 mb-1">AP Top 25</div>
-
 <Chart
 	data={data.ranks}
-	x="week"
-	xScale={scalePoint().padding(0.5)}
-	xDomain={weekLabels}
+	x={weekX}
+	xDomain={[-0.5, weekLabels.length - 0.5]}
 	y="position"
 	yDomain={[data.maxRank + 0.5, 0.5]}
 	padding={{ top: 24, bottom: 24, left: 36, right: 52 }}
@@ -202,9 +224,27 @@
 				id="gradient-declined"
 				stops={['var(--color-danger-300)', 'var(--color-danger-700)']}
 			/>
+			<LinearGradient
+				id="gradient-entered"
+				stops={['rgb(from var(--color-success-700) r g b / 0)', 'var(--color-success-700)']}
+			/>
+			<LinearGradient
+				id="gradient-dropped"
+				stops={['var(--color-danger-700)', 'rgb(from var(--color-danger-700) r g b / 0)']}
+			/>
 
-			<Axis placement="top" rule={false} />
-			<Axis placement="bottom" rule={false} />
+			<Axis
+				placement="top"
+				rule={false}
+				ticks={range(weekLabels.length)}
+				format={(i) => weekLabels[i]}
+			/>
+			<Axis
+				placement="bottom"
+				rule={false}
+				ticks={range(weekLabels.length)}
+				format={(i) => weekLabels[i]}
+			/>
 			<Axis placement="left" ticks={range(1, data.maxRank + 1)} format={(d) => `#${d}`} />
 			<Axis
 				placement="right"
@@ -221,7 +261,7 @@
 				>
 					{#each segments as segment, i (i)}
 						<Spline
-							data={segment}
+							data={withUnranked(segment)}
 							curve={curveBumpX}
 							stroke={lineColor}
 							strokeWidth={highlightId === team.id ? 4 : 2}
@@ -230,7 +270,7 @@
 					{/each}
 					<Circle
 						data={ranks}
-						cx="week"
+						cx={weekX}
 						cy="position"
 						r={logoSize / 2 + 2}
 						class="fill-surface-100 stroke-surface-content/20"
@@ -238,7 +278,7 @@
 					<Image
 						data={ranks}
 						href={team[logoKey]}
-						x="week"
+						x={weekX}
 						y="position"
 						width={logoSize}
 						height={logoSize}

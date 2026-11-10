@@ -64,53 +64,52 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 183,
+          "lineNumber": 206,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 196,
+          "lineNumber": 218,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 197,
+          "lineNumber": 219,
           "line": "<LinearGradient"
         },
         {
           "component": "Axis",
-          "lineNumber": 206,
-          "line": "<Axis placement=\"top\" rule={false} />"
+          "lineNumber": 236,
+          "line": "<Axis"
         },
         {
           "component": "Group",
-          "lineNumber": 218,
+          "lineNumber": 258,
           "line": "<Group"
         },
         {
           "component": "Spline",
-          "lineNumber": 223,
+          "lineNumber": 263,
           "line": "<Spline"
         },
         {
           "component": "Circle",
-          "lineNumber": 231,
+          "lineNumber": 271,
           "line": "<Circle"
         },
         {
           "component": "Image",
-          "lineNumber": 238,
+          "lineNumber": 278,
           "line": "<Image"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 251,
+          "lineNumber": 291,
           "line": "<Tooltip.Root {context}>"
         }
       ],
-      "description": "Weekly AP Top 25 poll for a college football or basketball season",
       "createdAt": "2026-10-20T15:00:01.000Z",
-      "updatedAt": "2026-10-20T15:00:01.000Z"
+      "updatedAt": "2026-10-26T02:29:21.000Z"
     },
     {
       "name": "bump-state-population-ranks",
@@ -269,6 +268,20 @@
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
       "updatedAt": "2026-03-31T15:09:10.000Z"
+    },
+    {
+      "name": "facet-series-data",
+      "title": "facet series data",
+      "path": "/docs/components/LineChart/facet-series-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 18,
+          "line": "<LineChart"
+        }
+      ],
+      "createdAt": "2026-10-23T17:06:05.000Z",
+      "updatedAt": "2026-10-23T17:06:05.000Z"
     },
     {
       "name": "gradient-encoding",
@@ -1583,6 +1596,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "facet-series-data",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/facet-series-data",
+      "lineNumber": 18,
+      "line": "<LineChart"
+    },
+    {
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
@@ -2038,5 +2058,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-10-19T19:57:17.400Z"
+  "updatedAt": "2026-10-26T02:35:36.523Z"
 }

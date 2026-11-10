@@ -73,6 +73,13 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 276,
+      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -241,5 +248,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.736Z"
+  "updatedAt": "2026-10-26T02:35:36.297Z"
 }

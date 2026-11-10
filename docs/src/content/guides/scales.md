@@ -131,6 +131,127 @@ LayerChart supports all d3-scale types:
 
 See the [d3-scale documentation](https://d3js.org/d3-scale) for a complete reference.
 
+## Color
+
+Color is a scale like any other. The `c` channel picks a value out of each row, `cDomain` holds the values to map, and `cRange` holds the colors they map to.
+
+```svelte
+<Chart
+  {data}
+  x="date"
+  y="value"
+  c="fruit"
+  cRange={['var(--color-apples)', 'var(--color-bananas)']}
+>
+```
+
+### The color channel
+
+- **`c`**: A property name (`c="fruit"`) or an accessor function (`c={(d) => d.value > 0 ? 'gain' : 'loss'}`).
+- **`cDomain`**: When `c` returns numbers, this is their extent (`[min, max]`). Otherwise it's the unique values, in the order they first appear. It's read from every row, including any a legend has hidden, so hiding a category doesn't recolor the ones that are left.
+- **`cRange`**: The colors. These can be any CSS color, including `var(--color-*)`, which keeps charts in step with your theme and dark mode.
+- **`cScale`**: Defaults to [`scaleOrdinal`](https://d3js.org/d3-scale/ordinal), which pairs each domain value with a color in turn. Unlike `x` and `y`, the type isn't inferred from the data, so a numeric `c` is still ordinal unless you pass a ramp or bucketing scale yourself.
+
+The chart has no built-in palette. If `c` is set but nothing supplies colors (no `cRange`, a `cScale` with no range of its own, or `series` colors), the marks keep their [default CSS color](/docs/guides/styles#global-css-colors). The simplified charts pass a single `--color-primary` range, so `BarChart` and `ScatterChart` stay one color until you give them more.
+
+### Choosing a color scale
+
+Any d3 scale that returns colors works. If you pass a `cScale` that already has a range and leave out `cRange`, its range is kept.
+
+```svelte
+<script>
+	import { scaleOrdinal, scaleSequential, scaleThreshold } from 'd3-scale';
+	import { schemeTableau10, interpolateViridis } from 'd3-scale-chromatic';
+</script>
+
+<!-- Categorical: one color per category, from a d3 scheme -->
+<Chart {data} c="species" cScale={scaleOrdinal(schemeTableau10)} />
+
+<!-- Continuous: a ramp across the extent of `temperature` -->
+<Chart {data} c="temperature" cScale={scaleSequential(interpolateViridis)} />
+
+<!-- Thresholds: below 50, then 50 and above -->
+<Chart
+	{data}
+	c="value"
+	cScale={scaleThreshold()}
+	cDomain={[50]}
+	cRange={['var(--color-danger)', 'var(--color-success)']}
+/>
+```
+
+`scaleQuantize`, `scaleQuantile`, `scaleDiverging` and the `sqrt`/`log` variants of the sequential scales work the same way. See [Legend](/docs/components/Legend) for one example of each, and [Styles](/docs/guides/styles#data-driven-colors) for charts built with them.
+
+### How a mark resolves its color
+
+Each mark uses the first of these that gives it a color:
+
+1. **Its own `fill` / `stroke`** (see below)
+2. **Its series' `color`**, when the mark draws a [series](/docs/guides/series)
+3. **The chart's `c` channel**, the row's value passed through `cScale`
+4. **The mark's default CSS color**, such as `--color-primary`. See [Styles](/docs/guides/styles#global-css-colors).
+
+A `fill` or `stroke` prop is resolved like this:
+
+| Value                                       | Resolves to                                                                           |
+| ------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `"#e15759"`, `"rgb(…)"`, `"var(--color-…)"` | Used as is. Anything starting with `#` or containing `(`                              |
+| `"species"` (a property of the row)         | `d.species` passed through `cScale`                                                   |
+| `"tomato"` (not a property of the row)      | Used as is, as a named CSS color                                                      |
+| `(d) => …`                                  | The result passed through `cScale`. A returned CSS color (`#…`, `…(…)`) is used as is |
+
+If there's no `cScale`, or the scale has nothing for a value, the value itself is used. This means a column that already holds colors works with no scale at all:
+
+```svelte
+<Points fill="color" />
+```
+
+### Series colors
+
+When `series` declare a `color` and the chart has no `cScale` or `cRange`, the chart builds an ordinal `cScale` from them, mapping each series `key` to its `color`. The marks, legend and tooltip then share one palette without you repeating it as `cDomain` / `cRange`:
+
+```svelte
+<Chart
+  series={[
+    { key: 'apples', color: 'var(--color-apples)' },
+    { key: 'bananas', color: 'var(--color-bananas)' }
+  ]}
+>
+```
+
+This scale only covers the series keys. Any other value is left alone rather than given the next color in the palette.
+
+Passing `cScale` or `cRange` replaces it. A mark drawing a series still uses that series' `color` first.
+
+### Colors as groups
+
+Setting `c` to a property of strings or booleans (`c="fruit"`) when no `series` are configured means each category is a group, not just a color:
+
+- the legend lists the categories, and clicking one hides its rows
+- bars and areas [stack](/docs/guides/series) by category
+- `Spline` and `Area` draw one line per category, in that category's color
+
+To split lines into separate paths without coloring them, use `g`. `c` is still what the legend names, so a chart can use both (`g="id"` with `c="region"`).
+
+A numeric `c`, or one given as a function, is a color for each row and does none of this.
+
+### Color from a mark alone
+
+A chart with no `c` can still have a color channel. When a mark's `fill` or `stroke` names a property of the data (`<Circle fill="island" />`), that property is used for the chart's `cDomain` and per-row color lookups, so the tooltip and legend use it too. A `Spline` or `Area` also draws one line per value. If marks name different properties, the chart doesn't pick one.
+
+This channel only adds color. To also group, stack and filter by the property, set `c` on the chart.
+
+### Marks with their own ramp
+
+`Contour`, `Density` and `Raster` color values they compute (a density, a grid cell), not values from your rows. They copy a continuous `cScale` and re-domain it to their own values. They ignore an ordinal one, and with no continuous `cScale` they use a built-in sequential ramp.
+
+### Legend
+
+A [Legend](/docs/components/Legend) shows whichever of these the chart is using:
+
+- **series items**, when `series` declare colors and `c` doesn't name the groups
+- otherwise **the `cScale`**: swatches for an ordinal scale, or a ramp for anything else (a gradient for continuous scales, blocks for threshold, quantize and quantile). A ramp marks the hovered row's value.
+
 ## Ticks
 
 Scales provide a `.ticks()` method that generates human-readable reference values at regular intervals. LayerChart uses these for axis labels and grid lines. You can customize the number of ticks or provide explicit tick values.

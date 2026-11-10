@@ -1,4 +1,5 @@
 import { prerender, getRequestEvent } from '$app/server';
+import { z } from 'zod';
 
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import { geoCentroid } from 'd3-geo';
@@ -7,6 +8,8 @@ import { parse } from '@layerstack/utils';
 
 import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
 import type { WorldLinksData } from '$static/data/examples/geo/world-links.js';
+import type { Admin0Topology, Admin1Topology } from '$static/data/examples/geo/admin.js';
+import admin1Countries from '$static/data/examples/geo/admin1/countries.json';
 
 export const getUsStatesTopology = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -311,3 +314,31 @@ export const getWorldLinks = prerender(async () => {
 	)) as WorldLinksData;
 	return data;
 });
+
+/**
+ * Every country, merged from Natural Earth's 10m admin-1 states and provinces (public domain) by
+ * `scripts/natural-earth-admin.mjs`, so its borders line up with `getAdmin1Topology`'s.
+ */
+export const getAdmin0Topology = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/admin0.json').then((r) =>
+		r.json()
+	)) as Admin0Topology;
+	return data;
+});
+
+/**
+ * One country's admin-1 states and provinces (by its `adm0_a3`, e.g. "ITA"), with its `regions`
+ * where Natural Earth's admin-1 is the second level down.
+ */
+export const getAdmin1Topology = prerender(
+	z.string(),
+	async (country) => {
+		const { fetch } = getRequestEvent();
+		const data = (await fetch(`/data/examples/geo/admin1/${country}.json`).then((r) =>
+			r.json()
+		)) as Admin1Topology;
+		return data;
+	},
+	{ inputs: () => admin1Countries }
+);

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { LoadingPlaceholder } from '@layerstack/docs/components';
-	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
+	import { toTitleCase } from '@layerstack/utils';
 	import { examples } from '@layerstack/docs/context';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import { page } from '$app/state';
+
+	import LucideGlobe from '~icons/lucide/globe';
 
 	let { data, children } = $props();
 
@@ -12,15 +16,25 @@
 		}
 	};
 	examples.set(examplesContext);
+
+	// Guides › any parent directories (e.g. Migrations)
+	const breadcrumbs = $derived([
+		{ label: 'Guides' },
+		...page.params
+			.name!.split('/')
+			.slice(0, -1)
+			.map((segment) => ({ label: toTitleCase(segment.replaceAll('-', ' ')) }))
+	]);
 </script>
 
-<h1 class="text-3xl font-bold mb-2">{data.metadata.title}</h1>
 <!-- OpenWithButton is shown as example on LLMs page, do not show again -->
-{#if data.metadata.title !== 'LLMs'}
-	<div class="mb-4">
-		<OpenWithButton example={data.metadata.title === 'LLMs'} />
-	</div>
-{/if}
+<PageHeader
+	title={data.metadata.title}
+	icon={LucideGlobe}
+	{breadcrumbs}
+	layers={data.layers}
+	showOpenWith={data.metadata.title !== 'LLMs'}
+/>
 
 <svelte:boundary>
 	{#snippet pending()}

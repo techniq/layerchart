@@ -3769,6 +3769,13 @@
       "line": "<Chart"
     },
     {
+      "example": "geojson-drilldown",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/geojson-drilldown",
+      "lineNumber": 253,
+      "line": "<Chart"
+    },
+    {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
@@ -4374,7 +4381,7 @@
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
-      "lineNumber": 183,
+      "lineNumber": 206,
       "line": "<Chart"
     },
     {
@@ -6044,5 +6051,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-10-23T06:08:46.706Z"
+  "updatedAt": "2026-10-26T02:35:35.663Z"
 }

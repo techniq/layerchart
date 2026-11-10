@@ -18,12 +18,6 @@ export const sites = [
 		source: 'https://github.com/zipline-ai'
 	},
 	{
-		name: 'Tenzir',
-		description: 'Open source data pipelines for security teams',
-		url: 'https://tenzir.com/',
-		source: 'https://github.com/tenzir'
-	},
-	{
 		name: 'shadcn-svelte',
 		description: 'shadcn/ui, but for Svelte.',
 		url: 'https://shadcn-svelte.com/',
@@ -127,11 +121,6 @@ export const sites = [
 		name: 'ftop',
 		description: 'Comperative performance metrics for Fortnite islands',
 		url: 'https://ftop.app/'
-	},
-	{
-		name: 'GEO audit',
-		description: 'GEO / AI audit that tracks your visibility impact',
-		url: 'https://www.geoaud.it/'
 	},
 	{
 		name: 'Nocturne',

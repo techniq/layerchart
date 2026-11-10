@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.9.2
+
+### Patch Changes
+
+- perf(Chart): Batch mark registration so mounting many marks no longer scales with the square of the mark count ([#971](https://github.com/techniq/layerchart/pull/971))
+
+- fix(Html): Clip at the chart's edge, as the SVG layer does, so content in the padding or panned and zoomed into view is no longer cut off ([#982](https://github.com/techniq/layerchart/pull/982))
+
 ## 2.9.1
 
 ### Patch Changes

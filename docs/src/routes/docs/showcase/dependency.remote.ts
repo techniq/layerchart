@@ -49,12 +49,6 @@ export const getDependents = prerender(async () => {
 	const supporterSites: Dependent[] = [
 		// could this be automated? pull sponsers, check dependents by owner === sponser, and add them here?
 		{
-			name: 'Tenzir',
-			description: 'Open source data pipelines for security teams',
-			repourl: 'https://github.com/tenzir',
-			homepageurl: 'https://tenzir.com/'
-		},
-		{
 			name: 'shadcn-svelte',
 			description: 'shadcn/ui, but for Svelte.',
 			repourl: 'https://github.com/huntabyte/shadcn-svelte',
@@ -65,16 +59,16 @@ export const getDependents = prerender(async () => {
 			description: 'Bluesky stats',
 			repourl: 'https://skyzoo.blue/',
 			homepageurl: 'https://github.com/jycouet/jyc.dev'
+		},
+		{
+			name: 'Kimbia',
+			description: 'Your training journal for running, trail, cycling, and hiking',
+			homepageurl: 'https://kimbia.app/'
 		}
 	];
 
 	// These do not have a GH repo, but will be promoted by adding to the top of popular sites.
 	const highlightedSites: Dependent[] = [
-		{
-			name: 'GEO audit',
-			description: 'GEO / AI audit that tracks your visibility impact',
-			homepageurl: 'https://www.geoaud.it/'
-		},
 		{
 			name: 'RetireNumber',
 			description: 'Get a second opinion on your retirement number.',

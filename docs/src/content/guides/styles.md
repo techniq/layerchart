@@ -30,7 +30,7 @@ Primitives rendered within Canvas layers support the same CSS classes and inline
 
 By default, LayerChart uses `currentColor` for default colors, but you can override these defaults by defining CSS variables in your global stylesheet. LayerChart defines a set of CSS variables that can be customized to change the default appearance of charts.
 
-- **--color-primary**: The primary color used for marks (e.g., lines, bars).
+- **--color-primary**: The primary color used for marks (e.g., lines, bars), when nothing else [gives them a color](/docs/guides/scales#how-a-mark-resolves-its-color).
 - **--color-surface-100**: A light surface color used for surface/backgrounds.
 - **--color-surface-200**: A medium surface color used for surface/backgrounds.
 - **--color-surface-300**: A darker surface color used for surface/backgrounds.
@@ -283,7 +283,7 @@ more info [Color Schemes](/docs/components/ColorRamp#schemes)
 
 #### Data driven colors
 
-Many components support data-driven colors via the `c` (color) prop on `Chart`, which maps a data field to a color scale. Combined with `cScale`, `cDomain`, and `cRange`, you can create choropleths, heatmaps, threshold-based coloring, and more.
+Many components support data-driven colors via the `c` (color) prop on `Chart`, which maps a data field to a color scale. Combined with `cScale`, `cDomain`, and `cRange`, you can create choropleths, heatmaps, threshold-based coloring, and more. See [Scales](/docs/guides/scales#color) for how the domain is read and how each mark resolves its color.
 
 :::tabs{key="data-driven-colors"}
 

@@ -1,6 +1,6 @@
 import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/content.js';
 
-export const load = async ({ params, parent, url }) => {
+export const load = async ({ data, params, parent, url }) => {
 	const parentData = await parent();
 
 	const { PageComponent, metadata } = await getMarkdownComponent(params.name, 'guides');
@@ -18,6 +18,7 @@ export const load = async ({ params, parent, url }) => {
 	return {
 		PageComponent,
 		metadata,
-		examples
+		examples,
+		layers: data.layers
 	};
 };

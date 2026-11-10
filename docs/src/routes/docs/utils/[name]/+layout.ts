@@ -2,7 +2,7 @@ import type { ComponentAPI } from '@layerstack/docs/api';
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
 import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/content.js';
 
-export const load = async ({ params, parent }) => {
+export const load = async ({ data, params, parent }) => {
 	// Get examples from parent layout
 	const parentData = await parent();
 
@@ -49,6 +49,7 @@ export const load = async ({ params, parent }) => {
 		metadata,
 		catalog,
 		examples,
-		api
+		api,
+		layers: data.layers
 	};
 };
