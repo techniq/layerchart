@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   let {
     ref: refProp = $bindable(),
@@ -30,7 +30,7 @@
   });
 </script>
 
-<div bind:this={ref} class={cls('lc-tooltip-list', className)} {...restProps}>
+<div bind:this={ref} class={clsx('lc-tooltip-list', className)} {...restProps}>
   {@render children?.()}
 </div>
 

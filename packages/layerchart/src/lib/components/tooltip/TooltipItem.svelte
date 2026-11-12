@@ -83,7 +83,7 @@
 
 <script lang="ts">
   import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { Snippet } from 'svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
 
@@ -161,7 +161,7 @@
 {#if visible}
   <div
     {...props.root}
-    class={cls('lc-tooltip-item-root', classes.root, className, props.root?.class)}
+    class={clsx('lc-tooltip-item-root', classes.root, className, props.root?.class)}
     data-highlighted={seriesKey != null ? ctx.series.isHighlighted(seriesKey, true) : undefined}
     {...restProps}
     onpointerenter={(e) => {
@@ -176,13 +176,13 @@
   >
     <div
       {...props.label}
-      class={cls('lc-tooltip-item-label', 'label', classes.label, props.label?.class)}
+      class={clsx('lc-tooltip-item-label', 'label', classes.label, props.label?.class)}
       bind:this={labelRef}
     >
       {#if color}
         <div
           {...props.color}
-          class={cls('lc-tooltip-item-color', 'color', classes.color, props.color?.class)}
+          class={clsx('lc-tooltip-item-color', 'color', classes.color, props.color?.class)}
           style:--color={color}
           bind:this={colorRef}
         ></div>
@@ -197,7 +197,7 @@
     <div
       bind:this={valueRef}
       {...props.value}
-      class={cls('lc-tooltip-item-value', 'value', classes.value, props.value?.class)}
+      class={clsx('lc-tooltip-item-value', 'value', classes.value, props.value?.class)}
       data-align={valueAlign}
     >
       {#if children}

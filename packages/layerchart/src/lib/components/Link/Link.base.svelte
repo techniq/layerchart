@@ -22,7 +22,7 @@
   import { getLayerIsometric } from '$lib/contexts/isometric.js';
   import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import {
     createMotion,
     extractTweenConfig,
@@ -270,7 +270,7 @@
       stroke={resolvedStroke}
       fill={resolvePerDatum(fillProp, d)}
       stroke-width={resolvePerDatum(strokeWidthProp, d)}
-      class={cls('lc-link', resolveClass(d))}
+      class={clsx('lc-link', resolveClass(d))}
     />
   {/each}
 {:else}
@@ -282,6 +282,6 @@
     {markerMid}
     {markerEnd}
     {...restProps}
-    class={cls('lc-link', typeof classProp === 'string' ? classProp : undefined)}
+    class={clsx('lc-link', typeof classProp === 'string' ? classProp : undefined)}
   />
 {/if}

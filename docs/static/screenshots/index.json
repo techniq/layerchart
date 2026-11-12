@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T02:37:59.491Z",
+  "generatedAt": "2026-11-12T18:39:15.383Z",
   "totalComponents": 82,
   "totalExamples": 1036,
   "components": [
@@ -3624,7 +3624,7 @@
         {
           "name": "bump-sports-rankings",
           "path": "/example/LineChart/bump-sports-rankings",
-          "checksum": "ed13089886181cbe5edef3eee367f53e"
+          "checksum": "41fff0097607c6e823ac350d21a5ba90"
         },
         {
           "name": "bump-state-population-ranks",
@@ -4789,7 +4789,7 @@
         {
           "name": "data-x-band",
           "path": "/example/Rule/data-x-band",
-          "checksum": "ce8945c770c5fd6b0102524f43af6c45"
+          "checksum": "1864f8264ec4fe2bcc99ffa2a18df4c0"
         },
         {
           "name": "data-x-date",

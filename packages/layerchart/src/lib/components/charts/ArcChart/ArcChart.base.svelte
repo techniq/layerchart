@@ -16,7 +16,7 @@
   import { onMount } from 'svelte';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import * as Tooltip from '../../tooltip/index.js';
 
@@ -180,7 +180,7 @@
       },
       ...props.arc,
       ...s.props,
-      class: cls(props.arc?.class, s.props?.class),
+      class: clsx(props.arc?.class, s.props?.class),
     };
   }
 

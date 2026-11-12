@@ -22,7 +22,7 @@
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getPointLabelLayout } from '$lib/utils/labelPlacement.js';
   import { getPixelValue } from '../Text/Text.shared.svelte.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { CircleProps } from '../Circle/Circle.shared.svelte.js';
   import type { TextProps } from '../Text/Text.shared.svelte.js';
 
@@ -154,14 +154,14 @@
     onmouseleave: onPointerLeave,
     ontouchend: onPointerLeave,
     ...props?.circle,
-    class: cls('lc-annotation-point', link && 'lc-annotation-point-ring', props?.circle?.class),
+    class: clsx('lc-annotation-point', link && 'lc-annotation-point-ring', props?.circle?.class),
   } as CircleProps);
 
   const resolvedLabelProps = $derived({
     ...labelProps,
     z: height,
     ...props?.label,
-    class: cls('lc-annotation-point-label', props?.label?.class),
+    class: clsx('lc-annotation-point-label', props?.label?.class),
   } as TextProps);
 </script>
 
@@ -181,7 +181,7 @@
     z2={height}
     type="straight"
     {...linkProps}
-    class={cls(
+    class={clsx(
       'lc-annotation-point-link',
       typeof linkProps.class === 'string' ? linkProps.class : undefined
     )}

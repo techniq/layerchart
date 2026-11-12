@@ -1,20 +1,34 @@
 <script lang="ts">
 	import { ScrollingValue } from 'svelte-ux';
-	import { IsInViewport, useInterval } from 'runed';
 	import { format } from '@layerstack/utils';
+	import { TimerState } from '@layerstack/svelte-state';
 	import { getStats } from '$lib/stats.remote';
 
 	const query = getStats();
 
 	let npmEl = $state<HTMLElement>();
-	const inViewport = new IsInViewport(() => npmEl);
-
-	const interval = useInterval(8000);
+	let inViewport = $state(false);
 	$effect(() => {
-		if (inViewport.current) {
-			interval.resume();
+		if (!npmEl) return;
+		const observer = new IntersectionObserver(([entry]) => {
+			inViewport = entry?.isIntersecting ?? false;
+		});
+		observer.observe(npmEl);
+		return () => observer.disconnect();
+	});
+
+	// Cycles the npm downloads interval (weekly, monthly, lifetime) while in view
+	const interval = new TimerState({
+		initial: 0,
+		delay: 8000,
+		disabled: true,
+		tick: (n) => (n ?? 0) + 1
+	});
+	$effect(() => {
+		if (inViewport) {
+			interval.start();
 		} else {
-			interval.pause();
+			interval.stop();
 		}
 	});
 
@@ -66,11 +80,11 @@
 					<div
 						class="h-14 w-36 text-center pt-1"
 						bind:this={npmEl}
-						onpointerenter={() => interval.pause()}
-						onpointerleave={() => interval.resume()}
+						onpointerenter={() => interval.stop()}
+						onpointerleave={() => interval.start()}
 					>
-						<ScrollingValue value={interval.counter} axis="y">
-							{@const intervalIndex = interval.counter % intervals.length}
+						<ScrollingValue value={interval.current ?? 0} axis="y">
+							{@const intervalIndex = (interval.current ?? 0) % intervals.length}
 							<div class="text-lg font-bold text-surface-content">
 								{format(query.current.npmDownloads[intervalIndex]!, 'metric', {
 									fractionDigits: 1

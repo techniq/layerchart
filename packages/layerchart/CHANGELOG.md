@@ -1,5 +1,35 @@
 # LayerChart
 
+## 2.10.1
+
+### Patch Changes
+
+- fix(Brush): Style the region and handle cursors with CSS instead of Tailwind classes ([#991](https://github.com/techniq/layerchart/pull/991))
+
+- chore: Replace `tailwind-merge` with `clsx` (~42 KB smaller) ([#991](https://github.com/techniq/layerchart/pull/991))
+
+## 2.10.0
+
+### Minor Changes
+
+- chore: Require Svelte `^5.57.0`, using Svelte's `createContext` in place of runed's `Context` ([#969](https://github.com/techniq/layerchart/pull/969))
+
+### Patch Changes
+
+- fix(dagre): Publish type declarations for `dagreGraph`, `dagreAncestors`, and `dagreDescendants` ([#969](https://github.com/techniq/layerchart/pull/969))
+
+- chore: Exclude tests, benchmarks, and screenshots from the published package (1.5 MB → 550 KB packed) ([#969](https://github.com/techniq/layerchart/pull/969))
+
+- fix: Remove the `runed` dependency so npm installs work with both SvelteKit 2 and 3 ([#969](https://github.com/techniq/layerchart/pull/969))
+
+## 2.9.2
+
+### Patch Changes
+
+- perf(Chart): Batch mark registration so mounting many marks no longer scales with the square of the mark count ([#971](https://github.com/techniq/layerchart/pull/971))
+
+- fix(Html): Clip at the chart's edge, as the SVG layer does, so content in the padding or panned and zoomed into view is no longer cut off ([#982](https://github.com/techniq/layerchart/pull/982))
+
 ## 2.9.1
 
 ### Patch Changes

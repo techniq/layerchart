@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
   import type { SVGAttributes } from 'svelte/elements';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { polygonPath, type BoxFace } from '$lib/utils/isometric.js';
 
   let {
@@ -44,7 +44,7 @@
       stroke-width={style.strokeWidth}
       opacity={style.opacity}
       stroke-dasharray={dashArray}
-      class={cls('lc-rect', `lc-rect-${face.kind}`, style.class)}
+      class={clsx('lc-rect', `lc-rect-${face.kind}`, style.class)}
     />
     <!-- Darkened by an overlay, as Safari ignores CSS filters on SVG shapes -->
     {#if face.shade}

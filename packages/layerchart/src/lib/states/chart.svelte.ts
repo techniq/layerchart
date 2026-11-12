@@ -1,8 +1,7 @@
-import { untrack } from 'svelte';
+import { createContext, untrack } from 'svelte';
 import { scaleBand, scaleOrdinal, scaleSqrt, scaleTime } from 'd3-scale';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
-import { Context, useDebounce } from 'runed';
 import type { ComponentRender } from '$lib/contexts/canvas.js';
 import { getCanvasContext } from '$lib/contexts/canvas.js';
 
@@ -116,7 +115,7 @@ export interface RegisterComponentOptions<T extends Element = Element> {
 }
 
 /** Svelte context key for tracking the nearest parent ComponentNode. */
-const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParent');
+const [_getParentNode, _setParentNode, _hasParentNode] = createContext<ComponentNode>();
 
 /** Mark info is "empty" when none of the fields the chart uses for series /
  * domain inference are populated. Pixel-mode primitives produce empty info
@@ -272,6 +271,8 @@ export class ChartState<
   // re-run → infinite loop.
   private _markInfosRaw: Array<{ _id: number; info: MarkInfo }> = [];
   private _markInfosVersion = $state(0);
+  /** Bumped by marks registered from components; only the effect that coalesces them reads it */
+  private _markInfosPending = $state(0);
   private _nextMarkId = 0;
 
   /** Reactive accessor — reads _markInfosVersion to create a reactive dependency,
@@ -304,13 +305,17 @@ export class ChartState<
    * For use in tests or synchronous contexts. In components, use `registerComponent` with `markInfo`.
    */
   registerMark(info: MarkInfo): () => void {
+    return this._addMark(info, () => this._markInfosVersion++);
+  }
+
+  private _addMark(info: MarkInfo, changed: () => void): () => void {
     const id = ++this._nextMarkId;
     this._markInfosRaw.push({ _id: id, info });
-    this._markInfosVersion++;
+    changed();
     return () => {
       const idx = this._markInfosRaw.findIndex((r) => r._id === id);
       if (idx !== -1) this._markInfosRaw.splice(idx, 1);
-      this._markInfosVersion++;
+      changed();
     };
   }
 
@@ -322,7 +327,7 @@ export class ChartState<
     options: RegisterComponentOptions<T>
   ): ComponentNode {
     const { name, kind, canvasRender, markInfo, paintByDepth } = options;
-    const parent = _ParentNodeContext.getOr(null);
+    const parent = _hasParentNode() ? _getParentNode() : null;
 
     // Walk ancestors to check for composite-mark
     let insideCompositeMark = false;
@@ -347,7 +352,7 @@ export class ChartState<
     };
 
     if (parent) parent.children.push(node);
-    _ParentNodeContext.set(node);
+    _setParentNode(node);
 
     const canvasCtx = canvasRender ? getCanvasContext() : null;
 
@@ -392,7 +397,7 @@ export class ChartState<
         $effect(() => {
           const info = markInfo();
           if (isEmptyMarkInfo(info)) return;
-          return untrack(() => this.registerMark(info));
+          return untrack(() => this._addMark(info, () => this._markInfosPending++));
         });
       }
     }
@@ -424,6 +429,22 @@ export class ChartState<
     if (settings) this.#settings = settings;
     // Read once — identity must stay stable for the life of the chart
     this.id = props.id ?? Symbol('Chart');
+
+    // Bump `_markInfosVersion` once for all the marks that mount or unmount in the same flush.
+    //
+    // Every bump marks `flatData` → `extents` → domains → scales dirty, and with them every effect
+    // of every mark already mounted that reads a scale.  Bumping once per mark made mounting N marks
+    // walk that graph N times, O(N²) — a few hundred `Area`s took seconds.  Marks bump
+    // `_markInfosPending` instead, which only this effect reads, and it runs after them in the same
+    // flush — so the chart has every mark by the time `mount()`/`flushSync()` returns, and domain
+    // motion's first domain is the one the marks give.
+    let seenPending = 0;
+    $effect(() => {
+      const pending = this._markInfosPending;
+      if (pending === seenPending) return;
+      seenPending = pending;
+      untrack(() => this._markInfosVersion++);
+    });
 
     let shown = false;
     $effect.pre(() => {
@@ -536,8 +557,6 @@ export class ChartState<
       }
     );
 
-    const logDebug = useDebounce(printDebug, 200);
-
     // Set mounted state once component initializes
     $effect(() => {
       this.isMounted = true;
@@ -567,7 +586,7 @@ export class ChartState<
       });
     });
 
-    // Debug logging when mounted
+    // Debug logging when mounted, debounced by cancelling the pending log on each re-run
     $effect(() => {
       if (
         !this.isMounted ||
@@ -578,7 +597,7 @@ export class ChartState<
       }
 
       if (this.box) {
-        logDebug({
+        const debugInfo = {
           data: this.data,
           flatData: this.flatData,
           boundingBox: this.box,
@@ -591,7 +610,9 @@ export class ChartState<
           yScale: this.yScale,
           zScale: this.zScale,
           rScale: this.rScale,
-        });
+        };
+        const timeout = setTimeout(() => printDebug(debugInfo), 200);
+        return () => clearTimeout(timeout);
       }
     });
 
@@ -1439,9 +1460,9 @@ export class ChartState<
   }
 
   /**
-   * Memoized per axis. `resolveDomain` re-runs on every mark registration —
-   * each mounting mark bumps `_markInfosVersion` — so recollecting these
-   * inline made mount cost O(series² × rows). Only the mark loop in
+   * Memoized per axis. `resolveDomain` re-runs whenever the registered marks
+   * change — each `_markInfosVersion` bump — so recollecting these inline
+   * made that cost O(series × rows) every time. Only the mark loop in
    * `resolveDomain` depends on `_markInfos`; these values don't, so the
    * repeated calls reuse them.
    */

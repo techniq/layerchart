@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
   import type { HTMLAttributes } from 'svelte/elements';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { BoxFace } from '$lib/utils/isometric.js';
 
   let {
@@ -41,6 +41,6 @@
     style:background={fill}
     style:box-shadow={face.shade ? `inset 0 0 0 9999px rgb(0 0 0 / ${face.shade})` : null}
     style:opacity
-    class={cls('lc-rect', `lc-rect-${face.kind}`, className)}
+    class={clsx('lc-rect', `lc-rect-${face.kind}`, className)}
   ></div>
 {/each}

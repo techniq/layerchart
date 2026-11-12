@@ -5,7 +5,7 @@ import { extent } from 'd3-array';
 import { pointRadial } from 'd3-shape';
 
 import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
-import { cls } from '@layerstack/tailwind';
+import { clsx } from 'clsx';
 
 import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
 import type { GroupProps } from '../Group/Group.shared.svelte.js';
@@ -624,7 +624,7 @@ export class AxisState {
         fill,
         stroke,
         ...labelProps,
-        class: cls('lc-axis-label', classes.label, labelProps?.class),
+        class: clsx('lc-axis-label', classes.label, labelProps?.class),
       } as TextProps;
     }
 
@@ -642,7 +642,7 @@ export class AxisState {
       fill,
       stroke,
       ...labelProps,
-      class: cls('lc-axis-label', classes.label, labelProps?.class),
+      class: clsx('lc-axis-label', classes.label, labelProps?.class),
     } as TextProps;
   });
 
@@ -726,7 +726,7 @@ export class AxisState {
         fill,
         stroke,
         ...tickLabelProps,
-        class: cls('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
+        class: clsx('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
       } as TextProps;
 
       return {

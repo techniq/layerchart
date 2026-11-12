@@ -21,7 +21,7 @@
 </script>
 
 <script lang="ts" generics="T extends Transition = Transition">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -92,7 +92,7 @@
   <Group
     {...restProps}
     data-placement={placement}
-    class={cls('lc-axis', `placement-${placement}`, classes.root, className)}
+    class={clsx('lc-axis', `placement-${placement}`, classes.root, className)}
   >
     {#if rule !== false && placement === 'back'}
       {#if c.back}
@@ -142,7 +142,7 @@
         {/if}
 
         {#if tickMarks}
-          {@const tickClasses = cls('lc-axis-tick', classes.tick)}
+          {@const tickClasses = clsx('lc-axis-tick', classes.tick)}
           {#if c.orientation === 'horizontal'}
             <Line
               x1={item.tickCoordsX}

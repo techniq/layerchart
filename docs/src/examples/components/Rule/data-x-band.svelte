@@ -41,6 +41,6 @@
 	<Layer>
 		<Axis placement="bottom" rule />
 		<Axis placement="left" />
-		<Rule class="stroke-2 stroke-primary stroke-4" />
+		<Rule class="stroke-primary stroke-4" />
 	</Layer>
 </Chart>

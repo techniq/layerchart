@@ -138,7 +138,7 @@
   import { geoDistance } from 'd3-geo';
   import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
 
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
@@ -288,7 +288,7 @@
   bind:this={ref}
   {...restProps}
   data-placement={placement}
-  class={cls('lc-geo-legend-container', className, classes.root)}
+  class={clsx('lc-geo-legend-container', className, classes.root)}
 >
   {#if barWidth > 0}
     <svg {width} height={svgHeight} viewBox="0 0 {width} {svgHeight}" class="lc-geo-legend-svg">
@@ -297,7 +297,7 @@
           x={padding}
           y={titleFontSize}
           style:font-size={titleFontSize}
-          class={cls('lc-geo-legend-title', classes.title)}
+          class={clsx('lc-geo-legend-title', classes.title)}
         >
           {title}
         </text>
@@ -309,7 +309,7 @@
           stroke={color}
           stroke-linecap="round"
           stroke-linejoin="round"
-          class={cls('lc-geo-legend-bar', classes.bar)}
+          class={clsx('lc-geo-legend-bar', classes.bar)}
         />
       {:else if variant === 'alternating'}
         <!-- Outline + alternating filled segments between consecutive ticks -->
@@ -324,7 +324,7 @@
               width={x2 - x1}
               {height}
               fill={color}
-              class={cls('lc-geo-legend-bar', classes.bar)}
+              class={clsx('lc-geo-legend-bar', classes.bar)}
             />
           {/if}
         {/each}
@@ -335,7 +335,7 @@
           {height}
           style:fill="none"
           stroke={color}
-          class={cls('lc-geo-legend-bar', classes.bar)}
+          class={clsx('lc-geo-legend-bar', classes.bar)}
         />
       {/if}
       <g class="lc-geo-legend-ticks">
@@ -346,7 +346,7 @@
             y={tickLabelY}
             text-anchor="middle"
             style:font-size={tickFontSize}
-            class={cls('lc-geo-legend-label', classes.label)}
+            class={clsx('lc-geo-legend-label', classes.label)}
           >
             {formatTick(value)}
           </text>

@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts" generics="TData = any">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { LabelsState } from './Labels.shared.svelte.js';
   import { getPixelValue } from '../Text/Text.shared.svelte.js';
@@ -102,7 +102,7 @@
                   y2={item.link.y2}
                   type="straight"
                   {...linkProps}
-                  class={cls(
+                  class={clsx(
                     'lc-labels-link',
                     typeof linkProps.class === 'string' ? linkProps.class : undefined
                   )}

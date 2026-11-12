@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import type { PointerEventHandler, TouchEventHandler } from 'svelte/elements';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { ArcState } from './Arc.shared.svelte.js';
@@ -122,7 +122,7 @@
   transform="translate({c.xOffset}, {c.yOffset})"
   {stroke}
   {...restProps}
-  class={cls('lc-arc-line', className)}
+  class={clsx('lc-arc-line', className)}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}

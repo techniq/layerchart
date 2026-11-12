@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { EllipseState, ellipseMarkInfo, type EllipseProps } from './Ellipse.shared.svelte.js';
 
@@ -57,7 +57,7 @@
       stroke={resolvedStroke}
       stroke-width={resolvedStrokeWidth}
       opacity={resolvedOpacity}
-      class={cls('lc-ellipse', resolvedClass)}
+      class={clsx('lc-ellipse', resolvedClass)}
     />
   {/each}
 {:else}
@@ -74,7 +74,7 @@
     stroke={c.staticStroke}
     stroke-width={c.staticStrokeWidth}
     opacity={c.staticOpacity}
-    class={cls('lc-ellipse', c.staticClassName)}
+    class={clsx('lc-ellipse', c.staticClassName)}
   />
 {/if}
 

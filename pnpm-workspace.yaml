@@ -6,3 +6,18 @@ packages:
 
 onlyBuiltDependencies:
   - esbuild
+
+# These import `svelte` but list it only as a devDependency, so they resolve whichever Svelte pnpm
+# hoists.  With docs on a different Svelte than the package, layerchart's svelte-check sees two
+# `Snippet` types.  Declaring the peer gives each Svelte its own copy.  Remove once fixed upstream
+# in LayerStack.
+packageExtensions:
+  '@layerstack/svelte-actions':
+    peerDependencies:
+      svelte: ^5.0.0
+  '@layerstack/utils':
+    peerDependencies:
+      svelte: ^5.0.0
+  '@layerstack/svelte-state':
+    peerDependencies:
+      svelte: ^5.0.0

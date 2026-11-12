@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { merge } from '@layerstack/utils';
   import {
     renderExtrudedShades,
@@ -39,7 +39,7 @@
             strokeWidth: itemStrokeWidth ?? c.staticStrokeWidth,
             opacity: itemOpacity ?? c.staticOpacity,
           },
-          classes: cls('lc-polygon', itemClass ?? c.staticClassName),
+          classes: clsx('lc-polygon', itemClass ?? c.staticClassName),
           style: (rest as any).style as string | undefined,
         };
   }

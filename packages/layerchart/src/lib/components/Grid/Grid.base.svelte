@@ -20,7 +20,7 @@
 <script lang="ts" generics="T extends Transition = Transition">
   import { curveLinearClosed, pointRadial } from 'd3-shape';
 
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -79,7 +79,7 @@
   const transitionInParams = $derived(transitionInParamsProp ?? c.defaultTransitionInParams);
 </script>
 
-<Group bind:ref class={cls('lc-grid', classes.root, className)} {...restProps}>
+<Group bind:ref class={clsx('lc-grid', classes.root, className)} {...restProps}>
   {#if x}
     {@const splineProps = extractLayerProps(x, 'lc-grid-x-line')}
 
@@ -96,7 +96,7 @@
             {stroke}
             motion={c.tweenConfig}
             {...splineProps}
-            class={cls('lc-grid-x-radial-line', classes.line, splineProps?.class)}
+            class={clsx('lc-grid-x-radial-line', classes.line, splineProps?.class)}
           />
         {:else}
           <Rule
@@ -105,7 +105,7 @@
             {stroke}
             {motion}
             {...splineProps}
-            class={cls('lc-grid-x-rule', classes.line, splineProps?.class)}
+            class={clsx('lc-grid-x-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/each}
@@ -118,7 +118,7 @@
           {stroke}
           {motion}
           {...splineProps}
-          class={cls('lc-grid-x-end-rule', classes.line, splineProps?.class)}
+          class={clsx('lc-grid-x-end-rule', classes.line, splineProps?.class)}
         />
       {/if}
     </Group>
@@ -135,7 +135,7 @@
               {stroke}
               {motion}
               {...splineProps}
-              class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
+              class={clsx('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
             />
           {:else}
             {#await import('../Spline/Spline.svelte') then { default: Spline }}
@@ -147,7 +147,7 @@
                 motion={c.tweenConfig}
                 curve={curveLinearClosed}
                 {...splineProps}
-                class={cls('lc-grid-y-radial-line', classes.line, splineProps?.class)}
+                class={clsx('lc-grid-y-radial-line', classes.line, splineProps?.class)}
               />
             {/await}
           {/if}
@@ -160,7 +160,7 @@
             {stroke}
             {motion}
             {...splineProps}
-            class={cls('lc-grid-y-rule', classes.line, splineProps?.class)}
+            class={clsx('lc-grid-y-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/each}
@@ -175,7 +175,7 @@
             {stroke}
             {motion}
             {...splineProps}
-            class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
+            class={clsx('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
           />
         {:else}
           {@const yEnd =
@@ -190,7 +190,7 @@
             {stroke}
             {motion}
             {...splineProps}
-            class={cls('lc-grid-y-end-rule', classes.line, splineProps?.class)}
+            class={clsx('lc-grid-y-end-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/if}

@@ -55,7 +55,7 @@
 
 <script lang="ts">
   import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   let {
     ref: refProp = $bindable(),
@@ -88,14 +88,14 @@
 </script>
 
 <div
-  class={cls('lc-tooltip-header', classes.root, props.root?.class, className)}
+  class={clsx('lc-tooltip-header', classes.root, props.root?.class, className)}
   {...restProps}
   bind:this={ref}
 >
   {#if color}
     <div
       bind:this={colorRef}
-      class={cls('lc-tooltip-header-color', classes.color)}
+      class={clsx('lc-tooltip-header-color', classes.color)}
       style:--color={color}
     ></div>
   {/if}

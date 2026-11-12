@@ -245,7 +245,7 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/main/examples
     [UnoCSS](https://unocss.dev/)
 
     -
-        :button{label="Source" href="https://github.com/techniq/layerchart/tree/main/examples/unocss" size="sm" icon="lucide:github"}
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/main/examples/unocss-1" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/main/examples/unocss-1" size="sm" icon="simple-icons:stackblitz"}
     ::
 
