@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   let {
     ref: refProp = $bindable(),
@@ -29,7 +29,7 @@
   });
 </script>
 
-<div bind:this={ref} class={cls('lc-tooltip-separator', className)} {...restProps}>
+<div bind:this={ref} class={clsx('lc-tooltip-separator', className)} {...restProps}>
   {@render children?.()}
 </div>
 

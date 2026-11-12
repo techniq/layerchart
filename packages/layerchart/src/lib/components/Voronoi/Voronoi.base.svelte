@@ -19,7 +19,7 @@
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { polygonArea, polygonCentroid } from 'd3-polygon';
   import { pointRadial } from 'd3-shape';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   // GeoPath lives in geo/ subpath; agnostic import (only used in geo charts).
   import GeoPath from '../geo/GeoPath/GeoPath.svelte';
@@ -185,7 +185,7 @@
   });
 </script>
 
-<Group {...restProps} class={cls('lc-voronoi-g', classes.root, className)}>
+<Group {...restProps} class={clsx('lc-voronoi-g', classes.root, className)}>
   {#if geo.projection}
     {#if geoPolygons}
       {#each geoPolygons.features as feature}

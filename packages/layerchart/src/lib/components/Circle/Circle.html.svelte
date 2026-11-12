@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { matrixToString } from '$lib/utils/isometric.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
@@ -64,7 +64,7 @@
       style:border-color={resolvedStroke}
       style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
       style:transform="translate(-50%, -50%) {cancelView}"
-      class={cls('lc-circle', resolvedClass)}
+      class={clsx('lc-circle', resolvedClass)}
     ></div>
   {/each}
 {:else}
@@ -83,7 +83,7 @@
     style:border-color={c.staticStroke}
     style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
     style:transform="translate(-50%, -50%) {cancelView}"
-    class={cls('lc-circle', c.staticClassName)}
+    class={clsx('lc-circle', c.staticClassName)}
   >
     {@render children?.()}
   </div>

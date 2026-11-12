@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import Group from '../Group/Group.svelte';
   import Path from '../Path/Path.svelte';
@@ -105,7 +105,7 @@
   <Group
     x={item.tx}
     y={item.ty}
-    class={cls('lc-waffle', className)}
+    class={clsx('lc-waffle', className)}
     opacity={(opacity ?? 1) * c.seriesOpacity}
   >
     <Pattern

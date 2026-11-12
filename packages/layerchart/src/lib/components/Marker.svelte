@@ -79,7 +79,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { createId } from '$lib/utils/createId.js';
 
   const uid = $props.id();
@@ -113,7 +113,7 @@
     {viewBox}
     data-type={type}
     {...restProps}
-    class={cls('lc-marker', className)}
+    class={clsx('lc-marker', className)}
   >
     {#if children}
       {@render children()}

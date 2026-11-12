@@ -5,7 +5,7 @@
   that draw through it, pick this one when `z` is set.
 -->
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import Path from './Path.svg.svelte';
   import { PathExtrusion, PathState, type PathProps } from './Path.shared.svelte.js';
 
@@ -35,7 +35,7 @@
         fill={rest.fill as string | undefined}
         fill-opacity={rest.fillOpacity}
         opacity={rest.opacity}
-        class={cls('lc-path-side', rest.class)}
+        class={clsx('lc-path-side', rest.class)}
         style:stroke="none"
       />
     {/if}

@@ -16,7 +16,7 @@
   // @ts-expect-error - no types available
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { curveLinearClosed } from 'd3-shape';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   // GeoPath agnostic; only loaded when used inside a geo chart.
   import GeoPath from '../geo/GeoPath/GeoPath.svelte';
@@ -73,7 +73,7 @@
   );
 </script>
 
-<Group {...restProps} class={cls('lc-hull-g', classes.root, className)} bind:ref>
+<Group {...restProps} class={clsx('lc-hull-g', classes.root, className)} bind:ref>
   {#if geo.projection}
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath

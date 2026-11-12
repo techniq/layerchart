@@ -1,4 +1,4 @@
-import { cls } from '@layerstack/tailwind';
+import { clsx } from 'clsx';
 import type { ClassValue } from 'svelte/elements';
 
 type ExtractObjectType<T> = T extends object ? (T extends Function ? never : T) : never;
@@ -28,11 +28,11 @@ export function extractLayerProps<T>(
   if (isObjectWithClass(props)) {
     return {
       ...props,
-      class: cls(className, ...extraClasses, props.class),
+      class: clsx(className, ...extraClasses, props.class),
     } as WithClass<ExtractObjectType<T>>;
   }
 
   return {
-    class: cls(className, ...extraClasses),
+    class: clsx(className, ...extraClasses),
   } as WithClass<ExtractObjectType<T> extends never ? DefaultProps : ExtractObjectType<T>>;
 }

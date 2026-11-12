@@ -134,7 +134,7 @@
   import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
 
   import ColorRamp from './ColorRamp.svelte';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -464,9 +464,9 @@
   bind:this={ref}
   {...restProps}
   data-placement={placement}
-  class={cls('lc-legend-container', className, classes.root)}
+  class={clsx('lc-legend-container', className, classes.root)}
 >
-  <div class={cls('lc-legend-title', classes.title)}>
+  <div class={clsx('lc-legend-title', classes.title)}>
     {title}
   </div>
   {#if children}
@@ -486,7 +486,7 @@
       {width}
       height={svgHeight}
       viewBox="0 0 {width} {svgHeight}"
-      class={cls('lc-legend-ramp-svg')}
+      class={clsx('lc-legend-ramp-svg')}
     >
       <g class="lc-legend-ramp-g">
         {#if scaleConfig.interpolator}
@@ -510,7 +510,7 @@
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
             y={tickLabelY}
             style:font-size={tickFontSize}
-            class={cls('lc-legend-tick-text', classes.label)}
+            class={clsx('lc-legend-tick-text', classes.label)}
           >
             <!-- @ts-expect-error - improve types -->
             {thresholdTicks && !tickValuesProp && typeof scaleConfig.tickFormat === 'function'
@@ -526,7 +526,7 @@
               y1={0}
               x2={scaleConfig.xScale?.(tick)}
               y2={height + tickLengthProp}
-              class={cls('lc-legend-tick-line', classes.tick)}
+              class={clsx('lc-legend-tick-line', classes.tick)}
             />
           {/if}
         {/each}
@@ -537,26 +537,26 @@
           d="M{indicatorX - 4},{height + indicatorSize + 1} L{indicatorX + 4},{height +
             indicatorSize +
             1} L{indicatorX},{height} Z"
-          class={cls('lc-legend-indicator')}
+          class={clsx('lc-legend-indicator')}
         />
       {/if}
     </svg>
   {:else if variant === 'swatches'}
-    <div class={cls('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
+    <div class={clsx('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
       {#each swatchItems as item}
         <button
           type="button"
-          class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
+          class={clsx('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
           style:opacity={selected.length === 0 || selected.includes(item.value) ? 1 : 0.3}
           onclick={(e) => onclickProp?.(e, item) ?? item.onclick?.(e)}
           onpointerenter={(e) => onpointerenterProp?.(e, item) ?? item.onpointerenter?.(e)}
           onpointerleave={(e) => onpointerleaveProp?.(e, item) ?? item.onpointerleave?.(e)}
         >
           <div
-            class={cls('lc-legend-swatch', classes.swatch)}
+            class={clsx('lc-legend-swatch', classes.swatch)}
             style:background-color={item.color}
           ></div>
-          <div class={cls('lc-legend-swatch-label', classes.label)}>
+          <div class={clsx('lc-legend-swatch-label', classes.label)}>
             {item.label}
           </div>
         </button>

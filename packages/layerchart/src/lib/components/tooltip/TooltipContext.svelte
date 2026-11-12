@@ -118,7 +118,7 @@
   // imported inside the $effect below so non-quadtree users don't pay for it.
   import type { Quadtree } from 'd3-quadtree';
   import { sortFunc, localPoint } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
@@ -963,7 +963,7 @@
             onclick={(e, { data }) => {
               onclick(e, { data });
             }}
-            classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
+            classes={{ path: clsx('lc-tooltip-voronoi-path', debug && 'debug') }}
           />
         </Svg>
       {/await}
@@ -980,7 +980,7 @@
                     outerRadius={rect.y + rect.height}
                     startAngle={rect.x}
                     endAngle={rect.x + rect.width}
-                    class={cls('lc-tooltip-rect', debug && 'debug')}
+                    class={clsx('lc-tooltip-rect', debug && 'debug')}
                     onpointerenter={(e) => showTooltip(e, rect?.data)}
                     onpointermove={(e) => showTooltip(e, rect?.data)}
                     onpointerleave={() => hideTooltip()}
@@ -1001,7 +1001,7 @@
                   y={rect?.y}
                   width={rect?.width}
                   height={rect?.height}
-                  class={cls('lc-tooltip-rect', debug && 'debug')}
+                  class={clsx('lc-tooltip-rect', debug && 'debug')}
                   onpointerenter={(e) => showTooltip(e, rect?.data)}
                   onpointermove={(e) => showTooltip(e, rect?.data)}
                   onpointerleave={() => hideTooltip()}
@@ -1032,7 +1032,7 @@
                   y={rect.y}
                   width={rect.width}
                   height={rect.height}
-                  class={cls('lc-tooltip-quadtree-rect', debug && 'debug')}
+                  class={clsx('lc-tooltip-quadtree-rect', debug && 'debug')}
                 />
               {/each}
             {/each}
