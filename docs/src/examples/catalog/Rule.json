@@ -320,11 +320,11 @@
         {
           "component": "Rule",
           "lineNumber": 44,
-          "line": "<Rule class=\"stroke-2 stroke-primary stroke-4\" />"
+          "line": "<Rule class=\"stroke-primary stroke-4\" />"
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-02-18T13:27:36.000Z"
+      "updatedAt": "2026-11-12T18:35:33.000Z"
     },
     {
       "name": "data-x-date",
@@ -695,7 +695,7 @@
       "component": "Rule",
       "path": "/docs/components/Rule/data-x-band",
       "lineNumber": 44,
-      "line": "<Rule class=\"stroke-2 stroke-primary stroke-4\" />"
+      "line": "<Rule class=\"stroke-primary stroke-4\" />"
     },
     {
       "example": "data-x-date",
@@ -740,5 +740,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-08-20T17:01:02.542Z"
+  "updatedAt": "2026-11-12T18:36:57.253Z"
 }
