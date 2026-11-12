@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.10.1
+
+### Patch Changes
+
+- fix(Brush): Style the region and handle cursors with CSS instead of Tailwind classes ([#991](https://github.com/techniq/layerchart/pull/991))
+
+- chore: Replace `tailwind-merge` with `clsx` (~42 KB smaller) ([#991](https://github.com/techniq/layerchart/pull/991))
+
 ## 2.10.0
 
 ### Minor Changes
