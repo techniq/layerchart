@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { merge } from '@layerstack/utils';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
@@ -40,7 +40,7 @@
             strokeWidth: itemStrokeWidth ?? c.staticStrokeWidth,
             opacity: itemOpacity ?? c.staticOpacity,
           },
-          classes: cls('lc-circle', itemClass ?? c.staticClassName),
+          classes: clsx('lc-circle', itemClass ?? c.staticClassName),
           style:
             [
               (rest as any).style as string | undefined,

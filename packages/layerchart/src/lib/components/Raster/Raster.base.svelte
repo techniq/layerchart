@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { scaleSequential } from 'd3-scale';
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max, min } from 'd3-array';
@@ -274,6 +274,6 @@
     {imageRendering}
     {opacity}
     preserveAspectRatio="none"
-    class={cls('lc-raster', className)}
+    class={clsx('lc-raster', className)}
   />
 {/if}

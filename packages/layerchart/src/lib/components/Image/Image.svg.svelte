@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { createId } from '$lib/utils/createId.js';
   import { ImageState, imageMarkInfo, type ImageProps } from './Image.shared.svelte.js';
 
@@ -99,7 +99,7 @@
       crossorigin={crossOrigin}
       image-rendering={imageRendering}
       {opacity}
-      class={cls('lc-image', className)}
+      class={clsx('lc-image', className)}
     />
   {/each}
 {:else}
@@ -124,6 +124,6 @@
     crossorigin={crossOrigin}
     image-rendering={imageRendering}
     {opacity}
-    class={cls('lc-image', className)}
+    class={clsx('lc-image', className)}
   />
 {/if}

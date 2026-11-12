@@ -16,7 +16,7 @@
 
 <script lang="ts">
   import { pointRadial } from 'd3-shape';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { RuleState } from './Rule.shared.svelte.js';
 
@@ -64,10 +64,10 @@
           {x2}
           {y2}
           {stroke}
-          class={cls('lc-rule-x-radial-line', className)}
+          class={clsx('lc-rule-x-radial-line', className)}
         />
       {:else if line.axis === 'y'}
-        <Circle r={line.y1} {stroke} class={cls('lc-rule-y-radial-circle', className)} />
+        <Circle r={line.y1} {stroke} class={clsx('lc-rule-y-radial-circle', className)} />
       {/if}
     {:else}
       <Line
@@ -77,7 +77,7 @@
         x2={line.x2}
         y2={line.y2}
         {stroke}
-        class={cls(line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line', className)}
+        class={clsx(line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line', className)}
       />
     {/if}
   {/each}

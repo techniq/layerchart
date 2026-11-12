@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import MarkerWrapper from '../MarkerWrapper.svelte';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { createId } from '$lib/utils/createId.js';
@@ -83,7 +83,7 @@
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
       stroke-dasharray={c.dashArrayAttr}
-      class={cls('lc-line', resolvedClass)}
+      class={clsx('lc-line', resolvedClass)}
     />
   {/each}
 {:else}
@@ -102,7 +102,7 @@
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     stroke-dasharray={c.dashArrayAttr}
-    class={cls('lc-line', c.staticClassName)}
+    class={clsx('lc-line', c.staticClassName)}
   />
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
   <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />

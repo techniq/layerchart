@@ -1,8 +1,7 @@
-import { untrack } from 'svelte';
+import { createContext, untrack } from 'svelte';
 import { scaleBand, scaleOrdinal, scaleSqrt, scaleTime } from 'd3-scale';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
-import { Context, useDebounce } from 'runed';
 import type { ComponentRender } from '$lib/contexts/canvas.js';
 import { getCanvasContext } from '$lib/contexts/canvas.js';
 
@@ -125,7 +124,7 @@ export interface RegisterComponentOptions<T extends Element = Element> {
 }
 
 /** Svelte context key for tracking the nearest parent ComponentNode. */
-const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParent');
+const [_getParentNode, _setParentNode, _hasParentNode] = createContext<ComponentNode>();
 
 /** Mark info is "empty" when none of the fields the chart uses for series /
  * domain inference are populated. Pixel-mode primitives produce empty info
@@ -339,7 +338,7 @@ export class ChartState<
     options: RegisterComponentOptions<T>
   ): ComponentNode {
     const { name, kind, canvasRender, markInfo, paintByDepth } = options;
-    const parent = _ParentNodeContext.getOr(null);
+    const parent = _hasParentNode() ? _getParentNode() : null;
 
     // Walk ancestors to check for composite-mark
     let insideCompositeMark = false;
@@ -364,7 +363,7 @@ export class ChartState<
     };
 
     if (parent) parent.children.push(node);
-    _ParentNodeContext.set(node);
+    _setParentNode(node);
 
     const canvasCtx = canvasRender ? getCanvasContext() : null;
 
@@ -569,8 +568,6 @@ export class ChartState<
       }
     );
 
-    const logDebug = useDebounce(printDebug, 200);
-
     // Set mounted state once component initializes
     $effect(() => {
       this.isMounted = true;
@@ -600,7 +597,7 @@ export class ChartState<
       });
     });
 
-    // Debug logging when mounted
+    // Debug logging when mounted, debounced by cancelling the pending log on each re-run
     $effect(() => {
       if (
         !this.isMounted ||
@@ -611,7 +608,7 @@ export class ChartState<
       }
 
       if (this.box) {
-        logDebug({
+        const debugInfo = {
           data: this.data,
           flatData: this.flatData,
           boundingBox: this.box,
@@ -624,7 +621,9 @@ export class ChartState<
           yScale: this.yScale,
           zScale: this.zScale,
           rScale: this.rScale,
-        });
+        };
+        const timeout = setTimeout(() => printDebug(debugInfo), 200);
+        return () => clearTimeout(timeout);
       }
     });
 

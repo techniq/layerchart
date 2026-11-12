@@ -1,4 +1,4 @@
-import { Context } from 'runed';
+import { createContext } from 'svelte';
 
 import { chartDataArray } from '$lib/utils/common.js';
 import { getChartContext } from '$lib/contexts/chart.js';
@@ -10,10 +10,10 @@ import type { Facet } from '$lib/states/facet.svelte.js';
  * Read during init, as with any context.  Returns a getter so reads stay current as the panels
  * are rebuilt.  Marks usually want `getMarkData()` rather than this.
  */
-const _FacetPanelContext = new Context<() => Facet>('FacetPanelContext');
+const [_getFacetPanel, _setFacetPanel, _hasFacetPanel] = createContext<(() => Facet) | undefined>();
 
 export function getFacetPanel(): (() => Facet) | undefined {
-  return _FacetPanelContext.getOr(undefined as unknown as () => Facet) ?? undefined;
+  return _hasFacetPanel() ? _getFacetPanel() : undefined;
 }
 
 /**
@@ -21,7 +21,7 @@ export function getFacetPanel(): (() => Facet) | undefined {
  * furniture wants, since it belongs to the whole grid rather than to any one panel.
  */
 export function setFacetPanel(getPanel: (() => Facet) | undefined) {
-  return _FacetPanelContext.set(getPanel as () => Facet);
+  return _setFacetPanel(getPanel);
 }
 
 /**

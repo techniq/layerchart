@@ -120,7 +120,6 @@
   import { drawsFlatLayers, warnFlatLayer } from '$lib/views/view.js';
   import { getPixelColor, scaleCanvas } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
-  import { useMutationObserver, watch } from 'runed';
   import type { HTMLCanvasAttributes, PointerEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import {
@@ -255,20 +254,18 @@
   // Invalidate/redraw if color scheme changes, either via browser `prefers-color-scheme` (including emulation) or by changing `<html class="dark">` or `<html data-theme="...">`
   if (typeof window !== 'undefined') {
     const { dark } = new MediaQueryPresets();
-    watch(
-      () => dark.current,
-      () => {
-        canvasContext.invalidate();
-      }
-    );
-    useMutationObserver(
-      () => document.documentElement,
-      () => canvasContext.invalidate(),
-      {
+    $effect(() => {
+      dark.current;
+      untrack(() => canvasContext.invalidate());
+    });
+    $effect(() => {
+      const observer = new MutationObserver(() => canvasContext.invalidate());
+      observer.observe(document.documentElement, {
         attributes: true,
         attributeFilter: ['class', 'data-theme'],
-      }
-    );
+      });
+      return () => observer.disconnect();
+    });
   }
 
   onMount(() => {

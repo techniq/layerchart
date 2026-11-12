@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { LinearGradientProps } from './LinearGradient.shared.svelte.js';
@@ -56,13 +56,13 @@
           <stop
             offset={stop[0]}
             stop-color={stop[1]}
-            class={cls('lc-linear-gradient-stop', className)}
+            class={clsx('lc-linear-gradient-stop', className)}
           />
         {:else}
           <stop
             offset="{i * (100 / (stops.length - 1))}%"
             stop-color={stop}
-            class={cls('lc-linear-gradient-stop', className)}
+            class={clsx('lc-linear-gradient-stop', className)}
           />
         {/if}
       {/each}

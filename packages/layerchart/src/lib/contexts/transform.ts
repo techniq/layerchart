@@ -1,4 +1,4 @@
-import { Context } from 'runed';
+import { createContext } from 'svelte';
 
 import {} from '$lib/components/TransformContext.svelte';
 import {
@@ -102,12 +102,13 @@ export type TransformContextValue = {
   zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }): void;
 };
 
-const _TransformContext = new Context<TransformContextValue>('TransformContext');
+const [_getTransformContext, _setTransformContext, _hasTransformContext] =
+  createContext<TransformContextValue>();
 
 export function getTransformContext() {
-  return _TransformContext.getOr(createDefaultTransformState());
+  return _hasTransformContext() ? _getTransformContext() : createDefaultTransformState();
 }
 
 export function setTransformContext(transform: TransformContextValue) {
-  return _TransformContext.set(transform);
+  return _setTransformContext(transform);
 }

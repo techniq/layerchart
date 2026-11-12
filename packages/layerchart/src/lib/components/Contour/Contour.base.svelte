@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { contours as d3Contours } from 'd3-contour';
   import { geoPath, geoTransform } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
@@ -253,7 +253,7 @@
         {fillOpacity}
         stroke={getContourStroke(contour)}
         {strokeWidth}
-        class={cls('lc-contour-band', className)}
+        class={clsx('lc-contour-band', className)}
       />
     {/each}
   </Group>

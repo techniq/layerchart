@@ -132,7 +132,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
 
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
 
@@ -243,7 +243,7 @@
   bind:this={ref}
   {...restProps}
   data-placement={placement}
-  class={cls('lc-circle-legend-container', className, classes.root)}
+  class={clsx('lc-circle-legend-container', className, classes.root)}
 >
   {#if items.length}
     <svg {width} height={svgHeight} viewBox="0 0 {width} {svgHeight}" class="lc-circle-legend-svg">
@@ -253,7 +253,7 @@
           y={titleFontSize}
           text-anchor="middle"
           style:font-size={titleFontSize}
-          class={cls('lc-circle-legend-title', classes.title)}
+          class={clsx('lc-circle-legend-title', classes.title)}
         >
           {title}
         </text>
@@ -266,7 +266,7 @@
             r={indicatorRadius}
             fill={stroke}
             fill-opacity="0.5"
-            class={cls('lc-circle-legend-indicator')}
+            class={clsx('lc-circle-legend-indicator')}
           />
         {/if}
         {#each items as item (item.value)}
@@ -277,7 +277,7 @@
             {fill}
             {stroke}
             stroke-width={strokeWidth}
-            class={cls('lc-circle-legend-circle', classes.circle)}
+            class={clsx('lc-circle-legend-circle', classes.circle)}
           />
           {#if labelPlacement !== 'inline'}
             <line
@@ -287,7 +287,7 @@
               y2={baseY - item.radius * 2}
               {stroke}
               stroke-dasharray="2,2"
-              class={cls('lc-circle-legend-tick', classes.tick)}
+              class={clsx('lc-circle-legend-tick', classes.tick)}
             />
           {/if}
           <text
@@ -298,7 +298,7 @@
             text-anchor={labelTextAnchor}
             dominant-baseline={labelPlacement === 'inline' ? 'auto' : 'middle'}
             style:font-size={tickFontSize}
-            class={cls('lc-circle-legend-label', classes.label)}
+            class={clsx('lc-circle-legend-label', classes.label)}
           >
             {tickFormatProp ? format(item.value, asAny(tickFormatProp)) : item.value}
           </text>

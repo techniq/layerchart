@@ -1,7 +1,7 @@
-import { Context } from 'runed';
+import { createContext } from 'svelte';
 import { ChartGroupState } from '$lib/states/group.svelte.js';
 
-const _ChartGroupContext = new Context<ChartGroupState | undefined>('ChartGroupContext');
+const [_getChartGroup, _setChartGroup, _hasChartGroup] = createContext<ChartGroupState>();
 
 /**
  * Get the chart group provided by an ancestor `<ChartGroup>`, or `undefined` when there is none.
@@ -9,9 +9,9 @@ const _ChartGroupContext = new Context<ChartGroupState | undefined>('ChartGroupC
  * Charts prefer an explicit `group` prop and fall back to this.
  */
 export function getChartGroup(): ChartGroupState | undefined {
-  return _ChartGroupContext.getOr(undefined);
+  return _hasChartGroup() ? _getChartGroup() : undefined;
 }
 
 export function setChartGroup(group: ChartGroupState): ChartGroupState | undefined {
-  return _ChartGroupContext.set(group);
+  return _setChartGroup(group);
 }

@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
   import type { Component } from 'svelte';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { getLayerIsometric } from '$lib/contexts/isometric.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { backWalls } from '$lib/utils/isometric.js';
@@ -81,7 +81,7 @@
         y2={b.y}
         {stroke}
         {...zProps}
-        class={cls('lc-grid-z-rule', lineClass, zProps?.class)}
+        class={clsx('lc-grid-z-rule', lineClass, zProps?.class)}
       />
     {/each}
   </Group>

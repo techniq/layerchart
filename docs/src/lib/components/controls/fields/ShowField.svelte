@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { useIntersectionObserver } from 'runed';
 	import { Field, Switch, type LabelPlacement } from 'svelte-ux';
 
 	let {
@@ -12,18 +11,24 @@
 
 	let target = $state<HTMLElement | null>(null);
 
-	useIntersectionObserver(
-		() => target,
-		(entries) => {
-			const entry = entries[0];
+	// Show once first scrolled into view
+	$effect(() => {
+		if (!target) return;
+		let timeout: ReturnType<typeof setTimeout> | undefined;
+		const observer = new IntersectionObserver(([entry]) => {
 			if (entry?.isIntersecting) {
-				setTimeout(() => {
+				observer.disconnect();
+				timeout = setTimeout(() => {
 					show = true;
 				}, 750);
 			}
-		},
-		{ once: true }
-	);
+		});
+		observer.observe(target);
+		return () => {
+			observer.disconnect();
+			clearTimeout(timeout);
+		};
+	});
 </script>
 
 {#if !inline}

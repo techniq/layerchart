@@ -185,7 +185,7 @@
   import { fade } from 'svelte/transition';
   import { createSubscriber } from 'svelte/reactivity';
   import { on } from 'svelte/events';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { portal as portalAction } from '@layerstack/svelte-actions/portal';
 
   import { dataCoords } from '$lib/utils/tooltip.js';
@@ -683,7 +683,7 @@
   <div
     {...props.root}
     use:portalAction={portalProp}
-    class={cls('lc-tooltip-root', classes.root, props.root?.class)}
+    class={clsx('lc-tooltip-root', classes.root, props.root?.class)}
     class:disablePointerEvents={pointerEvents === false}
     class:portaled={isPortaled}
     style:top="{motionY.current}px"
@@ -705,11 +705,11 @@
   >
     <div
       {...props.container}
-      class={cls('lc-tooltip-container', classes.container, props.container?.class, className)}
+      class={clsx('lc-tooltip-container', classes.container, props.container?.class, className)}
       data-variant={variant}
     >
       {#if children}
-        <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
+        <div {...props.content} class={clsx('lc-tooltip-content', classes.content)}>
           {@render children({ data: tooltipData })}
         </div>
       {/if}

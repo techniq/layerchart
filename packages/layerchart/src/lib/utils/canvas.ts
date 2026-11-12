@@ -1,6 +1,6 @@
 import type { ClassValue } from 'svelte/elements';
 import memoize from 'memoize';
-import { cls } from '@layerstack/tailwind';
+import { clsx } from 'clsx';
 import type { PatternShape } from '$lib/components/Pattern/Pattern.svelte';
 import { roundedRectPath } from './path.js';
 
@@ -134,7 +134,7 @@ export function _getComputedStyles(
     if (classes) {
       svg.setAttribute(
         'class',
-        cls(classes)
+        clsx(classes)
           .split(' ')
           .filter((s) => !s.startsWith('transition-'))
           .join(' ')

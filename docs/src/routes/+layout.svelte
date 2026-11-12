@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { settings } from 'svelte-ux';
 	import posthog from 'posthog-js';
-	import { watch } from 'runed';
 
 	import { dev } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
@@ -30,18 +29,6 @@
 
 		// Posthog analytics
 		if (!dev) {
-			watch(
-				() => page,
-				() => {
-					if (currentPath && currentPath !== page.url.pathname) {
-						// Page navigated away
-						posthog.capture('$pageleave');
-					}
-					// Page entered
-					currentPath = page.url.pathname;
-					posthog.capture('$pageview');
-				}
-			);
 			const handleBeforeUnload = () => {
 				// Hard reloads or browser exit
 				posthog.capture('$pageleave');
@@ -51,6 +38,20 @@
 				window.removeEventListener('beforeunload', handleBeforeUnload);
 			};
 		}
+	});
+
+	// Posthog page views (automatic capture is disabled in `+layout.ts`).  Tracks the pathname, as
+	// reading `page` itself is not reactive
+	$effect(() => {
+		if (dev) return;
+		const pathname = page.url.pathname;
+		if (currentPath && currentPath !== pathname) {
+			// Page navigated away
+			posthog.capture('$pageleave');
+		}
+		// Page entered
+		currentPath = pathname;
+		posthog.capture('$pageview');
 	});
 
 	// View transition for navigation

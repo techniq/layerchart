@@ -51,7 +51,7 @@
   },
   "peerDependencies": {
     "@threlte/core": "^8.6.0",
-    "svelte": "^5.0.0",
+    "svelte": "^5.57.0",
     "three": ">=0.172.0"
   },
   "type": "module",

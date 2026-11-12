@@ -6,7 +6,7 @@
   import { tick } from 'svelte';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { createControlledMotion } from '$lib/utils/motion.svelte.js';
   import { createId } from '$lib/utils/createId.js';
   import Group from '../Group/Group.svelte';
@@ -31,7 +31,7 @@
     // spread doesn't re-evaluate on every frame in mark-heavy scenes
     // (force-simulation graphs with hundreds of links updating per tick).
     // - `pathData`: changes every frame
-    // - `class`: parents typically pass `cls(...)` which produces a new
+    // - `class`: parents typically pass `clsx(...)` which produces a new
     //   string reference per parent render
     // - styling props: explicit on the <path> element below, no need to
     //   leak them through the spread
@@ -72,7 +72,7 @@
   // attribute: a TS cast in markup survives into `dist` and breaks tooling that
   // parses class expressions independently of Svelte (e.g. @unocss/svelte-scoped,
   // whose acorn pass chokes on the `as` keyword).
-  const pathClass = $derived(cls('lc-path', classProp as string | undefined));
+  const pathClass = $derived(clsx('lc-path', classProp as string | undefined));
 
   const endPointDuration = $derived.by(() => {
     if (

@@ -12,8 +12,10 @@
     "daisyui-5",
     "shadcn-svelte-1",
     "skeleton-3",
-    "skeleton4",
+    "skeleton-4",
+    "skeleton-5",
     "standalone",
-    "svelteux-2"
+    "svelte-ux-2",
+    "unocss-1"
   ]
 }

@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { merge } from '@layerstack/utils';
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
@@ -49,7 +49,7 @@
               : {}),
             ...((rest.textAnchor ?? 'start') !== 'start' ? { textAnchor: rest.textAnchor } : {}),
           },
-          classes: cls('lc-text', itemClass ?? c.staticClassName),
+          classes: clsx('lc-text', itemClass ?? c.staticClassName),
           style: (rest as any).style as string | undefined,
         };
   }

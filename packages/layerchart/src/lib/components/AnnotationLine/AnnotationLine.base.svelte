@@ -12,7 +12,7 @@
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { LineProps } from '../Line/Line.shared.svelte.js';
   import type { TextProps } from '../Text/Text.shared.svelte.js';
 
@@ -160,13 +160,13 @@
   const resolvedLineProps = $derived({
     ...line,
     ...props?.line,
-    class: cls('lc-annotation-line', props?.line?.class),
+    class: clsx('lc-annotation-line', props?.line?.class),
   } as LineProps);
 
   const resolvedLabelProps = $derived({
     ...labelProps,
     ...props?.label,
-    class: cls('lc-annotation-line-label', props?.label?.class),
+    class: clsx('lc-annotation-line-label', props?.label?.class),
   } as TextProps);
 </script>
 

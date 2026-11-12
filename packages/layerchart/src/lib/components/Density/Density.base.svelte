@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { contourDensity } from 'd3-contour';
   import { geoPath } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
@@ -116,7 +116,7 @@
         {fillOpacity}
         {stroke}
         {strokeWidth}
-        class={cls('lc-density-contour', className)}
+        class={clsx('lc-density-contour', className)}
       />
     {/each}
   </Group>

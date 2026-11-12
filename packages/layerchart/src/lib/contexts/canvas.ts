@@ -1,4 +1,4 @@
-import { Context } from 'runed';
+import { createContext } from 'svelte';
 import type { MouseEventHandler, PointerEventHandler, TouchEventHandler } from 'svelte/elements';
 
 import type { ComputedStylesOptions } from '$lib/utils/canvas.js';
@@ -40,7 +40,8 @@ export type CanvasContextValue = {
   getRootNode?: () => ComponentNode;
 };
 
-const CanvasContext = new Context<CanvasContextValue>('CanvasContext');
+const [_getCanvasContext, _setCanvasContext, _hasCanvasContext] =
+  createContext<CanvasContextValue>();
 
 const defaultCanvasContext: CanvasContextValue = {
   register: <T extends Element>(_: ComponentRender<T>) => {
@@ -50,9 +51,9 @@ const defaultCanvasContext: CanvasContextValue = {
 };
 
 export function getCanvasContext() {
-  return CanvasContext.getOr(defaultCanvasContext);
+  return _hasCanvasContext() ? _getCanvasContext() : defaultCanvasContext;
 }
 
 export function setCanvasContext(context: CanvasContextValue) {
-  return CanvasContext.set(context);
+  return _setCanvasContext(context);
 }
