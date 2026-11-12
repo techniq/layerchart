@@ -36,7 +36,7 @@
 
 <script lang="ts">
   import { timeWeek } from 'd3-time';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { endOfInterval } from '@layerstack/utils';
   import Path, { type PathPropsWithoutHTML } from './Path/Path.svelte';
 
@@ -76,7 +76,7 @@
   `);
 </script>
 
-<Path bind:pathRef {pathData} fill="none" class={cls('lc-month-path', className)} {...restProps} />
+<Path bind:pathRef {pathData} fill="none" class={clsx('lc-month-path', className)} {...restProps} />
 
 <style>
   @layer components {

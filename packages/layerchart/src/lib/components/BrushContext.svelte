@@ -122,7 +122,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { brushable, type BrushMode } from '$lib/attachments/brushable.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { applyMatrix, invertMatrix, matrixToString } from '$lib/utils/isometric.js';
   import { Logger } from '@layerstack/utils';
 
@@ -239,7 +239,7 @@
     style:left="{ctx.padding.left}px"
     style:width="{ctx.box.width}px"
     style:height="{ctx.box.height}px"
-    class={cls('lc-brush-context')}
+    class={clsx('lc-brush-context')}
     {@attach gesture('create')}
     ondblclick={(e) => {
       brushState.selectAll();
@@ -247,7 +247,7 @@
     }}
   >
     <div
-      class={cls('lc-brush-container')}
+      class={clsx('lc-brush-container')}
       style:top="-{ctx.padding.top ?? 0}px"
       style:left="-{ctx.padding.left ?? 0}px"
       style:width="{ctx.containerWidth}px"
@@ -274,7 +274,7 @@
               style:top="{brushState.range.y}px"
               style:width="{brushState.range.width}px"
               style:height="{brushState.range.height}px"
-              class={cls('lc-brush-range', classes.range, range?.class)}
+              class={clsx('lc-brush-range', classes.range, range?.class)}
               {@attach gesture('move')}
               ondblclick={(e) => {
                 // Stopped as the handles do — the root takes a double-click as "select all", which
@@ -293,7 +293,7 @@
                 style:width="{brushState.range.width}px"
                 style:height="{handleSize}px"
                 data-position="top"
-                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                class={clsx('lc-brush-handle', classes.handle, handle?.class)}
                 {@attach gesture('top')}
                 ondblclick={(e) => {
                   e.stopPropagation();
@@ -311,7 +311,7 @@
                 style:width="{brushState.range.width}px"
                 style:height="{handleSize}px"
                 data-position="bottom"
-                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                class={clsx('lc-brush-handle', classes.handle, handle?.class)}
                 {@attach gesture('bottom')}
                 ondblclick={(e) => {
                   e.stopPropagation();
@@ -331,7 +331,7 @@
                 style:width="{handleSize}px"
                 style:height="{brushState.range.height}px"
                 data-position="left"
-                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                class={clsx('lc-brush-handle', classes.handle, handle?.class)}
                 {@attach gesture('left')}
                 ondblclick={(e) => {
                   e.stopPropagation();
@@ -349,7 +349,7 @@
                 style:width="{handleSize}px"
                 style:height="{brushState.range.height}px"
                 data-position="right"
-                class={cls('lc-brush-handle', classes.handle, handle?.class)}
+                class={clsx('lc-brush-handle', classes.handle, handle?.class)}
                 {@attach gesture('right')}
                 ondblclick={(e) => {
                   e.stopPropagation();

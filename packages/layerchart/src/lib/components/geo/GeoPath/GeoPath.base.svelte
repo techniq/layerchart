@@ -12,7 +12,7 @@
 <script lang="ts">
   import { geoPath as d3GeoPath, geoTransform as d3geoTransform } from 'd3-geo';
   import { curveLinearClosed } from 'd3-shape';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getChartContext } from '$lib/contexts/chart.js';
@@ -88,7 +88,7 @@
     {...(tooltip || onpointerenter) && { onpointerenter: _onPointerEnter }}
     {...(tooltip || onpointermove) && { onpointermove: _onPointerMove }}
     {...(tooltip || onpointerleave) && { onpointerleave: _onPointerLeave }}
-    class={cls('lc-geo-path', className)}
+    class={clsx('lc-geo-path', className)}
     pathRef={refProp}
   />
 {/if}

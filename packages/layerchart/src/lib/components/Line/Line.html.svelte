@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { pointsToAngleAndLength } from '$lib/utils/math.js';
   import { dashArrayToGradient } from '$lib/utils/path.js';
@@ -43,7 +43,7 @@
         ? dashArrayToGradient(c.dashArrayResolved, resolvedStroke ?? 'var(--stroke-color)')
         : undefined}
       style:background-color={c.dashArrayResolved ? undefined : resolvedStroke}
-      class={cls('lc-line', resolvedClass)}
+      class={clsx('lc-line', resolvedClass)}
       style={(rest as any).style}
     ></div>
   {/each}
@@ -66,7 +66,7 @@
       ? dashArrayToGradient(c.dashArrayResolved, c.staticStroke ?? 'var(--stroke-color)')
       : undefined}
     style:background-color={c.dashArrayResolved ? undefined : c.staticStroke}
-    class={cls('lc-line', c.staticClassName)}
+    class={clsx('lc-line', c.staticClassName)}
     style={(rest as any).style}
   ></div>
 {/if}

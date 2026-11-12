@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import type { HTMLAttributes } from 'svelte/elements';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
@@ -70,7 +70,7 @@
         style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
         style:border-color={resolvedStroke}
         style:border-radius={c.borderRadius(item.width, item.height) ?? `${c.rx}px`}
-        class={cls('lc-rect', resolvedClass)}
+        class={clsx('lc-rect', resolvedClass)}
       ></div>
     {/if}
   {/each}
@@ -100,7 +100,7 @@
     style:border-style={c.dashArrayResolved ? 'dashed' : 'solid'}
     style:border-color={c.staticStroke}
     style:border-radius={c.borderRadiusStyle ?? `${c.rx}px`}
-    class={cls('lc-rect', c.staticClassName)}
+    class={clsx('lc-rect', c.staticClassName)}
     bind:this={ref}
   >
     {@render children?.()}

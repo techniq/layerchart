@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import type { SVGAttributes } from 'svelte/elements';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { RectState, rectMarkInfo, type RectProps } from './Rect.shared.svelte.js';
 
@@ -98,7 +98,7 @@
         stroke-width={resolvedStrokeWidth}
         opacity={resolvedOpacity}
         stroke-dasharray={c.dashArrayAttr}
-        class={cls('lc-rect', resolvedClass)}
+        class={clsx('lc-rect', resolvedClass)}
       />
     {:else}
       <rect
@@ -116,7 +116,7 @@
         rx={c.rx}
         ry={c.ry}
         stroke-dasharray={c.dashArrayAttr}
-        class={cls('lc-rect', resolvedClass)}
+        class={clsx('lc-rect', resolvedClass)}
       />
     {/if}
   {/each}
@@ -149,7 +149,7 @@
     stroke-width={c.staticStrokeWidth}
     opacity={c.staticOpacity}
     stroke-dasharray={c.dashArrayAttr}
-    class={cls('lc-rect', c.staticClassName)}
+    class={clsx('lc-rect', c.staticClassName)}
   />
 {:else}
   <rect
@@ -167,7 +167,7 @@
     rx={c.rx}
     ry={c.ry}
     stroke-dasharray={c.dashArrayAttr}
-    class={cls('lc-rect', c.staticClassName)}
+    class={clsx('lc-rect', c.staticClassName)}
     bind:this={ref}
   />
 {/if}

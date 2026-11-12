@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { EllipseState, ellipseMarkInfo, type EllipseProps } from './Ellipse.shared.svelte.js';
 
@@ -47,7 +47,7 @@
       style:border-color={resolvedStroke}
       style:border-style="solid"
       style:transform="translate(-50%, -50%) rotate({rotate ?? 0}deg)"
-      class={cls('lc-ellipse', resolvedClass)}
+      class={clsx('lc-ellipse', resolvedClass)}
     ></div>
   {/each}
 {:else}
@@ -66,7 +66,7 @@
     style:border-color={c.staticStroke}
     style:border-style="solid"
     style:transform="translate(-50%, -50%) rotate({rotate ?? 0}deg)"
-    class={cls('lc-ellipse', c.staticClassName)}
+    class={clsx('lc-ellipse', c.staticClassName)}
   ></div>
 {/if}
 

@@ -12,7 +12,7 @@
 <script lang="ts">
   import { max } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
@@ -147,7 +147,7 @@
   {fillOpacity}
   {opacity}
   stroke="none"
-  class={cls('lc-trail', className)}
+  class={clsx('lc-trail', className)}
   {...restProps}
 />
 

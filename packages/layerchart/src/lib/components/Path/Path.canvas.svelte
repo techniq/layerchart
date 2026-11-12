@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { merge } from '@layerstack/utils';
   import {
     renderExtrudedShades,
@@ -44,7 +44,7 @@
               opacity: rest.opacity,
               stroke: 'none',
             },
-            classes: cls('lc-path-side', rest.class as string | undefined),
+            classes: clsx('lc-path-side', rest.class as string | undefined),
           }
         );
       }
@@ -73,7 +73,7 @@
               strokeWidth: rest.strokeWidth,
               opacity: rest.opacity,
             },
-            classes: cls('lc-path', rest.class as string | undefined),
+            classes: clsx('lc-path', rest.class as string | undefined),
             style: (rest as any).style as string | undefined,
           }
     );

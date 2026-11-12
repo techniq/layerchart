@@ -16,7 +16,7 @@
   import type { PointerEventHandler } from 'svelte/elements';
   import { area as d3Area, curveCardinal } from 'd3-shape';
   import { quantile, ascending, deviation, max as d3Max } from 'd3-array';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
@@ -179,7 +179,7 @@
       {fillOpacity}
       {stroke}
       {strokeWidth}
-      class={cls('lc-violin-area', className)}
+      class={clsx('lc-violin-area', className)}
     />
 
     {#if showBox && stats}
@@ -192,7 +192,7 @@
           fill="currentColor"
           fillOpacity={0.3}
           stroke="none"
-          class={cls('lc-violin-box', className)}
+          class={clsx('lc-violin-box', className)}
         />
       {:else}
         <Rect
@@ -203,7 +203,7 @@
           fill="currentColor"
           fillOpacity={0.3}
           stroke="none"
-          class={cls('lc-violin-box', className)}
+          class={clsx('lc-violin-box', className)}
         />
       {/if}
     {/if}
@@ -217,7 +217,7 @@
           y2={valueScale(stats.median)}
           stroke="currentColor"
           strokeWidth={2}
-          class={cls('lc-violin-median', className)}
+          class={clsx('lc-violin-median', className)}
         />
       {:else}
         <Line
@@ -227,7 +227,7 @@
           y2={categoryPos + violinWidth * 0.15}
           stroke="currentColor"
           strokeWidth={2}
-          class={cls('lc-violin-median', className)}
+          class={clsx('lc-violin-median', className)}
         />
       {/if}
     {/if}

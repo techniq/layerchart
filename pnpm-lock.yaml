@@ -785,12 +785,12 @@ importers:
       '@layerstack/svelte-state':
         specifier: 0.1.0-next.25
         version: 0.1.0-next.25(svelte@5.57.1(@typescript-eslint/types@8.60.1))
-      '@layerstack/tailwind':
-        specifier: 2.0.0-next.21
-        version: 2.0.0-next.21(svelte@5.57.1(@typescript-eslint/types@8.60.1))
       '@layerstack/utils':
         specifier: 2.0.0-next.19
         version: 2.0.0-next.19(svelte@5.57.1(@typescript-eslint/types@8.60.1))
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4

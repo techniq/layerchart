@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { CircleState, circleMarkInfo, type CircleProps } from './Circle.shared.svelte.js';
 
@@ -47,7 +47,7 @@
       stroke-width={resolvedStrokeWidth}
       opacity={resolvedOpacity}
       stroke-dasharray={c.dashArrayAttr}
-      class={cls('lc-circle', resolvedClass)}
+      class={clsx('lc-circle', resolvedClass)}
     />
   {/each}
 {:else}
@@ -64,7 +64,7 @@
     stroke-width={c.staticStrokeWidth}
     opacity={c.staticOpacity}
     stroke-dasharray={c.dashArrayAttr}
-    class={cls('lc-circle', c.staticClassName)}
+    class={clsx('lc-circle', c.staticClassName)}
   />
 {/if}
 

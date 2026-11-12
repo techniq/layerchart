@@ -36,7 +36,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   import { getChartContext } from '$lib/contexts/chart.js';
   import { BrushState as BrushStateClass } from '$lib/states/brush.svelte.js';
@@ -100,10 +100,10 @@
   const handles = $derived(
     (
       [
-        { edge: 'top', cursor: 'cursor-ns-resize', axis: 'y' },
-        { edge: 'bottom', cursor: 'cursor-ns-resize', axis: 'y' },
-        { edge: 'left', cursor: 'cursor-ew-resize', axis: 'x' },
-        { edge: 'right', cursor: 'cursor-ew-resize', axis: 'x' },
+        { edge: 'top', axis: 'y' },
+        { edge: 'bottom', axis: 'y' },
+        { edge: 'left', axis: 'x' },
+        { edge: 'right', axis: 'x' },
       ] as const
     ).filter((h) => brushState.axis === 'both' || brushState.axis === h.axis)
   );
@@ -163,19 +163,14 @@
   The region that starts a new selection.  Drawn first so the selection and its handles sit above
   it and take their own drags.
 -->
-<Rect
-  {...region}
-  {...parts.root}
-  bind:ref={regionEl}
-  class={cls('lc-brush-root fill-transparent cursor-crosshair', classes.root)}
-/>
+<Rect {...region} {...parts.root} bind:ref={regionEl} class={clsx('lc-brush-root', classes.root)} />
 
 {#if brushState.active}
   <Rect
     {...selection}
     {...parts.move}
     ondblclick={clear}
-    class={cls('lc-brush-selection cursor-move', classes.selection)}
+    class={clsx('lc-brush-selection', classes.selection)}
   />
 
   <!-- A rect per edge rather than one hit-tested region, so each carries its own resize cursor -->
@@ -183,7 +178,8 @@
     <Rect
       {...handleRect(handle.edge)}
       {...parts[handle.edge]}
-      class={cls('lc-brush-handle', handle.cursor, classes.handle)}
+      data-position={handle.edge}
+      class={clsx('lc-brush-handle', classes.handle)}
     />
   {/each}
 {/if}
@@ -201,12 +197,28 @@
       touch-action: none;
     }
 
+    :global(:where(.lc-brush-root)) {
+      fill: transparent;
+      cursor: crosshair;
+    }
+
     :global(:where(.lc-brush-selection)) {
+      cursor: move;
       fill: color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent);
     }
 
     :global(:where(.lc-brush-handle)) {
       fill: transparent;
+
+      &[data-position='top'],
+      &[data-position='bottom'] {
+        cursor: ns-resize;
+      }
+
+      &[data-position='left'],
+      &[data-position='right'] {
+        cursor: ew-resize;
+      }
     }
 
     /*

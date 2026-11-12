@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { RadialGradientProps } from './RadialGradient.shared.svelte.js';
@@ -47,7 +47,7 @@
     {#if stopsContent}
       {@render stopsContent()}
     {:else if stops}
-      {@const stopClass = cls('lc-radial-gradient-stop', className)}
+      {@const stopClass = clsx('lc-radial-gradient-stop', className)}
       {#each stops as stop, i}
         {#if Array.isArray(stop)}
           <stop offset={stop[0]} stop-color={stop[1]} class={stopClass} />

@@ -14,7 +14,7 @@
 
 <script lang="ts">
   import type { PointerEventHandler } from 'svelte/elements';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { quantile } from 'd3-array';
 
   import { accessor } from '$lib/utils/common.js';
@@ -156,7 +156,7 @@
         y2={q1Pos}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-whisker', className)}
+        class={clsx('lc-boxplot-whisker', className)}
       />
       <Line
         x1={categoryPos}
@@ -165,7 +165,7 @@
         y2={maxPos}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-whisker', className)}
+        class={clsx('lc-boxplot-whisker', className)}
       />
       <Line
         x1={categoryPos - whiskerCapWidth / 2}
@@ -174,7 +174,7 @@
         y2={minPos}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-cap', className)}
+        class={clsx('lc-boxplot-cap', className)}
       />
       <Line
         x1={categoryPos - whiskerCapWidth / 2}
@@ -183,7 +183,7 @@
         y2={maxPos}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-cap', className)}
+        class={clsx('lc-boxplot-cap', className)}
       />
       <Rect
         x={categoryPos - boxWidth / 2}
@@ -195,7 +195,7 @@
         {stroke}
         {strokeWidth}
         rx={radius}
-        class={cls('lc-boxplot-box', className)}
+        class={clsx('lc-boxplot-box', className)}
       />
       <Line
         x1={categoryPos - boxWidth / 2}
@@ -204,7 +204,7 @@
         y2={medianPos}
         {stroke}
         strokeWidth={strokeWidth * 2}
-        class={cls('lc-boxplot-median', className)}
+        class={clsx('lc-boxplot-median', className)}
       />
       {#each outliersVal as outlier, i (i)}
         <Circle
@@ -213,7 +213,7 @@
           r={outlierRadius}
           {stroke}
           {strokeWidth}
-          class={cls('lc-boxplot-outlier', className)}
+          class={clsx('lc-boxplot-outlier', className)}
         />
       {/each}
     {:else}
@@ -224,7 +224,7 @@
         y2={categoryPos}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-whisker', className)}
+        class={clsx('lc-boxplot-whisker', className)}
       />
       <Line
         x1={q3Pos}
@@ -233,7 +233,7 @@
         y2={categoryPos}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-whisker', className)}
+        class={clsx('lc-boxplot-whisker', className)}
       />
       <Line
         x1={minPos}
@@ -242,7 +242,7 @@
         y2={categoryPos + whiskerCapWidth / 2}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-cap', className)}
+        class={clsx('lc-boxplot-cap', className)}
       />
       <Line
         x1={maxPos}
@@ -251,7 +251,7 @@
         y2={categoryPos + whiskerCapWidth / 2}
         {stroke}
         {strokeWidth}
-        class={cls('lc-boxplot-cap', className)}
+        class={clsx('lc-boxplot-cap', className)}
       />
       <Rect
         x={Math.min(q1Pos, q3Pos)}
@@ -263,7 +263,7 @@
         {stroke}
         {strokeWidth}
         rx={radius}
-        class={cls('lc-boxplot-box', className)}
+        class={clsx('lc-boxplot-box', className)}
       />
       <Line
         x1={medianPos}
@@ -272,7 +272,7 @@
         y2={categoryPos + boxWidth / 2}
         {stroke}
         strokeWidth={strokeWidth * 2}
-        class={cls('lc-boxplot-median', className)}
+        class={clsx('lc-boxplot-median', className)}
       />
       {#each outliersVal as outlier, i (i)}
         <Circle
@@ -281,7 +281,7 @@
           r={outlierRadius}
           {stroke}
           {strokeWidth}
-          class={cls('lc-boxplot-outlier', className)}
+          class={clsx('lc-boxplot-outlier', className)}
         />
       {/each}
     {/if}

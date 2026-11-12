@@ -16,7 +16,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { extent, max } from 'd3-array';
   import { geoInterpolate, geoPath } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
@@ -343,7 +343,7 @@
     strokeOpacity={item.strokeOpacity}
     strokeWidth={item.strokeWidth}
     opacity={item.opacity}
-    class={cls('lc-bin-cell', className)}
+    class={clsx('lc-bin-cell', className)}
     onclick={onclick && ((e: MouseEvent) => onclick(e, cell))}
     onpointerenter={onpointerenter && ((e: PointerEvent) => onpointerenter(e, cell))}
     onpointermove={onpointermove && ((e: PointerEvent) => onpointermove(e, cell))}
@@ -365,7 +365,7 @@
           fill={item.fill}
           fillOpacity={item.fillOpacity}
           opacity={item.opacity}
-          class={cls('lc-bin-side', className)}
+          class={clsx('lc-bin-side', className)}
         />
         {#each item.shades as shade}
           <Path

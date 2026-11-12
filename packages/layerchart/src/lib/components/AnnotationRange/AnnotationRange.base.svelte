@@ -15,7 +15,7 @@
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import type { RectProps } from '../Rect/Rect.shared.svelte.js';
   import type { TextProps } from '../Text/Text.shared.svelte.js';
 
@@ -99,13 +99,13 @@
     ...rect,
     ...props?.rect,
     fill,
-    class: cls('lc-annotation-range', props?.rect?.class, className),
+    class: clsx('lc-annotation-range', props?.rect?.class, className),
   } as RectProps);
 
   const resolvedLabelProps = $derived({
     ...labelProps,
     ...props?.label,
-    class: cls('lc-annotation-range-label', props?.label?.class),
+    class: clsx('lc-annotation-range-label', props?.label?.class),
   } as TextProps);
 </script>
 

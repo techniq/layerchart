@@ -23,7 +23,7 @@
     resolveColorProp,
   } from '$lib/utils/dataProp.js';
   import { chartDataArray } from '$lib/utils/common.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import {
     vectorArrowPath,
     vectorArrowFilledPath,
@@ -220,7 +220,7 @@
       stroke={resolvedStroke}
       strokeWidth={resolvedStrokeWidth}
       opacity={resolvedOpacity}
-      class={cls('lc-vector', isFilled ? 'lc-vector-filled' : 'lc-vector-stroked', resolvedClass)}
+      class={clsx('lc-vector', isFilled ? 'lc-vector-filled' : 'lc-vector-stroked', resolvedClass)}
     />
   {/each}
 {:else}

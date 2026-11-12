@@ -14,7 +14,7 @@
   import { ribbon as d3ribbon, ribbonArrow as d3ribbonArrow } from 'd3-chord';
 
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
 
   let {
     Path,
@@ -81,7 +81,7 @@
   {opacity}
   {motion}
   {...restProps}
-  class={cls('lc-ribbon', className)}
+  class={clsx('lc-ribbon', className)}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}

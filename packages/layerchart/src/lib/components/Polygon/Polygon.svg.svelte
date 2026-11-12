@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
+  import { clsx } from 'clsx';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { PolygonState, polygonMarkInfo, type PolygonProps } from './Polygon.shared.svelte.js';
 
@@ -33,7 +33,7 @@
     <path
       d={raised.sides}
       {fill}
-      class={cls('lc-polygon', 'lc-polygon-side', className)}
+      class={clsx('lc-polygon', 'lc-polygon-side', className)}
       style:stroke="none"
     />
   {/if}
@@ -68,7 +68,7 @@
       stroke={resolvedStroke}
       stroke-width={resolvedStrokeWidth}
       opacity={resolvedOpacity}
-      class={cls('lc-polygon', resolvedClass)}
+      class={clsx('lc-polygon', resolvedClass)}
     />
   {/each}
 {:else}
@@ -83,7 +83,7 @@
     stroke={c.staticStroke}
     stroke-width={c.staticStrokeWidth}
     opacity={c.staticOpacity}
-    class={cls('lc-polygon', c.staticClassName)}
+    class={clsx('lc-polygon', c.staticClassName)}
     bind:this={ref}
   />
 {/if}
