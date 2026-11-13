@@ -41,6 +41,8 @@
     expandBandBrushDomain,
   } from '$lib/states/brush.svelte.js';
 
+  import { nearViewport } from '$lib/attachments/nearViewport.js';
+
   import TooltipContext from '../tooltip/TooltipContext.svelte';
 
   let {
@@ -52,6 +54,8 @@
 
   let {
     ssr = false,
+    lazy: lazyProp,
+    placeholder,
     pointerEvents = true,
     width,
     height,
@@ -512,13 +516,38 @@
   let TransformContext = $state<typeof import('../TransformContext.svelte').default>();
   let BrushContext = $state<typeof import('../BrushContext.svelte').default>();
 
+  const lazy = $derived(lazyProp ?? settings.lazy);
+  /**
+   * Whether the subtree may be built.  Latched — once a lazy chart has been near the viewport it
+   * stays built, so scrolling back past it doesn't tear down and rebuild its marks.
+   */
+  let activated = $state(untrack(() => !lazy));
+  const active = $derived(!lazy || activated);
+
+  /**
+   * Builds a lazy chart once its container nears the viewport.
+   *
+   * Measures the element it's handed rather than leaving that to the measure effect below: under
+   * `experimental.async`, an activation that lands while another batch is pending (ex. an `await`
+   * elsewhere on the page) reads `ref` as it was before that batch, `undefined`, and the chart
+   * would never build.
+   */
+  function activate(node: HTMLElement) {
+    if (needsMeasure) {
+      chartState._containerWidth = node.clientWidth;
+      chartState._containerHeight = node.clientHeight;
+      chartState.isMeasured = true;
+    }
+    activated = true;
+  }
+
   $effect(() => {
-    if (transform && !TransformContext) {
+    if (transform && active && !TransformContext) {
       import('../TransformContext.svelte').then((m) => (TransformContext = m.default));
     }
   });
   $effect(() => {
-    if (brush && !BrushContext) {
+    if (brush && active && !BrushContext) {
       import('../BrushContext.svelte').then((m) => (BrushContext = m.default));
     }
   });
@@ -538,7 +567,7 @@
    * Reading the element here costs one layout per chart and gets them the real numbers first time.
    */
   $effect(() => {
-    if (!needsMeasure || !ref) return;
+    if (!needsMeasure || !active || !ref) return;
     chartState._containerWidth = ref.clientWidth;
     chartState._containerHeight = ref.clientHeight;
     chartState.isMeasured = true;
@@ -548,6 +577,7 @@
 {#if ssr === true || typeof window !== 'undefined'}
   <div
     bind:this={ref}
+    {@attach lazy && !activated ? nearViewport(activate, lazy === true ? undefined : lazy) : null}
     style:position
     style:top={position === 'absolute' ? 0 : null}
     style:right={position === 'absolute' ? 0 : null}
@@ -562,7 +592,7 @@
     class={['lc-root-container', className]}
     {...restProps}
   >
-    {#if !needsMeasure || chartState.isMeasured}
+    {#if active && (!needsMeasure || chartState.isMeasured)}
       {#if transform && TransformContext}
         <!-- Lazy-load TransformContext only when transform is enabled -->
         {@const {
@@ -598,6 +628,8 @@
       {:else}
         {@render inner()}
       {/if}
+    {:else}
+      {@render placeholder?.()}
     {/if}
   </div>
 {/if}

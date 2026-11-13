@@ -29,6 +29,8 @@ import type BrushContext from '../BrushContext.svelte';
 import type { ChartChildrenProps } from '../ChartChildren/ChartChildren.shared.svelte.js';
 import type { SeriesData } from '../charts/types.js';
 
+export type ChartLazyProp = boolean | { rootMargin?: string; threshold?: number | number[] };
+
 export type ChartResizeDetail = {
   width: number;
   height: number;
@@ -91,6 +93,25 @@ export type ChartPropsWithoutHTML<
    * @default false
    */
   ssr?: boolean;
+
+  /**
+   * Defer building the chart until its container scrolls near the viewport.  The container is
+   * laid out immediately (so the page doesn't shift); marks, axes, and interaction contexts are
+   * created the first time it intersects, and stay once created.
+   *
+   * Pass an object to tune the observer — `rootMargin` (default `'200px'`) starts building
+   * before the chart is on screen.  Defaults to the `lazy` setting (see `setSettings`).
+   *
+   * @default false
+   */
+  lazy?: ChartLazyProp;
+
+  /**
+   * Rendered inside the container until the chart is built — while a `lazy` chart waits to come
+   * into view, and in its server-rendered markup.  The container is already sized, so `h-full`
+   * fills the space the chart will take.
+   */
+  placeholder?: Snippet;
 
   /**
    * Whether to allow pointer events via CSS.
