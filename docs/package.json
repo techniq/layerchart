@@ -4,6 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
+		"predev": "pnpm generate:stackblitz",
 		"dev": "vite dev --port 3002",
 		"build": "vite build",
 		"prebuild": "pnpm generate:api && pnpm generate:stackblitz && pnpm generate:releases",
