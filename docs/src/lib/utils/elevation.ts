@@ -87,6 +87,57 @@ export async function loadElevation({ bounds, zoom }: { bounds: Bounds; zoom: nu
 }
 
 /**
+ * Stitches the map tiles covering `bounds` at `zoom` (any XYZ tile service, ex. satellite
+ * imagery) into one canvas, each tile at its own resolution, and returns it with a Web Mercator
+ * projection from longitude / latitude to its pixels: ex. for `GeoRaster`'s `image` and
+ * `sourceProjection`.  Tiles that fail to load are left blank.
+ */
+export async function loadTileImage({
+	bounds,
+	zoom,
+	url
+}: {
+	bounds: Bounds;
+	zoom: number;
+	url: (x: number, y: number, z: number) => string;
+}) {
+	const [[west, south], [east, north]] = bounds;
+	const tile = (v: number) => Math.min(2 ** zoom - 1, Math.max(0, Math.floor(v / TILE_SIZE)));
+	const [x0, y0] = mercator(west, north, zoom).map(tile);
+	const [x1, y1] = mercator(east, south, zoom).map(tile);
+
+	const images = await Promise.all(
+		Array.from({ length: (x1 - x0 + 1) * (y1 - y0 + 1) }, (_, i) => {
+			const x = x0 + (i % (x1 - x0 + 1));
+			const y = y0 + Math.floor(i / (x1 - x0 + 1));
+			return loadImage(url(x, y, zoom)).then(
+				(image) => ({ image, x, y }),
+				() => null
+			);
+		})
+	);
+	// Each tile's own size (high-resolution tiles are 512 pixels or more), so none is scaled down
+	const size = Math.max(TILE_SIZE, ...images.map((t) => t?.image.naturalWidth ?? 0));
+	const canvas = document.createElement('canvas');
+	canvas.width = (x1 - x0 + 1) * size;
+	canvas.height = (y1 - y0 + 1) * size;
+	const context = canvas.getContext('2d')!;
+	for (const t of images) {
+		if (t) context.drawImage(t.image, (t.x - x0) * size, (t.y - y0) * size, size, size);
+	}
+
+	const { geoMercator } = await import('d3-geo');
+	// The whole world's Mercator at this zoom, in the canvas' pixels: moved so tile (x0, y0) is at
+	// its corner
+	const world = size * 2 ** zoom;
+	const projection = () =>
+		geoMercator()
+			.scale(world / (2 * Math.PI))
+			.translate([world / 2 - x0 * size, world / 2 - y0 * size]);
+	return { image: canvas, projection };
+}
+
+/**
  * Whether a longitude / latitude falls inside `geojson`, answered from a canvas the features are
  * filled on — much faster than testing every point against every polygon.
  */

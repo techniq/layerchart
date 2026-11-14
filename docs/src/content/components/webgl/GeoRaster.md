@@ -16,6 +16,12 @@ An image (`image`: a URL, or an image, canvas, or bitmap) laid over the map thro
 
 :example{ name="projections" }
 
+## Terrain
+
+Map tiles stitched into one image (`sourceProjection` maps longitude and latitude onto its Web Mercator pixels) and draped over `elevation`, lit by a `Light`: satellite imagery over a mountain, at true scale times the exaggeration. The tiles load once for the area, so they don't sharpen as you zoom in.
+
+:example{ name="terrain" }
+
 ## Globe
 
 The `globe` projection lays the map on a real sphere you can orbit. Fit it as an orthographic map (the sphere is the size and place the disk would be, standing on the floor) and the same marks draw on it: `GeoRaster` wraps it in an image, `GeoPath` follows its curve, `Points` and `Bars` stand out from it, `Spline` runs along great circles, and `Surface` / `Raster` cover it.
