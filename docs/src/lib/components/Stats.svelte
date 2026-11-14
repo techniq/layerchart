@@ -37,7 +37,10 @@
 			? [
 					{
 						label: ' Downloads',
-						value: query.current.npmDownloads,
+						// Shown only with all three intervals, which it cycles through
+						value: query.current.npmDownloads.every((d) => d != null)
+							? query.current.npmDownloads
+							: null,
 						link: 'https://npmjs.com/package/layerchart',
 						intervals: ['Weekly', 'Monthly', 'Lifetime']
 					},
