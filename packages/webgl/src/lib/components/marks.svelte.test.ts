@@ -460,6 +460,23 @@ describe('GeoTile', () => {
     }
   });
 
+  it('shows part of the nearest ancestor a service has where it has no image for a tile', async () => {
+    let tiles: [number, number, number][] = [];
+    // Only the world's first few zooms (as satellite imagery stops early over open ocean)
+    const url = (x: number, y: number, z: number) =>
+      z <= 2 ? image : `http://127.0.0.1:9/${z}/${x}/${y}.png`;
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      // Nothing cached to draw from in the meantime
+      geotile: { url, disableCache: true, ontiles: (t: [number, number, number][]) => (tiles = t) },
+    });
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    expect(tiles[0][2]).toBeGreaterThan(2);
+    await expect.poll(() => meshes(scene).length, { timeout: 5000 }).toBe(tiles.length);
+    for (const mesh of meshes(scene)) expect(mesh.material.map.image.src).toBe(image);
+  });
+
   it('draws a new tile at once from its loaded ancestor, kept while its own fail', async () => {
     let tiles: [number, number, number][] = [];
     let scene: SceneState | undefined;

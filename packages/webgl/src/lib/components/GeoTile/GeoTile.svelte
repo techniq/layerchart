@@ -589,20 +589,23 @@
           draw(entry);
         }
         Promise.all([
-          loadTileImage(imageKey, { cache: !disableCache }),
+          loadImage(tile),
           elevationKey
             ? loadElevationTile(elevationKey, elevationEncoding).catch(() => null)
             : null,
         ]).then(
-          ([image, data]) => {
+          ([loaded, data]) => {
             // Gone from the view while loading
             if (entries.get(key) !== entry) return;
-            const own = blank(tile, imageKey, imagePart);
-            own.image = image;
+            const own = blank(tile, loaded.imageKey, loaded.imagePart);
+            own.image = loaded.image;
             if (data) own.elevation = { data, part, range: rangeOf(data, part) };
             own.loaded = true;
             if (entry.mesh) {
-              if (entry.imageKey === imageKey && entry.elevation?.data === own.elevation?.data) {
+              if (
+                entry.imageKey === loaded.imageKey &&
+                entry.elevation?.data === own.elevation?.data
+              ) {
                 // Its own were already there to draw from
                 entry.loaded = true;
                 sweep();
@@ -617,7 +620,7 @@
             sweep();
             version++;
           },
-          // A missing tile (ex. beyond what a service covers) is left out, or left as its stand-in
+          // With none of its ancestors' images either, it's left out, or left as its stand-in
           () => {
             entry.loaded = true;
             sweep();
@@ -633,6 +636,30 @@
   });
 
   let standIns = 0;
+
+  /** Images a service doesn't have (ex. open ocean past the zoom it stops at there) */
+  const missing = new Set<string>();
+
+  /**
+   * A tile's image, or where the service has none for it (ex. satellite imagery that stops at
+   * zoom 8 over open ocean), the nearest of its ancestors' (up to 8 zooms up) to show part of,
+   * enlarged
+   */
+  async function loadImage(tile: Tile) {
+    const top = Math.min(tile[2], maxZoom);
+    for (let z = top; z >= Math.max(0, top - 8); z--) {
+      const imagePart = ancestor(tile, z);
+      const imageKey = url(...imagePart.tile);
+      if (missing.has(imageKey)) continue;
+      try {
+        const image = await loadTileImage(imageKey, { cache: !disableCache });
+        return { image, imageKey, imagePart };
+      } catch {
+        missing.add(imageKey);
+      }
+    }
+    throw new Error(`No image for tile ${tile.join('/')}`);
+  }
 
   function blank(tile: Tile, imageKey: string, imagePart: Entry['imagePart']): Entry {
     return {
