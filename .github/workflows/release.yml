@@ -15,6 +15,7 @@ jobs:
       contents: write # to create release (changesets/action)
       pull-requests: write # to create pull request (changesets/action)
       id-token: write # to publish to npm via OIDC trusted publishing
+      actions: write # to start the docs deploy once published
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -41,3 +42,12 @@ jobs:
           version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # The docs read release notes from GitHub at build time, so redeploy once they exist.  A
+      # `release` trigger can't do this: releases created with `GITHUB_TOKEN` don't start other
+      # workflows, but `workflow_dispatch` is exempt.
+      - name: Deploy the docs with the new release notes
+        if: steps.changesets.outputs.published == 'true' && github.ref_name == 'main'
+        run: gh workflow run deploy-prod.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

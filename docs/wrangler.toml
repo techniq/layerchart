@@ -1,2 +1,25 @@
+# Must match the Worker's name in the Cloudflare dashboard, or the deploy is rejected
+name = "layerchart"
+main = ".svelte-kit/cloudflare/_worker.js"
+
 compatibility_date = "2026-01-20"
 compatibility_flags = ["nodejs_compat"]
+
+# Preview URLs back the per-PR deployments in `deploy-preview.yml`.  They default to whatever
+# `workers_dev` is, so set it explicitly rather than inheriting a dashboard toggle.
+#
+# Keep this above `[assets]` — every key after a table header belongs to that table, and wrangler
+# only warns ("Unexpected fields found in assets field") rather than failing.
+preview_urls = true
+
+# Serve the built site as static assets, falling through to the Worker only when nothing matches.
+#
+# This is what replaces Pages' `_routes.json`, which caps `include` + `exclude` at 100 rules
+# combined — the docs site blew past that (99 excludes kept, ~6,000 dropped), so every dropped
+# path invoked the function instead of being served as a file.  Workers has no such limit.
+[assets]
+binding = "ASSETS"
+directory = ".svelte-kit/cloudflare"
+
+[observability]
+enabled = true

@@ -31,6 +31,14 @@ jobs:
         env:
           GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
+      # `deploy-preview` names the preview after the PR, but it runs on `workflow_run`, where
+      # `workflow_run.pull_requests` is empty for pull requests opened from a fork — the case this
+      # split exists to serve.  Carry the number across in the artifact instead.
+      #
+      # Written beside `cloudflare/` rather than inside it, so it is not published as a static asset.
+      - name: Record the pull request number
+        run: echo "${{ github.event.number }}" > docs/.svelte-kit/pr-number
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:

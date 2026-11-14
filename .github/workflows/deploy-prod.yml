@@ -6,16 +6,23 @@ on:
       - main
     paths:
       - docs/**
-  release:
-    types: [published]
+  # Started by `release.yml` once a release is published, so the docs pick up its notes, and
+  # available for redeploying by hand
+  workflow_dispatch:
+
+# One deploy at a time: whichever run finishes uploading last is what's live, so overlapping runs
+# could leave an older commit serving.  A queued run is superseded by a newer one rather than
+# cancelling the deploy in progress.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   deploy-production:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      deployments: write
-    name: Deploy Production Site to Cloudflare Pages
+    name: Deploy Production Site to Cloudflare Workers
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -35,13 +42,19 @@ jobs:
         env:
           GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
-      - name: Deploy to Cloudflare Pages
-        uses: AdrianGonz97/refined-cf-pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projectName: layerchart
-          directory: ./.svelte-kit/cloudflare
-          workingDirectory: docs
-          deploymentName: Production
+      # `main` is trusted, so this builds and deploys in one job — no artifact hand-off needed.
+      # `deploy` promotes the new version to the active deployment, where `versions upload` in
+      # `deploy-preview` deliberately does not.
+      #
+      # Wrangler is the latest 4.x that has been public for a week (`min-release-age`, in days):
+      # current on fixes, while a compromised release has usually been caught and pulled by then —
+      # this step holds the Cloudflare token.  `--prefix` points npx away from the workspace, which
+      # would otherwise win with the lockfile's wrangler and ignore both the range and the age.
+      # `deploy-preview` resolves it the same way — keep the two in step.
+      - name: Deploy to Cloudflare Workers
+        working-directory: docs
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          NPM_CONFIG_MIN_RELEASE_AGE: 7
+        run: npx --yes --prefix "$RUNNER_TEMP" wrangler@4 deploy
