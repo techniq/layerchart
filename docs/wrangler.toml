@@ -3,7 +3,12 @@ name = "layerchart"
 main = ".svelte-kit/cloudflare/_worker.js"
 
 compatibility_date = "2026-01-20"
-compatibility_flags = ["nodejs_compat"]
+# `global_fetch_strictly_public`: a page using a `prerender` remote function (ex. the geo pages'
+# topojson) has SvelteKit fetch its prerendered result from the site's own URL
+# (`/_app/remote/...`).  By default a Worker's fetch to its own hostname skips the Worker and its
+# static assets (error 1042), so it only works when Cloudflare's cache happens to hold the file;
+# with the flag it goes out the public front door, where the assets are always served.
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 
 # Preview URLs back the per-PR deployments in `deploy-preview.yml`.  They default to whatever
 # `workers_dev` is, so set it explicitly rather than inheriting a dashboard toggle.

@@ -41,7 +41,7 @@
 		"@layerstack/utils": "2.0.0-next.19",
 		"@napi-rs/canvas": "^0.1.97",
 		"@sveltejs/adapter-cloudflare": "^7.2.8",
-		"@sveltejs/kit": "^2.62.0",
+		"@sveltejs/kit": "^2.70.4",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.0",
 		"@types/d3-array": "^3.2.2",
