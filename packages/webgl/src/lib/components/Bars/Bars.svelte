@@ -1,0 +1,160 @@
+<script lang="ts" module>
+  import type { Accessor, ColorProp, DataProp } from 'layerchart';
+
+  export type BarsProps = {
+    /** Override the chart's `data` */
+    data?: any[];
+    /** Override the chart's `x` accessor */
+    x?: Accessor;
+    /** Override the chart's `y` accessor */
+    y?: Accessor;
+    /**
+     * The bar's height: a data key or function (through the chart's `z` scale), or a number of
+     * pixels.  Defaults to the chart's `z`, stacked when the chart stacks along `z`.
+     */
+    z?: DataProp;
+    /**
+     * A CSS color, or a data key / function run through the chart's color scale.  Defaults to the
+     * chart's `c`, else `var(--color-primary, currentColor)`.
+     */
+    fill?: ColorProp;
+    /**
+     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * the fill, stroke, stroke width, and opacity they set, where its props don't say
+     */
+    class?: string;
+    /** @default 1 */
+    opacity?: number;
+    /**
+     * Pixels to leave between a bar and the edges of its band, on every side.
+     *
+     * @default 0
+     */
+    insets?: number;
+    /**
+     * A bar's width and depth in pixels along an axis without bands (and on a `globe`).
+     *
+     * @default 10
+     */
+    size?: number;
+    /**
+     * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).
+     *
+     * @default false
+     */
+    tooltip?: boolean;
+  };
+</script>
+
+<script lang="ts">
+  import { BoxGeometry, Color, Quaternion, Vector3 } from 'three';
+  import { getSceneContext } from '../../contexts/scene.svelte.js';
+  import { getChartContext, isScaleBand } from 'layerchart';
+
+  import { getSphere } from '../../utils/globe.js';
+  import { createInstances } from '../../utils/instances.svelte.js';
+  import { defined, resolveAccessor, rowColor } from '../../utils/marks.js';
+
+  let {
+    data: dataProp,
+    x,
+    y,
+    z,
+    fill,
+    class: className,
+    opacity = 1,
+    insets = 0,
+    size: sizeProp = 10,
+    tooltip = false,
+  }: BarsProps = $props();
+
+  const ctx = getChartContext();
+  const scene = getSceneContext();
+  /** What its `class` sets */
+  const look = $derived(scene.style(className));
+
+  ctx.registerComponent({
+    name: 'Bars',
+    kind: 'mark',
+    markInfo: () => ({
+      data: dataProp,
+      x,
+      y,
+      color: typeof fill === 'string' ? fill : undefined,
+      stacks: z == null,
+    }),
+  });
+
+  const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  const sphere = $derived(getSphere(ctx));
+  const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
+  const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
+
+  /** Where a bar starts along an axis and how far it reaches */
+  function extent(scale: any, value: unknown): [number, number] {
+    if (isScaleBand(scale)) {
+      return [Number(scale(value)) + insets, Math.max(0, scale.bandwidth() - insets * 2)];
+    }
+    return [Number(scale(value)) - sizeProp / 2, sizeProp];
+  }
+
+  const highlight = new Color(0xffffff);
+
+  // A unit cube standing on its corner at the origin, so a bar scales out from `(x, y)` up
+  createInstances({
+    tooltip: () => tooltip,
+    geometry: new BoxGeometry(1, 1, 1).translate(0.5, 0.5, 0.5),
+    instances: () =>
+      rows.flatMap((d: any) => {
+        const xValue = xAccessor(d);
+        const yValue = yAccessor(d);
+        if (!defined(xValue) || !defined(yValue)) return [];
+        if (sphere) {
+          // Standing out from the globe, `size` across, centered on its longitude / latitude
+          const [z0, z1] = ctx.heightOf(d, z);
+          const base = new Vector3(
+            ...sphere.toScene(Number(xValue), Number(yValue), Math.min(z0, z1))
+          );
+          const outward = base
+            .clone()
+            .sub(new Vector3(...sphere.center))
+            .normalize();
+          const rotation = new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), outward);
+          // The box's corner, half its footprint back from the center
+          const corner = new Vector3(-sizeProp / 2, 0, -sizeProp / 2)
+            .applyQuaternion(rotation)
+            .add(base);
+          return [
+            {
+              d,
+              x: corner.x,
+              y: corner.z,
+              z: corner.y,
+              width: sizeProp,
+              depth: sizeProp,
+              height: Math.abs(z1 - z0),
+              rotation,
+              color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
+            },
+          ];
+        }
+        const [x0, width] = extent(ctx.xScale, xValue);
+        const [y0, depth] = extent(ctx.yScale, yValue);
+        const [z0, z1] = ctx.heightOf(d, z);
+        return [
+          {
+            d,
+            x: x0,
+            y: y0,
+            z: Math.min(z0, z1),
+            width,
+            depth,
+            height: Math.abs(z1 - z0),
+            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
+          },
+        ];
+      }),
+    opacity: () => opacity * (look?.opacity ?? 1),
+    emphasize: (color) => color.lerp(highlight, 0.25),
+  });
+</script>

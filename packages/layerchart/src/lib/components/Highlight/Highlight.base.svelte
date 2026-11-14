@@ -24,6 +24,7 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   import { HighlightState } from './Highlight.shared.svelte.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     Circle,
@@ -37,7 +38,7 @@
     area = false,
     bar = false,
     opacity,
-    motion = 'spring',
+    motion: motionProp,
     onAreaClick,
     onBarClick,
     onPointClick,
@@ -45,6 +46,21 @@
     onPointLeave,
     ...rest
   }: HighlightBaseProps = $props();
+
+  // A spring glides between highlighted points
+  const chart = getChartContext();
+  const motion = $derived(motionProp ?? 'spring');
+  /**
+   * On a `domain` transform the scales change with every step of a pan or zoom, and a spring
+   * would only chase the point: drawn anew as they change, it's there at once, still gliding from
+   * one point to the next
+   */
+  const scales = $derived(
+    chart.props.transform?.mode === 'domain'
+      ? // What they do, rather than which objects they are (they can be made again the same)
+        JSON.stringify([chart.xScale, chart.yScale].map((scale) => [scale.domain(), scale.range()]))
+      : null
+  );
 
   const c = new HighlightState(
     () =>
@@ -62,30 +78,32 @@
 </script>
 
 {#if c.highlightData}
-  {#if area && c.inPanel}
-    {#if typeof area === 'function'}
-      {@render area({ area: c.area })}
-    {:else if c.ctx.radial}
-      <Arc
-        motion={motion === 'spring' ? 'spring' : undefined}
-        startAngle={c.area.x}
-        endAngle={c.area.x + c.area.width}
-        innerRadius={c.area.y}
-        outerRadius={c.area.y + c.area.height}
-        {opacity}
-        class="lc-highlight-area"
-        onclick={onAreaClick && ((e: MouseEvent) => onAreaClick(e, { data: c.highlightData }))}
-      />
-    {:else}
-      <Rect
-        motion={motion === 'spring' ? 'spring' : undefined}
-        {opacity}
-        {...c.area}
-        {...extractLayerProps(area, 'lc-highlight-area')}
-        onclick={onAreaClick && ((e: MouseEvent) => onAreaClick(e, { data: c.highlightData }))}
-      />
+  {#key scales}
+    {#if area && c.inPanel}
+      {#if typeof area === 'function'}
+        {@render area({ area: c.area })}
+      {:else if c.ctx.radial}
+        <Arc
+          motion={motion === 'spring' ? 'spring' : undefined}
+          startAngle={c.area.x}
+          endAngle={c.area.x + c.area.width}
+          innerRadius={c.area.y}
+          outerRadius={c.area.y + c.area.height}
+          {opacity}
+          class="lc-highlight-area"
+          onclick={onAreaClick && ((e: MouseEvent) => onAreaClick(e, { data: c.highlightData }))}
+        />
+      {:else}
+        <Rect
+          motion={motion === 'spring' ? 'spring' : undefined}
+          {opacity}
+          {...c.area}
+          {...extractLayerProps(area, 'lc-highlight-area')}
+          onclick={onAreaClick && ((e: MouseEvent) => onAreaClick(e, { data: c.highlightData }))}
+        />
+      {/if}
     {/if}
-  {/if}
+  {/key}
 
   {#if bar && c.inPanel}
     {#if typeof bar === 'function'}
@@ -103,81 +121,83 @@
     {/if}
   {/if}
 
-  {#if linesProp}
-    {#if typeof linesProp === 'function'}
-      {@render linesProp({ lines: c.lines })}
-    {:else}
-      {#each c.lines as line}
-        <Line
-          motion={motion === 'spring' ? 'spring' : undefined}
-          x1={line.x1}
-          y1={line.y1}
-          x2={line.x2}
-          y2={line.y2}
-          dashArray={[2, 2]}
-          {opacity}
-          {...extractLayerProps(linesProp, 'lc-highlight-line')}
-        />
-      {/each}
+  {#key scales}
+    {#if linesProp}
+      {#if typeof linesProp === 'function'}
+        {@render linesProp({ lines: c.lines })}
+      {:else}
+        {#each c.lines as line}
+          <Line
+            motion={motion === 'spring' ? 'spring' : undefined}
+            x1={line.x1}
+            y1={line.y1}
+            x2={line.x2}
+            y2={line.y2}
+            dashArray={[2, 2]}
+            {opacity}
+            {...extractLayerProps(linesProp, 'lc-highlight-line')}
+          />
+        {/each}
+      {/if}
     {/if}
-  {/if}
 
-  {#if shadows && c.shadows.length}
-    {@const { r: _r, ...shadowProps } = typeof shadows === 'object' ? shadows : {}}
-    {@const HighlightShadows = c.ctx.isometric!.HighlightShadows}
-    <HighlightShadows {Path} {Rect} shadows={c.shadows} {opacity} props={shadowProps} />
-  {/if}
-
-  {#if points}
-    {#if typeof points === 'function'}
-      {@render points({ points: c.points })}
-    {:else}
-      {#each c.points as point}
-        {@const pointOpacity =
-          opacity ??
-          (point.seriesKey
-            ? c.ctx.series.isHighlighted(point.seriesKey, true)
-              ? 1
-              : 0.1
-            : undefined)}
-        <Circle
-          motion={motion === 'spring' ? 'spring' : undefined}
-          cx={point.x}
-          cy={point.y}
-          fill={point.fill}
-          r={point.r ?? 4}
-          strokeWidth={point.r ? 2 : 6}
-          opacity={pointOpacity}
-          viewport={c.lift != null}
-          {...extractLayerProps(points, 'lc-highlight-point')}
-          onpointerdown={onPointClick &&
-            ((e: PointerEvent) => {
-              e.stopPropagation();
-            })}
-          onclick={onPointClick &&
-            ((e: MouseEvent) => onPointClick(e, { point, data: c.highlightData }))}
-          onpointerenter={(e: PointerEvent) => {
-            if (onPointClick) {
-              asAny(e.target).style.cursor = 'pointer';
-            }
-            if (point.seriesKey) {
-              c.ctx.series.highlightKey = point.seriesKey;
-            }
-            onPointEnter?.(e, { point, data: c.highlightData });
-          }}
-          onpointerleave={(e: PointerEvent) => {
-            if (onPointClick) {
-              asAny(e.target).style.cursor = 'default';
-            }
-            if (point.seriesKey) {
-              c.ctx.series.highlightKey = null;
-            }
-            onPointLeave?.(e, { point, data: c.highlightData });
-          }}
-        />
-      {/each}
+    {#if shadows && c.shadows.length}
+      {@const { r: _r, ...shadowProps } = typeof shadows === 'object' ? shadows : {}}
+      {@const HighlightShadows = c.ctx.isometric!.HighlightShadows}
+      <HighlightShadows {Path} {Rect} shadows={c.shadows} {opacity} props={shadowProps} />
     {/if}
-  {/if}
+
+    {#if points}
+      {#if typeof points === 'function'}
+        {@render points({ points: c.points })}
+      {:else}
+        {#each c.points as point}
+          {@const pointOpacity =
+            opacity ??
+            (point.seriesKey
+              ? c.ctx.series.isHighlighted(point.seriesKey, true)
+                ? 1
+                : 0.1
+              : undefined)}
+          <Circle
+            motion={motion === 'spring' ? 'spring' : undefined}
+            cx={point.x}
+            cy={point.y}
+            fill={point.fill}
+            r={point.r ?? 4}
+            strokeWidth={point.r ? 2 : 6}
+            opacity={pointOpacity}
+            viewport={c.lift != null}
+            {...extractLayerProps(points, 'lc-highlight-point')}
+            onpointerdown={onPointClick &&
+              ((e: PointerEvent) => {
+                e.stopPropagation();
+              })}
+            onclick={onPointClick &&
+              ((e: MouseEvent) => onPointClick(e, { point, data: c.highlightData }))}
+            onpointerenter={(e: PointerEvent) => {
+              if (onPointClick) {
+                asAny(e.target).style.cursor = 'pointer';
+              }
+              if (point.seriesKey) {
+                c.ctx.series.highlightKey = point.seriesKey;
+              }
+              onPointEnter?.(e, { point, data: c.highlightData });
+            }}
+            onpointerleave={(e: PointerEvent) => {
+              if (onPointClick) {
+                asAny(e.target).style.cursor = 'default';
+              }
+              if (point.seriesKey) {
+                c.ctx.series.highlightKey = null;
+              }
+              onPointLeave?.(e, { point, data: c.highlightData });
+            }}
+          />
+        {/each}
+      {/if}
+    {/if}
+  {/key}
 {/if}
 
 <style>

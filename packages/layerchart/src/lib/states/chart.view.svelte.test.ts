@@ -4,6 +4,10 @@ import { flushSync } from 'svelte';
 import { ChartState } from './chart.svelte.js';
 import { Settings } from './settings.svelte.js';
 import { isometric } from '$lib/views/isometric.js';
+import { orthographic, perspective } from '$lib/views/camera.js';
+import { drawsFlatLayers } from '$lib/views/view.js';
+import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
+import { geoIdentity } from 'd3-geo';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 
 function chartState(props: Partial<ChartPropsWithoutHTML<any>>, settings?: Settings) {
@@ -44,6 +48,152 @@ describe('ChartState `view`', () => {
     const optedOut = chartState({ view: null }, settings);
     expect(optedOut.state.view).toBeNull();
     optedOut.cleanup();
+  });
+
+  it('takes a 3D view, with its own default angles and no isometric floor', () => {
+    const plain = chartState({ view: perspective });
+    expect(plain.state.view?.type).toBe('perspective');
+    expect(plain.state.isometric).toBeNull();
+    expect(plain.state.isometricFloor).toBeNull();
+    expect(plain.state.viewAngles).toEqual({ rotate: -45, tilt: 60 });
+    expect(plain.state.viewRotation).toEqual({ rotate: -45, tilt: 60 });
+    plain.cleanup();
+
+    const turned = chartState({ view: orthographic({ rotate: 10, tilt: 30 }) });
+    expect(turned.state.viewAngles).toEqual({ rotate: 10, tilt: 30 });
+    turned.cleanup();
+  });
+
+  it('turns an `isometric` view about what has been panned to the middle', () => {
+    const { state, cleanup } = chartState({
+      view: isometric,
+      width: 400,
+      height: 300,
+      padding: 0,
+    });
+    const from = { x: -45, y: 50 };
+    const to = { x: 10, y: 30 };
+    // Unpanned, the middle of the floor stays in the middle
+    const still = state.isometricPivot(from, to, { x: 0, y: 0 }, 1);
+    expect(still.x).toBeCloseTo(0);
+    expect(still.y).toBeCloseTo(0);
+    // Turning there and back again comes back to the same pan
+    const panned = { x: 60, y: -25 };
+    const there = state.isometricPivot(from, to, panned, 2);
+    expect(there).not.toEqual(panned);
+    const back = state.isometricPivot(to, from, there, 2);
+    expect(back.x).toBeCloseTo(panned.x);
+    expect(back.y).toBeCloseTo(panned.y);
+    cleanup();
+  });
+
+  it('turns a tall view in place, about the middle of the box rather than of its floor', () => {
+    const { state, cleanup } = chartState({
+      view: isometric,
+      width: 400,
+      height: 300,
+      padding: 0,
+      data: [{ z: 0 }, { z: 10 }],
+      z: 'z',
+      zDomain: [0, 10],
+      zRange: ({ height }: { height: number }) => [0, height],
+    });
+    expect(state.zDepth).toBeGreaterThan(0);
+    const still = state.isometricPivot({ x: -45, y: 50 }, { x: 60, y: 30 }, { x: 0, y: 0 }, 1);
+    expect(still.x).toBeCloseTo(0);
+    expect(still.y).toBeCloseTo(0);
+    cleanup();
+  });
+
+  it('keeps the same point of the floor in the middle as it turns', () => {
+    const size = { width: 400, height: 300, padding: 0 };
+    const before = chartState({ view: isometric({ rotate: -45, tilt: 50 }), ...size });
+    const after = chartState({ view: isometric({ rotate: 10, tilt: 30 }), ...size });
+    const scale = 2;
+    const panned = { x: -150, y: 40 };
+    const translate = before.state.isometricPivot(
+      { x: -45, y: 50 },
+      { x: 10, y: 30 },
+      panned,
+      scale
+    );
+
+    // The share of the floor across and down under the middle of the plot, in a view
+    const middleOf = (state: ChartState<any>, t: { x: number; y: number }) => {
+      const m = invertMatrix(state.isometricMatrix!)!;
+      const p = applyMatrix(m, { x: (200 - t.x) / scale, y: (150 - t.y) / scale });
+      return { x: p.x / state.plot.width, y: p.y / state.plot.height };
+    };
+    const a = middleOf(before.state, panned);
+    const b = middleOf(after.state, translate);
+    expect(b.x).toBeCloseTo(a.x, 4);
+    expect(b.y).toBeCloseTo(a.y, 4);
+    before.cleanup();
+    after.cleanup();
+  });
+
+  it("widens a map's `z` domain to its marks' heights, which aren't projected", () => {
+    const { state, cleanup } = chartState({ geo: { projection: geoIdentity as any } });
+    const unregister = state.registerMark({ zExtent: [5, 50] });
+    flushSync();
+    expect(state.zDomain).toEqual([0, 50]);
+    unregister();
+    cleanup();
+  });
+
+  it("keeps a 3D view's floor at its aspect, so resizing scales it rather than stretching it", () => {
+    // Continuous axes in equal units: twice as wide as deep
+    const wide = chartState({
+      view: perspective,
+      width: 600,
+      height: 300,
+      padding: 0,
+      xDomain: [0, 20],
+      yDomain: [0, 10],
+    });
+    expect(wide.state.width).toBeCloseTo(600);
+    expect(wide.state.height).toBeCloseTo(300);
+    wide.cleanup();
+
+    const narrow = chartState({
+      view: perspective,
+      width: 300,
+      height: 300,
+      padding: 0,
+      xDomain: [0, 20],
+      yDomain: [0, 10],
+    });
+    expect(narrow.state.width).toBeCloseTo(300);
+    expect(narrow.state.height).toBeCloseTo(150);
+    narrow.cleanup();
+
+    // A map keeps the whole plot: its projection fits it in its own proportions
+    const map = chartState({
+      view: perspective,
+      geo: { projection: geoIdentity as any },
+      width: 600,
+      height: 300,
+      padding: 0,
+    });
+    expect(map.state.width).toBeCloseTo(600);
+    map.cleanup();
+
+    const given = chartState({
+      view: perspective({ aspect: 1 }),
+      width: 600,
+      height: 300,
+      padding: 0,
+    });
+    expect(given.state.width).toBeCloseTo(300);
+    expect(given.state.height).toBeCloseTo(300);
+    given.cleanup();
+  });
+
+  it('lets flat layers draw under no view or `isometric`, not a 3D one', () => {
+    expect(drawsFlatLayers(null)).toBe(true);
+    expect(drawsFlatLayers(isometric())).toBe(true);
+    expect(drawsFlatLayers(perspective())).toBe(false);
+    expect(drawsFlatLayers(orthographic())).toBe(false);
   });
 
   describe('`motion`', () => {

@@ -57,12 +57,16 @@
     ondragend,
     scaleExtent,
     translateExtent,
+    rotationExtent,
+    rotateExtent,
+    tiltExtent,
     constrain,
     inertia,
     pinch,
     scrollActivationKey,
     initialRotation,
     processRotate,
+    pivotRotate,
     drag,
     dragSwitchKey,
     ...restProps
@@ -83,12 +87,16 @@
     ondragend,
     scaleExtent,
     translateExtent,
+    rotationExtent,
+    rotateExtent,
+    tiltExtent,
     constrain,
     inertia,
     pinch,
     scrollActivationKey,
     initialRotation,
     processRotate,
+    pivotRotate,
     drag,
     dragSwitchKey,
   };
@@ -139,6 +147,7 @@
 
   $effect.pre(() => {
     transformState.processRotate = processRotate;
+    transformState.pivotRotate = pivotRotate;
   });
 
   $effect.pre(() => {
@@ -173,6 +182,12 @@
 
   $effect.pre(() => {
     transformState.translateExtent = translateExtent;
+  });
+
+  $effect.pre(() => {
+    transformState.rotationExtent = rotationExtent;
+    transformState.rotateExtent = rotateExtent;
+    transformState.tiltExtent = tiltExtent;
   });
 
   $effect.pre(() => {

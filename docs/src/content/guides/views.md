@@ -1,0 +1,76 @@
+---
+title: Views (2D and 3D)
+category: state
+---
+
+A chart's `view` says how its plot area is seen. Without one, it's flat: `x` across, `y` down, as on any chart. With one, the plot area becomes a **floor** seen at an angle, and `z` rises off it.
+
+```svelte
+<Chart view={isometric}>
+<Chart view={perspective}>
+```
+
+Besides the flat default, there are three views, which differ in how they're drawn and which layers can draw them.
+
+|            | `isometric`                         | `orthographic`                       | `perspective`                        |
+| ---------- | ----------------------------------- | ------------------------------------ | ------------------------------------ |
+| Projection | Parallel                            | Parallel                             | Far things smaller                   |
+| Layers     | `Svg`, `Canvas`, `Html`             | `WebGL`                              | `WebGL`                              |
+| Depth      | Faux (2D, back to front)            | True (depth tested, lit)             | True (depth tested, lit)             |
+| Guide      | [Isometric](/docs/guides/isometric) | [WebGL](/docs/guides/webgl#the-view) | [WebGL](/docs/guides/webgl#the-view) |
+
+`isometric` draws with LayerChart's own marks, from `layerchart`. The two cameras draw with [`@layerchart/webgl`](/docs/guides/webgl)'s marks, which take the same props.
+
+## The flat default
+
+Without a `view`, the plot area is drawn straight on, as every chart is: `x` across and `y` down through their scales, nothing turned or tipped. It's what most charts want, and it's the only view every layer draws: `Svg`, `Canvas`, `Html`, and `WebGL` layers all line up pixel for pixel, so they mix freely (ex. a [`WebGL` layer](/docs/guides/webgl#flat-2d) for 100,000 points under `Svg` axes and a tooltip highlight).
+
+- **Height** (`z`) needs a view: without one, nothing rises off the plot.
+- **A `transform`** pans and zooms. There's nothing to turn, so `drag: 'rotate'` pans as a plain drag does.
+- **Seen from directly above,** a view looks flat too: `isometric({ rotate: 0, tilt: 0 })`. Easing between that and a tilted view animates a chart into 3D and back (see [Animating the view](/docs/guides/isometric#animating-the-view)).
+
+## Choosing a view
+
+- **`isometric`** keeps everything you already use: the same layers, marks, axes, text, and CSS, with no extra package. It's faux 3D, a 2D drawing of a floor turned and tipped, so it suits charts that read as a raised floor (ex. [3D bars](/docs/guides/isometric#height), calendars, treemaps, maps with height).
+- **`orthographic`** draws the same parallel projection in true 3D, with [`@layerchart/webgl`](/docs/guides/webgl): marks hide what's behind them, faces are lit, and lights cast shadows. Reach for it when faux depth isn't enough (ex. dense 3D scatters, surfaces, terrain), or for more marks than `Svg` and `Canvas` keep up with.
+- **`perspective`** is `orthographic` with a camera's depth: farther things are smaller, which reads as more natural for scenes and globes, at the cost of comparing sizes across depth.
+
+The same data drawn both ways: `isometric` in an `Svg` layer, and `perspective` (or `orthographic`, with its toggle) in a `WebGL` layer.
+
+:example{ component="Chart" name="isometric-scatter-3d" }
+
+:example{ component="webgl/Points" name="scatter-3d" }
+
+## What they share
+
+All three views take the same options, so moving a chart between them is mostly changing its `view`:
+
+| Option   | What it does                                                                      | Default                                 |
+| -------- | --------------------------------------------------------------------------------- | --------------------------------------- |
+| `rotate` | Turns the floor about its center, clockwise, in degrees                           | `-45`                                   |
+| `tilt`   | Tips it away from the viewer, from `0` (seen from directly above) towards edge on | `54.7356` (`isometric`), `60` (cameras) |
+| `aspect` | The floor's width over its depth, or `'auto'` to take it from the data            | `'auto'`                                |
+| `motion` | Eases the view to new angles, ex. `'tween'`                                       |                                         |
+| `fov`    | `perspective` only: the vertical field of view, in degrees                        | `35`                                    |
+
+- **Height:** `z` is a third position channel, through the chart's `zScale`, from the floor up. Its range defaults to half the floor's shorter side. Marks take `z` the same way in every view (see [Height](/docs/guides/isometric#height)).
+- **Turning, panning, and zooming:** a chart's `transform` with `drag: 'rotate'` turns any view, `onTransform` reports the angles as `rotation`, and `rotateExtent` / `tiltExtent` limit them (see [Transform](/docs/guides/transform#constraints), [Dragging the view](/docs/guides/isometric#dragging-the-view), and [Turning, panning, and zooming](/docs/guides/webgl#turning-panning-and-zooming)).
+- **Fit:** the floor, and anything rising off it, is fitted into the plot area inside the chart's `padding`. Give it `padding` for room around it (ex. for axis labels).
+- **Axes:** `Axis placement="bottom"` and `"left"` run along the floor's edges, and `"back"` up its back corner. Tick labels lie on the floor unless `tickLabelProps={{ viewport: true }}` turns them to face the viewer.
+
+## Views and geo projections
+
+A [geo projection](/docs/guides/geo) and a view do different jobs, and they combine. The projection maps longitude and latitude to the plot area, in place of the `x` / `y` scales: it decides where places are on the flat map. The view then decides how that plot area is seen: straight on without one, or as a floor seen at an angle with one.
+
+So any projection can be the floor of any view, with `z` raising features, points, or bins off the map: ex. [an election map](/docs/components/GeoPath/election-isometric) or [pins](/docs/components/Chart/isometric-pin-map) on an `isometric` floor (see [Paths and maps](/docs/guides/isometric#paths-and-maps)), or [population bins](/docs/components/webgl/Bin/state-population) under a `perspective` camera.
+
+Two things look alike but aren't:
+
+- **A globe as a projection** (ex. `geoOrthographic`) is a flat drawing of a sphere: a disk on the plot. Turning it changes the projection's `rotate` (see [Globe rotation](/docs/guides/geo#globe-rotation)), and it works in any layer, with or without a view.
+- **A globe in a view** is a real sphere: `@layerchart/webgl`'s `globe` projection under a `perspective` or `orthographic` camera lays the map around it, and the view orbits it (see [Maps and globes](/docs/guides/webgl#maps-and-globes)).
+
+## Mixing layers
+
+An `isometric` view draws in every `Svg`, `Canvas`, and `Html` layer of the chart, so they can be mixed as on a flat chart. `orthographic` and `perspective` are drawn by `WebGL` layers only: `Svg`, `Canvas`, and `Html` layers can't draw through a camera, and warn when they're given one. A layer with `ignoreTransform` draws over the scene, flat (ex. a title), as do `Tooltip` and `Legend`.
+
+Without a `view`, a `WebGL` layer is flat too, lined up pixel for pixel with the chart's other layers: see [Flat (2D)](/docs/guides/webgl#flat-2d).

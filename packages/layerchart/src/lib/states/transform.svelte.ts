@@ -24,6 +24,11 @@ export type TransformAxis = 'x' | 'y' | 'both';
 export type TransformConstraint = {
   scale: number;
   translate: { x: number; y: number };
+  /**
+   * The view's rotation (see `initialRotation`), when there's one to turn.  Return a new one to
+   * limit how far a drag turns it.
+   */
+  rotation?: { x: number; y: number } | null;
 };
 
 export type TransformDetails = {
@@ -78,6 +83,18 @@ export type TransformStateOptions = {
   ) => { x: number; y: number };
 
   /**
+   * The translate keeping the view turning about what's in the middle of it, as a drag turns the
+   * view `from` one rotation `to` another from `translate` at `scale`.  Default: the translate
+   * holds, so the view turns about whatever it was laid out around.
+   */
+  pivotRotate?: (
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    translate: { x: number; y: number },
+    scale: number
+  ) => { x: number; y: number };
+
+  /**
    * What a drag does: move the content (`'translate'`) or turn the view (`'rotate'`).  Holding
    * `dragSwitchKey` does the other.
    * @default 'translate'
@@ -110,9 +127,21 @@ export type TransformStateOptions = {
   translateExtent?: [[number, number], [number, number]];
 
   /**
+   * How far a drag turns the view, in degrees: [[minRotate, minTilt], [maxRotate, maxTilt]].
+   * Default: no limit.
+   */
+  rotationExtent?: [[number, number], [number, number]];
+
+  /** Min/max turn [minRotate, maxRotate], in degrees.  Overrides `rotationExtent`'s. */
+  rotateExtent?: [number, number];
+
+  /** Min/max tilt [minTilt, maxTilt], in degrees.  Overrides `rotationExtent`'s. */
+  tiltExtent?: [number, number];
+
+  /**
    * Custom constraint function called after every transform update.
-   * Return corrected scale/translate values.
-   * Called after scaleExtent and translateExtent are applied.
+   * Return corrected scale/translate (and, as a drag turns the view, rotation) values.
+   * Called after scaleExtent, translateExtent, and the rotation extents are applied.
    */
   constrain?: (transform: TransformConstraint) => TransformConstraint;
 };
@@ -150,12 +179,21 @@ export class TransformState {
     deltaX: number,
     deltaY: number
   ) => { x: number; y: number };
+  pivotRotate?: (
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    translate: { x: number; y: number },
+    scale: number
+  ) => { x: number; y: number };
   dragSwitchKey: ScrollActivationKey;
   ondragstart: () => void;
   ondragend: () => void;
   scrollActivationKey: ScrollActivationKey | undefined;
   scaleExtent: [number, number] | undefined;
   translateExtent: [[number, number], [number, number]] | undefined;
+  rotationExtent: [[number, number], [number, number]] | undefined;
+  rotateExtent: [number, number] | undefined;
+  tiltExtent: [number, number] | undefined;
   constrain: ((transform: TransformConstraint) => TransformConstraint) | undefined;
   inertia: {
     enabled: boolean;
@@ -185,6 +223,11 @@ export class TransformState {
    * `pointerup` is swallowed rather than reaching what's under the pointer (see `onClickCapture`)
    */
   private _suppressClick = false;
+  /**
+   * When the last drag (or pinch) was released.  The browser counts quick presses near each other
+   * as a double click even when they drag, so two quick drags would otherwise zoom in.
+   */
+  private _dragEndedAt = -Infinity;
 
   // Velocity tracking for inertia
   private _pointerSamples: { x: number; y: number; t: number }[] = [];
@@ -221,6 +264,7 @@ export class TransformState {
     this.onTransform = options.onTransform ?? (() => {});
     this.initialRotation = options.initialRotation ?? null;
     this.processRotate = options.processRotate;
+    this.pivotRotate = options.pivotRotate;
     this.drag = options.drag ?? 'translate';
     this.dragSwitchKey = options.dragSwitchKey ?? 'shift';
     this.ondragstart = options.ondragstart ?? (() => {});
@@ -228,6 +272,9 @@ export class TransformState {
     this.scrollActivationKey = options.scrollActivationKey;
     this.scaleExtent = options.scaleExtent;
     this.translateExtent = options.translateExtent;
+    this.rotationExtent = options.rotationExtent;
+    this.rotateExtent = options.rotateExtent;
+    this.tiltExtent = options.tiltExtent;
     this.constrain = options.constrain;
     this.pinch = options.pinch ?? true;
 
@@ -324,11 +371,34 @@ export class TransformState {
     scale = this._clampScale(scale);
     translate = this._clampTranslate(translate);
     if (this.constrain) {
-      const constrained = this.constrain({ scale, translate });
+      const constrained = this.constrain({ scale, translate, rotation: this.rotation });
       scale = constrained.scale;
       translate = constrained.translate;
     }
     return { scale, translate };
+  }
+
+  /** Clamp a rotation a drag turns to, using the rotation extents and custom constrain. */
+  private _constrainRotation(rotation: { x: number; y: number }): { x: number; y: number } {
+    const [[minX, minY], [maxX, maxY]] = this.rotationExtent ?? [
+      [-Infinity, -Infinity],
+      [Infinity, Infinity],
+    ];
+    const [x0, x1] = this.rotateExtent ?? [minX, maxX];
+    const [y0, y1] = this.tiltExtent ?? [minY, maxY];
+    rotation = {
+      x: Math.max(x0, Math.min(x1, rotation.x)),
+      y: Math.max(y0, Math.min(y1, rotation.y)),
+    };
+    if (this.constrain) {
+      const constrained = this.constrain({
+        scale: this._scale.current,
+        translate: this._translate.current,
+        rotation,
+      });
+      rotation = constrained.rotation ?? rotation;
+    }
+    return rotation;
   }
 
   /**
@@ -347,7 +417,8 @@ export class TransformState {
    * so in domain mode the pointer is mapped back onto it.
    */
   #floorInverse() {
-    const m = this.mode === 'domain' ? this.ctx?.isometricMatrix : null;
+    const m =
+      this.mode === 'domain' ? (this.ctx?.isometricMatrix ?? this.ctx?.viewFloorMatrix) : null;
     return m ? invertMatrix(m) : null;
   }
 
@@ -726,12 +797,23 @@ export class TransformState {
 
       if (this._dragging === 'rotate') {
         const { x, y } = this.startRotation;
-        this.setRotation(
+        const rotation = this._constrainRotation(
           this.processRotate
             ? this.processRotate(x, y, deltaX, deltaY)
-            : { x: x + deltaX, y: y + deltaY },
-          this._instantMotion(this._rotation)
+            : { x: x + deltaX, y: y + deltaY }
         );
+        this.setRotation(rotation, this._instantMotion(this._rotation));
+        if (this.pivotRotate) {
+          this.setTranslate(
+            this.pivotRotate(
+              this.startRotation,
+              rotation,
+              this.startTranslate,
+              this._scale.current
+            ),
+            this._instantMotion(this._translate)
+          );
+        }
         return;
       }
 
@@ -779,6 +861,7 @@ export class TransformState {
       this.pointerDown = false;
       this.dragging = false;
       this._suppressClick = true;
+      this._dragEndedAt = performance.now();
       this.ondragend?.();
       return;
     }
@@ -786,7 +869,10 @@ export class TransformState {
     const wasDragging = this.dragging;
     this.pointerDown = false;
     this.dragging = false;
-    if (wasDragging) this._suppressClick = true;
+    if (wasDragging) {
+      this._suppressClick = true;
+      this._dragEndedAt = performance.now();
+    }
 
     // Apply inertia if enabled and was dragging with enough velocity
     if (this.inertia.enabled && wasDragging && this._pointerSamples.length >= 2) {
@@ -915,6 +1001,8 @@ export class TransformState {
 
   onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     if (this.mode === 'none') return;
+    // One of its presses dragged (both fall within the double click interval, about this long)
+    if (performance.now() - this._dragEndedAt < 500) return;
     const point = localPoint(e);
     this.scaleTo(e.shiftKey ? 0.5 : 2, point);
   }
@@ -952,11 +1040,12 @@ export class TransformState {
 
     if (this.scrollMode === 'scale' || pinchToZoom) {
       // Holding shift turns a wheel sideways (macOS for a mouse wheel, Firefox everywhere, Chrome
-      // on Windows and Linux), so with `shift` as the activation key a scroll arrives as `deltaX`
-      // alone and would zoom by nothing.  Read it as the vertical scroll it was.  Only then, so a
-      // horizontal trackpad swipe still pans in domain mode rather than zooming.
-      const shifted = this.scrollActivationKey === 'shift' && e.deltaY === 0;
-      const deltaY = shifted ? e.deltaX : e.deltaY;
+      // on Windows and Linux), so with `shift` as the activation key a scroll arrives mostly as
+      // `deltaX`, and from a trackpad rarely only: a swipe is seldom dead straight.  Zoom by
+      // whichever way it mostly scrolls, and don't also pan by the rest, or a zoom that's a little
+      // off straight pans the domain far sideways.
+      const shifted = this.scrollActivationKey === 'shift';
+      const deltaY = shifted && Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       const deltaX = shifted ? 0 : e.deltaX;
 
       // https://github.com/d3/d3-zoom#zoom_wheelDelta

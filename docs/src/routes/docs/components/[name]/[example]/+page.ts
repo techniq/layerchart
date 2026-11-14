@@ -1,8 +1,9 @@
 import { loadExample } from '$lib/examples.js';
 
-export async function load({ params }) {
+export async function load({ params, parent }) {
 	// Eagerly load the specific example for this page
-	const example = await loadExample(params.name, params.example);
+	const { componentName } = await parent();
+	const example = await loadExample(componentName, params.example);
 
 	return {
 		example,
