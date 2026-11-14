@@ -8,6 +8,7 @@
     Bin,
     Chart,
     GeoPath,
+    GeoTile,
     Highlight,
     Light,
     Link,
@@ -44,6 +45,7 @@
     rule,
     vector,
     highlight,
+    geotile,
     offset = 0,
     onScene,
   }: {
@@ -63,7 +65,8 @@
       | 'arc'
       | 'rule'
       | 'vector'
-      | 'highlight';
+      | 'highlight'
+      | 'geotile';
     chart: Partial<ComponentProps<typeof Chart>>;
     scene?: Partial<ComponentProps<typeof WebGL>>;
     points?: ComponentProps<typeof Points>;
@@ -82,6 +85,7 @@
     rule?: ComponentProps<typeof Rule>;
     vector?: ComponentProps<typeof Vector>;
     highlight?: ComponentProps<typeof Highlight>;
+    geotile?: ComponentProps<typeof GeoTile>;
     /** Pixels down the page to put the chart, to test it off screen */
     offset?: number;
     onScene: (scene: SceneState, chart: ChartState<any>) => void;
@@ -119,6 +123,8 @@
         <Vector {...vector} />
       {:else if mark === 'highlight'}
         <Highlight {...highlight} />
+      {:else if mark === 'geotile' && geotile}
+        <GeoTile {...geotile} />
       {:else if mark === 'axis'}
         <!-- A point too, so the scene has something in it however the axis draws -->
         <Axis {...axis!} />

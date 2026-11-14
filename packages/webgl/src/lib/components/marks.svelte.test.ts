@@ -12,7 +12,7 @@ import {
   type PerspectiveCamera,
 } from 'three';
 
-import { geoIdentity } from 'd3-geo';
+import { geoIdentity, geoMercator } from 'd3-geo';
 import type { ChartState } from 'layerchart';
 import type { SceneState } from '../contexts/scene.svelte.js';
 import { getSphere, globe } from '../utils/globe.js';
@@ -358,6 +358,105 @@ describe('Highlight, as LayerChart draws it on an isometric chart', () => {
     const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
     expect(lines.visible).toBe(false);
     expect(scene.markerSets.flat()).toHaveLength(0);
+  });
+});
+
+describe('GeoTile', () => {
+  /** A tile filled with one color, as a data URL (so nothing is fetched) */
+  const solid = (color: string) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 256;
+    const context = canvas.getContext('2d')!;
+    context.fillStyle = color;
+    context.fillRect(0, 0, 256, 256);
+    return canvas.toDataURL();
+  };
+  const image = solid('rgb(200, 80, 40)');
+  // Terrarium encodes meters as red × 256 + green + blue / 256 - 32768: 1000m is (131, 232, 0)
+  const thousandMeters = solid('rgb(131, 232, 0)');
+  const area = {
+    type: 'Feature' as const,
+    properties: {},
+    geometry: {
+      type: 'Polygon' as const,
+      coordinates: [
+        [
+          [-10, -10],
+          [-10, 10],
+          [10, 10],
+          [10, -10],
+          [-10, -10],
+        ],
+      ],
+    },
+  };
+  const meshes = (scene: SceneState) =>
+    scene.root.children.flatMap((o) => o.children).filter((o) => (o as any).isMesh) as any[];
+
+  it('draws a mesh per tile, raised by its elevation through the `z` scale', async () => {
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area }, view: perspective },
+      geotile: { url: () => image, elevation: () => thousandMeters },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    // The tiles' elevation widens the chart's `z` domain
+    await expect.poll(() => chart!.zDomain).toEqual([0, 1000]);
+    // Built in meters, the `z` scale applied as the mesh's height scale and offset (so a new
+    // scale only rescales it)
+    await expect
+      .poll(() => {
+        const mesh = meshes(scene)[0];
+        const positions = mesh.geometry.attributes.position.array as Float32Array;
+        const top = Math.max(...positions.filter((_, i) => i % 3 === 1));
+        return top * mesh.scale.y + mesh.position.y;
+      })
+      .toBeCloseTo(chart!.zScale(1000), 1);
+  });
+
+  it('lies flat, its points through the projection, without elevation', async () => {
+    let tiles: [number, number, number][] = [];
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      geotile: { url: () => image, ontiles: (t: [number, number, number][]) => (tiles = t) },
+    });
+    await expect.poll(() => meshes(scene).length).toBe(tiles.length);
+    for (const mesh of meshes(scene)) {
+      const positions = mesh.geometry.attributes.position.array as Float32Array;
+      expect(Math.max(...positions.filter((_: number, i: number) => i % 3 === 1))).toBe(0);
+      // Its corner is on the tile grid: a whole number of tiles across the world from -180°
+      const [longitude] = chart!.geo.projection!.invert!([positions[0], positions[2]])!;
+      const across = ((longitude + 180) / 360) * 2 ** tiles[0][2];
+      expect(Math.abs(across - Math.round(across))).toBeLessThan(1e-3);
+    }
+  });
+
+  it('draws a new tile at once from its loaded ancestor, kept while its own fail', async () => {
+    let tiles: [number, number, number][] = [];
+    let scene: SceneState | undefined;
+    // Only the first zoom's images load: deeper ones fail
+    let top = Infinity;
+    const url = (x: number, y: number, z: number) =>
+      z <= top ? image : `http://127.0.0.1:9/${z}/${x}/${y}.png`;
+    const props = (zoomDelta: number) => ({
+      mark: 'geotile' as const,
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      geotile: { url, zoomDelta, ontiles: (t: [number, number, number][]) => (tiles = t) },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    const { rerender } = render(Marks, props(0));
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    top = tiles[0][2];
+    await expect.poll(() => scene && meshes(scene).length).toBe(tiles.length);
+    rerender(props(1));
+    // A zoom deeper, each showing part of its parent's image, and the parents let go
+    await expect.poll(() => tiles[0][2]).toBe(top + 1);
+    await expect.poll(() => meshes(scene!).length).toBe(tiles.length);
+    for (const mesh of meshes(scene!)) expect(mesh.material.map.image.src).toBe(image);
   });
 });
 
