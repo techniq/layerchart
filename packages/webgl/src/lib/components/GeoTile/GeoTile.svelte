@@ -196,17 +196,35 @@
     );
     const origin = scene.root.position;
     const place = placer(ctx, sphere);
+    const globeCenter = sphere ? new Vector3(...sphere.center).add(origin) : null;
     // On a globe, a tile is curved: its corners alone don't bound it, and it faces away from the
-    // camera on the far side
-    const samples = sphere
-      ? [0, 0.5, 1].flatMap((v) => [0, 0.5, 1].map((u) => [u, v]))
-      : [
+    // camera on the far side.  Up close only a small cap of it is above the horizon, so a coarse
+    // tile is sampled finely enough that some of its points land in that cap
+    const horizon =
+      sphere && globeCenter
+        ? Math.acos(Math.min(1, sphere.radius / camera.position.distanceTo(globeCenter)))
+        : 0;
+    const grids = new Map<number, number[][]>();
+    const samplesAt = (z: number) => {
+      if (!sphere) {
+        return [
           [0, 0],
           [1, 0],
           [1, 1],
           [0, 1],
         ];
-    const globeCenter = sphere ? new Vector3(...sphere.center).add(origin) : null;
+      }
+      let grid = grids.get(z);
+      if (!grid) {
+        // A sample at least every half the horizon's reach across the tile, 3 × 3 at the least
+        const across = (2 * Math.PI) / 2 ** z;
+        const n = Math.min(32, Math.max(2, Math.ceil(across / Math.max(horizon / 2, 1e-3))));
+        const steps = Array.from({ length: n + 1 }, (_, k) => k / n);
+        grid = steps.flatMap((v) => steps.map((u) => [u, v]));
+        grids.set(z, grid);
+      }
+      return grid;
+    };
     const facing = new Vector3();
     const toCamera = new Vector3();
     // The tallest terrain, read without following it: tiles loading widen the `z` domain, and
@@ -230,7 +248,7 @@
     const measure = ([x, y, z]: Tile) => {
       box.makeEmpty();
       let faces = !globeCenter;
-      for (const [i, j] of samples) {
+      for (const [i, j] of samplesAt(z)) {
         const lon = tileLongitude(x + i, z);
         const lat = tileLatitude(y + j, z);
         // From the ground to the tallest terrain, so a peak beside the view still counts

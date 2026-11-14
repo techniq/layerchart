@@ -1193,6 +1193,34 @@ describe('globe', () => {
     }
   });
 
+  it('picks tiles under the camera zoomed down close to the surface', async () => {
+    let tiles: [number, number, number][] = [];
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 4;
+    const image = canvas.toDataURL();
+    await renderMarks({
+      mark: 'geotile',
+      chart: {
+        ...globeChart,
+        // Looking down between the points coarse tiles are first sampled at
+        view: perspective({ rotate: -20, tilt: 60 }),
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+      geotile: { url: () => image, ontiles: (t: [number, number, number][]) => (tiles = t) },
+    });
+    await withTransform();
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    // Only a small cap of the globe is above the horizon this close, smaller than the coarse
+    // tiles picking starts from
+    const scale = 40;
+    chart!.transform.setScale(scale);
+    chart!.transform.setTranslate({
+      x: ((1 - scale) * chart!.box.width) / 2,
+      y: ((1 - scale) * chart!.box.height) / 2,
+    });
+    await expect.poll(() => tiles.length > 0 && tiles[0][2] > 5).toBe(true);
+  });
+
   it('fits the camera on the sphere', async () => {
     const scene = await renderMarks({ mark: 'points', chart: globeChart, points: { r: 2 } });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
