@@ -34,7 +34,8 @@
     crossOrigin?: string | null;
     /**
      * Raise the image into terrain: a function of longitude and latitude returning a value for
-     * the chart's `z` scale (ex. elevation in meters).
+     * the chart's `z` scale (ex. elevation in meters).  `NaN` leaves a place out (ex. beyond the
+     * elevation loaded), as `Surface` does.
      */
     elevation?: (longitude: number, latitude: number) => number;
     /**
@@ -187,14 +188,27 @@
           uvs.set(uvOf(lonLat[k * 2], lonLat[k * 2 + 1]), k * 2);
         }
       }
-      // Two triangles a cell, where every corner is on the map and none wraps the antimeridian
+      // Two triangles a cell, where every corner is on the map (and on the image, and has an
+      // elevation, when given them) and none wraps the antimeridian
       const index: number[] = [];
       const u = (k: number) => uvs[k * 2];
+      const onImage = (k: number) =>
+        !sourceProjection ||
+        (uvs[k * 2] >= 0 && uvs[k * 2] <= 1 && uvs[k * 2 + 1] >= 0 && uvs[k * 2 + 1] <= 1);
+      const raised = (k: number) => !elevation || Number.isFinite(values[k]);
       for (let j = 0; j < rows - 1; j++) {
         for (let i = 0; i < columns - 1; i++) {
           const a = j * columns + i;
           const corners = [a, a + 1, a + columns, a + columns + 1];
-          if (!corners.every((k) => Number.isFinite(lonLat[k * 2]) && Number.isFinite(uvs[k * 2])))
+          if (
+            !corners.every(
+              (k) =>
+                Number.isFinite(lonLat[k * 2]) &&
+                Number.isFinite(uvs[k * 2]) &&
+                onImage(k) &&
+                raised(k)
+            )
+          )
             continue;
           const us = corners.map(u);
           if (Math.max(...us) - Math.min(...us) > 0.5) continue;
