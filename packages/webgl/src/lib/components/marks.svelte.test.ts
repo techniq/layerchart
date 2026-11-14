@@ -1039,6 +1039,33 @@ describe('globe', () => {
     expect(position.toArray().map((v) => Math.round(v))).toEqual([200, 150, 300]);
   });
 
+  it('zooms down towards the surface, never inside the globe', async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: { ...globeChart, view: perspective, transform: { mode: 'canvas', drag: 'rotate' } },
+      points: { r: 2 },
+    });
+    await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);
+    scene = await withTransform();
+    const sphere = getSphere(chart!)!;
+    const center = new Vector3(...sphere.center).add(scene.root.position);
+    const altitude = () => scene.camera!.position.distanceTo(center) - sphere.radius;
+    const start = await settled(altitude);
+    expect(start).toBeGreaterThan(0);
+
+    // Its height above the surface divided by the zoom (about the middle of the plot, as the zoom
+    // buttons and the wheel over the middle zoom), however far it zooms
+    for (const scale of [10, 1000]) {
+      chart!.transform.setScale(scale);
+      chart!.transform.setTranslate({
+        x: ((1 - scale) * chart!.box.width) / 2,
+        y: ((1 - scale) * chart!.box.height) / 2,
+      });
+      await expect.poll(altitude).toBeCloseTo(start / scale, 0);
+      expect(altitude()).toBeGreaterThan(0);
+    }
+  });
+
   it('fits the camera on the sphere', async () => {
     const scene = await renderMarks({ mark: 'points', chart: globeChart, points: { r: 2 } });
     await expect.poll(() => scene.camera?.position.length() ?? 0).toBeGreaterThan(0);

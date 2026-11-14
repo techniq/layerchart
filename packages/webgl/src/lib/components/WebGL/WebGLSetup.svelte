@@ -151,6 +151,8 @@
   const fitCenter = new Vector3();
   /** How far the fitted camera is from `fitTarget` */
   let fitDistance = 0;
+  /** The globe's radius (with room for anything raised off it) when there's one, else `0` */
+  let fitRadius = 0;
   /** At `fitTarget`'s depth, how far a pixel of the layer reaches in the fitted view */
   let fitUnit = 1;
   /**
@@ -212,6 +214,7 @@
     const sphere = getSphere(ctx);
     const box = { width: ctx.width, height: ctx.height, depth: ctx.zDepth };
     const radius = sphere ? sphere.radius + ctx.zDepth : null;
+    fitRadius = radius ?? 0;
     // Fitted into the plot area, inside the chart's `padding`, as an `isometric` chart is (the
     // floor, `ctx.width` × `ctx.height`, is only as large as fits it at the view's `aspect`)
     const area = ctx.box;
@@ -332,8 +335,12 @@
     const target = fitTarget.clone().sub(fitCenter).applyQuaternion(turn).add(pivot);
     let distance = fitDistance;
     if (cam instanceof PerspectiveCamera) {
-      distance = fitDistance / scale;
-      cam.near = distance / 100;
+      // Zooming in on a globe brings the camera down towards its surface, its height above it
+      // divided by the zoom, so any zoom stays outside it (and comes close to the ground);
+      // elsewhere, its distance from what it looks at
+      distance = fitRadius ? fitRadius + (fitDistance - fitRadius) / scale : fitDistance / scale;
+      // Near enough to see the ground close up, as the camera comes down to it
+      cam.near = fitRadius ? Math.min(distance / 100, (distance - fitRadius) / 4) : distance / 100;
       cam.far = Math.max(distance, fitDistance) * 10;
     } else if (cam instanceof OrthographicCamera) {
       cam.zoom = scale;

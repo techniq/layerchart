@@ -151,7 +151,7 @@
 		drag: 'rotate',
 		scrollMode: 'scale',
 		scrollActivationKey: 'shift',
-		// Zoom in no further than the camera stays outside the globe
+		// Zoom in no further than its one image stays sharp
 		scaleExtent: [0.5, 3],
 		// Tip on round to the south pole, rather than stopping edge on
 		tiltExtent: [0, 180]
