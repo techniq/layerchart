@@ -6,5 +6,5 @@ export const webglCategories: Record<string, string> = {
 	webgl: 'Common',
 	'webgl marks': 'Marks',
 	'webgl surfaces': 'Surfaces',
-	'webgl maps': 'Maps'
+	'webgl geo': 'Geo'
 };

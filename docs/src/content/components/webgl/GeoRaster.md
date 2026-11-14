@@ -1,6 +1,6 @@
 ---
 description: 'Geographic component which reprojects a raster image (such as NASA Blue Marble) onto any d3-geo projection. In a WebGL layer, the image can rise into terrain or wrap a globe.'
-category: WebGL maps
+category: WebGL geo
 related: [GeoRaster, guides/webgl, guides/geo]
 components:
   - { name: webgl/GeoRaster, label: GeoRaster }

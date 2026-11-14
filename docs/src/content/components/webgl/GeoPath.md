@@ -1,6 +1,6 @@
 ---
 description: 'Geographic component which renders shapes such as countries, states, or regions by drawing their boundaries based on coordinate data. In a WebGL layer, features rise by their z, or follow a globe.'
-category: WebGL maps
+category: WebGL geo
 related: [GeoPath, guides/webgl, guides/geo]
 components:
   - { name: webgl/GeoPath, label: GeoPath }
