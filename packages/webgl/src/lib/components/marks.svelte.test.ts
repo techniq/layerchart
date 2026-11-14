@@ -3,6 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { scaleBand, scaleOrdinal } from 'd3-scale';
 import { curveMonotoneX } from 'd3-shape';
 import {
+  MathUtils,
   Matrix4,
   Quaternion,
   Ray,
@@ -1207,6 +1208,53 @@ describe('globe', () => {
       });
       await expect.poll(altitude).toBeCloseTo(start / scale, 0);
       expect(altitude()).toBeGreaterThan(0);
+    }
+  });
+
+  it('turns as LayerChart’s flat globes do, 75° a drag of its radius, zoomed out or in', async () => {
+    let scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        ...globeChart,
+        // Looking at the equator, where turning either way moves the middle as much
+        view: perspective({ rotate: -20, tilt: 90 }),
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+      points: { r: 2 },
+    });
+    scene = await withTransform();
+    const sphere = getSphere(chart!)!;
+    const root = scene.root.position;
+    /** The point on the globe in the middle of the view, as the camera looks now */
+    const middle = () => {
+      const center = new Vector3(...sphere.center).add(root);
+      const p = scene.camera!.position.clone().sub(center).setLength(sphere.radius).add(center);
+      return [p.x - root.x, p.z - root.z, p.y - root.y] as const;
+    };
+    for (const scale of [1, 20]) {
+      chart!.transform.setScale(scale, { instant: true } as any);
+      chart!.transform.setTranslate(
+        { x: ((1 - scale) * chart!.box.width) / 2, y: ((1 - scale) * chart!.box.height) / 2 },
+        { instant: true } as any
+      );
+      await settled(() => scene.camera!.position.length());
+      const rate = chart!.viewTurnRate!;
+      expect(rate).toBeGreaterThan(0);
+      const [x, y, up] = middle();
+      const before = scene.project(x, y, up)!;
+      // A 20px drag across, then down, as the chart turns the view for one
+      const { rotate, tilt } = chart!.viewRotation;
+      chart!.transformState.setRotation({ x: rotate - 20 * rate, y: tilt }, {
+        instant: true,
+      } as any);
+      // The middle of the view, a radius from the globe's axis, moves 75° per radius dragged
+      const moved = (20 * 75) / MathUtils.radToDeg(1);
+      await expect.poll(() => scene.project(x, y, up)!.x - before.x).toBeCloseTo(moved, 0);
+      chart!.transformState.setRotation({ x: rotate, y: tilt - 20 * rate }, {
+        instant: true,
+      } as any);
+      await expect.poll(() => scene.project(x, y, up)!.y - before.y).toBeCloseTo(moved, 0);
+      chart!.transformState.setRotation({ x: rotate, y: tilt }, { instant: true } as any);
     }
   });
 

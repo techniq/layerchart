@@ -184,9 +184,10 @@
    */
   function processIsometricRotate(x: number, y: number, deltaX: number, deltaY: number) {
     if (!chartState.isometric) {
-      // A 3D view (`perspective`) turns as orbit controls do: a drag the chart's height round a
-      // full circle
-      const perPixel = 360 / Math.max(chartState.containerHeight, 1);
+      // A 3D view (`perspective`) turns as orbit controls do: across, about its vertical axis
+      // (a globe about its poles), and down, tipping it.  As fast as its layer says (ex. on a
+      // globe, so its middle keeps pace with the pointer), else a full circle the chart's height
+      const perPixel = chartState.viewTurnRate ?? 360 / Math.max(chartState.containerHeight, 1);
       return { x: x - deltaX * perPixel, y: y - deltaY * perPixel };
     }
     return { x: x - deltaX / 2, y: y - deltaY * 0.3 };

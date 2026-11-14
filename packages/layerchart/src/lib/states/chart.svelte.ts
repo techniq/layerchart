@@ -1368,6 +1368,13 @@ export class ChartState<
    */
   viewFloorMatrix = $state<AffineMatrix | null>(null);
 
+  /**
+   * The degrees a drag of one pixel turns a 3D view, set by a 3D layer (`@layerchart/webgl`) that
+   * knows better: ex. on a globe, so what's in the middle of it keeps pace with the pointer at any
+   * zoom.  `null` turns it a full circle across the chart's height.
+   */
+  viewTurnRate = $state<number | null>(null);
+
   /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {
     const options = this.#isometricOptions;

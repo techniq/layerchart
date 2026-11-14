@@ -153,6 +153,8 @@
   let fitDistance = 0;
   /** The globe's radius (with room for anything raised off it) when there's one, else `0` */
   let fitRadius = 0;
+  /** The globe's own radius, its surface, when there's one */
+  let globeRadius = 0;
   /** At `fitTarget`'s depth, how far a pixel of the layer reaches in the fitted view */
   let fitUnit = 1;
   /**
@@ -215,6 +217,7 @@
     const box = { width: ctx.width, height: ctx.height, depth: ctx.zDepth };
     const radius = sphere ? sphere.radius + ctx.zDepth : null;
     fitRadius = radius ?? 0;
+    globeRadius = sphere?.radius ?? 0;
     // Fitted into the plot area, inside the chart's `padding`, as an `isometric` chart is (the
     // floor, `ctx.width` × `ctx.height`, is only as large as fits it at the view's `aspect`)
     const area = ctx.box;
@@ -345,12 +348,36 @@
     } else if (cam instanceof OrthographicCamera) {
       cam.zoom = scale;
     }
+    turnRate(cam, distance);
     cam.position.copy(direction).multiplyScalar(distance).add(target);
     cam.up.set(0, 1, 0);
     cam.lookAt(target);
     cam.updateProjectionMatrix();
     keyLight.position.set(-0.5, 1, 0).multiplyScalar(fitDistance);
     moved();
+  }
+
+  /**
+   * On a globe, how many degrees a drag of a pixel turns it, as LayerChart's flat globes turn:
+   * across about the poles, down tipping them, the same wherever it's grabbed, 75° for a drag of
+   * its radius on screen.  A little faster than the middle of the view moves, so ground away from
+   * it (moving less as the globe turns) keeps up with the pointer too.  Its radius as the ground
+   * in the middle of the view shows it, however close the camera has come.  Elsewhere, the chart's
+   * usual rate.
+   */
+  function turnRate(cam: PerspectiveCamera | OrthographicCamera, distance: number) {
+    let rate: number | null = null;
+    const height = ctx.box.height;
+    if (globeRadius && height > 0) {
+      // Screen pixels a scene unit spans on the ground in the middle of the view: from the
+      // camera's height above it (perspective), or anywhere (orthographic)
+      const perUnit =
+        cam instanceof PerspectiveCamera
+          ? height / 2 / Math.tan(MathUtils.degToRad(cam.fov) / 2) / (distance - globeRadius)
+          : (height * cam.zoom) / (cam.top - cam.bottom);
+      if (perUnit > 0 && Number.isFinite(perUnit)) rate = 75 / (perUnit * globeRadius);
+    }
+    if (untrack(() => ctx.viewTurnRate) !== rate) ctx.viewTurnRate = rate;
   }
 
   /** The turn taking straight up to the direction a view at `rotate` / `tilt` looks from */
@@ -506,6 +533,11 @@
     return () => {
       ctx.viewFloorMatrix = null;
     };
+  });
+
+  // A drag turns the view at the chart's usual rate again once the layer's gone
+  $effect(() => () => {
+    ctx.viewTurnRate = null;
   });
 
   // Tooltips: the row under the pointer, from whichever mark it hits first
