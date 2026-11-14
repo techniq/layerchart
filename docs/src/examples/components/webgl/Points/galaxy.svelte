@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { RangeField, SelectField } from 'svelte-ux';
 	import { interpolateRgb } from 'd3-interpolate';
+	import { randomLcg } from 'd3-random';
 	import { Chart, Points, WebGL, perspective } from '@layerchart/webgl';
 	import type { ChartState } from 'layerchart';
 
@@ -18,21 +19,14 @@
 	 */
 	const VIEW = 3;
 
-	// Seeded, so the galaxy is the same on every load
-	function seeded(seed: number) {
-		return () => {
-			seed = (seed * 16807) % 2147483647;
-			return (seed - 1) / 2147483646;
-		};
-	}
-
 	/**
 	 * Each star on one of the arms, at a random distance out, twisted round by `twist` the farther it
 	 * is, and scattered off its arm in every direction, up to half `randomness` × its distance out
 	 * (closer to the arm as `power` rises)
 	 */
 	const data = $derived.by(() => {
-		const random = seeded(7);
+		// Seeded, so the galaxy is the same on every load
+		const random = randomLcg(0.7);
 		const scatter = (radius: number) =>
 			Math.pow(random(), power) * (random() - 0.5) * randomness * radius;
 		return Array.from({ length: count }, (_, i) => {

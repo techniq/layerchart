@@ -10,20 +10,17 @@
 		orthographic,
 		perspective
 	} from '@layerchart/webgl';
+	import { randomLcg, randomUniform } from 'd3-random';
 	import { scaleQuantize } from 'd3-scale';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	// Seeded, so the points are the same on every load
-	let seed = 7;
-	function random() {
-		seed = (seed * 16807) % 2147483647;
-		return (seed - 1) / 2147483646;
-	}
+	const random = randomUniform.source(randomLcg(0.7))(0, 10);
 
 	const data = Array.from({ length: 200 }, () => ({
-		x: random() * 10,
-		y: random() * 10,
-		z: random() * 10
+		x: random(),
+		y: random(),
+		z: random()
 	}));
 
 	// Farther points drawn smaller, or every point its true size at any depth

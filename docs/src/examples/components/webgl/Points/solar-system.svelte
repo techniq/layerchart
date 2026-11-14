@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { randomLcg } from 'd3-random';
 	import { Button, Field, SelectField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import {
 		Chart,
@@ -125,9 +126,8 @@
 		}).flat();
 	});
 
-	// A sky of stars, far beyond the planets
-	let seed = 3;
-	const random = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+	// A sky of stars, far beyond the planets (seeded, so it's the same on every load)
+	const random = randomLcg(0.3);
 	const stars = Array.from({ length: 1200 }, () => {
 		const u = random() * 2 - 1;
 		const t = random() * 2 * Math.PI;

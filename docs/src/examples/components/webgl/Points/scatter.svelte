@@ -3,22 +3,17 @@
 	import { Highlight, Svg } from 'layerchart';
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
+	import { randomLcg, randomNormal, randomUniform } from 'd3-random';
 
 	// Seeded, so the points are the same on every load
-	let seed = 7;
-	function random() {
-		seed = (seed * 16807) % 2147483647;
-		return (seed - 1) / 2147483646;
-	}
-	/** Normally distributed, about 0 */
-	function normal() {
-		return Math.sqrt(-2 * Math.log(random())) * Math.cos(2 * Math.PI * random());
-	}
+	const source = randomLcg(0.7);
+	const position = randomUniform.source(source)(10, 90);
+	const normal = randomNormal.source(source)();
 
 	// 100,000 points in eight clusters
 	const centers = Array.from({ length: 8 }, () => ({
-		x: random() * 80 + 10,
-		y: random() * 80 + 10
+		x: position(),
+		y: position()
 	}));
 	const data = Array.from({ length: 100_000 }, (_, i) => {
 		const cluster = i % centers.length;
