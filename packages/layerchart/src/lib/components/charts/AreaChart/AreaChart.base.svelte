@@ -29,6 +29,7 @@
     grid = true,
     legend = false,
     tooltipContext = true,
+    keyboard = true,
     highlight = { lines: true, points: true },
     rule = true,
     onPointClick,
@@ -71,6 +72,7 @@
   yBaseline={0}
   yNice
   {radial}
+  {keyboard}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false
