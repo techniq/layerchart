@@ -409,6 +409,46 @@
         quad(a, a + 1, a + n + 1, a + n + 2);
       }
     }
+
+    // On a globe, the tiles along the top and bottom of the world reach on to the poles: Web
+    // Mercator stops short of them (at about 85°), which would leave a hole at each.  The tile's
+    // edge row of pixels is drawn on out to the pole, and its edge's heights level off to their
+    // middle there.
+    const north = !!sphere && y === 0;
+    const south = !!sphere && y === (1 << z) - 1;
+    const cap = (edge: number, pole: number) => {
+      const edgeLatitude = tileLatitude(y + edge / n, z);
+      const rows = Math.max(2, Math.ceil(n / 8));
+      const edgeHeights = Array.from({ length: n + 1 }, (_, i) => heightOf(i, edge));
+      const middle = edgeHeights.reduce((sum, h) => sum + h, 0) / (n + 1);
+      const { u0, v0, size } = entry.imagePart;
+      const v = 1 - (v0 + (edge / n) * size);
+      const start = valid.length;
+      for (let r = 0; r <= rows; r++) {
+        const t = r / rows;
+        const latitude = edgeLatitude + (pole - edgeLatitude) * t;
+        for (let i = 0; i <= n; i++) {
+          const [px, up, py] = place(
+            tileLongitude(x + i / n, z),
+            latitude,
+            edgeHeights[i] * (1 - t) + middle * t
+          );
+          positions.push(px, up, py);
+          uvs.push(u0 + (i / n) * size, v);
+          valid.push(Number.isFinite(px) && Number.isFinite(py) && Number.isFinite(up));
+        }
+      }
+      // Row by row from the edge, wound as the grid is (its northern row first)
+      const at = (r: number, i: number) => start + r * (n + 1) + i;
+      for (let r = 0; r < rows; r++) {
+        const [above, below] = pole > 0 ? [r + 1, r] : [r, r + 1];
+        for (let i = 0; i < n; i++)
+          quad(at(above, i), at(above, i + 1), at(below, i), at(below, i + 1));
+      }
+    };
+    if (north) cap(0, 90);
+    if (south) cap(n, -90);
+
     if (skirt) {
       const edge = (points: [number, number][]) => {
         for (let k = 0; k < points.length - 1; k++) {
@@ -420,9 +460,10 @@
       };
       const side = (f: (k: number) => [number, number]) =>
         edge(Array.from({ length: n + 1 }, (_, k) => f(k)));
-      side((k) => [k, 0]);
+      // (Not along an edge reaching on to a pole)
+      if (!north) side((k) => [k, 0]);
       side((k) => [n, k]);
-      side((k) => [n - k, n]);
+      if (!south) side((k) => [n - k, n]);
       side((k) => [0, n - k]);
     }
     const geometry = new BufferGeometry();

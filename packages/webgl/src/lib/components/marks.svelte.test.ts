@@ -1210,6 +1210,37 @@ describe('globe', () => {
     }
   });
 
+  it('reaches on past where map tiles stop, to each pole', async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 4;
+    const image = canvas.toDataURL();
+    // Each looked at from above it
+    for (const [tilt, latitude] of [
+      [20, 90],
+      [160, -90],
+    ]) {
+      const scene = await renderMarks({
+        mark: 'geotile',
+        chart: { ...globeChart, view: perspective({ tilt }) },
+        geotile: { url: () => image },
+      });
+      const sphere = getSphere(chart!)!;
+      const meshes = () =>
+        scene.root.children.flatMap((o) => o.children).filter((o) => (o as any).isMesh) as any[];
+      /** How near any tile comes to a point on the globe */
+      const nearest = ([px, up, py]: number[]) => {
+        let best = Infinity;
+        for (const mesh of meshes()) {
+          const p = mesh.geometry.attributes.position.array as Float32Array;
+          for (let i = 0; i < p.length; i += 3)
+            best = Math.min(best, Math.hypot(p[i] - px, p[i + 1] - up, p[i + 2] - py));
+        }
+        return best;
+      };
+      await expect.poll(() => nearest(sphere.toScene(0, latitude))).toBeLessThan(1e-3);
+    }
+  });
+
   it('picks tiles under the camera zoomed down close to the surface', async () => {
     let tiles: [number, number, number][] = [];
     const canvas = document.createElement('canvas');
