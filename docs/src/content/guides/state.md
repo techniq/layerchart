@@ -185,7 +185,8 @@ Global settings control defaults across all charts in the component tree. Set th
 
 	setSettings({
 		layer: 'svg', // default Layer type: 'svg' | 'canvas' | 'html'
-		debug: false
+		debug: false,
+		lazy: false // build charts only near the viewport (see Chart's `lazy`)
 	});
 </script>
 ```

@@ -3,6 +3,7 @@
     ChartProps,
     ChartPropsWithoutHTML,
     ChartResizeDetail,
+    ChartLazyProp,
     PreservedChartConfig,
     LayerChartInternalMeta,
   } from './Chart.shared.svelte.js';
