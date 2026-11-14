@@ -70,7 +70,7 @@ describe('Highlight points, `c`-grouped', () => {
 });
 
 describe('Highlight on a `domain` transform', () => {
-  it('moves with the chart as it pans, rather than springing after it', async () => {
+  it('moves with the chart as it pans, rather than springing after it, and glides between points', async () => {
     let ctx: any;
     const { container } = render(PanZoomChart, { oncontext: (c: any) => (ctx = c) });
     await vi.waitFor(() => expect(ctx?.transformState).toBeTruthy());
@@ -98,7 +98,18 @@ describe('Highlight on a `domain` transform', () => {
     ctx.transformState.setTranslate({ x: 60, y: 0 }, { instant: true });
     await vi.waitFor(() => expect(ctx.xScale(50)).not.toBeCloseTo(at.x, 0));
     await new Promise((resolve) => requestAnimationFrame(resolve));
-    const cx = Number(container.querySelector('.lc-highlight-point')!.getAttribute('cx'));
-    expect(cx).toBeCloseTo(ctx.xScale(50), 0);
+    const cx = () => Number(container.querySelector('.lc-highlight-point')!.getAttribute('cx'));
+    expect(cx()).toBeCloseTo(ctx.xScale(50), 0);
+
+    // Another point: glides there, as on any chart
+    const from = cx();
+    const to = ctx.xScale(80);
+    show(to, ctx.yScale(40));
+    await vi.waitFor(() => expect(ctx.tooltip.data).toEqual({ x: 80, y: 40 }));
+    await vi.waitFor(() => {
+      expect(cx()).toBeGreaterThan(from + 1);
+      expect(cx()).toBeLessThan(to - 1);
+    });
+    await vi.waitFor(() => expect(cx()).toBeCloseTo(to, 0), { timeout: 3000 });
   });
 });

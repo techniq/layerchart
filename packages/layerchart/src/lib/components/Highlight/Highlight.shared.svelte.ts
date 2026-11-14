@@ -110,9 +110,8 @@ export type HighlightPropsWithoutHTML = {
   bar?: boolean | Partial<ComponentProps<typeof Bar>> | Snippet;
 
   /**
-   * `'spring'` to glide from one highlighted point to the next, or `'none'`.  Defaults to a
-   * spring, except on a chart with a `domain` transform: there the highlighted point moves with
-   * every step of a pan or zoom, which a spring would lag behind (and overshoot).
+   * `'spring'` to glide from one highlighted point to the next, or `'none'`.  On a chart with a
+   * `domain` transform, it still follows each step of a pan or zoom at once, rather than chasing it.
    *
    * @default 'spring'
    */
