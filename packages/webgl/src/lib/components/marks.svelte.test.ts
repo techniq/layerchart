@@ -349,6 +349,34 @@ describe('Highlight, as LayerChart draws it on an isometric chart', () => {
     expect(marker.z).toBeCloseTo(chart!.zScale(5));
   });
 
+  it('glides from one row to the next, as LayerChart’s, appearing at once', async () => {
+    const other = { x: 9, y: 2, z: 1 };
+    let scene: SceneState | undefined;
+    chart = undefined;
+    const { rerender } = render(Marks, {
+      mark: 'highlight',
+      chart: chartProps,
+      highlight: { data: row, points: true },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    const marker = () => scene?.markerSets.flat()[0];
+    await expect.poll(() => chart).toBeTruthy();
+    // There at once, the first time
+    await expect.poll(() => marker()?.x).toBeCloseTo(chart!.xScale(4));
+    rerender({ highlight: { data: other, points: true } });
+    // On its way, then there
+    await expect
+      .poll(() => {
+        const x = marker()!.x;
+        return x > chart!.xScale(4) + 1 && x < chart!.xScale(9) - 1;
+      })
+      .toBe(true);
+    await expect.poll(() => marker()?.x, { timeout: 3000 }).toBeCloseTo(chart!.xScale(9), 0);
+  });
+
   it('draws nothing without a row', async () => {
     const scene = await renderMarks({
       mark: 'highlight',

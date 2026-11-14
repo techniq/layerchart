@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { Accessor } from 'layerchart';
+  import type { MotionProp } from 'layerchart/utils/motion.svelte';
 
   /** How a `Highlight`'s point is drawn, as LayerChart's `Circle` props */
   export type HighlightPointProps = {
@@ -77,6 +78,12 @@
     shadows?: boolean | HighlightShadowProps;
     /** The opacity of all of it (0 to 1) */
     opacity?: number;
+    /**
+     * `'spring'` to glide from one highlighted row to the next (as LayerChart's `Highlight`), or
+     * `'none'`.  It follows each step of a pan or zoom at once, rather than chasing it.
+     * @default 'spring'
+     */
+    motion?: MotionProp;
   };
 </script>
 
@@ -93,7 +100,9 @@
   import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
   import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
   import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+  import { untrack } from 'svelte';
   import { accessor, getChartContext, isScaleBand } from 'layerchart';
+  import { createMotion } from 'layerchart/utils/motion.svelte';
 
   import { getSceneContext, type SceneMarker } from '../../contexts/scene.svelte.js';
   import { position, rowColor } from '../../utils/marks.js';
@@ -109,6 +118,7 @@
     lines = false,
     shadows = false,
     opacity = 1,
+    motion: motionProp,
   }: HighlightProps = $props();
 
   const ctx = getChartContext();
@@ -127,7 +137,7 @@
   const axis = $derived(axisProp ?? (isScaleBand(ctx.yScale) || ctx.valueAxis === 'x' ? 'y' : 'x'));
 
   /** The row in the chart's pixels: across, down, and up off the floor */
-  const at = $derived.by(() => {
+  const target = $derived.by(() => {
     if (row == null) return null;
     const [px, py] = position(ctx, accessor(x ?? ctx.x)(row), accessor(y ?? ctx.y)(row));
     if (!Number.isFinite(px) || !Number.isFinite(py)) return null;
@@ -139,6 +149,34 @@
           : 0;
     return { x: px, y: py, z: height };
   });
+
+  // Gliding from one row to the next (fixed when it mounts, as LayerChart's marks' motion is)
+  const motion = untrack(() => motionProp ?? 'spring');
+  let last: [number, number, number] = [0, 0, 0];
+  const glide = createMotion<[number, number, number]>(
+    [0, 0, 0],
+    () => (target ? (last = [target.x, target.y, target.z]) : last),
+    motion === 'none' ? undefined : (motion as any)
+  );
+  // Appearing, it's there at once rather than gliding in from the last row it showed, and so it
+  // is as the scales change (ex. each step of a pan or zoom): it glides only from row to row
+  let shown = false;
+  let scales = '';
+  $effect.pre(() => {
+    const now = target;
+    // What the scales do, rather than which objects they are (they can be made again the same)
+    const next = JSON.stringify(
+      [ctx.xScale, ctx.yScale, ctx.zScale].map((scale) => [scale.domain(), scale.range()])
+    );
+    const moved = next !== scales;
+    scales = next;
+    if (now && (!shown || moved)) glide.set([now.x, now.y, now.z], { instant: true } as any);
+    shown = now != null;
+  });
+  /** Where the row is drawn: gliding there, while there's one */
+  const at = $derived(
+    target ? { x: glide.current[0], y: glide.current[1], z: glide.current[2] } : null
+  );
 
   /** The back walls' sides of the plot box, away from the camera, and how tall they stand */
   const walls = $derived({
