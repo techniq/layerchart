@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { DataProp } from 'layerchart';
+  import type { ColorProp, DataProp } from 'layerchart';
   import type { ValueProp } from '../../utils/values.js';
 
   export type LinkProps = {
@@ -40,17 +40,17 @@
     y?: (node: any) => number;
     /**
      * How high each link arches above the straight line between its ends, in pixels (ex. flight
-     * paths over a map), or a function of the row.
+     * paths over a map), or per row (a data key or function).
      *
      * @default 0 (straight)
      */
     arc?: ValueProp<number>;
     /**
-     * A CSS color, or a function of the row.
+     * A CSS color, or a data key / function run through the chart's color scale.
      *
      * @default 'var(--color-surface-content)'
      */
-    stroke?: ValueProp<string>;
+    stroke?: ColorProp;
     /** @default 1 */
     strokeWidth?: number;
   };
@@ -60,7 +60,7 @@
   import { getChartContext, isDataProp } from 'layerchart';
 
   import { getSphere, type ScenePoint } from '../../utils/globe.js';
-  import { markRows, placeOf } from '../../utils/marks.js';
+  import { markRows, placeOf, rowColor } from '../../utils/marks.js';
   import { createMerged } from '../../utils/merged.svelte.js';
   import { valueOf } from '../../utils/values.js';
 
@@ -120,7 +120,13 @@
           const up = 4 * lift * t * (1 - t);
           line.push(sx + (tx - sx) * t, sz + (tz - sz) * t + up, sy + (ty - sy) * t);
         }
-        return { d, geometry: null, fill: null, lines: [line], stroke: valueOf(stroke, d) };
+        return {
+          d,
+          geometry: null,
+          fill: null,
+          lines: [line],
+          stroke: rowColor(ctx, stroke, d, 'var(--color-surface-content, currentColor)'),
+        };
       }),
     opacity: () => 1,
     strokeWidth: () => strokeWidth,

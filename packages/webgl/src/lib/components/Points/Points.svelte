@@ -16,9 +16,10 @@
      */
     z?: DataProp;
     /**
-     * Radius in pixels, or per row.  Defaults to the chart's `r` scale when it has one, else `5`.
+     * Radius in pixels, or per row (a data key or function, in pixels).  Defaults to the chart's
+     * `r` scale when it has one, else `5`.
      */
-    r?: number | ((d: any) => number);
+    r?: ValueProp<number>;
     /**
      * A CSS color, or a data key / function run through the chart's color scale.  Defaults to the
      * chart's `c`, else `var(--color-primary, currentColor)`.
@@ -53,20 +54,22 @@
      */
     glow?: boolean;
     /**
-     * An equirectangular image to wrap each sphere in, or a function of the row returning one (ex.
-     * a planet's surface): a URL, or an image or canvas already drawn.  Rows without one are
-     * colored by `fill`.
+     * An equirectangular image to wrap each sphere in (ex. a planet's surface): a URL, or an image
+     * or canvas already drawn, or per row, a data key or function.  A string names the row's field
+     * when the row has one by that name, else is a URL when it looks like one (`"earth.jpg"`).
+     * Rows without one are colored by `fill`.
      */
     image?: ValueProp<ImageSource | null | undefined>;
     /**
-     * Degrees to turn an image-wrapped sphere about its axis (ex. a planet's spin), or per row.
+     * Degrees to turn an image-wrapped sphere about its axis (ex. a planet's spin), or per row (a
+     * data key or function).
      *
      * @default 0
      */
     rotate?: ValueProp<number>;
     /**
      * Degrees an image-wrapped sphere's axis leans from upright (ex. `23.4` for the Earth), or per
-     * row.
+     * row (a data key or function).
      *
      * @default 0
      */
@@ -92,7 +95,7 @@
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createInstances } from '../../utils/instances.svelte.js';
   import { loadTexture } from '../../utils/texture.js';
-  import { valueOf } from '../../utils/values.js';
+  import { fieldOrValueOf, isUrl, valueOf } from '../../utils/values.js';
   import { getSphere } from '../../utils/globe.js';
   import { colorer, defined, linearShift, placer, resolveAccessor } from '../../utils/marks.js';
 
@@ -176,8 +179,7 @@
     const [xOf, yOf] = [xAccessor, yAccessor];
     const at = placer(ctx, sphere, placedScales ?? undefined);
     const raised = ctx.config.z != null || z != null;
-    const sized =
-      typeof r === 'function' ? r : r != null ? () => r : ctx.config.r ? ctx.rGet : () => 5;
+    const sized = r != null ? (d: any) => valueOf(r, d) : ctx.config.r ? ctx.rGet : () => 5;
     return (d: any) => {
       const xValue = xOf(d);
       const yValue = yOf(d);
@@ -187,7 +189,7 @@
     };
   }
 
-  const imageOf = (d: any) => (image == null ? null : valueOf(image, d));
+  const imageOf = (d: any) => (image == null ? null : (fieldOrValueOf(image, d, isUrl) ?? null));
 
   // A unit sphere, scaled out to each point's radius about its center.  Flat (no `view`, seen
   // from directly above) a disc facing up looks the same, for a fraction of the triangles.

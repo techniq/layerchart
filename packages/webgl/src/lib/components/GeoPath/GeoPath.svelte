@@ -2,7 +2,6 @@
   import type { ColorProp, DataProp } from 'layerchart';
   import type { Feature, FeatureCollection, Geometry, GeometryCollection } from 'geojson';
   import type { GeoSphere } from 'd3-geo';
-  import type { ValueProp } from '../../utils/values.js';
   import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 
   /** A light gray that reads on either theme */
@@ -35,8 +34,11 @@
      * @default 'color-mix(in oklab, var(--color-surface-content) 15%, var(--color-surface-100))'
      */
     fill?: ColorProp<Feature> | null;
-    /** The outlines' CSS color, or a function of the feature.  No outlines without one. */
-    stroke?: ValueProp<string | null | undefined>;
+    /**
+     * The outlines' color: a CSS color, or a data key / function of the feature run through the
+     * chart's color scale.  No outlines without one.
+     */
+    stroke?: ColorProp<Feature> | null;
     /**
      * Outline width in pixels, the same at any depth.
      *
@@ -68,14 +70,13 @@
   import { untrack } from 'svelte';
   import { geoPath } from 'd3-geo';
   import { BufferGeometry, Float32BufferAttribute, SphereGeometry } from 'three';
-  import { getChartContext } from 'layerchart';
+  import { getChartContext, resolveColorProp } from 'layerchart';
   import { createControlledMotion } from 'layerchart/utils/motion.svelte';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getSphere, sphereLines } from '../../utils/globe.js';
   import { createMerged } from '../../utils/merged.svelte.js';
   import { extrude, ShapeContext } from '../../utils/shapes.js';
-  import { valueOf } from '../../utils/values.js';
   import { rowColor } from '../../utils/marks.js';
 
   let {
@@ -198,7 +199,7 @@
             fill: null,
             lines: sphereLines(sphere, feature.geometry),
             stroke:
-              valueOf(stroke, feature) ??
+              (stroke != null ? resolveColorProp(stroke, feature, ctx.cScale) : null) ??
               (fill ? rowColor(ctx, fill, feature, defaultFill) : null) ??
               'var(--color-surface-content, currentColor)',
           };
@@ -227,7 +228,7 @@
           fillColor: geometry ? ([r, g, b, a] as [number, number, number, number]) : undefined,
           lines: (shape?.lines ?? []).map((line) => line.flatMap(([x, y]) => [x, top, y])),
           stroke:
-            valueOf(stroke, feature) ??
+            (stroke != null ? resolveColorProp(stroke, feature, ctx.cScale) : null) ??
             (isLine(feature) ? 'var(--color-surface-content, currentColor)' : null),
         };
       });

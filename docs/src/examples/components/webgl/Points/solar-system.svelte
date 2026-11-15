@@ -248,7 +248,7 @@
 				<Points
 					data={[{ ...SUN, x: 0, y: 0, z: 0 }]}
 					r={sunRadius}
-					image={(d) => d.image}
+					image="image"
 					rotate={turned(SUN)}
 					glow
 					tooltip
@@ -257,10 +257,10 @@
 					data={planets}
 					z="z"
 					r={radiusOf}
-					fill={(d: Planet) => d.color}
-					image={(d: Planet) => d.image}
+					fill="color"
+					image="image"
 					rotate={turned}
-					tilt={(d: Planet) => d.tilt}
+					tilt="tilt"
 					tooltip
 				/>
 

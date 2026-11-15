@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { DataProp, TruncateTextOptions } from 'layerchart';
+  import type { ColorProp, DataProp, TruncateTextOptions } from 'layerchart';
   import type { FormatConfig, FormatType } from '@layerstack/utils';
   import type { ValueProp } from '../../utils/values.js';
 
@@ -60,7 +60,8 @@
     /** Shrink a label lying on the surface to fit `width`, rather than wrapping it */
     scaleToFit?: boolean;
     /**
-     * Font size in pixels of the plot, for labels lying on the surface.
+     * Font size in pixels of the plot, for labels lying on the surface, or per row (a data key or
+     * function).
      *
      * @default 12
      */
@@ -72,18 +73,20 @@
      */
     fontWeight?: number | string;
     /**
-     * Which way labels lying on the surface run, in degrees clockwise from left to right across the plot.
+     * Which way labels lying on the surface run, in degrees clockwise from left to right across the plot,
+     * or per row (a data key or function).
      * Turned half round whenever they'd read backwards from where the view is.
      *
      * @default 0
      */
     rotate?: ValueProp<number>;
     /**
-     * The CSS color of labels lying on the surface.
+     * The color of labels lying on the surface: a CSS color, or a data key / function run through
+     * the chart's color scale.
      *
      * @default 'var(--color-surface-content)'
      */
-    fill?: ValueProp<string>;
+    fill?: ColorProp;
     /** Class added to each `viewport` label */
     class?: string;
   };
@@ -104,7 +107,7 @@
   import { getSceneContext, isUnclipped, type SceneLabel } from '../../contexts/scene.svelte.js';
   import { getSphere } from '../../utils/globe.js';
   import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
-  import { markRows, placeOf } from '../../utils/marks.js';
+  import { markRows, placeOf, rowColor } from '../../utils/marks.js';
   import { valueOf } from '../../utils/values.js';
 
   let {
@@ -230,7 +233,9 @@
           if (natural && natural > width) size *= width / natural;
         }
         const wrapAt = width && !truncate && !scaleToFit ? width : undefined;
-        const color = scene.color(valueOf(fill, d));
+        const color = scene.color(
+          rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)')
+        );
         const key = [
           text,
           size,

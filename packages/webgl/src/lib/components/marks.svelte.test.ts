@@ -305,6 +305,29 @@ describe('Rule and Vector, as LayerChart draws them', () => {
     expect(Math.abs(tip.x - base.x)).toBeLessThan(1e-6);
   });
 
+  it('reads a `Vector`’s `rotate` and `tilt` from the fields they name', async () => {
+    const scene = await renderMarks({
+      mark: 'vector',
+      chart: {
+        view: perspective,
+        data: [{ x: 5, y: 5, angle: 90, lean: 90 }],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+      },
+      vector: { length: 40, rotate: 'angle', tilt: 'lean', anchor: 'start' },
+    });
+    const arrow = () => scene.root.children.find((o) => (o as any).isInstancedMesh) as any;
+    await expect.poll(() => arrow()?.count ?? 0).toBe(1);
+    const matrix = new Matrix4();
+    arrow().getMatrixAt(0, matrix);
+    const base = new Vector3().setFromMatrixPosition(matrix);
+    // Straight up, as `rotate: 90, tilt: 90` points it
+    const tip = new Vector3(0, 1, 0).applyMatrix4(matrix);
+    expect(tip.y - base.y).toBeCloseTo(40);
+  });
+
   it('points a `Vector` by `rotate`, `length` long, about its middle', async () => {
     const scene = await renderMarks({
       mark: 'vector',
@@ -743,6 +766,29 @@ describe('Points glow and image', () => {
     expect((Math.acos(axis.y) * 180) / Math.PI).toBeCloseTo(30);
     const [instanced] = children(scene, 'isInstancedMesh') as InstancedMesh[];
     await expect.poll(() => instanced.count).toBe(1);
+  });
+
+  it('reads `image`, `r`, `rotate`, and `tilt` from the fields they name, as LayerChart reads data keys', async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 8;
+    canvas.height = 4;
+    const scene = await renderMarks({
+      mark: 'points',
+      chart: {
+        data: [{ x: 1, y: 1, image: canvas, size: 12, spin: 0, lean: 40 }],
+        x: 'x',
+        y: 'y',
+      },
+      points: { image: 'image', r: 'size', rotate: 'spin', tilt: 'lean' },
+    });
+    const meshes = () =>
+      scene.root.children.filter((o: any) => o.isMesh && !o.isInstancedMesh && o.material?.map);
+    await expect.poll(() => meshes().length).toBe(1);
+    const [sphere] = meshes() as any[];
+    expect(sphere.material.map.image).toBe(canvas);
+    expect(sphere.scale.x).toBeCloseTo(12);
+    const axis = new Vector3(0, 1, 0).applyQuaternion(sphere.quaternion);
+    expect((Math.acos(axis.y) * 180) / Math.PI).toBeCloseTo(40);
   });
 });
 
