@@ -27,3 +27,5 @@ bench-results/
 
 .playwright-mcp
 .openchamber
+# Local promo / video projects (ex. examples/promo-webgl), not part of the repo
+examples/promo-*/
