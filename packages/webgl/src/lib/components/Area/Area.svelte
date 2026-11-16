@@ -31,7 +31,7 @@
     z0?: DataProp;
     /**
      * Draw one area per distinct value, in data order.  Defaults to the chart's `g`, else the
-     * data key `fill` names, else the chart's `c` (as `Spline`).
+     * categorical data key `fill` names, else the chart's `c` (as `Spline`).
      */
     g?: Accessor;
     /** The d3 curve the area's edges take through its rows (ex. `curveMonotoneX`) */
@@ -74,7 +74,7 @@
 <script lang="ts">
   import { group } from 'd3-array';
   import { BufferGeometry, Float32BufferAttribute } from 'three';
-  import { accessor, colorPropDataKey, getChartContext, resolveDataProp } from 'layerchart';
+  import { accessor, colorPropGroupKey, getChartContext, resolveDataProp } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { curvePoints } from '../../utils/curve.js';
@@ -126,7 +126,7 @@
     const gProp = g ?? (ctx.props as { g?: Accessor }).g;
     if (gProp != null) return accessor(gProp);
     const first = rows[0];
-    const implied = colorPropDataKey(fill, first);
+    const implied = colorPropGroupKey(fill, first);
     if (implied != null) return accessor(implied);
     if (dataProp != null) return null;
     return first != null && ctx.cKey(first) != null ? ctx.cKey : null;

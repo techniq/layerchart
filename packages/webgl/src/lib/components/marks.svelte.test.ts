@@ -98,6 +98,15 @@ describe('Spline', () => {
     });
     await expect.poll(() => children(scene, 'isLine2').length).toBe(3);
   });
+
+  it('colors along one line by a numeric data key `stroke` names, rather than splitting it', async () => {
+    const scene = await renderMarks({
+      mark: 'spline',
+      chart: { data: lines.filter((d) => d.key === lines[0].key), x: 't', y: 'value' },
+      spline: { stroke: 'value' },
+    });
+    await expect.poll(() => children(scene, 'isLine2').length).toBe(1);
+  });
 });
 
 describe('Spline and Area, as LayerChart draws them', () => {

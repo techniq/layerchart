@@ -16,7 +16,8 @@
     z?: DataProp;
     /**
      * Draw one line per distinct value, in data order.  Defaults to the chart's `g`, else the
-     * data key `stroke` names, else the chart's `c` (as the core `Spline`).
+     * categorical data key `stroke` names, else the chart's `c` (as the core `Spline`).  A numeric
+     * key (`stroke="z"`) colors along the line instead.
      */
     g?: Accessor;
     /**
@@ -61,7 +62,7 @@
   import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
   import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
   import { group } from 'd3-array';
-  import { accessor, colorPropDataKey, getChartContext } from 'layerchart';
+  import { accessor, colorPropGroupKey, getChartContext } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getSphere, sphereArc } from '../../utils/globe.js';
@@ -106,15 +107,15 @@
   const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
 
   /**
-   * What splits the rows into lines: this mark's `g`, the chart's `g`, the data key `stroke`
-   * names, then the chart's `c` — what colors the lines splits them.  Rows the mark was handed
+   * What splits the rows into lines: this mark's `g`, the chart's `g`, the categorical data key
+   * `stroke` names, then the chart's `c` — what colors the lines splits them.  Rows the mark was handed
    * itself are taken as already grouped.
    */
   const gAccessor = $derived.by<((d: any) => unknown) | null>(() => {
     const gProp = g ?? (ctx.props as { g?: Accessor }).g;
     if (gProp != null) return accessor(gProp);
     const first = rows[0];
-    const implied = colorPropDataKey(stroke, first);
+    const implied = colorPropGroupKey(stroke, first);
     if (implied != null) return accessor(implied);
     if (dataProp != null) return null;
     return first != null && ctx.cKey(first) != null ? ctx.cKey : null;
