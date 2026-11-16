@@ -27,6 +27,9 @@ export type SceneLabel = {
   verticalAnchor?: 'start' | 'middle' | 'end';
   /** Wrap onto more lines to keep within this many pixels */
   width?: number;
+  /** A halo around the letters, behind them (a CSS color), and its width in pixels */
+  stroke?: string;
+  strokeWidth?: number;
   /**
    * The way it sits out from its point, in the chart's axes (ex. out from an axis): it's anchored
    * by its side nearest the point, whichever way the view turns that on screen, so it keeps the

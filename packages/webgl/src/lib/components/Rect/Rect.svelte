@@ -39,7 +39,15 @@
      */
     fill?: ColorProp;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * The outline, as the core isometric boxes draw theirs: around each box's top and up its
+     * corners (ex. lines between a treemap's siblings).  A CSS color, or a key / function of the
+     * row run through the color scale.  None without one (here or in `class`).
+     */
+    stroke?: ColorProp;
+    /** Outline width in pixels, the same at any depth. @default 1 */
+    strokeWidth?: number;
+    /**
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -60,6 +68,7 @@
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
 
   import { createInstances } from '../../utils/instances.svelte.js';
+  import { createOutlines } from '../../utils/outlines.js';
   import { markRows, positionOf, rowColor } from '../../utils/marks.js';
 
   let {
@@ -74,6 +83,8 @@
     y1,
     z,
     fill,
+    stroke,
+    strokeWidth: strokeWidthProp,
     class: className,
     opacity = 1,
     tooltip = false,
@@ -83,6 +94,7 @@
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className));
+  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   const highlight = new Color(0xffffff);
 
   /** With rows (`data`, or props reading the chart's), as the core `Rect` */
@@ -126,24 +138,39 @@
     return [Math.min(a, b), Math.max(a, b)];
   }
 
+  /** Each row's box: its corner, size, and color */
+  const boxes = $derived(
+    (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map((d) => {
+      const [base, top] = heights(d);
+      return {
+        d,
+        ...footprint(d),
+        z: base,
+        height: top - base,
+        color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
+      };
+    })
+  );
+
+  /** Outlined only when asked, so boxes without one cost nothing more */
+  const outlined = $derived(stroke != null || !!look?.stroke);
+
   // A unit cube standing on its corner at the origin, so each box scales out from `(x, y)` up
   createInstances({
     tooltip: () => tooltip,
     geometry: new BoxGeometry(1, 1, 1).translate(0.5, 0.5, 0.5),
-    instances: () =>
-      (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map(
-        (d) => {
-          const [base, top] = heights(d);
-          return {
-            d,
-            ...footprint(d),
-            z: base,
-            height: top - base,
-            color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
-          };
-        }
-      ),
+    instances: () => boxes,
     opacity: () => opacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
+    // Giving way to its outline in depth, so the outline sits on its edges
+    behind: () => outlined,
+  });
+
+  // Around each box's top and up its corners, as the core isometric boxes are outlined
+  createOutlines({
+    instances: () => (outlined ? boxes : []),
+    stroke: (d) => rowColor(ctx, stroke, d, 'currentColor', look?.stroke),
+    strokeWidth: () => strokeWidth,
+    opacity: () => opacity * (look?.opacity ?? 1),
   });
 </script>

@@ -1,7 +1,9 @@
 import { untrack } from 'svelte';
 import {
   AdditiveBlending,
+  BufferGeometry,
   Color,
+  Float32BufferAttribute,
   InstancedBufferAttribute,
   InstancedMesh,
   Matrix4,
@@ -12,7 +14,6 @@ import {
   Vector3,
   Vector4,
   type BufferAttribute,
-  type BufferGeometry,
 } from 'three';
 import { getChartContext } from 'layerchart';
 
@@ -61,7 +62,48 @@ type InstancesOptions = {
    * without placing every row again.  `null` for none.
    */
   shift?: () => [kx: number, tx: number, ky: number, ty: number] | null;
+  /**
+   * Lose to lines lying on the instances' faces (ex. a box's outline along its edges): pushed back
+   * a hair in depth, by more where a face is seen edge on, rather than the lines moved off them
+   */
+  behind?: () => boolean;
+  /**
+   * Draw `ringGeometry`'s ring about each instance's edge, this many scene units either side of
+   * it whatever the instance's size (ex. half a point's stroke width), as an SVG stroke straddles
+   * a circle's edge
+   */
+  ring?: () => number;
 };
+
+/**
+ * A ring for `createInstances`' `ring`: the unit circle lying flat (facing up, as a disc made by
+ * `CircleGeometry(1).rotateX(-Math.PI / 2)` does), each point twice, which the shader moves in
+ * and out to the ring's edges
+ */
+export function ringGeometry(segments = 32) {
+  const positions: number[] = [];
+  const sides: number[] = [];
+  const normals: number[] = [];
+  for (let k = 0; k <= segments; k++) {
+    const angle = (k / segments) * Math.PI * 2;
+    for (const side of [-1, 1]) {
+      positions.push(Math.cos(angle), 0, -Math.sin(angle));
+      sides.push(side);
+      normals.push(0, 1, 0);
+    }
+  }
+  const index: number[] = [];
+  for (let k = 0; k < segments; k++) {
+    const [a, b, c, d] = [2 * k, 2 * k + 1, 2 * k + 3, 2 * k + 2];
+    index.push(a, b, c, a, c, d);
+  }
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('normal', new Float32BufferAttribute(normals, 3));
+  geometry.setAttribute('ringSide', new Float32BufferAttribute(sides, 1));
+  geometry.setIndex(index);
+  return geometry;
+}
 
 /** The `shift` a material draws with, shared by its compiled program */
 const shifts = new WeakMap<MeshLambertMaterial | MeshBasicMaterial, { value: Vector4 }>();
@@ -70,22 +112,31 @@ const shifts = new WeakMap<MeshLambertMaterial | MeshBasicMaterial, { value: Vec
  * Lambert shading, with each instance's alpha from an `instanceOpacity` attribute, since
  * `InstancedMesh` colors carry no alpha of their own.
  */
-function createMaterial(lit: boolean) {
+function createMaterial(lit: boolean, ring = false) {
   // Unlit, each instance shows its own color whatever the lights (ex. a star)
   const material = lit ? new MeshLambertMaterial() : new MeshBasicMaterial();
   const shift = { value: new Vector4(1, 0, 1, 0) };
   shifts.set(material, shift);
   material.userData.shift = shift.value;
+  const ringHalf = { value: 0 };
+  material.userData.ringHalf = ringHalf;
+  if (ring) material.defines = { LC_RING: '' };
   material.onBeforeCompile = (shader) => {
     shader.uniforms.uShift = shift;
+    shader.uniforms.uRingHalf = ringHalf;
     shader.vertexShader = shader.vertexShader
       .replace(
         '#include <common>',
-        '#include <common>\nattribute float instanceOpacity;\nvarying float vInstanceOpacity;\nuniform vec4 uShift;'
+        '#include <common>\nattribute float instanceOpacity;\nvarying float vInstanceOpacity;\nuniform vec4 uShift;\n#ifdef LC_RING\nattribute float ringSide;\nuniform float uRingHalf;\n#endif'
       )
       .replace(
         '#include <begin_vertex>',
-        '#include <begin_vertex>\nvInstanceOpacity = instanceOpacity;'
+        // A ring's edges, its half width in and out from the instance's own edge (its scale)
+        `#include <begin_vertex>
+vInstanceOpacity = instanceOpacity;
+#if defined( LC_RING ) && defined( USE_INSTANCING )
+	transformed.xz *= 1.0 + ringSide * uRingHalf / max( length( instanceMatrix[0].xyz ), 1e-6 );
+#endif`
       )
       // Each instance's center moved by `shift` (chart `x` is the scene's `x`, chart `y` its `z`)
       .replace(
@@ -107,7 +158,8 @@ gl_Position = projectionMatrix * mvPosition;`
       );
   };
   // Keep the patched program apart from plain Lambert materials' in three's cache
-  material.customProgramCacheKey = () => `lc-instance-opacity-${lit ? 'lit' : 'unlit'}`;
+  material.customProgramCacheKey = () =>
+    `lc-instance-opacity-${lit ? 'lit' : 'unlit'}${ring ? '-ring' : ''}`;
   return material;
 }
 
@@ -125,14 +177,16 @@ export function createInstances({
   glow,
   additive,
   shift,
+  behind,
+  ring,
 }: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
-  const litMaterial = createMaterial(true);
+  const litMaterial = createMaterial(true, !!ring);
   /** Made the first time something glows */
   let glowMaterial: MeshBasicMaterial | null = null;
   const material = $derived(
-    glow?.() ? (glowMaterial ??= createMaterial(false) as MeshBasicMaterial) : litMaterial
+    glow?.() ? (glowMaterial ??= createMaterial(false, !!ring) as MeshBasicMaterial) : litMaterial
   );
 
   // Out of a scale's domain (ex. a category a band scale doesn't list) a position is `NaN`, which
@@ -156,6 +210,8 @@ export function createInstances({
     const count = list.length;
     const geometry = shape;
     shapes.add(geometry);
+    // Nothing yet to draw (ex. a mark's outlines when it has none): no mesh until there is
+    if (!mesh && count === 0) return;
     if (mesh && mesh.geometry === geometry && mesh.instanceMatrix.count >= count) return;
     const capacity = Math.max(1, Math.ceil(count * 1.5));
     alpha = new InstancedBufferAttribute(new Float32Array(capacity).fill(1), 1);
@@ -268,6 +324,12 @@ export function createInstances({
 
     const o = opacity();
     material.opacity = o;
+    if (ring) material.userData.ringHalf.value = ring();
+    // A depth offset needs no new program, so it can follow along
+    const back = behind?.() ?? false;
+    material.polygonOffset = back;
+    material.polygonOffsetFactor = back ? 1 : 0;
+    material.polygonOffsetUnits = back ? 1 : 0;
     // Adding light, it's drawn over everything else without hiding what's behind it
     const adds = additive?.() ?? false;
     // Switching blending recompiles, so only when it changes

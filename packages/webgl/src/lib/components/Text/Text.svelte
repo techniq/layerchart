@@ -87,6 +87,14 @@
      * @default 'var(--color-surface-content)'
      */
     fill?: ColorProp;
+    /**
+     * A halo around the letters, behind them, as the core `Text` draws its stroke (ex. to read
+     * over a busy surface): a CSS color, or a data key / function run through the chart's color
+     * scale.  None without one.
+     */
+    stroke?: ColorProp;
+    /** The halo's width in pixels, half of it outside the letters. @default 1 */
+    strokeWidth?: number;
     /** Class added to each `viewport` label */
     class?: string;
   };
@@ -130,6 +138,8 @@
     fontWeight = 600,
     rotate = 0,
     fill = 'var(--color-surface-content, currentColor)',
+    stroke,
+    strokeWidth = 1,
     class: className,
   }: TextProps = $props();
 
@@ -184,13 +194,15 @@
   const labels = $derived(
     viewport
       ? rows.map(
-          ({ text, x, y, z }, i): SceneLabel => ({
+          ({ d, text, x, y, z }, i): SceneLabel => ({
             key: String(i),
             x,
             y,
             z,
             text,
             class: className,
+            stroke: stroke == null ? undefined : rowColor(ctx, stroke, d, 'currentColor'),
+            strokeWidth: stroke == null ? undefined : strokeWidth,
             clip: true,
             dx,
             dy,
@@ -236,12 +248,16 @@
         const color = scene.color(
           rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)')
         );
+        const halo = stroke == null ? null : scene.color(rowColor(ctx, stroke, d, 'currentColor'));
         const key = [
           text,
           size,
           fontWeight,
           color?.color.getHexString(),
           color?.opacity,
+          halo?.color.getHexString(),
+          halo?.opacity,
+          halo ? strokeWidth : 0,
           wrapAt,
           lineSpacing,
           textAnchor,
@@ -252,6 +268,8 @@
             fontSize: size,
             fontWeight,
             color,
+            stroke: halo,
+            strokeWidth,
             family,
             maxWidth: wrapAt,
             lineHeight: lineSpacing,

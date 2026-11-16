@@ -26,7 +26,16 @@
      */
     fill?: ColorProp;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * A ring around each point, straddling its edge as the core `Points` strokes its circles:
+     * a CSS color, or a data key / function run through the chart's color scale.  None without
+     * one (here or in `class`).  Drawn in the flat (2D) mode, where points are discs; a 3D view's
+     * lit spheres have none.
+     */
+    stroke?: ColorProp;
+    /** The ring's width in pixels. @default 1 */
+    strokeWidth?: number;
+    /**
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say.  A
      * `mix-blend-mode` of `plus-lighter` or `screen` (ex. `mix-blend-plus-lighter`) adds the
      * points' light together where they overlap.
@@ -93,7 +102,7 @@
   import { getChartContext, isScaleLinear } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
-  import { createInstances } from '../../utils/instances.svelte.js';
+  import { createInstances, ringGeometry } from '../../utils/instances.svelte.js';
   import { loadTexture } from '../../utils/texture.js';
   import { fieldOrValueOf, isUrl, valueOf } from '../../utils/values.js';
   import { getSphere } from '../../utils/globe.js';
@@ -106,6 +115,8 @@
     z,
     r,
     fill,
+    stroke,
+    strokeWidth: strokeWidthProp,
     class: className,
     opacity = 1,
     hoverScale = 1.4,
@@ -120,6 +131,9 @@
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className));
+  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
+  /** Ringed only when asked, and flat: a 3D view's points are lit spheres */
+  const ringed = $derived(!ctx.view && (stroke != null || !!look?.stroke) && strokeWidth > 0);
 
   ctx.registerComponent({
     name: 'Points',
@@ -211,12 +225,46 @@
         if (image != null && imageOf(d)) return [];
         const point = pointOf(d);
         if (!point) return [];
+        // Inside its ring, so the two don't overlap (and darken where they're translucent)
+        const radius = ringed ? Math.max(0, point.radius - strokeWidth / 2) : point.radius;
         return [
           {
             d,
             x: point.x,
             y: point.y,
             z: point.z,
+            width: radius,
+            depth: radius,
+            height: radius,
+            color: colorOf(d),
+          },
+        ];
+      });
+    },
+    opacity: () => opacity * (look?.opacity ?? 1),
+    shift: () => shift,
+    emphasize: (_color, size) => size.multiplyScalar(hoverScale),
+  });
+
+  // Each point's ring, half its width either side of its edge, as an SVG circle's stroke
+  createInstances({
+    geometry: ringGeometry(),
+    ring: () => (strokeWidth / 2) * scene.unit,
+    instances: () => {
+      if (!ringed) return [];
+      const pointOf = pointer();
+      const colorOf = colorer(ctx, stroke, 'currentColor', look?.stroke);
+      return rows.flatMap((d: any) => {
+        if (image != null && imageOf(d)) return [];
+        const point = pointOf(d);
+        if (!point) return [];
+        return [
+          {
+            d,
+            x: point.x,
+            y: point.y,
+            // Over its point, flat
+            z: point.z + 0.01,
             width: point.radius,
             depth: point.radius,
             height: point.radius,

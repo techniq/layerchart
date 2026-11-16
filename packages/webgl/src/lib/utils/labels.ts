@@ -29,10 +29,16 @@ export function labelPlane(
     maxWidth,
     lineHeight = 1.2,
     align = 'middle',
+    stroke = null,
+    strokeWidth = 1,
   }: {
     fontSize: number;
     fontWeight: number | string;
     color: ResolvedColor | null;
+    /** A halo around the letters, behind them, as an SVG stroke with `paint-order: stroke` */
+    stroke?: ResolvedColor | null;
+    /** The halo's width in pixels of the plot, half of it outside the letters */
+    strokeWidth?: number;
     /** The font family, if already looked up (ex. once for many labels) */
     family?: string;
     /** Wrap words onto more lines to keep within this many pixels of the plot */
@@ -49,9 +55,12 @@ export function labelPlane(
   if (!measure) return null;
   measure.font = font;
   const lines = maxWidth ? wrap(text, maxWidth * RESOLUTION, measure) : text.split('\n');
-  const width = Math.ceil(Math.max(...lines.map((line) => measure!.measureText(line).width))) + 2;
+  // Room around the letters for the halo's outer half
+  const pad = stroke && strokeWidth > 0 ? Math.ceil((strokeWidth * RESOLUTION) / 2) : 0;
+  const width =
+    Math.ceil(Math.max(...lines.map((line) => measure!.measureText(line).width))) + 2 + pad * 2;
   const step = fontSize * RESOLUTION * lineHeight;
-  const height = Math.ceil(fontSize * RESOLUTION * 1.3 + step * (lines.length - 1));
+  const height = Math.ceil(fontSize * RESOLUTION * 1.3 + step * (lines.length - 1)) + pad * 2;
 
   const label = document.createElement('canvas');
   label.width = width;
@@ -63,13 +72,22 @@ export function labelPlane(
   // Painted in the color's linear values, read by the shader as they are (a linear texture), and
   // encoded for the screen with the rest of the scene.  An sRGB texture of sRGB values should do
   // the same, but came out decoded twice over: the text color washed out to grey.
-  const linear = color?.color;
-  paint.fillStyle = linear
-    ? `rgb(${Math.round(linear.r * 255)} ${Math.round(linear.g * 255)} ${Math.round(linear.b * 255)})`
-    : 'black';
+  const css = (value: ResolvedColor['color'] | undefined) =>
+    value
+      ? `rgb(${Math.round(value.r * 255)} ${Math.round(value.g * 255)} ${Math.round(value.b * 255)})`
+      : 'black';
+  const x = align === 'start' ? 1 + pad : align === 'end' ? width - 1 - pad : width / 2;
+  const first = (fontSize * RESOLUTION * 1.3) / 2 + pad;
+  if (pad) {
+    // The halo first, so the letters cover its inner half
+    paint.strokeStyle = css(stroke!.color);
+    paint.globalAlpha = stroke!.opacity;
+    paint.lineWidth = strokeWidth * RESOLUTION;
+    paint.lineJoin = 'round';
+    lines.forEach((line, i) => paint.strokeText(line, x, first + step * i));
+  }
+  paint.fillStyle = css(color?.color);
   paint.globalAlpha = color?.opacity ?? 1;
-  const x = align === 'start' ? 1 : align === 'end' ? width - 1 : width / 2;
-  const first = (fontSize * RESOLUTION * 1.3) / 2;
   lines.forEach((line, i) => paint.fillText(line, x, first + step * i));
 
   const texture = new CanvasTexture(label);

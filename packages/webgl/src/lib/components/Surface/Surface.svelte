@@ -32,6 +32,8 @@
      * @default 'color-mix(in oklab, var(--color-surface-content) 40%, transparent)'
      */
     stroke?: string;
+    /** The wireframe and contour lines' width in pixels, the same at any depth. @default 1 */
+    strokeWidth?: number;
     /**
      * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).
      *
@@ -52,8 +54,6 @@
     BufferGeometry,
     DoubleSide,
     Float32BufferAttribute,
-    LineBasicMaterial,
-    LineSegments,
     Mesh,
     MeshLambertMaterial,
   } from 'three';
@@ -61,6 +61,7 @@
   import { getChartContext } from 'layerchart';
   import { createControlledMotion } from 'layerchart/utils/motion.svelte';
 
+  import { createSegments } from '../../utils/lines.js';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { cellCenter, contourSegments } from '../../utils/contours.js';
   import { getSphere } from '../../utils/globe.js';
@@ -80,6 +81,7 @@
     wireframe = false,
     contours,
     stroke = 'color-mix(in oklab, var(--color-surface-content, currentColor) 40%, transparent)',
+    strokeWidth = 1,
     tooltip = false,
     motion,
     ...gridProps
@@ -130,9 +132,8 @@
   const material = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide });
   const mesh = new Mesh(new BufferGeometry(), material);
   mesh.castShadow = mesh.receiveShadow = true;
-  const lineMaterial = new LineBasicMaterial({ transparent: true, depthWrite: false });
-  const lines = new LineSegments(new BufferGeometry(), lineMaterial);
-  scene.root.add(mesh, lines);
+  const lines = createSegments();
+  scene.root.add(mesh, lines.object);
 
   // The surface
   $effect(() => {
@@ -244,18 +245,12 @@
         for (let k = 0; k < lines.length; k++) segments.push(lines[k]);
       }
     }
-    lines.geometry.dispose();
-    lines.geometry = new BufferGeometry();
-    lines.geometry.setAttribute('position', new Float32BufferAttribute(segments, 3));
+    lines.set(segments);
     scene.invalidate();
   });
 
   $effect(() => {
-    const color = scene.color(stroke);
-    if (color) {
-      lineMaterial.color.copy(color.color);
-      lineMaterial.opacity = color.opacity;
-    }
+    lines.style(scene.color(stroke), strokeWidth);
     scene.invalidate();
   });
 
@@ -278,11 +273,10 @@
 
   $effect(() => {
     return () => {
-      scene.root.remove(mesh, lines);
+      scene.root.remove(mesh, lines.object);
       mesh.geometry.dispose();
-      lines.geometry.dispose();
+      lines.dispose();
       material.dispose();
-      lineMaterial.dispose();
       scene.invalidate();
     };
   });

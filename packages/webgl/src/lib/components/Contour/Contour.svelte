@@ -27,22 +27,25 @@
      * @default 'var(--color-surface-content)'
      */
     stroke?: string;
+    /** The lines' width in pixels, the same at any depth. @default 1 */
+    strokeWidth?: number;
   };
 </script>
 
 <script lang="ts">
-  import { BufferGeometry, Float32BufferAttribute, LineBasicMaterial, LineSegments } from 'three';
   import { getChartContext } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { contourSegments } from '../../utils/contours.js';
   import { gridExtent, sampleGrid } from '../../utils/grid.js';
+  import { createSegments } from '../../utils/lines.js';
 
   let {
     pixelSize = 4,
     thresholds = 10,
     z = 0,
     stroke = 'var(--color-surface-content, currentColor)',
+    strokeWidth = 1,
     ...gridProps
   }: ContourProps = $props();
 
@@ -58,9 +61,8 @@
     markInfo: () => ({ zExtent: z === 'value' && extent ? extent : [0, 0] }),
   });
 
-  const material = new LineBasicMaterial({ transparent: true });
-  const lines = new LineSegments(new BufferGeometry(), material);
-  scene.root.add(lines);
+  const lines = createSegments();
+  scene.root.add(lines.object);
 
   $effect(() => {
     const segments =
@@ -70,26 +72,19 @@
             z === 'value' ? Number(ctx.zScale(v)) + 1 : z + 0.5
           )
         : [];
-    lines.geometry.dispose();
-    lines.geometry = new BufferGeometry();
-    lines.geometry.setAttribute('position', new Float32BufferAttribute(segments, 3));
+    lines.set(segments);
     scene.invalidate();
   });
 
   $effect(() => {
-    const color = scene.color(stroke);
-    if (color) {
-      material.color.copy(color.color);
-      material.opacity = color.opacity;
-    }
+    lines.style(scene.color(stroke), strokeWidth);
     scene.invalidate();
   });
 
   $effect(() => {
     return () => {
-      scene.root.remove(lines);
-      lines.geometry.dispose();
-      material.dispose();
+      scene.root.remove(lines.object);
+      lines.dispose();
       scene.invalidate();
     };
   });

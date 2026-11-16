@@ -45,6 +45,14 @@
      * @default 'count'
      */
     fill?: ColorProp<BinCell<T>>;
+    /**
+     * The cells' outline, as the core `Bin` draws it: around each cell's top, and up its
+     * corners when it stands any height.  A CSS color, or a cell property / function run through
+     * the chart's color scale.  None without one.
+     */
+    stroke?: ColorProp<BinCell<T>>;
+    /** Outline width in pixels, the same at any depth. @default 1 */
+    strokeWidth?: number;
     /** @default 1 */
     opacity?: number;
     /**
@@ -63,7 +71,8 @@
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { binCells, binGrid, getChartContext, isScaleOrdinal, resolveColorProp } from 'layerchart';
 
-  import { createInstances } from '../../utils/instances.svelte.js';
+  import { createInstances, type Instance } from '../../utils/instances.svelte.js';
+  import { createOutlines } from '../../utils/outlines.js';
   import { position, resolveAccessor } from '../../utils/marks.js';
   import { extrude, ShapeContext } from '../../utils/shapes.js';
 
@@ -77,6 +86,8 @@
     gap = 0,
     z,
     fill = 'count',
+    stroke,
+    strokeWidth = 1,
     opacity = 1,
     tooltip = false,
   }: BinProps = $props();
@@ -136,13 +147,17 @@
    * One cell's prism, a pixel tall, on the floor about its center: every cell is the same shape,
    * so they're drawn as instances of it, stretched to their heights
    */
-  const prism = $derived.by(() => {
+  /** One cell's corners about its center, in pixels, shrunk by `gap` */
+  const corners = $derived.by((): [number, number][] => {
     const grid = binGrid(shape, size);
     const shrink = Math.max(0, grid.circumradius - gap / 2) / grid.circumradius;
+    return grid.polygon(0, 0, true).map(([px, py]) => [px * shrink, py * shrink]);
+  });
+  const prism = $derived.by(() => {
     const context = new ShapeContext();
-    grid.polygon(0, 0, true).forEach(([px, py], i) => {
-      if (i) context.lineTo(px * shrink, py * shrink);
-      else context.moveTo(px * shrink, py * shrink);
+    corners.forEach(([px, py], i) => {
+      if (i) context.lineTo(px, py);
+      else context.moveTo(px, py);
     });
     context.closePath();
     return extrude(context, 0, 1, 1)!;
@@ -152,28 +167,46 @@
   const turned = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI);
   const highlight = new Color(0xffffff);
 
+  /** Each cell's prism: its center, height, turn, and color */
+  const prisms = $derived<Instance[]>(
+    cells.map((cell) => {
+      const [z0, z1] = z == null ? [0, 1] : ctx.heightOf(cell, z as DataProp);
+      // The apex above the center points up
+      const down = shape === 'triangle' && cell.polygon[0][1] > cell.y;
+      return {
+        d: cell,
+        x: cell.x,
+        y: cell.y,
+        z: Math.min(z0, z1),
+        width: 1,
+        depth: 1,
+        // A pixel at least, above anything lying on the floor beneath (ex. a map)
+        height: Math.max(Math.abs(z1 - z0), 1),
+        color: resolveColorProp(fill, cell, fillScale) ?? 'var(--color-primary, currentColor)',
+        rotation: down ? turned : undefined,
+      };
+    })
+  );
+
+  /** Outlined only when asked, so cells without one cost nothing more */
+  const outlined = $derived(stroke != null);
+
   createInstances({
     tooltip: () => tooltip,
     geometry: () => prism,
-    instances: () =>
-      cells.map((cell) => {
-        const [z0, z1] = z == null ? [0, 1] : ctx.heightOf(cell, z as DataProp);
-        // The apex above the center points up
-        const down = shape === 'triangle' && cell.polygon[0][1] > cell.y;
-        return {
-          d: cell,
-          x: cell.x,
-          y: cell.y,
-          z: Math.min(z0, z1),
-          width: 1,
-          depth: 1,
-          // A pixel at least, above anything lying on the floor beneath (ex. a map)
-          height: Math.max(Math.abs(z1 - z0), 1),
-          color: resolveColorProp(fill, cell, fillScale) ?? 'var(--color-primary, currentColor)',
-          rotation: down ? turned : undefined,
-        };
-      }),
+    instances: () => prisms,
     opacity: () => opacity,
     emphasize: (color) => color.lerp(highlight, 0.25),
+    // Giving way to its outline in depth, so the outline sits on its edges
+    behind: () => outlined,
+  });
+
+  // Around each cell's top and up its corners, as the core `Bin` outlines its cells
+  createOutlines({
+    instances: () => (outlined ? prisms : []),
+    stroke: (cell) => resolveColorProp(stroke, cell, ctx.cScale) ?? 'currentColor',
+    strokeWidth: () => strokeWidth,
+    opacity: () => opacity,
+    footprint: () => corners,
   });
 </script>

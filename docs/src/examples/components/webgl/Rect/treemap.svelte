@@ -92,6 +92,8 @@
 		</WebGL>
 
 		<Tooltip.Root>
+				class="stroke-black/25"
+				strokeWidth={0.5}
 			{#snippet children({ data })}
 				<Tooltip.Header>
 					{data

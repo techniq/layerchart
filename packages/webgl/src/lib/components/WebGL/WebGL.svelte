@@ -176,6 +176,10 @@
               (label.dy ?? 0) +
               shift.dy}px) translate({shift.x}%, {shift.y}%)"
             style:max-width={label.width ? `${label.width}px` : undefined}
+            style:-webkit-text-stroke={label.stroke
+              ? `${label.strokeWidth ?? 1}px ${label.stroke}`
+              : undefined}
+            style:paint-order={label.stroke ? 'stroke fill' : undefined}
             style:white-space={label.width ? 'normal' : undefined}
           >
             {label.text}

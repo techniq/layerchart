@@ -616,10 +616,11 @@ describe('Surface', () => {
         contours: 20,
       },
     });
-    const lines = scene.root.children.find((o: any) => o.isLineSegments) as any;
+    const lines = scene.root.children.find((o: any) => o.isLineSegments2) as any;
+    // Each segment a pair of points
     await expect
-      .poll(() => lines.geometry.getAttribute('position')?.count ?? 0)
-      .toBeGreaterThan(50_000);
+      .poll(() => lines.geometry.attributes.instanceStart?.count ?? 0)
+      .toBeGreaterThan(25_000);
   });
 
   it('leaves holes where values are missing', async () => {
@@ -972,6 +973,47 @@ describe('placed as LayerChart places its namesakes', () => {
     // Floats from 2 to 3 of the `z` domain's 10
     expect(position.y).toBeCloseTo(20);
     expect(size.y).toBeCloseTo(10);
+  });
+
+  it('outlines a `Rect` with a `stroke`, around its top and up its corners, and not without', async () => {
+    const box = {
+      data: [{ x0: 1, x1: 3, y0: 6, y1: 8, depth: 2 }],
+      x0: 'x0',
+      x1: 'x1',
+      y0: 'y0',
+      y1: 'y1',
+      z: (d: any) => [d.depth, d.depth + 1],
+    };
+    const lines = (scene: SceneState) =>
+      scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const segments = (scene: SceneState) =>
+      lines(scene)?.visible === false
+        ? 0
+        : (lines(scene)?.geometry.attributes.instanceStart?.count ?? 0);
+
+    const plain = await renderMarks({ mark: 'rect', chart: chartProps, rect: box });
+    expect(segments(plain)).toBe(0);
+
+    const scene = await renderMarks({
+      mark: 'rect',
+      chart: chartProps,
+      rect: { ...box, stroke: 'black' },
+    });
+    // Four around the top, and one up each corner
+    await expect.poll(() => segments(scene)).toBe(8);
+    const ends = Array.from(
+      lines(scene).geometry.attributes.instanceStart.data.array as Float32Array
+    );
+    // The top's first side, on its edge (2 → 3 of the `z` domain's 10 is 30px)
+    expect(ends[0]).toBeCloseTo(chart!.xScale(1));
+    expect(ends[1]).toBeCloseTo(30);
+    expect(ends[3]).toBeCloseTo(chart!.xScale(3));
+    // The box gives way to it in depth, rather than it floating off the box
+    const [mesh] = children(scene, 'isInstancedMesh') as InstancedMesh[];
+    expect((mesh.material as any).polygonOffset).toBe(true);
+    expect(
+      ((children(plain, 'isInstancedMesh') as InstancedMesh[])[0].material as any).polygonOffset
+    ).toBe(false);
   });
 
   it('draws a `Link` from `x1` / `y1` up to `z2`, its end defaulting to its start', async () => {
@@ -1723,5 +1765,148 @@ describe('GeoPath motion', () => {
     await expect.poll(top).toBeGreaterThan(11);
     expect(top()).toBeLessThan(39);
     await expect.poll(top).toBeCloseTo(40);
+  });
+});
+
+describe('strokes, as LayerChart’s marks take them', () => {
+  /** How many line segments a mark's outlines draw */
+  const segments = (scene: SceneState) => {
+    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    return lines && lines.visible !== false
+      ? (lines.geometry.attributes.instanceStart?.count ?? 0)
+      : 0;
+  };
+  const instanced = (scene: SceneState) => children(scene, 'isInstancedMesh') as InstancedMesh[];
+
+  it('outlines `Bars` around each bar’s top and up its corners', async () => {
+    const scene = await renderMarks({
+      mark: 'bars',
+      chart: {
+        data: [
+          { x: 2, y: 2, h: 3 },
+          { x: 7, y: 6, h: 5 },
+        ],
+        x: 'x',
+        y: 'y',
+        z: 'h',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+        zDomain: [0, 10],
+        view: perspective,
+      },
+      bars: { stroke: 'black' },
+    });
+    await expect.poll(() => segments(scene)).toBe(16);
+    expect((instanced(scene)[0].material as any).polygonOffset).toBe(true);
+  });
+
+  it('outlines `Bin` cells around their tops and up their corners', async () => {
+    const scene = await renderMarks({
+      mark: 'bin',
+      chart: {
+        data: [
+          { x: 2, y: 2 },
+          { x: 8, y: 7 },
+        ],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+        view: perspective,
+      },
+      bin: { shape: 'hexagon', size: 40, stroke: 'black' },
+    });
+    await expect.poll(() => instanced(scene)[0]?.count ?? 0).toBe(2);
+    // A hexagon's six sides, and its six corners
+    await expect.poll(() => segments(scene)).toBe(2 * 12);
+  });
+
+  it('draws `Contour` lines `strokeWidth` pixels wide', async () => {
+    const scene = await renderMarks({
+      mark: 'contour',
+      chart: { xDomain: [0, 1], yDomain: [0, 1] },
+      contour: { value: (x: number, y: number) => x + y, strokeWidth: 3 },
+    });
+    await expect.poll(() => segments(scene)).toBeGreaterThan(0);
+    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    expect(lines.material.linewidth).toBe(3);
+  });
+
+  it('draws a halo around `Text` lying on the surface, behind its letters', async () => {
+    const label = (stroke?: string) =>
+      renderMarks({
+        mark: 'text',
+        chart: { view: perspective },
+        text: { x: 100, y: 100, value: 'Halo', fontSize: 12, stroke, strokeWidth: 4 },
+      }).then(async (scene) => {
+        const plane = () => {
+          let found: any;
+          scene.root.traverse((o: any) => {
+            if (o.isMesh && o.material?.map?.image) found = o;
+          });
+          return found;
+        };
+        await expect.poll(() => plane()).toBeTruthy();
+        return plane().material.map.image as HTMLCanvasElement;
+      });
+    const plain = await label();
+    const haloed = await label('white');
+    // Room for the halo's outer half on every side: 4px wide at 4 canvas pixels a pixel
+    expect(haloed.width - plain.width).toBe(16);
+    expect(haloed.height - plain.height).toBe(16);
+  });
+
+  it('draws a halo around `viewport` labels, behind their letters', async () => {
+    await renderMarks({
+      mark: 'text',
+      chart: { view: perspective },
+      text: { x: 100, y: 100, value: 'Halo', viewport: true, stroke: 'white', strokeWidth: 2 },
+    });
+    const div = () =>
+      [...document.querySelectorAll<HTMLElement>('.lc-webgl-label')].find(
+        (el) => el.textContent?.trim() === 'Halo'
+      );
+    await expect.poll(() => div()).toBeTruthy();
+    expect(div()!.style.getPropertyValue('-webkit-text-stroke')).toContain('2px');
+    // The stroke first, under the letters (`stroke fill`, as browsers write it back: `stroke`)
+    expect(div()!.style.getPropertyValue('paint-order')).toMatch(/^stroke/);
+  });
+
+  it('rings flat `Points` across their edges, their fill inside the ring', async () => {
+    const chart = {
+      data: [
+        { x: 2, y: 2 },
+        { x: 7, y: 6 },
+      ],
+      x: 'x',
+      y: 'y',
+      xDomain: [0, 10],
+      yDomain: [0, 10],
+    };
+    const flat = await renderMarks({
+      mark: 'points',
+      chart,
+      points: { r: 10, stroke: 'black', strokeWidth: 4 },
+    });
+    await expect.poll(() => instanced(flat).length).toBe(2);
+    const [fill, ring] = instanced(flat);
+    await expect.poll(() => ring.count).toBe(2);
+    const matrix = new Matrix4();
+    const size = new Vector3();
+    fill.getMatrixAt(0, matrix);
+    matrix.decompose(new Vector3(), new Quaternion(), size);
+    // Inside the ring's inner edge, 10 - 4 / 2
+    expect(size.x).toBeCloseTo(8);
+    ring.getMatrixAt(0, matrix);
+    matrix.decompose(new Vector3(), new Quaternion(), size);
+    expect(size.x).toBeCloseTo(10);
+
+    // A 3D view's points are lit spheres, with no ring
+    const raised = await renderMarks({
+      mark: 'points',
+      chart: { ...chart, view: perspective },
+      points: { r: 10, stroke: 'black', strokeWidth: 4 },
+    });
+    await expect.poll(() => instanced(raised).length).toBe(1);
   });
 });
