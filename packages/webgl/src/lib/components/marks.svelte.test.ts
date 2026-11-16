@@ -1876,6 +1876,27 @@ describe('strokes, as LayerChart’s marks take them', () => {
     expect(div()!.style.getPropertyValue('paint-order')).toMatch(/^stroke/);
   });
 
+  it('colors `viewport` labels by `fill` when it’s given, else leaves it to their `class`', async () => {
+    await renderMarks({
+      mark: 'text',
+      chart: { view: perspective },
+      text: { x: 100, y: 100, value: 'Filled', viewport: true, fill: 'rgb(255, 0, 0)' },
+    });
+    await renderMarks({
+      mark: 'text',
+      chart: { view: perspective },
+      text: { x: 100, y: 100, value: 'Classed', viewport: true },
+    });
+    const div = (text: string) =>
+      [...document.querySelectorAll<HTMLElement>('.lc-webgl-label')].find(
+        (el) => el.textContent?.trim() === text
+      );
+    await expect.poll(() => div('Filled')).toBeTruthy();
+    expect(div('Filled')!.style.color).toBe('rgb(255, 0, 0)');
+    await expect.poll(() => div('Classed')).toBeTruthy();
+    expect(div('Classed')!.style.color).toBe('');
+  });
+
   it('rings flat `Points` across their edges, their fill inside the ring', async () => {
     const chart = {
       data: [

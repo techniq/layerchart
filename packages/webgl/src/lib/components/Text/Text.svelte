@@ -81,8 +81,8 @@
      */
     rotate?: ValueProp<number>;
     /**
-     * The color of labels lying on the surface: a CSS color, or a data key / function run through
-     * the chart's color scale.
+     * The labels' color: a CSS color, or a data key / function run through the chart's color
+     * scale.  `viewport` labels without one take their color from `class`.
      *
      * @default 'var(--color-surface-content)'
      */
@@ -137,12 +137,14 @@
     fontSize = 12,
     fontWeight = 600,
     rotate = 0,
-    fill = 'var(--color-surface-content, currentColor)',
+    fill: fillProp,
     stroke,
     strokeWidth = 1,
     class: className,
   }: TextProps = $props();
 
+  /** Labels lying on the surface: as asked, else the text color */
+  const fill = $derived(fillProp ?? 'var(--color-surface-content, currentColor)');
   const ctx = getChartContext();
   const scene = getSceneContext();
   const sphere = $derived(getSphere(ctx));
@@ -201,6 +203,8 @@
             z,
             text,
             class: className,
+            // Only as asked, so a `class` coloring them (ex. `text-red-500`) still does
+            color: fillProp == null ? undefined : rowColor(ctx, fillProp, d, 'currentColor'),
             stroke: stroke == null ? undefined : rowColor(ctx, stroke, d, 'currentColor'),
             strokeWidth: stroke == null ? undefined : strokeWidth,
             clip: true,

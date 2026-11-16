@@ -176,6 +176,7 @@
               (label.dy ?? 0) +
               shift.dy}px) translate({shift.x}%, {shift.y}%)"
             style:max-width={label.width ? `${label.width}px` : undefined}
+            style:color={label.color}
             style:-webkit-text-stroke={label.stroke
               ? `${label.strokeWidth ?? 1}px ${label.stroke}`
               : undefined}

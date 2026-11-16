@@ -27,6 +27,8 @@ export type SceneLabel = {
   verticalAnchor?: 'start' | 'middle' | 'end';
   /** Wrap onto more lines to keep within this many pixels */
   width?: number;
+  /** The letters' CSS color, in place of what `class` gives them */
+  color?: string;
   /** A halo around the letters, behind them (a CSS color), and its width in pixels */
   stroke?: string;
   strokeWidth?: number;
