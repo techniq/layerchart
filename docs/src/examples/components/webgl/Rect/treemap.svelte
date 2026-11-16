@@ -10,7 +10,8 @@
 	import { sortFunc } from '@layerstack/utils';
 
 	import { getStringWidth } from 'layerchart';
-	import { Chart, Rect, WebGL, Text, Tooltip, perspective } from '@layerchart/webgl';
+	import { Field, RangeField, Switch } from 'svelte-ux';
+	import { Chart, Light, Rect, WebGL, Text, Tooltip, perspective } from '@layerchart/webgl';
 
 	const root = hierarchy(data)
 		.sum((d) => d.value)
@@ -30,6 +31,11 @@
 	const chroma = scaleSqrt([0, root.height], [0, 60]);
 	const nodeColor = (node: HierarchyNode<any>) =>
 		hcl(hues.get(node.data)!, chroma(node.depth), luminance(node.depth));
+
+	// A sun from the top left, low enough for the taller tiers to shadow the ones beside them
+	let azimuth = $state(315);
+	let altitude = $state(20);
+	let shadow = $state(true);
 
 	type Node = ReturnType<ReturnType<typeof treemap<any>>>;
 
@@ -52,6 +58,14 @@
 	}
 </script>
 
+<div class="grid grid-cols-[1fr_1fr_auto] gap-2 mb-2">
+	<RangeField label="Sun azimuth" bind:value={azimuth} min={0} max={360} step={5} />
+	<RangeField label="Sun altitude" bind:value={altitude} min={5} max={90} step={1} />
+	<Field label="Shadows">
+		<Switch bind:checked={shadow} />
+	</Field>
+</div>
+
 <!-- One thin tier per level of the tree, each a `zScale` step tall -->
 <Chart
 	view={perspective({ rotate: -45, tilt: 60 })}
@@ -67,6 +81,8 @@
 	{#snippet children({ context })}
 		{@const label = (d: Node) => leafLabel(d, context)}
 		<WebGL>
+			<Light {azimuth} {altitude} intensity={1.3} {shadow} />
+			<Light type="ambient" intensity={0.45} />
 			<Rect
 				tooltip
 				data={nodes}
@@ -76,6 +92,8 @@
 				y1="y1"
 				z={(d) => [d.depth, d.depth + 1]}
 				fill={(d) => nodeColor(d).toString()}
+				class="stroke-black/25"
+				strokeWidth={0.5}
 			/>
 			<!-- Lying on the leaves' tops, so nearer boxes cover them as the view turns -->
 			<Text
@@ -92,8 +110,6 @@
 		</WebGL>
 
 		<Tooltip.Root>
-				class="stroke-black/25"
-				strokeWidth={0.5}
 			{#snippet children({ data })}
 				<Tooltip.Header>
 					{data
