@@ -10,7 +10,7 @@
     /** Override the chart's `y` accessor */
     y?: Accessor;
     /**
-     * The area's base down the plot, as LayerChart's `Area`: an accessor of the row.  Defaults to
+     * The area's base down the plot, as the core `Area`: an accessor of the row.  Defaults to
      * a stacked row's base, else the bottom of the plot.
      */
     y0?: Accessor;
@@ -20,7 +20,7 @@
      * Stand the area up as a curtain off the floor at each row's `y`, rising to this height: a
      * key or function of the row (through the chart's `z` scale), or a number of pixels.  Defaults
      * to the chart's `z`; without one (or with `y0` / `y1`), the area lies on the floor, between
-     * `y0` and `y1`, as LayerChart's `Area` fills the plot.
+     * `y0` and `y1`, as the core `Area` fills the plot.
      */
     z?: DataProp;
     /**
@@ -36,7 +36,7 @@
     g?: Accessor;
     /** The d3 curve the area's edges take through its rows (ex. `curveMonotoneX`) */
     curve?: CurveFactory;
-    /** Whether a row is drawn: the area breaks at rows it isn't, as LayerChart's `Area` does */
+    /** Whether a row is drawn: the area breaks at rows it isn't, as the core `Area` does */
     defined?: (d: any, index: number, data: any[]) => boolean;
     /**
      * A CSS color, or a data key / function run through the chart's color scale (read from each
@@ -44,7 +44,7 @@
      */
     fill?: ColorProp;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -118,7 +118,7 @@
   const y0Accessor = $derived(y0 == null ? null : accessor(y0));
   const y1Accessor = $derived(y1 == null ? null : accessor(y1));
 
-  /** Standing up as a curtain, rather than lying on the floor as LayerChart's `Area` fills the plot */
+  /** Standing up as a curtain, rather than lying on the floor as the core `Area` fills the plot */
   const curtain = $derived(y0 == null && y1 == null && (z != null || ctx.config.z != null));
 
   /** As `Spline`: what splits the rows into areas */
@@ -150,7 +150,7 @@
         ? { d, x: px, y: py, a: base, b: top }
         : null;
     }
-    // Lying on the floor between `y0` and `y1`, as LayerChart's `Area` (a stacked row's value is
+    // Lying on the floor between `y0` and `y1`, as the core `Area` (a stacked row's value is
     // its `[base, top]`)
     const stacked = Array.isArray(yValue) ? yValue : null;
     const top = y1Accessor ? y1Accessor(d) : stacked ? stacked[1] : yValue;

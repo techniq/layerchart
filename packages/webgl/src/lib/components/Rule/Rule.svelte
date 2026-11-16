@@ -45,7 +45,7 @@
     /** @default 1 */
     opacity?: number;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `stroke-red-500`): the
+     * CSS classes to style it by, as the core marks take them (ex. `stroke-red-500`): the
      * stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -91,7 +91,7 @@
     );
   }
 
-  /** Where each line runs, in pixels, as LayerChart's `Rule` places them */
+  /** Where each line runs, in pixels, as the core `Rule` places them */
   const lines = $derived.by(() => {
     const [xMin, xMax] = extent<number>(ctx.xRange as number[]) as [number, number];
     const [yMin, yMax] = extent<number>(ctx.yRange as number[]) as [number, number];

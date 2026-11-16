@@ -218,7 +218,7 @@
 				<Tooltip
 					title={counterpart.label === 'WebGL'
 						? 'Also drawn with WebGL, by @layerchart/webgl'
-						: 'Also drawn by LayerChart, without WebGL'}
+						: 'Also drawn without WebGL, in Svg, Canvas, or Html layers'}
 				>
 					<Button
 						href={counterpart.href}

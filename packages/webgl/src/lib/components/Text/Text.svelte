@@ -49,7 +49,7 @@
     dx?: number;
     /** Pixels to move each label down: on screen with `viewport`, else down the plot */
     dy?: number;
-    /** How to format a number or date `value` (as LayerChart's `format`) */
+    /** How to format a number or date `value` (as the core `format`) */
     format?: FormatType | FormatConfig;
     /** Wrap words onto more lines to keep each label within this many pixels */
     width?: number;
@@ -137,7 +137,7 @@
   const scene = getSceneContext();
   const sphere = $derived(getSphere(ctx));
 
-  /** With rows (`data`, or `x` / `y` reading the chart's), as LayerChart's `Text` */
+  /** With rows (`data`, or `x` / `y` reading the chart's), as the core `Text` */
   const dataMode = $derived(data != null || isDataProp(x) || isDataProp(y));
   const xProp = $derived(x ?? (dataMode ? (ctx.config.x as DataProp) : undefined));
   const yProp = $derived(y ?? (dataMode ? (ctx.config.y as DataProp) : undefined));
@@ -157,7 +157,7 @@
     })
   );
 
-  /** A number or date as `format` says, as LayerChart's `Text` formats its `value` */
+  /** A number or date as `format` says, as the core `Text` formats its `value` */
   function formatted(text: unknown) {
     if (format == null || typeof text === 'string') return String(text);
     return formatValue(text as any, format as any);

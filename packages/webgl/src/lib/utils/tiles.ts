@@ -9,7 +9,7 @@ export type Tile = [x: number, y: number, z: number];
 /**
  * The tiles covering a `width` × `height` view of a Mercator projection with this `scale` (its
  * `scale()`, the world's radius in pixels) whose `[0, 0]` is at `center`, as `d3-tile` picks
- * them (and so LayerChart's `GeoTile`): at the zoom where a tile is nearest `tileSize` pixels,
+ * them (and so the core `GeoTile`): at the zoom where a tile is nearest `tileSize` pixels,
  * plus `zoomDelta`.  Tiles off the world's edge are left out.
  */
 export function tileCover({

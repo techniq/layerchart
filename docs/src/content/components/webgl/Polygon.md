@@ -12,6 +12,6 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-A polygon per row, with LayerChart's [Polygon](/docs/components/Polygon) props: a regular polygon (or star, with `inset`) of `points` corners about `cx` / `cy` with radius `r`, or explicit `points` in pixels, `rotate`d, stretched, skewed, and rounded by `cornerRadius`. `z` stands it up, as on an `isometric` chart; without one it lies flat.
+A polygon per row, with the core [Polygon](/docs/components/Polygon) props: a regular polygon (or star, with `inset`) of `points` corners about `cx` / `cy` with radius `r`, or explicit `points` in pixels, `rotate`d, stretched, skewed, and rounded by `cornerRadius`. `z` stands it up, as on an `isometric` chart; without one it lies flat.
 
 :example{ name="tree" }

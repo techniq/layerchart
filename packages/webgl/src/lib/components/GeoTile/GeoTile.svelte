@@ -2,7 +2,7 @@
   import type { ElevationEncoding, Tile } from '../../utils/tiles.js';
 
   export type GeoTileProps = {
-    /** A tile's image URL, from its column, row, and zoom (an XYZ tile service, as LayerChart's) */
+    /** A tile's image URL, from its column, row, and zoom (an XYZ tile service, as the core `GeoTile` takes) */
     url: (x: number, y: number, z: number) => string;
     /**
      * Zoom levels to add to (or take from) the one picked for the view, for sharper (or fewer)
@@ -130,7 +130,7 @@
   const scene = getSceneContext();
   const sphere = $derived(getSphere(ctx));
 
-  /** The tiles covering the chart (padding included), as LayerChart's `GeoTile` picks them */
+  /** The tiles covering the chart (padding included), as the core `GeoTile` picks them */
   const coverTiles = $derived.by(() => {
     const projection = ctx.geo.projection;
     if (!projection) return [];

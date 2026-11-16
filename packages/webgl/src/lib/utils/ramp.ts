@@ -7,7 +7,7 @@ import type { SceneState } from '../contexts/scene.svelte.js';
 const SIZE = 256;
 
 /**
- * Colors for values from `min` to `max`, as LayerChart's `Raster` picks them: through the chart's
+ * Colors for values from `min` to `max`, as the core `Raster` picks them: through the chart's
  * continuous color scale (`cScale` / `cRange`), else yellow-green-blue.  Read off a table of
  * `SIZE` steps, so CSS colors like `var(--color-primary)` resolve once each, not once per vertex.
  */

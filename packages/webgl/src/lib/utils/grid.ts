@@ -8,7 +8,7 @@ import {
   type InterpolateMethod,
 } from 'layerchart';
 
-/** How a grid of values is given — the same inputs as LayerChart's `Raster` */
+/** How a grid of values is given — the same inputs as the core `Raster` */
 export type GridDataProps = {
   /**
    * Row-major grid values (with `width` and `height`), or rows of scattered samples (with `x`,

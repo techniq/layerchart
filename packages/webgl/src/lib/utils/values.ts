@@ -2,7 +2,7 @@ import { accessor } from 'layerchart';
 
 /**
  * A prop that's a value, a function of the row, or the name of the row's field holding it, as
- * LayerChart's `DataProp`s: `tilt="tilt"` reads each row's `tilt`, as `tilt={(d) => d.tilt}` does
+ * the core `DataProp`s: `tilt="tilt"` reads each row's `tilt`, as `tilt={(d) => d.tilt}` does
  */
 export type ValueProp<T> = T | string | ((d: any) => T);
 

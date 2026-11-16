@@ -12,6 +12,6 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-Reference lines with LayerChart's [Rule](/docs/components/Rule) props, on the floor (or `z` pixels above it): `x` / `y` at a value, at the plot's edges (`true`, `'$left'`, `'$top'`, ...), or as an accessor for a line per row, from zero (or the band) to its value. `class` styles them as on any LayerChart mark.
+Reference lines with the core [Rule](/docs/components/Rule) props, on the floor (or `z` pixels above it): `x` / `y` at a value, at the plot's edges (`true`, `'$left'`, `'$top'`, ...), or as an accessor for a line per row, from zero (or the band) to its value. `class` styles them as on any core mark.
 
 :example{ name="lollipop" }

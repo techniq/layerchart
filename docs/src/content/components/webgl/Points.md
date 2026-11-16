@@ -40,6 +40,6 @@ Without a view, points are discs, for many thousands of them.
 
 :example{ name="scatter" }
 
-The grid, axes, and highlight can be LayerChart's own `Svg` layers instead, with only the points in WebGL:
+The grid, axes, and highlight can be core's own `Svg` layers instead, with only the points in WebGL:
 
 :example{ name="scatter-with-svg" }

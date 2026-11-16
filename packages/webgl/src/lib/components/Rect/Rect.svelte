@@ -85,7 +85,7 @@
   const look = $derived(scene.style(className));
   const highlight = new Color(0xffffff);
 
-  /** With rows (`data`, or props reading the chart's), as LayerChart's `Rect` */
+  /** With rows (`data`, or props reading the chart's), as the core `Rect` */
   const dataMode = $derived(
     data != null || [x, y, width, height, x0, x1, y0, y1].some((p) => isDataProp(p))
   );

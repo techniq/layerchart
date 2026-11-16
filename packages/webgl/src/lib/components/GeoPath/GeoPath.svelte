@@ -46,7 +46,7 @@
      */
     strokeWidth?: number;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -157,7 +157,7 @@
     })
   );
 
-  // The motion is fixed when the mark mounts, as LayerChart's marks' is
+  // The motion is fixed when the mark mounts, as the core marks' is
   const eased = untrack(() => (motion ? createControlledMotion<number[]>(targets, motion) : null));
   $effect.pre(() => {
     const next = targets;

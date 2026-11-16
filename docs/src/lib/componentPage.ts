@@ -78,7 +78,7 @@ function counterpartOf(componentName: string): { href: string; label: string } |
 	);
 	return {
 		href: `/docs/components/${name}`,
-		label: webgl ? layers.join(' / ') || 'LayerChart' : 'WebGL'
+		label: webgl ? layers.join(' / ') || 'Core' : 'WebGL'
 	};
 }
 

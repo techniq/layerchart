@@ -39,7 +39,7 @@
     z?: DataProp<BinCell<T>>;
     /**
      * Each cell's color: a cell property (ex. `'count'`) or a function of the cell, numbers
-     * colored as LayerChart's `Bin` colors them (the chart's continuous `cScale`, else
+     * colored as the core `Bin` colors them (the chart's continuous `cScale`, else
      * yellow-green-blue), or a CSS color.
      *
      * @default 'count'
@@ -121,7 +121,7 @@
 
   /**
    * The scale colors go through: a ramp over the cells' values when they're numbers, as
-   * LayerChart's `Bin` colors them, else the chart's `cScale` for categories
+   * the core `Bin` colors them, else the chart's `cScale` for categories
    */
   const fillScale = $derived.by(() => {
     const values = cells.map((cell) => cellValue(fill, cell));

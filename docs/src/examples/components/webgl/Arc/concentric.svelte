@@ -12,7 +12,7 @@
 	export { data };
 </script>
 
-<!-- LayerChart's concentric gauges, props and classes unchanged, each ring standing 12px tall -->
+<!-- The core concentric gauges example, props and classes unchanged, each ring standing 12px tall -->
 <Chart
 	view={perspective({ rotate: 0, tilt: 50 })}
 	transform={{ mode: 'canvas', drag: 'rotate', scrollMode: 'scale', scrollActivationKey: 'shift' }}

@@ -12,7 +12,7 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-Rows grouped into hexagons (or squares, or triangles) of the plot, or of the map as projected, as LayerChart's [Bin](/docs/components/Bin) groups them. Each cell stands up `z` tall (ex. its `count`), colored by its count unless given a `fill`. Every cell is the same shape, so thousands draw as one.
+Rows grouped into hexagons (or squares, or triangles) of the plot, or of the map as projected, as the core [Bin](/docs/components/Bin) groups them. Each cell stands up `z` tall (ex. its `count`), colored by its count unless given a `fill`. Every cell is the same shape, so thousands draw as one.
 
 ```svelte
 <WebGL>

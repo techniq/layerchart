@@ -12,7 +12,7 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-Heights from values, through the chart's `z` scale (whose domain widens to reach them), colored through the chart's continuous color scale (`cScale`), else yellow-green-blue. Values come the same ways as LayerChart's [Raster](/docs/components/Raster):
+Heights from values, through the chart's `z` scale (whose domain widens to reach them), colored through the chart's continuous color scale (`cScale`), else yellow-green-blue. Values come the same ways as the core [Raster](/docs/components/Raster):
 
 - **A grid:** `data` (row-major values) with `width` × `height`, laid across the plot, or across `x1` / `y1` to `x2` / `y2` in data coordinates.
 - **A function:** `value={(x, y) => ...}`, sampled every `pixelSize` pixels, in data coordinates (longitude and latitude on a map).

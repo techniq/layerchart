@@ -4,7 +4,7 @@ import { line, type CurveFactory } from 'd3-shape';
 const STEPS = 12;
 
 /**
- * A line through `points` (`[x, y]` on the floor) shaped by a d3 `curve`, as LayerChart's `Spline`
+ * A line through `points` (`[x, y]` on the floor) shaped by a d3 `curve`, as the core `Spline`
  * draws it: each point sampled along it, with where it falls between the points it was drawn
  * through (`at`: `1.5` is halfway from the second to the third), for its height, color, and row
  */

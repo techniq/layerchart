@@ -139,7 +139,7 @@
 	</Field>
 </div>
 
-<!-- Map tiles draped over elevation tiles, both picked for the area as LayerChart's GeoTile picks
+<!-- Map tiles draped over elevation tiles, both picked for the area as the core GeoTile picks
      them -->
 <Chart
 	bind:context

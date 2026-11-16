@@ -36,7 +36,7 @@
     /** A count, values, or an interval */
     ticks?: TicksConfig;
     /**
-     * Pixels between ticks, picking how many there are as the axis' length changes (as LayerChart's
+     * Pixels between ticks, picking how many there are as the axis' length changes (as the core
      * `Axis`).  `null` leaves the count to the scale.
      *
      * @default 50 in a 3D view (80 across a flat one)
@@ -119,7 +119,7 @@
   const length = $derived(
     placement === 'bottom' ? ctx.width : placement === 'left' ? ctx.height : ctx.zDepth
   );
-  // Spaced as LayerChart's `Axis` spaces them
+  // Spaced as the core `Axis` spaces them
   const spacing = $derived(
     tickSpacingProp !== undefined
       ? tickSpacingProp
@@ -213,14 +213,14 @@
 
   const sizeOf = (l: SceneLabel) =>
     ((isTitle(l) ? labelProps : tickLabelProps)?.fontSize ?? (isTitle(l) ? 12 : 10)) * scene.unit;
-  // Tick labels as LayerChart's `Axis` draws them: light, in the text color
+  // Tick labels as the core `Axis` draws them: light, in the text color
   const weightOf = (l: SceneLabel) =>
     (isTitle(l) ? labelProps : tickLabelProps)?.fontWeight ?? (isTitle(l) ? 600 : 300);
   const fillOf = (l: SceneLabel) =>
     (isTitle(l) ? labelProps : tickLabelProps)?.fill ??
     'var(--color-surface-content, currentColor)';
 
-  // The rule along the edge and the marks out from it at each tick, as LayerChart's `Axis` draws
+  // The rule along the edge and the marks out from it at each tick, as the core `Axis` draws
   // them (in the scene's axes: chart x, then height, then chart y)
   const lineMaterial = new LineBasicMaterial({ transparent: true, depthWrite: false });
   const lines = new LineSegments(new BufferGeometry(), lineMaterial);

@@ -171,7 +171,7 @@ export class SceneState {
   }
 
   /**
-   * What a mark's CSS `class` sets (its fill, stroke, and opacity, as LayerChart's `Canvas` layer
+   * What a mark's CSS `class` sets (its fill, stroke, and opacity, as the core `Canvas` layer
    * reads them), re-read when the theme changes.  `null` without one, or before the layer mounts.
    */
   style(classes: string | null | undefined): ClassStyle | null {

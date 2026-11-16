@@ -12,7 +12,7 @@
 	export { data };
 </script>
 
-<!-- LayerChart's lollipop, its marks drawn by WebGL: the same props and classes -->
+<!-- The core lollipop example, its marks drawn by WebGL: the same props and classes -->
 <Chart
 	{data}
 	x="letter"

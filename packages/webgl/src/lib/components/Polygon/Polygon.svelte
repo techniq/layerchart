@@ -47,7 +47,7 @@
     /** The tilt factor for y-coordinates. @default 0 */
     tiltY?: number;
     /**
-     * How tall it stands, as LayerChart's `Polygon` on an `isometric` chart: a data property name
+     * How tall it stands, as the core `Polygon` on an `isometric` chart: a data property name
      * or function of the row through the chart's `z` scale, pixels, or a `[start, end]` pair of
      * pixels to float it between.  Defaults to the chart's `z` with rows, else it lies flat.
      */
@@ -63,7 +63,7 @@
     /** @default 1 */
     strokeWidth?: number;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -117,7 +117,7 @@
   const look = $derived(scene.style(className));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
 
-  /** Whether the props read rows, as LayerChart's `Polygon` decides */
+  /** Whether the props read rows, as the core `Polygon` decides */
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
 
   /** A row's corners, in pixels */
@@ -141,7 +141,7 @@
     });
   }
 
-  /** `corners` traced into `context`, each corner rounded by `cornerRadius` (as LayerChart's) */
+  /** `corners` traced into `context`, each corner rounded by `cornerRadius` (as core's are) */
   function trace(context: ShapeContext, coords: { x: number; y: number }[]) {
     if (!coords.length) return;
     if (!cornerRadius) {

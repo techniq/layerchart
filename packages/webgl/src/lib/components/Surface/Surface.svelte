@@ -95,7 +95,7 @@
   );
   const sampled = $derived(sphere ? null : sampleGrid(ctx, gridProps, pixelSize));
 
-  // The motion is fixed when the mark mounts, as LayerChart's marks' is
+  // The motion is fixed when the mark mounts, as the core marks' is
   const eased = untrack(() => (motion ? createControlledMotion<number[]>([], motion) : null));
   $effect.pre(() => {
     const next = sampled ? Array.from(sampled.values) : [];

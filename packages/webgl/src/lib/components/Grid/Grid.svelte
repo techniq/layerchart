@@ -29,7 +29,7 @@
     /**
      * Shade the floor and the two walls away from the camera.  The walls turn to stay behind
      * the plot as the camera orbits, and only stand when the chart has height (`z`).  Flat
-     * (without a `view`), the floor is left clear, as LayerChart's `Grid` leaves it.
+     * (without a `view`), the floor is left clear, as the core `Grid` leaves it.
      *
      * @default true with a `view`, else false
      */
@@ -68,7 +68,7 @@
     yTicks,
     zTicks,
     walls: wallsProp,
-    // As LayerChart's `Grid` draws its lines
+    // As core's `Grid` draws its lines
     stroke = 'color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent)',
     fill = 'color-mix(in oklab, var(--color-surface-content, currentColor) 4%, transparent)',
   }: GridProps = $props();

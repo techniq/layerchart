@@ -5,20 +5,20 @@
   export type GeoRasterProps = {
     /**
      * The image to lay over the map through the chart's projection (ex. NASA's Blue Marble), or
-     * wrap around its `globe`, as LayerChart's `GeoRaster` reprojects it: a URL, or an image,
+     * wrap around its `globe`, as the core `GeoRaster` reprojects it: a URL, or an image,
      * canvas, or bitmap already drawn.  Equirectangular unless `sourceProjection` says otherwise:
      * longitude across it from -180° to 180°, latitude down it from 90° to -90°.
      */
     image: ImageSource;
     /**
      * The projection the image was drawn in, mapping longitude / latitude to its own pixels (as
-     * LayerChart's `GeoRaster`).  Equirectangular without one.  Not on a `globe`, which wraps an
+     * the core `GeoRaster`).  Equirectangular without one.  Not on a `globe`, which wraps an
      * equirectangular image.
      */
     sourceProjection?: () => GeoProjection;
     /**
      * How the image is sampled between its pixels: `'nearest'` for crisp, blocky pixels, or
-     * `'bilinear'` to blend them.  LayerChart's `GeoRaster` defaults to `'nearest'`, as blending
+     * `'bilinear'` to blend them.  The core `GeoRaster` defaults to `'nearest'`, as blending
      * costs it ~4x the work; here the GPU blends for free.
      *
      * @default 'bilinear'

@@ -12,7 +12,7 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-An image (`image`: a URL, or an image, canvas, or bitmap) laid over the map through the chart's projection, as LayerChart's [GeoRaster](/docs/components/GeoRaster) reprojects one, and with the same props: it's equirectangular unless `sourceProjection` gives the projection it was drawn in, and `interpolate` / `pixelated` choose blended or crisp pixels. Unlike LayerChart's, it blends (`'bilinear'`) by default, which costs the GPU nothing. `elevation` (a function of longitude and latitude) raises it into terrain, and `tooltip` shows the longitude and latitude under the pointer.
+An image (`image`: a URL, or an image, canvas, or bitmap) laid over the map through the chart's projection, as the core [GeoRaster](/docs/components/GeoRaster) reprojects one, and with the same props: it's equirectangular unless `sourceProjection` gives the projection it was drawn in, and `interpolate` / `pixelated` choose blended or crisp pixels. Unlike core's, it blends (`'bilinear'`) by default, which costs the GPU nothing. `elevation` (a function of longitude and latitude) raises it into terrain, and `tooltip` shows the longitude and latitude under the pointer.
 
 :example{ name="projections" }
 

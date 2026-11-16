@@ -12,7 +12,7 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-A label per row, placed as LayerChart's [`Text`](/docs/components/Text) places it: `x`, `y`, and `z` are data properties or functions of the row, through the chart's scales (longitude and latitude on a map), or numbers in pixels. `value` is a property, a function, or the text itself.
+A label per row, placed as the core [`Text`](/docs/components/Text) places it: `x`, `y`, and `z` are data properties or functions of the row, through the chart's scales (longitude and latitude on a map), or numbers in pixels. `value` is a property, a function, or the text itself.
 
 By default a label lies on the surface at its height (ex. the tops of boxes), turning and tipping with the view, in `fontSize` and `fill`. With `viewport` it faces the viewer instead, drawn over the scene upright and crisp however the view turns, styled with `class`.
 

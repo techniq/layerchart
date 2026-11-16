@@ -2,7 +2,7 @@
   import type { Accessor } from 'layerchart';
   import type { MotionProp } from 'layerchart/utils/motion.svelte';
 
-  /** How a `Highlight`'s point is drawn, as LayerChart's `Circle` props */
+  /** How a `Highlight`'s point is drawn, as the core `Circle` props */
   export type HighlightPointProps = {
     /** Radius in pixels on screen. @default 4 */
     r?: number;
@@ -16,7 +16,7 @@
     class?: string;
   };
 
-  /** How a `Highlight`'s lines are drawn, as LayerChart's `Line` props */
+  /** How a `Highlight`'s lines are drawn, as the core `Line` props */
   export type HighlightLineProps = {
     /** @default 'color-mix(in oklab, var(--color-surface-content) 20%, transparent)' */
     stroke?: string;
@@ -79,7 +79,7 @@
     /** The opacity of all of it (0 to 1) */
     opacity?: number;
     /**
-     * `'spring'` to glide from one highlighted row to the next (as LayerChart's `Highlight`), or
+     * `'spring'` to glide from one highlighted row to the next (as the core `Highlight`), or
      * `'none'`.  It follows each step of a pan or zoom at once, rather than chasing it.
      * @default 'spring'
      */
@@ -133,7 +133,7 @@
 
   const row = $derived(data ?? ctx.tooltip.data);
 
-  /** Which positions the lines trace, as LayerChart's `Highlight` picks by default */
+  /** Which positions the lines trace, as the core `Highlight` picks by default */
   const axis = $derived(axisProp ?? (isScaleBand(ctx.yScale) || ctx.valueAxis === 'x' ? 'y' : 'x'));
 
   /** The row in the chart's pixels: across, down, and up off the floor */
@@ -150,7 +150,7 @@
     return { x: px, y: py, z: height };
   });
 
-  // Gliding from one row to the next (fixed when it mounts, as LayerChart's marks' motion is)
+  // Gliding from one row to the next (fixed when it mounts, as the core marks' motion is)
   const motion = untrack(() => motionProp ?? 'spring');
   let last: [number, number, number] = [0, 0, 0];
   const glide = createMotion<[number, number, number]>(
@@ -189,7 +189,7 @@
   });
   const raised = $derived(!!ctx.view && walls.depth > 0 && (z != null || ctx.config.z != null));
 
-  // Lines: dashed, as LayerChart's, in the scene's axes (chart x, height, chart y)
+  // Lines: dashed, as core's are, in the scene's axes (chart x, height, chart y)
   const lineMaterial = new LineMaterial({ transparent: true, dashed: true, depthWrite: false });
   const lineMesh = new LineSegments2(new LineSegmentsGeometry(), lineMaterial);
   lineMesh.userData.unclipped = true;
@@ -289,7 +289,7 @@
     scene.invalidate();
   });
 
-  // The point, drawn over the scene facing the viewer, as LayerChart's `Highlight` draws it
+  // The point, drawn over the scene facing the viewer, as the core `Highlight` draws it
   const markers = $derived.by((): SceneMarker[] => {
     const p = at;
     if (!points || !p) return [];

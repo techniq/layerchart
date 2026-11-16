@@ -3,7 +3,7 @@ import { Color, SRGBColorSpace } from 'three';
 export type ResolvedColor = { color: Color; opacity: number };
 
 /**
- * What a mark's CSS classes (ex. `fill-red-500 opacity-50`) set, as LayerChart's `Canvas` layer
+ * What a mark's CSS classes (ex. `fill-red-500 opacity-50`) set, as the core `Canvas` layer
  * reads them: `null` for what they leave alone
  */
 export type ClassStyle = {

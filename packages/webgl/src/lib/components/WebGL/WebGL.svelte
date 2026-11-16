@@ -208,7 +208,7 @@
       pointer-events: none;
     }
 
-    /* As LayerChart's `Highlight` draws its point */
+    /* As core's `Highlight` draws its point */
     :where(.lc-webgl-markers .lc-highlight-point) {
       paint-order: stroke;
       filter: drop-shadow(var(--drop-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15)));
@@ -225,7 +225,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      /* As LayerChart's Axis draws its tick labels */
+      /* As core's Axis draws its tick labels */
       font-size: 10px;
       font-weight: 300;
       line-height: 1;

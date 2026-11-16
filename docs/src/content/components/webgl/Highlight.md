@@ -12,7 +12,7 @@ Part of [`@layerchart/webgl`](/docs/guides/webgl), drawn in a `WebGL` layer. See
 
 ## Usage
 
-The tooltip's row (or `data`), marked as LayerChart's [Highlight](/docs/components/Highlight) marks it on an `isometric` chart, with the same props: `points` rings it with a circle facing the viewer, `lines` trace its position across the floor and, with a `z`, across and up each back wall (`axis` picks which), and `shadows` put a spot beneath it on the floor and level with it on each wall. Pass props to style each, ex. `points={{ r: 8, fill: 'none' }}`.
+The tooltip's row (or `data`), marked as the core [Highlight](/docs/components/Highlight) marks it on an `isometric` chart, with the same props: `points` rings it with a circle facing the viewer, `lines` trace its position across the floor and, with a `z`, across and up each back wall (`axis` picks which), and `shadows` put a spot beneath it on the floor and level with it on each wall. Pass props to style each, ex. `points={{ r: 8, fill: 'none' }}`.
 
 ```svelte
 <WebGL>
@@ -22,6 +22,6 @@ The tooltip's row (or `data`), marked as LayerChart's [Highlight](/docs/componen
 </WebGL>
 ```
 
-On a flat `WebGL` chart, LayerChart's own `Highlight` in an `Svg` layer over it works as well (ex. [scatter](/docs/components/webgl/Points/scatter)).
+On a flat `WebGL` chart, core's own `Highlight` in an `Svg` layer over it works as well (ex. [scatter](/docs/components/webgl/Points/scatter)).
 
 :example{ component="webgl/Points" name="scatter-3d" }

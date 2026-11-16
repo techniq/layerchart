@@ -45,7 +45,7 @@ category: state
 
 ## Quick start
 
-Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are LayerChart's own, re-exported. The chart's `view` says how it's seen (`perspective`, as `isometric` does for flat layers), and the marks inside a [`WebGL`](/docs/components/webgl/WebGL) layer are drawn through it. A `transform` turns, pans, and zooms it.
+Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are core's own, re-exported. The chart's `view` says how it's seen (`perspective`, as `isometric` does for flat layers), and the marks inside a [`WebGL`](/docs/components/webgl/WebGL) layer are drawn through it. A `transform` turns, pans, and zooms it.
 
 ```svelte
 <script>
@@ -74,7 +74,7 @@ The chart lays out exactly as a flat one would: `x` across the plot's width, `y`
 - **The `z` scale** measures up from the floor, as it does for [isometric](/docs/guides/isometric#height). Its range defaults to half the floor's shorter side. Set `zRange={({ height }) => [0, height]}` for a cube.
 - **Color, series, stacking, and domains** work as on any chart: marks register with the chart, and `fill` / `stroke` take a CSS color, or a data key or function run through the color scale (`c`, `cRange`, ...). CSS variables like `var(--color-primary)` resolve against the page, and follow theme changes.
 - **Tooltips** show the row under the pointer, from the nearest mark with `tooltip` set (it's off by default, as for flat marks). Add `tooltipContext` to the chart and a `Tooltip.Root`.
-- **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as LayerChart's primitives do. Marks take their LayerChart namesakes' props, so a chart moves between `Canvas` and `WebGL` with few changes.
+- **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as the core primitives do. Marks take their core namesakes' props, so a chart moves between `Canvas` and `WebGL` with few changes.
 
 ## The view
 
@@ -148,7 +148,7 @@ Without a `view`, a `WebGL` layer is seen from directly above and drawn unshaded
 
 :example{ component="webgl/Points" name="scatter" }
 
-Only the marks need a `WebGL` layer: the grid, axes, tooltip highlight, and legend can be LayerChart's own, in `Svg` layers above and below it.
+Only the marks need a `WebGL` layer: the grid, axes, tooltip highlight, and legend can be core's own, in `Svg` layers above and below it.
 
 :example{ component="webgl/Points" name="scatter-with-svg" }
 

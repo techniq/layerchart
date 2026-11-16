@@ -16,7 +16,7 @@
     z?: DataProp;
     /**
      * Draw one line per distinct value, in data order.  Defaults to the chart's `g`, else the
-     * data key `stroke` names, else the chart's `c` (as LayerChart's `Spline`).
+     * data key `stroke` names, else the chart's `c` (as the core `Spline`).
      */
     g?: Accessor;
     /**
@@ -32,18 +32,18 @@
      */
     strokeWidth?: number;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
     /** @default 1 */
     opacity?: number;
     /**
-     * The d3 curve each line takes through its rows (ex. `curveMonotoneX`), as LayerChart's
+     * The d3 curve each line takes through its rows (ex. `curveMonotoneX`), as the core
      * `Spline` draws it.  Straight between them without one.
      */
     curve?: CurveFactory;
-    /** Whether a row is drawn: a line breaks at rows it isn't, as LayerChart's `Spline` does */
+    /** Whether a row is drawn: a line breaks at rows it isn't, as the core `Spline` does */
     defined?: (d: any, index: number, data: any[]) => boolean;
     /**
      * Show the tooltip for the row nearest where the pointer is over a line (with the chart's

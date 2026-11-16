@@ -4,7 +4,7 @@
 
   /** How the track behind an arc is drawn */
   export type ArcTrackProps = {
-    /** CSS classes to style it by, as LayerChart's (ex. `fill-red-500/10`) */
+    /** CSS classes to style it by, as core marks take them (ex. `fill-red-500/10`) */
     class?: string;
     /** @default 'color-mix(in oklab, var(--color-surface-content) 10%, transparent)' */
     fill?: string;
@@ -65,7 +65,7 @@
     /** The center down, in pixels.  Defaults to the plot's center. */
     y?: number;
     /**
-     * How tall it stands, as LayerChart's `Arc` on an `isometric` chart: pixels, or a
+     * How tall it stands, as the core `Arc` on an `isometric` chart: pixels, or a
      * `[start, end]` pair of pixels to float it between (or a key / function of `data` through
      * the chart's `z` scale).  Flat on the floor without one.
      */
@@ -83,7 +83,7 @@
     /** @default 1 */
     strokeWidth?: number;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `fill-red-500 opacity-50`):
+     * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
      * the fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -155,7 +155,7 @@
 
   const radians = (degrees: number) => (degrees * Math.PI) / 180;
 
-  /** Radii as LayerChart's `Arc` reads them: pixels, a fraction of the chart's, or an offset */
+  /** Radii as the core `Arc` reads them: pixels, a fraction of the chart's, or an offset */
   const chartRadius = $derived(Math.min(ctx.width, ctx.height) / 2);
   function outerOf(r: number | undefined) {
     if (!r) return chartRadius;

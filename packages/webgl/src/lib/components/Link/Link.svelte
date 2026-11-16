@@ -84,7 +84,7 @@
   const ctx = getChartContext();
   const sphere = $derived(getSphere(ctx));
 
-  /** Ends placed by `x1` / `y1` (as LayerChart's `Link`), rather than by `source` / `target` nodes */
+  /** Ends placed by `x1` / `y1` (as the core `Link`), rather than by `source` / `target` nodes */
   const placed = $derived([x1, y1, x2, y2].some((p) => p != null));
 
   /** A link's ends, in the scene's axes */

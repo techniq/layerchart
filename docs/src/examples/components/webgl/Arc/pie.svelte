@@ -48,7 +48,7 @@
 	{#snippet children({ context })}
 		{@const outer = Math.min(context.width, context.height) / 2}
 		<WebGL>
-			<!-- A slice per arc, as LayerChart's Arc draws them, labeled beyond its outer edge -->
+			<!-- A slice per arc, as the core Arc draws them, labeled beyond its outer edge -->
 			{#each arcs as arc}
 				{@const angle = (arc.startAngle + arc.endAngle) / 2}
 				<Arc

@@ -67,7 +67,7 @@
     /** @default 1 */
     strokeWidth?: number;
     /**
-     * CSS classes to style it by, as LayerChart's marks take them (ex. `stroke-red-500`): the
+     * CSS classes to style it by, as the core marks take them (ex. `stroke-red-500`): the
      * fill, stroke, stroke width, and opacity they set, where its props don't say
      */
     class?: string;
@@ -143,7 +143,7 @@
   const lengthOf = (d: any) =>
     resolveDataProp(length, d, ctx.rScale, typeof length === 'number' ? length : 12);
 
-  /** A row's vector as LayerChart's `Vector` draws it: a path of moves and lines, in pixels */
+  /** A row's vector as the core `Vector` draws it: a path of moves and lines, in pixels */
   function pathOf(d: any) {
     const [px, py] = positionOf(ctx, x, y, d);
     const len = lengthOf(d);
@@ -173,7 +173,7 @@
     return lines;
   }
 
-  // Flat (no `view`), drawn as LayerChart draws it: lines and filled shapes on the floor
+  // Flat (no `view`), drawn as core draws it: lines and filled shapes on the floor
   createMerged({
     tooltip: () => tooltip,
     items: () =>

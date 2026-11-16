@@ -96,7 +96,7 @@ export function colorer(
 }
 
 /**
- * Where a row's `x` / `y` props put it on the plot, as LayerChart's primitives resolve them: a
+ * Where a row's `x` / `y` props put it on the plot, as the core primitives resolve them: a
  * number in pixels, and a data key or function through the chart's projection on a map
  * (longitude, latitude), else its scales (at the middle of a band)
  */
@@ -146,7 +146,7 @@ export function placeOf(
 }
 
 /**
- * The rows a mark draws: its `data`, else the chart's when its props read rows (as LayerChart's
+ * The rows a mark draws: its `data`, else the chart's when its props read rows (as the core
  * primitives do), else one, for a mark placed by numbers alone
  */
 export function markRows(ctx: ChartState<any>, data: any[] | undefined, ...props: unknown[]) {
@@ -155,7 +155,7 @@ export function markRows(ctx: ChartState<any>, data: any[] | undefined, ...props
 }
 
 /**
- * Pixels between ticks along an axis, as LayerChart's `Axis` spaces them when its ticks don't
+ * Pixels between ticks along an axis, as the core `Axis` spaces them when its ticks don't
  * say: wider across (`x`) than up or down (`y`, and the height `z`)
  */
 export const TICK_SPACING = { x: 80, y: 50, z: 50 } as const;

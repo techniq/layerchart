@@ -358,7 +358,7 @@
   }
 
   /**
-   * On a globe, how many degrees a drag of a pixel turns it, as LayerChart's flat globes turn:
+   * On a globe, how many degrees a drag of a pixel turns it, as the core flat globes turn:
    * across about the poles, down tipping them, the same wherever it's grabbed, 75° for a drag of
    * its radius on screen.  A little faster than the middle of the view moves, so ground away from
    * it (moving less as the globe turns) keeps up with the pointer too.  Its radius as the ground

@@ -30,7 +30,7 @@
 
 <GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
 
-<!-- LayerChart's zoomable tiles, drawn by WebGL: zooming the projection loads sharper tiles -->
+<!-- The core zoomable tiles example, drawn by WebGL: zooming the projection loads sharper tiles -->
 {#if serviceUrl}
 	<Chart
 		geo={{ projection: geoMercator, fitGeojson: contiguous }}
