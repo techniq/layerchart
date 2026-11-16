@@ -471,7 +471,7 @@ describe('GeoTile', () => {
     const scene = await renderMarks({
       mark: 'geotile',
       chart: { geo: { projection: geoMercator, fitGeojson: area } },
-      geotile: { url: () => image, ontiles: (t: [number, number, number][]) => (tiles = t) },
+      geotile: { url: () => image, onTilesChange: (t: [number, number, number][]) => (tiles = t) },
     });
     await expect.poll(() => meshes(scene).length).toBe(tiles.length);
     for (const mesh of meshes(scene)) {
@@ -493,7 +493,11 @@ describe('GeoTile', () => {
       mark: 'geotile',
       chart: { geo: { projection: geoMercator, fitGeojson: area } },
       // Nothing cached to draw from in the meantime
-      geotile: { url, disableCache: true, ontiles: (t: [number, number, number][]) => (tiles = t) },
+      geotile: {
+        url,
+        disableCache: true,
+        onTilesChange: (t: [number, number, number][]) => (tiles = t),
+      },
     });
     await expect.poll(() => tiles.length).toBeGreaterThan(0);
     expect(tiles[0][2]).toBeGreaterThan(2);
@@ -511,7 +515,7 @@ describe('GeoTile', () => {
     const props = (zoomDelta: number) => ({
       mark: 'geotile' as const,
       chart: { geo: { projection: geoMercator, fitGeojson: area } },
-      geotile: { url, zoomDelta, ontiles: (t: [number, number, number][]) => (tiles = t) },
+      geotile: { url, zoomDelta, onTilesChange: (t: [number, number, number][]) => (tiles = t) },
       onScene: (s: SceneState, c: ChartState<any>) => {
         scene = s;
         chart = c;
@@ -1390,7 +1394,7 @@ describe('globe', () => {
         view: perspective({ rotate: -20, tilt: 60 }),
         transform: { mode: 'canvas', drag: 'rotate' },
       },
-      geotile: { url: () => image, ontiles: (t: [number, number, number][]) => (tiles = t) },
+      geotile: { url: () => image, onTilesChange: (t: [number, number, number][]) => (tiles = t) },
     });
     await withTransform();
     await expect.poll(() => tiles.length).toBeGreaterThan(0);

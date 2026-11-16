@@ -73,7 +73,7 @@
      */
     tooltip?: boolean;
     /** The tiles drawn, as `[x, y, z]`, when they change */
-    ontiles?: (tiles: Tile[]) => void;
+    onTilesChange?: (tiles: Tile[]) => void;
   };
 </script>
 
@@ -130,7 +130,7 @@
     opacity = 1,
     debug = false,
     tooltip = false,
-    ontiles,
+    onTilesChange,
   }: GeoTileProps = $props();
 
   /** The elevation tiles' URLs, encoding, and deepest zoom, when there are any */
@@ -322,7 +322,7 @@
   /** The tiles drawn: those the camera sees in a 3D view, else those covering the chart */
   const tiles = $derived(viewTiles ?? coverTiles);
 
-  $effect(() => ontiles?.(tiles));
+  $effect(() => onTilesChange?.(tiles));
 
   /** A tile once loaded: its mesh, and the image and elevation it's made from */
   type Entry = {
