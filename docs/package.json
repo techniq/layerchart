@@ -91,7 +91,7 @@
 		"mathjs": "^15.2.0",
 		"mdsx": "^0.0.7",
 		"paneforge": "^1.0.2",
-		"playwright": "^1.60.0",
+		"playwright": "^1.65.1",
 		"posthog-js": "^1.379.0",
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.1.0",
