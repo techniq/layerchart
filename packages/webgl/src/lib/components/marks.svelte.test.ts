@@ -449,7 +449,7 @@ describe('GeoTile', () => {
     const scene = await renderMarks({
       mark: 'geotile',
       chart: { geo: { projection: geoMercator, fitGeojson: area }, view: perspective },
-      geotile: { url: () => image, elevation: () => thousandMeters },
+      geotile: { url: () => image, elevation: { url: () => thousandMeters } },
     });
     await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
     // The tiles' elevation widens the chart's `z` domain

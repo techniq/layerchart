@@ -1,6 +1,24 @@
 <script lang="ts" module>
   import type { ElevationEncoding, Tile } from '../../utils/tiles.js';
 
+  /**
+   * Elevation tiles to raise a `GeoTile` into terrain: a second tile service beside its imagery,
+   * with its own encoding and zoom limit
+   */
+  export type GeoTileElevation = {
+    /** An elevation tile's URL from its column, row, and zoom (ex. AWS's open terrain tiles) */
+    url: (x: number, y: number, z: number) => string;
+    /**
+     * How the tiles pack meters into their colors: `'terrarium'` (ex. AWS, Mapterhorn) or
+     * `'mapbox'` (Terrain-RGB).
+     *
+     * @default 'terrarium'
+     */
+    encoding?: ElevationEncoding;
+    /** The deepest zoom the tiles go to: deeper ones use part of an ancestor's (as `maxZoom`) */
+    maxZoom?: number;
+  };
+
   export type GeoTileProps = {
     /** A tile's image URL, from its column, row, and zoom (an XYZ tile service, as the core `GeoTile` takes) */
     url: (x: number, y: number, z: number) => string;
@@ -23,19 +41,10 @@
      */
     maxZoom?: number;
     /**
-     * Raise the tiles into terrain: an elevation tile's URL from its column, row, and zoom (ex.
-     * AWS's open terrain tiles), its meters run through the chart's `z` scale
+     * Raise the tiles into terrain from elevation tiles: their `url`, `encoding`, and `maxZoom`,
+     * their meters run through the chart's `z` scale
      */
-    elevation?: (x: number, y: number, z: number) => string;
-    /**
-     * How the elevation tiles pack meters into their colors: `'terrarium'` (ex. AWS, Mapterhorn)
-     * or `'mapbox'` (Terrain-RGB).
-     *
-     * @default 'terrarium'
-     */
-    elevationEncoding?: ElevationEncoding;
-    /** The deepest zoom the elevation tiles go to (as `maxZoom`) */
-    elevationMaxZoom?: number;
+    elevation?: GeoTileElevation;
     /**
      * Points across each tile's mesh: more follow terrain (or a projection's curves) more closely.
      *
@@ -115,9 +124,7 @@
     zoomDelta = 0,
     tileSize = 256,
     maxZoom = Infinity,
-    elevation,
-    elevationEncoding = 'terrarium',
-    elevationMaxZoom = Infinity,
+    elevation: elevationProp,
     segments,
     disableCache = false,
     opacity = 1,
@@ -125,6 +132,11 @@
     tooltip = false,
     ontiles,
   }: GeoTileProps = $props();
+
+  /** The elevation tiles' URLs, encoding, and deepest zoom, when there are any */
+  const elevation = $derived(elevationProp?.url);
+  const elevationEncoding = $derived(elevationProp?.encoding ?? 'terrarium');
+  const elevationMaxZoom = $derived(elevationProp?.maxZoom ?? Infinity);
 
   const ctx = getChartContext();
   const scene = getSceneContext();

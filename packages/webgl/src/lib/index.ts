@@ -56,7 +56,7 @@ export type { RuleProps } from './components/Rule/Rule.svelte';
 export { default as Vector } from './components/Vector/Vector.svelte';
 export type { VectorProps } from './components/Vector/Vector.svelte';
 export { default as GeoTile } from './components/GeoTile/GeoTile.svelte';
-export type { GeoTileProps } from './components/GeoTile/GeoTile.svelte';
+export type { GeoTileElevation, GeoTileProps } from './components/GeoTile/GeoTile.svelte';
 export { default as GeoRaster } from './components/GeoRaster/GeoRaster.svelte';
 export type { GeoRasterProps } from './components/GeoRaster/GeoRaster.svelte';
 

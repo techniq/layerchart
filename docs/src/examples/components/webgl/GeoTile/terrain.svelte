@@ -66,8 +66,12 @@
 			maxZoom: 19
 		}
 	};
-	const elevation = (x: number, y: number, z: number) =>
-		`https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`;
+	// AWS's open terrain tiles (Terrarium encoded, the default)
+	const elevation = {
+		url: (x: number, y: number, z: number) =>
+			`https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`,
+		maxZoom: 15
+	};
 
 	let placeLabel = $state('Mt. St Helens');
 	let surface = $state<keyof typeof surfaces>('Satellite');
@@ -159,7 +163,6 @@
 			url={surfaces[surface].url}
 			maxZoom={surfaces[surface].maxZoom}
 			{elevation}
-			elevationMaxZoom={15}
 			{debug}
 			tooltip
 		/>

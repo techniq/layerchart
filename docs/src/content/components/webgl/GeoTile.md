@@ -18,15 +18,16 @@ Map tiles from an XYZ tile service, with the core [GeoTile](/docs/components/Geo
 
 ## Terrain
 
-`elevation` raises the tiles from elevation tiles (ex. AWS's open terrain tiles, or Mapterhorn, in `'terrarium'` encoding; Terrain-RGB as `'mapbox'`), their meters through the chart's `z` scale. `maxZoom` and `elevationMaxZoom` say how deep each service goes: deeper tiles show part of their ancestor, enlarged.
+`elevation` raises the tiles from a second tile service of elevation tiles (ex. AWS's open terrain tiles, or Mapterhorn): their `url`, `encoding` (`'terrarium'`, or Terrain-RGB as `'mapbox'`), and `maxZoom`, their meters through the chart's `z` scale. `maxZoom` and the elevation's `maxZoom` say how deep each service goes: deeper tiles show part of their ancestor, enlarged.
 
 ```svelte
 <GeoTile
 	url={(x, y, z) => `https://tiles.versatiles.org/tiles/satellite-raster/${z}/${x}/${y}`}
 	maxZoom={12}
-	elevation={(x, y, z) =>
-		`https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`}
-	elevationMaxZoom={15}
+	elevation={{
+		url: (x, y, z) => `https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`,
+		maxZoom: 15
+	}}
 />
 ```
 
