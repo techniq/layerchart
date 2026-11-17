@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { randomLcg } from 'd3-random';
+	import { prefersReducedMotion } from 'svelte/motion';
 	import { Button, Field, SelectField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import {
 		Chart,
@@ -32,9 +33,10 @@
 		return { x: p.x * k, y: -p.y * k, z: p.z * k };
 	};
 
-	// Days since J2000, moving at `speed` days a second while playing
+	// Days since J2000, moving at `speed` days a second while playing (paused to begin with when
+	// reduced motion is preferred)
 	let days = $state(daysSinceJ2000(new Date()));
-	let playing = $state(true);
+	let playing = $state(!prefersReducedMotion.current);
 	const speeds = [
 		{ label: 'A day a second', value: 1 },
 		{ label: 'A week a second', value: 7 },

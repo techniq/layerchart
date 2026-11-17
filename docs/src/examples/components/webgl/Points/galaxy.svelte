@@ -2,6 +2,7 @@
 	import { RangeField, SelectField } from 'svelte-ux';
 	import { interpolateRgb } from 'd3-interpolate';
 	import { randomLcg } from 'd3-random';
+	import { prefersReducedMotion } from 'svelte/motion';
 	import { Chart, Points, WebGL, perspective } from '@layerchart/webgl';
 	import type { ChartState } from 'layerchart';
 
@@ -46,11 +47,11 @@
 	const colorOf = interpolateRgb('#ff6030', '#1b3984');
 
 	// Turning slowly about its middle, as a drag turns it (so the view doesn't refit as it goes), and
-	// still while dragged
+	// still while dragged, or when reduced motion is preferred
 	let context = $state<ChartState<any>>();
 	$effect(() => {
 		const transform = context?.transform;
-		if (!transform) return;
+		if (!transform || prefersReducedMotion.current) return;
 		let frame = 0;
 		let last = performance.now();
 		const tick = (now: number) => {
