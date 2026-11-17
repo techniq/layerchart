@@ -21,7 +21,7 @@
 		(val) => (typeof val === 'boolean' ? String(val) : val),
 		z.string().nullable().default(null)
 	);
-	export const schema = z.object({
+	const schema = z.object({
 		filter: stringParam,
 		category: stringParam,
 		/** `null` groups by component; `newest` groups by the month each example was added */
