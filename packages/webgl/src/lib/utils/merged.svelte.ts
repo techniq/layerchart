@@ -52,6 +52,8 @@ function append(target: number[], source: ArrayLike<number>) {
 export function createMerged({ items, opacity, strokeWidth, tooltip, behind }: MergedOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
 
   const material = new MeshLambertMaterial({
     vertexColors: true,
@@ -62,7 +64,7 @@ export function createMerged({ items, opacity, strokeWidth, tooltip, behind }: M
   mesh.castShadow = mesh.receiveShadow = true;
   const lineMaterial = new LineMaterial({ vertexColors: true, transparent: true });
   const lines = new LineSegments2(new LineSegmentsGeometry(), lineMaterial);
-  scene.root.add(mesh, lines);
+  layer.add(mesh, lines);
 
   /** Each item's row and the vertices it spans, to pick and to highlight */
   let spans: { d: any; start: number; count: number; color: [number, number, number, number] }[] =
@@ -211,7 +213,7 @@ export function createMerged({ items, opacity, strokeWidth, tooltip, behind }: M
 
   $effect(() => {
     return () => {
-      scene.root.remove(mesh, lines);
+      layer.remove(mesh, lines);
       mesh.geometry.dispose();
       lines.geometry.dispose();
       material.dispose();

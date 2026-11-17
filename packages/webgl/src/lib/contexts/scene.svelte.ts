@@ -74,12 +74,55 @@ const KEY = Symbol('LayerChart3DScene');
  * plot box up in the scene: chart `x` runs along three.js `x`, chart `y` along `z` (towards the
  * viewer), and height along `y` (up).
  */
+/**
+ * Height between marks' groups in the flat mode: above any mark's own lift off the floor (ex. a
+ * `Rule`'s half pixel), so the order marks are declared decides which covers which
+ */
+const LAYER_STEP = 2;
+
 export class SceneState {
   /** The group every mark adds to, its origin at the plot's `(0, 0)` corner on the floor */
   readonly root = new Group();
 
   /** Ask for a frame (the scene only renders on demand) */
   invalidate: () => void = () => {};
+
+  /** Each mark's own group, in the order marks set up (the order they're declared) */
+  readonly #layers: Group[] = [];
+  /** Whether marks stack in the order they're declared (the flat mode) */
+  #stacked = false;
+
+  /**
+   * A group for a mark's objects, in the scene from now until the mark goes.  Call during the
+   * mark's setup.  In the flat mode, each group stands `LAYER_STEP` above the one set up before
+   * it, so marks cover each other in the order they're declared (as in an `Svg` or `Canvas`
+   * layer) rather than by their small lifts off the floor; in a 3D view they're all at the floor.
+   */
+  layer() {
+    const group = new Group();
+    group.userData.layer = true;
+    this.#layers.push(group);
+    this.root.add(group);
+    this.#place();
+    $effect(() => () => {
+      this.#layers.splice(this.#layers.indexOf(group), 1);
+      this.root.remove(group);
+      this.#place();
+    });
+    return group;
+  }
+
+  /** Stack the marks' groups in the order they're declared (the flat mode), or not */
+  stack(stacked: boolean) {
+    if (stacked === this.#stacked) return;
+    this.#stacked = stacked;
+    this.#place();
+  }
+
+  #place() {
+    this.#layers.forEach((group, i) => group.position.setY(this.#stacked ? i * LAYER_STEP : 0));
+    this.invalidate();
+  }
 
   colors: ColorResolver | null = null;
   camera: Camera | null = null;

@@ -103,6 +103,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
 
   /** On a `globe`, a sphere wrapped in the image */
   const sphere = $derived(getSphere(ctx));
@@ -161,7 +163,7 @@
     flat
   );
   mesh.castShadow = mesh.receiveShadow = true;
-  scene.root.add(mesh);
+  layer.add(mesh);
 
   $effect(() => {
     const s = samples;
@@ -275,7 +277,7 @@
 
   $effect(() => {
     return () => {
-      scene.root.remove(mesh);
+      layer.remove(mesh);
       mesh.geometry.dispose();
       flat.dispose();
       lit.dispose();

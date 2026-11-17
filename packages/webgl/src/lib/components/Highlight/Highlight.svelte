@@ -123,6 +123,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
 
   const faint = 'color-mix(in oklab, var(--color-surface-content, currentColor) 20%, transparent)';
   const pointLook = $derived(typeof points === 'object' ? points : {});
@@ -194,7 +196,7 @@
   const lineMesh = new LineSegments2(new LineSegmentsGeometry(), lineMaterial);
   lineMesh.userData.unclipped = true;
   lineMesh.renderOrder = 1;
-  scene.root.add(lineMesh);
+  layer.add(lineMesh);
 
   $effect(() => {
     const p = at;
@@ -246,7 +248,7 @@
   });
   const shadowGroup = new Group();
   shadowGroup.userData.unclipped = true;
-  scene.root.add(shadowGroup);
+  layer.add(shadowGroup);
 
   $effect(() => {
     const p = at;
@@ -282,7 +284,7 @@
   });
 
   $effect(() => () => {
-    scene.root.remove(lineMesh, shadowGroup);
+    layer.remove(lineMesh, shadowGroup);
     lineMesh.geometry.dispose();
     lineMaterial.dispose();
     shadowMaterial.dispose();

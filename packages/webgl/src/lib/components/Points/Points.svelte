@@ -129,6 +129,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   /** What its `class` sets */
   const look = $derived(scene.style(className));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
@@ -321,7 +323,7 @@
       let mesh = pool[i];
       if (!mesh) {
         mesh = pool[i] = new Mesh(detailed);
-        scene.root.add(mesh);
+        layer.add(mesh);
         const picked = mesh;
         removePickables.push(
           scene.addPickable({
@@ -355,7 +357,7 @@
   $effect(() => {
     return () => {
       for (const remove of removePickables) remove();
-      for (const mesh of pool) scene.root.remove(mesh);
+      for (const mesh of pool) layer.remove(mesh);
       detailed.dispose();
       for (const material of materials.values()) material.dispose();
       for (const texture of textures.values()) texture.dispose();

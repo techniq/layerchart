@@ -140,6 +140,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   const sphere = $derived(getSphere(ctx));
 
   /** The tiles covering the chart (padding included), as the core `GeoTile` picks them */
@@ -350,7 +352,7 @@
   /** Every tile wanted, loaded or loading, by its images' URLs */
   const entries = new Map<string, Entry>();
   const group = new Group();
-  scene.root.add(group);
+  layer.add(group);
 
   /** Bumped as tiles load or go, for what depends on all of them (ex. the elevation's range) */
   let version = $state(0);
@@ -975,7 +977,7 @@
     clearTimeout(lookTimer);
     cancelAnimationFrame(fadeFrame);
     for (const [key, entry] of [...entries]) remove(key, entry);
-    scene.root.remove(group);
+    layer.remove(group);
     outlineMaterial.dispose();
     scene.invalidate();
   });

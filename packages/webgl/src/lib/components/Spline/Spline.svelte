@@ -86,6 +86,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   /** What its `class` sets */
   const look = $derived(scene.style(className));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 2);
@@ -226,7 +228,7 @@
         opacity: opacity * (look?.opacity ?? 1) * alpha,
       });
       const line = new Line2(geometry, material);
-      scene.root.add(line);
+      layer.add(line);
       // Each segment's row is the one at its nearer end
       const removePickable = tooltip
         ? scene.addPickable({
@@ -249,7 +251,7 @@
     return () => {
       for (const { line, removePickable } of objects) {
         removePickable?.();
-        scene.root.remove(line);
+        layer.remove(line);
         line.geometry.dispose();
         line.material.dispose();
       }

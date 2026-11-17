@@ -89,6 +89,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
 
   /** On a `globe`, relief raised out from it (no wireframe or contours there yet) */
   const sphere = $derived(getSphere(ctx));
@@ -133,7 +135,7 @@
   const mesh = new Mesh(new BufferGeometry(), material);
   mesh.castShadow = mesh.receiveShadow = true;
   const lines = createSegments();
-  scene.root.add(mesh, lines.object);
+  layer.add(mesh, lines.object);
 
   // The surface
   $effect(() => {
@@ -273,7 +275,7 @@
 
   $effect(() => {
     return () => {
-      scene.root.remove(mesh, lines.object);
+      layer.remove(mesh, lines.object);
       mesh.geometry.dispose();
       lines.dispose();
       material.dispose();

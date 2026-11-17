@@ -147,6 +147,8 @@
   const fill = $derived(fillProp ?? 'var(--color-surface-content, currentColor)');
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   const sphere = $derived(getSphere(ctx));
 
   /** With rows (`data`, or `x` / `y` reading the chart's), as the core `Text` */
@@ -223,7 +225,7 @@
   // Lying on the surface: each label painted onto a plane at its height
   const group = new Group();
   group.userData.unclipped = isUnclipped();
-  scene.root.add(group);
+  layer.add(group);
   /** Each plane's turn as given, before any half turn to read the right way round */
   const turns = new Map<Mesh, number>();
   /**
@@ -335,7 +337,7 @@
   $effect(() => {
     return () => {
       for (const labels of painted.values()) for (const { mesh } of labels) disposeLabel(mesh);
-      scene.root.remove(group);
+      layer.remove(group);
       scene.invalidate();
     };
   });

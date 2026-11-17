@@ -98,6 +98,8 @@
    * orthographic too), else from directly above
    */
   const view = $derived(ctx.view);
+  // Flat, marks cover each other in the order they're declared, as in an `Svg` or `Canvas` layer
+  $effect.pre(() => sceneState.stack(!view));
   const camera = $derived(
     view?.type === 'perspective' ? new PerspectiveCamera() : new OrthographicCamera()
   );

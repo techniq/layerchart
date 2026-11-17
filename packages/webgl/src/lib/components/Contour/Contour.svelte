@@ -51,6 +51,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
 
   const grid = $derived(sampleGrid(ctx, gridProps, pixelSize));
   const extent = $derived(grid ? gridExtent(grid.values) : null);
@@ -62,7 +64,7 @@
   });
 
   const lines = createSegments();
-  scene.root.add(lines.object);
+  layer.add(lines.object);
 
   $effect(() => {
     const segments =
@@ -83,7 +85,7 @@
 
   $effect(() => {
     return () => {
-      scene.root.remove(lines.object);
+      layer.remove(lines.object);
       lines.dispose();
       scene.invalidate();
     };

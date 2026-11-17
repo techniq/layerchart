@@ -182,6 +182,8 @@ export function createInstances({
 }: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   const litMaterial = createMaterial(true, !!ring);
   /** Made the first time something glows */
   let glowMaterial: MeshBasicMaterial | null = null;
@@ -224,10 +226,10 @@ export function createInstances({
     next.count = 0;
     next.castShadow = next.receiveShadow = true;
     if (mesh) {
-      scene.root.remove(mesh);
+      layer.remove(mesh);
       mesh.dispose();
     }
-    scene.root.add(next);
+    layer.add(next);
     mesh = next;
   });
 
@@ -372,7 +374,7 @@ export function createInstances({
 
   $effect(() => {
     return () => {
-      if (mesh) scene.root.remove(mesh);
+      if (mesh) layer.remove(mesh);
       mesh?.dispose();
       for (const shape of shapes) shape.dispose();
       litMaterial.dispose();

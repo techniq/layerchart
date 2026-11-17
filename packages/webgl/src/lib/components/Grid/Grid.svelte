@@ -75,6 +75,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   const walls = $derived(wallsProp ?? !!ctx.view);
 
   /** Spaced as `Axis` spaces them, if the ticks don't say */
@@ -92,7 +94,7 @@
   const planes = new Mesh(new BufferGeometry(), planeMaterial);
   // Under the marks wherever they meet
   lines.renderOrder = planes.renderOrder = -1;
-  scene.root.add(planes, lines);
+  layer.add(planes, lines);
 
   $effect(() => {
     const w = ctx.width;
@@ -159,7 +161,7 @@
 
   $effect(() => {
     return () => {
-      scene.root.remove(planes, lines);
+      layer.remove(planes, lines);
       lines.geometry.dispose();
       planes.geometry.dispose();
       lineMaterial.dispose();

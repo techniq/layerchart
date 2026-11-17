@@ -110,6 +110,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
   // Its labels lie beside the plot box, so aren't clipped to it
   setUnclipped();
 
@@ -225,7 +227,7 @@
   const lineMaterial = new LineBasicMaterial({ transparent: true, depthWrite: false });
   const lines = new LineSegments(new BufferGeometry(), lineMaterial);
   lines.userData.unclipped = true;
-  scene.root.add(lines);
+  layer.add(lines);
   $effect(() => {
     const w = ctx.width;
     const h = ctx.height;
@@ -271,7 +273,7 @@
     scene.invalidate();
   });
   $effect(() => () => {
-    scene.root.remove(lines);
+    layer.remove(lines);
     lines.geometry.dispose();
     lineMaterial.dispose();
   });
@@ -280,7 +282,7 @@
   // edge outward, so they turn with the walls as the floor's turn with the floor
   const wall = new Group();
   wall.userData.unclipped = true;
-  scene.root.add(wall);
+  layer.add(wall);
   $effect(() => {
     const planes: Mesh[] = [];
     if (placement === 'back') {
@@ -318,7 +320,7 @@
     };
   });
   $effect(() => () => {
-    scene.root.remove(wall);
+    layer.remove(wall);
     scene.invalidate();
   });
 

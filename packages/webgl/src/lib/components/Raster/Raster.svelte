@@ -68,6 +68,8 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
 
   /** On a `globe`, the colors wrapped around it */
   const sphere = $derived(getSphere(ctx));
@@ -87,7 +89,7 @@
     material
   );
   mesh.receiveShadow = true;
-  scene.root.add(mesh);
+  layer.add(mesh);
 
   $effect(() => {
     const g = grid;
@@ -163,7 +165,7 @@
 
   $effect(() => {
     return () => {
-      scene.root.remove(mesh);
+      layer.remove(mesh);
       mesh.geometry.dispose();
       material.map?.dispose();
       material.dispose();

@@ -20,6 +20,7 @@ import { getSphere, globe } from '../utils/globe.js';
 import { viewAngles } from '../utils/camera.js';
 import { orthographic, perspective } from '../index.js';
 import Marks from './__fixtures__/Marks.svelte';
+import Stacked from './__fixtures__/Stacked.svelte';
 
 /** Render, and wait for the marks to add their objects to the scene */
 async function renderMarks(props: Omit<Parameters<typeof render<typeof Marks>>[1], 'onScene'>) {
@@ -67,8 +68,12 @@ async function settled(read: () => number) {
 /** How far a perspective camera is from what it looks at (its near plane is a hundredth of it) */
 const reach = (scene: SceneState) => (scene.camera as PerspectiveCamera).near * 100;
 
+/** The objects marks put in the scene, looking through each mark's own layer */
+const layered = (scene: SceneState) =>
+  scene.root.children.flatMap((o) => (o.userData.layer ? o.children : [o]));
+
 const children = (scene: SceneState, is: 'isLine2' | 'isInstancedMesh') =>
-  scene.root.children.filter((o: Object3D) => (o as any)[is]);
+  layered(scene).filter((o: Object3D) => (o as any)[is]);
 
 const lines = ['a', 'b', 'c'].flatMap((key, i) =>
   Array.from({ length: 5 }, (_, t) => ({ key, t, value: t + i }))
@@ -147,7 +152,7 @@ describe('Spline and Area, as LayerChart draws them', () => {
       mark: 'area',
       chart: { ...chartProps, data: series.filter((d) => d.y != null) },
     });
-    const mesh = scene.root.children.find(
+    const mesh = layered(scene).find(
       (o) => (o as any).isMesh && !(o as any).isInstancedMesh
     ) as any;
     const positions = Array.from(mesh.geometry.attributes.position.array as Float32Array);
@@ -161,7 +166,7 @@ describe('Spline and Area, as LayerChart draws them', () => {
 
 describe('Polygon, as LayerChart draws it', () => {
   const merged = (scene: SceneState) =>
-    scene.root.children.find((o) => (o as any).isMesh && !(o as any).isInstancedMesh) as any;
+    layered(scene).find((o) => (o as any).isMesh && !(o as any).isInstancedMesh) as any;
   const extent = (scene: SceneState, axis: number) => {
     const values = Array.from(
       merged(scene).geometry.attributes.position.array as Float32Array
@@ -209,7 +214,7 @@ describe('Polygon, as LayerChart draws it', () => {
 
 describe('Arc, as LayerChart draws it', () => {
   const meshes = (scene: SceneState) =>
-    scene.root.children.filter(
+    layered(scene).filter(
       (o) =>
         (o as any).isMesh &&
         !(o as any).isInstancedMesh &&
@@ -264,7 +269,7 @@ describe('Arc, as LayerChart draws it', () => {
 describe('Rule and Vector, as LayerChart draws them', () => {
   /** Every outline segment's end points, `[x, y]` on the floor */
   const segments = (scene: SceneState) => {
-    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const lines = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     const start = lines?.geometry.attributes.instanceStart;
     const end = lines?.geometry.attributes.instanceEnd;
     return Array.from({ length: start?.count ?? 0 }, (_, i) => [
@@ -298,7 +303,7 @@ describe('Rule and Vector, as LayerChart draws them', () => {
       chart: { view: perspective },
       vector: { x: 100, y: 100, z: 20, length: 40, rotate: 90, tilt: 90, anchor: 'start' },
     });
-    const arrow = () => scene.root.children.find((o) => (o as any).isInstancedMesh) as any;
+    const arrow = () => layered(scene).find((o) => (o as any).isInstancedMesh) as any;
     await expect.poll(() => arrow()?.count ?? 0).toBe(1);
     const matrix = new Matrix4();
     arrow().getMatrixAt(0, matrix);
@@ -327,7 +332,7 @@ describe('Rule and Vector, as LayerChart draws them', () => {
       },
       vector: { length: 40, rotate: 'angle', tilt: 'lean', anchor: 'start' },
     });
-    const arrow = () => scene.root.children.find((o) => (o as any).isInstancedMesh) as any;
+    const arrow = () => layered(scene).find((o) => (o as any).isInstancedMesh) as any;
     await expect.poll(() => arrow()?.count ?? 0).toBe(1);
     const matrix = new Matrix4();
     arrow().getMatrixAt(0, matrix);
@@ -371,10 +376,10 @@ describe('Highlight, as LayerChart draws it on an isometric chart', () => {
       chart: chartProps,
       highlight: { data: row, lines: true, shadows: true, points: true, axis: 'both' },
     });
-    const lines = () => scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const lines = () => layered(scene).find((o) => (o as any).isLineSegments2) as any;
     // Across the floor at `x` and `y`, across both walls at its height, and up each at `x` / `y`
     await expect.poll(() => lines()?.geometry.attributes.instanceStart?.count ?? 0).toBe(6);
-    const spots = scene.root.children.find((o) => (o as any).isGroup && o.children.length) as any;
+    const spots = layered(scene).find((o) => (o as any).isGroup && o.children.length) as any;
     expect(spots.children).toHaveLength(3);
     // The point, facing the viewer at the row's height
     const [marker] = scene.markerSets.flat();
@@ -416,7 +421,7 @@ describe('Highlight, as LayerChart draws it on an isometric chart', () => {
       chart: chartProps,
       highlight: { lines: true, shadows: true, points: true },
     });
-    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const lines = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     expect(lines.visible).toBe(false);
     expect(scene.markerSets.flat()).toHaveLength(0);
   });
@@ -452,7 +457,9 @@ describe('GeoTile', () => {
     },
   };
   const meshes = (scene: SceneState) =>
-    scene.root.children.flatMap((o) => o.children).filter((o) => (o as any).isMesh) as any[];
+    layered(scene)
+      .flatMap((o) => o.children)
+      .filter((o) => (o as any).isMesh) as any[];
 
   it('draws a mesh per tile, raised by its elevation through the `z` scale', async () => {
     const scene = await renderMarks({
@@ -601,7 +608,7 @@ describe('Surface', () => {
     );
     /** The surface's highest point */
     const top = () => {
-      const mesh = scene?.root.children.find((o: any) => o.isMesh) as any;
+      const mesh = (scene ? layered(scene) : []).find((o: any) => o.isMesh) as any;
       const position = mesh?.geometry.getAttribute('position');
       if (!position) return NaN;
       let max = -Infinity;
@@ -629,7 +636,7 @@ describe('Surface', () => {
         contours: 20,
       },
     });
-    const lines = scene.root.children.find((o: any) => o.isLineSegments2) as any;
+    const lines = layered(scene).find((o: any) => o.isLineSegments2) as any;
     // Each segment a pair of points
     await expect
       .poll(() => lines.geometry.attributes.instanceStart?.count ?? 0)
@@ -643,7 +650,7 @@ describe('Surface', () => {
       // Two parameters, as a function sampled across the plot (as `Raster` reads `value`)
       surface: { value: (x: number, _y: number) => (x < 0.5 ? NaN : 1), pixelSize: 20 },
     });
-    const mesh = scene.root.children.find((o: any) => o.isMesh) as any;
+    const mesh = layered(scene).find((o: any) => o.isMesh) as any;
     await expect.poll(() => mesh.geometry.index?.count ?? 0).toBeGreaterThan(0);
     // Only the cells with all four corners in the right half are drawn
     const positions = mesh.geometry.getAttribute('position');
@@ -676,7 +683,7 @@ describe('GeoPath', () => {
       chart: { geo: { projection: geoIdentity } },
       geopath: { geojson: square, z: 20 },
     });
-    const mesh = scene.root.children.find((o: any) => o.isMesh) as any;
+    const mesh = layered(scene).find((o: any) => o.isMesh) as any;
     await expect.poll(() => mesh.geometry.getAttribute('position')?.count ?? 0).toBeGreaterThan(0);
     mesh.geometry.computeBoundingBox();
     expect(mesh.geometry.boundingBox.max.y).toBeCloseTo(20);
@@ -771,7 +778,7 @@ describe('Points glow and image', () => {
       points: { image: (d: { image?: HTMLCanvasElement }) => d.image, r: 10, tilt: 30 },
     });
     const meshes = () =>
-      scene.root.children.filter((o: any) => o.isMesh && !o.isInstancedMesh && o.material?.map);
+      layered(scene).filter((o: any) => o.isMesh && !o.isInstancedMesh && o.material?.map);
     await expect.poll(() => meshes().length).toBe(1);
     const [sphere] = meshes() as any[];
     expect(sphere.scale.x).toBeCloseTo(10);
@@ -796,7 +803,7 @@ describe('Points glow and image', () => {
       points: { image: 'image', r: 'size', rotate: 'spin', tilt: 'lean' },
     });
     const meshes = () =>
-      scene.root.children.filter((o: any) => o.isMesh && !o.isInstancedMesh && o.material?.map);
+      layered(scene).filter((o: any) => o.isMesh && !o.isInstancedMesh && o.material?.map);
     await expect.poll(() => meshes().length).toBe(1);
     const [sphere] = meshes() as any[];
     expect(sphere.material.map.image).toBe(canvas);
@@ -998,7 +1005,7 @@ describe('placed as LayerChart places its namesakes', () => {
       z: (d: any) => [d.depth, d.depth + 1],
     };
     const lines = (scene: SceneState) =>
-      scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+      layered(scene).find((o) => (o as any).isLineSegments2) as any;
     const segments = (scene: SceneState) =>
       lines(scene)?.visible === false
         ? 0
@@ -1035,7 +1042,7 @@ describe('placed as LayerChart places its namesakes', () => {
       chart: chartProps,
       link: { data: rows, x1: 'x', y1: 'y', z2: 'h' },
     });
-    const segments = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const segments = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
     expect(ends.slice(0, 6).map((v) => Math.round(v))).toEqual([
       Math.round(chart!.xScale(2)),
@@ -1053,7 +1060,7 @@ describe('placed as LayerChart places its namesakes', () => {
       chart: chartProps,
       link: { data: [{ source: { x: 10, y: 20 }, target: { x: 30, y: 40 } }] },
     });
-    const segments = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const segments = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
     expect(ends.slice(0, 6)).toEqual([10, 0, 20, 30, 0, 40]);
   });
@@ -1137,7 +1144,7 @@ describe('Light', () => {
       chart: { data: [{ x: 1, y: 1 }], x: 'x', y: 'y' },
       light: { type: 'point', x: 40, y: 60, z: 10, shadow: false },
     });
-    const light = () => scene.root.children.find((o: any) => o.isPointLight) as any;
+    const light = () => layered(scene).find((o: any) => o.isPointLight) as any;
     await expect.poll(() => !!light()).toBe(true);
     expect(light().position.toArray()).toEqual([40, 10, 60]);
     // Not fading with distance
@@ -1375,7 +1382,9 @@ describe('globe', () => {
       });
       const sphere = getSphere(chart!)!;
       const meshes = () =>
-        scene.root.children.flatMap((o) => o.children).filter((o) => (o as any).isMesh) as any[];
+        layered(scene)
+          .flatMap((o) => o.children)
+          .filter((o) => (o as any).isMesh) as any[];
       /** How near any tile comes to a point on the globe */
       const nearest = ([px, up, py]: number[]) => {
         let best = Infinity;
@@ -1765,7 +1774,7 @@ describe('GeoPath motion', () => {
     });
     await expect.poll(() => scene?.root.children.length ?? 0).toBeGreaterThan(0);
     const top = () => {
-      const mesh = scene!.root.children.find((o: any) => o.isMesh) as any;
+      const mesh = layered(scene!).find((o: any) => o.isMesh) as any;
       mesh.geometry.computeBoundingBox();
       return mesh.geometry.boundingBox?.max.y ?? 0;
     };
@@ -1784,7 +1793,7 @@ describe('GeoPath motion', () => {
 describe('strokes, as LayerChart’s marks take them', () => {
   /** How many line segments a mark's outlines draw */
   const segments = (scene: SceneState) => {
-    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const lines = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     return lines && lines.visible !== false
       ? (lines.geometry.attributes.instanceStart?.count ?? 0)
       : 0;
@@ -1841,7 +1850,7 @@ describe('strokes, as LayerChart’s marks take them', () => {
       contour: { value: (x: number, y: number) => x + y, strokeWidth: 3 },
     });
     await expect.poll(() => segments(scene)).toBeGreaterThan(0);
-    const lines = scene.root.children.find((o) => (o as any).isLineSegments2) as any;
+    const lines = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     expect(lines.material.linewidth).toBe(3);
   });
 
@@ -1942,5 +1951,42 @@ describe('strokes, as LayerChart’s marks take them', () => {
       points: { r: 10, stroke: 'black', strokeWidth: 4 },
     });
     await expect.poll(() => instanced(raised).length).toBe(1);
+  });
+});
+
+describe('marks covering each other', () => {
+  const rows = [
+    { x: 'a', y: 4 },
+    { x: 'b', y: 7 },
+  ];
+  /** How high each mark's objects stand off the floor: the rule's lines and the points' discs */
+  async function heights(order: 'rule-first' | 'points-first', view?: typeof perspective) {
+    let scene: SceneState | undefined;
+    render(Stacked, {
+      order,
+      chart: { data: rows, x: 'x', y: 'y', xScale: scaleBand(), yDomain: [0, 10], view },
+      onScene: (s: SceneState) => (scene = s),
+    });
+    const height = (is: string) => () => {
+      const layer = scene?.root.children.find(
+        (o) => o.userData.layer && o.children.some((c: any) => c[is])
+      );
+      return layer ? layer.position.y : NaN;
+    };
+    await expect.poll(height('isLineSegments2')).not.toBeNaN();
+    await expect.poll(height('isInstancedMesh')).not.toBeNaN();
+    return { rule: height('isLineSegments2')(), points: height('isInstancedMesh')() };
+  }
+
+  it('stacks in the order they’re declared when flat, as in an `Svg` or `Canvas` layer', async () => {
+    const ruleFirst = await heights('rule-first');
+    expect(ruleFirst.points).toBeGreaterThan(ruleFirst.rule);
+    const pointsFirst = await heights('points-first');
+    expect(pointsFirst.rule).toBeGreaterThan(pointsFirst.points);
+  });
+
+  it('leaves them at their own heights in a 3D view', async () => {
+    const { rule, points } = await heights('rule-first', perspective);
+    expect([rule, points]).toEqual([0, 0]);
   });
 });
