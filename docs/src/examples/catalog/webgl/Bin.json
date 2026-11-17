@@ -1,0 +1,126 @@
+{
+  "component": "Bin",
+  "examples": [
+    {
+      "name": "hexbin",
+      "title": "hexbin",
+      "path": "/docs/components/Bin/hexbin",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 29,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 30,
+          "line": "<Grid z={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis placement=\"bottom\" label=\"weight (kg)\" />"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 33,
+          "line": "<Bin size={21} z=\"count\" tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "state-population",
+      "title": "state population",
+      "path": "/docs/components/Bin/state-population",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 132,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 133,
+          "line": "<Light azimuth={315} altitude={22} intensity={1.1} shadow />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 137,
+          "line": "<Rect"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 145,
+          "line": "<GeoPath geojson={outline} fill=\"var(--color-surface-100)\" />"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 148,
+          "line": "<Bin"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 158,
+          "line": "<Link"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 165,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "walmart",
+      "title": "walmart",
+      "path": "/docs/components/Bin/walmart",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 32,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 33,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Bin",
+          "lineNumber": 43,
+          "line": "<Bin size={17} z=\"count\" tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "hexbin",
+      "component": "Bin",
+      "path": "/docs/components/Bin/hexbin",
+      "lineNumber": 33,
+      "line": "<Bin size={21} z=\"count\" tooltip />"
+    },
+    {
+      "example": "state-population",
+      "component": "Bin",
+      "path": "/docs/components/Bin/state-population",
+      "lineNumber": 148,
+      "line": "<Bin"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 43,
+      "line": "<Bin size={17} z=\"count\" tooltip />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.308Z"
+}

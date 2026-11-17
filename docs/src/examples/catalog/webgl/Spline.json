@@ -1,0 +1,139 @@
+{
+  "component": "Spline",
+  "examples": [
+    {
+      "name": "line3d",
+      "title": "line3d",
+      "path": "/docs/components/Spline/line3d",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 29,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 30,
+          "line": "<Grid />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 35,
+          "line": "<Spline strokeWidth={1.5} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "series",
+      "title": "series",
+      "path": "/docs/components/Spline/series",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 41,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 42,
+          "line": "<Grid y={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 43,
+          "line": "<Axis placement=\"bottom\" label=\"time\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 46,
+          "line": "<Spline strokeWidth={3} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "temperatures",
+      "title": "temperatures",
+      "path": "/docs/components/Spline/temperatures",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 73,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 74,
+          "line": "<Axis placement=\"back\" format=\"none\" label=\"Year\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 75,
+          "line": "<Spline strokeWidth={1} opacity={0.8} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 146,
+      "line": "<Spline data={frame} stroke={colorScale(row)} strokeWidth={1.5} />"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 242,
+      "line": "<Spline"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 271,
+      "line": "<Spline"
+    },
+    {
+      "example": "line3d",
+      "component": "Spline",
+      "path": "/docs/components/Spline/line3d",
+      "lineNumber": 35,
+      "line": "<Spline strokeWidth={1.5} />"
+    },
+    {
+      "example": "series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/series",
+      "lineNumber": 46,
+      "line": "<Spline strokeWidth={3} />"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 75,
+      "line": "<Spline strokeWidth={1} opacity={0.8} tooltip />"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 106,
+      "line": "<Spline strokeWidth={1} opacity={0.8} tooltip />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.338Z"
+}

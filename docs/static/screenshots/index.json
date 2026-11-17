@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-12T18:39:15.383Z",
-  "totalComponents": 82,
-  "totalExamples": 1036,
+  "generatedAt": "2026-11-17T06:33:38.833Z",
+  "totalComponents": 101,
+  "totalExamples": 1080,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2374,7 +2374,7 @@
         {
           "name": "isometric-pan-zoom",
           "path": "/example/Chart/isometric-pan-zoom",
-          "checksum": "d01d48d2d8e044a26f564140a436813c"
+          "checksum": "a4d1d913764d51ea9d225b78674c7f8a"
         },
         {
           "name": "isometric-pin-map",
@@ -2394,7 +2394,7 @@
         {
           "name": "isometric-scatter-3d",
           "path": "/example/Chart/isometric-scatter-3d",
-          "checksum": "3e8a72430f5c727d8c8b6ec5874dd131"
+          "checksum": "4728679e00ce47f9a62cab096c210675"
         },
         {
           "name": "isometric-stacked-columns",
@@ -2404,7 +2404,7 @@
         {
           "name": "isometric-treemap",
           "path": "/example/Chart/isometric-treemap",
-          "checksum": "c19517206b417c830b6e35633672d24e"
+          "checksum": "d8f600b2546d66c2aa45ced1cca86acf"
         },
         {
           "name": "mixed-marks-with-stack",
@@ -5590,6 +5590,321 @@
           "name": "unit-multiple",
           "path": "/example/Waffle/unit-multiple",
           "checksum": "4d00cb2d5ec1d77df1921eb49c7395ef"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Arc",
+      "examples": [
+        {
+          "name": "concentric",
+          "path": "/example/webgl/Arc/concentric",
+          "checksum": "dc2ce916e60b42c109a3b727bb191954"
+        },
+        {
+          "name": "pie",
+          "path": "/example/webgl/Arc/pie",
+          "checksum": "f16874df48266fbe58970ab995d560ba"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Area",
+      "examples": [
+        {
+          "name": "areas",
+          "path": "/example/webgl/Area/areas",
+          "checksum": "7434c694d3cd9c0ff51ef019b948a372"
+        },
+        {
+          "name": "ridgeline",
+          "path": "/example/webgl/Area/ridgeline",
+          "checksum": "f2ce03f7bab422203a1086bad58611c1"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Bars",
+      "examples": [
+        {
+          "name": "calendar",
+          "path": "/example/webgl/Bars/calendar",
+          "checksum": "bb37a43c73294daa8f23d74de09ef3ef"
+        },
+        {
+          "name": "columns",
+          "path": "/example/webgl/Bars/columns",
+          "checksum": "de1005038cf518052198a24c58de996c"
+        },
+        {
+          "name": "heatmap",
+          "path": "/example/webgl/Bars/heatmap",
+          "checksum": "e6659deed247e9b3de091b9e7c14ebf0"
+        },
+        {
+          "name": "stacked-columns",
+          "path": "/example/webgl/Bars/stacked-columns",
+          "checksum": "d4544bfbbfb3c159320750da9324bcf7"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Bin",
+      "examples": [
+        {
+          "name": "hexbin",
+          "path": "/example/webgl/Bin/hexbin",
+          "checksum": "ac8efc24e1e235f4a2180a8337e52886"
+        },
+        {
+          "name": "state-population",
+          "path": "/example/webgl/Bin/state-population",
+          "checksum": "232fe98faec9920f03e3c311e8944c63"
+        },
+        {
+          "name": "walmart",
+          "path": "/example/webgl/Bin/walmart",
+          "checksum": "64cff2bdb0f4f8bc6699f12e0a4dc21b"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Contour",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/webgl/Contour/basic",
+          "checksum": "581412eb59836e858894237662110197"
+        }
+      ]
+    },
+    {
+      "component": "webgl/GeoPath",
+      "examples": [
+        {
+          "name": "election",
+          "path": "/example/webgl/GeoPath/election",
+          "checksum": "b9eb8459bd6930e183850307ef1f90a0"
+        }
+      ]
+    },
+    {
+      "component": "webgl/GeoRaster",
+      "examples": [
+        {
+          "name": "globe",
+          "path": "/example/webgl/GeoRaster/globe",
+          "checksum": "e4064c012e0247febc978e63d4c3d3d6"
+        },
+        {
+          "name": "globe-textures",
+          "path": "/example/webgl/GeoRaster/globe-textures",
+          "checksum": "5ac0cead4942988bfef7b3c802f08f5e"
+        },
+        {
+          "name": "globe-tiles",
+          "path": "/example/webgl/GeoRaster/globe-tiles",
+          "checksum": "534c3105681560c6cda3cc1e993445d3"
+        },
+        {
+          "name": "planets",
+          "path": "/example/webgl/GeoRaster/planets",
+          "checksum": "17f6d86ea49ea94410f27b2319c610df"
+        },
+        {
+          "name": "projections",
+          "path": "/example/webgl/GeoRaster/projections",
+          "checksum": "8a3933086b35e7b71d2fe167e96be4e3"
+        },
+        {
+          "name": "terrain",
+          "path": "/example/webgl/GeoRaster/terrain",
+          "checksum": "02d4269d9d1b2df0a732d58ee9ab8449"
+        }
+      ]
+    },
+    {
+      "component": "webgl/GeoTile",
+      "examples": [
+        {
+          "name": "globe",
+          "path": "/example/webgl/GeoTile/globe",
+          "checksum": "995fab12e90664eabd726b6af2f4ff91"
+        },
+        {
+          "name": "terrain",
+          "path": "/example/webgl/GeoTile/terrain",
+          "checksum": "170c2d6c1071ff4418a3d94559bcb5fb"
+        },
+        {
+          "name": "zoomable",
+          "path": "/example/webgl/GeoTile/zoomable",
+          "checksum": "10d494a34f65a2627f71cdfc48e296cb"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Light",
+      "examples": [
+        {
+          "name": "buildings",
+          "path": "/example/webgl/Light/buildings",
+          "checksum": "1c66f32530e273c368d81a7f0e9635db"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Link",
+      "examples": [
+        {
+          "name": "pin-map",
+          "path": "/example/webgl/Link/pin-map",
+          "checksum": "2615fa82337c78fa3a2f04a863e9c52a"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Points",
+      "examples": [
+        {
+          "name": "galaxy",
+          "path": "/example/webgl/Points/galaxy",
+          "checksum": "2f704b838b1666ad255a34a24c99bb67"
+        },
+        {
+          "name": "scatter",
+          "path": "/example/webgl/Points/scatter",
+          "checksum": "0304c41b69499c6415529930a0baf411"
+        },
+        {
+          "name": "scatter-3d",
+          "path": "/example/webgl/Points/scatter-3d",
+          "checksum": "f891d8d8098f6121456e509a377cca01"
+        },
+        {
+          "name": "scatter-with-svg",
+          "path": "/example/webgl/Points/scatter-with-svg",
+          "checksum": "fe8dad2edae0848053677e5862838b8d"
+        },
+        {
+          "name": "solar-system",
+          "path": "/example/webgl/Points/solar-system",
+          "checksum": "cd39c362a328d9eeb10c555643c739ea"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Polygon",
+      "examples": [
+        {
+          "name": "tree",
+          "path": "/example/webgl/Polygon/tree",
+          "checksum": "b27541974fbb034f31cccfdbff4ae97b"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Raster",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/webgl/Raster/basic",
+          "checksum": "f90599045d2efc3986e39daf9b7bac0a"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Rect",
+      "examples": [
+        {
+          "name": "treemap",
+          "path": "/example/webgl/Rect/treemap",
+          "checksum": "b4c2fe53b60cdc0a2b465d3a4bf4b61d"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Rule",
+      "examples": [
+        {
+          "name": "lollipop",
+          "path": "/example/webgl/Rule/lollipop",
+          "checksum": "a8a12aa612ee7f519c1a440220939be2"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Spline",
+      "examples": [
+        {
+          "name": "line3d",
+          "path": "/example/webgl/Spline/line3d",
+          "checksum": "acd66c2ffb5975fba45639718b365811"
+        },
+        {
+          "name": "series",
+          "path": "/example/webgl/Spline/series",
+          "checksum": "5bdb989579e5821ba7deb41bfd72a2bf"
+        },
+        {
+          "name": "temperatures",
+          "path": "/example/webgl/Spline/temperatures",
+          "checksum": "6336bb246214f65241bc99e9cda2a941"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Surface",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/webgl/Surface/basic",
+          "checksum": "28dd5b49b8afb592cae1d250f1aaa277"
+        },
+        {
+          "name": "math-functions",
+          "path": "/example/webgl/Surface/math-functions",
+          "checksum": "ee9277ca18c4ab71250f7b92384fde92"
+        },
+        {
+          "name": "terrain",
+          "path": "/example/webgl/Surface/terrain",
+          "checksum": "7de3059b110f09fc00a760eda7510123"
+        },
+        {
+          "name": "us-elevation",
+          "path": "/example/webgl/Surface/us-elevation",
+          "checksum": "8516f793b4882da92e201f86e67c2dc7"
+        },
+        {
+          "name": "volcano",
+          "path": "/example/webgl/Surface/volcano",
+          "checksum": "806dbde91ee2e2adf2822335259d5b16"
+        },
+        {
+          "name": "world-elevation",
+          "path": "/example/webgl/Surface/world-elevation",
+          "checksum": "3f7a65712c5cca2335eb1f693de37acf"
+        }
+      ]
+    },
+    {
+      "component": "webgl/Vector",
+      "examples": [
+        {
+          "name": "field",
+          "path": "/example/webgl/Vector/field",
+          "checksum": "1a097358e99a781a5495e6d7a2d1272b"
+        }
+      ]
+    },
+    {
+      "component": "webgl/WebGL",
+      "examples": [
+        {
+          "name": "playground",
+          "path": "/example/webgl/WebGL/playground",
+          "checksum": "b0f5167aa9a5b34e11a5244cabf79738"
         }
       ]
     }

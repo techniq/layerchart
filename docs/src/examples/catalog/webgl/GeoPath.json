@@ -1,0 +1,118 @@
+{
+  "component": "GeoPath",
+  "examples": [
+    {
+      "name": "election",
+      "title": "election",
+      "path": "/docs/components/GeoPath/election",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 59,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 60,
+          "line": "<GeoPath"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "state-population",
+      "component": "Bin",
+      "path": "/docs/components/Bin/state-population",
+      "lineNumber": 145,
+      "line": "<GeoPath geojson={outline} fill=\"var(--color-surface-100)\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 33,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 38,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "election",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election",
+      "lineNumber": 60,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 37,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 41,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "globe-tiles",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe-tiles",
+      "lineNumber": 102,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} fill=\"var(--color-surface-200)\" />"
+    },
+    {
+      "example": "globe-tiles",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe-tiles",
+      "lineNumber": 106,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 66,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 71,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable",
+      "lineNumber": 43,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "buildings",
+      "component": "Light",
+      "path": "/docs/components/Light/buildings",
+      "lineNumber": 49,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "pin-map",
+      "component": "Link",
+      "path": "/docs/components/Link/pin-map",
+      "lineNumber": 62,
+      "line": "<GeoPath"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.311Z"
+}

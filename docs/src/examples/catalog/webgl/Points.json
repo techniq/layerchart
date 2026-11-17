@@ -1,0 +1,226 @@
+{
+  "component": "Points",
+  "examples": [
+    {
+      "name": "galaxy",
+      "title": "galaxy",
+      "path": "/docs/components/Points/galaxy",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 116,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 117,
+          "line": "<Points r={0.4} fill={(d) => colorOf(d.out)} glow class=\"mix-blend-plus-lighter\" />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T06:26:47.000Z"
+    },
+    {
+      "name": "scatter",
+      "title": "scatter",
+      "path": "/docs/components/Points/scatter",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 51,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 52,
+          "line": "<Grid />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 53,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 55,
+          "line": "<Points r={1.5} opacity={0.6} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 59,
+          "line": "<Highlight points lines axis=\"both\" />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "scatter-3d",
+      "title": "scatter 3d",
+      "path": "/docs/components/Points/scatter-3d",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 74,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 75,
+          "line": "<Grid />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 76,
+          "line": "<Axis placement=\"bottom\" label=\"x\" tickLabelProps={labelProps} {labelProps} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 80,
+          "line": "<Highlight lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 81,
+          "line": "<Points r={6} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "scatter-with-svg",
+      "title": "scatter with svg",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "components": [
+        {
+          "component": "Grid",
+          "lineNumber": 52,
+          "line": "<Grid x y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 53,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "WebGL",
+          "lineNumber": 57,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 58,
+          "line": "<Points r={1.5} opacity={0.6} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 62,
+          "line": "<Highlight points lines axis=\"both\" />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "solar-system",
+      "title": "solar system",
+      "path": "/docs/components/Points/solar-system",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 227,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 229,
+          "line": "<Light type=\"point\" x={sun[0]} y={sun[1]} z={0} intensity={1.4} />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 232,
+          "line": "<Points"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 242,
+          "line": "<Spline"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 283,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T06:26:47.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "pin-map",
+      "component": "Link",
+      "path": "/docs/components/Link/pin-map",
+      "lineNumber": 75,
+      "line": "<Points data={pins} x=\"x\" y=\"y\" z=\"population\" r={5} fill=\"var(--color-primary)\" tooltip />"
+    },
+    {
+      "example": "galaxy",
+      "component": "Points",
+      "path": "/docs/components/Points/galaxy",
+      "lineNumber": 117,
+      "line": "<Points r={0.4} fill={(d) => colorOf(d.out)} glow class=\"mix-blend-plus-lighter\" />"
+    },
+    {
+      "example": "scatter",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter",
+      "lineNumber": 55,
+      "line": "<Points r={1.5} opacity={0.6} />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 81,
+      "line": "<Points r={6} tooltip />"
+    },
+    {
+      "example": "scatter-with-svg",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "lineNumber": 58,
+      "line": "<Points r={1.5} opacity={0.6} />"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 232,
+      "line": "<Points"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 250,
+      "line": "<Points"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 258,
+      "line": "<Points"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/docs/components/Rule/lollipop",
+      "lineNumber": 31,
+      "line": "<Points class=\"fill-secondary\" />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.328Z"
+}

@@ -4161,35 +4161,35 @@
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 83,
+      "lineNumber": 82,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 85,
+      "lineNumber": 84,
       "line": "<Tooltip.List>"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 86,
+      "lineNumber": 85,
       "line": "<Tooltip.Item label=\"x\" value={data.x} format=\"decimal\" />"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 87,
+      "lineNumber": 86,
       "line": "<Tooltip.Item label=\"y\" value={data.y} format=\"decimal\" />"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 88,
+      "lineNumber": 87,
       "line": "<Tooltip.Item label=\"z\" value={data.z} format=\"decimal\" />"
     },
     {
@@ -4224,28 +4224,28 @@
       "example": "isometric-treemap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-treemap",
-      "lineNumber": 138,
+      "lineNumber": 139,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "isometric-treemap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-treemap",
-      "lineNumber": 140,
+      "lineNumber": 141,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "isometric-treemap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-treemap",
-      "lineNumber": 148,
+      "lineNumber": 149,
       "line": "<Tooltip.List>"
     },
     {
       "example": "isometric-treemap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-treemap",
-      "lineNumber": 149,
+      "lineNumber": 150,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
@@ -8491,5 +8491,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:37.082Z"
+  "updatedAt": "2026-11-17T06:28:17.492Z"
 }

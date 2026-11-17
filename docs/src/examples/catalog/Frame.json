@@ -170,14 +170,14 @@
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 59,
+      "lineNumber": 58,
       "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
     },
     {
@@ -244,5 +244,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.272Z"
+  "updatedAt": "2026-11-17T06:28:16.636Z"
 }

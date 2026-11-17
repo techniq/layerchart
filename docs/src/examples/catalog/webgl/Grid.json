@@ -1,0 +1,98 @@
+{
+  "component": "Grid",
+  "examples": [],
+  "usage": [
+    {
+      "example": "areas",
+      "component": "Area",
+      "path": "/docs/components/Area/areas",
+      "lineNumber": 54,
+      "line": "<Grid y={false} />"
+    },
+    {
+      "example": "columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/columns",
+      "lineNumber": 38,
+      "line": "<Grid x={false} y={false} />"
+    },
+    {
+      "example": "heatmap",
+      "component": "Bars",
+      "path": "/docs/components/Bars/heatmap",
+      "lineNumber": 38,
+      "line": "<Grid x={false} y={false} />"
+    },
+    {
+      "example": "stacked-columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/stacked-columns",
+      "lineNumber": 34,
+      "line": "<Grid x={false} y={false} />"
+    },
+    {
+      "example": "hexbin",
+      "component": "Bin",
+      "path": "/docs/components/Bin/hexbin",
+      "lineNumber": 30,
+      "line": "<Grid z={false} />"
+    },
+    {
+      "example": "scatter",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter",
+      "lineNumber": 52,
+      "line": "<Grid />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 75,
+      "line": "<Grid />"
+    },
+    {
+      "example": "scatter-with-svg",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "lineNumber": 52,
+      "line": "<Grid x y />"
+    },
+    {
+      "example": "line3d",
+      "component": "Spline",
+      "path": "/docs/components/Spline/line3d",
+      "lineNumber": 30,
+      "line": "<Grid />"
+    },
+    {
+      "example": "series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/series",
+      "lineNumber": 42,
+      "line": "<Grid y={false} />"
+    },
+    {
+      "example": "basic",
+      "component": "Surface",
+      "path": "/docs/components/Surface/basic",
+      "lineNumber": 20,
+      "line": "<Grid />"
+    },
+    {
+      "example": "field",
+      "component": "Vector",
+      "path": "/docs/components/Vector/field",
+      "lineNumber": 54,
+      "line": "<Grid />"
+    },
+    {
+      "example": "playground",
+      "component": "WebGL",
+      "path": "/docs/components/WebGL/playground",
+      "lineNumber": 119,
+      "line": "<Grid x={false} y={false} />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.318Z"
+}

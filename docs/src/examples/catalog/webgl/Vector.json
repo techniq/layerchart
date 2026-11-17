@@ -1,0 +1,44 @@
+{
+  "component": "Vector",
+  "examples": [
+    {
+      "name": "field",
+      "title": "field",
+      "path": "/docs/components/Vector/field",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 53,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 54,
+          "line": "<Grid />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 55,
+          "line": "<Axis placement=\"bottom\" label=\"x\" />"
+        },
+        {
+          "component": "Vector",
+          "lineNumber": 58,
+          "line": "<Vector"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "field",
+      "component": "Vector",
+      "path": "/docs/components/Vector/field",
+      "lineNumber": 58,
+      "line": "<Vector"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.344Z"
+}

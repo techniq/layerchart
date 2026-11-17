@@ -597,7 +597,7 @@
       "example": "isometric-treemap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-treemap",
-      "lineNumber": 119,
+      "lineNumber": 120,
       "line": "<Text"
     },
     {
@@ -1217,5 +1217,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:14.175Z"
+  "updatedAt": "2026-11-17T06:28:17.444Z"
 }

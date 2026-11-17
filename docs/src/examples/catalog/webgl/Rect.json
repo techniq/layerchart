@@ -1,0 +1,51 @@
+{
+  "component": "Rect",
+  "examples": [
+    {
+      "name": "treemap",
+      "title": "treemap",
+      "path": "/docs/components/Rect/treemap",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 83,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 84,
+          "line": "<Light {azimuth} {altitude} intensity={1.3} {shadow} />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 86,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 99,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "state-population",
+      "component": "Bin",
+      "path": "/docs/components/Bin/state-population",
+      "lineNumber": 137,
+      "line": "<Rect"
+    },
+    {
+      "example": "treemap",
+      "component": "Rect",
+      "path": "/docs/components/Rect/treemap",
+      "lineNumber": 86,
+      "line": "<Rect"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.334Z"
+}

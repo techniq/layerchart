@@ -377,14 +377,14 @@
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 66,
+      "lineNumber": 65,
       "line": "<Highlight data={hovered} lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Highlight"
     },
     {
@@ -703,5 +703,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-10-16T16:15:13.997Z"
+  "updatedAt": "2026-11-17T06:28:16.879Z"
 }

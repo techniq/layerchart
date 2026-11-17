@@ -1,0 +1,79 @@
+{
+  "component": "Arc",
+  "examples": [
+    {
+      "name": "concentric",
+      "title": "concentric",
+      "path": "/docs/components/Arc/concentric",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 22,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 23,
+          "line": "<Arc"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "pie",
+      "title": "pie",
+      "path": "/docs/components/Arc/pie",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 50,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 54,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 63,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/docs/components/Arc/concentric",
+      "lineNumber": 23,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/docs/components/Arc/concentric",
+      "lineNumber": 32,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/docs/components/Arc/concentric",
+      "lineNumber": 42,
+      "line": "<Arc"
+    },
+    {
+      "example": "pie",
+      "component": "Arc",
+      "path": "/docs/components/Arc/pie",
+      "lineNumber": 54,
+      "line": "<Arc"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.299Z"
+}

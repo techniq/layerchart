@@ -427,7 +427,7 @@
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Grid x y />"
     },
     {
@@ -441,7 +441,7 @@
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 60,
+      "lineNumber": 59,
       "line": "<Grid x y z />"
     },
     {
@@ -550,5 +550,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.504Z"
+  "updatedAt": "2026-11-17T06:28:16.844Z"
 }

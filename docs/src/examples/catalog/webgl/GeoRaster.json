@@ -1,0 +1,189 @@
+{
+  "component": "GeoRaster",
+  "examples": [
+    {
+      "name": "globe",
+      "title": "globe",
+      "path": "/docs/components/GeoRaster/globe",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 35,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 36,
+          "line": "<GeoRaster image=\"/images/blue-marble.jpg\" tooltip />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 37,
+          "line": "<GeoPath"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "globe-textures",
+      "title": "globe textures",
+      "path": "/docs/components/GeoRaster/globe-textures",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 162,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 164,
+          "line": "<GeoRaster image={texture} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "globe-tiles",
+      "title": "globe tiles",
+      "path": "/docs/components/GeoRaster/globe-tiles",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 100,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 102,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} fill=\"var(--color-surface-200)\" />"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 104,
+          "line": "<GeoRaster {image} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "planets",
+      "title": "planets",
+      "path": "/docs/components/GeoRaster/planets",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 89,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 91,
+          "line": "<Light azimuth={250} altitude={20} intensity={1.1} />"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 93,
+          "line": "<GeoRaster image={planet} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "projections",
+      "title": "projections",
+      "path": "/docs/components/GeoRaster/projections",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 64,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 65,
+          "line": "<GeoRaster image=\"/images/blue-marble.jpg\" pixelSize={3} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 66,
+          "line": "<GeoPath"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "terrain",
+      "title": "terrain",
+      "path": "/docs/components/GeoRaster/terrain",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 200,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 201,
+          "line": "<Light azimuth={300} altitude={35} intensity={1.2} />"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 204,
+          "line": "<GeoRaster"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 36,
+      "line": "<GeoRaster image=\"/images/blue-marble.jpg\" tooltip />"
+    },
+    {
+      "example": "globe-textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe-textures",
+      "lineNumber": 164,
+      "line": "<GeoRaster image={texture} />"
+    },
+    {
+      "example": "globe-tiles",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe-tiles",
+      "lineNumber": 104,
+      "line": "<GeoRaster {image} />"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 93,
+      "line": "<GeoRaster image={planet} />"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 65,
+      "line": "<GeoRaster image=\"/images/blue-marble.jpg\" pixelSize={3} />"
+    },
+    {
+      "example": "terrain",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/terrain",
+      "lineNumber": 204,
+      "line": "<GeoRaster"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.314Z"
+}

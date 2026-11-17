@@ -1,0 +1,199 @@
+{
+  "component": "Surface",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Surface/basic",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 19,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 20,
+          "line": "<Grid />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"bottom\" label=\"x\" />"
+        },
+        {
+          "component": "Surface",
+          "lineNumber": 24,
+          "line": "<Surface"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "math-functions",
+      "title": "math functions",
+      "path": "/docs/components/Surface/math-functions",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 129,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 130,
+          "line": "<Axis placement=\"bottom\" label=\"x\" />"
+        },
+        {
+          "component": "Surface",
+          "lineNumber": 133,
+          "line": "<Surface"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "terrain",
+      "title": "terrain",
+      "path": "/docs/components/Surface/terrain",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 159,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 160,
+          "line": "<Light {azimuth} {altitude} intensity={1.2} {shadow} />"
+        },
+        {
+          "component": "Surface",
+          "lineNumber": 163,
+          "line": "<Surface value={terrain.elevation} pixelSize={2} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "us-elevation",
+      "title": "us elevation",
+      "path": "/docs/components/Surface/us-elevation",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 80,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 81,
+          "line": "<Light {azimuth} {altitude} intensity={1.1} {shadow} />"
+        },
+        {
+          "component": "Surface",
+          "lineNumber": 84,
+          "line": "<Surface value={elevation} pixelSize={3} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "volcano",
+      "title": "volcano",
+      "path": "/docs/components/Surface/volcano",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 42,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 43,
+          "line": "<Light azimuth={315} altitude={35} intensity={0.9} shadow />"
+        },
+        {
+          "component": "Surface",
+          "lineNumber": 45,
+          "line": "<Surface"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "world-elevation",
+      "title": "world elevation",
+      "path": "/docs/components/Surface/world-elevation",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 81,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 82,
+          "line": "<Light azimuth={315} altitude={35} />"
+        },
+        {
+          "component": "Surface",
+          "lineNumber": 86,
+          "line": "<Surface value={elevation} pixelSize={3} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Surface",
+      "path": "/docs/components/Surface/basic",
+      "lineNumber": 24,
+      "line": "<Surface"
+    },
+    {
+      "example": "math-functions",
+      "component": "Surface",
+      "path": "/docs/components/Surface/math-functions",
+      "lineNumber": 133,
+      "line": "<Surface"
+    },
+    {
+      "example": "terrain",
+      "component": "Surface",
+      "path": "/docs/components/Surface/terrain",
+      "lineNumber": 163,
+      "line": "<Surface value={terrain.elevation} pixelSize={2} tooltip />"
+    },
+    {
+      "example": "us-elevation",
+      "component": "Surface",
+      "path": "/docs/components/Surface/us-elevation",
+      "lineNumber": 84,
+      "line": "<Surface value={elevation} pixelSize={3} tooltip />"
+    },
+    {
+      "example": "volcano",
+      "component": "Surface",
+      "path": "/docs/components/Surface/volcano",
+      "lineNumber": 45,
+      "line": "<Surface"
+    },
+    {
+      "example": "world-elevation",
+      "component": "Surface",
+      "path": "/docs/components/Surface/world-elevation",
+      "lineNumber": 86,
+      "line": "<Surface value={elevation} pixelSize={3} tooltip />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.341Z"
+}

@@ -1,0 +1,352 @@
+{
+  "component": "WebGL",
+  "examples": [
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/WebGL/playground",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 118,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 119,
+          "line": "<Grid x={false} y={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 120,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 123,
+          "line": "<Bars tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/docs/components/Arc/concentric",
+      "lineNumber": 22,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "pie",
+      "component": "Arc",
+      "path": "/docs/components/Arc/pie",
+      "lineNumber": 50,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "areas",
+      "component": "Area",
+      "path": "/docs/components/Area/areas",
+      "lineNumber": 53,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 138,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "calendar",
+      "component": "Bars",
+      "path": "/docs/components/Bars/calendar",
+      "lineNumber": 44,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/columns",
+      "lineNumber": 37,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "heatmap",
+      "component": "Bars",
+      "path": "/docs/components/Bars/heatmap",
+      "lineNumber": 37,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "stacked-columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/stacked-columns",
+      "lineNumber": 33,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "hexbin",
+      "component": "Bin",
+      "path": "/docs/components/Bin/hexbin",
+      "lineNumber": 29,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "state-population",
+      "component": "Bin",
+      "path": "/docs/components/Bin/state-population",
+      "lineNumber": 132,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "walmart",
+      "component": "Bin",
+      "path": "/docs/components/Bin/walmart",
+      "lineNumber": 32,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "basic",
+      "component": "Contour",
+      "path": "/docs/components/Contour/basic",
+      "lineNumber": 23,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "election",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/election",
+      "lineNumber": 59,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 35,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "globe-textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe-textures",
+      "lineNumber": 162,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "globe-tiles",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe-tiles",
+      "lineNumber": 100,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 89,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 64,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "terrain",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/terrain",
+      "lineNumber": 200,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "globe",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/globe",
+      "lineNumber": 31,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "terrain",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/terrain",
+      "lineNumber": 159,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable",
+      "lineNumber": 41,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "buildings",
+      "component": "Light",
+      "path": "/docs/components/Light/buildings",
+      "lineNumber": 46,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "pin-map",
+      "component": "Link",
+      "path": "/docs/components/Link/pin-map",
+      "lineNumber": 61,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "galaxy",
+      "component": "Points",
+      "path": "/docs/components/Points/galaxy",
+      "lineNumber": 116,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "scatter",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter",
+      "lineNumber": 51,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 74,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "scatter-with-svg",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "lineNumber": 57,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 227,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "tree",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/tree",
+      "lineNumber": 43,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "basic",
+      "component": "Raster",
+      "path": "/docs/components/Raster/basic",
+      "lineNumber": 18,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "treemap",
+      "component": "Rect",
+      "path": "/docs/components/Rect/treemap",
+      "lineNumber": 83,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/docs/components/Rule/lollipop",
+      "lineNumber": 29,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "line3d",
+      "component": "Spline",
+      "path": "/docs/components/Spline/line3d",
+      "lineNumber": 29,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/series",
+      "lineNumber": 41,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 73,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 102,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "basic",
+      "component": "Surface",
+      "path": "/docs/components/Surface/basic",
+      "lineNumber": 19,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "math-functions",
+      "component": "Surface",
+      "path": "/docs/components/Surface/math-functions",
+      "lineNumber": 129,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "terrain",
+      "component": "Surface",
+      "path": "/docs/components/Surface/terrain",
+      "lineNumber": 159,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "us-elevation",
+      "component": "Surface",
+      "path": "/docs/components/Surface/us-elevation",
+      "lineNumber": 80,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "volcano",
+      "component": "Surface",
+      "path": "/docs/components/Surface/volcano",
+      "lineNumber": 42,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "world-elevation",
+      "component": "Surface",
+      "path": "/docs/components/Surface/world-elevation",
+      "lineNumber": 81,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "field",
+      "component": "Vector",
+      "path": "/docs/components/Vector/field",
+      "lineNumber": 53,
+      "line": "<WebGL>"
+    },
+    {
+      "example": "playground",
+      "component": "WebGL",
+      "path": "/docs/components/WebGL/playground",
+      "lineNumber": 118,
+      "line": "<WebGL>"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.346Z"
+}
