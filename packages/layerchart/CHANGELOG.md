@@ -1,5 +1,37 @@
 # LayerChart
 
+## 2.11.0
+
+### Minor Changes
+
+- feat(Chart): Add `perspective` and `orthographic` views for 3D layers (ex. `@layerchart/webgl`) ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- feat(Chart): Add `MarkInfo.zExtent`, so a mark's own heights widen an automatic `zDomain` ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- feat: Export `binCells`, `binGrid`, and `isScaleLinear` for drawing marks in other layers (ex. `@layerchart/webgl`) ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- feat(TransformContext): Add `rotationExtent` (or `rotateExtent` / `tiltExtent`) to limit how far a drag turns a `view` or globe, and pass the turned `rotation` to `constrain` ([#985](https://github.com/techniq/layerchart/pull/985))
+
+### Patch Changes
+
+- fix(TransformContext): Don't zoom in on the double click two quick drags make ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(Highlight): Follow a `domain` pan or zoom at once rather than springing after it ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(Axis): Space ticks evenly along every axis of an `isometric` chart, rather than wider along `x` ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(Chart): Turn a panned `isometric` view about what's in the middle rather than the floor's center ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- refactor(isometric): Rename the view's `impl` to `isometric`, and `IsometricImpl` to `Isometric` (the old type name kept, deprecated) ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(Spline, Area): Color by a numeric data key (`stroke="value"`) without splitting into a line per value ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(TooltipContext): Rebuild a `quadtree` tooltip once a `domain` pan or zoom settles, rather than at every step ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(TransformContext): Zoom on a slightly diagonal `shift` scroll (ex. a trackpad swipe) rather than panning a `domain` sideways ([#985](https://github.com/techniq/layerchart/pull/985))
+
+- fix(Tooltip): Appear at the pointer when shown again (ex. after a drag), rather than gliding from where it was last ([#985](https://github.com/techniq/layerchart/pull/985))
+
 ## 2.10.1
 
 ### Patch Changes
