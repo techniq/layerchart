@@ -8,6 +8,7 @@ import {
   fitIsometricFloor,
   floorCorner,
   isometricLift,
+  isometricPivot,
   paintOrder,
   planeCircle,
   screenToFloor,
@@ -38,6 +39,7 @@ const geometry = {
   highlightShadows,
   highlightWallLines,
   isometricLift,
+  isometricPivot,
   paintOrder,
   planeCircle,
   screenToFloor,
@@ -67,22 +69,25 @@ export type IsometricRenderers = {
  * (`ctx.isometric`) rather than imported by the marks, so charts that never use `isometric` don't
  * bundle it.
  */
-export type IsometricImpl = typeof geometry & IsometricRenderers;
+export type Isometric = typeof geometry & IsometricRenderers;
+
+/** @deprecated Renamed `Isometric` */
+export type IsometricImpl = Isometric;
 
 export type IsometricView = {
   type: 'isometric';
   options: IsometricOptions;
-  impl: IsometricImpl;
+  isometric: Isometric;
 };
 
 /** The `isometric` view function, drawing marks with height with `renderers` */
 export function createIsometric(renderers: IsometricRenderers) {
-  const impl: IsometricImpl = { ...geometry, ...renderers };
+  const code: Isometric = { ...geometry, ...renderers };
   /**
    * Draw the chart's plot area as a floor seen at an angle, for a `Chart`'s `view`:
    * `view={isometric}` for true isometric, or `view={isometric({ rotate: -30, tilt: 60 })}`.
    */
   return function isometric(options: IsometricOptions = {}): IsometricView {
-    return { type: 'isometric', options, impl };
+    return { type: 'isometric', options, isometric: code };
   };
 }

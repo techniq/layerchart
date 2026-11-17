@@ -17,6 +17,7 @@ const viewOnly = [
   'fitIsometricFloor',
   'floorCorner',
   'isometricLift',
+  'isometricPivot',
   'paintOrder',
   'planeCircle',
   'screenToFloor',
@@ -80,6 +81,20 @@ describe('the isometric view', () => {
           offenders.push(`${file}: ${statement.replace(/\s+/g, ' ')}`);
       }
     }
+    expect(offenders).toEqual([]);
+  });
+});
+
+describe('the camera views', () => {
+  it("are the only ones to fit a floor's aspect, so charts without a view don't bundle it", () => {
+    const offenders = sources(lib)
+      .map((path) => relative(lib, path))
+      .filter((file) => !file.startsWith('views/') && file !== 'utils/isometric.ts')
+      .filter((file) =>
+        /import\s+(?!type\s)[^;]*?from\s*'[^']*floorAspect/.test(
+          readFileSync(join(lib, file), 'utf8')
+        )
+      );
     expect(offenders).toEqual([]);
   });
 });

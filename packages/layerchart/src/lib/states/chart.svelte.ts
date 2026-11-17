@@ -22,14 +22,11 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 import {
-  applyMatrix,
-  invertMatrix,
   multiplyMatrix,
   ISOMETRIC_TILT,
   type AffineMatrix,
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
-import { autoFloorAspect } from '$lib/utils/floorAspect.js';
 import { resolveView } from '$lib/views/view.js';
 import { CAMERA_ANGLES } from '$lib/views/camera.js';
 
@@ -1188,7 +1185,7 @@ export class ChartState<
    * What an `isometric` view draws with (see `isometric`), or `null`.  Marks reach the geometry and
    * components of height through this, so a chart that never uses `isometric` doesn't bundle them.
    */
-  isometric = $derived(this.view?.type === 'isometric' ? this.view.impl : null);
+  isometric = $derived(this.view?.type === 'isometric' ? this.view.isometric : null);
 
   /** The view's options as given (its angles and `motion` among them), or `null` */
   #viewOptions = $derived(this.view?.options ?? null);
@@ -1281,38 +1278,18 @@ export class ChartState<
     const isometric = this.isometric;
     const options = this.#isometricOptions;
     if (!isometric || !options) return translate;
-    const box = this.box;
-    const footprint = this.#isometricFootprint;
-    // The floor (refitted as the view turns) and the matrix drawing it, at a rotation
-    const frame = ({ x, y }: { x: number; y: number }) => {
-      const turned = { ...options, rotate: x, tilt: y };
-      const floor = isometric.fitIsometricFloor(turned, box.width, box.height, {
-        footprint,
-        depthAt: (f) => this.#zDepthFor(f),
-      });
-      const depth = this.#zDepthFor(floor);
-      const matrix = isometric.createIsometricMatrix(turned, floor, box, { depth, footprint });
-      // Raising a point halfway up the box, on the flat plot
-      const lift = isometric.isometricLift(turned);
-      return { floor, matrix, rise: { x: (lift.x * depth) / 2, y: (lift.y * depth) / 2 } };
-    };
-    const before = frame(from);
-    const after = frame(to);
-    const inverse = invertMatrix(before.matrix);
-    if (!inverse || !before.floor.width || !before.floor.height) return translate;
-    // The point halfway up the box in the middle of the plot, by where it is over the floor as a
-    // share of the floor across and down, which holds as the floor refits
-    const middle = { x: box.width / 2, y: box.height / 2 };
-    const raised = applyMatrix(inverse, {
-      x: (middle.x - translate.x) / scale,
-      y: (middle.y - translate.y) / scale,
-    });
-    const point = { x: raised.x - before.rise.x, y: raised.y - before.rise.y };
-    const turned = applyMatrix(after.matrix, {
-      x: (point.x / before.floor.width) * after.floor.width + after.rise.x,
-      y: (point.y / before.floor.height) * after.floor.height + after.rise.y,
-    });
-    return { x: middle.x - scale * turned.x, y: middle.y - scale * turned.y };
+    return isometric.isometricPivot(
+      {
+        options,
+        box: this.box,
+        footprint: this.#isometricFootprint,
+        depthAt: (floor) => this.#zDepthFor(floor),
+      },
+      from,
+      to,
+      translate,
+      scale
+    );
   }
 
   /** A radial chart draws a circle, which turns without growing — fit it as one */
@@ -1339,22 +1316,13 @@ export class ChartState<
   #cameraFloor = $derived.by(() => {
     const view = this.view;
     if (!view || view.type === 'isometric') return null;
-    const option = view.options.aspect ?? 'auto';
-    // A map's projection fits it to the plot in its own proportions already
-    if (option === 'auto' && this.props.geo?.projection) return null;
-    const aspect = this.props.radial
-      ? 1
-      : typeof option === 'number'
-        ? Math.max(option, 1e-6)
-        : autoFloorAspect(
-            { scale: this._xScaleProp, domain: this._baseXDomain },
-            { scale: this._yScaleProp, domain: this._baseYDomain }
-          );
-    const { width, height } = this.box;
-    if (!(width > 0 && height > 0)) return { width, height };
-    return width / height > aspect
-      ? { width: height * aspect, height }
-      : { width, height: width / aspect };
+    return view.camera.floor(view.options, {
+      box: this.box,
+      radial: !!this.props.radial,
+      projected: !!this.props.geo?.projection,
+      x: () => ({ scale: this._xScaleProp, domain: this._baseXDomain }),
+      y: () => ({ scale: this._yScaleProp, domain: this._baseYDomain }),
+    });
   });
 
   plot = $derived(

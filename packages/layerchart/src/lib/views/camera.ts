@@ -1,3 +1,4 @@
+import { autoFloorAspect } from '$lib/utils/floorAspect.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
 type CameraOptions = {
@@ -41,11 +42,62 @@ export type PerspectiveOptions = CameraOptions & {
 
 export type OrthographicOptions = CameraOptions;
 
+/** A scale and its domain, for sizing a floor `aspect: 'auto'` */
+type FloorAxis = { scale: unknown; domain: unknown[] };
+
+/**
+ * The part of the plot a camera view's floor takes: `aspect` wide for its depth (`'auto'`, from
+ * the `x` / `y` scales and their domains), as large as fits.  `null` lets a map's own
+ * proportions (its projection's fit) stand.  Part of the camera views, so a chart without one
+ * doesn't bundle it.
+ */
+function cameraFloor(
+  options: CameraOptions,
+  {
+    box,
+    radial,
+    projected,
+    x,
+    y,
+  }: {
+    box: { width: number; height: number };
+    radial: boolean;
+    projected: boolean;
+    x: () => FloorAxis;
+    y: () => FloorAxis;
+  }
+) {
+  const option = options.aspect ?? 'auto';
+  if (option === 'auto' && projected) return null;
+  const aspect = radial
+    ? 1
+    : typeof option === 'number'
+      ? Math.max(option, 1e-6)
+      : autoFloorAspect(x(), y());
+  const { width, height } = box;
+  if (!(width > 0 && height > 0)) return { width, height };
+  return width / height > aspect
+    ? { width: height * aspect, height }
+    : { width, height: width / aspect };
+}
+
+/** The camera's own code a camera view brings with it, for the chart to call */
+const camera = { floor: cameraFloor };
+export type Camera = typeof camera;
+
 /** A camera looking at the plot box in 3D, drawing farther things smaller */
-export type PerspectiveView = { type: 'perspective'; options: PerspectiveOptions };
+export type PerspectiveView = {
+  type: 'perspective';
+  options: PerspectiveOptions;
+  camera: Camera;
+};
 
 /** A camera looking at the plot box in 3D, keeping sizes true at any depth */
-export type OrthographicView = { type: 'orthographic'; options: OrthographicOptions };
+export type OrthographicView = {
+  type: 'orthographic';
+  options: OrthographicOptions;
+  camera: Camera;
+};
 
 /** The angles a 3D view starts at without its own */
 export const CAMERA_ANGLES = { rotate: -45, tilt: 60 };
@@ -56,7 +108,7 @@ export const CAMERA_ANGLES = { rotate: -45, tilt: 60 };
  * draws through it; flat layers draw nothing under it, and warn.
  */
 export function perspective(options: PerspectiveOptions = {}): PerspectiveView {
-  return { type: 'perspective', options };
+  return { type: 'perspective', options, camera };
 }
 
 /**
@@ -64,5 +116,5 @@ export function perspective(options: PerspectiveOptions = {}): PerspectiveView {
  * `view`.  Only a 3D layer (`@layerchart/webgl`) draws through it.
  */
 export function orthographic(options: OrthographicOptions = {}): OrthographicView {
-  return { type: 'orthographic', options };
+  return { type: 'orthographic', options, camera };
 }
