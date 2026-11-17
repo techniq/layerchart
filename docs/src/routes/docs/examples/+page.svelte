@@ -13,6 +13,8 @@
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 	import { cls } from '@layerstack/tailwind';
 
+	import { webglCategories } from '$lib/webglCategories.js';
+
 	let { data } = $props();
 
 	const stringParam = z.preprocess(
@@ -63,10 +65,10 @@
 		};
 
 		return filtered
-			.map(({ component, category, examples }) => {
+			.map(({ component, label, category, examples }) => {
 				// If component name matches, return all examples for this component
-				if (matchesQuery(component)) {
-					return { component, category, examples };
+				if (matchesQuery(component) || matchesQuery(label)) {
+					return { component, label, category, examples };
 				}
 
 				// Otherwise, filter examples by name
@@ -76,7 +78,7 @@
 
 				// Only return component if it has matching examples
 				if (filteredExamples.length > 0) {
-					return { component, category, examples: filteredExamples };
+					return { component, label, category, examples: filteredExamples };
 				}
 
 				return null;
@@ -102,19 +104,19 @@
 	 */
 	let groups = $derived.by(() => {
 		if (params.sort !== 'newest') {
-			return visibleExamples.map(({ component, examples }) => ({
+			return visibleExamples.map(({ component, label, examples }) => ({
 				key: component,
-				heading: component,
+				heading: label,
 				examples: examples.map((example) => ({ ...example, component, label: example.title }))
 			}));
 		}
 
 		const examples = visibleExamples
-			.flatMap(({ component, examples }) =>
+			.flatMap(({ component, label, examples }) =>
 				examples.map((example) => ({
 					...example,
 					component,
-					label: `${component} · ${example.title}`,
+					label: `${label} · ${example.title}`,
 					date: example.createdAt
 				}))
 			)
@@ -144,16 +146,14 @@
 		() => sum(visibleExamples.map(({ examples }) => examples.length)) ?? 0
 	);
 
-	// Get unique categories from components
+	// Get unique categories from components (lowercased, with their frontmatter casing to show)
 	let componentCategories = $derived.by(() => {
-		const categories = new Set<string>();
-		data.components.forEach(({ category }) => {
-			if (category) {
-				categories.add(category);
-			}
-		});
-		return Array.from(categories).sort(
-			sortFunc((category) =>
+		const categories = group(
+			data.components.flatMap(({ category }) => category ?? []),
+			(category) => category.toLowerCase()
+		);
+		return Array.from(categories, ([value, [label]]) => ({ value, label })).sort(
+			sortFunc(({ value }) =>
 				[
 					'charts',
 					'common',
@@ -166,21 +166,22 @@
 					'fill',
 					'clipping',
 					'layers',
-					'other'
-				].indexOf(category)
+					'other',
+					...Object.keys(webglCategories)
+				].indexOf(value)
 			)
 		);
 	});
 
 	let categoryOptions = $derived.by(() => [
 		{ label: 'All', value: null },
-		...componentCategories.map((category) => ({
-			label: category.charAt(0).toUpperCase() + category.slice(1),
-			value: category,
+		...componentCategories.map(({ value, label }) => ({
+			label: label.charAt(0).toUpperCase() + label.slice(1),
+			value,
 			group: 'Categories'
 		})),
-		...data.components.map(({ component }) => ({
-			label: component,
+		...data.components.map(({ component, label }) => ({
+			label,
 			value: component,
 			group: 'Components'
 		}))
