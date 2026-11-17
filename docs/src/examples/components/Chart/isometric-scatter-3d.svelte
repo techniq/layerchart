@@ -51,7 +51,6 @@
 	tooltipContext={{ mode: 'quadtree', radius: 20 }}
 	padding={{ top: 24, bottom: 24, left: 40, right: 24 }}
 	height={500}
-	class="cursor-grab active:cursor-grabbing"
 >
 	{#snippet children({ context })}
 		{@const hovered = context.tooltip.data}

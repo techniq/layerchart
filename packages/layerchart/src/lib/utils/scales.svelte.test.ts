@@ -1,7 +1,17 @@
 import { describe, it, expect } from 'vitest';
-import { scaleBand, scaleLinear, scaleTime, scaleUtc } from 'd3-scale';
+import {
+  scaleBand,
+  scaleLinear,
+  scaleLog,
+  scalePow,
+  scaleRadial,
+  scaleSqrt,
+  scaleSymlog,
+  scaleTime,
+  scaleUtc,
+} from 'd3-scale';
 
-import { isScaleUtc, scaleBandInvert, scaleInvert } from './scales.svelte.js';
+import { isScaleLinear, isScaleUtc, scaleBandInvert, scaleInvert } from './scales.svelte.js';
 
 describe('scaleBandInvert', () => {
   const domain = ['A', 'B', 'C', 'D', 'E'];
@@ -107,5 +117,25 @@ describe('isScaleUtc', () => {
     isScaleUtc(scale as any);
     expect(scale.domain()).toEqual(domain);
     expect(scale.range()).toEqual([0, 100]);
+  });
+});
+
+describe('isScaleLinear', () => {
+  it('holds for scales mapping values to positions along a straight line', () => {
+    expect(isScaleLinear(scaleLinear())).toBe(true);
+    expect(isScaleLinear(scaleTime())).toBe(true);
+    expect(isScaleLinear(scaleUtc())).toBe(true);
+    for (const scale of [
+      scaleLog(),
+      scalePow(),
+      scaleSqrt(),
+      scaleRadial(),
+      scaleSymlog(),
+      scaleBand(),
+    ]) {
+      expect(isScaleLinear(scale as any)).toBe(false);
+    }
+    // A clamped scale's ends stop moving
+    expect(isScaleLinear(scaleLinear().clamp(true))).toBe(false);
   });
 });

@@ -14,7 +14,7 @@ import {
   extractTweenConfig,
   type MotionProp,
 } from '$lib/utils/motion.svelte.js';
-import { colorPropDataKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
+import { colorPropGroupKey, resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
 import type { ColorProp, DataProp, StyleProp } from '$lib/utils/dataProp.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
@@ -243,9 +243,10 @@ export class SplineState {
   /**
    * Accessor grouping the data into one line per distinct value, or `null` for a single line.
    *
-   * Resolves in order: this mark's `g`, the chart's `g`, the data property named by `stroke` /
-   * `fill`, then the chart's `c` — so `stroke="fruit"` alone gives a line per fruit,
-   * and so does `<Chart c="fruit">`: what colors the lines splits them.
+   * Resolves in order: this mark's `g`, the chart's `g`, the categorical data property named by
+   * `stroke` / `fill`, then the chart's `c` — so `stroke="fruit"` alone gives a line per fruit,
+   * and so does `<Chart c="fruit">`: what colors the lines splits them.  A numeric one
+   * (`stroke="value"`) colors the line without splitting it.
    *
    * A mark carrying its own rows is left alone — whoever handed them over grouped them already.
    */
@@ -255,7 +256,7 @@ export class SplineState {
     if (g != null) return accessor(g);
 
     const first = this.resolvedData?.[0];
-    const implied = colorPropDataKey(props.stroke, first) ?? colorPropDataKey(props.fill, first);
+    const implied = colorPropGroupKey(props.stroke, first) ?? colorPropGroupKey(props.fill, first);
     if (implied != null) return accessor(implied);
 
     if (props.data != null || this.series?.data != null) return null;

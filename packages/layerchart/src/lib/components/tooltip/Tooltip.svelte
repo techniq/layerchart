@@ -627,8 +627,17 @@
     };
   });
 
-  const motionX = createMotion(null, () => positions.x, motion);
-  const motionY = createMotion(null, () => positions.y, motion);
+  /**
+   * Whether the tooltip was showing as of its last move.  One that comes back (ex. after a drag
+   * hid it) is put where it belongs at once, rather than gliding over from where it was last seen.
+   */
+  let showing = false;
+  const motionX = createMotion(null, () => positions.x, motion, { instant: () => !showing });
+  const motionY = createMotion(null, () => positions.y, motion, { instant: () => !showing });
+  // After the motions' own effects (declared first), so they read whether it was showing before
+  $effect(() => {
+    showing = !!tooltipData && !ctx.tooltip.suppressed;
+  });
 
   $effect(() => {
     if (!ctx.tooltip.data) {

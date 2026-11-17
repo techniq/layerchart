@@ -172,6 +172,42 @@ describe('TransformContext', () => {
       });
     });
 
+    it("should bound a globe's yaw and pitch with `rotateExtent` and `tiltExtent`", async () => {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: {
+          height: 300,
+          geo: {
+            projection: geoOrthographic,
+            fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
+          },
+          transform: {
+            mode: 'projection' as const,
+            rotationExtent: [
+              [-90, -60],
+              [90, 60],
+            ] as [[number, number], [number, number]],
+            tiltExtent: [-30, 30] as [number, number],
+          },
+        },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext?.transformState).toBeTruthy());
+
+      // The globe's translate is its yaw and pitch, in degrees
+      chartContext.transform.setTranslate({ x: 200, y: 80 }, { instant: true });
+      await vi.waitFor(() => expect(chartContext.transform.translate).toEqual({ x: 90, y: 30 }));
+      chartContext.transform.setTranslate({ x: -200, y: -80 }, { instant: true });
+      await vi.waitFor(() => expect(chartContext.transform.translate).toEqual({ x: -90, y: -30 }));
+      const [yaw, pitch] = chartContext.geo.projection!.rotate();
+      expect(yaw).toBeCloseTo(-90);
+      expect(pitch).toBeCloseTo(-30);
+    });
+
     it('should sync disablePointer reactively', async () => {
       let chartContext: any;
 
@@ -531,6 +567,19 @@ describe('TransformContext', () => {
         click(...to);
       }
 
+      /** The `dblclick` the browser fires after a second quick press near the first */
+      function dblclick(x: number, y: number) {
+        mark.dispatchEvent(
+          new MouseEvent('dblclick', {
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            detail: 2,
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      }
+
       return {
         get transform() {
           return chartContext.transform;
@@ -538,9 +587,29 @@ describe('TransformContext', () => {
         dispatch,
         click,
         drag,
+        dblclick,
         onclick,
       };
     }
+
+    it('should not zoom on the double click two quick drags make', async () => {
+      const { transform, drag, dblclick } = await setup({ transform: { mode: 'canvas' } });
+
+      drag([100, 100], [140, 100]);
+      drag([100, 100], [140, 100]);
+      dblclick(140, 100);
+
+      expect(transform.scale).toBe(1);
+      expect(transform.translate.x).toBeCloseTo(80);
+    });
+
+    it('should still zoom on a double click', async () => {
+      const { transform, dblclick } = await setup({ transform: { mode: 'canvas' } });
+
+      dblclick(100, 100);
+
+      await vi.waitFor(() => expect(transform.scale).toBeCloseTo(2));
+    });
 
     it('should not click what a pan is released over', async () => {
       const { transform, drag, onclick } = await setup({ transform: { mode: 'canvas' } });
@@ -792,6 +861,27 @@ describe('TransformContext', () => {
       wheel({ deltaX: -100, deltaY: 0, shiftKey: true });
 
       expect(upright.scale).toBeCloseTo(ZOOM_IN, 5);
+      expect(transform.scale).toBeCloseTo(upright.scale, 5);
+      expect(transform.translate.x).toBeCloseTo(upright.translate.x, 5);
+      expect(transform.translate.y).toBeCloseTo(upright.translate.y, 5);
+    });
+
+    it('should zoom, not pan, on a shift-turned trackpad scroll a little off straight', async () => {
+      const { transform, wheel } = await setup({
+        ...domainChart,
+        transform: { mode: 'domain', scrollMode: 'scale', scrollActivationKey: 'shift' },
+      });
+
+      // Where an upright scroll leaves the view...
+      wheel({ deltaY: -100, shiftKey: true });
+      const upright = { scale: transform.scale, translate: { ...transform.translate } };
+      transform.reset({ instant: true });
+      await vi.waitFor(() => expect(transform.scale).toBe(1));
+
+      // ...is where it leaves it turned sideways by shift, with a little of the swipe's vertical
+      // left in, rather than panned far sideways
+      wheel({ deltaX: -100, deltaY: -6, shiftKey: true });
+
       expect(transform.scale).toBeCloseTo(upright.scale, 5);
       expect(transform.translate.x).toBeCloseTo(upright.translate.x, 5);
       expect(transform.translate.y).toBeCloseTo(upright.translate.y, 5);

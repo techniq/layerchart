@@ -160,7 +160,7 @@ export type SphereBinning<
 
 const SQRT3 = Math.sqrt(3);
 
-type Grid = {
+export type BinGrid = {
   /** The cell `[x, y]` falls in, as a key and its center */
   locate(x: number, y: number): { key: string; x: number; y: number; up?: boolean };
   /** Every cell overlapping `[0, width] × [0, height]` */
@@ -172,6 +172,8 @@ type Grid = {
   /** Every cell's area */
   area: number;
 };
+
+type Grid = BinGrid;
 
 /**
  * Pointy-topped hexagons in rows `size * √3 / 2` apart, every other row shifted half a cell, with

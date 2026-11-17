@@ -2,8 +2,8 @@ import { allComponents, allGuides, allUtils } from 'content-collections';
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
 import { buildSearchEntries, type SearchEntry } from '@layerstack/docs/search';
 
-// Load all catalog JSON files
-const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/*.json', {
+// Load all catalog JSON files (`webgl/` holds `@layerchart/webgl`'s)
+const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/**/*.json', {
 	eager: true,
 	import: 'default'
 });
@@ -12,18 +12,22 @@ const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog
 function catalogToEntries(): SearchEntry[] {
 	const entries: SearchEntry[] = [];
 
-	for (const [, catalog] of Object.entries(catalogModules)) {
+	for (const [file, catalog] of Object.entries(catalogModules)) {
+		// `@layerchart/webgl`'s examples are on its pages, `webgl/<name>`
+		const webgl = file.includes('/catalog/webgl/');
+		const component = webgl ? `webgl/${catalog.component}` : catalog.component;
 		for (const example of catalog.examples) {
 			entries.push({
 				title: example.title,
-				slug: example.path.slice(1), // Remove leading slash
+				slug: webgl ? `docs/components/${component}/${example.name}` : example.path.slice(1), // Remove leading slash
 				content: [
 					catalog.component,
+					webgl ? 'WebGL' : '',
 					example.name.replaceAll('-', ' '),
 					...(example.tags ?? [])
 				].join(' '),
 				type: 'example',
-				component: catalog.component,
+				component,
 				example: example.name,
 				tags: example.tags
 			});
@@ -31,6 +35,19 @@ function catalogToEntries(): SearchEntry[] {
 	}
 
 	return entries;
+}
+
+const WEBGL_PAGES = 'docs/components/webgl/';
+
+/**
+ * `@layerchart/webgl`'s pages repeat LayerChart's names (ex. `Arc`), so their results (and their
+ * sections' and examples') say they're WebGL's
+ */
+function markWebGL(entry: SearchEntry): SearchEntry {
+	const slug = entry.type === 'heading' ? entry.parentSlug : entry.slug;
+	if (!slug?.startsWith(WEBGL_PAGES)) return entry;
+	if (entry.type === 'heading') return { ...entry, parent: `${entry.parent} (WebGL)` };
+	return { ...entry, title: `${entry.title} (WebGL)` };
 }
 
 // Top-level documentation pages
@@ -74,4 +91,4 @@ export const searchContent: SearchEntry[] = [
 	...catalogToEntries(),
 	...buildSearchEntries(allGuides, { type: 'guide', slugPrefix: 'docs/guides' }),
 	...buildSearchEntries(allUtils, { type: 'util', slugPrefix: 'docs/utils' })
-];
+].map(markWebGL);

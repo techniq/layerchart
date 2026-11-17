@@ -171,9 +171,11 @@ export function sandboxRegistry(): Plugin {
 			if (command !== 'serve') return;
 			// Everything here loads lazily on first edit. Undiscovered, each one makes the dev
 			// server re-optimize and reload the page in the middle of that edit. Only npm
-			// packages can be pre-bundled; the workspace `layerchart` and `svelte` never are.
+			// packages can be pre-bundled; the workspace `layerchart` (and `@layerchart/*`, which
+			// would each bundle a copy of it) and `svelte` never are.
 			const packages = [...imports().keys()].filter(
-				(specifier) => !/^(\$|~|\/|svelte(\/|$)|layerchart(\/|$))/.test(specifier)
+				(specifier) =>
+					!/^(\$|~|\/|svelte(\/|$)|(@layerchart\/[^/]+|layerchart)(\/|$))/.test(specifier)
 			);
 			return { optimizeDeps: { include: [...EDITOR_DEPS, ...packages] } };
 		},

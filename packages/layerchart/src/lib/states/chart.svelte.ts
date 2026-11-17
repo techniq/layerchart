@@ -28,6 +28,7 @@ import {
   type IsometricOptions,
 } from '$lib/utils/isometric.js';
 import { resolveView } from '$lib/views/view.js';
+import { CAMERA_ANGLES } from '$lib/views/camera.js';
 
 import { getFacetPanel } from '$lib/contexts/facet.js';
 import { defaultSettings, type Settings } from './settings.svelte.js';
@@ -65,6 +66,11 @@ export interface MarkInfo {
   /** Label for legend/tooltip */
   label?: string;
   /**
+   * The `[min, max]` of the heights this mark draws from values of its own (ex. a surface's grid),
+   * folded into an automatic `zDomain`.
+   */
+  zExtent?: [number, number];
+  /**
    * Whether this mark reads `SeriesState.getStackAccessors()` rather than the raw accessor — a
    * stack-aware mark type with no explicit value accessor overriding it.  A `Points` placing
    * labels at its own `y` says `false`.
@@ -78,8 +84,8 @@ export interface MarkInfo {
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
 
-/** An `isometric` view's turn and tip */
-type IsometricAngles = { rotate: number; tilt: number };
+/** A view's turn and tip (`isometric`, `perspective`, `orthographic`) */
+type ViewAngles = { rotate: number; tilt: number };
 
 export interface ComponentNode {
   id: symbol;
@@ -291,6 +297,8 @@ export class ChartState<
           seriesKey: info.seriesKey,
           color: info.color,
           label: info.label,
+          // Heights aren't projected, so a map's marks still widen the `z` domain
+          zExtent: info.zExtent,
         } as MarkInfo,
       }));
     }
@@ -1177,37 +1185,58 @@ export class ChartState<
    * What an `isometric` view draws with (see `isometric`), or `null`.  Marks reach the geometry and
    * components of height through this, so a chart that never uses `isometric` doesn't bundle them.
    */
-  isometric = $derived(this.view?.type === 'isometric' ? this.view.impl : null);
+  isometric = $derived(this.view?.type === 'isometric' ? this.view.isometric : null);
 
-  /** The `isometric` view's options as given, or `null` */
-  #viewOptions = $derived(this.view?.type === 'isometric' ? this.view.options : null);
+  /** The view's options as given (its angles and `motion` among them), or `null` */
+  #viewOptions = $derived(this.view?.options ?? null);
 
   /**
-   * Whether the transform can rotate the isometric view as well as pan and zoom it.  With a geo
-   * projection, only in `'canvas'` mode, as the others drive the projection.
+   * Whether the transform can rotate the view as well as pan and zoom it.  With a geo projection,
+   * only in `'canvas'` mode, as the others drive the projection.
    */
-  isometricTransform = $derived(
-    !!this.isometric &&
+  viewTransform = $derived(
+    !!this.view &&
       !!this.props.transform?.mode &&
       this.props.transform.mode !== 'none' &&
       (!this.props.geo?.projection || this.props.transform.mode === 'canvas')
   );
 
-  /** The `isometric` options' `rotate` / `tilt`, with their defaults */
-  #propAngles = $derived.by((): IsometricAngles => {
+  /** Whether the transform can rotate the `isometric` view (see `viewTransform`) */
+  get isometricTransform() {
+    return this.viewTransform && !!this.isometric;
+  }
+
+  /** The view's `rotate` / `tilt`, with its defaults */
+  #propAngles = $derived.by((): ViewAngles => {
     const options = this.#viewOptions ?? {};
-    return { rotate: options.rotate ?? -45, tilt: options.tilt ?? ISOMETRIC_TILT };
+    const defaults =
+      this.view?.type === 'isometric' ? { rotate: -45, tilt: ISOMETRIC_TILT } : CAMERA_ANGLES;
+    return { rotate: options.rotate ?? defaults.rotate, tilt: options.tilt ?? defaults.tilt };
   });
 
   /**
    * The angles eased by the view's `motion`, read once from the first view that has one (a chart
    * may start without a view).  `null` until then, following the angles as given.
    */
-  #angles = $state.raw<ReturnType<typeof createControlledMotion<IsometricAngles>> | null>(null);
+  #angles = $state.raw<ReturnType<typeof createControlledMotion<ViewAngles>> | null>(null);
 
-  /** The `isometric` angles, eased by their `motion`; a transform rotates the view from these */
-  get isometricAngles(): IsometricAngles {
+  /** The view's angles, eased by their `motion`; a transform rotates the view from these */
+  get viewAngles(): ViewAngles {
     return this.#angles?.current ?? this.#propAngles;
+  }
+
+  /** The `isometric` angles (see `viewAngles`) */
+  get isometricAngles(): ViewAngles {
+    return this.viewAngles;
+  }
+
+  /**
+   * Where the view is turned to: the transform's rotation while it drives the view, else the
+   * view's angles.  What a 3D layer points its camera along.
+   */
+  get viewRotation(): ViewAngles {
+    const rotation = this.viewTransform ? this.transformState?.rotation : null;
+    return rotation ? { rotate: rotation.x, tilt: rotation.y } : this.viewAngles;
   }
 
   /**
@@ -1216,14 +1245,11 @@ export class ChartState<
    */
   #isometricOptions = $derived.by((): IsometricOptions | null => {
     const isometric = this.isometric;
-    let options = this.#viewOptions;
+    let options = this.view?.type === 'isometric' ? this.view.options : null;
     if (!isometric || !options) return null;
 
     // `TransformContext` loads lazily; until then the props stand
-    const rotation = this.isometricTransform ? this.transformState?.rotation : null;
-    options = rotation
-      ? { ...options, rotate: rotation.x, tilt: rotation.y }
-      : { ...options, ...this.isometricAngles };
+    options = { ...options, ...this.viewRotation };
 
     if (typeof options.aspect === 'number') return options;
     // From the scale types and domains, not the scales, whose ranges depend on the floor
@@ -1235,6 +1261,36 @@ export class ChartState<
       ),
     };
   });
+
+  /**
+   * The translate keeping what's at the middle of the plot there as the `isometric` view turns
+   * `from` one rotation `to` another (`x` the turn, `y` the tilt) under a pan and zoom, so a drag
+   * turns the view about what's been panned to rather than the floor's centre.  The point it turns
+   * about is halfway up the box, as the view is centred on the box (the floor and what rises off
+   * it): unpanned, the box's middle, so the view turns in place however tall it is.
+   */
+  isometricPivot(
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    translate: { x: number; y: number },
+    scale: number
+  ) {
+    const isometric = this.isometric;
+    const options = this.#isometricOptions;
+    if (!isometric || !options) return translate;
+    return isometric.isometricPivot(
+      {
+        options,
+        box: this.box,
+        footprint: this.#isometricFootprint,
+        depthAt: (floor) => this.#zDepthFor(floor),
+      },
+      from,
+      to,
+      translate,
+      scale
+    );
+  }
 
   /** A radial chart draws a circle, which turns without growing — fit it as one */
   #isometricFootprint = $derived<'rect' | 'disc'>(this.props.radial ? 'disc' : 'rect');
@@ -1253,7 +1309,39 @@ export class ChartState<
   });
 
   /** The area the scales lay out across: the isometric floor, or the plot area when flat */
-  plot = $derived(this.isometricFloor ?? { width: this.box.width, height: this.box.height });
+  /**
+   * The floor a 3D view (`perspective`, `orthographic`) lays out on: as large as fits the plot area
+   * at the view's `aspect`, so resizing scales it rather than stretching it.  `null` otherwise.
+   */
+  #cameraFloor = $derived.by(() => {
+    const view = this.view;
+    if (!view || view.type === 'isometric') return null;
+    return view.camera.floor(view.options, {
+      box: this.box,
+      radial: !!this.props.radial,
+      projected: !!this.props.geo?.projection,
+      x: () => ({ scale: this._xScaleProp, domain: this._baseXDomain }),
+      y: () => ({ scale: this._yScaleProp, domain: this._baseYDomain }),
+    });
+  });
+
+  plot = $derived(
+    this.isometricFloor ?? this.#cameraFloor ?? { width: this.box.width, height: this.box.height }
+  );
+
+  /**
+   * Internal, for `@layerchart/webgl`.  How a 3D layer lays the floor on screen about the plot's middle, from
+   * plot pixels to pixels from the plot's corner as `isometricMatrix` maps them.  The layer sets it,
+   * so a `domain` transform pans and zooms where the pointer is on the floor.  `null` without one.
+   */
+  _viewFloorMatrix = $state<AffineMatrix | null>(null);
+
+  /**
+   * Internal, for `@layerchart/webgl`.  The degrees a drag of one pixel turns a 3D view, set by a
+   * 3D layer that knows better: ex. on a globe, so what's in the middle of it keeps pace with the pointer at any
+   * zoom.  `null` turns it a full circle across the chart's height.
+   */
+  _viewTurnRate = $state<number | null>(null);
 
   /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {
@@ -1700,12 +1788,27 @@ export class ChartState<
       }
     }
     const domain = calcDomain('z', this.extents, this.props.zDomain);
-    if (this.props.zDomain !== undefined || !Array.isArray(domain) || domain.length !== 2) {
-      return domain;
+    if (this.props.zDomain !== undefined) return domain;
+    const marks = this.#markZExtent;
+    if (!Array.isArray(domain) || domain.length !== 2) {
+      return marks ? [Math.min(0, marks[0]), Math.max(0, marks[1])] : domain;
     }
     const [min, max] = domain;
     if (typeof min !== 'number' || typeof max !== 'number') return domain;
-    return [Math.min(0, min), Math.max(0, max)];
+    return [Math.min(0, min, marks?.[0] ?? min), Math.max(0, max, marks?.[1] ?? max)];
+  });
+
+  /** The heights marks draw from values of their own (`MarkInfo.zExtent`), or `null` for none */
+  #markZExtent = $derived.by((): [number, number] | null => {
+    let result: [number, number] | null = null;
+    for (const { info } of this._markInfos) {
+      const range = info.zExtent;
+      if (!range) continue;
+      result = result
+        ? [Math.min(result[0], range[0]), Math.max(result[1], range[1])]
+        : [range[0], range[1]];
+    }
+    return result;
   });
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 

@@ -64,30 +64,8 @@ export type IsometricFit = {
   footprint?: 'rect' | 'disc';
 };
 
-/** How far apart a continuous axis' ends may sit before `'auto'` gives up on equal units */
-const MAX_AUTO_ASPECT = 4;
-
-/**
- * The floor's proportions for `aspect: 'auto'`: columns over rows for two band scales, the
- * domains' spans for two continuous ones (square when that would leave a sliver), else square.
- */
-export function autoIsometricAspect(
-  x: { scale: unknown; domain: unknown[] },
-  y: { scale: unknown; domain: unknown[] }
-) {
-  const isBand = (scale: unknown) => typeof (scale as any)?.bandwidth === 'function';
-  if (isBand(x.scale) && isBand(y.scale)) {
-    return x.domain.length > 0 && y.domain.length > 0 ? x.domain.length / y.domain.length : 1;
-  }
-
-  const span = (domain: unknown[]) => {
-    const [d0, d1] = [domain[0], domain[domain.length - 1]];
-    return typeof d0 === 'number' && typeof d1 === 'number' ? Math.abs(d1 - d0) : NaN;
-  };
-  const ratio = span(x.domain) / span(y.domain);
-  if (!Number.isFinite(ratio) || ratio <= 0) return 1;
-  return ratio > MAX_AUTO_ASPECT || ratio < 1 / MAX_AUTO_ASPECT ? 1 : ratio;
-}
+// Also used by the camera views, which mustn't bundle the isometric view to get it
+export { autoFloorAspect as autoIsometricAspect } from './floorAspect.js';
 
 /** The turn and tilt of the view, at its natural size */
 function isometricLinear({ rotate = -45, tilt = ISOMETRIC_TILT }: IsometricOptions): AffineMatrix {
@@ -694,4 +672,53 @@ export function raiseItems<T extends Record<K, number>, K extends string>(
     (item as Record<K, number>)[ky] += lift.y * z;
   }
   return items.sort((a, b) => depth.get(a)! - depth.get(b)!);
+}
+
+/**
+ * The translate keeping what's at the middle of the plot there as an `isometric` view turns
+ * `from` one rotation `to` another (`x` the turn, `y` the tilt) under a pan and zoom, so a drag
+ * turns the view about what's been panned to rather than the floor's centre.  The point it turns
+ * about is halfway up the box, as the view is centred on the box (the floor and what rises off
+ * it): unpanned, the box's middle, so the view turns in place however tall it is.
+ */
+export function isometricPivot(
+  {
+    options,
+    box,
+    footprint,
+    depthAt,
+  }: {
+    options: IsometricOptions;
+    box: { width: number; height: number };
+    footprint: IsometricFit['footprint'];
+    depthAt: (floor: { width: number; height: number }) => number;
+  },
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+  translate: { x: number; y: number },
+  scale: number
+) {
+  const frame = ({ x, y }: { x: number; y: number }) => {
+    const turned = { ...options, rotate: x, tilt: y };
+    const floor = fitIsometricFloor(turned, box.width, box.height, { footprint, depthAt });
+    const depth = depthAt(floor);
+    const matrix = createIsometricMatrix(turned, floor, box, { depth, footprint });
+    const lift = isometricLift(turned);
+    return { floor, matrix, rise: { x: (lift.x * depth) / 2, y: (lift.y * depth) / 2 } };
+  };
+  const before = frame(from);
+  const after = frame(to);
+  const inverse = invertMatrix(before.matrix);
+  if (!inverse || !before.floor.width || !before.floor.height) return translate;
+  const middle = { x: box.width / 2, y: box.height / 2 };
+  const raised = applyMatrix(inverse, {
+    x: (middle.x - translate.x) / scale,
+    y: (middle.y - translate.y) / scale,
+  });
+  const point = { x: raised.x - before.rise.x, y: raised.y - before.rise.y };
+  const turned = applyMatrix(after.matrix, {
+    x: (point.x / before.floor.width) * after.floor.width + after.rise.x,
+    y: (point.y / before.floor.height) * after.floor.height + after.rise.y,
+  });
+  return { x: middle.x - scale * turned.x, y: middle.y - scale * turned.y };
 }

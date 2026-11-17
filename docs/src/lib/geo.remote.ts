@@ -10,6 +10,7 @@ import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-cap
 import type { WorldLinksData } from '$static/data/examples/geo/world-links.js';
 import type { Admin0Topology, Admin1Topology } from '$static/data/examples/geo/admin.js';
 import admin1Countries from '$static/data/examples/geo/admin1/countries.json';
+import populationStates from '$static/data/examples/geo/kontur-population/states.json';
 
 export const getUsStatesTopology = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -342,3 +343,55 @@ export const getAdmin1Topology = prerender(
 	},
 	{ inputs: () => admin1Countries }
 );
+
+/**
+ * The people living in one US state (by its file, ex. `west-virginia`, as `getPopulationStates`
+ * lists them), as `[longitude, latitude, people]` in cells of about 160 across the state, and its
+ * largest places to label as `[name, longitude, latitude]`.
+ *
+ * From Kontur Population (November 2023, CC BY 4.0, https://data.humdata.org/dataset/kontur-population-united-states-of-america),
+ * its 400m H3 hexagons summed into the cells and clipped to us-atlas' 1:10m state outlines, and
+ * Natural Earth's populated places (public domain).  Built by `scripts/kontur-population.mjs`.
+ */
+export const getStatePopulation = prerender(
+	z.string().regex(/^[a-z-]+$/),
+	async (state) => {
+		const { fetch } = getRequestEvent();
+		// Stored as whole steps from the state's southwest corner, `[i, j, people]` flattened
+		const { origin, step, cells, cities } = (await fetch(
+			`/data/examples/geo/kontur-population/${state}.json`
+		).then((r) => r.json())) as {
+			origin: [number, number];
+			step: [number, number];
+			cells: number[];
+			cities: [name: string, longitude: number, latitude: number][];
+		};
+		const data: [longitude: number, latitude: number, people: number][] = [];
+		for (let k = 0; k < cells.length; k += 3) {
+			data.push([origin[0] + cells[k] * step[0], origin[1] + cells[k + 1] * step[1], cells[k + 2]]);
+		}
+		return { cells: data, cities };
+	},
+	{ inputs: () => populationStates.map((s) => s.value) }
+);
+
+/** The states `getStatePopulation` has, alphabetically: their files (`value`) and names */
+export const getPopulationStates = prerender(async () => populationStates);
+
+/**
+ * Lower Manhattan's buildings: footprints, with heights in meters where they're tagged (or 3.5m a
+ * floor where only floors are), and names.
+ *
+ * From OpenStreetMap (© OpenStreetMap contributors, ODbL), fetched through the Overpass API in
+ * October 2026.
+ */
+export const getLowerManhattanBuildings = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/lower-manhattan-buildings.json').then((r) =>
+		r.json()
+	)) as import('geojson').FeatureCollection<
+		import('geojson').Polygon,
+		{ height: number | null; name: string | null }
+	>;
+	return data;
+});

@@ -80,8 +80,9 @@
 	transform={{
 		mode: 'canvas',
 		scrollMode: 'scale',
-		// Drag to pan and shift-drag to turn, or the reverse via the controls.  Eases the zoom
-		// buttons and reset
+		// Drag to turn and shift-drag to pan (flat, from above, drag pans), or the reverse via the
+		// controls.  Eases the zoom buttons and reset
+		drag: view === 'flat' ? 'pan' : 'rotate',
 		motion: { type: 'tween', duration: 800, easing: cubicInOut }
 	}}
 	padding={24}

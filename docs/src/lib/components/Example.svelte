@@ -48,7 +48,8 @@
 	import { movable } from '$lib/actions/movable';
 
 	let {
-		component = page.params.name!,
+		// The page's component: its folder under `src/examples/components` (ex. `webgl/Points`)
+		component = (page.data.componentName as string | undefined) ?? page.params.name!,
 		name,
 		path,
 		showCode = false,
@@ -170,7 +171,9 @@
 	});
 
 	// Ensure component name is always resolved consistently
-	const resolvedComponent = $derived(component ?? page.params.name ?? '');
+	const resolvedComponent = $derived(
+		component ?? (page.data.componentName as string | undefined) ?? page.params.name ?? ''
+	);
 	// Only set view-transition-name on detail pages (when page.params.example matches)
 	// This prevents conflicts with ExampleScreenshot on listing pages
 	const isDetailPage = $derived(page.params.example === name);

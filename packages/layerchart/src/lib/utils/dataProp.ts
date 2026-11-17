@@ -188,9 +188,6 @@ function isCSSColor(value: string): boolean {
 /**
  * The data property a color prop names, or `undefined` when it's a CSS color literal (or names
  * nothing in the data).
- *
- * Marks that draw one shape per series use this to infer their grouping from `stroke` / `fill`,
- * without also having to also use `g="fruit"`.
  */
 export function colorPropDataKey<T>(
   value: ColorProp<T> | undefined | null,
@@ -198,6 +195,24 @@ export function colorPropDataKey<T>(
 ): string | undefined {
   if (typeof value !== 'string' || isCSSColor(value)) return undefined;
   return d != null && get(d, value) !== undefined ? value : undefined;
+}
+
+/**
+ * The data property a color prop names when it holds categories, so marks that draw one shape per
+ * series can infer their grouping from `stroke` / `fill` without also needing `g="fruit"`.
+ *
+ * As with the chart's own `c`, categories are labels rather than measurements: a number (or date)
+ * is a ramp to color along, so `stroke="z"` colors a line by its height rather than cutting it at
+ * every one.
+ */
+export function colorPropGroupKey<T>(
+  value: ColorProp<T> | undefined | null,
+  d: T
+): string | undefined {
+  const key = colorPropDataKey(value, d);
+  if (key == null) return undefined;
+  const first = get(d, key);
+  return typeof first === 'string' || typeof first === 'boolean' ? key : undefined;
 }
 
 export function resolveColorProp<T>(

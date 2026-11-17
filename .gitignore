@@ -20,10 +20,12 @@ bench-results/
 .live-code/
 
 # Generated API documentation
-**/generated/api/*.json
+**/generated/api/**/*.json
 
 # Generated StackBlitz files
 **/static/stackblitz-files.json
 
 .playwright-mcp
 .openchamber
+# Local promo / video projects (ex. examples/promo-webgl), not part of the repo
+examples/promo-*/

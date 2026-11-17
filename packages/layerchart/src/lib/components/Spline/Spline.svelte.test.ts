@@ -110,6 +110,18 @@ describe('Spline', () => {
       await expect.poll(() => paths().length).toBe(2);
     });
 
+    it('is not implied by a `stroke` naming a numeric property', async () => {
+      // Numbers are a ramp to color along, as the chart's own `c` treats them, not series names —
+      // grouping on them would cut one line into a path per value
+      render(TestHarness, {
+        component: Spline,
+        chartProps: chartProps({ data: data.filter((d) => d.group === 'a') }),
+        componentProps: { stroke: 'value' },
+      });
+      await expect.poll(() => paths().length).toBe(1);
+      expect(paths()[0].getAttribute('d')!.split('L')).toHaveLength(3);
+    });
+
     it('is not implied by a CSS color', async () => {
       render(TestHarness, {
         component: Spline,

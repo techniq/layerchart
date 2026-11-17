@@ -96,6 +96,24 @@ export function isScaleUtc(scale: AnyScale<any, any>): boolean {
   );
 }
 
+/**
+ * Whether the scale maps values to positions along a straight line (linear, time, UTC), so moving
+ * or zooming its domain moves every position by one scale and offset.  Not log, pow, sqrt, radial,
+ * symlog, or a clamped scale (whose ends stop moving).
+ */
+export function isScaleLinear(scale: AnyScale<any, any>): boolean {
+  const s = scale as any;
+  return (
+    typeof s.invert === 'function' &&
+    // A radial scale has none: it squares its range
+    typeof s.interpolate === 'function' &&
+    !('base' in s) &&
+    !('exponent' in s) &&
+    !('constant' in s) &&
+    !(typeof s.clamp === 'function' && s.clamp())
+  );
+}
+
 export function isScaleNumeric(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
   const domain = scale.domain();
   return typeof domain[0] === 'number' || typeof domain[1] === 'number';

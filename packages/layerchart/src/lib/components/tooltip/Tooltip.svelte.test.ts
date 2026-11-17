@@ -97,6 +97,31 @@ function stubVisualViewport(rect: { left: number; top: number; width: number; he
 }
 
 describe('Tooltip', () => {
+  describe('motion', () => {
+    it('should appear where the pointer is when shown again, rather than gliding over', async () => {
+      const { container } = render(LineChart, { props: baseProps });
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      const rect = tooltipCtx.getBoundingClientRect();
+      const at = (share: number) => ({
+        clientX: rect.left + rect.width * share,
+        clientY: rect.top + rect.height / 2,
+      });
+
+      // Shown on the left, then hidden (ex. as a drag starts)
+      await waitForTooltip(tooltipCtx, at(0.1), () => expect(getTooltipRoot()).not.toBeNull());
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      tooltipCtx.dispatchEvent(new PointerEvent('pointerleave', { bubbles: true, ...at(0.1) }));
+      await vi.waitFor(() => expect(getTooltipRoot()).toBeNull());
+
+      // Shown again on the right: already beside the pointer, not on its way over from the left
+      triggerTooltip(tooltipCtx, at(0.7));
+      await vi.waitFor(() => expect(getTooltipRoot()).not.toBeNull());
+      const left = parseFloat(getTooltipRoot()!.style.left);
+      expect(Math.abs(left - at(0.7).clientX)).toBeLessThan(60);
+    });
+  });
+
   describe('portal', () => {
     it('should portal tooltip to body by default', async () => {
       const { container } = render(LineChart, {

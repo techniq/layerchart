@@ -30,7 +30,7 @@
 
 {#if catalog && (catalog.examples?.length || catalog.usage?.length)}
 	<div class="mt-12">
-		<ExampleListing {catalog} viewAllHref="/docs/components/{page.params.name}/examples" />
+		<ExampleListing {catalog} viewAllHref="/docs/components/{data.componentName}/examples" />
 	</div>
 {/if}
 

@@ -7,7 +7,7 @@ import { interpolatePath } from 'd3-interpolate-path';
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 import { accessor, type Accessor } from '$lib/utils/common.js';
 import {
-  colorPropDataKey,
+  colorPropGroupKey,
   resolveColorProp,
   resolveStyleProp,
   type ColorProp,
@@ -236,7 +236,7 @@ export class AreaState {
     if (g != null) return accessor(g);
 
     const first = this.resolvedData?.[0];
-    const implied = colorPropDataKey(props.fill, first) ?? colorPropDataKey(props.stroke, first);
+    const implied = colorPropGroupKey(props.fill, first) ?? colorPropGroupKey(props.stroke, first);
     if (implied != null) return accessor(implied);
 
     if (props.data != null || this.seriesData != null) return null;

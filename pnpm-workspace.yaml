@@ -1,6 +1,8 @@
 packages:
   - 'packages/*'
   - 'examples/*'
+  # Local promo / video projects: their own installs (linking the packages), kept out of the lockfile
+  - '!examples/promo-*'
   - 'docs'
   - 'bundle-analyzer'
 

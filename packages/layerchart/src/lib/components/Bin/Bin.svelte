@@ -1,5 +1,13 @@
 <script lang="ts" module>
-  export type { BinCell, BinProps, BinPropsWithoutHTML, BinShape } from './Bin.shared.svelte.js';
+  export type {
+    BinCell,
+    BinGrid,
+    BinProps,
+    BinPropsWithoutHTML,
+    BinShape,
+  } from './Bin.shared.svelte.js';
+  // The binning itself, for marks drawing cells in other ways (ex. `@layerchart/webgl`'s `Bin`)
+  export { binCells, binGrid } from './Bin.shared.svelte.js';
 </script>
 
 <script lang="ts">

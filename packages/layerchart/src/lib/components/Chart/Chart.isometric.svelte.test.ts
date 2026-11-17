@@ -5,6 +5,8 @@ import TooltipTestHarness from '$lib/tests/TooltipTestHarness.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
 import { isometric } from '$lib/views/isometric.js';
+import { perspective } from '$lib/views/camera.js';
+import type { TransformConstraint } from '$lib/states/transform.svelte.js';
 
 // Sorted by `x` for `bisect-x`, and inside the domain so none sits on the floor's edge
 const data = [
@@ -59,6 +61,13 @@ function pointerEventAt(ctx: ChartState<any, any, any>, x: number, y: number) {
   // does not have
   Object.defineProperty(e, 'target', { value: ctx.containerRef });
   return e;
+}
+
+/** The share of the floor across and down drawn in the middle of the plot */
+function floorAtMiddle(ctx: ChartState<any>) {
+  const m = invertMatrix(ctx.layerMatrix()!)!;
+  const p = applyMatrix(m, { x: ctx.box.width / 2, y: ctx.box.height / 2 });
+  return { x: p.x / ctx.plot.width, y: p.y / ctx.plot.height };
 }
 
 describe('Chart isometric', () => {
@@ -237,21 +246,91 @@ describe('Chart isometric with a transform', () => {
     expect(ctx.transform.translate).toEqual({ x: 60, y: 20 });
     expect(ctx.transform.rotation).toEqual({ x: -30, y: 50 });
 
+    // Turning about what's been panned to the middle, which moves the pan with it
+    const middle = floorAtMiddle(ctx);
     await drag(ctx, 60, 0, true);
-    expect(ctx.transform.translate).toEqual({ x: 60, y: 20 });
+    expect(ctx.transform.translate).not.toEqual({ x: 60, y: 20 });
     expect(ctx.transform.rotation!.x).toBeCloseTo(-60);
+    const turned = floorAtMiddle(ctx);
+    expect(turned.x).toBeCloseTo(middle.x, 3);
+    expect(turned.y).toBeCloseTo(middle.y, 3);
   });
 
   it('turns the view with a drag for `drag: "rotate"`, and pans with shift held', async () => {
     const ctx = await renderTransformed({ mode: 'canvas', drag: 'rotate' });
     await drag(ctx, 60, -20);
-    expect(ctx.transform.translate).toEqual({ x: 0, y: 0 });
+    // Unpanned, it turns about the floor's centre
+    expect(ctx.transform.translate.x).toBeCloseTo(0);
+    expect(ctx.transform.translate.y).toBeCloseTo(0);
     expect(ctx.transform.rotation!.x).toBeCloseTo(-60);
     // Dragging up tips it towards edge on
     expect(ctx.transform.rotation!.y).toBeGreaterThan(50);
 
     await drag(ctx, 40, 10, true);
-    expect(ctx.transform.translate).toEqual({ x: 40, y: 10 });
+    expect(ctx.transform.translate.x).toBeCloseTo(40);
+    expect(ctx.transform.translate.y).toBeCloseTo(10);
+  });
+
+  it('stops a drag short of edge on, and from beneath', async () => {
+    const ctx = await renderTransformed({ mode: 'canvas', drag: 'rotate' });
+    await drag(ctx, 0, -1000);
+    expect(ctx.transform.rotation!.y).toBe(89);
+    await drag(ctx, 0, 1000);
+    expect(ctx.transform.rotation!.y).toBe(0);
+  });
+
+  it('stops a drag at `rotateExtent` and `tiltExtent`, over `rotationExtent`', async () => {
+    const ctx = await renderTransformed({
+      mode: 'canvas',
+      drag: 'rotate',
+      rotationExtent: [
+        [-45, 10],
+        [0, 70],
+      ],
+      tiltExtent: [20, 60],
+    });
+    await drag(ctx, 1000, -1000);
+    expect(ctx.transform.rotation).toEqual({ x: -45, y: 60 });
+    await drag(ctx, -1000, 1000);
+    expect(ctx.transform.rotation).toEqual({ x: 0, y: 20 });
+  });
+
+  it("can't tip an isometric floor past edge on, whatever the extent", async () => {
+    const ctx = await renderTransformed({ mode: 'canvas', drag: 'rotate', tiltExtent: [-30, 180] });
+    await drag(ctx, 0, -1000);
+    expect(ctx.transform.rotation!.y).toBe(89);
+    await drag(ctx, 0, 1000);
+    expect(ctx.transform.rotation!.y).toBe(0);
+  });
+
+  it('stops a 3D view edge on, or turns it on round to beneath when `tiltExtent` lets it', async () => {
+    const view = perspective({ rotate: -30, tilt: 50 });
+    const ctx = await renderChart({ view, transform: { mode: 'canvas', drag: 'rotate' } });
+    await vi.waitFor(() => expect(ctx.transformState).toBeTruthy());
+    await drag(ctx, 0, -1000);
+    expect(ctx.transform.rotation!.y).toBe(90);
+
+    const under = await renderChart({
+      view,
+      transform: { mode: 'canvas', drag: 'rotate', tiltExtent: [0, 360] },
+    });
+    await vi.waitFor(() => expect(under.transformState).toBeTruthy());
+    await drag(under, 0, -1000);
+    expect(under.transform.rotation!.y).toBe(180);
+  });
+
+  it("hands a drag's rotation to `constrain`", async () => {
+    const ctx = await renderTransformed({
+      mode: 'canvas',
+      drag: 'rotate',
+      // Turn in steps of 15°
+      constrain: (t: TransformConstraint) => ({
+        ...t,
+        rotation: t.rotation && { x: Math.round(t.rotation.x / 15) * 15, y: t.rotation.y },
+      }),
+    });
+    await drag(ctx, 50, 0);
+    expect(ctx.transform.rotation).toEqual({ x: -60, y: 50 });
   });
 
   it('keeps turning from where it is when a pinch ends mid-drag', async () => {
