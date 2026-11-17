@@ -377,7 +377,7 @@
           : (height * cam.zoom) / (cam.top - cam.bottom);
       if (perUnit > 0 && Number.isFinite(perUnit)) rate = 75 / (perUnit * globeRadius);
     }
-    if (untrack(() => ctx.viewTurnRate) !== rate) ctx.viewTurnRate = rate;
+    if (untrack(() => ctx._viewTurnRate) !== rate) ctx._viewTurnRate = rate;
   }
 
   /** The turn taking straight up to the direction a view at `rotate` / `tilt` looks from */
@@ -522,7 +522,7 @@
     const c = (down.x - middle.x) / step;
     const d = (down.y - middle.y) / step;
     const { left, top } = ctx.padding;
-    ctx.viewFloorMatrix = {
+    ctx._viewFloorMatrix = {
       a,
       b,
       c,
@@ -531,13 +531,13 @@
       f: middle.y - top - (b * width) / 2 - (d * height) / 2,
     };
     return () => {
-      ctx.viewFloorMatrix = null;
+      ctx._viewFloorMatrix = null;
     };
   });
 
   // A drag turns the view at the chart's usual rate again once the layer's gone
   $effect(() => () => {
-    ctx.viewTurnRate = null;
+    ctx._viewTurnRate = null;
   });
 
   // Tooltips: the row under the pointer, from whichever mark it hits first

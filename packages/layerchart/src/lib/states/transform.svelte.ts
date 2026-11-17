@@ -418,7 +418,7 @@ export class TransformState {
    */
   #floorInverse() {
     const m =
-      this.mode === 'domain' ? (this.ctx?.isometricMatrix ?? this.ctx?.viewFloorMatrix) : null;
+      this.mode === 'domain' ? (this.ctx?.isometricMatrix ?? this.ctx?._viewFloorMatrix) : null;
     return m ? invertMatrix(m) : null;
   }
 

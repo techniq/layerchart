@@ -1339,7 +1339,7 @@ describe('globe', () => {
         { instant: true } as any
       );
       await settled(() => scene.camera!.position.length());
-      const rate = chart!.viewTurnRate!;
+      const rate = chart!._viewTurnRate!;
       expect(rate).toBeGreaterThan(0);
       const [x, y, up] = middle();
       const before = scene.project(x, y, up)!;
@@ -1528,9 +1528,9 @@ describe('view and transform', () => {
       },
     });
     scene = await withTransform();
-    await expect.poll(() => chart!.viewFloorMatrix).toBeTruthy();
+    await expect.poll(() => chart!._viewFloorMatrix).toBeTruthy();
     // Orthographic lays the floor flat on screen, so the matrix holds across it
-    const m = chart!.viewFloorMatrix!;
+    const m = chart!._viewFloorMatrix!;
     const { left, top } = chart!.padding;
     for (const [x, y] of [
       [0, 0],

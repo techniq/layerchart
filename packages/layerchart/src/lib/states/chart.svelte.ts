@@ -1362,18 +1362,18 @@ export class ChartState<
   );
 
   /**
-   * How a 3D layer (`@layerchart/webgl`) lays the floor on screen about the plot's middle, from
+   * Internal, for `@layerchart/webgl`.  How a 3D layer lays the floor on screen about the plot's middle, from
    * plot pixels to pixels from the plot's corner as `isometricMatrix` maps them.  The layer sets it,
    * so a `domain` transform pans and zooms where the pointer is on the floor.  `null` without one.
    */
-  viewFloorMatrix = $state<AffineMatrix | null>(null);
+  _viewFloorMatrix = $state<AffineMatrix | null>(null);
 
   /**
-   * The degrees a drag of one pixel turns a 3D view, set by a 3D layer (`@layerchart/webgl`) that
-   * knows better: ex. on a globe, so what's in the middle of it keeps pace with the pointer at any
+   * Internal, for `@layerchart/webgl`.  The degrees a drag of one pixel turns a 3D view, set by a
+   * 3D layer that knows better: ex. on a globe, so what's in the middle of it keeps pace with the pointer at any
    * zoom.  `null` turns it a full circle across the chart's height.
    */
-  viewTurnRate = $state<number | null>(null);
+  _viewTurnRate = $state<number | null>(null);
 
   /** The matrix every layer draws the floor through, or `null` when the chart is flat */
   isometricMatrix = $derived.by((): AffineMatrix | null => {
