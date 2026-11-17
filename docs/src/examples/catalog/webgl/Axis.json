@@ -1,0 +1,322 @@
+{
+  "component": "Axis",
+  "examples": [],
+  "usage": [
+    {
+      "example": "areas",
+      "component": "Area",
+      "path": "/docs/components/Area/areas",
+      "lineNumber": 55,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "areas",
+      "component": "Area",
+      "path": "/docs/components/Area/areas",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "areas",
+      "component": "Area",
+      "path": "/docs/components/Area/areas",
+      "lineNumber": 57,
+      "line": "<Axis placement=\"back\" />"
+    },
+    {
+      "example": "columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/columns",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+    },
+    {
+      "example": "columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/columns",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} />"
+    },
+    {
+      "example": "columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/columns",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"back\" />"
+    },
+    {
+      "example": "heatmap",
+      "component": "Bars",
+      "path": "/docs/components/Bars/heatmap",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+    },
+    {
+      "example": "heatmap",
+      "component": "Bars",
+      "path": "/docs/components/Bars/heatmap",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} />"
+    },
+    {
+      "example": "stacked-columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/stacked-columns",
+      "lineNumber": 35,
+      "line": "<Axis placement=\"bottom\" format=\"none\" />"
+    },
+    {
+      "example": "stacked-columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/stacked-columns",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"left\" format={(d) => `Basket ${d}`} />"
+    },
+    {
+      "example": "stacked-columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/stacked-columns",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"back\" format=\"metric\" />"
+    },
+    {
+      "example": "hexbin",
+      "component": "Bin",
+      "path": "/docs/components/Bin/hexbin",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"bottom\" label=\"weight (kg)\" />"
+    },
+    {
+      "example": "hexbin",
+      "component": "Bin",
+      "path": "/docs/components/Bin/hexbin",
+      "lineNumber": 32,
+      "line": "<Axis placement=\"left\" label=\"height (m)\" />"
+    },
+    {
+      "example": "scatter",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter",
+      "lineNumber": 53,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "scatter",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter",
+      "lineNumber": 54,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 76,
+      "line": "<Axis placement=\"bottom\" label=\"x\" tickLabelProps={labelProps} {labelProps} />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 77,
+      "line": "<Axis placement=\"left\" label=\"y\" tickLabelProps={labelProps} {labelProps} />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 78,
+      "line": "<Axis placement=\"back\" label=\"z\" tickLabelProps={labelProps} {labelProps} />"
+    },
+    {
+      "example": "scatter-with-svg",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "lineNumber": 53,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "scatter-with-svg",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "lineNumber": 54,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Raster",
+      "path": "/docs/components/Raster/basic",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"bottom\" label=\"x\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Raster",
+      "path": "/docs/components/Raster/basic",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" label=\"y\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/docs/components/Rule/lollipop",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/docs/components/Rule/lollipop",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "line3d",
+      "component": "Spline",
+      "path": "/docs/components/Spline/line3d",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "line3d",
+      "component": "Spline",
+      "path": "/docs/components/Spline/line3d",
+      "lineNumber": 32,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "line3d",
+      "component": "Spline",
+      "path": "/docs/components/Spline/line3d",
+      "lineNumber": 33,
+      "line": "<Axis placement=\"back\" />"
+    },
+    {
+      "example": "series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/series",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"bottom\" label=\"time\" />"
+    },
+    {
+      "example": "series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/series",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "series",
+      "component": "Spline",
+      "path": "/docs/components/Spline/series",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"back\" />"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 74,
+      "line": "<Axis placement=\"back\" format=\"none\" label=\"Year\" />"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 103,
+      "line": "<Axis placement=\"bottom\" format=\"month\" />"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 104,
+      "line": "<Axis placement=\"left\" format=\"none\" label=\"Year\" />"
+    },
+    {
+      "example": "temperatures",
+      "component": "Spline",
+      "path": "/docs/components/Spline/temperatures",
+      "lineNumber": 105,
+      "line": "<Axis placement=\"back\" format={(v) => v + '° F'} />"
+    },
+    {
+      "example": "basic",
+      "component": "Surface",
+      "path": "/docs/components/Surface/basic",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"bottom\" label=\"x\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Surface",
+      "path": "/docs/components/Surface/basic",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"left\" label=\"y\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Surface",
+      "path": "/docs/components/Surface/basic",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"back\" label=\"z\" />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Surface",
+      "path": "/docs/components/Surface/math-functions",
+      "lineNumber": 130,
+      "line": "<Axis placement=\"bottom\" label=\"x\" />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Surface",
+      "path": "/docs/components/Surface/math-functions",
+      "lineNumber": 131,
+      "line": "<Axis placement=\"left\" label=\"y\" />"
+    },
+    {
+      "example": "field",
+      "component": "Vector",
+      "path": "/docs/components/Vector/field",
+      "lineNumber": 55,
+      "line": "<Axis placement=\"bottom\" label=\"x\" />"
+    },
+    {
+      "example": "field",
+      "component": "Vector",
+      "path": "/docs/components/Vector/field",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"left\" label=\"y\" />"
+    },
+    {
+      "example": "field",
+      "component": "Vector",
+      "path": "/docs/components/Vector/field",
+      "lineNumber": 57,
+      "line": "<Axis placement=\"back\" label=\"z\" />"
+    },
+    {
+      "example": "playground",
+      "component": "WebGL",
+      "path": "/docs/components/WebGL/playground",
+      "lineNumber": 120,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "playground",
+      "component": "WebGL",
+      "path": "/docs/components/WebGL/playground",
+      "lineNumber": 121,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "playground",
+      "component": "WebGL",
+      "path": "/docs/components/WebGL/playground",
+      "lineNumber": 122,
+      "line": "<Axis placement=\"back\" />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.304Z"
+}

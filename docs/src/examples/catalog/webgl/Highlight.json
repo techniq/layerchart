@@ -1,0 +1,42 @@
+{
+  "component": "Highlight",
+  "examples": [],
+  "usage": [
+    {
+      "example": "scatter",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter",
+      "lineNumber": 59,
+      "line": "<Highlight points lines axis=\"both\" />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 80,
+      "line": "<Highlight lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
+    },
+    {
+      "example": "scatter-3d",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-3d",
+      "lineNumber": 83,
+      "line": "<Highlight"
+    },
+    {
+      "example": "scatter-with-svg",
+      "component": "Points",
+      "path": "/docs/components/Points/scatter-with-svg",
+      "lineNumber": 62,
+      "line": "<Highlight points lines axis=\"both\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/docs/components/Rule/lollipop",
+      "lineNumber": 34,
+      "line": "<Highlight area />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.321Z"
+}

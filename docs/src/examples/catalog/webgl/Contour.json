@@ -1,0 +1,39 @@
+{
+  "component": "Contour",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Contour/basic",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 23,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 24,
+          "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} opacity={0.6} />"
+        },
+        {
+          "component": "Contour",
+          "lineNumber": 25,
+          "line": "<Contour"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Contour",
+      "path": "/docs/components/Contour/basic",
+      "lineNumber": 25,
+      "line": "<Contour"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.310Z"
+}

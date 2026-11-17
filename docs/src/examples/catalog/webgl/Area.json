@@ -1,0 +1,75 @@
+{
+  "component": "Area",
+  "examples": [
+    {
+      "name": "areas",
+      "title": "areas",
+      "path": "/docs/components/Area/areas",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 53,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 54,
+          "line": "<Grid y={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 55,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 58,
+          "line": "<Area opacity={0.75} line />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "ridgeline",
+      "title": "ridgeline",
+      "path": "/docs/components/Area/ridgeline",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 138,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 141,
+          "line": "<Area"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 146,
+          "line": "<Spline data={frame} stroke={colorScale(row)} strokeWidth={1.5} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "areas",
+      "component": "Area",
+      "path": "/docs/components/Area/areas",
+      "lineNumber": 58,
+      "line": "<Area opacity={0.75} line />"
+    },
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 141,
+      "line": "<Area"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.302Z"
+}

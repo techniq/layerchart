@@ -1,0 +1,49 @@
+{
+  "component": "Rule",
+  "examples": [
+    {
+      "name": "lollipop",
+      "title": "lollipop",
+      "path": "/docs/components/Rule/lollipop",
+      "components": [
+        {
+          "component": "Axis",
+          "lineNumber": 26,
+          "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
+        },
+        {
+          "component": "WebGL",
+          "lineNumber": 29,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 30,
+          "line": "<Rule class=\"stroke-4 stroke-primary\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 31,
+          "line": "<Points class=\"fill-secondary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 34,
+          "line": "<Highlight area />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/docs/components/Rule/lollipop",
+      "lineNumber": 30,
+      "line": "<Rule class=\"stroke-4 stroke-primary\" />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.335Z"
+}

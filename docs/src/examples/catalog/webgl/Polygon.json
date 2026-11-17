@@ -1,0 +1,44 @@
+{
+  "component": "Polygon",
+  "examples": [
+    {
+      "name": "tree",
+      "title": "tree",
+      "path": "/docs/components/Polygon/tree",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 43,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 45,
+          "line": "<Link"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 53,
+          "line": "<Polygon cx={node.x} cy={node.y} {r} {points} {rotate} {z} {fill} cornerRadius={2} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 54,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "tree",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/tree",
+      "lineNumber": 53,
+      "line": "<Polygon cx={node.x} cy={node.y} {r} {points} {rotate} {z} {fill} cornerRadius={2} />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.330Z"
+}

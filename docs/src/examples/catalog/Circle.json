@@ -431,7 +431,7 @@
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 50,
+      "lineNumber": 49,
       "line": "<Circle cx=\"x\" cy=\"y\" r={4} viewport class=\"fill-primary\" />"
     },
     {
@@ -452,7 +452,7 @@
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 68,
+      "lineNumber": 67,
       "line": "<Circle cx=\"x\" cy=\"y\" r={6} fill=\"z\" viewport class=\"stroke-surface-100\" />"
     },
     {
@@ -1296,5 +1296,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:35.791Z"
+  "updatedAt": "2026-11-17T06:28:16.416Z"
 }

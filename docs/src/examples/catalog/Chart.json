@@ -889,37 +889,37 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 43,
+          "lineNumber": 42,
           "line": "<Layer>"
         },
         {
           "component": "Frame",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
         },
         {
           "component": "Grid",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<Grid x y />"
         },
         {
           "component": "Axis",
-          "lineNumber": 46,
+          "lineNumber": 45,
           "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 49,
+          "lineNumber": 48,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Circle",
-          "lineNumber": 50,
+          "lineNumber": 49,
           "line": "<Circle cx=\"x\" cy=\"y\" r={4} viewport class=\"fill-primary\" />"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-11-17T05:51:36.000Z"
     },
     {
       "name": "isometric-pin-map",
@@ -1025,42 +1025,42 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 58,
+          "lineNumber": 57,
           "line": "<Layer>"
         },
         {
           "component": "Frame",
-          "lineNumber": 59,
+          "lineNumber": 58,
           "line": "<Frame class=\"fill-surface-content/3 stroke-surface-content/20\" />"
         },
         {
           "component": "Grid",
-          "lineNumber": 60,
+          "lineNumber": 59,
           "line": "<Grid x y z />"
         },
         {
           "component": "Axis",
-          "lineNumber": 61,
+          "lineNumber": 60,
           "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 66,
+          "lineNumber": 65,
           "line": "<Highlight data={hovered} lines={{ strokeWidth: 1 }} shadows axis=\"both\" />"
         },
         {
           "component": "Circle",
-          "lineNumber": 68,
+          "lineNumber": 67,
           "line": "<Circle cx=\"x\" cy=\"y\" r={6} fill=\"z\" viewport class=\"stroke-surface-100\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 83,
+          "lineNumber": 82,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-11-17T05:51:36.000Z"
     },
     {
       "name": "isometric-stacked-columns",
@@ -1128,32 +1128,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 94,
+          "lineNumber": 95,
           "line": "<Layer>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 95,
+          "lineNumber": 96,
           "line": "<Treemap hierarchy={root} paddingOuter={4}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 103,
+          "lineNumber": 104,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 119,
+          "lineNumber": 120,
           "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 138,
+          "lineNumber": 139,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-10-08T16:43:08.000Z",
-      "updatedAt": "2026-10-08T16:43:08.000Z"
+      "updatedAt": "2026-11-17T05:51:36.000Z"
     },
     {
       "name": "mixed-marks-with-stack",
@@ -6051,5 +6051,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:35.663Z"
+  "updatedAt": "2026-11-17T06:28:16.306Z"
 }

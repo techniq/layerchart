@@ -3735,14 +3735,14 @@
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
     },
     {
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: true }} />"
     },
     {
@@ -3763,21 +3763,21 @@
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 61,
+      "lineNumber": 60,
       "line": "<Axis placement=\"bottom\" tickLabelProps={{ viewport: true }} />"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 62,
+      "lineNumber": 61,
       "line": "<Axis placement=\"left\" tickLabelProps={{ viewport: true }} />"
     },
     {
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 63,
+      "lineNumber": 62,
       "line": "<Axis placement=\"back\" />"
     },
     {
@@ -6063,5 +6063,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:35.342Z"
+  "updatedAt": "2026-11-17T06:28:16.031Z"
 }

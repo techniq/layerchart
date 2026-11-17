@@ -83,7 +83,7 @@
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<ChartClipPath>"
     },
     {
@@ -164,5 +164,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-10-08T16:54:43.194Z"
+  "updatedAt": "2026-11-17T06:28:16.354Z"
 }

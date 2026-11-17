@@ -1744,7 +1744,7 @@
       "example": "isometric-pan-zoom",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-pan-zoom",
-      "lineNumber": 43,
+      "lineNumber": 42,
       "line": "<Layer>"
     },
     {
@@ -1765,7 +1765,7 @@
       "example": "isometric-scatter-3d",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-scatter-3d",
-      "lineNumber": 58,
+      "lineNumber": 57,
       "line": "<Layer>"
     },
     {
@@ -1779,7 +1779,7 @@
       "example": "isometric-treemap",
       "component": "Chart",
       "path": "/docs/components/Chart/isometric-treemap",
-      "lineNumber": 94,
+      "lineNumber": 95,
       "line": "<Layer>"
     },
     {
@@ -4716,5 +4716,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:36.449Z"
+  "updatedAt": "2026-11-17T06:28:16.955Z"
 }

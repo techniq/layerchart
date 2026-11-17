@@ -1,0 +1,49 @@
+{
+  "component": "Text",
+  "examples": [],
+  "usage": [
+    {
+      "example": "pie",
+      "component": "Arc",
+      "path": "/docs/components/Arc/pie",
+      "lineNumber": 63,
+      "line": "<Text"
+    },
+    {
+      "example": "state-population",
+      "component": "Bin",
+      "path": "/docs/components/Bin/state-population",
+      "lineNumber": 165,
+      "line": "<Text"
+    },
+    {
+      "example": "pin-map",
+      "component": "Link",
+      "path": "/docs/components/Link/pin-map",
+      "lineNumber": 76,
+      "line": "<Text"
+    },
+    {
+      "example": "solar-system",
+      "component": "Points",
+      "path": "/docs/components/Points/solar-system",
+      "lineNumber": 283,
+      "line": "<Text"
+    },
+    {
+      "example": "tree",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/tree",
+      "lineNumber": 54,
+      "line": "<Text"
+    },
+    {
+      "example": "treemap",
+      "component": "Rect",
+      "path": "/docs/components/Rect/treemap",
+      "lineNumber": 99,
+      "line": "<Text"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.343Z"
+}

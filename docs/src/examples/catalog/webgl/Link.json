@@ -1,0 +1,63 @@
+{
+  "component": "Link",
+  "examples": [
+    {
+      "name": "pin-map",
+      "title": "pin map",
+      "path": "/docs/components/Link/pin-map",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 61,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 62,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 68,
+          "line": "<Link"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 75,
+          "line": "<Points data={pins} x=\"x\" y=\"y\" z=\"population\" r={5} fill=\"var(--color-primary)\" tooltip />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 76,
+          "line": "<Text"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "state-population",
+      "component": "Bin",
+      "path": "/docs/components/Bin/state-population",
+      "lineNumber": 158,
+      "line": "<Link"
+    },
+    {
+      "example": "pin-map",
+      "component": "Link",
+      "path": "/docs/components/Link/pin-map",
+      "lineNumber": 68,
+      "line": "<Link"
+    },
+    {
+      "example": "tree",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/tree",
+      "lineNumber": 45,
+      "line": "<Link"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.324Z"
+}

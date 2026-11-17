@@ -1,0 +1,156 @@
+{
+  "component": "Bars",
+  "examples": [
+    {
+      "name": "calendar",
+      "title": "calendar",
+      "path": "/docs/components/Bars/calendar",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 44,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 46,
+          "line": "<Bars z={1.5} insets={1} fill=\"var(--color-surface-200)\" />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "columns",
+      "title": "columns",
+      "path": "/docs/components/Bars/columns",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 37,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 38,
+          "line": "<Grid x={false} y={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 39,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 42,
+          "line": "<Bars tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "heatmap",
+      "title": "heatmap",
+      "path": "/docs/components/Bars/heatmap",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 37,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 38,
+          "line": "<Grid x={false} y={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 39,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'W' + d} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 41,
+          "line": "<Bars z={3} insets={1} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "stacked-columns",
+      "title": "stacked columns",
+      "path": "/docs/components/Bars/stacked-columns",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 33,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 34,
+          "line": "<Grid x={false} y={false} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"bottom\" format=\"none\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 38,
+          "line": "<Bars tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "calendar",
+      "component": "Bars",
+      "path": "/docs/components/Bars/calendar",
+      "lineNumber": 46,
+      "line": "<Bars z={1.5} insets={1} fill=\"var(--color-surface-200)\" />"
+    },
+    {
+      "example": "calendar",
+      "component": "Bars",
+      "path": "/docs/components/Bars/calendar",
+      "lineNumber": 47,
+      "line": "<Bars insets={1} tooltip />"
+    },
+    {
+      "example": "columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/columns",
+      "lineNumber": 42,
+      "line": "<Bars tooltip />"
+    },
+    {
+      "example": "heatmap",
+      "component": "Bars",
+      "path": "/docs/components/Bars/heatmap",
+      "lineNumber": 41,
+      "line": "<Bars z={3} insets={1} tooltip />"
+    },
+    {
+      "example": "stacked-columns",
+      "component": "Bars",
+      "path": "/docs/components/Bars/stacked-columns",
+      "lineNumber": 38,
+      "line": "<Bars tooltip />"
+    },
+    {
+      "example": "playground",
+      "component": "WebGL",
+      "path": "/docs/components/WebGL/playground",
+      "lineNumber": 123,
+      "line": "<Bars tooltip />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.306Z"
+}

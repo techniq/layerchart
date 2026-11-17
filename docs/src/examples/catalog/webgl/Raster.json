@@ -1,0 +1,46 @@
+{
+  "component": "Raster",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Raster/basic",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 18,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 19,
+          "line": "<Axis placement=\"bottom\" label=\"x\" />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 21,
+          "line": "<Raster value={(x: number, y: number) => Math.sin(x) * Math.cos(y)} pixelSize={3} tooltip />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Contour",
+      "path": "/docs/components/Contour/basic",
+      "lineNumber": 24,
+      "line": "<Raster data={volcano.values} width={volcano.width} height={volcano.height} opacity={0.6} />"
+    },
+    {
+      "example": "basic",
+      "component": "Raster",
+      "path": "/docs/components/Raster/basic",
+      "lineNumber": 21,
+      "line": "<Raster value={(x: number, y: number) => Math.sin(x) * Math.cos(y)} pixelSize={3} tooltip />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.332Z"
+}

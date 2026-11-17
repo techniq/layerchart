@@ -1,0 +1,96 @@
+{
+  "component": "GeoTile",
+  "examples": [
+    {
+      "name": "globe",
+      "title": "globe",
+      "path": "/docs/components/GeoTile/globe",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 31,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 32,
+          "line": "<GeoTile {url} maxZoom={12} debug={settings.debug} />"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "terrain",
+      "title": "terrain",
+      "path": "/docs/components/GeoTile/terrain",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 159,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "Light",
+          "lineNumber": 160,
+          "line": "<Light azimuth={300} altitude={35} intensity={1.2} />"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 162,
+          "line": "<GeoTile"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    },
+    {
+      "name": "zoomable",
+      "title": "zoomable",
+      "path": "/docs/components/GeoTile/zoomable",
+      "components": [
+        {
+          "component": "WebGL",
+          "lineNumber": 41,
+          "line": "<WebGL>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 42,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 43,
+          "line": "<GeoPath"
+        }
+      ],
+      "createdAt": "2026-11-17T05:51:36.000Z",
+      "updatedAt": "2026-11-17T05:51:36.000Z"
+    }
+  ],
+  "usage": [
+    {
+      "example": "globe",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/globe",
+      "lineNumber": 32,
+      "line": "<GeoTile {url} maxZoom={12} debug={settings.debug} />"
+    },
+    {
+      "example": "terrain",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/terrain",
+      "lineNumber": 162,
+      "line": "<GeoTile"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable",
+      "lineNumber": 42,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    }
+  ],
+  "updatedAt": "2026-11-17T06:28:18.316Z"
+}
