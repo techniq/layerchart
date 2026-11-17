@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix(TooltipContext): Build a `quadtree` tooltip's tree once a `domain` pan or zoom rests, rather than at every step of it
+fix(TooltipContext): Rebuild a `quadtree` tooltip once a `domain` pan or zoom settles, rather than at every step

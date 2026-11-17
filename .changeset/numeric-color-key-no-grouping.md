@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix(Spline, Area): Color by a numeric data key (`stroke="value"`) without splitting into a line per value, as the chart's `c` already does
+fix(Spline, Area): Color by a numeric data key (`stroke="value"`) without splitting into a line per value

@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix(Highlight): Move with a chart's `domain` pan or zoom rather than springing after it, still gliding between points
+fix(Highlight): Follow a `domain` pan or zoom at once rather than springing after it

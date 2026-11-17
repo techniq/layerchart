@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(Chart): Add `MarkInfo.zExtent` to let a mark widen an automatic `zDomain` with heights from its own values
+feat(Chart): Add `MarkInfo.zExtent`, so a mark's own heights widen an automatic `zDomain`
