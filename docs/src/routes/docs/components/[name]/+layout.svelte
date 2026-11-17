@@ -67,8 +67,11 @@
 			? intersectExampleLayers(exampleInfo.components, metadata.layers ?? [])
 			: null;
 	});
+	// `@layerchart/webgl`'s pages draw in a `WebGL` layer only, shown (selected) on its own
 	let layers = $derived(
-		pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []
+		data.componentName.startsWith('webgl/')
+			? ['webgl']
+			: (pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? [])
 	);
 
 	// Component names as-is (ex. `ArcChart`), example names in sentence case (ex. `Axis labels inside`)

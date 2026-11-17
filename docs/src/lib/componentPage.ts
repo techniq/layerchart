@@ -65,20 +65,29 @@ export async function loadComponentPage(
 }
 
 /**
- * The same-named component on the other side, to link to: `@layerchart/webgl`'s for one of
- * LayerChart's (ex. `Points` ↔ `webgl/Points`), and LayerChart's for one of its, labeled with its layers
+ * Counterparts not named alike: `Chart` and `Layer` draw in WebGL through its `WebGL` layer, whose
+ * page leads back to `Layer`
  */
-function counterpartOf(componentName: string): { href: string; label: string } | null {
+const counterpartAliases: Record<string, string> = {
+	Chart: 'webgl/WebGL',
+	Layer: 'webgl/WebGL',
+	'webgl/WebGL': 'Layer'
+};
+
+/**
+ * The same-named component (or an alias's) on the other side, to switch to: `@layerchart/webgl`'s for one of
+ * LayerChart's (ex. `Points` ↔ `webgl/Points`), and LayerChart's for one of its, with its layers
+ */
+function counterpartOf(componentName: string): { href: string; layers: string[] } | null {
 	const webgl = componentName.startsWith('webgl/');
-	const name = webgl ? componentName.slice(6) : `webgl/${componentName}`;
+	const name =
+		counterpartAliases[componentName] ??
+		(webgl ? componentName.slice(6) : `webgl/${componentName}`);
 	const other = allComponents.find((c) => c.slug === name);
 	if (!other) return null;
-	const layers = ((other as { layers?: string[] }).layers ?? []).map(
-		(layer) => layer[0].toUpperCase() + layer.slice(1)
-	);
 	return {
 		href: `/docs/components/${name}`,
-		label: webgl ? layers.join(' / ') || 'Core' : 'WebGL'
+		layers: webgl ? ((other as { layers?: string[] }).layers ?? []) : ['webgl']
 	};
 }
 
