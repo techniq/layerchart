@@ -69,7 +69,7 @@
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
 	<SelectField
 		label="Stars"
-		options={[30_000, 100_000, 300_000].map((value) => ({
+		options={[30_000, 100_000, 300_000, 500_000, 1_000_000].map((value) => ({
 			label: value.toLocaleString(),
 			value
 		}))}
