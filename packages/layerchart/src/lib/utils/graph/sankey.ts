@@ -1,4 +1,3 @@
-import { csvParseRows } from 'd3-dsv';
 import type {
   SankeyExtraProperties,
   SankeyGraph,
@@ -9,19 +8,21 @@ import type {
 import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 
 /**
- * Convert CSV rows in format: 'source,target,value' to SankeyGraph
+ * Convert CSV rows in format: 'source,target,value' to SankeyGraph.
+ *
+ * Rows missing a source or target are skipped, and a missing or non-numeric value defaults to `1`.
+ * Splits on newlines and commas only (no quoted fields). Parse other formats yourself and pass
+ * the links to `sankeyNodesFromLinks()`.
  */
 export function sankeyGraphFromCsv(csv: string): SankeyGraph<any, any> {
-  const links = csvParseRows(csv, (row) => {
-    const [source, target, rawValue] = row;
-    if (!source || !target) return null;
+  const links: Array<{ source: string; target: string; value: number }> = [];
+
+  for (const line of csv.split(/\r\n|\r|\n/)) {
+    const [source, target, rawValue] = line.split(',');
+    if (!source || !target) continue;
     const num = rawValue ? +rawValue : NaN;
-    return {
-      source,
-      target,
-      value: isNaN(num) ? 1 : num,
-    };
-  });
+    links.push({ source, target, value: isNaN(num) ? 1 : num });
+  }
 
   return { nodes: sankeyNodesFromLinks(links), links };
 }
