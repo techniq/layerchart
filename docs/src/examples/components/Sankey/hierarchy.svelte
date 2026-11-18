@@ -59,7 +59,6 @@
 			onUpdate={(e) => {
 				// Calculate domain extents from Sankey data
 				// TODO: Update as 'nodeColorBy' changes
-				// @ts-expect-error
 				const extents = extent(e.nodes, (d) => d[config.nodeColorBy]);
 				// @ts-expect-error
 				colorScale.domain(extents);
@@ -94,7 +93,7 @@
 						<Rect
 							width={nodeWidth}
 							height={nodeHeight}
-							fill={colorScale(node[config.nodeColorBy])}
+							fill={colorScale(node[config.nodeColorBy]!)}
 							fillOpacity={0.5}
 							onpointerenter={() => {
 								highlightLinkIndexes = [
