@@ -2,7 +2,7 @@ import type { ComponentProps, Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { TimeInterval } from 'd3-time';
 import type { HierarchyNode } from 'd3-hierarchy';
-import type { SankeyGraph } from 'd3-sankey';
+import type { SankeyGraph } from '$lib/utils/graph/sankeyLayout.js';
 
 import type { Accessor } from '$lib/utils/common.js';
 import type { MotionProp } from '$lib/utils/motion.svelte.js';

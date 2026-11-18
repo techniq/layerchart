@@ -4,8 +4,10 @@ import type {
   SankeyLink,
   SankeyNode,
   SankeyNodeMinimal,
-} from 'd3-sankey';
+} from './sankeyLayout.js';
 import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
+
+export type { SankeyGraph, SankeyLink, SankeyNode } from './sankeyLayout.js';
 
 /**
  * Convert CSV rows in format: 'source,target,value' to SankeyGraph.

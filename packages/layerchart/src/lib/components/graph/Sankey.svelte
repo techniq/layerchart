@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
+  import type { SankeyGraph, SankeyLink, SankeyNode } from '$lib/utils/graph/sankeyLayout.js';
 
   export type NodeExtraProperties = Record<string, any>;
 
@@ -17,9 +18,11 @@
      */
     nodeId?: (d: any) => any;
     /**
-     * @see https://github.com/d3/d3-sankey#alignments
+     * Which column each node goes in: `left` by depth from the sources, `right` by height from the
+     * sinks, `center` next to the nodes it links to, and `justify` like `left` but with sinks in the
+     * last column
      *
-     * @default sankeyJustify
+     * @default 'justify'
      */
     nodeAlign?:
       | ((node: SankeyNode<any, any>, n: number) => number)
@@ -69,7 +72,7 @@
       [
         {
           nodes: SankeyNode<NodeExtraProperties, any>[];
-          links: SankeyNode<NodeExtraProperties, any>[];
+          links: SankeyLink<NodeExtraProperties, any>[];
         },
       ]
     >;
@@ -77,24 +80,21 @@
 </script>
 
 <script lang="ts">
-  // https://github.com/d3/d3-sankey
   import {
-    sankey as d3Sankey,
+    sankeyLayout,
     sankeyLeft,
     sankeyCenter,
     sankeyRight,
     sankeyJustify,
-    type SankeyNode,
-    type SankeyLink,
-    type SankeyGraph,
-  } from 'd3-sankey';
+    type SankeyLayoutOptions,
+  } from '$lib/utils/graph/sankeyLayout.js';
 
   import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     nodes: nodesProp = (d: any) => d.nodes,
     nodeId = (d: any) => d.index,
-    nodeAlign = sankeyJustify,
+    nodeAlign = 'justify',
     nodeWidth = 4,
     nodePadding = 10,
     nodeSort,
@@ -107,12 +107,13 @@
   const ctx = getChartContext();
 
   const sankeyData = $derived.by(() => {
-    return (
-      d3Sankey()
-        .size([ctx.width, ctx.height])
-        .nodes(nodesProp)
-        .nodeId(nodeId)
-        .nodeAlign(
+    const data = structuredClone(ctx.data);
+    return sankeyLayout(
+      { nodes: nodesProp(data), links: linksProp(data) },
+      {
+        size: [ctx.width, ctx.height],
+        nodeId,
+        nodeAlign:
           nodeAlign === 'left'
             ? sankeyLeft
             : nodeAlign === 'center'
@@ -121,15 +122,12 @@
                 ? sankeyRight
                 : nodeAlign === 'justify'
                   ? sankeyJustify
-                  : nodeAlign
-        )
-        .nodeWidth(nodeWidth)
-        .nodePadding(nodePadding)
-        // @ts-expect-error
-        .nodeSort(nodeSort)
-        .links(linksProp)
-        // @ts-expect-error
-        .linkSort(linkSort)(structuredClone(ctx.data))
+                  : nodeAlign,
+        nodeWidth,
+        nodePadding,
+        nodeSort: nodeSort as SankeyLayoutOptions['nodeSort'],
+        linkSort: linkSort as SankeyLayoutOptions['linkSort'],
+      }
     );
   });
 

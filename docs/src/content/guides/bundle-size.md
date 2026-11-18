@@ -36,12 +36,12 @@ These additions to your chart cause an extra HTTP fetch the first time the corre
 
 Components that bring in large d3 modules or framework-specific libraries are not re-exported from the root `'layerchart'` entry. They live behind opt-in sub-paths so the default barrel doesn't drag those deps into bundlers that don't tree-shake aggressively.
 
-| Sub-path               | Components                             | Heavy dep saved                                    |
-| ---------------------- | -------------------------------------- | -------------------------------------------------- |
-| `layerchart/geo`       | `Geo*` (12), `Graticule`, `TileImage`  | `d3-geo` (~15 KB), `d3-tile`                       |
-| `layerchart/hierarchy` | `Tree`, `Treemap`, `Pack`, `Partition` | `d3-hierarchy` (~6 KB)                             |
-| `layerchart/force`     | `ForceSimulation`                      | `d3-force` (~7 KB)                                 |
-| `layerchart/graph`     | `Dagre`, `Sankey`, `Chord`, `Ribbon`   | `@dagrejs/dagre` (~22 KB), `d3-sankey`, `d3-chord` |
+| Sub-path               | Components                             | Heavy dep saved                                      |
+| ---------------------- | -------------------------------------- | ---------------------------------------------------- |
+| `layerchart/geo`       | `Geo*` (12), `Graticule`, `TileImage`  | `d3-geo` (~15 KB), `d3-tile`                         |
+| `layerchart/hierarchy` | `Tree`, `Treemap`, `Pack`, `Partition` | `d3-hierarchy` (~6 KB)                               |
+| `layerchart/force`     | `ForceSimulation`                      | `d3-force` (~7 KB)                                   |
+| `layerchart/graph`     | `Dagre`, `Sankey`, `Chord`, `Ribbon`   | `@dagrejs/dagre` (~22 KB), Sankey layout, `d3-chord` |
 
 If you use these components, just import from the sub-path:
 
