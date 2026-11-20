@@ -1730,11 +1730,14 @@ export class ChartState<
    */
   #transformDomain(axis: 'x' | 'y', at: 'current' | 'target') {
     const base = axis === 'x' ? this._baseXDomain : this._baseYDomain;
-    const size = axis === 'x' ? this.width : this.height;
 
     const transform = this.#transform;
     if (transform?.mode !== 'domain') return base;
     if (transform.axis !== axis && transform.axis !== 'both') return base;
+
+    // Read the plot size only once a domain transform applies — it depends on `padding`, which may
+    // itself be derived from this domain (e.g. sized to fit the axis labels)
+    const size = axis === 'x' ? this.width : this.height;
     if (!(size > 0)) return base;
 
     // `targetScale` / `targetTranslate` live on `TransformState`; the fallback has neither, and
