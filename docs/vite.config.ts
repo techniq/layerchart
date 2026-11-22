@@ -57,6 +57,18 @@ export default defineConfig({
 			}
 		}) /*, devtoolsJson()*/
 	],
+	environments: {
+		ssr: {
+			build: {
+				rollupOptions: {
+					// The share cards' WebP decoder (`routes/og/[...path]/screenshot.ts`), for wrangler
+					// to bundle as a `WebAssembly.Module`.  `ssr.external` (below) does not cover it,
+					// as Vite only leaves out JavaScript.
+					external: ['@jsquash/webp/codec/dec/webp_dec.wasm']
+				}
+			}
+		}
+	},
 	server: {
 		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
@@ -118,9 +130,14 @@ export default defineConfig({
 		noExternal: isTest ? undefined : true,
 		// Externalize packages not needed server-side to stay under
 		// Cloudflare Workers' 25 MiB uncompressed size limit.
+		//
+		// The share cards' renderers (`routes/og`) are left for wrangler to bundle too, as they
+		// import their WebAssembly as modules, which only wrangler turns into `WebAssembly.Module`s
+		// (Vite refuses a `.wasm` import outright)
 		external: [
-			'satori',
-			'@resvg/resvg-js',
+			'@cf-wasm/satori',
+			'@cf-wasm/resvg',
+			'@jsquash/webp',
 			'shiki',
 			'@shikijs/langs',
 			'@shikijs/themes',
