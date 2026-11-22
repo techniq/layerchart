@@ -1185,7 +1185,9 @@ export class ChartState<
       // stands in with the padding it would have had by default
       const measured = this.#autoPadding;
       const sides =
-        typeof paddingProp === 'object' ? paddingProp : ({} as Record<string, PaddingSide | undefined>);
+        typeof paddingProp === 'object'
+          ? paddingProp
+          : ({} as Record<string, PaddingSide | undefined>);
       const resolved = { ...defaultPadding } as Padding;
       for (const side of SIDES) {
         const value = typeof paddingProp === 'object' ? sides[side] : paddingProp;
