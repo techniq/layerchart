@@ -21,7 +21,6 @@ import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$l
 import { colorPropDataKey, resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
-import { clearStringWidths } from '$lib/utils/string.js';
 import { printDebug } from '$lib/utils/debug.js';
 import {
   multiplyMatrix,
@@ -636,18 +635,6 @@ export class ChartState<
       }
     });
 
-    // A web font can load after the axes first measure for `'auto'` padding, and measure wider
-    $effect(() => {
-      const fonts = typeof document === 'undefined' ? undefined : document.fonts;
-      if (!fonts || this.autoPaddingSides === NO_SIDES) return;
-      const loaded = () => {
-        clearStringWidths();
-        this._fontsLoaded++;
-      };
-      fonts.addEventListener('loadingdone', loaded);
-      return () => fonts.removeEventListener('loadingdone', loaded);
-    });
-
     // Set up domain motion if motion prop is configured
     const motionProp = props.motion;
     if (motionProp) {
@@ -1134,8 +1121,6 @@ export class ChartState<
    * whose labels would flip between two widths can't oscillate.
    */
   #autoPadding = $state<Padding | null>(null);
-  /** Internal, for `Axis`.  Counts web fonts loading, so `'auto'` padding measures again */
-  _fontsLoaded = $state(0);
   #autoPaddingShrink: ReturnType<typeof setTimeout> | undefined;
 
   /**

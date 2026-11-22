@@ -14,6 +14,7 @@ import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
 import { occlude } from '$lib/utils/occlusion.js';
 import { getTextRect, getTextStyle } from '$lib/utils/string.js';
+import { fontsLoaded } from '$lib/utils/fonts.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
@@ -312,14 +313,8 @@ export class AxisState {
     const height = this.ctx.height;
     const overflow = { top: 0, right: 0, bottom: 0, left: 0 };
 
-    // Measure in the font the labels render in — a class (ex. `text-sm`), or what they inherit
-    // from the chart — rather than at `fontSize`.  Every tick label shares its props but `value`,
-    // so one font serves them all.  Re-measured once a web font loads, as it can measure wider
-    this.ctx._fontsLoaded;
-    const container = this.ctx.containerRef;
-    const tickLabel = this.tickItems[0]?.tickLabelProps;
-    const tickStyle = tickLabel && getTextStyle(container, tickLabel.class, tickLabel.fontSize);
-
+    // In the font the labels render in, as `tickOcclusion` measures them
+    const tickStyle = this.#tickLabelStyle;
     for (const item of this.tickItems) {
       const rect = this.#tickLabelRect(item.tickLabelProps, tickStyle);
       overflow.left = Math.max(overflow.left, -rect.x);
@@ -334,7 +329,7 @@ export class AxisState {
     if (title.value) {
       const { labelPlacement = 'middle' } = this.#props;
       const rect = getTextRect(String(title.value), 0, 0, {
-        style: getTextStyle(container, title.class, title.fontSize),
+        style: this.#titleStyle,
         fontSize: Number.parseFloat(String(title.fontSize ?? 10)) || 10,
         rotate: Number(title.rotate) || 0,
       });
@@ -356,6 +351,34 @@ export class AxisState {
       bottom: fit(overflow.bottom),
       left: fit(overflow.left),
     };
+  });
+
+  /** The class every tick label renders with */
+  #tickLabelClass = $derived(
+    clsx('lc-axis-tick-label', this.#props.classes?.tickLabel, this.#props.tickLabelProps?.class)
+  );
+  #tickLabelFontSize = $derived(this.#props.tickLabelProps?.fontSize);
+  #titleClass = $derived(
+    clsx('lc-axis-label', this.#props.classes?.label, this.#props.labelProps?.class)
+  );
+  #titleFontSize = $derived(this.#props.labelProps?.fontSize);
+
+  /**
+   * The fonts the tick labels and title render in — a class (ex. `text-sm`), or what they inherit
+   * from the chart — for measuring them.  Asked of the page once, not on every tick change (ex.
+   * each frame of a zoom): they read only what decides the font — the class and size (as strings,
+   * which stop at an unchanged value where `props` would not), the chart's width (a responsive
+   * class), and web fonts loading.
+   */
+  #tickLabelStyle = $derived.by(() => {
+    fontsLoaded();
+    this.ctx.containerWidth;
+    return getTextStyle(this.ctx.containerRef, this.#tickLabelClass, this.#tickLabelFontSize);
+  });
+  #titleStyle = $derived.by(() => {
+    fontsLoaded();
+    this.ctx.containerWidth;
+    return getTextStyle(this.ctx.containerRef, this.#titleClass, this.#titleFontSize);
   });
 
   // --- Derived from placement ---
@@ -770,7 +793,8 @@ export class AxisState {
       return index;
     }
 
-    const kept = occlude(items, (item) => this.#tickLabelRect(item.tickLabelProps), {
+    const style = this.#tickLabelStyle;
+    const kept = occlude(items, (item) => this.#tickLabelRect(item.tickLabelProps, style), {
       priority: rank,
       padding,
     });
@@ -779,7 +803,7 @@ export class AxisState {
   }
 
   tickItems = $derived.by<AxisTickItem[]>(() => {
-    const { motion, stroke, fill, tickLabelProps, classes = {} } = this.#props;
+    const { motion, stroke, fill, tickLabelProps } = this.#props;
     const items = this.tickVals.map((tick, index) => {
       const tickCoords = this.getCoords(tick);
       const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y);
@@ -799,7 +823,7 @@ export class AxisState {
         fill,
         stroke,
         ...tickLabelProps,
-        class: clsx('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
+        class: this.#tickLabelClass,
       } as TextProps;
 
       return {

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand } from 'd3-scale';
 
@@ -146,5 +146,56 @@ describe('Axis tickOcclusion', () => {
       },
     });
     await expect.poll(() => labels().length).toBeGreaterThan(flat);
+  });
+
+  it('measures labels in the font a class gives them', async () => {
+    // A stand-in for a utility class (ex. Tailwind's `text-lg`)
+    const sheet = document.createElement('style');
+    sheet.textContent = '.occlusion-text-lg { font-size: 18px; }';
+    document.head.append(sheet);
+    try {
+      render(TestHarness, {
+        chartProps,
+        component: Axis,
+        componentProps: {
+          placement: 'bottom',
+          tickOcclusion: true,
+          tickLabelProps: { class: 'occlusion-text-lg' },
+        },
+      });
+      await expect.poll(() => labels().length).toBeGreaterThan(0);
+
+      const rects = Array.from(document.querySelectorAll('.lc-axis-tick-label'))
+        .map((el) => el.getBoundingClientRect())
+        .sort((a, b) => a.left - b.left);
+      for (let i = 1; i < rects.length; i++) {
+        expect(rects[i].left).toBeGreaterThanOrEqual(rects[i - 1].right);
+      }
+    } finally {
+      sheet.remove();
+    }
+  });
+
+  it('reads the label font once, not on every tick change', async () => {
+    const spy = vi.spyOn(window, 'getComputedStyle');
+    try {
+      const { rerender } = render(TestHarness, {
+        chartProps,
+        component: Axis,
+        componentProps: { placement: 'bottom', tickOcclusion: true },
+      });
+      await expect.poll(() => labels().length).toBeGreaterThan(0);
+      const afterMount = spy.mock.calls.length;
+
+      // New ticks every time — what a zoom does each frame — with the font unchanged
+      for (let i = 1; i <= 10; i++) {
+        const shifted = data.map((d, j) => ({ ...d, day: `${d.day} (${i}.${j})` }));
+        await rerender({ chartProps: { ...chartProps, data: shifted } });
+      }
+      await expect.poll(() => labels().some((label) => label.includes('(10.'))).toBe(true);
+      expect(spy.mock.calls.length - afterMount).toBe(0);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

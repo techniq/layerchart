@@ -88,6 +88,11 @@ export function getTextStyle(
   const computed = getComputedStyle(text);
   const style: Partial<CSSStyleDeclaration> = {};
   for (const key of FONT_STYLES) style[key] = computed[key];
+
+  // Read, so stop posing as one: anything selecting the class (ex. `.lc-axis-tick-label`) would
+  // find the probe too
+  text.removeAttribute('class');
+  text.removeAttribute('font-size');
   return style;
 }
 
