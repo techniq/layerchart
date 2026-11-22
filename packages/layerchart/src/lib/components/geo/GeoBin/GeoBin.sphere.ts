@@ -10,12 +10,11 @@ import {
   geoRotation,
 } from 'd3-geo';
 // @ts-expect-error - no types available
-import { geoGrayFullerRaw } from 'd3-geo-polygon';
-// @ts-expect-error - no types available
 import { geoDelaunay } from 'd3-geo-voronoi';
 import { radiansToDegrees } from '$lib/utils/math.js';
 import { sideShade } from '$lib/utils/isometric.js';
 import { weightOf } from '../../Bin/Bin.shared.svelte.js';
+import { geoGrayFullerRaw } from './grayFuller.js';
 import type {
   BinCell,
   BinShape,

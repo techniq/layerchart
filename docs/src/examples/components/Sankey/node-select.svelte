@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-	import type { SankeyNode } from 'd3-sankey';
+	import type { SankeyNode } from 'layerchart';
 	import { Chart, Group, Link, Rect, Layer, Text, sankeyGraphFromNode } from 'layerchart';
 	import { Sankey } from 'layerchart/graph';
 

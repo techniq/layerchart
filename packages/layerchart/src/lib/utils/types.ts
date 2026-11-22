@@ -1,7 +1,7 @@
 import type { MouseEventHandler, PointerEventHandler } from 'svelte/elements';
 import type { TransitionConfig } from 'svelte/transition';
 import type { HierarchyNode } from 'd3-hierarchy';
-import type { SankeyGraph } from 'd3-sankey';
+import type { SankeyGraph } from './graph/sankeyLayout.js';
 
 import type { AnyScale } from './scales.svelte.js';
 
