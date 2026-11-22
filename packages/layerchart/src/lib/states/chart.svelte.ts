@@ -15,7 +15,8 @@ import {
   makeAccessor,
 } from '$lib/utils/scales.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
-import type { Extents, PaddingArray } from '$lib/utils/types.js';
+import type { PaddingSide } from '$lib/components/Chart/Chart.shared.svelte.js';
+import type { Extents, Padding, PaddingArray } from '$lib/utils/types.js';
 import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
 import { colorPropDataKey, resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
 import { filterObject } from '$lib/utils/filterObject.js';
@@ -42,6 +43,16 @@ import type { SeriesData } from '$lib/components/charts/types.js';
 import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
+
+const SIDES = ['top', 'right', 'bottom', 'left'] as const;
+/** No `'auto'` sides — one shared instance, so a chart without any can tell with `===` */
+const NO_SIDES: readonly (typeof SIDES)[number][] = [];
+/** Whether a `padding` side fits what the axes draw: `'auto'`, or a function of what fits */
+function isAutoPadding(value: PaddingSide | undefined) {
+  return value === 'auto' || typeof value === 'function';
+}
+/** How long `'auto'` padding waits for its axes' labels to settle before shrinking, in ms */
+const AUTO_PADDING_SHRINK_DELAY = 150;
 
 /** Stable empty array to avoid creating new [] references on each reactive update */
 const EMPTY_SERIES: any[] = [];
@@ -1084,19 +1095,115 @@ export class ChartState<
     r: this.r,
   });
 
+  /**
+   * The sides of `padding` sized to fit what the axes draw outside the plot: set to `'auto'`, or a
+   * function of what fits
+   */
+  autoPaddingSides = $derived.by(() => {
+    const padding = this.props.padding;
+    if (padding === 'auto' || typeof padding === 'function') return SIDES;
+    if (padding == null || typeof padding !== 'object') return NO_SIDES;
+    const sides = SIDES.filter((side) => isAutoPadding(padding[side]));
+    return sides.length ? sides : NO_SIDES;
+  });
+
+  /**
+   * How far each axis draws past the plot's edges, by axis.  Written from an effect once the axis
+   * has measured its labels, never derived, as the labels depend on the plot size that the padding
+   * decides — reading them from `padding` would be a cycle.
+   */
+  #autoPaddingReports = new Map<symbol, Padding>();
+
+  /**
+   * The padding the reports call for, as applied: it grows at once, so no label is ever clipped,
+   * but only shrinks once they've been quiet for a moment.  A domain tweening or zooming through
+   * shorter labels then settles in one step rather than nudging the plot at each, and a layout
+   * whose labels would flip between two widths can't oscillate.
+   */
+  #autoPadding = $state<Padding | null>(null);
+  #autoPaddingShrink: ReturnType<typeof setTimeout> | undefined;
+
+  /**
+   * Internal, for `Axis`.  Report how far `key`'s axis draws past each edge of the plot, or `null`
+   * once it no longer does (unmounted, hidden).
+   */
+  _reportAutoPadding(key: symbol, overflow: Padding | null) {
+    const previous = this.#autoPaddingReports.get(key);
+    if (overflow) {
+      if (previous && SIDES.every((side) => previous[side] === overflow[side])) return;
+      this.#autoPaddingReports.set(key, { ...overflow });
+    } else if (!this.#autoPaddingReports.delete(key)) {
+      return;
+    }
+
+    clearTimeout(this.#autoPaddingShrink);
+    const reported = this.#reportedAutoPadding();
+    const applied = untrack(() => this.#autoPadding);
+    if (!reported || !applied) {
+      this.#autoPadding = reported;
+      return;
+    }
+
+    if (SIDES.some((side) => reported[side] > applied[side])) {
+      this.#autoPadding = Object.fromEntries(
+        SIDES.map((side) => [side, Math.max(applied[side], reported[side])])
+      ) as Padding;
+    }
+    if (SIDES.some((side) => reported[side] < applied[side])) {
+      this.#autoPaddingShrink = setTimeout(() => {
+        this.#autoPadding = this.#reportedAutoPadding();
+      }, AUTO_PADDING_SHRINK_DELAY);
+    }
+  }
+
+  /** The most any axis reported for each side, or `null` with no reports */
+  #reportedAutoPadding(): Padding | null {
+    const reports = [...this.#autoPaddingReports.values()];
+    if (!reports.length) return null;
+    return Object.fromEntries(
+      SIDES.map((side) => [side, Math.max(0, ...reports.map((report) => report[side]))])
+    ) as Padding;
+  }
+
   padding = $derived.by(() => {
     let paddingProp = this.props.padding;
-    // When no explicit padding, compute default from axis/legend (unless radial).
+
+    // The padding a chart gets without one: room for its axes and legend (unless radial).
     // When `children` is not set, ChartChildren renders with axis=true by default,
     // so apply matching padding. When `children` IS set (Treemap, Pack, etc.),
     // the user controls layout — only apply padding if axis is explicitly set.
     const hasChartChildrenLayout = !this.props.children;
     const effectiveAxis = this.props.axis ?? (hasChartChildrenLayout ? true : false);
-    if (paddingProp == null && !this.props.radial && effectiveAxis) {
-      paddingProp = defaultChartPadding({
-        axis: effectiveAxis as any,
-        legend: this.props.legend as any,
-      });
+    const defaults =
+      !this.props.radial && effectiveAxis
+        ? defaultChartPadding({ axis: effectiveAxis as any, legend: this.props.legend as any })
+        : undefined;
+
+    const autoSides = this.autoPaddingSides;
+    if (autoSides !== NO_SIDES) {
+      // Until the axes have measured (and with no axis to, or on the server) an `'auto'` side
+      // stands in with the padding it would have had by default
+      const measured = this.#autoPadding;
+      const sides =
+        typeof paddingProp === 'object' ? paddingProp : ({} as Record<string, PaddingSide | undefined>);
+      const resolved = { ...defaultPadding } as Padding;
+      for (const side of SIDES) {
+        const value = typeof paddingProp === 'object' ? sides[side] : paddingProp;
+        if (!autoSides.includes(side)) {
+          resolved[side] = (value as number | undefined) ?? 0;
+          continue;
+        }
+        let fit = measured?.[side] ?? defaults?.[side] ?? 0;
+        // The legend sits in the bottom padding below the axis, which no axis reports — leave it
+        // the room `defaultChartPadding` would (all of its bottom, without an `x` axis)
+        if (side === 'bottom' && measured && this.props.legend) {
+          fit += defaultChartPadding({ axis: 'y', legend: true })!.bottom;
+        }
+        resolved[side] = typeof value === 'function' ? value(fit) : fit;
+      }
+      return resolved;
+    } else if (paddingProp == null) {
+      paddingProp = defaults;
     }
     paddingProp = paddingProp ?? {};
     if (typeof paddingProp === 'number') {
@@ -1108,7 +1215,8 @@ export class ChartState<
         left: paddingProp,
       };
     }
-    return { ...defaultPadding, ...paddingProp };
+    // `'auto'` sides return above
+    return { ...defaultPadding, ...(paddingProp as Partial<Padding>) };
   });
 
   box = $derived.by(() => {

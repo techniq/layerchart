@@ -99,6 +99,14 @@ axis is drawn wherever its tick sits, so reserve horizontal `padding` for it —
 `priority: 'start-end'`, which anchors both ends by design.
 ::
 
+### Auto padding
+
+The labels an axis draws sit outside the plot, in the chart's `padding`. Set `padding="auto"` on the chart (or a single side, ex. `padding={{ bottom: 'auto' }}`) and each axis measures its labels — formatted, after `tickOcclusion` drops any, and after rotation — plus its `label`, and the padding fits them. Rotated labels no longer need a hand-tuned `bottom`:
+
+:example{ name="auto-padding" }
+
+See [Chart padding](/docs/components/Chart#padding) for adding room beyond what fits.
+
 ### time scales
 
 With no `format`, tick labels are chosen automatically from the duration between ticks — a domain spanning years is labelled with years, one spanning a minute with seconds. Resizing the chart (or changing `tickSpacing`) changes the tick density, and the labels follow.

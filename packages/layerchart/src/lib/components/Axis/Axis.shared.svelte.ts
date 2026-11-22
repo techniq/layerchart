@@ -287,7 +287,67 @@ export class AxisState {
   constructor(getProps: () => AxisProps) {
     this.#getProps = getProps;
     this.ctx.registerComponent({ name: 'Axis', kind: 'composite-mark' });
+
+    // Tell the chart how much room an `'auto'` padding needs for this axis.  Reported rather than
+    // read: the labels depend on the plot size the padding decides, so as a derived it'd be a cycle
+    const key = Symbol('Axis');
+    $effect.pre(() => {
+      this.ctx._reportAutoPadding(key, this.autoPaddingOverflow);
+    });
+    $effect.pre(() => () => this.ctx._reportAutoPadding(key, null));
   }
+
+  /**
+   * How far this axis draws past each edge of the plot — its tick labels, and a title pinned to
+   * that edge — when the chart has an `'auto'` padding side to fit it to.  `null` otherwise, so
+   * a chart without one doesn't measure.
+   */
+  autoPaddingOverflow = $derived.by(() => {
+    const placement = this.#props.placement;
+    if (this.ctx.autoPaddingSides.length === 0) return null;
+    if (!['top', 'right', 'bottom', 'left'].includes(placement)) return null;
+    if (this.ctx.view || this.ctx.props.radial || !this.visible) return null;
+
+    const width = this.ctx.width;
+    const height = this.ctx.height;
+    const overflow = { top: 0, right: 0, bottom: 0, left: 0 };
+
+    for (const item of this.tickItems) {
+      const rect = this.#tickLabelRect(item.tickLabelProps);
+      overflow.left = Math.max(overflow.left, -rect.x);
+      overflow.top = Math.max(overflow.top, -rect.y);
+      overflow.right = Math.max(overflow.right, rect.x + rect.width - width);
+      overflow.bottom = Math.max(overflow.bottom, rect.y + rect.height - height);
+    }
+
+    // The title sits against the padding's outer edge, so it needs its thickness on top of the
+    // tick labels rather than measuring where it is (it moves with the padding)
+    const title = this.resolvedLabelProps;
+    if (title.value) {
+      const { labelPlacement = 'middle' } = this.#props;
+      const rect = getTextRect(String(title.value), 0, 0, {
+        fontSize: Number.parseFloat(String(title.fontSize ?? 10)) || 10,
+        rotate: Number(title.rotate) || 0,
+      });
+      const gap = 4;
+      if (this.orientation === 'vertical' && labelPlacement !== 'middle') {
+        overflow[labelPlacement === 'start' ? 'top' : 'bottom'] += rect.height + gap;
+      } else {
+        const side = placement as 'top' | 'right' | 'bottom' | 'left';
+        overflow[side] += (this.orientation === 'vertical' ? rect.width : rect.height) + gap;
+      }
+    }
+
+    // Labels are measured as `fontSize` tall, a little shy of the box text renders with, and flush
+    // against the container they'd look clipped anyway — so leave a sliver past them
+    const fit = (value: number) => (value > 0 ? Math.ceil(value + 2) : 0);
+    return {
+      top: fit(overflow.top),
+      right: fit(overflow.right),
+      bottom: fit(overflow.bottom),
+      left: fit(overflow.left),
+    };
+  });
 
   // --- Derived from placement ---
 

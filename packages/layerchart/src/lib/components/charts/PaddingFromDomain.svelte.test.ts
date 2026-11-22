@@ -27,7 +27,9 @@ describe('padding derived from the bound domain (#1009)', () => {
       onbind: (c: any) => (context = c),
     });
 
-    await expect.element(container.querySelector<HTMLElement>('.lc-root-container')).toBeInTheDocument();
+    await expect
+      .element(container.querySelector<HTMLElement>('.lc-root-container'))
+      .toBeInTheDocument();
     await expect.poll(() => context?.yDomain?.[1]).toBe(120);
     // `String(120).length * 8 + 16`
     await expect.poll(() => context?.padding.left).toBe(40);

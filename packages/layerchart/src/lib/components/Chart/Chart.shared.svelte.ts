@@ -29,6 +29,9 @@ import type BrushContext from '../BrushContext.svelte';
 import type { ChartChildrenProps } from '../ChartChildren/ChartChildren.shared.svelte.js';
 import type { SeriesData } from '../charts/types.js';
 
+/** One side of `padding`: pixels, `'auto'` to fit the axes, or a function of what fits */
+export type PaddingSide = number | 'auto' | ((auto: number) => number);
+
 export type ChartResizeDetail = {
   width: number;
   height: number;
@@ -204,7 +207,21 @@ export type ChartPropsWithoutHTML<
   zDomainSort?: boolean;
   rDomainSort?: boolean;
 
-  padding?: { top?: number; right?: number; bottom?: number; left?: number } | number;
+  /**
+   * Space between the container and the plot, in pixels — for all sides, or each.
+   *
+   * `'auto'` sizes it to fit what the axes draw there (tick labels, title).  A function is given
+   * that size to adjust, ex. `(auto) => auto + 8` for room beyond it or `(auto) => Math.max(auto, 40)`
+   * for a minimum.
+   */
+  padding?:
+    | {
+        top?: PaddingSide;
+        right?: PaddingSide;
+        bottom?: PaddingSide;
+        left?: PaddingSide;
+      }
+    | PaddingSide;
 
   extents?: {
     x?: [min: number, max: number];
