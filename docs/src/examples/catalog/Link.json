@@ -212,14 +212,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 64,
+      "lineNumber": 63,
       "line": "<Link"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 70,
+      "lineNumber": 69,
       "line": "<Link"
     },
     {
@@ -272,5 +272,5 @@
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.745Z"
+  "updatedAt": "2026-11-22T06:51:03.031Z"
 }

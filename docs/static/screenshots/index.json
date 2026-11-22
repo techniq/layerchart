@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T06:33:38.833Z",
+  "generatedAt": "2026-11-22T06:52:59.318Z",
   "totalComponents": 101,
   "totalExamples": 1080,
   "components": [
@@ -4819,17 +4819,17 @@
         {
           "name": "complex",
           "path": "/example/Sankey/complex",
-          "checksum": "90e4bdf6826e86d6af609427f1b97247"
+          "checksum": "749b4c1295f5a9089f340438f7159eb9"
         },
         {
           "name": "hierarchy",
           "path": "/example/Sankey/hierarchy",
-          "checksum": "5736352b98b388a8bfc3a35f0e734904"
+          "checksum": "c400e7680ca7fb660949f09ba95faeae"
         },
         {
           "name": "node-select",
           "path": "/example/Sankey/node-select",
-          "checksum": "1d5a913841edce89ecae0b4cdfa449dd"
+          "checksum": "23bc8e872247eaed323ba4cb512141e2"
         },
         {
           "name": "simple",
@@ -5434,7 +5434,7 @@
         {
           "name": "nested-zoom",
           "path": "/example/Treemap/nested-zoom",
-          "checksum": "401eeb036158acdb3b2e3f1c3262c0dd"
+          "checksum": "683270f85b4f090087c1489eb883bf91"
         },
         {
           "name": "playground",

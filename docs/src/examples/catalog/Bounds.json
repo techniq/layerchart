@@ -38,13 +38,6 @@
       "line": "<Bounds"
     },
     {
-      "example": "nested-zoom",
-      "component": "Treemap",
-      "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 90,
-      "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
-    },
-    {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
@@ -52,5 +45,5 @@
       "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
     }
   ],
-  "updatedAt": "2026-07-22T16:53:01.276Z"
+  "updatedAt": "2026-11-22T06:51:02.283Z"
 }

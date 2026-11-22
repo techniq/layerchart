@@ -132,8 +132,8 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 128,
-      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+      "lineNumber": 129,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight} {motion}>"
     },
     {
       "example": "playground",
@@ -150,5 +150,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2026-08-19T19:59:27.055Z"
+  "updatedAt": "2026-11-22T06:51:03.253Z"
 }

@@ -146,7 +146,7 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 92,
+      "lineNumber": 90,
       "line": "<ChartClipPath>"
     },
     {
@@ -164,5 +164,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:16.354Z"
+  "updatedAt": "2026-11-22T06:51:02.429Z"
 }

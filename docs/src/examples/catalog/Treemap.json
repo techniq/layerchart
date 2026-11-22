@@ -149,23 +149,18 @@
           "line": "<Layer>"
         },
         {
-          "component": "Bounds",
-          "lineNumber": 90,
-          "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
-        },
-        {
           "component": "ChartClipPath",
-          "lineNumber": 92,
+          "lineNumber": 90,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 93,
+          "lineNumber": 91,
           "line": "<Treemap"
         },
         {
           "component": "Group",
-          "lineNumber": 106,
+          "lineNumber": 105,
           "line": "<Group"
         },
         {
@@ -175,22 +170,22 @@
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 128,
-          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+          "lineNumber": 129,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight} {motion}>"
         },
         {
           "component": "Text",
-          "lineNumber": 129,
+          "lineNumber": 130,
           "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 184,
+          "lineNumber": 181,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-11-22T06:50:05.000Z"
     },
     {
       "name": "playground",
@@ -329,7 +324,7 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 93,
+      "lineNumber": 91,
       "line": "<Treemap"
     },
     {
@@ -347,5 +342,5 @@
       "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:17.609Z"
+  "updatedAt": "2026-11-22T06:51:03.500Z"
 }
