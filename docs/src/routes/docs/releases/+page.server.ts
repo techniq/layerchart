@@ -1,5 +1,6 @@
 import { sortFunc } from '@layerstack/utils';
 import { allReleases } from 'content-collections';
+import { releaseDate, releaseName } from '$lib/releases';
 
 const RELEASES_PER_PAGE = 10;
 
@@ -20,8 +21,16 @@ export async function load({ url }) {
 	const endIndex = startIndex + perPage;
 	const releases = allSortedReleases.slice(startIndex, endIndex);
 
+	const latest = allSortedReleases[0];
 	return {
 		releases,
+		// For the tab and link previews
+		metadata: {
+			name: 'Releases',
+			description: latest
+				? `Release notes for every version of LayerChart. Latest: ${releaseName(latest)}, released ${releaseDate(latest)}.`
+				: 'Release notes for every version of LayerChart.'
+		},
 		pagination: {
 			currentPage,
 			totalPages,

@@ -75,7 +75,7 @@
 		'Composable Svelte chart components to build a large variety of visualizations';
 
 	let pageTitle = $derived(
-		page.data.metadata?.name ? `${page.data.metadata.name} | LayerChart` : 'LayerChart'
+		page.data.metadata?.name ? `${page.data.metadata.name} · LayerChart` : 'LayerChart'
 	);
 	let pageDescription = $derived(page.data.metadata?.description ?? defaultDescription);
 	// TODO: Switch back to dynamic satori-based OG image once Cloudflare compatibility is resolved
