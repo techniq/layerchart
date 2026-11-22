@@ -6,6 +6,7 @@
 	import { dev } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
+	import { pageMeta } from '$lib/meta';
 	import { preparePageTransition } from '@layerstack/docs/page-transitions';
 	import '@fontsource-variable/inter';
 	import '../app.css';
@@ -71,40 +72,15 @@
 		}
 	});
 
-	const defaultDescription =
-		'Composable Svelte chart components to build a large variety of visualizations';
-
-	let pageTitle = $derived(
-		page.data.metadata?.name ? `${page.data.metadata.name} | LayerChart` : 'LayerChart'
-	);
-	let pageDescription = $derived(page.data.metadata?.description ?? defaultDescription);
-	// TODO: Switch back to dynamic satori-based OG image once Cloudflare compatibility is resolved
-	// let ogImageUrl = $derived(
-	// 	`${page.url.origin}/og?title=${encodeURIComponent(page.data.metadata?.name ?? 'LayerChart')}${page.data.metadata?.description ? `&description=${encodeURIComponent(page.data.metadata.description)}` : `&description=${encodeURIComponent(defaultDescription)}`}${page.data.metadata?.category ? `&component=${encodeURIComponent(page.data.metadata.category)}` : ''}`
-	// );
-	let ogImageUrl = $derived(`${page.url.origin}/images/og-image.png`);
+	// The title and tags for search and link previews (see `$lib/meta`)
+	let meta = $derived(pageMeta(page.url, page.data.metadata));
 </script>
 
 <svelte:head>
-	<title>{pageTitle}</title>
-	<meta name="description" content={pageDescription} />
-
-	<!-- Open Graph -->
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content={pageTitle} />
-	<meta property="og:description" content={pageDescription} />
-	<meta property="og:image" content={ogImageUrl} />
-	<meta property="og:image:width" content="1200" />
-	<meta property="og:image:height" content="630" />
-	<meta property="og:url" content={page.url.href} />
-	<meta property="og:site_name" content="LayerChart" />
-
-	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@techniq35" />
-	<meta name="twitter:title" content={pageTitle} />
-	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content={ogImageUrl} />
+	<title>{meta.title}</title>
+	{#each meta.tags as [attribute, key, content] (key)}
+		<meta {...{ [attribute]: key }} {content} />
+	{/each}
 
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
