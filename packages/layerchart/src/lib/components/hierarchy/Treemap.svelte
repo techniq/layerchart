@@ -199,13 +199,13 @@
       const h = hierarchy.copy();
       const treemapData = _treemap(h);
 
-      const selectedNode = selected && h.find((n) => n.data === selected.data);
-      if (selectedNode && selectedNode !== h) {
+      const selectedNode = selected && treemapData.find((n) => n.data === selected.data);
+      if (selectedNode && selectedNode !== treemapData) {
         // Scale everything so the selected node fills the chart (pushing siblings off)...
         const { x0, y0, x1, y1 } = selectedNode;
         const kx = ctx.width / (x1 - x0);
         const ky = ctx.height / (y1 - y0);
-        h.each((n) => {
+        treemapData.each((n) => {
           n.x0 = (n.x0 - x0) * kx;
           n.x1 = (n.x1 - x0) * kx;
           n.y0 = (n.y0 - y0) * ky;
