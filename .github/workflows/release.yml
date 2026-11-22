@@ -5,6 +5,12 @@ on:
     branches:
       - main
       - next
+    # Private workspaces with nothing to publish. The bot PRs that update them merge right after a
+    # Version Packages publish, while npm still has the version staged, so a Release run would retry the publish and 409
+    paths-ignore:
+      - docs/**
+      - bundle-analyzer/**
+      - examples/**
 
 permissions: {}
 jobs:
