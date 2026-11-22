@@ -13,6 +13,7 @@
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 	import { cls } from '@layerstack/tailwind';
 
+	import { browser } from '$app/environment';
 	import { webglCategories } from '$lib/webglCategories.js';
 
 	let { data } = $props();
@@ -188,10 +189,6 @@
 	]);
 </script>
 
-<svelte:head>
-	<title>Examples - LayerChart</title>
-</svelte:head>
-
 <H1>Examples</H1>
 <div class="text-sm text-surface-content/50 mb-10">
 	Browse {@render scrollingValue(totalVisibleExamples)} examples across {@render scrollingValue(
@@ -246,21 +243,32 @@
 	</div>
 </div>
 
-<div class="grid gap-10">
-	{#each groups as { key, heading, examples } (key)}
-		<div>
-			<H2 id={key} class="sticky top-42 sm:top-29 pt-2 pb-1">{heading}</H2>
-			<div
-				style:--column-count="repeat({columnCount}, 1fr)"
-				class="grid grid-cols-(--column-count) gap-4"
-			>
-				{#each examples as example (`${example.component}/${example.name}`)}
-					<ExampleLink component={example.component} example={example.name} title={example.label} />
-				{/each}
+<!--
+	Drawn in the browser only: its column count starts from the window's width, and server rendering
+	all of it would send ~4 MB of HTML (six screenshot sizes and themes for each of ~1,000 examples).
+	The rest of the page, and its title and link preview tags, render on the server as usual.
+-->
+{#if browser}
+	<div class="grid gap-10">
+		{#each groups as { key, heading, examples } (key)}
+			<div>
+				<H2 id={key} class="sticky top-42 sm:top-29 pt-2 pb-1">{heading}</H2>
+				<div
+					style:--column-count="repeat({columnCount}, 1fr)"
+					class="grid grid-cols-(--column-count) gap-4"
+				>
+					{#each examples as example (`${example.component}/${example.name}`)}
+						<ExampleLink
+							component={example.component}
+							example={example.name}
+							title={example.label}
+						/>
+					{/each}
+				</div>
 			</div>
-		</div>
-	{/each}
-</div>
+		{/each}
+	</div>
+{/if}
 
 {#snippet scrollingValue(value: number)}
 	<ScrollingValue {value} class="tabular-nums text-surface-content" />

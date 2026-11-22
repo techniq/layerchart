@@ -1,6 +1,8 @@
 import { allComponents } from 'content-collections';
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
 
+import { metadata } from './metadata';
+
 interface ExampleInfo {
 	/** The component's slug, as its route and screenshots use it (ex. `Area`, `webgl/Area`) */
 	component: string;
@@ -56,6 +58,7 @@ export async function load() {
 		.sort((a, b) => a.label.localeCompare(b.label));
 
 	return {
-		components
+		components,
+		metadata
 	};
 }
