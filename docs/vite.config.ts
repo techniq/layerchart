@@ -5,6 +5,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import contentCollections from '@content-collections/vite';
 import Icons from 'unplugin-icons/vite';
 import { sandboxRegistry } from './src/lib/sandbox/registry-plugin';
+import { workerWasm } from './vite-plugin-worker-wasm';
 // import devtoolsJson from 'vite-plugin-devtools-json';
 
 const isTest = process.env.VITEST === 'true';
@@ -42,6 +43,8 @@ export default defineConfig({
 		tailwindcss(),
 		sveltekit(),
 		sandboxRegistry(),
+		// The share cards' renderers (`routes/og`), which load WebAssembly
+		workerWasm({ packages: ['@cf-wasm/satori', '@cf-wasm/resvg', '@jsquash/webp'] }),
 		!isTest && contentCollections(),
 		Icons({
 			compiler: 'svelte',
@@ -57,18 +60,6 @@ export default defineConfig({
 			}
 		}) /*, devtoolsJson()*/
 	],
-	environments: {
-		ssr: {
-			build: {
-				rollupOptions: {
-					// The share cards' WebP decoder (`routes/og/[...path]/screenshot.ts`), for wrangler
-					// to bundle as a `WebAssembly.Module`.  `ssr.external` (below) does not cover it,
-					// as Vite only leaves out JavaScript.
-					external: ['@jsquash/webp/codec/dec/webp_dec.wasm']
-				}
-			}
-		}
-	},
 	server: {
 		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
@@ -130,19 +121,6 @@ export default defineConfig({
 		noExternal: isTest ? undefined : true,
 		// Externalize packages not needed server-side to stay under
 		// Cloudflare Workers' 25 MiB uncompressed size limit.
-		//
-		// The share cards' renderers (`routes/og`) are left for wrangler to bundle too, as they
-		// import their WebAssembly as modules, which only wrangler turns into `WebAssembly.Module`s
-		// (Vite refuses a `.wasm` import outright)
-		external: [
-			'@cf-wasm/satori',
-			'@cf-wasm/resvg',
-			'@jsquash/webp',
-			'shiki',
-			'@shikijs/langs',
-			'@shikijs/themes',
-			'@napi-rs/canvas',
-			'mathjs'
-		]
+		external: ['shiki', '@shikijs/langs', '@shikijs/themes', '@napi-rs/canvas', 'mathjs']
 	}
 });

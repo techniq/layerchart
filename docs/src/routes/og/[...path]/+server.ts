@@ -2,15 +2,14 @@
  * The picture shown when a page is shared: `/og` followed by the page's path, like
  * `/og/docs/components/AreaChart/basic`.  `$lib/og` builds these addresses for the layout's meta tags.
  *
- * Drawn with satori (layout to SVG) and resvg (SVG to PNG), both from `@cf-wasm`, whose `workerd`
+ * Drawn with satori (layout to SVG) and resvg (SVG to PNG), both from `@cf-wasm`.  Their `workerd`
  * builds import their WebAssembly as modules - the only way a Worker may load it, since compiling
- * WebAssembly from bytes at runtime is refused.  Under `vite dev` the same imports resolve to the
- * Node builds.
+ * WebAssembly from bytes at runtime is refused - which `vite-plugin-worker-wasm` copies into the
+ * build.  Under `vite dev`, which runs on Node, their Node builds are used instead.
  */
 import { dev } from '$app/environment';
 import { read } from '$app/server';
-import { Resvg } from '@cf-wasm/resvg';
-import { satori, type Font } from '@cf-wasm/satori';
+import type { Font } from '@cf-wasm/satori';
 import { allComponents, allGuides, allReleases, allUtils } from 'content-collections';
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
 
@@ -46,6 +45,17 @@ async function loadFonts() {
 	});
 	fonts = await Promise.all([load(inter400, 400), load(inter600, 600), load(inter700, 700)]);
 	return fonts;
+}
+
+/**
+ * satori and resvg, as the build for where this runs.  Chosen by name rather than by export
+ * conditions, which would leave the build on whichever the bundler happens to pick.
+ */
+async function renderers() {
+	const [{ satori }, { Resvg }] = dev
+		? await Promise.all([import('@cf-wasm/satori/node'), import('@cf-wasm/resvg/node')])
+		: await Promise.all([import('@cf-wasm/satori/workerd'), import('@cf-wasm/resvg/workerd')]);
+	return { satori, Resvg };
 }
 
 /** `charts` → `Charts`, `axis-labels` → `Axis labels`, as the docs title examples */
@@ -241,6 +251,7 @@ export const GET: RequestHandler = async ({ params, url, platform }) => {
 	// Anything else - a page that has gone, or no page at all - gets the home page's card
 	if (!content) return Response.redirect(new URL('/images/og-image.png', url.origin), 302);
 
+	const { satori, Resvg } = await renderers();
 	const svg = await satori(card(content), {
 		width: WIDTH,
 		height: HEIGHT,

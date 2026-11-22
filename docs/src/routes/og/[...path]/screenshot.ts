@@ -11,7 +11,7 @@ import { base64, type Screenshot } from './draw';
 
 /**
  * Whether the decoder has its WebAssembly.  A Worker refuses to compile WebAssembly from bytes at
- * runtime, so there it is imported as a module, which wrangler bundles as one; `vite dev` runs on
+ * runtime, so there it is imported as a module (see `vite-plugin-worker-wasm`); `vite dev` runs on
  * Node, which cannot import a `.wasm` file, so there it is read and compiled.
  *
  * Held as a flag and never as a shared promise: an isolate serves many requests at once, and a
@@ -29,7 +29,7 @@ async function loadDecoder() {
 		const path = createRequire(import.meta.url).resolve('@jsquash/webp/codec/dec/webp_dec.wasm');
 		module = await WebAssembly.compile(await readFile(path));
 	} else {
-		// @ts-expect-error - a `.wasm` import, which wrangler turns into a `WebAssembly.Module`
+		// @ts-expect-error - a `.wasm` import, which the Worker loads as a `WebAssembly.Module`
 		module = (await import('@jsquash/webp/codec/dec/webp_dec.wasm')).default;
 	}
 	await init(module);
