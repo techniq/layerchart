@@ -13,7 +13,7 @@ import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
 import { occlude } from '$lib/utils/occlusion.js';
-import { getTextRect } from '$lib/utils/string.js';
+import { getTextRect, getTextStyle } from '$lib/utils/string.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
@@ -312,8 +312,16 @@ export class AxisState {
     const height = this.ctx.height;
     const overflow = { top: 0, right: 0, bottom: 0, left: 0 };
 
+    // Measure in the font the labels render in — a class (ex. `text-sm`), or what they inherit
+    // from the chart — rather than at `fontSize`.  Every tick label shares its props but `value`,
+    // so one font serves them all.  Re-measured once a web font loads, as it can measure wider
+    this.ctx._fontsLoaded;
+    const container = this.ctx.containerRef;
+    const tickLabel = this.tickItems[0]?.tickLabelProps;
+    const tickStyle = tickLabel && getTextStyle(container, tickLabel.class, tickLabel.fontSize);
+
     for (const item of this.tickItems) {
-      const rect = this.#tickLabelRect(item.tickLabelProps);
+      const rect = this.#tickLabelRect(item.tickLabelProps, tickStyle);
       overflow.left = Math.max(overflow.left, -rect.x);
       overflow.top = Math.max(overflow.top, -rect.y);
       overflow.right = Math.max(overflow.right, rect.x + rect.width - width);
@@ -326,6 +334,7 @@ export class AxisState {
     if (title.value) {
       const { labelPlacement = 'middle' } = this.#props;
       const rect = getTextRect(String(title.value), 0, 0, {
+        style: getTextStyle(container, title.class, title.fontSize),
         fontSize: Number.parseFloat(String(title.fontSize ?? 10)) || 10,
         rotate: Number(title.rotate) || 0,
       });
@@ -717,11 +726,12 @@ export class AxisState {
    * long categories fit in the first place, and measuring it flat would keep dropping ticks that
    * now have room.
    */
-  #tickLabelRect(labelProps: TextProps) {
+  #tickLabelRect(labelProps: TextProps, style?: Partial<CSSStyleDeclaration>) {
     const value = labelProps.value;
     const lines = (Array.isArray(value) ? value : [value]).filter(Boolean).map(String);
 
     return getTextRect(lines, Number(labelProps.x) || 0, Number(labelProps.y) || 0, {
+      style,
       textAnchor: labelProps.textAnchor as 'start' | 'middle' | 'end',
       verticalAnchor: labelProps.verticalAnchor as 'start' | 'middle' | 'end',
       fontSize: Number.parseFloat(String(labelProps.fontSize ?? 10)) || 10,

@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import ChartBindings from './__fixtures__/ChartBindings.svelte';
 import BarChart from './BarChart/BarChart.svelte';
+import BarChartCanvas from './BarChart/BarChart.canvas.svelte';
 import LineChart from './LineChart/LineChart.svelte';
 import PieChart from './PieChart/PieChart.svelte';
 
@@ -209,5 +210,77 @@ describe("padding 'auto'", () => {
     });
     await expect.poll(() => all.context()?.padding.left).toBe(fitted.left + 5);
     expect(all.context().padding.bottom).toBe(fitted.bottom + 5);
+  });
+});
+
+describe("padding 'auto' measures the font labels render in", () => {
+  // Stand-ins for utility classes (ex. Tailwind's `text-sm`) and a chart-level font
+  beforeAll(() => {
+    document.head.insertAdjacentHTML(
+      'beforeend',
+      `<style>
+        .auto-padding-text-sm { font-size: 14px; }
+        .auto-padding-wide-font { font-family: monospace; letter-spacing: 1px; }
+      </style>`
+    );
+  });
+
+  const data = [{ name: 'Genome sequencing analysis', count: 120 }];
+  const props = { data, x: 'count', y: 'name', orientation: 'horizontal', padding: 'auto' };
+
+  /** Left edge of the widest label, from the container's left edge */
+  function labelInset(container: HTMLElement) {
+    const root = container.querySelector('.lc-root-container')!.getBoundingClientRect();
+    return leftmostText(container) - root.left;
+  }
+
+  it('fits labels sized by a class', async () => {
+    const { container, context } = setup(BarChart, {
+      ...props,
+      props: { yAxis: { tickLabelProps: { class: 'auto-padding-text-sm' } } },
+    });
+    await expect.poll(() => context()?.padding.left).toBeGreaterThan(150);
+    expect(textOverflow(container).left).toBeLessThanOrEqual(1);
+    expect(labelInset(container)).toBeLessThan(4);
+  });
+
+  it('fits labels in a font inherited from the chart', async () => {
+    const { container, context } = setup(BarChart, { ...props, class: 'auto-padding-wide-font' });
+    await expect.poll(() => context()?.padding.left).toBeGreaterThan(150);
+    expect(textOverflow(container).left).toBeLessThanOrEqual(1);
+    expect(labelInset(container)).toBeLessThan(4);
+  });
+
+  it('measures canvas labels the same as svg ones', async () => {
+    const tickLabelProps = { class: 'auto-padding-text-sm' };
+    const svg = setup(BarChart, { ...props, props: { yAxis: { tickLabelProps } } });
+    await expect.poll(() => svg.context()?.padding.left).toBeGreaterThan(150);
+    const left = svg.context().padding.left;
+    svg.unmount();
+
+    const canvas = setup(BarChartCanvas, { ...props, props: { yAxis: { tickLabelProps } } });
+    await expect.poll(() => canvas.context()?.padding.left).toBe(left);
+  });
+
+  it('measures again once a web font loads', async () => {
+    const sheet = document.createElement('style');
+    sheet.textContent = '.auto-padding-font-loads { font-size: 10px; }';
+    document.head.append(sheet);
+    try {
+      const { context } = setup(BarChart, {
+        ...props,
+        props: { yAxis: { tickLabelProps: { class: 'auto-padding-font-loads' } } },
+      });
+      await expect.poll(() => context()?.padding.left).toBeGreaterThan(100);
+      const before = context().padding.left;
+
+      // What a web font arriving looks like to the chart: the same class measures wider, with
+      // nothing reactive changed — until the font set says it's done loading
+      sheet.textContent = '.auto-padding-font-loads { font-size: 14px; }';
+      document.fonts.dispatchEvent(new Event('loadingdone'));
+      await expect.poll(() => context().padding.left).toBeGreaterThan(before + 30);
+    } finally {
+      sheet.remove();
+    }
   });
 });
