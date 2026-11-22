@@ -69,6 +69,13 @@
      */
     maintainAspectRatio?: boolean;
 
+    /**
+     * Node to zoom into (matched by `data`).  Its subtree is laid out again to fill the chart, so
+     * tiles keep their proportions and padding stays in pixels, while every other node is scaled
+     * off around it.  Pair with mark `motion` to animate between zoom levels.
+     */
+    selected?: HierarchyNode<T> | null;
+
     /** Render the nodes, in back-to-front paint order on an `isometric` chart */
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
@@ -103,6 +110,7 @@
     paddingLeft,
     paddingRight,
     maintainAspectRatio = false,
+    selected,
     children,
   }: TreemapProps<T> = $props();
 
@@ -190,6 +198,28 @@
     if (hierarchy) {
       const h = hierarchy.copy();
       const treemapData = _treemap(h);
+
+      const selectedNode = selected && h.find((n) => n.data === selected.data);
+      if (selectedNode && selectedNode !== h) {
+        // Scale everything so the selected node fills the chart (pushing siblings off)...
+        const { x0, y0, x1, y1 } = selectedNode;
+        const kx = ctx.width / (x1 - x0);
+        const ky = ctx.height / (y1 - y0);
+        h.each((n) => {
+          n.x0 = (n.x0 - x0) * kx;
+          n.x1 = (n.x1 - x0) * kx;
+          n.y0 = (n.y0 - y0) * ky;
+          n.y1 = (n.y1 - y0) * ky;
+        });
+
+        // ...then tile the selected subtree again at that size rather than stretching it.  Laid out
+        // on a copy since the layout indexes its padding by depth from the root it is given.
+        const selectedLayout = _treemap(selectedNode.copy()).descendants();
+        selectedNode.descendants().forEach((n, i) => {
+          const { x0, y0, x1, y1 } = selectedLayout[i];
+          Object.assign(n, { x0, y0, x1, y1 });
+        });
+      }
       return {
         links: treemapData.links(),
         nodes: treemapData.descendants(),

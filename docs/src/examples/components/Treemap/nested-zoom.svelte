@@ -16,7 +16,6 @@
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import {
-		Bounds,
 		Chart,
 		ChartClipPath,
 		Group,
@@ -25,7 +24,6 @@
 		Layer,
 		Text,
 		Tooltip,
-		asAny,
 		findAncestor
 	} from 'layerchart';
 	import { Treemap } from 'layerchart/hierarchy';
@@ -70,6 +68,8 @@
 		return '';
 	}
 
+	const motion = { type: 'tween', duration: 800, easing: cubicOut } as const;
+
 	export { data };
 </script>
 
@@ -87,98 +87,95 @@
 <Chart height={800}>
 	{#snippet children({ context })}
 		<Layer>
-			<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>
-				{#snippet children({ xScale, yScale })}
-					<ChartClipPath>
-						<Treemap
-							{hierarchy}
-							tile={config.tile}
-							paddingOuter={config.paddingOuter}
-							paddingInner={config.paddingInner}
-							paddingTop={config.paddingTop}
-							paddingBottom={config.paddingBottom}
-							paddingLeft={config.paddingLeft}
-							paddingRight={config.paddingRight}
-							maintainAspectRatio={config.maintainAspectRatio}
-						>
-							{#snippet children({ nodes })}
-								{#each nodes as node}
-									<Group
-										x={xScale(node.x0)}
-										y={yScale(node.y0)}
-										onclick={() => (node.children ? (selected = node) : null)}
-										onpointermove={(e) => context.tooltip.show(e, node)}
-										onpointerleave={context.tooltip.hide}
-									>
-										{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-										{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
-										{@const nodeColor = getNodeColor(node, config.colorBy)}
-										<g transition:fade={{ duration: 600 }}>
-											<Rect
-												width={nodeWidth}
-												height={nodeHeight}
-												stroke={config.colorBy === 'children'
-													? 'var(--color-primary-content)'
-													: hsl(nodeColor).darker(1).toString()}
-												strokeOpacity={config.colorBy === 'children' ? 0.2 : 1}
-												fill={nodeColor}
-												fillOpacity={node.children ? 0.5 : 1}
-												rx={5}
-											/>
-											<RectClipPath width={nodeWidth} height={nodeHeight}>
-												<Text
-													segments={[
-														{
-															value: node.data.name,
-															class: cls(
-																'text-[10px] font-medium',
-																config.colorBy === 'children'
-																	? 'fill-primary-content'
-																	: 'fill-black'
-															)
-														},
-														...(node.children
-															? [
-																	{
-																		value: ` ${format(node.value ?? 0, 'integer')}`,
-																		class: cls(
-																			'text-[8px] font-extralight',
-																			config.colorBy === 'children'
-																				? 'fill-primary-content'
-																				: 'fill-black'
-																		)
-																	}
-																]
-															: [])
-													]}
-													verticalAnchor="start"
-													lineHeight="10px"
-													x={4}
-													y={3.6}
-												/>
+			<ChartClipPath>
+				<Treemap
+					{hierarchy}
+					tile={config.tile}
+					paddingOuter={config.paddingOuter}
+					paddingInner={config.paddingInner}
+					paddingTop={config.paddingTop}
+					paddingBottom={config.paddingBottom}
+					paddingLeft={config.paddingLeft}
+					paddingRight={config.paddingRight}
+					maintainAspectRatio={config.maintainAspectRatio}
+					{selected}
+				>
+					{#snippet children({ nodes })}
+						{#each nodes as node (node.data)}
+							<Group
+								x={node.x0}
+								y={node.y0}
+								{motion}
+								onclick={() => (node.children ? (selected = node) : null)}
+								onpointermove={(e) => context.tooltip.show(e, node)}
+								onpointerleave={context.tooltip.hide}
+							>
+								{@const nodeWidth = node.x1 - node.x0}
+								{@const nodeHeight = node.y1 - node.y0}
+								{@const nodeColor = getNodeColor(node, config.colorBy)}
+								<g transition:fade={{ duration: 600 }}>
+									<Rect
+										width={nodeWidth}
+										height={nodeHeight}
+										stroke={config.colorBy === 'children'
+											? 'var(--color-primary-content)'
+											: hsl(nodeColor).darker(1).toString()}
+										strokeOpacity={config.colorBy === 'children' ? 0.2 : 1}
+										fill={nodeColor}
+										fillOpacity={node.children ? 0.5 : 1}
+										rx={5}
+										{motion}
+									/>
+									<RectClipPath width={nodeWidth} height={nodeHeight} {motion}>
+										<Text
+											segments={[
+												{
+													value: node.data.name,
+													class: cls(
+														'text-[10px] font-medium',
+														config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+													)
+												},
+												...(node.children
+													? [
+															{
+																value: ` ${format(node.value ?? 0, 'integer')}`,
+																class: cls(
+																	'text-[8px] font-extralight',
+																	config.colorBy === 'children'
+																		? 'fill-primary-content'
+																		: 'fill-black'
+																)
+															}
+														]
+													: [])
+											]}
+											verticalAnchor="start"
+											lineHeight="10px"
+											x={4}
+											y={3.6}
+										/>
 
-												{#if !node.children}
-													<Text
-														value={format(node.value ?? 0, 'integer')}
-														class={cls(
-															'text-[8px] font-extralight',
-															config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-														)}
-														verticalAnchor="start"
-														lineHeight="8px"
-														x={4}
-														y={16}
-													/>
-												{/if}
-											</RectClipPath>
-										</g>
-									</Group>
-								{/each}
-							{/snippet}
-						</Treemap>
-					</ChartClipPath>
-				{/snippet}
-			</Bounds>
+										{#if !node.children}
+											<Text
+												value={format(node.value ?? 0, 'integer')}
+												class={cls(
+													'text-[8px] font-extralight',
+													config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+												)}
+												verticalAnchor="start"
+												lineHeight="8px"
+												x={4}
+												y={16}
+											/>
+										{/if}
+									</RectClipPath>
+								</g>
+							</Group>
+						{/each}
+					{/snippet}
+				</Treemap>
+			</ChartClipPath>
 		</Layer>
 
 		<Tooltip.Root>
