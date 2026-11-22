@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-17T06:01:57.575Z",
+  "timestamp": "2026-11-22T06:57:28.916Z",
   "results": [
     {
       "scenario": "core",
@@ -537,8 +537,8 @@
       "scenario": "hierarchy-treemap",
       "description": "Treemap layout",
       "group": "Hierarchy",
-      "size": 364817,
-      "gzipSize": 85895,
+      "size": 365439,
+      "gzipSize": 86099,
       "imports": [
         "Chart",
         "Svg",
@@ -609,8 +609,8 @@
       "scenario": "sankey",
       "description": "Sankey flow diagram",
       "group": "Graph / network",
-      "size": 370266,
-      "gzipSize": 86902,
+      "size": 368351,
+      "gzipSize": 86563,
       "imports": [
         "Chart",
         "Svg",
@@ -2647,8 +2647,8 @@
       "scenario": "Treemap",
       "description": "Standalone Treemap — baseline",
       "group": "Components",
-      "size": 7682,
-      "gzipSize": 2721,
+      "size": 8292,
+      "gzipSize": 2939,
       "imports": [
         "Treemap"
       ]
@@ -2687,8 +2687,8 @@
       "scenario": "Sankey",
       "description": "Standalone Sankey — baseline",
       "group": "Components",
-      "size": 9881,
-      "gzipSize": 3009,
+      "size": 8494,
+      "gzipSize": 2751,
       "imports": [
         "Sankey"
       ]
@@ -2847,8 +2847,8 @@
       "scenario": "all",
       "description": "Everything from layerchart (worst case)",
       "group": "Worst case",
-      "size": 1134776,
-      "gzipSize": 269871,
+      "size": 1130090,
+      "gzipSize": 268622,
       "imports": [
         "*"
       ]
