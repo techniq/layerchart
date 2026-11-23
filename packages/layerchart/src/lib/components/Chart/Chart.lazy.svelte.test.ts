@@ -13,7 +13,7 @@ describe('Chart lazy', () => {
   // Tests scroll the page — start each at the top, where chart 0 is on screen
   beforeEach(() => window.scrollTo(0, 0));
 
-  it('builds on-screen charts in the first flush and defers the rest', () => {
+  it('builds the first on-screen chart in the first flush and defers the rest', () => {
     render(LazyChartsHarness, { count: 20, lazy: true });
     flushSync();
     expect(built(0)).toBe(true);
@@ -21,6 +21,16 @@ describe('Chart lazy', () => {
     // The container is still laid out, so the page doesn't shift once it builds
     const container = document.querySelector('[data-chart="19"] .lc-root-container')!;
     expect(container.getBoundingClientRect().height).toBe(300);
+  });
+
+  it('builds the other on-screen charts one at a time, in later tasks', async () => {
+    render(LazyChartsHarness, { count: 20, lazy: true });
+    flushSync();
+    // Chart 1 is on screen too (300px charts in a taller viewport), but waits its turn
+    expect(window.innerHeight).toBeGreaterThan(300);
+    expect(built(1)).toBe(false);
+    await expect.poll(() => built(1)).toBe(true);
+    expect(built(19)).toBe(false);
   });
 
   it('builds a chart once it scrolls near the viewport, and keeps it', async () => {

@@ -38,7 +38,7 @@ A page of many charts pays to build all of them up front, including the ones far
 ```
 
 - The container renders right away at its full size, so nothing shifts when the chart builds. Size it as you would any chart.
-- A chart that is already on screen builds immediately, without an empty first frame.
+- The first chart on screen builds immediately, without an empty first frame. Others that arrive together (every chart on screen at load, or a fast scroll past several) follow one at a time as the browser is idle, rather than all building in one long task that blocks the page.
 - The others build once they come within `200px` of the viewport. Pass `lazy={{ rootMargin: '600px' }}` to start sooner. `threshold` is also accepted.
 - Once built, a chart stays built. Scrolling away keeps its tooltip, brush, and zoom state.
 - A chart in a hidden container (ex. an inactive tab) builds when it's shown.
@@ -62,7 +62,7 @@ Set `lazy` in [settings](/docs/guides/state#settings-global-defaults) to make it
 ```
 
 :::note
-With Svelte's `experimental.async`, a lazy chart that comes into view while an `await` elsewhere on the page is still pending can stall the page ([sveltejs/svelte#18997](https://github.com/sveltejs/svelte/issues/18997)).
+With Svelte's `experimental.async`, use Svelte 5.58.1 or later. Before it, a lazy chart that comes into view while an `await` elsewhere on the page is still pending can stall the page ([sveltejs/svelte#18997](https://github.com/sveltejs/svelte/issues/18997)).
 :::
 
 ## Text selection

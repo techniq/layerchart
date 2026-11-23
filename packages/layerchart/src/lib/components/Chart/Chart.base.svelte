@@ -528,9 +528,9 @@
    * Builds a lazy chart once its container nears the viewport.
    *
    * Measures the element it's handed rather than leaving that to the measure effect below: under
-   * `experimental.async`, an activation that lands while another batch is pending (ex. an `await`
-   * elsewhere on the page) reads `ref` as it was before that batch, `undefined`, and the chart
-   * would never build.
+   * `experimental.async` before Svelte 5.58.1, an activation that lands while another batch is
+   * pending (ex. an `await` elsewhere on the page) reads `ref` as it was before that batch,
+   * `undefined`, and the chart would never build.
    */
   function activate(node: HTMLElement) {
     if (needsMeasure) {
