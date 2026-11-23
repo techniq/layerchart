@@ -62,7 +62,7 @@ Set `lazy` in [settings](/docs/guides/state#settings-global-defaults) to make it
 ```
 
 :::note
-With Svelte's `experimental.async`, use Svelte 5.58.1 or later. Before it, a lazy chart that comes into view while an `await` elsewhere on the page is still pending can stall the page ([sveltejs/svelte#18997](https://github.com/sveltejs/svelte/issues/18997)).
+With Svelte's `experimental.async`, a lazy chart that comes into view while an `await` elsewhere on the page is still pending builds much more slowly than usual, and before Svelte 5.58.1 it could freeze the page ([sveltejs/svelte#18997](https://github.com/sveltejs/svelte/issues/18997)). Use 5.58.1 or later.
 :::
 
 ## Text selection
