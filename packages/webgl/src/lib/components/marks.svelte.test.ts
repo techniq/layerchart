@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand, scaleOrdinal } from 'd3-scale';
 import { curveMonotoneX } from 'd3-shape';
@@ -456,10 +456,40 @@ describe('GeoTile', () => {
       ],
     },
   };
-  const meshes = (scene: SceneState) =>
+  const allMeshes = (scene: SceneState) =>
     layered(scene)
       .flatMap((o) => o.children)
       .filter((o) => (o as any).isMesh) as any[];
+  /** The tiles' meshes, leaving out the coarse backdrop beneath them */
+  const meshes = (scene: SceneState) => allMeshes(scene).filter((m) => !m.userData.backdrop);
+  const backdrop = (scene: SceneState) => allMeshes(scene).filter((m) => m.userData.backdrop);
+
+  /**
+   * Images whose URL starts `hold:` don't load until `release()`d, as tiles still on their way
+   * over a slow connection
+   */
+  const src = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')!;
+  let held: { image: HTMLImageElement; url: string }[] = [];
+  function hold() {
+    Object.defineProperty(HTMLImageElement.prototype, 'src', {
+      ...src,
+      set(this: HTMLImageElement, value: string) {
+        if (value.startsWith('hold:')) held.push({ image: this, url: value });
+        else src.set!.call(this, value);
+      },
+    });
+  }
+  /** Let the images held load, as what `as` gives for their URLs */
+  function release(as: (url: string) => string) {
+    for (const { image, url } of held.splice(0)) src.set!.call(image, as(url));
+  }
+  afterEach(() => {
+    Object.defineProperty(HTMLImageElement.prototype, 'src', src);
+    held = [];
+  });
+  /** Distinct images (and so cache keys) per test, so none starts out cached from another */
+  let test = 0;
+  const tint = (z: number) => solid(`rgb(${(z * 17) % 256}, ${(test * 37) % 256}, 99)`);
 
   it('draws a mesh per tile, raised by its elevation through the `z` scale', async () => {
     const scene = await renderMarks({
@@ -546,6 +576,80 @@ describe('GeoTile', () => {
     await expect.poll(() => tiles[0][2]).toBe(top + 1);
     await expect.poll(() => meshes(scene!).length).toBe(tiles.length);
     for (const mesh of meshes(scene!)) expect(mesh.material.map.image.src).toBe(image);
+  });
+
+  it('zooming out, draws new tiles from a loaded ancestor beneath the sharper tiles left behind', async () => {
+    test++;
+    hold();
+    let tiles: [number, number, number][] = [];
+    let scene: SceneState | undefined;
+    // Zoomed in, every image loads; zoomed out, the new zoom's own images are still on their way
+    let slow = Infinity;
+    const url = (x: number, y: number, z: number) => (z === slow ? `hold:${z}/${x}/${y}` : tint(z));
+    const props = (zoomDelta: number) => ({
+      mark: 'geotile' as const,
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      geotile: { url, zoomDelta, onTilesChange: (t: [number, number, number][]) => (tiles = t) },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    const { rerender } = render(Marks, props(2));
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    const deep = tiles[0][2];
+    await expect.poll(() => scene && meshes(scene).length).toBe(tiles.length);
+    // Beneath it, the backdrop three zooms up, loaded and out of sight
+    await expect.poll(() => backdrop(scene!).length).toBeGreaterThan(0);
+    for (const mesh of backdrop(scene!)) expect(mesh.material.map.image.src).toBe(tint(deep - 3));
+    await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
+
+    slow = deep - 2;
+    rerender(props(0));
+    await expect.poll(() => tiles[0][2]).toBe(slow);
+    // Each new tile (larger than the old view: those left behind cover only part of it) is drawn
+    // at once, from the old backdrop's image a zoom up, rather than left empty until its own
+    // arrive.  Behind those left behind, so the part they cover stays sharp
+    const standIns = () =>
+      meshes(scene!).filter((m) => m.material.map.image.src === tint(slow - 1));
+    await expect.poll(() => standIns().length).toBe(tiles.length);
+    const left = meshes(scene!).filter((m) => m.material.map.image.src === tint(deep));
+    expect(left.length).toBeGreaterThan(0);
+    for (const standIn of standIns()) {
+      for (const mesh of left)
+        expect(standIn.material.polygonOffsetUnits).toBeGreaterThan(
+          mesh.material.polygonOffsetUnits
+        );
+    }
+    // The new backdrop shows beneath while they load, and hides once they're drawn
+    await expect.poll(() => backdrop(scene!).some((m) => m.visible)).toBe(true);
+    release(() => tint(slow));
+    await expect
+      .poll(() => meshes(scene!).filter((m) => m.material.map.image.src === tint(slow)).length)
+      .toBe(tiles.length);
+    await expect.poll(() => meshes(scene!).length).toBe(tiles.length);
+    for (const mesh of meshes(scene!)) expect(mesh.material.polygonOffset).toBe(false);
+    await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
+  });
+
+  it('lays the backdrop flat at the lowest elevation, beneath the terrain', async () => {
+    test++;
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area }, view: perspective },
+      geotile: { url: tint, elevation: { url: () => thousandMeters } },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    await expect.poll(() => backdrop(scene).length).toBeGreaterThan(0);
+    await expect.poll(() => chart!.zDomain).toEqual([0, 1000]);
+    // Every point at 0m (the domain's lowest), where the terrain is at 1000m
+    const tops = (mesh: any) =>
+      (mesh.geometry.attributes.position.array as Float32Array).filter((_, i) => i % 3 === 1);
+    for (const mesh of backdrop(scene)) {
+      expect(Math.max(...tops(mesh))).toBe(0);
+      expect(Math.min(...tops(mesh))).toBe(0);
+    }
+    expect(Math.max(...tops(meshes(scene)[0]))).toBeCloseTo(1000, 0);
   });
 });
 
