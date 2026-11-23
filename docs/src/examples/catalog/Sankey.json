@@ -23,32 +23,32 @@
         },
         {
           "component": "Link",
-          "lineNumber": 64,
+          "lineNumber": 63,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 92,
+          "lineNumber": 91,
           "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 93,
+          "lineNumber": 92,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 111,
+          "lineNumber": 110,
           "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 125,
+          "lineNumber": 124,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-11-22T04:44:43.000Z"
     },
     {
       "name": "hierarchy",
@@ -72,27 +72,27 @@
         },
         {
           "component": "Link",
-          "lineNumber": 70,
+          "lineNumber": 69,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 93,
+          "lineNumber": 92,
           "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 94,
+          "lineNumber": 93,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 108,
+          "lineNumber": 107,
           "line": "<Text"
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-11-22T04:44:43.000Z"
     },
     {
       "name": "node-select",
@@ -136,7 +136,7 @@
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-11-22T04:44:43.000Z"
     },
     {
       "name": "simple",
@@ -269,5 +269,5 @@
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     }
   ],
-  "updatedAt": "2026-04-30T15:36:28.091Z"
+  "updatedAt": "2026-11-22T06:51:03.287Z"
 }

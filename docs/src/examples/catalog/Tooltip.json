@@ -6828,63 +6828,63 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 125,
+      "lineNumber": 124,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 127,
+      "lineNumber": 126,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 137,
+      "lineNumber": 136,
       "line": "<Tooltip.List>"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 139,
+      "lineNumber": 138,
       "line": "<Tooltip.Item label=\"Total\" value={data.node.value} format=\"decimal\" />"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 142,
+      "lineNumber": 141,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 145,
+      "lineNumber": 144,
       "line": "<Tooltip.Item label={link.source.name} value={link.value} format=\"decimal\" />"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 150,
+      "lineNumber": 149,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 153,
+      "lineNumber": 152,
       "line": "<Tooltip.Item label={link.target.name} value={link.value} format=\"decimal\" />"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 157,
+      "lineNumber": 156,
       "line": "<Tooltip.Item label=\"Value\" value={data.link.value} format=\"decimal\" />"
     },
     {
@@ -7969,28 +7969,28 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 184,
+      "lineNumber": 181,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 186,
+      "lineNumber": 183,
       "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 187,
+      "lineNumber": 184,
       "line": "<Tooltip.List>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 188,
+      "lineNumber": 185,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
@@ -8491,5 +8491,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:17.492Z"
+  "updatedAt": "2026-11-22T06:51:03.398Z"
 }

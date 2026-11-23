@@ -919,14 +919,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 111,
+      "lineNumber": 110,
       "line": "<Text"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 108,
+      "lineNumber": 107,
       "line": "<Text"
     },
     {
@@ -1122,14 +1122,14 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 129,
+      "lineNumber": 130,
       "line": "<Text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 161,
+      "lineNumber": 160,
       "line": "<Text"
     },
     {
@@ -1217,5 +1217,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:17.444Z"
+  "updatedAt": "2026-11-22T06:51:03.360Z"
 }

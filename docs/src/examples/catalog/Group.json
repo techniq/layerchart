@@ -359,14 +359,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 92,
+      "lineNumber": 91,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 93,
+      "lineNumber": 92,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
@@ -478,7 +478,7 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 106,
+      "lineNumber": 105,
       "line": "<Group"
     },
     {
@@ -496,5 +496,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:36.342Z"
+  "updatedAt": "2026-11-22T06:51:02.868Z"
 }
