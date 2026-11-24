@@ -103,6 +103,7 @@
 
 		<Legend
 			title="Population"
+			tickFormat={{ type: 'metric', options: { maximumSignificantDigits: 2 } }}
 			class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
 		/>
 

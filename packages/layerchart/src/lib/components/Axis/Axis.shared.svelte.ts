@@ -13,7 +13,8 @@ import type { TextProps } from '../Text/Text.shared.svelte.js';
 import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand, isScaleUtc } from '$lib/utils/scales.svelte.js';
 import { occlude } from '$lib/utils/occlusion.js';
-import { getTextRect } from '$lib/utils/string.js';
+import { getTextRect, getTextStyle } from '$lib/utils/string.js';
+import { fontsLoaded } from '$lib/utils/fonts.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import { getLayerIsometric } from '$lib/contexts/isometric.js';
 import { getFacetPanel } from '$lib/contexts/facet.js';
@@ -287,7 +288,98 @@ export class AxisState {
   constructor(getProps: () => AxisProps) {
     this.#getProps = getProps;
     this.ctx.registerComponent({ name: 'Axis', kind: 'composite-mark' });
+
+    // Tell the chart how much room an `'auto'` padding needs for this axis.  Reported rather than
+    // read: the labels depend on the plot size the padding decides, so as a derived it'd be a cycle
+    const key = Symbol('Axis');
+    $effect.pre(() => {
+      this.ctx._reportAutoPadding(key, this.autoPaddingOverflow);
+    });
+    $effect.pre(() => () => this.ctx._reportAutoPadding(key, null));
   }
+
+  /**
+   * How far this axis draws past each edge of the plot — its tick labels, and a title pinned to
+   * that edge — when the chart has an `'auto'` padding side to fit it to.  `null` otherwise, so
+   * a chart without one doesn't measure.
+   */
+  autoPaddingOverflow = $derived.by(() => {
+    const placement = this.#props.placement;
+    if (this.ctx.autoPaddingSides.length === 0) return null;
+    if (!['top', 'right', 'bottom', 'left'].includes(placement)) return null;
+    if (this.ctx.view || this.ctx.props.radial || !this.visible) return null;
+
+    const width = this.ctx.width;
+    const height = this.ctx.height;
+    const overflow = { top: 0, right: 0, bottom: 0, left: 0 };
+
+    // In the font the labels render in, as `tickOcclusion` measures them
+    const tickStyle = this.#tickLabelStyle;
+    for (const item of this.tickItems) {
+      const rect = this.#tickLabelRect(item.tickLabelProps, tickStyle);
+      overflow.left = Math.max(overflow.left, -rect.x);
+      overflow.top = Math.max(overflow.top, -rect.y);
+      overflow.right = Math.max(overflow.right, rect.x + rect.width - width);
+      overflow.bottom = Math.max(overflow.bottom, rect.y + rect.height - height);
+    }
+
+    // The title sits against the padding's outer edge, so it needs its thickness on top of the
+    // tick labels rather than measuring where it is (it moves with the padding)
+    const title = this.resolvedLabelProps;
+    if (title.value) {
+      const { labelPlacement = 'middle' } = this.#props;
+      const rect = getTextRect(String(title.value), 0, 0, {
+        style: this.#titleStyle,
+        fontSize: Number.parseFloat(String(title.fontSize ?? 10)) || 10,
+        rotate: Number(title.rotate) || 0,
+      });
+      const gap = 4;
+      if (this.orientation === 'vertical' && labelPlacement !== 'middle') {
+        overflow[labelPlacement === 'start' ? 'top' : 'bottom'] += rect.height + gap;
+      } else {
+        const side = placement as 'top' | 'right' | 'bottom' | 'left';
+        overflow[side] += (this.orientation === 'vertical' ? rect.width : rect.height) + gap;
+      }
+    }
+
+    // Labels are measured as `fontSize` tall, a little shy of the box text renders with, and flush
+    // against the container they'd look clipped anyway — so leave a sliver past them
+    const fit = (value: number) => (value > 0 ? Math.ceil(value + 2) : 0);
+    return {
+      top: fit(overflow.top),
+      right: fit(overflow.right),
+      bottom: fit(overflow.bottom),
+      left: fit(overflow.left),
+    };
+  });
+
+  /** The class every tick label renders with */
+  #tickLabelClass = $derived(
+    clsx('lc-axis-tick-label', this.#props.classes?.tickLabel, this.#props.tickLabelProps?.class)
+  );
+  #tickLabelFontSize = $derived(this.#props.tickLabelProps?.fontSize);
+  #titleClass = $derived(
+    clsx('lc-axis-label', this.#props.classes?.label, this.#props.labelProps?.class)
+  );
+  #titleFontSize = $derived(this.#props.labelProps?.fontSize);
+
+  /**
+   * The fonts the tick labels and title render in — a class (ex. `text-sm`), or what they inherit
+   * from the chart — for measuring them.  Asked of the page once, not on every tick change (ex.
+   * each frame of a zoom): they read only what decides the font — the class and size (as strings,
+   * which stop at an unchanged value where `props` would not), the chart's width (a responsive
+   * class), and web fonts loading.
+   */
+  #tickLabelStyle = $derived.by(() => {
+    fontsLoaded();
+    this.ctx.containerWidth;
+    return getTextStyle(this.ctx.containerRef, this.#tickLabelClass, this.#tickLabelFontSize);
+  });
+  #titleStyle = $derived.by(() => {
+    fontsLoaded();
+    this.ctx.containerWidth;
+    return getTextStyle(this.ctx.containerRef, this.#titleClass, this.#titleFontSize);
+  });
 
   // --- Derived from placement ---
 
@@ -657,11 +749,12 @@ export class AxisState {
    * long categories fit in the first place, and measuring it flat would keep dropping ticks that
    * now have room.
    */
-  #tickLabelRect(labelProps: TextProps) {
+  #tickLabelRect(labelProps: TextProps, style?: Partial<CSSStyleDeclaration>) {
     const value = labelProps.value;
     const lines = (Array.isArray(value) ? value : [value]).filter(Boolean).map(String);
 
     return getTextRect(lines, Number(labelProps.x) || 0, Number(labelProps.y) || 0, {
+      style,
       textAnchor: labelProps.textAnchor as 'start' | 'middle' | 'end',
       verticalAnchor: labelProps.verticalAnchor as 'start' | 'middle' | 'end',
       fontSize: Number.parseFloat(String(labelProps.fontSize ?? 10)) || 10,
@@ -700,7 +793,8 @@ export class AxisState {
       return index;
     }
 
-    const kept = occlude(items, (item) => this.#tickLabelRect(item.tickLabelProps), {
+    const style = this.#tickLabelStyle;
+    const kept = occlude(items, (item) => this.#tickLabelRect(item.tickLabelProps, style), {
       priority: rank,
       padding,
     });
@@ -709,7 +803,7 @@ export class AxisState {
   }
 
   tickItems = $derived.by<AxisTickItem[]>(() => {
-    const { motion, stroke, fill, tickLabelProps, classes = {} } = this.#props;
+    const { motion, stroke, fill, tickLabelProps } = this.#props;
     const items = this.tickVals.map((tick, index) => {
       const tickCoords = this.getCoords(tick);
       const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y);
@@ -729,7 +823,7 @@ export class AxisState {
         fill,
         stroke,
         ...tickLabelProps,
-        class: clsx('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
+        class: this.#tickLabelClass,
       } as TextProps;
 
       return {

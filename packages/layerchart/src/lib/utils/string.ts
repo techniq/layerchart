@@ -1,4 +1,4 @@
-import memoize from 'memoize';
+import memoize, { memoizeClear } from 'memoize';
 
 const MEASUREMENT_ELEMENT_ID = '__text_measurement_id';
 
@@ -32,6 +32,69 @@ function _getStringWidth(str: string, style?: CSSStyleDeclaration) {
 export const getStringWidth = memoize(_getStringWidth, {
   cacheKey: ([str, style]) => `${str}_${JSON.stringify(style)}`,
 });
+
+/** Forget measured widths, ex. once a web font has loaded and the same text measures wider */
+export function clearStringWidths() {
+  memoizeClear(getStringWidth);
+}
+
+/** What decides how wide a line of text measures */
+const FONT_STYLES = [
+  'fontFamily',
+  'fontSize',
+  'fontStyle',
+  'fontWeight',
+  'fontStretch',
+  'fontVariant',
+  'letterSpacing',
+  'wordSpacing',
+  'textTransform',
+] as const;
+
+const textStyleProbes = new WeakMap<Element, SVGTextElement>();
+
+/**
+ * The font a `<text class={className} font-size={fontSize}>` renders in inside `container`, for `getTextRect()` to
+ * measure with: classes, the font it inherits and CSS scoped to the chart all apply.  `fontSize`
+ * is set as an attribute, as `<Text>` does, so a class still overrides it.
+ *
+ * `undefined` without a DOM to ask (ex. SSR, or before the chart mounts).
+ */
+export function getTextStyle(
+  container: Element | undefined,
+  className: unknown,
+  fontSize?: unknown
+): Partial<CSSStyleDeclaration> | undefined {
+  if (!container || typeof window === 'undefined') return undefined;
+
+  let text = textStyleProbes.get(container);
+  if (!text?.isConnected) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.style.cssText =
+      'position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none';
+    text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    svg.appendChild(text);
+    container.appendChild(svg);
+    textStyleProbes.set(container, text);
+  }
+
+  // A per-datum (function) class or size can't apply to a probe — it measures without one
+  text.setAttribute('class', typeof className === 'string' ? className : '');
+  if (typeof fontSize === 'number' || typeof fontSize === 'string') {
+    text.setAttribute('font-size', String(fontSize));
+  } else text.removeAttribute('font-size');
+
+  const computed = getComputedStyle(text);
+  const style: Partial<CSSStyleDeclaration> = {};
+  for (const key of FONT_STYLES) style[key] = computed[key];
+
+  // Read, so stop posing as one: anything selecting the class (ex. `.lc-axis-tick-label`) would
+  // find the probe too
+  text.removeAttribute('class');
+  text.removeAttribute('font-size');
+  return style;
+}
 
 type Rect = { x: number; y: number; width: number; height: number };
 
@@ -76,6 +139,11 @@ export type TextRectOptions = {
   verticalAnchor?: 'start' | 'middle' | 'end';
   /** Font size (px) — measures the width and sets the height. @default 16 */
   fontSize?: number;
+  /**
+   * The font to measure in, ex. from `getTextStyle()` — its `fontSize` takes the place of the
+   * option above.  Without one, text measures in the page's font at `fontSize`.
+   */
+  style?: Partial<CSSStyleDeclaration>;
   /** Height of each line when `text` is multiline. @default `fontSize` */
   lineHeight?: number;
   /** Additional offset applied to `x` / `y` (matching `<Text>`'s `dx` / `dy`). */
@@ -108,20 +176,20 @@ export function getTextRect(
   options: TextRectOptions = {}
 ) {
   const {
+    style,
     textAnchor = 'start',
     verticalAnchor = 'middle',
-    fontSize = 16,
-    lineHeight = fontSize,
     dx = 0,
     dy = 0,
     rotate = 0,
   } = options;
+  const fontSize = Number.parseFloat(style?.fontSize ?? '') || options.fontSize || 16;
+  const lineHeight = options.lineHeight ?? fontSize;
+  const font = (style ?? { fontSize: `${fontSize}px` }) as CSSStyleDeclaration;
 
   const lines = Array.isArray(text) ? text : [text];
   const width = lines.reduce((widest, line) => {
-    const lineWidth =
-      getStringWidth(line, { fontSize: `${fontSize}px` } as CSSStyleDeclaration) ??
-      line.length * fontSize * 0.6;
+    const lineWidth = getStringWidth(line, font) ?? line.length * fontSize * 0.6;
     return Math.max(widest, lineWidth);
   }, 0);
   const height = lines.length > 1 ? lineHeight * lines.length : fontSize;

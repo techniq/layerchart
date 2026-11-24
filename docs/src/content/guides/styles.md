@@ -375,3 +375,9 @@ An empty `@layer` statement just registers the priority order; the actual rules 
 Chart padding controls the space between the chart edges and the data area. Use the `padding` prop on `Chart` to set `top`, `bottom`, `left`, and `right` values individually, or pass a single number to apply uniform padding on all sides.
 
 :example{ path="./styles/padding.svelte" noResize }
+
+### Auto padding
+
+Set a side to `'auto'` to size it to fit what the axes draw there — tick labels, and the axis title — rather than tuning it by hand. Pass `padding="auto"` to fit every side, or a function to adjust what fits, ex. `padding={(auto) => auto + 16}`. See [Chart padding](/docs/components/Chart#padding) for details.
+
+:example{ component="Chart" name="padding-auto" }
