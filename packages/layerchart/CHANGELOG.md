@@ -1,5 +1,21 @@
 # LayerChart
 
+## 2.12.0
+
+### Minor Changes
+
+- feat(Chart): Support `padding="auto"` (or per side, ex. `padding={{ left: 'auto' }}`) to fit the axis tick labels and title ([#1011](https://github.com/techniq/layerchart/pull/1011))
+
+- feat(Treemap): Add `selected` prop to zoom into a node without distorting tiles or padding ([#1017](https://github.com/techniq/layerchart/pull/1017))
+
+### Patch Changes
+
+- fix(Chart): Allow `padding` derived from the bound `xDomain` / `yDomain` without a `derived_references_self` error (#1009) ([#1011](https://github.com/techniq/layerchart/pull/1011))
+
+- fix(Axis): Measure `tickOcclusion` labels in the font they render in, so labels enlarged by a class (ex. `text-lg`) don't overlap ([#1011](https://github.com/techniq/layerchart/pull/1011))
+
+- chore: Remove `d3-dsv`, `d3-geo-polygon` and `d3-sankey` dependencies, dropping 12 packages (~2.9 MB) from installs, including the command-line-only `commander`, `iconv-lite` and `rw`, and older duplicate versions of `d3-array`, `d3-shape` and `d3-path` (`sankeyGraphFromCsv()` no longer handles quoted fields) ([#1010](https://github.com/techniq/layerchart/pull/1010))
+
 ## 2.11.0
 
 ### Minor Changes
