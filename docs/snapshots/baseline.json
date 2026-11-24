@@ -323,8 +323,9 @@
       "elements": 263
     },
     "Area/oscilloscope-ridgeline": {
-      "hash": "23274bb18763a816",
-      "elements": 32
+      "hash": "3bd2ac429c7d8944",
+      "elements": 32,
+      "unstable": true
     },
     "Area/oscilloscope-ridgeline-isometric": {
       "hash": "e7a20bf460d7acf3",
@@ -336,7 +337,7 @@
       "elements": 60
     },
     "Area/ridgeline": {
-      "hash": "26f1cdf9df8c09d3",
+      "hash": "6b952c29f6afd072",
       "elements": 65,
       "unstable": true
     },
@@ -346,43 +347,41 @@
     },
     "Area/stack": {
       "hash": "db6f2aa020d98117",
-      "elements": 83
+      "elements": 83,
+      "unstable": true
     },
     "Area/stack-with-gradient": {
       "hash": "d543db3a471d8772",
-      "elements": 83
+      "elements": 83,
+      "unstable": true
     },
     "Area/threshold-with-lineargradient": {
       "hash": "1237a6b0e5382f8d",
-      "elements": 87,
-      "unstable": true
+      "elements": 87
     },
     "Area/threshold-with-lineargradient-over-under": {
-      "hash": "fbf69e844706bb3c",
-      "elements": 87,
-      "unstable": true
+      "hash": "a5fa3b0148e89fb1",
+      "elements": 87
     },
     "Area/threshold-with-rectclippath": {
-      "hash": "eef2e9a318602f01",
+      "hash": "962bb54200da5d59",
       "elements": 91
     },
     "Area/threshold-with-rectclippath-over-under": {
-      "hash": "8335d257a59c6f6f",
-      "elements": 91,
-      "unstable": true
+      "hash": "862af57c9a8fa805",
+      "elements": 91
     },
     "Area/tween-on-mount": {
       "hash": "f6f783891cfc1e33",
       "elements": 77
     },
     "Area/with-labels": {
-      "hash": "2a524f4aeb614072",
+      "hash": "b5b96558969e02f0",
       "elements": 139
     },
     "Area/with-tooltip-and-highlight": {
       "hash": "48c75ea6c80d94f4",
-      "elements": 79,
-      "unstable": true
+      "elements": 79
     },
     "AreaChart/all-zero": {
       "hash": "9db52cec47624750",
@@ -418,8 +417,7 @@
     },
     "AreaChart/default-series-label": {
       "hash": "f8fbff93976edf92",
-      "elements": 80,
-      "unstable": true
+      "elements": 80
     },
     "AreaChart/funnel": {
       "hash": "75092989a22704ee",
@@ -427,20 +425,21 @@
     },
     "AreaChart/gradient": {
       "hash": "a3170ed098cafaf3",
-      "elements": 80
+      "elements": 80,
+      "unstable": true
     },
     "AreaChart/labels": {
       "hash": "04e6e4871ffea46d",
-      "elements": 140,
-      "unstable": true
+      "elements": 140
     },
     "AreaChart/line-annotation": {
       "hash": "da3b4511f0e5e5ea",
       "elements": 54
     },
     "AreaChart/markers": {
-      "hash": "f8fbff93976edf92",
-      "elements": 80
+      "hash": "baef40c226ba375c",
+      "elements": 80,
+      "unstable": true
     },
     "AreaChart/motion-tween": {
       "hash": "fc37a47a5f9ebe67",
@@ -480,7 +479,8 @@
     },
     "AreaChart/series-overlap": {
       "hash": "c63e5045dd722a18",
-      "elements": 84
+      "elements": 84,
+      "unstable": true
     },
     "AreaChart/series-point-annotations": {
       "hash": "8ae28eebf875e4fb",
@@ -492,7 +492,8 @@
     },
     "AreaChart/series-separate-data": {
       "hash": "66822f3aede44078",
-      "elements": 84
+      "elements": 84,
+      "unstable": true
     },
     "AreaChart/series-stack": {
       "hash": "66822f3aede44078",
@@ -535,13 +536,13 @@
       "elements": 62
     },
     "AreaChart/single-axis-y": {
-      "hash": "a10b5a857ac52e8f",
-      "elements": 35,
-      "unstable": true
+      "hash": "e9b4bba957f57031",
+      "elements": 35
     },
     "AreaChart/sparkline": {
-      "hash": "c22ef43d09b0deb4",
-      "elements": 10
+      "hash": "213845626cac7f56",
+      "elements": 10,
+      "unstable": true
     },
     "AreaChart/threshold": {
       "hash": "6d2d598417322ffc",
@@ -566,6 +567,10 @@
     "Axis/arrow-markers": {
       "hash": "d0f7c89b0585e1ef",
       "elements": 78
+    },
+    "Axis/auto-padding": {
+      "hash": "060236ff9df5626a",
+      "elements": 83
     },
     "Axis/axis-label-placement-left-right": {
       "hash": "7f4585d5385cca93",
@@ -704,12 +709,12 @@
       "elements": 81
     },
     "Axis/tick-occlusion-explicit-ticks": {
-      "hash": "d2f3d3e04f9c359b",
-      "elements": 58
+      "hash": "e7e451a232ce664f",
+      "elements": 61
     },
     "Axis/tick-occlusion-priority": {
-      "hash": "85e7fa9ecaa80c14",
-      "elements": 58
+      "hash": "3f99efb7c998e7e9",
+      "elements": 61
     },
     "Axis/tick-occlusion-rotated": {
       "hash": "f25df94b63758d64",
@@ -760,8 +765,9 @@
       "elements": 79
     },
     "BarChart/axis-labels-inside-bars-using-labels": {
-      "hash": "bf7b99190b5a8bf1",
-      "elements": 79
+      "hash": "e16db9aa75dad0b5",
+      "elements": 59,
+      "settled": false
     },
     "BarChart/both-axis-grid": {
       "hash": "6dfb4b4dc4969385",
@@ -769,7 +775,8 @@
     },
     "BarChart/both-axis-grid-align-between": {
       "hash": "1032140aef96d578",
-      "elements": 94
+      "elements": 94,
+      "settled": false
     },
     "BarChart/brush": {
       "hash": "6ee2160f0565a864",
@@ -781,11 +788,13 @@
     },
     "BarChart/brush-pan-zoom": {
       "hash": "6ee2160f0565a864",
-      "elements": 275
+      "elements": 275,
+      "settled": false
     },
     "BarChart/brush-pan-zoom-band": {
       "hash": "5ee6136252e03d9b",
-      "elements": 283
+      "elements": 283,
+      "settled": false
     },
     "BarChart/color-bars-class": {
       "hash": "4ba960d8c63f9a2b",
@@ -1069,7 +1078,8 @@
     },
     "BarChart/series-diverging": {
       "hash": "c70cf9d3a3f028d9",
-      "elements": 89
+      "elements": 89,
+      "unstable": true
     },
     "BarChart/series-horizontal": {
       "hash": "7f6e298a34dbaf70",
@@ -1232,7 +1242,7 @@
       "elements": 72
     },
     "Bars/horizontal-highlight-individual-bar": {
-      "hash": "e07eb099ecac7f89",
+      "hash": "69ceba4ba5ed304e",
       "elements": 95,
       "unstable": true
     },
@@ -1245,29 +1255,30 @@
       "elements": 101
     },
     "Bars/horizontal-limit-ticks-count": {
-      "hash": "eedd0f4b2b218d86",
+      "hash": "b1e2a76e186b434e",
       "elements": 74,
       "unstable": true
     },
     "Bars/horizontal-limit-ticks-second-scale": {
-      "hash": "891e29d6e80c7369",
+      "hash": "41e8fd58a8deacde",
       "elements": 77
     },
     "Bars/horizontal-multiple-diverging": {
-      "hash": "72bd5c2ae71aba88",
-      "elements": 112
+      "hash": "c6326e077dec2734",
+      "elements": 112,
+      "unstable": true
     },
     "Bars/horizontal-multiple-overlapping": {
       "hash": "4a572d073a95f533",
       "elements": 112
     },
     "Bars/horizontal-outside-labels-default": {
-      "hash": "9b5e0db8a7171343",
-      "elements": 105,
+      "hash": "74cd2fab164acef4",
+      "elements": 109,
       "unstable": true
     },
     "Bars/horizontal-rounded-right-only": {
-      "hash": "774ed98cadd0e514",
+      "hash": "12715b0dda2a36fa",
       "elements": 92,
       "unstable": true
     },
@@ -1284,18 +1295,19 @@
       "elements": 82
     },
     "Bars/horizontal-time-scale-with-inset": {
-      "hash": "7255e69353f345a8",
+      "hash": "4dada0c70096eb8c",
       "elements": 77,
       "unstable": true
     },
     "Bars/horizontal-time-scale-with-interval": {
-      "hash": "60ac1302d43ed556",
+      "hash": "44e199bd52a89fb7",
       "elements": 77,
       "unstable": true
     },
     "Bars/horizontal-time-scale-with-missing-data": {
-      "hash": "2a9fcc60ad0e10e3",
-      "elements": 70
+      "hash": "967a09e655bb28a7",
+      "elements": 73,
+      "unstable": true
     },
     "Bars/horizontal-tooltip-and-bar-highlight": {
       "hash": "d1aba44ee0434dcd",
@@ -1307,32 +1319,30 @@
       "elements": 56
     },
     "Bars/horizontal-tooltip-and-clipped-highlight": {
-      "hash": "196c90fac49ee049",
-      "elements": 102,
-      "unstable": true
+      "hash": "d1aba44ee0434dcd",
+      "elements": 102
     },
     "Bars/horizontal-tooltip-and-highlight": {
       "hash": "d1aba44ee0434dcd",
-      "elements": 102,
-      "unstable": true
+      "elements": 102
     },
     "Bars/horizontal-tween-on-mount": {
       "hash": "d5e933903c312867",
       "elements": 82
     },
     "Bars/horizontal-with-grid-on-top": {
-      "hash": "ea336c0fad114e77",
+      "hash": "6fbeff54e41734ed",
       "elements": 92,
       "unstable": true
     },
     "Bars/horizontal-with-grid-on-top-mix-blend": {
       "hash": "6fbeff54e41734ed",
-      "elements": 92
+      "elements": 92,
+      "unstable": true
     },
     "Bars/vertical-average-annotation-rule": {
-      "hash": "c36043a6e919cbd7",
-      "elements": 115,
-      "unstable": true
+      "hash": "5e0f3860a2044b73",
+      "elements": 115
     },
     "Bars/vertical-basic": {
       "hash": "a651eae8c059abbe",
@@ -1341,7 +1351,8 @@
     },
     "Bars/vertical-calculated-value-domain-negative": {
       "hash": "55b253505f80408b",
-      "elements": 111
+      "elements": 111,
+      "unstable": true
     },
     "Bars/vertical-calculated-value-domain-positive": {
       "hash": "3b6aa2af47c45a7a",
@@ -1358,7 +1369,8 @@
     },
     "Bars/vertical-fixed-width": {
       "hash": "ff24ef1ef7d293e8",
-      "elements": 112
+      "elements": 112,
+      "unstable": true
     },
     "Bars/vertical-gradient": {
       "hash": "5c9c793977f730a5",
@@ -1377,16 +1389,16 @@
       "elements": 56
     },
     "Bars/vertical-highlight-individual-bar": {
-      "hash": "42ec0d4f689a1826",
+      "hash": "dd813b77528dd0b8",
       "elements": 115
     },
     "Bars/vertical-highlight-individual-bar-line": {
-      "hash": "b7063cfecad685bc",
+      "hash": "8402cccf345fa51f",
       "elements": 113,
       "unstable": true
     },
     "Bars/vertical-inside-labels": {
-      "hash": "173be0e6fbd25659",
+      "hash": "ced20479401c8373",
       "elements": 161,
       "unstable": true
     },
@@ -1400,26 +1412,26 @@
       "elements": 61
     },
     "Bars/vertical-multiple-diverging": {
-      "hash": "52a395ed29602734",
+      "hash": "e10cff8690cf25bc",
       "elements": 128
     },
     "Bars/vertical-multiple-diverging-rounded-specific": {
       "hash": "5062243f50a8b6ab",
-      "elements": 178,
-      "unstable": true
+      "elements": 178
     },
     "Bars/vertical-multiple-overlapping": {
       "hash": "3a73e4b297c68391",
-      "elements": 128,
-      "unstable": true
+      "elements": 128
     },
     "Bars/vertical-outside-labels-default": {
-      "hash": "ac8b6daf9e8f5c7b",
-      "elements": 149
+      "hash": "0afd808aca6507d5",
+      "elements": 149,
+      "unstable": true
     },
     "Bars/vertical-rounded-top-only": {
-      "hash": "e5b3e557d2c3871f",
-      "elements": 112
+      "hash": "d3c3f1d155be4e66",
+      "elements": 112,
+      "unstable": true
     },
     "Bars/vertical-stacked": {
       "hash": "ca21464e13ce8774",
@@ -1438,25 +1450,24 @@
       "elements": 92
     },
     "Bars/vertical-time-scale-with-inset": {
-      "hash": "6e5ebaea143356b6",
-      "elements": 82,
-      "unstable": true
+      "hash": "e2737313a8d3271a",
+      "elements": 82
     },
     "Bars/vertical-time-scale-with-interval": {
       "hash": "3a16d1076b22a2d9",
-      "elements": 82
-    },
-    "Bars/vertical-time-scale-with-interval-months": {
-      "hash": "231749c24d467aa1",
       "elements": 82,
       "unstable": true
+    },
+    "Bars/vertical-time-scale-with-interval-months": {
+      "hash": "3a16d1076b22a2d9",
+      "elements": 82
     },
     "Bars/vertical-time-scale-with-missing-data": {
       "hash": "5310c2fc25d3f6ef",
       "elements": 76
     },
     "Bars/vertical-tooltip-and-bar-highlight": {
-      "hash": "63ca548cb392a81a",
+      "hash": "a675905683397eff",
       "elements": 132,
       "unstable": true
     },
@@ -1559,8 +1570,8 @@
       "elements": 74
     },
     "BoxPlot/with-violin": {
-      "hash": "d40f758d79678afe",
-      "elements": 98
+      "hash": "f80d004181e9716f",
+      "elements": 96
     },
     "Brush/basic": {
       "hash": "44ec043d2de66da9",
@@ -1664,7 +1675,8 @@
     },
     "BrushContext/synced-brushes": {
       "hash": "0a7fbf923a9c08db",
-      "elements": 122
+      "elements": 122,
+      "unstable": true
     },
     "BrushContext/tooltip-interop": {
       "hash": "89363b92e4c3503b",
@@ -1898,6 +1910,10 @@
       "hash": "f57fa672fd361666",
       "elements": 91
     },
+    "Chart/padding-auto": {
+      "hash": "1f480a13bdbd721d",
+      "elements": 70
+    },
     "ChartGroup/basic": {
       "hash": "e2657f0ac56e28a2",
       "elements": 103
@@ -1924,7 +1940,8 @@
     },
     "ChartGroup/synced-brushes": {
       "hash": "0a7fbf923a9c08db",
-      "elements": 122
+      "elements": 122,
+      "unstable": true
     },
     "ChartGroup/synced-legend": {
       "hash": "f7f94a3149a5884d",
@@ -2164,30 +2181,31 @@
       "elements": 151
     },
     "ForceSimulation/collision-detection": {
-      "hash": "ecc79a962b350af8",
+      "hash": "366bddc11eded90a",
       "elements": 205,
       "settled": false,
       "unstable": true
     },
     "ForceSimulation/disjoint-graph": {
-      "hash": "dfd163619229d6eb",
+      "hash": "5c0a0bade643d2f3",
       "elements": 617,
-      "settled": false
+      "settled": false,
+      "unstable": true
     },
     "ForceSimulation/games-industry-layoffs": {
-      "hash": "9408ddc8bd3125bd",
+      "hash": "84dde3c1d56465aa",
       "elements": 500,
       "settled": false,
       "unstable": true
     },
     "ForceSimulation/graph-drag": {
-      "hash": "c6735e4299ef2f48",
+      "hash": "d4b6abba21e8188e",
       "elements": 37,
       "settled": false,
       "unstable": true
     },
     "ForceSimulation/graph-playground": {
-      "hash": "1d3ab738c80c2e27",
+      "hash": "9f7b8abe15170b7b",
       "elements": 344,
       "settled": false,
       "unstable": true
@@ -2206,20 +2224,18 @@
     "ForceSimulation/layoffs-by-industry": {
       "hash": "7c47b57bdbaaf7c2",
       "elements": 1733,
-      "settled": false,
-      "unstable": true
+      "settled": false
     },
     "ForceSimulation/text": {
-      "hash": "b785f08d20cd9477",
+      "hash": "af1f698bddd70e3e",
       "elements": 252,
       "settled": false,
       "unstable": true
     },
     "ForceSimulation/tree": {
-      "hash": "640ecd9b6a3a002e",
+      "hash": "fb2ae3a19d0789b1",
       "elements": 509,
-      "settled": false,
-      "unstable": true
+      "settled": false
     },
     "Frame/basic": {
       "hash": "2b06813faef653c0",
@@ -2262,8 +2278,8 @@
       "elements": 2494
     },
     "GeoCircle/earthquake-globe": {
-      "hash": "c03b5d19482fca74",
-      "elements": 87
+      "hash": "296fc2217cf75ac8",
+      "elements": 84
     },
     "GeoCircle/playground": {
       "hash": "c173658e91d8f7d0",
@@ -2306,7 +2322,7 @@
       "elements": 6332
     },
     "GeoPath/choropleth": {
-      "hash": "0229927924290057",
+      "hash": "3ec9ed45fdf82d4a",
       "elements": 3182
     },
     "GeoPath/eclipses-globe": {
@@ -2322,7 +2338,7 @@
       "elements": 24
     },
     "GeoPath/interpolating-projections": {
-      "hash": "37608ae25767174f",
+      "hash": "b28d7bb941197953",
       "elements": 9,
       "settled": false,
       "unstable": true
@@ -2464,9 +2480,8 @@
       "elements": 10
     },
     "GeoRaster/tiles-globe": {
-      "hash": "94478af5ad5ec291",
-      "elements": 166,
-      "unstable": true
+      "hash": "2ae6939c020e1cfe",
+      "elements": 166
     },
     "GeoSpline/draggable-globe": {
       "hash": "6922f066972b458b",
@@ -2581,8 +2596,8 @@
       "elements": 467
     },
     "Image/college-football-upsets": {
-      "hash": "e95f80e205a4e809",
-      "elements": 975
+      "hash": "6cfbcb498219df4f",
+      "elements": 1056
     },
     "Image/country-flags": {
       "hash": "b12360bccd3b008a",
@@ -2749,8 +2764,8 @@
       "elements": 50
     },
     "LineChart/bump-sports-rankings": {
-      "hash": "9e42a90c68b60df2",
-      "elements": 1040,
+      "hash": "a45827386c38256f",
+      "elements": 1118,
       "unstable": true
     },
     "LineChart/bump-state-population-ranks": {
@@ -3618,7 +3633,7 @@
       "elements": 132
     },
     "Rule/data-x-date": {
-      "hash": "f04e5ea1a7a7acbd",
+      "hash": "a5dffdb0842f93d4",
       "elements": 75,
       "unstable": true
     },
