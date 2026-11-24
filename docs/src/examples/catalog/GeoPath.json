@@ -116,12 +116,12 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 109,
+          "lineNumber": 110,
           "line": "<Tooltip.Root>"
         }
       ],
       "createdAt": "2026-02-18T13:27:36.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-11-24T00:32:44.000Z"
     },
     {
       "name": "eclipses-globe",
@@ -1858,5 +1858,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:36.178Z"
+  "updatedAt": "2026-11-24T00:36:17.348Z"
 }

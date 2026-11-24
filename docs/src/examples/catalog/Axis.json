@@ -26,6 +26,35 @@
       "updatedAt": "2026-02-18T13:27:36.000Z"
     },
     {
+      "name": "auto-padding",
+      "title": "auto padding",
+      "path": "/docs/components/Axis/auto-padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 33,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 44,
+          "line": "<Axis placement=\"left\" grid rule label=\"Visitors\" format=\"integer\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 46,
+          "line": "<Bars />"
+        }
+      ],
+      "createdAt": "2026-11-24T00:32:44.000Z",
+      "updatedAt": "2026-11-24T00:32:44.000Z"
+    },
+    {
       "name": "axis-label-placement-left-right",
       "title": "axis label placement left right",
       "path": "/docs/components/Axis/axis-label-placement-left-right",
@@ -1490,6 +1519,20 @@
       "path": "/docs/components/Axis/arrow-markers",
       "lineNumber": 18,
       "line": "<Axis placement=\"bottom\" grid rule={{ markerEnd: { type: 'arrow' } }} />"
+    },
+    {
+      "example": "auto-padding",
+      "component": "Axis",
+      "path": "/docs/components/Axis/auto-padding",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"left\" grid rule label=\"Visitors\" format=\"integer\" />"
+    },
+    {
+      "example": "auto-padding",
+      "component": "Axis",
+      "path": "/docs/components/Axis/auto-padding",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"bottom\" rule tickLabelProps={{ rotate: -45, textAnchor: 'end' }} />"
     },
     {
       "example": "axis-label-placement-left-right",
@@ -6063,5 +6106,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:16.031Z"
+  "updatedAt": "2026-11-24T00:36:16.875Z"
 }
