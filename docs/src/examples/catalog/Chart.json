@@ -1252,6 +1252,20 @@
       ],
       "createdAt": "2026-08-20T03:04:59.000Z",
       "updatedAt": "2026-08-20T03:04:59.000Z"
+    },
+    {
+      "name": "padding-auto",
+      "title": "padding auto",
+      "path": "/docs/components/Chart/padding-auto",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 50,
+          "line": "<BarChart"
+        }
+      ],
+      "createdAt": "2026-11-24T00:32:44.000Z",
+      "updatedAt": "2026-11-24T00:32:44.000Z"
     }
   ],
   "usage": [
@@ -1561,6 +1575,13 @@
       "component": "Axis",
       "path": "/docs/components/Axis/arrow-markers",
       "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
+      "example": "auto-padding",
+      "component": "Axis",
+      "path": "/docs/components/Axis/auto-padding",
+      "lineNumber": 33,
       "line": "<Chart"
     },
     {
@@ -6051,5 +6072,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:16.306Z"
+  "updatedAt": "2026-11-24T00:36:17.068Z"
 }

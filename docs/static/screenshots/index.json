@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-22T06:52:59.318Z",
+  "generatedAt": "2026-11-24T00:38:18.721Z",
   "totalComponents": 101,
-  "totalExamples": 1080,
+  "totalExamples": 1082,
   "components": [
     {
       "component": "AnnotationLine",
@@ -735,6 +735,11 @@
           "name": "arrow-markers",
           "path": "/example/Axis/arrow-markers",
           "checksum": "3d0a212bb7a2a22397fe9753bb2e92f4"
+        },
+        {
+          "name": "auto-padding",
+          "path": "/example/Axis/auto-padding",
+          "checksum": "de63caf46e46784f344c13047ab7eee2"
         },
         {
           "name": "axis-label-placement-left-right",
@@ -2415,6 +2420,11 @@
           "name": "mixed-marks-with-stack-long-data",
           "path": "/example/Chart/mixed-marks-with-stack-long-data",
           "checksum": "4c7e352ea04ad55ae86c6a2d7a07ee0b"
+        },
+        {
+          "name": "padding-auto",
+          "path": "/example/Chart/padding-auto",
+          "checksum": "cf4be514b9ffc615aa8ab74c89bcc7ae"
         }
       ]
     },
@@ -2994,7 +3004,7 @@
         {
           "name": "choropleth",
           "path": "/example/GeoPath/choropleth",
-          "checksum": "f6e6e47b15dc949aba2943c16ef82c8f"
+          "checksum": "6c377dbaef500d557ad339483cb9943c"
         },
         {
           "name": "eclipses-globe",

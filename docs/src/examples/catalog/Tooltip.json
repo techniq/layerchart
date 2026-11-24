@@ -5288,42 +5288,42 @@
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 109,
+      "lineNumber": 110,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 112,
+      "lineNumber": 113,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 115,
+      "lineNumber": 116,
       "line": "<Tooltip.List>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 116,
+      "lineNumber": 117,
       "line": "<Tooltip.Item"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 122,
+      "lineNumber": 123,
       "line": "<Tooltip.Item"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 128,
+      "lineNumber": 129,
       "line": "<Tooltip.Item"
     },
     {
@@ -8491,5 +8491,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-11-22T06:51:03.398Z"
+  "updatedAt": "2026-11-24T00:36:17.864Z"
 }

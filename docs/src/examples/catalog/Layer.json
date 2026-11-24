@@ -404,6 +404,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "auto-padding",
+      "component": "Axis",
+      "path": "/docs/components/Axis/auto-padding",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
       "example": "axis-label-placement-left-right",
       "component": "Axis",
       "path": "/docs/components/Axis/axis-label-placement-left-right",
@@ -4716,5 +4723,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:16.955Z"
+  "updatedAt": "2026-11-24T00:36:17.496Z"
 }
