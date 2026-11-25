@@ -8,37 +8,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 42,
+          "lineNumber": 45,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 62,
+          "lineNumber": 65,
           "line": "<Layer>"
         },
         {
           "component": "Circle",
-          "lineNumber": 64,
+          "lineNumber": 67,
           "line": "<Circle"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 78,
+          "lineNumber": 81,
           "line": "<GeoPath"
         },
         {
           "component": "Image",
-          "lineNumber": 85,
+          "lineNumber": 88,
           "line": "<Image"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 95,
+          "lineNumber": 98,
           "line": "<Tooltip.Root {context}>"
         }
       ],
       "createdAt": "2026-03-31T15:09:10.000Z",
-      "updatedAt": "2026-04-27T16:10:53.000Z"
+      "updatedAt": "2026-11-25T15:56:05.000Z"
     },
     {
       "name": "college-football-upsets",
@@ -197,6 +197,60 @@
       "updatedAt": "2026-04-27T16:10:53.000Z"
     },
     {
+      "name": "sports-territories",
+      "title": "sports territories",
+      "path": "/docs/components/Image/sports-territories",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 231,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 250,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 252,
+          "line": "<GeoPath geojson={region} class=\"fill-surface-content/5 stroke-none\" />"
+        },
+        {
+          "component": "Voronoi",
+          "lineNumber": 257,
+          "line": "<Voronoi"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 268,
+          "line": "<ClipPath path={cell.path}>"
+        },
+        {
+          "component": "Path",
+          "lineNumber": 269,
+          "line": "<Path pathData={cell.path} fill={cell.data.color} class=\"pointer-events-none\" />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 273,
+          "line": "<Image"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 329,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 368,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ],
+      "createdAt": "2026-11-25T15:56:05.000Z",
+      "updatedAt": "2026-11-25T15:56:05.000Z"
+    },
+    {
       "name": "us-presidents",
       "title": "us presidents",
       "path": "/docs/components/Image/us-presidents",
@@ -266,7 +320,7 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 85,
+      "lineNumber": 88,
       "line": "<Image"
     },
     {
@@ -312,6 +366,20 @@
       "line": "<Image"
     },
     {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 273,
+      "line": "<Image"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 355,
+      "line": "<Image"
+    },
+    {
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
@@ -347,5 +415,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:36.418Z"
+  "updatedAt": "2026-11-25T16:05:16.815Z"
 }

@@ -4248,7 +4248,7 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 42,
+      "lineNumber": 45,
       "line": "<Chart"
     },
     {
@@ -4287,11 +4287,32 @@
       "line": "<Chart"
     },
     {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 231,
+      "line": "<Chart"
+    },
+    {
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
       "lineNumber": 12,
       "line": "<Chart"
+    },
+    {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
+      "example": "shape-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-geo",
+      "lineNumber": 40,
+      "line": "<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} height={500}>"
     },
     {
       "example": "voronoi",
@@ -6072,5 +6093,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-11-24T00:36:17.068Z"
+  "updatedAt": "2026-11-25T16:05:16.015Z"
 }

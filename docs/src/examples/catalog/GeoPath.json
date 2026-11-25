@@ -1805,8 +1805,29 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 78,
+      "lineNumber": 81,
       "line": "<GeoPath"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 252,
+      "line": "<GeoPath geojson={region} class=\"fill-surface-content/5 stroke-none\" />"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 295,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "shape-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-geo",
+      "lineNumber": 43,
+      "line": "<GeoPath geojson={feature} class=\"fill-surface-content/10 stroke-surface-100\" />"
     },
     {
       "example": "voronoi-geo",
@@ -1858,5 +1879,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-11-24T00:36:17.348Z"
+  "updatedAt": "2026-11-25T16:05:16.560Z"
 }

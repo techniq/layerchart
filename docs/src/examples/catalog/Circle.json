@@ -872,7 +872,21 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 64,
+      "lineNumber": 67,
+      "line": "<Circle"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 329,
+      "line": "<Circle"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 344,
       "line": "<Circle"
     },
     {
@@ -1296,5 +1310,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-11-17T06:28:16.416Z"
+  "updatedAt": "2026-11-25T16:05:16.154Z"
 }

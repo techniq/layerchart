@@ -1364,6 +1364,13 @@
       "line": "<Spline"
     },
     {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 43,
+      "line": "<Spline g=\"name\" class=\"stroke-surface-100 stroke-2\" />"
+    },
+    {
       "example": "bump-sports-rankings",
       "component": "LineChart",
       "path": "/docs/components/LineChart/bump-sports-rankings",
@@ -1826,5 +1833,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-10-26T02:35:36.966Z"
+  "updatedAt": "2026-11-25T16:05:17.421Z"
 }

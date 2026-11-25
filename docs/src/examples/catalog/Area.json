@@ -1624,6 +1624,13 @@
       "line": "<Area"
     },
     {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 42,
+      "line": "<Area fill=\"name\" />"
+    },
+    {
       "example": "pan-zoom-with-overview",
       "component": "LineChart",
       "path": "/docs/components/LineChart/pan-zoom-with-overview",
@@ -1792,5 +1799,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:12.534Z"
+  "updatedAt": "2026-11-25T16:05:15.617Z"
 }

@@ -43,6 +43,20 @@
   ],
   "usage": [
     {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 257,
+      "line": "<Voronoi"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 305,
+      "line": "<Voronoi"
+    },
+    {
       "example": "voronoi",
       "component": "Labels",
       "path": "/docs/components/Labels/voronoi",
@@ -57,5 +71,5 @@
       "line": "<Voronoi"
     }
   ],
-  "updatedAt": "2026-08-06T13:53:36.920Z"
+  "updatedAt": "2026-11-25T16:05:17.743Z"
 }

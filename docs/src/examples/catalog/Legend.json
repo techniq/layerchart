@@ -350,6 +350,13 @@
       "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
     },
     {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 55,
+      "line": "<Legend placement=\"top\" />"
+    },
+    {
       "example": "chart-integration",
       "component": "Legend",
       "path": "/docs/components/Legend/chart-integration",
@@ -686,5 +693,5 @@
       "line": "<Legend variant=\"swatches\" placement=\"top-right\" orientation=\"horizontal\" />"
     }
   ],
-  "updatedAt": "2026-10-22T21:41:13.650Z"
+  "updatedAt": "2026-11-25T16:05:16.869Z"
 }

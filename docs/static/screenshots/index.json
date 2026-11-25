@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-24T00:38:18.721Z",
+  "generatedAt": "2026-11-25T16:08:09.699Z",
   "totalComponents": 101,
-  "totalExamples": 1082,
+  "totalExamples": 1086,
   "components": [
     {
       "component": "AnnotationLine",
@@ -3389,7 +3389,7 @@
         {
           "name": "college-football-map",
           "path": "/example/Image/college-football-map",
-          "checksum": "77ea4515a0df695b372d5f969fe3188b"
+          "checksum": "ee6c6e191817b5af5067ff946e854c90"
         },
         {
           "name": "college-football-upsets",
@@ -3417,6 +3417,11 @@
           "checksum": "56e50b2c424f4300a48b1cc31e82cda7"
         },
         {
+          "name": "sports-territories",
+          "path": "/example/Image/sports-territories",
+          "checksum": "49353b2d300f208cf60398bd8ef4e6ca"
+        },
+        {
           "name": "us-presidents",
           "path": "/example/Image/us-presidents",
           "checksum": "2bc4913aa3c56edfe0469897a979510c"
@@ -3426,6 +3431,21 @@
     {
       "component": "Labels",
       "examples": [
+        {
+          "name": "shape-area",
+          "path": "/example/Labels/shape-area",
+          "checksum": "cd9c378c405d12d0c0d325045623c17f"
+        },
+        {
+          "name": "shape-area-chart",
+          "path": "/example/Labels/shape-area-chart",
+          "checksum": "26cffba9b7fb9e0d11fea10503ee5258"
+        },
+        {
+          "name": "shape-geo",
+          "path": "/example/Labels/shape-geo",
+          "checksum": "eaec098a48992382995effd11dcfaee6"
+        },
         {
           "name": "voronoi",
           "path": "/example/Labels/voronoi",
