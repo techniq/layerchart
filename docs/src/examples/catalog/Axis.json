@@ -4454,6 +4454,20 @@
       "line": "<Axis placement=\"left\" label=\"Very favorable %\" rule />"
     },
     {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"left\" format=\"percentRound\" grid rule />"
+    },
+    {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Line",
       "path": "/docs/components/Line/color-via-ordinal-scale",
@@ -6106,5 +6120,5 @@
       "line": "<Axis"
     }
   ],
-  "updatedAt": "2026-11-24T00:36:16.875Z"
+  "updatedAt": "2026-11-25T16:05:15.678Z"
 }

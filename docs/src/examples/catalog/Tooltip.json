@@ -5953,35 +5953,35 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 95,
+      "lineNumber": 98,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 97,
+      "lineNumber": 100,
       "line": "<Tooltip.Header>{data.team}</Tooltip.Header>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 98,
+      "lineNumber": 101,
       "line": "<Tooltip.List>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 99,
+      "lineNumber": 102,
       "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 100,
+      "lineNumber": 103,
       "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
     },
     {
@@ -6004,6 +6004,62 @@
       "path": "/docs/components/Image/college-football-upsets",
       "lineNumber": 207,
       "line": "<Tooltip.List>"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 368,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 370,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 382,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 384,
+      "line": "<Tooltip.Item label=\"Campus\" value={data.campus} />"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 387,
+      "line": "<Tooltip.Item label=\"Venue\" value={data.venue} />"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 390,
+      "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 392,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 397,
+      "line": "<Tooltip.Item label=\"Division\" value={data.division} />"
     },
     {
       "example": "bump-sports-rankings",
@@ -8491,5 +8547,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-11-24T00:36:17.864Z"
+  "updatedAt": "2026-11-25T16:05:17.542Z"
 }

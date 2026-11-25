@@ -1097,6 +1097,13 @@
       "line": "<AreaChart {data} x=\"date\" {series} {padding} height={200} legend />"
     },
     {
+      "example": "shape-area-chart",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area-chart",
+      "lineNumber": 35,
+      "line": "<AreaChart"
+    },
+    {
       "example": "basic",
       "component": "Threshold",
       "path": "/docs/components/Threshold/basic",
@@ -1118,5 +1125,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:17.701Z"
+  "updatedAt": "2026-11-25T16:05:15.646Z"
 }

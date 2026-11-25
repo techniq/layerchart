@@ -2,6 +2,93 @@
   "component": "Labels",
   "examples": [
     {
+      "name": "shape-area",
+      "title": "shape area",
+      "path": "/docs/components/Labels/shape-area",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 39,
+          "line": "<Axis placement=\"left\" format=\"percentRound\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 42,
+          "line": "<Area fill=\"name\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 43,
+          "line": "<Spline g=\"name\" class=\"stroke-surface-100 stroke-2\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 46,
+          "line": "<Labels"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 55,
+          "line": "<Legend placement=\"top\" />"
+        }
+      ],
+      "createdAt": "2026-11-25T15:56:05.000Z",
+      "updatedAt": "2026-11-25T15:56:05.000Z"
+    },
+    {
+      "name": "shape-area-chart",
+      "title": "shape area chart",
+      "path": "/docs/components/Labels/shape-area-chart",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 35,
+          "line": "<AreaChart"
+        }
+      ],
+      "createdAt": "2026-11-25T15:56:05.000Z",
+      "updatedAt": "2026-11-25T15:56:05.000Z"
+    },
+    {
+      "name": "shape-geo",
+      "title": "shape geo",
+      "path": "/docs/components/Labels/shape-geo",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} height={500}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 43,
+          "line": "<GeoPath geojson={feature} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 47,
+          "line": "<Labels"
+        }
+      ],
+      "createdAt": "2026-11-25T15:56:05.000Z",
+      "updatedAt": "2026-11-25T15:56:05.000Z"
+    },
+    {
       "name": "voronoi",
       "title": "voronoi",
       "path": "/docs/components/Labels/voronoi",
@@ -128,6 +215,20 @@
       "line": "<Labels format=\"integer\" />"
     },
     {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 46,
+      "line": "<Labels"
+    },
+    {
+      "example": "shape-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-geo",
+      "lineNumber": 47,
+      "line": "<Labels"
+    },
+    {
       "example": "voronoi",
       "component": "Labels",
       "path": "/docs/components/Labels/voronoi",
@@ -170,5 +271,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-08-20T07:29:18.899Z"
+  "updatedAt": "2026-11-25T16:05:16.832Z"
 }

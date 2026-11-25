@@ -204,6 +204,13 @@
       "line": "<ClipPath useId=\"globe\">"
     },
     {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 268,
+      "line": "<ClipPath path={cell.path}>"
+    },
+    {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
@@ -211,5 +218,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-10-23T06:08:46.880Z"
+  "updatedAt": "2026-11-25T16:05:16.203Z"
 }

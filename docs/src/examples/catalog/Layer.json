@@ -2983,14 +2983,14 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 62,
+      "lineNumber": 65,
       "line": "<Layer>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 76,
+      "lineNumber": 79,
       "line": "<Layer>"
     },
     {
@@ -3029,10 +3029,31 @@
       "line": "<Layer>"
     },
     {
+      "example": "sports-territories",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-territories",
+      "lineNumber": 250,
+      "line": "<Layer>"
+    },
+    {
       "example": "us-presidents",
       "component": "Image",
       "path": "/docs/components/Image/us-presidents",
       "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "shape-area",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-area",
+      "lineNumber": 38,
+      "line": "<Layer>"
+    },
+    {
+      "example": "shape-geo",
+      "component": "Labels",
+      "path": "/docs/components/Labels/shape-geo",
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
@@ -4723,5 +4744,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-11-24T00:36:17.496Z"
+  "updatedAt": "2026-11-25T16:05:16.850Z"
 }
