@@ -1,7 +1,13 @@
 import type { Component } from 'svelte';
 import type { SeriesData } from '../components/charts/types.js';
 import { group, InternMap } from 'd3-array';
-import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
+import {
+  stack,
+  stackOffsetDiverging,
+  stackOffsetExpand,
+  stackOffsetNone,
+  type Series,
+} from 'd3-shape';
 import { scaleOrdinal } from 'd3-scale';
 import { accessor, type Accessor } from '../utils/common.js';
 import { SelectionState } from '@layerstack/svelte-state';
@@ -11,6 +17,21 @@ const STACK_UNGROUPED = '';
 
 /** How a stack accumulates.  `'overlap'` isn't one of these — nothing is stacked there */
 export type StackLayout = 'stack' | 'stackExpand' | 'stackDiverging';
+
+/**
+ * `stackOffsetExpand`, but with each stack's top exactly 1: its shares can sum to slightly more in
+ * floating point (ex. `[0.01, 0.02, 0.29]` to 1.0000000000000002), which a nice scale rounds up
+ * to 1.1
+ */
+function stackOffsetExpandExact(series: Series<any, any>[], order: Iterable<number>) {
+  stackOffsetExpand(series, order);
+  for (const layer of series) {
+    for (const point of layer) {
+      if (Math.abs(point[0] - 1) < 1e-9) point[0] = 1;
+      if (Math.abs(point[1] - 1) < 1e-9) point[1] = 1;
+    }
+  }
+}
 
 /** How multiple series are arranged, before `auto` is resolved — see `ChartState.seriesLayout` */
 export type SeriesLayout = StackLayout | 'overlap' | 'group' | 'auto';
@@ -271,7 +292,7 @@ export class SeriesState<TData, TComponent extends Component> {
 
     const offset =
       config.layout === 'stackExpand'
-        ? stackOffsetExpand
+        ? stackOffsetExpandExact
         : config.layout === 'stackDiverging'
           ? stackOffsetDiverging
           : stackOffsetNone;

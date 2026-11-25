@@ -502,6 +502,16 @@ describe('SeriesState', () => {
         expect(appleVal![0]).toBeCloseTo(0);
         expect(orangeVal![1]).toBeCloseTo(1);
       });
+
+      it('should top each stack at exactly 1 (not a float sum just above it)', () => {
+        // These shares sum to 1.0000000000000002 in floating point
+        const row = { date: '2024-01-01', apples: 0.01, bananas: 0.02, oranges: 0.29 };
+        const state = createSeriesState(
+          [{ key: 'apples' }, { key: 'bananas' }, { key: 'oranges' }] as any[],
+          { layout: 'stackExpand', data: [row], keyBy: 'date' }
+        );
+        expect(state.getStackValue('oranges', row)![1]).toBe(1);
+      });
     });
   });
 });
