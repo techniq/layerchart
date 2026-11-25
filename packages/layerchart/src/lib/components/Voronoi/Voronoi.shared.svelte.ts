@@ -21,6 +21,17 @@ export type VoronoiCell = {
    */
   polygon: [number, number][] | null;
   /**
+   * The cell's pieces on screen (several when `clip` splits it, ex. by a coastline's islands), each
+   * a polygon of rings as `shapeLabel()` takes them.  Empty for degenerate cells.  Ex. for where an
+   * image's square fits: `shapeLabel(cell.polygons, { fit: 'rect' })`.
+   */
+  polygons: [number, number][][][];
+  /**
+   * The cell's outline as SVG path data (all of its pieces, with `clip`), or `null` for degenerate
+   * cells.  Ex. for a `<ClipPath path>` to keep an image within the cell.
+   */
+  path: string | null;
+  /**
    * Centroid of the cell `[x, y]` in pixel space, or `null`. For geo charts this
    * is the projected spherical centroid (`geoCentroid`), which is stable across
    * the antimeridian.
@@ -31,6 +42,13 @@ export type VoronoiCell = {
    * cartesian charts; spherical area in steradians (`geoArea`) for geo charts.
    */
   area: number;
+  /**
+   * The cell's visual center (the point inside it farthest from its edges) and its `distance` to
+   * them (the room there, ex. to size an image by), or `null` for degenerate cells.  Unlike the
+   * centroid, always inside, even for a concave cell (ex. cut to a state's border).  Only computed
+   * when read (see `shapeLabel()`, with `polygons` for other options).
+   */
+  center: { x: number; y: number; distance: number } | null;
 };
 
 export type VoronoiPropsWithoutHTML = {
@@ -39,6 +57,13 @@ export type VoronoiPropsWithoutHTML = {
   y?: Accessor;
   /** Radius to clip voronoi cells. `0` or `undefined` to disables clipping */
   r?: number;
+  /**
+   * A shape to cut every cell to: a GeoJSON feature or geometry in a geo chart (through its
+   * projection), or a polygon of `[x, y]` pixels.  Cells are then measured on screen (rather than
+   * on the sphere in a geo chart), and points sharing a location share their cell.  Ex. to divide
+   * each state between the teams in it, with a `<Voronoi>` per state.
+   */
+  clip?: GeoPermissibleObjects | [number, number][];
   classes?: {
     root?: string;
     path?: string;
