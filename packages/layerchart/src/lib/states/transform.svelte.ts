@@ -549,11 +549,8 @@ export class TransformState {
   zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }) {
     if (!this.ctx) return;
 
-    let newScale = rect
-      ? this.ctx.width < this.ctx.height
-        ? this.ctx.width / rect.width
-        : this.ctx.height / rect.height
-      : 1;
+    // The whole rect in view (the scale fitting its tighter side)
+    let newScale = rect ? Math.min(this.ctx.width / rect.width, this.ctx.height / rect.height) : 1;
 
     newScale = this._clampScale(newScale);
 
