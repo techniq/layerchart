@@ -1,5 +1,12 @@
 # @layerchart/webgl
 
+## 2.14.0
+
+### Patch Changes
+
+- Updated dependencies [[`e595cf2`](https://github.com/techniq/layerchart/commit/e595cf27a97c25d21eac7ac7bc36f24ac2556b39), [`e595cf2`](https://github.com/techniq/layerchart/commit/e595cf27a97c25d21eac7ac7bc36f24ac2556b39)]:
+  - layerchart@2.14.0
+
 ## 2.13.0
 
 ### Patch Changes
