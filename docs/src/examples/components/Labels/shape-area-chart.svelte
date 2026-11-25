@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { max, rollup, sum } from 'd3-array';
-	import { schemeTableau10 } from 'd3-scale-chromatic';
+	import { quantize } from 'd3-interpolate';
+	import { interpolateSpectral } from 'd3-scale-chromatic';
 	import { AreaChart } from 'layerchart';
 	import { getProgrammingLanguages } from '$lib/data.remote';
 
@@ -34,7 +35,11 @@
 <AreaChart
 	{data}
 	x="date"
-	series={[...keys, 'Other'].map((key, i) => ({ key, color: schemeTableau10[i] }))}
+	series={[
+		// Spectral across the languages (as in the Labels "shape-area" example), gray for the rest
+		...quantize(interpolateSpectral, keys.length).map((color, i) => ({ key: keys[i], color })),
+		{ key: 'Other', color: '#9ca3af' }
+	]}
 	seriesLayout="stackExpand"
 	labels={{
 		layout: 'shape',
