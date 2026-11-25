@@ -54,6 +54,18 @@ describe('Labels layout="shape" on areas', () => {
     expect(labels.c.y).toBeCloseTo(yAt(45), 0);
   });
 
+  it('labels the area of a chart without series, from the baseline', async () => {
+    const labels = await labelsOf({ data: wide, y: 'b' }, { value: () => 'b' });
+    expect(labels.b.y).toBeCloseTo(yAt(10), 0);
+  });
+
+  it("labels a range area from the chart's `y={[0, 1]}` pair (ex. d3 `stack()` rows)", async () => {
+    // Each row its band's bottom and top, 10 to 30
+    const rows = wide.map(({ x }) => Object.assign([10, 30], { x }));
+    const labels = await labelsOf({ data: rows, y: [0, 1] }, { value: () => 'band' });
+    expect(labels.band.y).toBeCloseTo(yAt(20), 0);
+  });
+
   it("labels each overlapping category's area, from the baseline", async () => {
     const labels = await labelsOf({ data: long, y: 'value', c: 'key', seriesLayout: 'overlap' });
     // Each area reaches down to 0 (so the labels center in 0–10, 0–20 and 0–30)

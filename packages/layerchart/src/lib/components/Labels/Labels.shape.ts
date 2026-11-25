@@ -2,7 +2,7 @@
  * `<Labels layout="shape">`: one label per shape, placed where it has the most room.  Imported
  * only by charts using the layout (it brings `d3-geo`'s `geoPath` and `shapeLabel`).
  */
-import { extent, group, min } from 'd3-array';
+import { extent, group } from 'd3-array';
 import type { GeoProjection } from 'd3-geo';
 import { format as formatValue, type FormatConfig, type FormatType } from '@layerstack/utils';
 
@@ -122,12 +122,8 @@ function isGeoJson(d: any) {
  * `series` do
  */
 function seriesShapes({ ctx, markData, data, seriesKey }: ShapeLabelsOptions) {
-  const baseline = () => ctx.props.yBaseline ?? min(ctx.yScale.domain() as number[]);
-
   if (ctx.series.isDefaultSeries && ctx.cGroups) {
-    const stack = ctx.stackAccessorsFor({ ownData: data != null, stacksImplicitly: true });
-    const y0 = stack?.y0 ?? baseline;
-    const y1 = stack?.y1 ?? ctx.y;
+    const { y0, y1 } = ctx.areaAccessorsFor({ ownData: data != null });
     return [...group(markData(data), ctx.c)].map(([category, rows]) => ({
       key: category,
       // Like a series, ex. for a `fill={(d) => d.color}`
@@ -137,26 +133,26 @@ function seriesShapes({ ctx, markData, data, seriesKey }: ShapeLabelsOptions) {
     }));
   }
 
+  // A chart without `series`: its one area (unnamed, so labeled only by `value`), as `Area` draws
+  // it from the chart's `y`
+  if (ctx.series.isDefaultSeries) {
+    const { y0, y1 } = ctx.areaAccessorsFor({ ownData: data != null });
+    return [
+      {
+        key: 'default',
+        data: ctx.series.series[0] ?? { key: 'default' },
+        defaultValue: '',
+        polygons: areaPolygons(ctx, markData(data), y0, y1),
+      },
+    ];
+  }
+
   const series = seriesKey
     ? ctx.series.series.filter((s) => s.key === seriesKey)
     : ctx.series.visibleSeries;
 
   return series.map((s) => {
-    const stack = ctx.stackAccessorsFor({
-      seriesKey: s.key,
-      ownData: data != null,
-      stacksImplicitly: true,
-    });
-    const seriesAccessor = s.value ?? (s.data ? undefined : s.key);
-    const y0: (d: any) => any =
-      stack?.y0 ?? (Array.isArray(seriesAccessor) ? accessor(seriesAccessor[0]) : baseline);
-    const y1: (d: any) => any =
-      stack?.y1 ??
-      (Array.isArray(seriesAccessor)
-        ? accessor(seriesAccessor[1])
-        : seriesAccessor
-          ? accessor(seriesAccessor)
-          : ctx.y);
+    const { y0, y1 } = ctx.areaAccessorsFor({ seriesKey: s.key, ownData: data != null });
 
     return {
       key: s.key,

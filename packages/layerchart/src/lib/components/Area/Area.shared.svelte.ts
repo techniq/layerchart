@@ -1,7 +1,7 @@
 import { untrack, type ComponentProps } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 import { type Area as D3Area, area as d3Area, areaRadial, type CurveFactory } from 'd3-shape';
-import { group as d3Group, min } from 'd3-array';
+import { group as d3Group } from 'd3-array';
 import { interpolatePath } from 'd3-interpolate-path';
 
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -200,29 +200,14 @@ export class AreaState {
     return x ? accessor(x) : this.ctx.x;
   });
 
-  y0Accessor = $derived.by(() => {
-    const props = this.#props;
-    if (props.y0) return accessor(props.y0);
-    if (this.stackAccessors) return this.stackAccessors.y0;
-    if (Array.isArray(this.seriesAccessor)) return accessor(this.seriesAccessor[0]);
-    if (Array.isArray(this.ctx.config.y) && this.ctx.config.y[0] === 0) {
-      return (d: any) => this.ctx.y(d)[0];
-    }
-    if (this.ctx.props.yBaseline != null) return () => this.ctx.props.yBaseline as number;
-    return () => min(this.ctx.yScale.domain()) as number;
-  });
-
-  y1Accessor = $derived.by(() => {
-    const props = this.#props;
-    if (props.y1) return accessor(props.y1);
-    if (this.stackAccessors) return this.stackAccessors.y1;
-    if (Array.isArray(this.seriesAccessor)) return accessor(this.seriesAccessor[1]);
-    if (this.seriesAccessor) return accessor(this.seriesAccessor as Accessor);
-    if (Array.isArray(this.ctx.config.y) && this.ctx.config.y[1] === 1) {
-      return (d: any) => this.ctx.y(d)[1];
-    }
-    return this.ctx.y;
-  });
+  #yAccessors = $derived(
+    this.ctx.areaAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+    })
+  );
+  y0Accessor = $derived(this.#props.y0 ? accessor(this.#props.y0) : this.#yAccessors.y0);
+  y1Accessor = $derived(this.#props.y1 ? accessor(this.#props.y1) : this.#yAccessors.y1);
 
   resolvedData = $derived(this.markData(this.#props.data, this.seriesData));
 
