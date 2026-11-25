@@ -611,17 +611,18 @@ describe('GeoTile', () => {
     await expect.poll(() => tiles[0][2]).toBe(slow);
     // Each new tile (larger than the old view: those left behind cover only part of it) is drawn
     // at once, from the old backdrop's image a zoom up, rather than left empty until its own
-    // arrive.  Behind those left behind, so the part they cover stays sharp
+    // arrive.  Layered under those left behind (drawn after them, only where they aren't), so
+    // the part they cover stays sharp, however much higher its terrain
     const standIns = () =>
       meshes(scene!).filter((m) => m.material.map.image.src === tint(slow - 1));
     await expect.poll(() => standIns().length).toBe(tiles.length);
     const left = meshes(scene!).filter((m) => m.material.map.image.src === tint(deep));
     expect(left.length).toBeGreaterThan(0);
     for (const standIn of standIns()) {
-      for (const mesh of left)
-        expect(standIn.material.polygonOffsetUnits).toBeGreaterThan(
-          mesh.material.polygonOffsetUnits
-        );
+      for (const mesh of left) {
+        expect(standIn.material.stencilRef).toBeLessThan(mesh.material.stencilRef);
+        expect(standIn.renderOrder).toBeGreaterThan(mesh.renderOrder);
+      }
     }
     // The new backdrop shows beneath while they load, and hides once they're drawn
     await expect.poll(() => backdrop(scene!).some((m) => m.visible)).toBe(true);
@@ -630,7 +631,8 @@ describe('GeoTile', () => {
       .poll(() => meshes(scene!).filter((m) => m.material.map.image.src === tint(slow)).length)
       .toBe(tiles.length);
     await expect.poll(() => meshes(scene!).length).toBe(tiles.length);
-    for (const mesh of meshes(scene!)) expect(mesh.material.polygonOffset).toBe(false);
+    // Their own, over anything left beneath
+    await expect.poll(() => meshes(scene!).every((m) => m.material.stencilRef === 255)).toBe(true);
     await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
   });
 
@@ -706,6 +708,20 @@ describe('GeoTile', () => {
     const back = meshes(scene!).filter((m) => m.material.map.image.src === tint(z));
     expect(back.length).toBeGreaterThan(0);
     for (const mesh of back) expect(mesh.material.opacity).toBe(1);
+  });
+
+  it('draws on a stencil buffer, to layer tiles by how sharp they are', async () => {
+    test++;
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area }, view: perspective },
+      geotile: { url: (_x: number, _y: number, z: number) => tint(z) },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    const canvas = document.querySelector('.lc-layout-webgl canvas') as HTMLCanvasElement;
+    const gl = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
+    expect(gl?.getContextAttributes()?.stencil).toBe(true);
+    for (const mesh of meshes(scene)) expect(mesh.material.stencilWrite).toBe(true);
   });
 
   it('raises the backdrop with the terrain, a little beneath it', async () => {

@@ -105,6 +105,7 @@
 
   import { getSceneContext, type SceneLabel } from '../../contexts/scene.svelte.js';
   import { getSphere } from '../../utils/globe.js';
+  import { rankLayer } from '../../utils/layering.js';
   import { placer } from '../../utils/marks.js';
   import {
     ancestor,
@@ -554,23 +555,21 @@
   });
 
   /**
-   * A tile's mesh scaled to the `z` scale (in meters), and while it isn't its own tile drawn from
-   * its own image (stale, a stand-in, or the backdrop), pushed back in depth so those draw over
-   * it: where it is, rather than moved (which, with the camera close, would shift it on screen and
-   * open gaps), and coarser ones further back.  So wherever tiles overlap, the sharpest shows: a
-   * stand-in fills only what tiles left behind don't cover, rather than blurring them
+   * A tile's mesh scaled to the `z` scale (in meters), and layered by how sharp it is: where tiles
+   * overlap (ex. tiles left behind under those taking their place, stand-ins, and the backdrop),
+   * the sharpest shows, and tiles drawn from their own image over all.  Not by depth: a coarser
+   * tile's terrain smooths a canyon over, hundreds of meters above the river a sharper one shows.
+   * Each draws, sharpest first, only where none sharper has (marking the stencil with its rank),
+   * so a coarser one fills just what they leave; one fading in draws over them all, last.
    */
   function fit(entry: Entry) {
     const mesh = entry.mesh;
     if (!mesh) return;
-    const material = mesh.material;
     const back = entry.stale || !entry.loaded || entry.backdrop;
-    material.polygonOffset = back;
-    material.polygonOffsetFactor = back ? 2 : 0;
-    // (Those left behind in front of a stand-in from the same zoom)
-    material.polygonOffsetUnits = back
-      ? 4 * (24 - entry.imagePart.tile[2]) + (entry.stale ? 0 : 2)
-      : 0;
+    // Its own image over all; else by its image's zoom, those left behind over a stand-in from the
+    // same zoom
+    const rank = back ? 1 + 2 * entry.imagePart.tile[2] + (entry.stale ? 1 : 0) : 255;
+    rankLayer(mesh, rank, entry.fading != null);
     if (inMeters) {
       mesh.scale.set(1, heightScale.k, 1);
       mesh.position.set(0, heightScale.b, 0);
@@ -899,8 +898,8 @@
   function fadeIn(entry: Entry) {
     entry.fading = performance.now();
     entry.mesh!.material.opacity = 0;
-    // Over the tile beneath, rather than fighting it for depth
-    entry.mesh!.renderOrder = 1;
+    // Over the tiles beneath, after them (see `fit`)
+    fit(entry);
     if (!fadeFrame) fadeFrame = requestAnimationFrame(fade);
   }
   function fade(now: number) {
@@ -915,7 +914,7 @@
       if (t < 1) more = true;
       else {
         entry.fading = null;
-        entry.mesh.renderOrder = 0;
+        fit(entry);
         done = true;
       }
     }
