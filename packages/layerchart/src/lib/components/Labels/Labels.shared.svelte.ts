@@ -40,14 +40,20 @@ export type LabelsPropsWithoutHTML<T = any> = {
   placement?: 'inside' | 'outside' | 'middle' | 'center' | 'smart';
   /**
    * Global positioning algorithm applied across all labels (distinct from the
-   * per-point `placement`). `'voronoi'` orients each label towards the open space
-   * of its cell — good for scatter plots and maps.
+   * per-point `placement`).
+   * - `'voronoi'` orients each label towards the open space of its cell — good for scatter plots
+   *   and maps.
+   * - `'shape'` labels each shape nearest its center where the text fits (or else where it has
+   *   the most room): each GeoJSON feature of `data` in a geo chart (its `properties.name`), or
+   *   else each series' area (its label), or each `c` category's when the rows name their layers.
    */
-  layout?: 'voronoi';
+  layout?: 'voronoi' | 'shape';
   /**
    * Hide labels that would overlap a higher-priority (roomier-cell) one, resolving
    * the actual boxes rather than dropping by a proxy. Requires `layout`. Pass an
    * object to tune the spacing — e.g. `{ padding: 8 }` for a sparser result.
+   *
+   * With `layout="shape"`, hide the labels that don't fit within their shape.
    */
   occlude?: boolean | { padding?: number };
   /**
