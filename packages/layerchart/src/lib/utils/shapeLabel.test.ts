@@ -17,6 +17,9 @@ describe('shapeLabel', () => {
     expect(result.x).toBeCloseTo(50, 0);
     expect(result.y).toBeCloseTo(50, 0);
     expect(result.distance).toBeCloseTo(50, 0);
+    // The room's size: the circle's
+    expect(result.width).toBeCloseTo(100, 0);
+    expect(result.height).toBeCloseTo(100, 0);
   });
 
   it('stays inside a concave shape, unlike its centroid', () => {
@@ -84,6 +87,8 @@ describe('shapeLabel', () => {
     expect(shapeLabel(triangle).distance).toBeCloseTo((100 * (2 - Math.SQRT2)) / 2, 0);
     const square = shapeLabel(triangle, { fit: 'rect' });
     expect(square.distance).toBeCloseTo(25, 0);
+    expect(square.width).toBeCloseTo(50, 0);
+    expect(square.height).toBeCloseTo(50, 0);
     expect(square.x).toBeCloseTo(25, 0);
     expect(square.y).toBeCloseTo(25, 0);
 
@@ -114,6 +119,9 @@ describe('shapeLabel', () => {
     ];
     const result = shapeLabel(diamond, { fit: 'rect', aspect: 2 });
     expect(result.distance).toBeCloseTo(10, 0);
+    // A 20 × 10 rectangle
+    expect(result.width).toBeCloseTo(20, 0);
+    expect(result.height).toBeCloseTo(10, 0);
     expect(result.x).toBeCloseTo(0, 0);
     expect(result.y).toBeCloseTo(0, 0);
   });
@@ -179,7 +187,7 @@ describe('shapeLabel', () => {
   });
 
   it('handles degenerate polygons', () => {
-    expect(shapeLabel([[]]).distance).toBe(0);
+    expect(shapeLabel([[]])).toMatchObject({ distance: 0, width: 0, height: 0 });
     expect(shapeLabel(rect(5, 5, 0, 0)).distance).toBe(0);
   });
 });
