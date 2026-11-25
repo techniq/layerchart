@@ -8,6 +8,11 @@ on:
       # Generated from the examples after merging; captures don't read it
       - '!docs/src/examples/catalog/**'
       - docs/scripts/visual-snapshot.mjs
+      - pnpm-lock.yaml
+      # What the Version Packages PR from `release.yml` changes.  Dependency changes still run this
+      # through `pnpm-lock.yaml`
+      - '!packages/*/CHANGELOG.md'
+      - '!packages/*/package.json'
     types: [opened, synchronize, reopened]
 
 concurrency:

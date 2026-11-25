@@ -16,6 +16,12 @@ on:
       - docs/static/screenshots/**
       - docs/snapshots/**
       - bundle-analyzer/bundle-reports/**
+      # What the Version Packages PR from `release.yml` changes.  A dependency change in
+      # `package.json` comes with `pnpm-lock.yaml`, which still runs this; any other
+      # `package.json`-only change is checked on `main` once merged
+      - .changeset/**
+      - packages/*/CHANGELOG.md
+      - packages/*/package.json
 
 jobs:
   build:
