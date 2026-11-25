@@ -6009,56 +6009,56 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 368,
+      "lineNumber": 433,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 370,
+      "lineNumber": 435,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 382,
+      "lineNumber": 447,
       "line": "<Tooltip.List>"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 384,
+      "lineNumber": 449,
       "line": "<Tooltip.Item label=\"Campus\" value={data.campus} />"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 387,
+      "lineNumber": 452,
       "line": "<Tooltip.Item label=\"Venue\" value={data.venue} />"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 390,
+      "lineNumber": 455,
       "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 392,
+      "lineNumber": 457,
       "line": "<Tooltip.Item"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 397,
+      "lineNumber": 462,
       "line": "<Tooltip.Item label=\"Division\" value={data.division} />"
     },
     {
@@ -8547,5 +8547,5 @@
       "line": "<Tooltip.Item label=\"Count\" value={data.count} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:17.542Z"
+  "updatedAt": "2026-11-25T19:58:31.860Z"
 }

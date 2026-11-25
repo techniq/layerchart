@@ -46,14 +46,14 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 257,
+      "lineNumber": 317,
       "line": "<Voronoi"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 305,
+      "lineNumber": 370,
       "line": "<Voronoi"
     },
     {
@@ -71,5 +71,5 @@
       "line": "<Voronoi"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:17.743Z"
+  "updatedAt": "2026-11-25T19:58:31.963Z"
 }

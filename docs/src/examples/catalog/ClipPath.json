@@ -207,7 +207,7 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 268,
+      "lineNumber": 328,
       "line": "<ClipPath path={cell.path}>"
     },
     {
@@ -218,5 +218,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:16.203Z"
+  "updatedAt": "2026-11-25T19:58:31.148Z"
 }

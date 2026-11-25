@@ -3032,7 +3032,7 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 250,
+      "lineNumber": 309,
       "line": "<Layer>"
     },
     {
@@ -4744,5 +4744,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:16.850Z"
+  "updatedAt": "2026-11-25T19:58:31.487Z"
 }

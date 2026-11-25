@@ -879,14 +879,14 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 329,
+      "lineNumber": 394,
       "line": "<Circle"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 344,
+      "lineNumber": 409,
       "line": "<Circle"
     },
     {
@@ -1310,5 +1310,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:16.154Z"
+  "updatedAt": "2026-11-25T19:58:31.124Z"
 }
