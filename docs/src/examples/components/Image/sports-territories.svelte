@@ -3,8 +3,9 @@
 	import { geoAlbersUsa, geoConicEqualArea, geoPath } from 'd3-geo';
 	import { untrack } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
-	import { feature } from 'topojson-client';
+	import { feature, merge } from 'topojson-client';
 	import LucideFocus from '~icons/lucide/focus';
+	import LucideSquareScissors from '~icons/lucide/square-scissors';
 
 	import {
 		Chart,
@@ -136,6 +137,48 @@
 		return teams.filter((t) => !codes.has(t.state));
 	});
 
+	/** Whether each state is divided between its own teams, or the whole map between all of them */
+	let clipToStates = $state(true);
+
+	/**
+	 * Alaska and Hawaii, drawn apart from the rest (`geoAlbersUsa`'s insets), so divided on their own
+	 * even with `clipToStates` off: on screen, they're next to California
+	 */
+	const insets = $derived(new Set(area === 'us' ? ['AK', 'HI'] : []));
+
+	/** The map as one shape (but its insets), without the borders between its states and provinces */
+	const nation = $derived.by(() => {
+		const outline = (topology: typeof usTopology) => {
+			const geometries = topology.objects.admin1.geometries.filter((g) => {
+				const code = (g.properties as { code?: string } | undefined)?.code;
+				return !insets.has(code?.split('-')[1] ?? '');
+			});
+			return merge(topology, geometries as Parameters<typeof merge>[1]);
+		};
+		const outlines = [outline(usTopology)];
+		if (area === 'us-canada') outlines.push(outline(canadaTopology));
+		return { type: 'MultiPolygon' as const, coordinates: outlines.flatMap((o) => o.coordinates) };
+	});
+
+	/** What's divided between teams, each with its teams: each state, or the whole map (and its insets) */
+	const territories = $derived.by(() => {
+		const byState = regionTeams.map(({ region, teams }) => ({
+			id: String(region.id),
+			clip: region,
+			teams
+		}));
+		if (clipToStates) return byState;
+		const inset = (region: (typeof regions)[number]) => insets.has(regionCode(region) ?? '');
+		return [
+			{
+				id: 'all',
+				clip: nation,
+				teams: regionTeams.filter(({ region }) => !inset(region)).flatMap(({ teams }) => teams)
+			},
+			...byState.filter(({ clip }) => inset(clip))
+		];
+	});
+
 	let chart = $state<ChartState>();
 
 	/**
@@ -208,6 +251,7 @@
 		<div slot="append" onclick={(e) => e.stopPropagation()} role="none">
 			<Button
 				icon={LucideFocus}
+				class="leading-none"
 				on:click={() => {
 					focused = !focused;
 					if (!focused) chart?.transform.reset();
@@ -225,6 +269,21 @@
 			<ToggleOption value="us">US</ToggleOption>
 			<ToggleOption value="us-canada">US + Canada</ToggleOption>
 		</ToggleGroup>
+		<div slot="append" class="pl-2.5" onclick={(e) => e.stopPropagation()} role="none">
+			<!-- Each state divided between its own teams, or the whole map between all of them -->
+			<Button
+				icon={LucideSquareScissors}
+				class="leading-none"
+				on:click={() => (clipToStates = !clipToStates)}
+				size="sm"
+				variant={clipToStates ? 'fill-light' : 'default'}
+				color={clipToStates ? 'primary' : 'default'}
+				title={clipToStates
+					? 'Divide the whole map between all teams'
+					: 'Divide each state between its own teams'}
+				aria-pressed={clipToStates}
+			/>
+		</div>
 	</Field>
 </div>
 
@@ -252,13 +311,14 @@
 				<GeoPath geojson={region} class="fill-surface-content/5 stroke-none" />
 			{/each}
 
-			<!-- Each state divided between its teams: the Voronoi cells of their locations, cut to it -->
-			{#each regionTeams as { region, teams } (region.id)}
+			<!-- Each state (or the whole map) divided between its teams: the Voronoi cells of their
+			     locations, cut to it -->
+			{#each territories as { id, clip, teams } (id)}
 				<Voronoi
 					data={teams}
 					x="longitude"
 					y="latitude"
-					clip={region}
+					{clip}
 					onpointermove={(e, { data }) => context.tooltip.show(e, data)}
 					onpointerleave={() => context.tooltip.hide()}
 				>
@@ -303,13 +363,15 @@
 			{/each}
 
 			<!-- The hovered territory's outline, above the state borders -->
-			{@const hoveredRegion = regionTeams.find(({ teams }) => hovered && teams.includes(hovered))}
-			{#if hoveredRegion}
+			{@const hoveredTerritory = territories.find(
+				({ teams }) => hovered && teams.includes(hovered)
+			)}
+			{#if hoveredTerritory}
 				<Voronoi
-					data={hoveredRegion.teams}
+					data={hoveredTerritory.teams}
 					x="longitude"
 					y="latitude"
-					clip={hoveredRegion.region}
+					clip={hoveredTerritory.clip}
 					class="pointer-events-none"
 				>
 					{#snippet children({ cells })}
