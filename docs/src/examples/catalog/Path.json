@@ -45,21 +45,21 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 269,
+      "lineNumber": 329,
       "line": "<Path pathData={cell.path} fill={cell.data.color} class=\"pointer-events-none\" />"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 283,
+      "lineNumber": 346,
       "line": "<Path"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 315,
+      "lineNumber": 380,
       "line": "<Path"
     },
     {
@@ -84,5 +84,5 @@
       "line": "<ellipse cx=\"39\" cy=\"16.969\" fill=\"currentColor\" rx=\"2\" ry=\"3\" /><path"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:17.137Z"
+  "updatedAt": "2026-11-25T19:58:31.641Z"
 }

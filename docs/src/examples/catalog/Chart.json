@@ -4290,7 +4290,7 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 231,
+      "lineNumber": 290,
       "line": "<Chart"
     },
     {
@@ -6093,5 +6093,5 @@
       "line": "<Chart"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:16.015Z"
+  "updatedAt": "2026-11-25T19:58:31.057Z"
 }

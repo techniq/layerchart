@@ -1812,14 +1812,14 @@
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 252,
+      "lineNumber": 311,
       "line": "<GeoPath geojson={region} class=\"fill-surface-content/5 stroke-none\" />"
     },
     {
       "example": "sports-territories",
       "component": "Image",
       "path": "/docs/components/Image/sports-territories",
-      "lineNumber": 295,
+      "lineNumber": 358,
       "line": "<GeoPath"
     },
     {
@@ -1879,5 +1879,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-11-25T16:05:16.560Z"
+  "updatedAt": "2026-11-25T19:58:31.337Z"
 }
