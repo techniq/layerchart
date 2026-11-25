@@ -269,13 +269,16 @@
 									<Path pathData={cell.path} fill={cell.data.color} class="pointer-events-none" />
 									{#if cell.data.logo_key}
 										<!-- In the largest square that fits, so the logo isn't cut off -->
-										{@const room = shapeLabel(cell.polygons, { fit: 'rect', centroidWeight: 0.01 })}
+										{@const { x, y, width, height } = shapeLabel(cell.polygons, {
+											fit: 'rect',
+											centroidWeight: 0.01
+										})}
 										<Image
 											href={sportsLogo(cell.data, { variant: 'on-color', size: 192 })}
-											x={room.x}
-											y={room.y}
-											width={2 * room.distance}
-											height={2 * room.distance}
+											{x}
+											{y}
+											{width}
+											{height}
 											class="pointer-events-none"
 										/>
 									{/if}

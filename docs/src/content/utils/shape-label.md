@@ -13,7 +13,7 @@ related: [components/Labels, components/Voronoi, /docs/components/Image/sports-t
 import { shapeLabel } from 'layerchart';
 
 // A polygon: an outer ring followed by any holes, in pixels
-const { x, y, distance } = shapeLabel([
+const { x, y, width, height } = shapeLabel([
 	[
 		[0, 0],
 		[100, 0],
@@ -23,7 +23,14 @@ const { x, y, distance } = shapeLabel([
 ]);
 ```
 
-Pass an array of polygons (ex. a state and its islands) to find the best spot across all of them. `distance` is the room there: the radius of the largest circle that fits.
+Pass an array of polygons (ex. a state and its islands) to find the best spot across all of them.
+
+It returns the point (`x`, `y`) and the room there: `width` and `height`, the size of the largest circle (or ellipse, or rect) that fits, and `distance`, from the point to the nearest edge (the circle's radius, or with an `aspect` or `fit: 'rect'`, half the width). Ex. to place an image without crossing the edges:
+
+```ts
+const { x, y, width, height } = shapeLabel(polygons, { fit: 'rect' });
+// <Image {x} {y} {width} {height} href={...} />
+```
 
 ## Options
 

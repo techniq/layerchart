@@ -63,17 +63,23 @@
 
 			{#each labels as label (label.name)}
 				{@const [x, y] = projection?.([label.x, label.y]) ?? [label.x, label.y]}
-				{@const rx = label.distance * k}
-				{@const ry = (label.distance / aspect) * k}
+				{@const width = label.width * k}
+				{@const height = label.height * k}
 				<!-- The room at the label's position: the largest ellipse (or rect) of `aspect` that fits -->
 				{#if fit === 'circle'}
-					<Ellipse cx={x} cy={y} {rx} {ry} class="fill-warning/40 stroke-warning" />
+					<Ellipse
+						cx={x}
+						cy={y}
+						rx={width / 2}
+						ry={height / 2}
+						class="fill-warning/40 stroke-warning"
+					/>
 				{:else}
 					<Rect
-						x={x - rx}
-						y={y - ry}
-						width={2 * rx}
-						height={2 * ry}
+						x={x - width / 2}
+						y={y - height / 2}
+						{width}
+						{height}
 						class="fill-warning/40 stroke-warning"
 					/>
 				{/if}

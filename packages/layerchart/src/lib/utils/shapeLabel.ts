@@ -66,13 +66,23 @@ export type ShapeLabelResult = {
    * (half its height is `distance / aspect`).
    */
   distance: number;
+  /**
+   * Size of that room: the circle's or ellipse's width and height (`2 × distance`, and
+   * `2 × distance / aspect`), or the rect's.  Ex. with `fit: 'rect'`, the size an image placed at
+   * (`x`, `y`) can be without crossing the edges.
+   */
+  width: number;
+  height: number;
 };
+
+/** A point and its room, as the search finds it (before its size is worked out) */
+type Pole = Pick<ShapeLabelResult, 'x' | 'y' | 'distance'>;
 
 /**
  * The point inside `polygon` (or across several polygons) farthest from its edges.
  *
  * ```ts
- * const { x, y, distance } = shapeLabel([[[0, 0], [100, 0], [100, 50], [0, 50]]]);
+ * const { x, y, width, height } = shapeLabel([[[0, 0], [100, 0], [100, 50], [0, 50]]]);
  * ```
  */
 export function shapeLabel(
@@ -87,7 +97,7 @@ export function shapeLabel(
   let best: {
     original: ShapeLabelPolygon;
     polygon: ShapeLabelPolygon;
-    result: ShapeLabelResult;
+    result: Pole;
   } | null = null;
   for (const p of polygons) {
     if (!p[0]?.length) continue;
@@ -107,7 +117,7 @@ export function shapeLabel(
       best = { original: p, polygon: stretched, result };
     }
   }
-  if (!best) return { x: NaN, y: NaN, distance: 0 };
+  if (!best) return { x: NaN, y: NaN, distance: 0, width: 0, height: 0 };
 
   let { result } = best;
   if (minDistance != null && result.distance >= minDistance) {
@@ -130,7 +140,14 @@ export function shapeLabel(
       if (kept) result = kept;
     }
   }
-  return { x: result.x, y: result.y / aspect, distance: result.distance };
+  const { distance } = result;
+  return {
+    x: result.x,
+    y: result.y / aspect,
+    distance,
+    width: 2 * distance,
+    height: (2 * distance) / aspect,
+  };
 }
 
 /**
@@ -145,10 +162,10 @@ function keepPreferred(
   prefer: { x: number; y: number },
   aspect: number,
   rect: boolean,
-  center: ShapeLabelResult,
+  center: Pole,
   minDistance: number,
   precision: number
-): ShapeLabelResult | null {
+): Pole | null {
   const distance = distanceAt(shape.polygon, prefer.x, prefer.y * aspect, rect);
   if (distance < minDistance - 2 * precision) return null;
   if (distanceAt(shape.original, prefer.x, prefer.y) < 0.75 * center.distance) return null;
@@ -264,7 +281,7 @@ function poleOfInaccessibility(
     anchor?: { x: number; y: number };
     rect?: boolean;
   } = {}
-): ShapeLabelResult {
+): Pole {
   // Bounding box of the outer ring
   let minX = Infinity;
   let minY = Infinity;
