@@ -12,9 +12,9 @@
 </script>
 
 <script lang="ts">
-  import { max } from 'd3-array';
+  import { extent, greatest, max, sum } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
-  import { geoArea, geoCentroid } from 'd3-geo';
+  import { geoArea, geoCentroid, geoPath } from 'd3-geo';
   // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { polygonArea, polygonCentroid } from 'd3-polygon';
@@ -29,6 +29,12 @@
   import { getLayerIsometric } from '$lib/contexts/isometric.js';
   import { accessor } from '$lib/utils/common.js';
   import { applyMatrix, invertMatrix } from '$lib/utils/isometric.js';
+  import {
+    clipToConvex,
+    geoPolygons as screenPolygons,
+    ringsToPath,
+    spreadApart,
+  } from '$lib/utils/polygon.js';
   import { clipToCircle, type VoronoiCell } from './Voronoi.shared.svelte.js';
 
   let {
@@ -39,6 +45,7 @@
     x: xProp,
     y: yProp,
     r,
+    clip,
     classes = {},
     onclick,
     onpointerenter,
@@ -63,48 +70,72 @@
   const toPlot = $derived(view ? invertMatrix(view) : null);
   const lift = $derived(view && ctx.config.z != null ? ctx.isometricLift : null);
 
+  /**
+   * `clip`'s rings on screen, cutting every cell (which are then measured on screen, even in a geo
+   * chart).  Not on an isometric chart, whose cells are already measured on screen.
+   */
+  const clipRings = $derived.by<[number, number][][] | null>(() => {
+    if (clip == null || view) return null;
+    const rings = Array.isArray(clip)
+      ? [clip as [number, number][]]
+      : geo.projection
+        ? screenPolygons(geo.projection, clip).map((p) => p[0])
+        : null;
+    // None when `clip` has no area on screen (ex. a feature the projection drops, or a point),
+    // leaving every cell empty
+    return rings?.filter((ring) => ring.length > 2) ?? null;
+  });
+
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
 
   const points = $derived(
-    (data ?? facetPanel?.().data ?? ctx.flatData).map((d: any) => {
-      const xValue = xAccessorOverride
-        ? geo.projection
-          ? xAccessorOverride(d)
-          : ctx.xScale(xAccessorOverride(d))
-        : geo.projection
-          ? ctx.x(d)
-          : ctx.xGet(d);
-      const yValue = yAccessorOverride
-        ? geo.projection
-          ? yAccessorOverride(d)
-          : ctx.yScale(yAccessorOverride(d))
-        : geo.projection
-          ? ctx.y(d)
-          : ctx.yGet(d);
+    (data ?? facetPanel?.().data ?? ctx.flatData)
+      .map((d: any) => {
+        const xValue = xAccessorOverride
+          ? geo.projection
+            ? xAccessorOverride(d)
+            : ctx.xScale(xAccessorOverride(d))
+          : geo.projection
+            ? ctx.x(d)
+            : ctx.xGet(d);
+        const yValue = yAccessorOverride
+          ? geo.projection
+            ? yAccessorOverride(d)
+            : ctx.yScale(yAccessorOverride(d))
+          : geo.projection
+            ? ctx.y(d)
+            : ctx.yGet(d);
 
-      const x = Array.isArray(xValue) ? max(xValue) : xValue;
-      const y = Array.isArray(yValue) ? max(yValue) : yValue;
+        const x = Array.isArray(xValue) ? max(xValue) : xValue;
+        const y = Array.isArray(yValue) ? max(yValue) : yValue;
 
-      let point: [number, number];
-      if (ctx.radial) {
-        const radialPoint = pointRadial(x, y);
-        point = [radialPoint[0] + ctx.width / 2, radialPoint[1] + ctx.height / 2];
-      } else {
-        point = [x, y];
-      }
-      if (view) {
-        const height = lift ? ctx.heightOf(d)[1] : 0;
-        const seen = applyMatrix(view, {
-          x: point[0] + (lift?.x ?? 0) * height,
-          y: point[1] + (lift?.y ?? 0) * height,
-        });
-        point = [seen.x, seen.y];
-      }
-      // @ts-expect-error
-      point.data = d;
-      return point;
-    })
+        let point: [number, number];
+        if (ctx.radial) {
+          const radialPoint = pointRadial(x, y);
+          point = [radialPoint[0] + ctx.width / 2, radialPoint[1] + ctx.height / 2];
+        } else {
+          point = [x, y];
+        }
+        if (view) {
+          const height = lift ? ctx.heightOf(d)[1] : 0;
+          const seen = applyMatrix(view, {
+            x: point[0] + (lift?.x ?? 0) * height,
+            y: point[1] + (lift?.y ?? 0) * height,
+          });
+          point = [seen.x, seen.y];
+        }
+        if (geo.projection && clipRings) {
+          // Measured on screen, so projected (dropped if off the projection, ex. outside its insets)
+          const projected = geo.projection(point);
+          if (!projected) return null;
+          point = [projected[0], projected[1]];
+        }
+        // @ts-expect-error
+        point.data = d;
+        return point;
+      })
+      .filter((point: [number, number] | null) => point != null)
   );
 
   const boundWidth = $derived(Math.max(ctx.width, 0));
@@ -113,13 +144,36 @@
   const disableClip = $derived(r === 0 || r == null || r === Infinity);
 
   // Compute once and share between cell rendering and the `children` cell payload
-  const voronoi = $derived(
-    geo.projection
+  const voronoi = $derived.by(() => {
+    if (clipRings) {
+      if (!clipRings.length) return null;
+      // Within `clip`'s bounds, with points sharing a location (ex. two teams' stadium) spread
+      // apart to share its cell rather than one of them getting none
+      const [x0, x1] = extent(clipRings.flat(), (p) => p[0]) as [number, number];
+      const [y0, y1] = extent(clipRings.flat(), (p) => p[1]) as [number, number];
+      return Delaunay.from(spreadApart(points)).voronoi([x0 - 1, y0 - 1, x1 + 1, y1 + 1]);
+    }
+    return geo.projection
       ? null
       : Delaunay.from(points).voronoi(
           // On screen, the whole plot area rather than the floor
           view ? [0, 0, ctx.box.width, ctx.box.height] : [0, 0, boundWidth, boundHeight]
-        )
+        );
+  });
+
+  /** With `clip`, each cell cut to it (its pieces, ex. a state's islands) */
+  const clippedCells = $derived(
+    clipRings
+      ? points.map((_: any, i: number) => {
+          const cell = voronoi?.cellPolygon(i) as [number, number][] | null | undefined;
+          // Without the zero-width slivers left where the cell's edge runs along `clip`'s
+          return cell
+            ? clipRings
+                .map((ring) => clipToConvex(ring, cell))
+                .filter((ring) => ring.length > 2 && Math.abs(polygonArea(ring)) > 1e-6)
+            : [];
+        })
+      : null
   );
 
   /** On an isometric chart, cell `i` cut to `r` on screen and mapped back onto the flat plot */
@@ -134,14 +188,41 @@
     });
   }
 
-  const geoPolygons = $derived(geo.projection ? geoVoronoi().polygons(points) : null);
+  const geoPolygons = $derived(geo.projection && !clipRings ? geoVoronoi().polygons(points) : null);
+
+  /** A cell from its pieces on screen */
+  function planarCell(
+    data: any,
+    index: number,
+    point: [number, number],
+    pieces: [number, number][][]
+  ): VoronoiCell {
+    const largest = greatest(pieces, (piece) => Math.abs(polygonArea(piece))) ?? null;
+    return {
+      data,
+      index,
+      point,
+      polygon: largest,
+      polygons: pieces.map((piece) => [piece]),
+      path: pieces.length ? ringsToPath(pieces) : null,
+      centroid: largest ? polygonCentroid(largest) : null,
+      area: sum(pieces, (piece) => Math.abs(polygonArea(piece))),
+    };
+  }
 
   // Cell geometry exposed to the `children` snippet for custom rendering (e.g. labels).
   // Only computed when a `children` snippet is provided.
   const cells = $derived.by<VoronoiCell[]>(() => {
     if (!children) return [];
 
+    if (clippedCells) {
+      return points.map((point: any, index: number) =>
+        planarCell(point.data, index, [point[0], point[1]], clippedCells[index])
+      );
+    }
+
     if (geo.projection && geoPolygons) {
+      const path = geoPath(geo.projection);
       return geoPolygons.features.map((feature: any, index: number): VoronoiCell => {
         const projectedPoint = geo.projection?.(feature.properties.sitecoordinates) ?? null;
         const ring: [number, number][] = (feature.geometry?.coordinates?.[0] ?? [])
@@ -156,6 +237,8 @@
           index,
           point: (projectedPoint ?? [NaN, NaN]) as [number, number],
           polygon,
+          polygons: polygon ? [[polygon]] : [],
+          path: path(feature),
           centroid:
             projectedCentroid && Number.isFinite(projectedCentroid[0])
               ? (projectedCentroid as [number, number])
@@ -170,14 +253,12 @@
       return points.map((point: any, index: number): VoronoiCell => {
         const polygon = toPlot ? plotPolygon(index) : (voronoi.cellPolygon(index) as any);
         const site = toPlot ? applyMatrix(toPlot, { x: point[0], y: point[1] }) : null;
-        return {
-          data: point.data,
+        return planarCell(
+          point.data,
           index,
-          point: site ? [site.x, site.y] : [point[0], point[1]],
-          polygon,
-          centroid: polygon ? polygonCentroid(polygon) : null,
-          area: polygon ? Math.abs(polygonArea(polygon)) : 0,
-        };
+          site ? [site.x, site.y] : [point[0], point[1]],
+          polygon ? [polygon] : []
+        );
       });
     }
 
@@ -186,7 +267,29 @@
 </script>
 
 <Group {...restProps} class={clsx('lc-voronoi-g', classes.root, className)}>
-  {#if geo.projection}
+  {#if clippedCells}
+    {#each points as point, i}
+      {@const pieces = clippedCells[i]}
+      {#if pieces.length}
+        <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip}>
+          <Path
+            pathData={ringsToPath(pieces)}
+            class={['lc-voronoi-path', classes.path]}
+            onclick={(e: MouseEvent) => onclick?.(e, { data: (point as any).data, point })}
+            onpointerenter={(e: PointerEvent) =>
+              onpointerenter?.(e, { data: (point as any).data, point })}
+            onpointermove={(e: PointerEvent) =>
+              onpointermove?.(e, { data: (point as any).data, point })}
+            onpointerdown={(e: PointerEvent) =>
+              onpointerdown?.(e, { data: (point as any).data, point })}
+            ontouchmove={(e: TouchEvent) => {
+              e.preventDefault();
+            }}
+          />
+        </CircleClipPath>
+      {/if}
+    {/each}
+  {:else if geo.projection}
     {#if geoPolygons}
       {#each geoPolygons.features as feature}
         {@const point = r ? geo.projection?.(feature.properties.sitecoordinates) : null}

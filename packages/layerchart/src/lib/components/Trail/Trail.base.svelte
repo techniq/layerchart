@@ -46,7 +46,7 @@
   }: TrailBaseProps = $props();
 
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
-  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
+  let seriesAccessor = $derived(ctx.series.valueAccessor(seriesKey));
 
   const xAccessor = $derived(
     accessor(x ?? (ctx.valueAxis === 'x' ? seriesAccessor : undefined) ?? ctx.x)

@@ -95,11 +95,7 @@ export class BarState {
     return seriesKey ? this.ctx.series.series.find((s) => s.key === seriesKey) : undefined;
   });
 
-  seriesAccessor = $derived(
-    this.series
-      ? (this.series.value ?? (this.series.data ? undefined : this.series.key))
-      : undefined
-  );
+  seriesAccessor = $derived(this.ctx.series.valueAccessor(this.#props.seriesKey));
 
   stackAccessors = $derived.by(() =>
     this.ctx.stackAccessorsFor({

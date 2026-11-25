@@ -21,7 +21,7 @@
 		"generate:api": "layerstack-docs generate-api ../packages/layerchart/src/lib/components generated/api && layerstack-docs generate-api ../packages/webgl/src/lib/components generated/api/webgl",
 		"generate:screenshots": "layerstack-docs generate-screenshots src/examples/components static/screenshots",
 		"generate:catalog": "layerstack-docs generate-catalog ../packages/layerchart/src/lib/components src/examples/components src/examples/catalog && layerstack-docs generate-catalog ../packages/webgl/src/lib/components src/examples/components/webgl src/examples/catalog/webgl",
-		"generate:stackblitz": "layerstack-docs generate-stackblitz src static/stackblitz-files.json static/remote-sources.json --source src/lib/utils/data.ts=lib/utils/data.ts --remote data.remote.ts=lib/data.remote.ts --remote geo.remote.ts=lib/geo.remote.ts --remote graph.remote.ts=lib/graph.remote.ts",
+		"generate:stackblitz": "layerstack-docs generate-stackblitz src static/stackblitz-files.json static/remote-sources.json --source src/lib/utils/data.ts=lib/utils/data.ts --source src/lib/utils/sports.ts=lib/utils/sports.ts --remote data.remote.ts=lib/data.remote.ts --remote geo.remote.ts=lib/geo.remote.ts --remote graph.remote.ts=lib/graph.remote.ts",
 		"generate:releases": "layerstack-docs generate-releases techniq/layerchart generated/releases",
 		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz && pnpm generate:releases"
 	},

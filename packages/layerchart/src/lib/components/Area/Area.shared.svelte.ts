@@ -1,7 +1,7 @@
 import { untrack, type ComponentProps } from 'svelte';
 import type { SVGAttributes } from 'svelte/elements';
 import { type Area as D3Area, area as d3Area, areaRadial, type CurveFactory } from 'd3-shape';
-import { group as d3Group, min } from 'd3-array';
+import { group as d3Group } from 'd3-array';
 import { interpolatePath } from 'd3-interpolate-path';
 
 import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -183,9 +183,7 @@ export class AreaState {
 
   series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
   seriesData = $derived(this.series?.data);
-  seriesAccessor = $derived(
-    this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
-  );
+  seriesAccessor = $derived(this.ctx.series.valueAccessor(this.#props.seriesKey));
 
   stackAccessors = $derived.by(() =>
     this.ctx.stackAccessorsFor({
@@ -200,29 +198,14 @@ export class AreaState {
     return x ? accessor(x) : this.ctx.x;
   });
 
-  y0Accessor = $derived.by(() => {
-    const props = this.#props;
-    if (props.y0) return accessor(props.y0);
-    if (this.stackAccessors) return this.stackAccessors.y0;
-    if (Array.isArray(this.seriesAccessor)) return accessor(this.seriesAccessor[0]);
-    if (Array.isArray(this.ctx.config.y) && this.ctx.config.y[0] === 0) {
-      return (d: any) => this.ctx.y(d)[0];
-    }
-    if (this.ctx.props.yBaseline != null) return () => this.ctx.props.yBaseline as number;
-    return () => min(this.ctx.yScale.domain()) as number;
-  });
-
-  y1Accessor = $derived.by(() => {
-    const props = this.#props;
-    if (props.y1) return accessor(props.y1);
-    if (this.stackAccessors) return this.stackAccessors.y1;
-    if (Array.isArray(this.seriesAccessor)) return accessor(this.seriesAccessor[1]);
-    if (this.seriesAccessor) return accessor(this.seriesAccessor as Accessor);
-    if (Array.isArray(this.ctx.config.y) && this.ctx.config.y[1] === 1) {
-      return (d: any) => this.ctx.y(d)[1];
-    }
-    return this.ctx.y;
-  });
+  #yAccessors = $derived(
+    this.ctx.areaAccessorsFor({
+      seriesKey: this.#props.seriesKey,
+      ownData: this.#props.data != null,
+    })
+  );
+  y0Accessor = $derived(this.#props.y0 ? accessor(this.#props.y0) : this.#yAccessors.y0);
+  y1Accessor = $derived(this.#props.y1 ? accessor(this.#props.y1) : this.#yAccessors.y1);
 
   resolvedData = $derived(this.markData(this.#props.data, this.seriesData));
 
@@ -278,14 +261,44 @@ export class AreaState {
     }));
   });
 
-  /** `#areaTargets` with each group's path swapped for its in-flight tween */
+  /**
+   * `#areaTargets` with each group's path swapped for its in-flight tween, and faded while the
+   * legend highlights another group (kept out of the targets, so hovering doesn't rebuild paths)
+   */
   areas = $derived.by(() => {
     const targets = this.#areaTargets;
+    if (!targets) return targets;
     const tweens = this.#areaTweens;
-    if (!targets || !tweens) return targets;
 
-    return targets.map((area) => ({ ...area, d: tweens.get(area.key) ?? area.d }));
+    return targets.map((area) => ({
+      ...area,
+      d: tweens?.get(area.key) ?? area.d,
+      opacity: area.opacity ?? this.#areaOpacity(area.data),
+    }));
   });
+
+  /**
+   * Fade for one area when the legend names `c` categories, or `undefined` when it names series
+   * (`pathOpacity` fades those, but one series draws every area here, so they'd fade as one).  As
+   * `Spline`'s lines do.
+   */
+  #areaOpacity(data: any[]) {
+    const key = this.#groupKey(data[0]);
+    if (key == null) return undefined;
+    return this.ctx.series.isHighlighted(key, true) ? 1 : 0.1;
+  }
+
+  /**
+   * What the legend calls this area, or `null` when nothing names it: the chart's `c`, or the
+   * mark's own grouping where a series is declared per group
+   */
+  #groupKey(d: any): any {
+    const category = this.ctx.cKey(d);
+    if (category != null) return category;
+    if (!this.gAccessor || d == null) return null;
+    const key = this.gAccessor(d);
+    return key != null && this.ctx.series.series.some((s) => s.key === key) ? key : null;
+  }
 
   /** `fill` / `stroke` / `class` for the ungrouped case, resolved the same way */
   resolvedFill = $derived(
@@ -384,12 +397,7 @@ export class AreaState {
         if (val && val[1] <= 0) return this.y0Accessor;
       }
     }
-    return props.y1 ||
-      this.stackAccessors ||
-      Array.isArray(this.seriesAccessor) ||
-      this.seriesAccessor
-      ? this.y1Accessor
-      : undefined;
+    return props.y1 || this.stackAccessors || this.seriesAccessor ? this.y1Accessor : undefined;
   });
 
   pathOpacity = $derived.by(() => {

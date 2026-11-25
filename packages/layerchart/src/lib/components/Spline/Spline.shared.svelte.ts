@@ -204,9 +204,7 @@ export class SplineState {
   }
 
   series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
-  seriesAccessor = $derived(
-    this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
-  );
+  seriesAccessor = $derived(this.ctx.series.valueAccessor(this.#props.seriesKey));
 
   xAccessor = $derived(
     accessor(

@@ -890,6 +890,37 @@ export class ChartState<
   }
 
   /**
+   * An area's bottom (`y0`) and top (`y1`), from the first of:
+   * - the stack it's in (areas stack by nature, see `stackAccessorsFor()`)
+   * - its series' value: a `[y0, y1]` pair, or its top over the baseline
+   * - the chart's `y={[0, 1]}` pair (ex. rows from d3's `stack()`)
+   * - the chart's `y` over the baseline (`yBaseline`, or the bottom of the y domain)
+   *
+   * So everything measuring an area (ex. `Labels`' `layout="shape"`) measures the one `Area` draws.
+   */
+  areaAccessorsFor(options: { seriesKey?: string; ownData?: boolean }): {
+    y0: (d: any) => any;
+    y1: (d: any) => any;
+  } {
+    const { seriesKey, ownData } = options;
+    const stack = this.stackAccessorsFor({ seriesKey, ownData, stacksImplicitly: true });
+    if (stack) return { y0: stack.y0, y1: stack.y1 };
+
+    const value = this.series.valueAccessor(seriesKey);
+    if (Array.isArray(value)) return { y0: accessor(value[0]), y1: accessor(value[1]) };
+
+    // `y={[0, 1]}`: each row's bottom and top by index
+    const [bottom, top] = Array.isArray(this.config.y) ? this.config.y : [];
+    return {
+      y0:
+        bottom === 0
+          ? (d: any) => this.y(d)[0]
+          : () => this.props.yBaseline ?? min(this.yScale.domain() as number[]),
+      y1: value ? accessor(value) : top === 1 ? (d: any) => this.y(d)[1] : this.y,
+    };
+  }
+
+  /**
    * A value re-read against the stack — the top of `seriesKey`'s segment at `keyValue`.
    *
    * An annotation naming a series carries that series' own value, which is only where it's drawn

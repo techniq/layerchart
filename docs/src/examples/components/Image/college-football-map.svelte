@@ -15,9 +15,12 @@
 	const states = $derived(feature(topology, topology.objects.states));
 
 	const conferences = $derived([...new Set(allTeams.map((t) => t.conference))].sort());
-	const conferenceOptions = $derived(conferences.map((c) => ({ label: c, value: c })));
+	const conferenceOptions = $derived([
+		{ label: 'All conferences', value: null },
+		...conferences.map((c) => ({ label: c, value: c }))
+	]);
 
-	let selectedConference = $state<string | undefined>(undefined);
+	let selectedConference = $state<string | null>(null);
 
 	const teams = $derived(
 		selectedConference ? allTeams.filter((t) => t.conference === selectedConference) : allTeams
@@ -33,9 +36,9 @@
 		label="Conference"
 		options={conferenceOptions}
 		bind:value={selectedConference}
-		placeholder="All conferences"
-		clearable
+		clearable={false}
 		toggleIcon={null}
+		stepper
 	/>
 </div>
 

@@ -56,14 +56,17 @@ const textStyleProbes = new WeakMap<Element, SVGTextElement>();
 /**
  * The font a `<text class={className} font-size={fontSize}>` renders in inside `container`, for `getTextRect()` to
  * measure with: classes, the font it inherits and CSS scoped to the chart all apply.  `fontSize`
- * is set as an attribute, as `<Text>` does, so a class still overrides it.
+ * is set as an attribute, as `<Text>` does, so a class still overrides it.  `style` is inline CSS
+ * the text would inherit from where it renders (ex. a custom property a class reads, like
+ * `Labels`' `--labels-font-size`).
  *
  * `undefined` without a DOM to ask (ex. SSR, or before the chart mounts).
  */
 export function getTextStyle(
   container: Element | undefined,
   className: unknown,
-  fontSize?: unknown
+  fontSize?: unknown,
+  style?: string
 ): Partial<CSSStyleDeclaration> | undefined {
   if (!container || typeof window === 'undefined') return undefined;
 
@@ -84,16 +87,18 @@ export function getTextStyle(
   if (typeof fontSize === 'number' || typeof fontSize === 'string') {
     text.setAttribute('font-size', String(fontSize));
   } else text.removeAttribute('font-size');
+  text.style.cssText = style ?? '';
 
   const computed = getComputedStyle(text);
-  const style: Partial<CSSStyleDeclaration> = {};
-  for (const key of FONT_STYLES) style[key] = computed[key];
+  const font: Partial<CSSStyleDeclaration> = {};
+  for (const key of FONT_STYLES) font[key] = computed[key];
 
   // Read, so stop posing as one: anything selecting the class (ex. `.lc-axis-tick-label`) would
   // find the probe too
   text.removeAttribute('class');
   text.removeAttribute('font-size');
-  return style;
+  text.removeAttribute('style');
+  return font;
 }
 
 type Rect = { x: number; y: number; width: number; height: number };

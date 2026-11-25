@@ -10,6 +10,7 @@ export * from './math.js';
 export * from './occlusion.js';
 export * from './path.js';
 export * from './pivot.js';
+export * from './shapeLabel.js';
 export * from './scales.svelte.js';
 export * from './stack.js';
 export * from './string.js';
