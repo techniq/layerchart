@@ -632,7 +632,7 @@ describe('GeoTile', () => {
     await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
   });
 
-  it('lays the backdrop flat at the lowest elevation, beneath the terrain', async () => {
+  it('raises the backdrop with the terrain, a little beneath it', async () => {
     test++;
     const scene = await renderMarks({
       mark: 'geotile',
@@ -642,14 +642,13 @@ describe('GeoTile', () => {
     await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
     await expect.poll(() => backdrop(scene).length).toBeGreaterThan(0);
     await expect.poll(() => chart!.zDomain).toEqual([0, 1000]);
-    // Every point at 0m (the domain's lowest), where the terrain is at 1000m
-    const tops = (mesh: any) =>
-      (mesh.geometry.attributes.position.array as Float32Array).filter((_, i) => i % 3 === 1);
-    for (const mesh of backdrop(scene)) {
-      expect(Math.max(...tops(mesh))).toBe(0);
-      expect(Math.min(...tops(mesh))).toBe(0);
-    }
-    expect(Math.max(...tops(meshes(scene)[0]))).toBeCloseTo(1000, 0);
+    const top = (mesh: any) =>
+      Math.max(
+        ...(mesh.geometry.attributes.position.array as Float32Array).filter((_, i) => i % 3 === 1)
+      );
+    // A twentieth of the domain's rise beneath the terrain's 1000m
+    for (const mesh of backdrop(scene)) await expect.poll(() => top(mesh)).toBeCloseTo(950, 0);
+    expect(top(meshes(scene)[0])).toBeCloseTo(1000, 0);
   });
 });
 

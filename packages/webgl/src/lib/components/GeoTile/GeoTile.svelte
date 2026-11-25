@@ -358,7 +358,7 @@
     /** No longer wanted, but shown until the tiles taking its place are drawn */
     stale: boolean;
     /**
-     * One of the coarse tiles beneath the map (see `rootTiles`), flat at the lowest elevation and
+     * One of the coarse tiles beneath the map (see `rootTiles`), a little beneath the terrain, and
      * shown only while a tile over it has yet to be drawn
      */
     backdrop: boolean;
@@ -512,12 +512,13 @@
     const zScale = ctx.zScale;
     const zero = sphere ? Number(zScale(0)) : 0;
     const raw = inMeters;
-    // The backdrop, at the lowest elevation, so terrain drawn over it always hides it
-    const flat = entry.backdrop && elevation ? (raw ? floor : Number(zScale(floor)) - zero) : 0;
+    // The backdrop sunk a little, so its coarse terrain doesn't show through finer tiles over it
+    // (higher in a valley, as it smooths it)
+    const sink = entry.backdrop ? backdropSink : 0;
     return (u: number, v: number) => {
-      if (!entry.elevation) return flat;
+      if (!entry.elevation) return 0;
       const { data, part } = entry.elevation;
-      const meters = sampleElevation(data, part.u0 + u * part.size, part.v0 + v * part.size);
+      const meters = sampleElevation(data, part.u0 + u * part.size, part.v0 + v * part.size) - sink;
       return raw ? meters : Number(zScale(meters)) - zero;
     };
   }
@@ -654,15 +655,16 @@
         backdrop: false,
       });
     }
-    // The backdrop's images only (it lies flat), and none already wanted for itself
+    // The backdrop, none of it already wanted for itself
     const ownTiles = new Set(tiles.map((tile) => tile.join('/')));
     for (const tile of rootTiles) {
       if (ownTiles.has(tile.join('/'))) continue;
       const imageKey = url(...ancestor(tile, maxZoom).tile);
-      wanted.set(`backdrop ${tile.join('/')} ${imageKey}`, {
+      const elevationKey = elevation ? elevation(...ancestor(tile, elevationMaxZoom).tile) : null;
+      wanted.set(`backdrop ${tile.join('/')} ${imageKey} ${elevationKey}`, {
         tile,
         imageKey,
-        elevationKey: null,
+        elevationKey,
         backdrop: true,
       });
     }
@@ -949,7 +951,8 @@
     let min = widest?.[0] ?? Infinity;
     let max = widest?.[1] ?? -Infinity;
     for (const entry of untrack(() => [...entries.values()])) {
-      if (!entry.elevation) continue;
+      // (Not the backdrop's, which reaches past the map)
+      if (!entry.elevation || entry.backdrop) continue;
       min = Math.min(min, Math.floor(entry.elevation.range[0] / 50) * 50);
       max = Math.max(max, Math.ceil(entry.elevation.range[1] / 50) * 50);
     }
@@ -957,16 +960,14 @@
     if (widest && widest[0] === min && widest[1] === max) return widest;
     return (widest = [min, max]);
   });
-  /**
-   * The lowest elevation (in meters) of the `z` domain and the tiles loaded, for the backdrop to
-   * lie flat at, beneath all terrain
-   */
-  const floor = $derived(
-    elevation ? Math.min(Number(ctx.zDomain?.[0]) || 0, zExtent?.[0] ?? Infinity) : 0
-  );
+  /** How far (in meters) the backdrop's terrain sinks beneath the tiles': a twentieth of its rise */
+  const backdropSink = $derived.by(() => {
+    const [low, high] = (ctx.zDomain ?? [0, 0]).map(Number);
+    return elevation && high > low ? (high - low) / 20 : 0;
+  });
   $effect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    floor;
+    backdropSink;
     untrack(() => {
       for (const entry of entries.values()) if (entry.backdrop && entry.mesh) draw(entry);
     });
