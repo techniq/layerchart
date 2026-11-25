@@ -2,9 +2,9 @@ name: Package PR
 
 on:
   push:
-    # Generated assets the bot PRs from the `update-*` workflows change.  Nothing here builds,
+    # Generated files the bot PR from `update-generated.yml` changes.  Nothing here builds,
     # tests or packages them, so a PR (or merge) touching only these has nothing to check — and
-    # skipping it means those PRs don't wait on approval to run this
+    # skipping it means that PR doesn't wait on approval to run this
     paths-ignore:
       - docs/src/examples/catalog/**
       - docs/static/screenshots/**

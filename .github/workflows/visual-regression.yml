@@ -43,7 +43,7 @@ jobs:
 
       # Fingerprints depend on the rendering environment and on serving a production build (seeded
       # randomness is consumed in module load order, which differs from `vite dev`), so the
-      # baseline has to have been recorded the same way — see update-visual-baseline.yml
+      # baseline has to have been recorded the same way — see update-generated.yml
       - name: Read the baseline from the target branch
         id: baseline
         run: |
@@ -52,7 +52,7 @@ jobs:
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
-            echo "No baseline on ${{ github.base_ref }} — run the Update Visual Baseline workflow." >> "$GITHUB_STEP_SUMMARY"
+            echo "No baseline on ${{ github.base_ref }} — run the Update Generated Files workflow." >> "$GITHUB_STEP_SUMMARY"
           fi
 
       # A production build rather than `vite dev`, which serves each page as hundreds of separate
@@ -131,5 +131,5 @@ jobs:
         if: steps.baseline.outputs.found == 'true' && steps.compare.outputs.exit != '0'
         run: |
           echo "Rendered output changed — review the job summary."
-          echo "If the changes are intended, run the Update Visual Baseline workflow after merging."
+          echo "If the changes are intended, run the Update Generated Files workflow after merging."
           exit 1

@@ -427,7 +427,7 @@ function compare(baselinePath, currentPath) {
 	if (unusable) {
 		console.log(
 			`\n${incomparable.length} of ${Object.keys(baseline).length} baseline entries are errors — the baseline is unusable. ` +
-				`Re-record it with the Update Visual Baseline workflow.`
+				`Re-record it with the Update Generated Files workflow.`
 		);
 	}
 	return { keys: [...changed, ...broke].map((line) => line.split(/\s+/)[0]), differences: broke.length + changed.length + (unusable ? 1 : 0) }; // prettier-ignore
