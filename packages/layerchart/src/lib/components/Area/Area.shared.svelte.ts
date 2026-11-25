@@ -183,9 +183,7 @@ export class AreaState {
 
   series = $derived(this.ctx.series.series.find((s) => s.key === this.#props.seriesKey));
   seriesData = $derived(this.series?.data);
-  seriesAccessor = $derived(
-    this.series?.value ?? (this.series?.data ? undefined : this.series?.key)
-  );
+  seriesAccessor = $derived(this.ctx.series.valueAccessor(this.#props.seriesKey));
 
   stackAccessors = $derived.by(() =>
     this.ctx.stackAccessorsFor({

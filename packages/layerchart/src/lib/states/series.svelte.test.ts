@@ -515,3 +515,24 @@ describe('SeriesState', () => {
     });
   });
 });
+
+describe('SeriesState valueAccessor', () => {
+  const state = createSeriesState([
+    { key: 'apples' },
+    { key: 'range', value: ['low', 'high'] },
+    { key: 'own', data: [{ date: '2024-01', value: 1 }] },
+    { key: 'ownWithValue', data: [{ date: '2024-01', count: 1 }], value: 'count' },
+  ]);
+
+  it("reads a series' `value`, or else its key as a field of the chart's rows", () => {
+    expect(state.valueAccessor('apples')).toBe('apples');
+    expect(state.valueAccessor('range')).toEqual(['low', 'high']);
+    expect(state.valueAccessor('ownWithValue')).toBe('count');
+  });
+
+  it('is undefined for a series with its own `data` and no `value`, or no series', () => {
+    expect(state.valueAccessor('own')).toBeUndefined();
+    expect(state.valueAccessor('missing')).toBeUndefined();
+    expect(state.valueAccessor(undefined)).toBeUndefined();
+  });
+});

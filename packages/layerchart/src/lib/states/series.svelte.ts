@@ -469,6 +469,16 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
+   * What a mark reads `seriesKey`'s values with: its `value`, or else its `key`, naming a field of
+   * the chart's rows.  `undefined` without such a series, or for one with its own `data` and no
+   * `value` (read with the chart's accessors).
+   */
+  valueAccessor(seriesKey: string | undefined): Accessor<TData> | undefined {
+    const series = seriesKey == null ? undefined : this.#series.find((s) => s.key === seriesKey);
+    return series?.value ?? (series?.data ? undefined : series?.key);
+  }
+
+  /**
    * Get only visible series for the chart.
    */
   get visibleSeries() {

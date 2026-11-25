@@ -906,10 +906,7 @@ export class ChartState<
     const stack = this.stackAccessorsFor({ seriesKey, ownData, stacksImplicitly: true });
     if (stack) return { y0: stack.y0, y1: stack.y1 };
 
-    const series =
-      seriesKey == null ? undefined : this.series.series.find((s) => s.key === seriesKey);
-    const value: Accessor | Accessor[] | undefined =
-      series?.value ?? (series?.data ? undefined : series?.key);
+    const value = this.series.valueAccessor(seriesKey);
     if (Array.isArray(value)) return { y0: accessor(value[0]), y1: accessor(value[1]) };
 
     // `y={[0, 1]}`: each row's bottom and top by index

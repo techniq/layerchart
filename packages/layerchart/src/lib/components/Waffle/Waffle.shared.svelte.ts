@@ -194,11 +194,7 @@ export class WaffleState {
     return 0.1;
   });
 
-  seriesAccessor = $derived(
-    this.series
-      ? (this.series.value ?? (this.series.data ? undefined : this.series.key))
-      : undefined
-  );
+  seriesAccessor = $derived(this.ctx.series.valueAccessor(this.#props.seriesKey));
 
   stackAccessors = $derived.by(() =>
     this.ctx.stackAccessorsFor({
