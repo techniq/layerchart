@@ -1,5 +1,10 @@
 // Everything a 3D chart needs from one import: the chart itself and the pieces that draw outside
 // the scene come from `layerchart`, and the marks drawn in it from here.
+//
+// Layer-agnostic, as `layerchart` is: `Layer` draws a `<WebGL>` scene with `type="webgl"` (or
+// `settings.layer`), and LayerChart's `Svg`, `Canvas`, or `Html` layer otherwise, and each mark
+// draws its WebGL version in a scene and LayerChart's elsewhere.  For WebGL only, without bundling
+// LayerChart's versions of the marks, import from `@layerchart/webgl/webgl`.
 export { Chart, Legend, Tooltip, orthographic, perspective } from 'layerchart';
 export type {
   OrthographicOptions,
@@ -8,8 +13,10 @@ export type {
   PerspectiveView,
 } from 'layerchart';
 
-export { default as WebGL } from './components/WebGL/WebGL.svelte';
-export type { WebGLProps, WebGLPropsWithoutHTML } from './components/WebGL/WebGL.svelte';
+export { default as WebGL } from './components/layers/WebGL.svelte';
+export type { WebGLProps, WebGLPropsWithoutHTML } from './components/layers/WebGL.svelte';
+export { default as Layer } from './components/layers/Layer.svelte';
+export type { LayerProps } from './components/layers/Layer.svelte';
 export { default as Axis } from './components/Axis/Axis.svelte';
 export type { AxisProps, AxisLabelProps } from './components/Axis/Axis.svelte';
 export { default as Bars } from './components/Bars/Bars.svelte';

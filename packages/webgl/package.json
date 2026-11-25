@@ -62,6 +62,11 @@
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./webgl": {
+      "types": "./dist/webgl.d.ts",
+      "svelte": "./dist/webgl.js",
+      "default": "./dist/webgl.js"
     }
   },
   "files": [

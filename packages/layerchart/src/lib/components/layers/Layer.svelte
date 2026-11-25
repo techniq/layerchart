@@ -18,6 +18,17 @@
     children: Snippet;
   };
 
+  let warnedWebGLFallback = false;
+
+  /** Warn once a page that `webgl` is drawn as `canvas` by LayerChart's `Layer` */
+  function warnWebGLFallback() {
+    if (warnedWebGLFallback) return;
+    warnedWebGLFallback = true;
+    console.warn(
+      "[LayerChart] LayerChart's `Layer` draws `webgl` as `canvas`. Import `Layer` (and its marks) from `@layerchart/webgl` to draw them with WebGL."
+    );
+  }
+
   export type LayerProps = (
     | CanvasLayerProps
     | HtmlLayerProps
@@ -34,11 +45,20 @@
   import Html, { type HTMLProps } from './Html.svelte';
   import Frame from '../Frame/Frame.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
+  import type { SettingsLayer } from '$lib/states/settings.svelte.js';
 
   let { type, children: childrenProp, ...restProps }: LayerProps = $props();
 
   let settings = getSettings();
-  let layer = $derived(type ?? settings.layer);
+  // `webgl` is `@layerchart/webgl`'s `Layer` to draw; LayerChart's marks draw in `canvas`, the
+  // closest of its layers, instead.  It can come as a `type` too: `ChartChildren` passes
+  // `settings.layer` on.
+  let requested = $derived<SettingsLayer>(type ?? settings.layer);
+  let layer = $derived(requested === 'webgl' ? 'canvas' : requested);
+
+  $effect(() => {
+    if (requested === 'webgl') warnWebGLFallback();
+  });
 </script>
 
 {#if layer === 'canvas'}

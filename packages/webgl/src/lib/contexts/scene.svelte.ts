@@ -285,6 +285,11 @@ export function setSceneContext(state: SceneState) {
   return setContext(KEY, state);
 }
 
+/** Whether this is inside a `<WebGL>` scene (a layer-agnostic mark draws its WebGL version there) */
+export function hasSceneContext(): boolean {
+  return getContext<SceneState | undefined>(KEY) !== undefined;
+}
+
 export function getSceneContext(): SceneState {
   const state = getContext<SceneState | undefined>(KEY);
   if (!state) {

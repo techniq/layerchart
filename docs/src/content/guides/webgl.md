@@ -76,6 +76,28 @@ The chart lays out exactly as a flat one would: `x` across the plot's width, `y`
 - **Tooltips** show the row under the pointer, from the nearest mark with `tooltip` set (it's off by default, as for flat marks). Add `tooltipContext` to the chart and a `Tooltip.Root`.
 - **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as the core primitives do. Marks take their core namesakes' props, so a chart moves between `Canvas` and `WebGL` with few changes.
 
+## Switching layers
+
+The marks from `@layerchart/webgl` are layer-agnostic, as core's are: each draws its WebGL version inside a `WebGL` layer, and its core namesake in an `Svg`, `Canvas`, or `Html` one. Its `Layer` adds `type="webgl"` to core's, so one chart can move between all four, or follow `settings.layer` with no `type` set.
+
+```svelte
+<script>
+	import { Axis, Chart, Layer, Points } from '@layerchart/webgl';
+</script>
+
+<Chart {data} x="date" y="value">
+	<Layer type="webgl">
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Points />
+	</Layer>
+</Chart>
+```
+
+`Light` and `Surface` have no core namesake, so they're drawn only in a `WebGL` layer. Core's own `Layer` draws `settings.layer="webgl"` as `canvas`, and warns once.
+
+For a chart that's only ever WebGL, import from `@layerchart/webgl/webgl` instead, as `layerchart/svg` is for SVG. Its marks draw only in a `WebGL` layer (and `Layer` is `WebGL`), so the chart doesn't bundle core's versions of them: a few KB gz per chart.
+
 ## The view
 
 The chart's `view` is the camera. `perspective` draws farther things smaller; `orthographic` keeps sizes true at any depth, as `isometric` does (see [Views](/docs/guides/views) for how they compare). Call either with options, or pass it as is for the defaults:

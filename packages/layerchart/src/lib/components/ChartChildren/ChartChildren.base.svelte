@@ -69,6 +69,8 @@
 
   let snippetProps = $derived({ context });
   let layer = $derived(settings.layer);
+  // `Layer` draws `webgl` as `canvas` (`@layerchart/webgl`'s draws it with WebGL)
+  let layerTypeProps = $derived(layer === 'canvas' || layer === 'webgl' ? props.canvas : props.svg);
 </script>
 
 {#if childrenProp}
@@ -76,12 +78,7 @@
 {:else}
   {@render belowContext?.(snippetProps)}
 
-  <Layer
-    type={layer}
-    center={context.radial}
-    {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
-    debug={settings.debug}
-  >
+  <Layer type={layer} center={context.radial} {...asAny(layerTypeProps)} debug={settings.debug}>
     <!--
       The panel comes from the layer, which renders its children once per facet — so a snippet can
       draw in one panel only (an annotation), or vary by which panel it's in.  Unfaceted charts get
