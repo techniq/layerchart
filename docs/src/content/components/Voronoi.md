@@ -8,3 +8,14 @@ related: [TooltipContext, Labels]
 ## Usage
 
 :example{ name="radius" showCode }
+
+## Clipping to a shape
+
+Use `clip` to cut every cell to a shape: a GeoJSON feature in a geo chart, or a polygon of pixels.
+Cells are then measured on screen, so even one or two points divide the shape, and points sharing a
+location share their cell. The `children` snippet's `cells` give each cell's `path` (ex. for a
+`<ClipPath>`) and its visual `center`, with the room there to size content by.
+
+Here, each state is divided between the teams in it, with a team's logo filling its territory.
+
+:example{ component="Image" name="sports-territories" showCode }

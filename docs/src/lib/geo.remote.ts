@@ -300,6 +300,61 @@ export const getD1FootballTeams = prerender(async () => {
 	return data;
 });
 
+/** `cfb` is Division I college football (FBS and FCS), `cfb2` and `cfb3` Divisions II and III */
+export type SportsLeague =
+	| 'mlb'
+	| 'nfl'
+	| 'nba'
+	| 'nhl'
+	| 'wnba'
+	| 'cfb'
+	| 'cfb2'
+	| 'cfb3'
+	| 'cbb'
+	| 'wcbb';
+
+export type SportsTeam = {
+	league: SportsLeague;
+	/** ESPN team id (a college's is the same in every sport) */
+	id: number;
+	name: string;
+	short_name: string;
+	abbreviation: string;
+	/** College football only (`FBS` or `FCS`) */
+	subdivision: string | null;
+	conference: string;
+	/** Pro leagues only */
+	division: string | null;
+	/** College's name (ex. "University of Florida") */
+	campus: string | null;
+	venue: string | null;
+	city: string | null;
+	/** State or province code (ex. `TX`, `ON`) */
+	state: string;
+	/** Campus (college) or venue (pro) location */
+	latitude: number;
+	longitude: number;
+	/** Primary brand color */
+	color: string;
+	alt_color: string;
+	/** ESPN logo ids, for `sportsLogo()` (`$lib/utils/sports`), empty for teams without a logo */
+	logo_key: string | number;
+	logo_guid: string | null;
+};
+
+/**
+ * MLB, NFL, NBA, NHL and WNBA teams, Division I, II and III college football teams, and Division I
+ * men's and women's college basketball teams, built by `scripts/sports-teams.mjs` from ESPN (teams),
+ * NCES IPEDS (campus locations) and Wikidata (venue locations).
+ */
+export const getSportsTeams = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/sports-teams.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as SportsTeam[];
+	return data;
+});
+
 export const getBeagleVoyage = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/beagle-voyage.csv').then(async (r) =>
