@@ -211,6 +211,11 @@
 
   /** Fit the camera along `direction` to see the whole plot box, then place it */
   function fit() {
+    zoomingAt = null;
+    turningAbout = null;
+    zoomedTo = null;
+    grip = null;
+    turnedFrom = { ...angles };
     const { width, height } = size.current;
     if (!width || !height) return;
     // The plot box, or the chart's `globe` (and room for anything raised off it), which looks the
@@ -330,14 +335,7 @@
   function place() {
     const cam = camera;
     const { scale } = panZoomState();
-    // The framed view turned, camera and target together, about the middle of what's framed: so
-    // that stays put on screen as the view turns, as orbit controls turn about what they look at.
-    // (Framing centers what's framed on screen, which for a perspective camera can put the target
-    // a little off its middle.)
-    const turn = orientation(angles).multiply(orientation(framedAngles).invert());
-    // Panned, it turns about what's been panned to: the middle moved by the pan
-    const pivot = fitCenter.clone().add(pan);
-    const target = fitTarget.clone().sub(fitCenter).applyQuaternion(turn).add(pivot);
+    const target = lookingAt();
     let distance = fitDistance;
     if (cam instanceof PerspectiveCamera) {
       // Zooming in on a globe brings the camera down towards its surface, its height above it
@@ -382,6 +380,22 @@
     if (untrack(() => ctx._viewTurnRate) !== rate) ctx._viewTurnRate = rate;
   }
 
+  /** What the camera looks at, in the scene, zoomed in by `scale` */
+  function lookingAt(scale = panZoomState().scale) {
+    // The framed view turned, camera and target together, about the middle of what's framed: so
+    // that stays put on screen as the view turns, as orbit controls turn about what they look at.
+    // (Framing centers what's framed on screen, which for a perspective camera can put the target
+    // a little off its middle.)
+    const turn = orientation(angles).multiply(orientation(framedAngles).invert());
+    // Panned, it turns about what's been panned to: the middle moved by the pan
+    const pivot = fitCenter.clone().add(pan);
+    // Zoomed in, the camera, what it looks at, and what it turns about are all drawn in towards
+    // where it zoomed (see `applyPanZoom`): so it turns as it does unzoomed, at any zoom, rather
+    // than about somewhere far off beside it
+    const shrink = camera instanceof PerspectiveCamera && !fitRadius ? 1 / scale : 1;
+    return fitTarget.clone().sub(fitCenter).multiplyScalar(shrink).applyQuaternion(turn).add(pivot);
+  }
+
   /** The turn taking straight up to the direction a view at `rotate` / `tilt` looks from */
   function orientation({ rotate, tilt }: { rotate: number; tilt: number }) {
     // As `viewDirection`: tipped by `tilt` from straight up, then turned by `rotate` about it
@@ -405,16 +419,180 @@
 
   const right = new Vector3();
   const up = new Vector3();
+  const zoomRaycaster = new Raycaster();
+  const zoomPointer = new Vector2();
+  const floor = new Plane(new Vector3(0, 1, 0), 0);
+
+  /** The camera's ray through a point of the plot area on screen (in `zoomRaycaster`) */
+  function rayAt(x: number, y: number) {
+    const { width, height } = size.current;
+    if (!width || !height) return null;
+    zoomPointer.set(
+      ((x + ctx.padding.left) / width) * 2 - 1,
+      -((y + ctx.padding.top) / height) * 2 + 1
+    );
+    camera.updateMatrixWorld();
+    zoomRaycaster.setFromCamera(zoomPointer, camera);
+    return zoomRaycaster.ray;
+  }
+
+  /**
+   * What a drag grabbed (what was under the pointer as it started), and where the drag started:
+   * kept under the pointer as it pans on (and as it coasts on after, with `inertia`)
+   */
+  let grip: { x: number; y: number; tx: number; ty: number; point: Vector3 } | null = null;
+  const gripPlane = new Plane();
+
+  /**
+   * A perspective view panned by a drag moves over the ground as a map's does: what it grabbed
+   * stays under the pointer, at any zoom and however far off it is, and the camera stays as high.
+   * (Panning by as much at every depth, things farther than what the camera looks at lag behind
+   * the pointer.)  Whether it did: not for a pan that isn't a drag, or past the horizon.
+   */
+  function dragGround(next: { scale: number; x: number; y: number }) {
+    if (!(camera instanceof PerspectiveCamera) || fitRadius || next.scale !== applied.scale) {
+      return false;
+    }
+    const { startPoint: start, startTranslate: from, dragging } = ctx.transform;
+    const { left, top } = ctx.padding;
+    if (
+      !grip ||
+      grip.x !== start.x ||
+      grip.y !== start.y ||
+      grip.tx !== from.x ||
+      grip.ty !== from.y
+    ) {
+      // Only a drag grabs, as it starts: the camera is still where it started
+      const point = dragging ? surfaceAt(start.x - left, start.y - top) : null;
+      grip = point ? { x: start.x, y: start.y, tx: from.x, ty: from.y, point } : null;
+      if (!grip) return false;
+    }
+    // Where the pointer is now (or would be, coasting on), and the ground there at the height of
+    // what was grabbed
+    const ray = rayAt(start.x - left + next.x - grip.tx, start.y - top + next.y - grip.ty);
+    gripPlane.set(new Vector3(0, 1, 0), -grip.point.y);
+    const under = ray?.intersectPlane(gripPlane, new Vector3());
+    if (!under) return false;
+    pan.add(grip.point.clone().sub(under));
+    return true;
+  }
+
+  /**
+   * What's drawn at a point of the plot area on screen: the nearest mark there (ex. terrain), else
+   * the plot's floor, else nothing (ex. the sky)
+   */
+  function surfaceAt(x: number, y: number) {
+    if (!rayAt(x, y)) return null;
+    const shown = (object: Object3D | null): boolean =>
+      !object || (object.visible && shown(object.parent));
+    const hit = zoomRaycaster
+      .intersectObject(sceneState.root, true)
+      .find(
+        ({ object, point }) =>
+          (object as Mesh).isMesh &&
+          shown(object) &&
+          (!sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0))
+      );
+    if (hit) return hit.point;
+    // The floor only where the plot is: past it, towards the horizon, it goes on without end
+    const onFloor = zoomRaycaster.ray.intersectPlane(floor, new Vector3());
+    return onFloor && Math.abs(onFloor.x) <= ctx.width / 2 && Math.abs(onFloor.z) <= ctx.height / 2
+      ? onFloor
+      : null;
+  }
+
+  /** The angles the camera was last placed at, to turn on from */
+  let turnedFrom: { rotate: number; tilt: number } | null = null;
+  /**
+   * Zoomed in, what the view turns about: where it last zoomed towards, else what's nearest the
+   * middle of the view as it starts turning, which stays where it is on screen as it turns.
+   * Forgotten as the view pans, zooms or refits
+   */
+  let turningAbout: Vector3 | null = null;
+  /** Where the view last zoomed towards, in the scene, until it pans or refits */
+  let zoomedTo: Vector3 | null = null;
+
+  /**
+   * What's drawn nearest the middle of the view, from it on down (the middle, looking out towards
+   * the horizon, may be sky)
+   */
+  function middleSurface() {
+    for (const down of [0.5, 0.65, 0.8, 0.95]) {
+      const point = surfaceAt(ctx.box.width / 2, ctx.box.height * down);
+      if (point) return point;
+    }
+    return null;
+  }
+
+  /**
+   * Zoomed in, turn about what it zoomed towards (or else what's in the middle of the view), as
+   * orbit controls (and globes) turn about what they look at: wherever the zooms and pans that
+   * brought it there went.  (Unzoomed, it turns about the middle of what's framed, as `place`
+   * does.)  The camera is still where the view was turned `from`.
+   */
+  function turnAbout(to: { rotate: number; tilt: number }) {
+    const from = turnedFrom;
+    if (!from || (from.rotate === to.rotate && from.tilt === to.tilt)) return;
+    if (!(camera instanceof PerspectiveCamera) || fitRadius || panZoomState().scale === 1) return;
+    turningAbout ??= zoomedTo?.clone() ?? middleSurface();
+    if (!turningAbout) return;
+    // The camera, what it looks at, and what it's framed about, all turned about it, together
+    const turn = orientation(to).multiply(orientation(from).invert());
+    const pivot = fitCenter.clone().add(pan);
+    pan.add(pivot.clone().sub(turningAbout).applyQuaternion(turn).add(turningAbout).sub(pivot));
+  }
+
+  /**
+   * The point a zoom last went towards, and where it is on screen: zoomed towards, it stays there,
+   * so the rest of a gesture (the wheel turning on, or the zoom buttons easing) doesn't look for it
+   * again, which for detailed terrain takes a while.  Forgotten as the view turns, pans or refits
+   */
+  let zoomingAt: { x: number; y: number; point: Vector3 } | null = null;
+  function zoomPoint(x: number, y: number) {
+    if (!zoomingAt || Math.abs(zoomingAt.x - x) > 0.5 || Math.abs(zoomingAt.y - y) > 0.5) {
+      const point = surfaceAt(x, y);
+      zoomingAt = point ? { x, y, point } : null;
+    }
+    return zoomingAt?.point.clone() ?? null;
+  }
+
   /**
    * Fold a new pan / zoom into `pan`: the change, along the camera's axes as it's turned now, so
-   * an earlier pan stays where it was in the scene however the view has turned since
+   * an earlier pan stays where it was in the scene however the view has turned since.
+   *
+   * A perspective camera zooms towards what's under the pointer (or the middle, for the zoom
+   * buttons): it, what it looks at, and what it turns about all move that share of the way to it,
+   * so it stays under the pointer, zooming in flies on towards it, slowing as it nears, never
+   * through it, and the view turns as it did before
    */
   function applyPanZoom() {
+    turningAbout = null;
     const next = panZoomState();
-    if (next.scale === 1 && next.x === 0 && next.y === 0) {
+    // A zoom (by `r`) keeps one point of the plot area where it is on screen, `t' = q - (q - t) r`:
+    // where the pointer is, for the wheel
+    const r = next.scale / applied.scale;
+    const reset = next.scale === 1 && next.x === 0 && next.y === 0;
+    const toward =
+      !reset && camera instanceof PerspectiveCamera && !fitRadius && Math.abs(1 - r) > 1e-6
+        ? zoomPoint((next.x - r * applied.x) / (1 - r), (next.y - r * applied.y) / (1 - r))
+        : null;
+    if (reset) {
       // Back where it started (ex. `reset()`)
       pan.set(0, 0, 0);
+      zoomedTo = null;
+      grip = null;
+    } else if (toward) {
+      grip = null;
+      zoomedTo = toward.clone();
+      pan.addScaledVector(toward.sub(fitCenter).sub(pan), 1 - 1 / r);
+    } else if (dragGround(next)) {
+      zoomingAt = null;
+      zoomedTo = null;
     } else {
+      zoomingAt = null;
+      zoomedTo = null;
+      // (What it looks at kept where the pan / zoom alone moves it, as the zoom draws it in)
+      pan.add(lookingAt(applied.scale).sub(lookingAt(next.scale)));
       const from = panOffset(applied);
       const to = panOffset(next);
       camera.updateMatrixWorld();
@@ -481,12 +659,19 @@
     untrack(fit);
   });
 
-  // Turning (ex. a drag) moves the camera round what it's framed on
+  // Turning (ex. a drag) moves the camera round what it's framed on, or zoomed in, what it's
+  // looking at
   $effect.pre(() => {
     const { rotate, tilt } = angles;
     viewDirection(rotate, tilt, direction);
     untrack(() => {
-      if (sceneState.width && view) place();
+      zoomingAt = null;
+      grip = null;
+      if (sceneState.width && view) {
+        turnAbout({ rotate, tilt });
+        place();
+      }
+      turnedFrom = { rotate, tilt };
     });
   });
 

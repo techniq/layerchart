@@ -43,12 +43,25 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Canvas } from '@threlte/core';
-  import { NoToneMapping, PCFShadowMap } from 'three';
+  import { NoToneMapping, PCFShadowMap, WebGLRenderer } from 'three';
   import { getChartContext } from 'layerchart';
 
   import { SceneState, setSceneContext } from '../../contexts/scene.svelte.js';
   import { ColorResolver } from '../../utils/color.js';
   import WebGLSetup from './WebGLSetup.svelte';
+
+  /**
+   * Threlte's renderer, with a stencil buffer: marks layer by it (ex. `GeoTile`'s tiles, sharpest
+   * over coarser).  Usually stored with the depth buffer, so it costs nothing more.
+   */
+  const createRenderer = (canvas: HTMLCanvasElement) =>
+    new WebGLRenderer({
+      canvas,
+      powerPreference: 'high-performance',
+      antialias: true,
+      alpha: true,
+      stencil: true,
+    });
 
   let {
     dpr,
@@ -131,7 +144,13 @@
   {...restProps}
 >
   {#if onScreen && transformReady}
-    <Canvas renderMode="on-demand" toneMapping={NoToneMapping} shadows={PCFShadowMap} {dpr}>
+    <Canvas
+      renderMode="on-demand"
+      toneMapping={NoToneMapping}
+      shadows={PCFShadowMap}
+      {dpr}
+      {createRenderer}
+    >
       <WebGLSetup>
         {@render children?.()}
       </WebGLSetup>

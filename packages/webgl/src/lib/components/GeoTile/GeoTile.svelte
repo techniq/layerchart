@@ -105,6 +105,7 @@
 
   import { getSceneContext, type SceneLabel } from '../../contexts/scene.svelte.js';
   import { getSphere } from '../../utils/globe.js';
+  import { rankLayer } from '../../utils/layering.js';
   import { placer } from '../../utils/marks.js';
   import {
     ancestor,
@@ -137,6 +138,22 @@
   const elevation = $derived(elevationProp?.url);
   const elevationEncoding = $derived(elevationProp?.encoding ?? 'terrarium');
   const elevationMaxZoom = $derived(elevationProp?.maxZoom ?? Infinity);
+  /**
+   * How many zooms up from a tile its elevation comes from: an elevation tile's 256 pixels across
+   * cover as many tiles as leaves a pixel for each of a tile's `segments` (two zooms up for 64).
+   * Its own would be sampled every few pixels, and 16 times as many to load, decode and keep
+   */
+  const elevationLevels = $derived(Math.max(0, Math.round(Math.log2(256 / (segments ?? 64)))));
+  /**
+   * The deepest zoom a tile's elevation comes from: `elevationLevels` up, though no coarser than
+   * zoom 11 unless the tile is itself.  Services' coarser elevation tiles are resampled with
+   * artifacts (ex. AWS's, spikes 2km above a lake), which tiles drawn up close would show.
+   */
+  const elevationZoom = (tile: Tile) =>
+    Math.max(
+      0,
+      Math.min(elevationMaxZoom, Math.max(tile[2] - elevationLevels, Math.min(tile[2], 11)))
+    );
 
   const ctx = getChartContext();
   const scene = getSceneContext();
@@ -157,6 +174,33 @@
       tileSize,
       zoomDelta,
     });
+  });
+
+  /**
+   * Coarse tiles under the map: the chart's own cover three zooms up (in a 3D view, with their
+   * neighbors, as the camera can look past the map's edge); on a globe, the whole world.  A 3D
+   * view picks its tiles starting from these, and they're drawn beneath the tiles wanted as a
+   * backdrop, so a tile still loading never leaves a hole
+   */
+  const rootTiles = $derived.by((): Tile[] => {
+    const roots = new Map<string, Tile>();
+    if (sphere) {
+      for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) roots.set(`${x}/${y}`, [x, y, 2]);
+      return [...roots.values()];
+    }
+    const z0 = Math.max(0, (coverTiles[0]?.[2] ?? 0) - 3);
+    const spread = ctx.view ? 1 : 0;
+    for (const [x, y, z] of coverTiles) {
+      const n = 1 << (z - z0);
+      for (let dy = -spread; dy <= spread; dy++) {
+        for (let dx = -spread; dx <= spread; dx++) {
+          const tile: Tile = [Math.floor(x / n) + dx, Math.floor(y / n) + dy, z0];
+          if (tile[0] >= 0 && tile[1] >= 0 && tile[0] < 1 << z0 && tile[1] < 1 << z0)
+            roots.set(tile.join('/'), tile);
+        }
+      }
+    }
+    return [...roots.values()];
   });
 
   /** How deep the tiles go: as deep as the deepest service, else to street level */
@@ -283,25 +327,6 @@
       return { visible: true, size: (across * focal) / Math.max(distance, across * 0.25) };
     };
 
-    // Coarse tiles around the map to start from (the chart's own cover, three zooms up, and its
-    // neighbors, as the camera can look past the map's edge); on a globe, the whole world
-    const z0 = sphere ? 2 : Math.max(0, (coverTiles[0]?.[2] ?? 0) - 3);
-    const roots = new Map<string, Tile>();
-    if (sphere) {
-      for (let y = 0; y < 1 << z0; y++)
-        for (let x = 0; x < 1 << z0; x++) roots.set(`${x}/${y}`, [x, y, z0]);
-    }
-    for (const [x, y, z] of sphere ? [] : coverTiles) {
-      const n = 1 << (z - z0);
-      for (let dy = -1; dy <= 1; dy++) {
-        for (let dx = -1; dx <= 1; dx++) {
-          const tile: Tile = [Math.floor(x / n) + dx, Math.floor(y / n) + dy, z0];
-          if (tile[0] >= 0 && tile[1] >= 0 && tile[0] < 1 << z0 && tile[1] < 1 << z0)
-            roots.set(tile.join('/'), tile);
-        }
-      }
-    }
-
     const result: Tile[] = [];
     const visit = (tile: Tile) => {
       const { visible, size } = measure(tile);
@@ -317,7 +342,7 @@
           visit([x * 2 + dx, y * 2 + dy, z + 1]);
       } else result.push(tile);
     };
-    for (const root of roots.values()) visit(root);
+    for (const root of rootTiles) visit(root);
     return result;
   });
 
@@ -342,10 +367,18 @@
     outline: LineSegments | null;
     /** Stops the pointer picking it for the tooltip */
     unpick: (() => void) | null;
-    /** Its image (and elevation) has arrived, or failed to */
+    /**
+     * Its image (and elevation) has arrived, or failed to.  Drawn before then, it's a stand-in:
+     * drawn from an ancestor's while its own load
+     */
     loaded: boolean;
     /** No longer wanted, but shown until the tiles taking its place are drawn */
     stale: boolean;
+    /**
+     * One of the coarse tiles beneath the map (see `rootTiles`), a little beneath the terrain, and
+     * shown only while a tile over it has yet to be drawn
+     */
+    backdrop: boolean;
     /** When it began fading in, while it is */
     fading: number | null;
   };
@@ -496,10 +529,13 @@
     const zScale = ctx.zScale;
     const zero = sphere ? Number(zScale(0)) : 0;
     const raw = inMeters;
+    // The backdrop sunk a little, so its coarse terrain doesn't show through finer tiles over it
+    // (higher in a valley, as it smooths it)
+    const sink = entry.backdrop ? backdropSink : 0;
     return (u: number, v: number) => {
       if (!entry.elevation) return 0;
       const { data, part } = entry.elevation;
-      const meters = sampleElevation(data, part.u0 + u * part.size, part.v0 + v * part.size);
+      const meters = sampleElevation(data, part.u0 + u * part.size, part.v0 + v * part.size) - sink;
       return raw ? meters : Number(zScale(meters)) - zero;
     };
   }
@@ -519,17 +555,21 @@
   });
 
   /**
-   * A tile's mesh scaled to the `z` scale (in meters), and while stale, pushed back in depth so
-   * the tiles taking its place draw over it: where it is, rather than moved (which, with the camera
-   * close, would shift it on screen and open gaps), and coarser ones further back
+   * A tile's mesh scaled to the `z` scale (in meters), and layered by how sharp it is: where tiles
+   * overlap (ex. tiles left behind under those taking their place, stand-ins, and the backdrop),
+   * the sharpest shows, and tiles drawn from their own image over all.  Not by depth: a coarser
+   * tile's terrain smooths a canyon over, hundreds of meters above the river a sharper one shows.
+   * Each draws, sharpest first, only where none sharper has (marking the stencil with its rank),
+   * so a coarser one fills just what they leave; one fading in draws over them all, last.
    */
   function fit(entry: Entry) {
     const mesh = entry.mesh;
     if (!mesh) return;
-    const material = mesh.material;
-    material.polygonOffset = entry.stale;
-    material.polygonOffsetFactor = entry.stale ? 2 : 0;
-    material.polygonOffsetUnits = entry.stale ? 4 * (24 - entry.imagePart.tile[2]) : 0;
+    const back = entry.stale || !entry.loaded || entry.backdrop;
+    // Its own image over all; else by its image's zoom, those left behind over a stand-in from the
+    // same zoom
+    const rank = back ? 1 + 2 * entry.imagePart.tile[2] + (entry.stale ? 1 : 0) : 255;
+    rankLayer(mesh, rank, entry.fading != null);
     if (inMeters) {
       mesh.scale.set(1, heightScale.k, 1);
       mesh.position.set(0, heightScale.b, 0);
@@ -566,7 +606,7 @@
   const outlineMaterial = new LineBasicMaterial({ color: 0xff3366 });
 
   /** Draw a loaded tile (again, after something it's placed by changed) */
-  function draw(entry: Entry) {
+  function draw(entry: Entry, fade = true) {
     if (!entry.image) return;
     const geometry = geometryOf(entry);
     if (entry.mesh) {
@@ -580,15 +620,16 @@
       entry.mesh = new Mesh(geometry, material);
       entry.mesh.castShadow = entry.mesh.receiveShadow = lit;
       group.add(entry.mesh);
-      if (untrack(() => tooltip)) entry.unpick = pick(entry);
-      fadeIn(entry);
+      entry.mesh.userData.backdrop = entry.backdrop;
+      if (untrack(() => tooltip) && !entry.backdrop) entry.unpick = pick(entry);
+      if (fade) fadeIn(entry);
     }
     if (entry.outline) {
       entry.outline.removeFromParent();
       entry.outline.geometry.dispose();
       entry.outline = null;
     }
-    if (debug) {
+    if (debug && !entry.backdrop) {
       // On the mesh, so it's scaled with it
       entry.outline = outlineOf(entry);
       entry.mesh.add(entry.outline);
@@ -614,12 +655,37 @@
 
   // The tiles wanted: load those new to the view, and let go of those it's left
   $effect(() => {
-    const wanted = new Map<string, { tile: Tile; imageKey: string; elevationKey: string | null }>();
+    const wanted = new Map<
+      string,
+      { tile: Tile; imageKey: string; elevationKey: string | null; backdrop: boolean }
+    >();
     for (const tile of tiles) {
       const imagePart = ancestor(tile, maxZoom);
       const imageKey = url(...imagePart.tile);
-      const elevationKey = elevation ? elevation(...ancestor(tile, elevationMaxZoom).tile) : null;
-      wanted.set(`${tile.join('/')} ${imageKey} ${elevationKey}`, { tile, imageKey, elevationKey });
+      const elevationKey = elevation
+        ? elevation(...ancestor(tile, elevationZoom(tile)).tile)
+        : null;
+      wanted.set(`${tile.join('/')} ${imageKey} ${elevationKey}`, {
+        tile,
+        imageKey,
+        elevationKey,
+        backdrop: false,
+      });
+    }
+    // The backdrop, none of it already wanted for itself
+    const ownTiles = new Set(tiles.map((tile) => tile.join('/')));
+    for (const tile of rootTiles) {
+      if (ownTiles.has(tile.join('/'))) continue;
+      const imageKey = url(...ancestor(tile, maxZoom).tile);
+      const elevationKey = elevation
+        ? elevation(...ancestor(tile, elevationZoom(tile)).tile)
+        : null;
+      wanted.set(`backdrop ${tile.join('/')} ${imageKey} ${elevationKey}`, {
+        tile,
+        imageKey,
+        elevationKey,
+        backdrop: true,
+      });
     }
     untrack(() => {
       // Those the view has left stay a moment, behind, until those taking their place
@@ -630,18 +696,27 @@
         } else if (!entry.mesh) remove(key, entry);
         else if (!entry.stale) setStale(entry, true);
       }
-      for (const [key, { tile, imageKey, elevationKey }] of wanted) {
+      for (const [key, { tile, imageKey, elevationKey, backdrop }] of wanted) {
         if (entries.has(key)) continue;
         const imagePart = ancestor(tile, maxZoom);
-        const part = ancestor(tile, elevationMaxZoom);
+        const part = ancestor(tile, elevationZoom(tile));
         const entry = blank(tile, imageKey, imagePart);
+        entry.backdrop = backdrop;
         entries.set(key, entry);
         // Drawn at once from what's loaded of an ancestor (ex. the tile it's zoomed in from),
-        // blurrier until its own arrive, so zooming in never waits on an empty space
+        // blurrier until its own arrive, so zooming in (or out) never waits on an empty space.
+        // Behind any sharper tiles left behind over it (see `fit`)
         const early = standIn(tile, !!elevationKey);
-        if (early && !sharperBeneath(tile, early.imagePart.tile[2])) {
+        if (early) {
+          // From its own image and elevation, loaded before (ex. turning back to it), it's drawn
+          // as it'll stay, rather than fading in as if it had just arrived
+          const own =
+            early.imageKey === imageKey &&
+            (early.elevation
+              ? elevation!(...early.elevation.part.tile) === elevationKey
+              : !elevationKey);
           Object.assign(entry, early);
-          draw(entry);
+          draw(entry, !own);
         }
         Promise.all([
           loadImage(tile),
@@ -653,6 +728,7 @@
             // Gone from the view while loading
             if (entries.get(key) !== entry) return;
             const own = blank(tile, loaded.imageKey, loaded.imagePart);
+            own.backdrop = backdrop;
             own.image = loaded.image;
             if (data) own.elevation = { data, part, range: rangeOf(data, part) };
             own.loaded = true;
@@ -663,6 +739,7 @@
               ) {
                 // Its own were already there to draw from
                 entry.loaded = true;
+                fit(entry);
                 sweep();
                 return;
               }
@@ -728,6 +805,7 @@
       unpick: null,
       loaded: false,
       stale: false,
+      backdrop: false,
       fading: null,
     };
   }
@@ -768,7 +846,7 @@
     const image = found(maxZoom, (part) => peekTileImage(url(...part.tile)));
     if (!image) return null;
     const terrain = withElevation
-      ? found(elevationMaxZoom, (part) =>
+      ? found(elevationZoom(tile), (part) =>
           peekElevationTile(elevation!(...part.tile), elevationEncoding)
         )
       : null;
@@ -789,22 +867,15 @@
     return a[0] >> (a[2] - z) === b[0] >> (b[2] - z) && a[1] >> (a[2] - z) === b[1] >> (b[2] - z);
   }
 
-  /** Whether tiles left behind over `tile` show it sharper than drawing it from zoom `from` would */
-  function sharperBeneath(tile: Tile, from: number) {
-    for (const entry of entries.values()) {
-      if (entry.stale && entry.mesh && entry.imagePart.tile[2] > from && overlaps(entry.tile, tile))
-        return true;
-    }
-    return false;
-  }
-
   let sweepTimer: ReturnType<typeof setTimeout> | undefined;
   /**
    * Let go of tiles the view has left, each once the tiles wanted over it are drawn, at least as
-   * sharp, and done fading in (or all of them `now`)
+   * sharp, and done fading in (or all of them `now`).  And show the backdrop only where a tile
+   * wanted has yet to be: beneath tiles with transparent parts (ex. labels over imagery), or at
+   * `opacity` below 1, it would otherwise show through
    */
   function sweep(now = false) {
-    const wanted = [...entries.values()].filter((e) => !e.stale);
+    const wanted = [...entries.values()].filter((e) => !e.stale && !e.backdrop);
     for (const [key, entry] of [...entries]) {
       if (!entry.stale) continue;
       const from = entry.imagePart.tile[2];
@@ -812,6 +883,11 @@
         e.fading == null && (e.loaded || (!!e.mesh && e.imagePart.tile[2] >= from));
       if (now || wanted.every((e) => !overlaps(e.tile, entry.tile) || covered(e)))
         remove(key, entry);
+    }
+    const drawn = (e: Entry) => e.loaded && !!e.mesh && e.fading == null;
+    for (const entry of entries.values()) {
+      if (entry.backdrop && entry.mesh)
+        entry.mesh.visible = wanted.some((e) => overlaps(e.tile, entry.tile) && !drawn(e));
     }
     scene.invalidate();
   }
@@ -822,8 +898,8 @@
   function fadeIn(entry: Entry) {
     entry.fading = performance.now();
     entry.mesh!.material.opacity = 0;
-    // Over the tile beneath, rather than fighting it for depth
-    entry.mesh!.renderOrder = 1;
+    // Over the tiles beneath, after them (see `fit`)
+    fit(entry);
     if (!fadeFrame) fadeFrame = requestAnimationFrame(fade);
   }
   function fade(now: number) {
@@ -832,12 +908,13 @@
     let more = false;
     for (const entry of entries.values()) {
       if (entry.fading == null || !entry.mesh) continue;
-      const t = Math.min(1, (now - entry.fading) / fadeDuration);
+      // (A frame can be timed a little before the fade began)
+      const t = MathUtils.clamp((now - entry.fading) / fadeDuration, 0, 1);
       entry.mesh.material.opacity = opacity * t;
       if (t < 1) more = true;
       else {
         entry.fading = null;
-        entry.mesh.renderOrder = 0;
+        fit(entry);
         done = true;
       }
     }
@@ -901,7 +978,8 @@
     let min = widest?.[0] ?? Infinity;
     let max = widest?.[1] ?? -Infinity;
     for (const entry of untrack(() => [...entries.values()])) {
-      if (!entry.elevation) continue;
+      // (Not the backdrop's, which reaches past the map)
+      if (!entry.elevation || entry.backdrop) continue;
       min = Math.min(min, Math.floor(entry.elevation.range[0] / 50) * 50);
       max = Math.max(max, Math.ceil(entry.elevation.range[1] / 50) * 50);
     }
@@ -909,6 +987,19 @@
     if (widest && widest[0] === min && widest[1] === max) return widest;
     return (widest = [min, max]);
   });
+  /** How far (in meters) the backdrop's terrain sinks beneath the tiles': a twentieth of its rise */
+  const backdropSink = $derived.by(() => {
+    const [low, high] = (ctx.zDomain ?? [0, 0]).map(Number);
+    return elevation && high > low ? (high - low) / 20 : 0;
+  });
+  $effect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    backdropSink;
+    untrack(() => {
+      for (const entry of entries.values()) if (entry.backdrop && entry.mesh) draw(entry);
+    });
+  });
+
   ctx.registerComponent({
     name: 'GeoTile',
     kind: 'mark',
@@ -967,7 +1058,7 @@
     untrack(() => {
       for (const entry of entries.values()) {
         entry.unpick?.();
-        entry.unpick = on && entry.mesh ? pick(entry) : null;
+        entry.unpick = on && entry.mesh && !entry.backdrop ? pick(entry) : null;
       }
     });
   });

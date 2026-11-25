@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { scaleBand, scaleOrdinal } from 'd3-scale';
 import { curveMonotoneX } from 'd3-shape';
@@ -7,6 +7,8 @@ import {
   Matrix4,
   Quaternion,
   Ray,
+  Raycaster,
+  Vector2,
   Vector3,
   type InstancedMesh,
   type Object3D,
@@ -456,10 +458,40 @@ describe('GeoTile', () => {
       ],
     },
   };
-  const meshes = (scene: SceneState) =>
+  const allMeshes = (scene: SceneState) =>
     layered(scene)
       .flatMap((o) => o.children)
       .filter((o) => (o as any).isMesh) as any[];
+  /** The tiles' meshes, leaving out the coarse backdrop beneath them */
+  const meshes = (scene: SceneState) => allMeshes(scene).filter((m) => !m.userData.backdrop);
+  const backdrop = (scene: SceneState) => allMeshes(scene).filter((m) => m.userData.backdrop);
+
+  /**
+   * Images whose URL starts `hold:` don't load until `release()`d, as tiles still on their way
+   * over a slow connection
+   */
+  const src = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')!;
+  let held: { image: HTMLImageElement; url: string }[] = [];
+  function hold() {
+    Object.defineProperty(HTMLImageElement.prototype, 'src', {
+      ...src,
+      set(this: HTMLImageElement, value: string) {
+        if (value.startsWith('hold:')) held.push({ image: this, url: value });
+        else src.set!.call(this, value);
+      },
+    });
+  }
+  /** Let the images held load, as what `as` gives for their URLs */
+  function release(as: (url: string) => string) {
+    for (const { image, url } of held.splice(0)) src.set!.call(image, as(url));
+  }
+  afterEach(() => {
+    Object.defineProperty(HTMLImageElement.prototype, 'src', src);
+    held = [];
+  });
+  /** Distinct images (and so cache keys) per test, so none starts out cached from another */
+  let test = 0;
+  const tint = (z: number) => solid(`rgb(${(z * 17) % 256}, ${(test * 37) % 256}, 99)`);
 
   it('draws a mesh per tile, raised by its elevation through the `z` scale', async () => {
     const scene = await renderMarks({
@@ -546,6 +578,169 @@ describe('GeoTile', () => {
     await expect.poll(() => tiles[0][2]).toBe(top + 1);
     await expect.poll(() => meshes(scene!).length).toBe(tiles.length);
     for (const mesh of meshes(scene!)) expect(mesh.material.map.image.src).toBe(image);
+  });
+
+  it('zooming out, draws new tiles from a loaded ancestor beneath the sharper tiles left behind', async () => {
+    test++;
+    hold();
+    let tiles: [number, number, number][] = [];
+    let scene: SceneState | undefined;
+    // Zoomed in, every image loads; zoomed out, the new zoom's own images are still on their way
+    let slow = Infinity;
+    const url = (x: number, y: number, z: number) => (z === slow ? `hold:${z}/${x}/${y}` : tint(z));
+    const props = (zoomDelta: number) => ({
+      mark: 'geotile' as const,
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      geotile: { url, zoomDelta, onTilesChange: (t: [number, number, number][]) => (tiles = t) },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    const { rerender } = render(Marks, props(2));
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    const deep = tiles[0][2];
+    await expect.poll(() => scene && meshes(scene).length).toBe(tiles.length);
+    // Beneath it, the backdrop three zooms up, loaded and out of sight
+    await expect.poll(() => backdrop(scene!).length).toBeGreaterThan(0);
+    for (const mesh of backdrop(scene!)) expect(mesh.material.map.image.src).toBe(tint(deep - 3));
+    await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
+
+    slow = deep - 2;
+    rerender(props(0));
+    await expect.poll(() => tiles[0][2]).toBe(slow);
+    // Each new tile (larger than the old view: those left behind cover only part of it) is drawn
+    // at once, from the old backdrop's image a zoom up, rather than left empty until its own
+    // arrive.  Layered under those left behind (drawn after them, only where they aren't), so
+    // the part they cover stays sharp, however much higher its terrain
+    const standIns = () =>
+      meshes(scene!).filter((m) => m.material.map.image.src === tint(slow - 1));
+    await expect.poll(() => standIns().length).toBe(tiles.length);
+    const left = meshes(scene!).filter((m) => m.material.map.image.src === tint(deep));
+    expect(left.length).toBeGreaterThan(0);
+    for (const standIn of standIns()) {
+      for (const mesh of left) {
+        expect(standIn.material.stencilRef).toBeLessThan(mesh.material.stencilRef);
+        expect(standIn.renderOrder).toBeGreaterThan(mesh.renderOrder);
+      }
+    }
+    // The new backdrop shows beneath while they load, and hides once they're drawn
+    await expect.poll(() => backdrop(scene!).some((m) => m.visible)).toBe(true);
+    release(() => tint(slow));
+    await expect
+      .poll(() => meshes(scene!).filter((m) => m.material.map.image.src === tint(slow)).length)
+      .toBe(tiles.length);
+    await expect.poll(() => meshes(scene!).length).toBe(tiles.length);
+    // Their own, over anything left beneath
+    await expect.poll(() => meshes(scene!).every((m) => m.material.stencilRef === 255)).toBe(true);
+    await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
+  });
+
+  it('raises each tile from the elevation two zooms up (no coarser than 11), a pixel for each of its 64 points', async () => {
+    test++;
+    let tiles: [number, number, number][] = [];
+    const zooms = new Set<number>();
+    const scene = await renderMarks({
+      mark: 'geotile',
+      // A small area, its tiles deep enough to take elevation from two zooms up
+      chart: {
+        geo: {
+          projection: geoMercator,
+          fitGeojson: {
+            ...area,
+            geometry: {
+              ...area.geometry,
+              coordinates: [area.geometry.coordinates[0].map(([x, y]) => [x / 400, y / 400])],
+            },
+          },
+        },
+        view: perspective,
+      },
+      geotile: {
+        url: tint,
+        elevation: {
+          url: (_x: number, _y: number, z: number) => {
+            zooms.add(z);
+            return thousandMeters;
+          },
+        },
+        onTilesChange: (t: [number, number, number][]) => (tiles = t),
+      },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    const tileZooms = new Set(tiles.map(([, , z]) => z));
+    expect(Math.max(...tileZooms)).toBeGreaterThanOrEqual(13);
+    // (And the backdrop's, three zooms up from the map's cover)
+    const from = (z: number) => Math.max(z - 2, Math.min(z, 11));
+    for (const z of tileZooms) expect(zooms.has(from(z))).toBe(true);
+    expect(Math.max(...zooms)).toBe(from(Math.max(...tileZooms)));
+  });
+
+  it('draws a tile loaded before at once, rather than fading it in', async () => {
+    test++;
+    let tiles: [number, number, number][] = [];
+    let scene: SceneState | undefined;
+    const props = (zoomDelta: number) => ({
+      mark: 'geotile' as const,
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      geotile: {
+        url: (_x: number, _y: number, z: number) => tint(z),
+        zoomDelta,
+        onTilesChange: (t: [number, number, number][]) => (tiles = t),
+      },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    const { rerender } = render(Marks, props(0));
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    const z = tiles[0][2];
+    await expect.poll(() => scene && meshes(scene).length).toBe(tiles.length);
+    await rerender(props(1));
+    await expect.poll(() => tiles[0][2]).toBe(z + 1);
+    await expect.poll(() => meshes(scene!).every((m) => m.material.opacity === 1)).toBe(true);
+
+    // Back to the tiles loaded before: drawn as they were, at once
+    await rerender(props(0));
+    await expect.poll(() => tiles[0][2]).toBe(z);
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
+    const back = meshes(scene!).filter((m) => m.material.map.image.src === tint(z));
+    expect(back.length).toBeGreaterThan(0);
+    for (const mesh of back) expect(mesh.material.opacity).toBe(1);
+  });
+
+  it('draws on a stencil buffer, to layer tiles by how sharp they are', async () => {
+    test++;
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area }, view: perspective },
+      geotile: { url: (_x: number, _y: number, z: number) => tint(z) },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    const canvas = document.querySelector('.lc-layout-webgl canvas') as HTMLCanvasElement;
+    const gl = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
+    expect(gl?.getContextAttributes()?.stencil).toBe(true);
+    for (const mesh of meshes(scene)) expect(mesh.material.stencilWrite).toBe(true);
+  });
+
+  it('raises the backdrop with the terrain, a little beneath it', async () => {
+    test++;
+    const scene = await renderMarks({
+      mark: 'geotile',
+      chart: { geo: { projection: geoMercator, fitGeojson: area }, view: perspective },
+      geotile: { url: tint, elevation: { url: () => thousandMeters } },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    await expect.poll(() => backdrop(scene).length).toBeGreaterThan(0);
+    await expect.poll(() => chart!.zDomain).toEqual([0, 1000]);
+    const top = (mesh: any) =>
+      Math.max(
+        ...(mesh.geometry.attributes.position.array as Float32Array).filter((_, i) => i % 3 === 1)
+      );
+    // A twentieth of the domain's rise beneath the terrain's 1000m
+    for (const mesh of backdrop(scene)) await expect.poll(() => top(mesh)).toBeCloseTo(950, 0);
+    expect(top(meshes(scene)[0])).toBeCloseTo(1000, 0);
   });
 });
 
@@ -1709,6 +1904,175 @@ describe('view and transform', () => {
     await expect.poll(() => direction.angleTo(ray().direction)).toBeGreaterThan(0.2);
     // Turned about what's been panned to: it stays where it was on screen
     expect(onScreen(pannedTo).distanceTo(before)).toBeLessThan(0.005);
+  });
+
+  it('zooms a perspective view towards what is under the pointer, never through it', async () => {
+    await renderMarks({
+      mark: 'surface',
+      chart: {
+        xDomain: [0, 1],
+        yDomain: [0, 1],
+        zDomain: [0, 10],
+        zRange: [0, 100],
+        view: perspective,
+        transform: { mode: 'canvas' },
+      },
+      surface: { value: (x: number, y: number) => 10 * x * y, pixelSize: 20 },
+    });
+    const scene = await withTransform();
+    await settled(() => reach(scene));
+    const camera = () => {
+      scene.camera!.updateMatrixWorld();
+      return scene.camera!;
+    };
+    // A point of the plot area off its middle, as the pointer might be, from -1 to 1 on screen
+    const q = { x: chart!.box.width * 0.3, y: chart!.box.height * 0.65 };
+    const ndc = new Vector2(
+      ((q.x + chart!.padding.left) / scene.width) * 2 - 1,
+      -((q.y + chart!.padding.top) / scene.height) * 2 + 1
+    );
+    const raycaster = new Raycaster();
+    raycaster.setFromCamera(ndc, camera());
+    const [hit] = raycaster
+      .intersectObject(scene.root, true)
+      .filter((h) => (h.object as any).isMesh);
+    expect(hit).toBeDefined();
+    const before = camera().position.distanceTo(hit.point);
+
+    chart!.transform.scaleTo(
+      4,
+      { x: q.x + chart!.padding.left, y: q.y + chart!.padding.top },
+      { instant: true }
+    );
+    // A quarter of the way as far from it, along the way to it
+    await expect.poll(() => camera().position.distanceTo(hit.point)).toBeCloseTo(before / 4, 0);
+    // And it's still under the pointer
+    const on = hit.point.clone().project(camera());
+    expect(on.x).toBeCloseTo(ndc.x, 3);
+    expect(on.y).toBeCloseTo(ndc.y, 3);
+  });
+
+  it('turns zoomed in about where it last zoomed towards, however it got there', async () => {
+    await renderMarks({
+      mark: 'surface',
+      chart: {
+        xDomain: [0, 1],
+        yDomain: [0, 1],
+        zDomain: [0, 10],
+        zRange: [0, 100],
+        view: perspective({ rotate: -20, tilt: 70 }),
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+      surface: { value: (x: number, y: number) => 10 * x * y, pixelSize: 20 },
+    });
+    const scene = await withTransform();
+    await settled(() => reach(scene));
+    const camera = () => {
+      scene.camera!.updateMatrixWorld();
+      return scene.camera!;
+    };
+    const raycaster = new Raycaster();
+    /** What's drawn at a share of the plot area across and down */
+    const surface = (u: number, v: number) => {
+      raycaster.setFromCamera(
+        new Vector2(
+          ((u * chart!.box.width + chart!.padding.left) / scene.width) * 2 - 1,
+          -((v * chart!.box.height + chart!.padding.top) / scene.height) * 2 + 1
+        ),
+        camera()
+      );
+      return raycaster.intersectObject(scene.root, true).find((h) => (h.object as any).isMesh)
+        ?.point;
+    };
+    const zoom = async (u: number, v: number) => {
+      const scale = chart!.transform.scale;
+      chart!.transform.scaleTo(
+        6,
+        {
+          x: u * chart!.box.width + chart!.padding.left,
+          y: v * chart!.box.height + chart!.padding.top,
+        },
+        { instant: true }
+      );
+      await expect.poll(() => chart!.transform.scale).toBeCloseTo(scale * 6);
+    };
+    // Zoomed in towards one place, then on towards another off to the side of it
+    await zoom(0.3, 0.6);
+    await zoom(0.8, 0.4);
+
+    // Turned, it orbits what it zoomed towards last: that stays where it is on screen, as far away
+    const middle = surface(0.8, 0.4)!;
+    expect(middle).toBeDefined();
+    const before = middle.clone().project(camera());
+    const away = camera().position.distanceTo(middle);
+    const direction = camera().getWorldDirection(new Vector3());
+    const { x, y } = chart!.transform.rotation!;
+    chart!.transform.setRotation({ x: x + 25, y: y - 10 }, { instant: true });
+    await expect
+      .poll(() => direction.angleTo(camera().getWorldDirection(new Vector3())))
+      .toBeGreaterThan(0.1);
+    await new Promise((r) => setTimeout(r, 100));
+    const after = middle.clone().project(camera());
+    expect(Math.hypot(after.x - before.x, after.y - before.y)).toBeLessThan(0.01);
+    expect(camera().position.distanceTo(middle)).toBeCloseTo(away, 1);
+  });
+
+  it('drags the ground under the pointer, zoomed in, keeping the camera as high', async () => {
+    await renderMarks({
+      mark: 'surface',
+      chart: {
+        xDomain: [0, 1],
+        yDomain: [0, 1],
+        zDomain: [0, 10],
+        zRange: [0, 100],
+        view: perspective({ rotate: -20, tilt: 70 }),
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+      surface: { value: (x: number, y: number) => 10 * x * y, pixelSize: 20 },
+    });
+    const scene = await withTransform();
+    await settled(() => reach(scene));
+    const camera = () => {
+      scene.camera!.updateMatrixWorld();
+      return scene.camera!;
+    };
+    const { padding, box } = chart!;
+    /** A point of the chart's container, from -1 to 1 on screen */
+    const ndc = (x: number, y: number) =>
+      new Vector2((x / scene.width) * 2 - 1, -(y / scene.height) * 2 + 1);
+    const transform = chart!.transform;
+    // Zoomed in towards somewhere near the middle
+    transform.scaleTo(
+      4,
+      { x: padding.left + box.width * 0.45, y: padding.top + box.height * 0.55 },
+      { instant: true }
+    );
+    await expect.poll(() => transform.scale).toBeCloseTo(4);
+
+    // Grabbing the ground off towards the far side, as a drag does
+    const start = { x: padding.left + box.width * 0.6, y: padding.top + box.height * 0.4 };
+    const raycaster = new Raycaster();
+    raycaster.setFromCamera(ndc(start.x, start.y), camera());
+    const [hit] = raycaster
+      .intersectObject(scene.root, true)
+      .filter((h) => (h.object as any).isMesh);
+    expect(hit).toBeDefined();
+    const height = camera().position.y;
+    const from = { ...transform.translate };
+    transform.startPoint = start;
+    transform.startTranslate = from;
+    transform.dragging = true;
+    const moved = { x: -40, y: 25 };
+    transform.setTranslate({ x: from.x + moved.x, y: from.y + moved.y }, { instant: true });
+    await expect.poll(() => transform.translate.x).toBeCloseTo(from.x + moved.x);
+    transform.dragging = false;
+
+    // What was grabbed is under the pointer where it's moved to
+    const on = hit.point.clone().project(camera());
+    const to = ndc(start.x + moved.x, start.y + moved.y);
+    expect(on.x).toBeCloseTo(to.x, 2);
+    expect(on.y).toBeCloseTo(to.y, 2);
+    expect(camera().position.y).toBeCloseTo(height, 1);
   });
 
   it('keeps a zoom when the plot box changes', async () => {

@@ -18,6 +18,11 @@
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import {
+    loadedAncestor,
+    loadedTiles,
+    loadTileWithAncestor,
+  } from '../TileImage/TileImage.shared.svelte.js';
 
   let {
     Group,
@@ -49,13 +54,54 @@
   const translate = $derived(tiles.translate);
   const scale = $derived(tiles.scale);
 
+  /** Bumped as tiles arrive, to draw the canvas again */
+  let arrived = $state(0);
+  /** Tiles asked for and not yet arrived */
+  const awaiting = new Set<string>();
+
   function render(ctx: CanvasRenderingContext2D) {
     for (const [x, y, z] of tiles) {
-      const image = new Image();
-      image.onload = () => {
-        ctx.drawImage(image, (x + translate[0]) * scale, (y + translate[1]) * scale, scale, scale);
-      };
-      image.src = url(x, y, z);
+      const dx = (x + translate[0]) * scale;
+      const dy = (y + translate[1]) * scale;
+      if (disableCache) {
+        const image = new Image();
+        image.onload = () => ctx.drawImage(image, dx, dy, scale, scale);
+        image.src = url(x, y, z);
+        continue;
+      }
+      const key = url(x, y, z);
+      const own = loadedTiles.get(key);
+      if (own) {
+        ctx.drawImage(own.image, dx, dy, scale, scale);
+        continue;
+      }
+      if (!awaiting.has(key)) {
+        awaiting.add(key);
+        loadTileWithAncestor(url, x, y, z)
+          .then(
+            () => arrived++,
+            () => {}
+          )
+          .finally(() => awaiting.delete(key));
+      }
+      // While its own loads, part of its nearest ancestor already loaded, enlarged
+      const standIn = loadedAncestor(url, x, y, z);
+      if (standIn) {
+        const { image } = standIn.tile;
+        const w = image.naturalWidth;
+        const h = image.naturalHeight;
+        ctx.drawImage(
+          image,
+          standIn.u0 * w,
+          standIn.v0 * h,
+          standIn.size * w,
+          standIn.size * h,
+          dx,
+          dy,
+          scale,
+          scale
+        );
+      }
     }
   }
 
@@ -65,7 +111,7 @@
       kind: 'mark',
       canvasRender: {
         render,
-        deps: () => [tiles],
+        deps: () => [tiles, arrived],
       },
     });
   }

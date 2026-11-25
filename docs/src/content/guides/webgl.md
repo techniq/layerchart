@@ -65,7 +65,7 @@ Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are 
 
 :example{ component="webgl/Points" name="scatter-3d" }
 
-Drag to turn the view, and shift-drag to pan. Hold shift and scroll to zoom, moving the camera in and out.
+Drag to turn the view, and shift-drag to pan. Hold shift and scroll to zoom, flying the camera towards (or back from) what's under the pointer.
 
 ## How it works
 
