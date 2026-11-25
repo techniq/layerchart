@@ -1,5 +1,15 @@
 # LayerChart
 
+## 2.14.0
+
+### Minor Changes
+
+- feat: Add `width` and `height` to `shapeLabel()`'s result, the size of the room it found (ex. for an image placed there) ([#1032](https://github.com/techniq/layerchart/pull/1032))
+
+### Patch Changes
+
+- fix(Labels): Fade the other series' `layout="shape"` labels while one is highlighted (ex. by hovering the legend), as their areas do ([#1032](https://github.com/techniq/layerchart/pull/1032))
+
 ## 2.13.0
 
 ### Minor Changes
