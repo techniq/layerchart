@@ -634,6 +634,80 @@ describe('GeoTile', () => {
     await expect.poll(() => backdrop(scene!).every((m) => !m.visible)).toBe(true);
   });
 
+  it('raises each tile from the elevation two zooms up (no coarser than 11), a pixel for each of its 64 points', async () => {
+    test++;
+    let tiles: [number, number, number][] = [];
+    const zooms = new Set<number>();
+    const scene = await renderMarks({
+      mark: 'geotile',
+      // A small area, its tiles deep enough to take elevation from two zooms up
+      chart: {
+        geo: {
+          projection: geoMercator,
+          fitGeojson: {
+            ...area,
+            geometry: {
+              ...area.geometry,
+              coordinates: [area.geometry.coordinates[0].map(([x, y]) => [x / 400, y / 400])],
+            },
+          },
+        },
+        view: perspective,
+      },
+      geotile: {
+        url: tint,
+        elevation: {
+          url: (_x: number, _y: number, z: number) => {
+            zooms.add(z);
+            return thousandMeters;
+          },
+        },
+        onTilesChange: (t: [number, number, number][]) => (tiles = t),
+      },
+    });
+    await expect.poll(() => meshes(scene).length).toBeGreaterThan(0);
+    const tileZooms = new Set(tiles.map(([, , z]) => z));
+    expect(Math.max(...tileZooms)).toBeGreaterThanOrEqual(13);
+    // (And the backdrop's, three zooms up from the map's cover)
+    const from = (z: number) => Math.max(z - 2, Math.min(z, 11));
+    for (const z of tileZooms) expect(zooms.has(from(z))).toBe(true);
+    expect(Math.max(...zooms)).toBe(from(Math.max(...tileZooms)));
+  });
+
+  it('draws a tile loaded before at once, rather than fading it in', async () => {
+    test++;
+    let tiles: [number, number, number][] = [];
+    let scene: SceneState | undefined;
+    const props = (zoomDelta: number) => ({
+      mark: 'geotile' as const,
+      chart: { geo: { projection: geoMercator, fitGeojson: area } },
+      geotile: {
+        url: (_x: number, _y: number, z: number) => tint(z),
+        zoomDelta,
+        onTilesChange: (t: [number, number, number][]) => (tiles = t),
+      },
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    const { rerender } = render(Marks, props(0));
+    await expect.poll(() => tiles.length).toBeGreaterThan(0);
+    const z = tiles[0][2];
+    await expect.poll(() => scene && meshes(scene).length).toBe(tiles.length);
+    await rerender(props(1));
+    await expect.poll(() => tiles[0][2]).toBe(z + 1);
+    await expect.poll(() => meshes(scene!).every((m) => m.material.opacity === 1)).toBe(true);
+
+    // Back to the tiles loaded before: drawn as they were, at once
+    await rerender(props(0));
+    await expect.poll(() => tiles[0][2]).toBe(z);
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
+    const back = meshes(scene!).filter((m) => m.material.map.image.src === tint(z));
+    expect(back.length).toBeGreaterThan(0);
+    for (const mesh of back) expect(mesh.material.opacity).toBe(1);
+  });
+
   it('raises the backdrop with the terrain, a little beneath it', async () => {
     test++;
     const scene = await renderMarks({

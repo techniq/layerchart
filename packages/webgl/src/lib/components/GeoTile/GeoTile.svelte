@@ -137,6 +137,22 @@
   const elevation = $derived(elevationProp?.url);
   const elevationEncoding = $derived(elevationProp?.encoding ?? 'terrarium');
   const elevationMaxZoom = $derived(elevationProp?.maxZoom ?? Infinity);
+  /**
+   * How many zooms up from a tile its elevation comes from: an elevation tile's 256 pixels across
+   * cover as many tiles as leaves a pixel for each of a tile's `segments` (two zooms up for 64).
+   * Its own would be sampled every few pixels, and 16 times as many to load, decode and keep
+   */
+  const elevationLevels = $derived(Math.max(0, Math.round(Math.log2(256 / (segments ?? 64)))));
+  /**
+   * The deepest zoom a tile's elevation comes from: `elevationLevels` up, though no coarser than
+   * zoom 11 unless the tile is itself.  Services' coarser elevation tiles are resampled with
+   * artifacts (ex. AWS's, spikes 2km above a lake), which tiles drawn up close would show.
+   */
+  const elevationZoom = (tile: Tile) =>
+    Math.max(
+      0,
+      Math.min(elevationMaxZoom, Math.max(tile[2] - elevationLevels, Math.min(tile[2], 11)))
+    );
 
   const ctx = getChartContext();
   const scene = getSceneContext();
@@ -591,7 +607,7 @@
   const outlineMaterial = new LineBasicMaterial({ color: 0xff3366 });
 
   /** Draw a loaded tile (again, after something it's placed by changed) */
-  function draw(entry: Entry) {
+  function draw(entry: Entry, fade = true) {
     if (!entry.image) return;
     const geometry = geometryOf(entry);
     if (entry.mesh) {
@@ -607,7 +623,7 @@
       group.add(entry.mesh);
       entry.mesh.userData.backdrop = entry.backdrop;
       if (untrack(() => tooltip) && !entry.backdrop) entry.unpick = pick(entry);
-      fadeIn(entry);
+      if (fade) fadeIn(entry);
     }
     if (entry.outline) {
       entry.outline.removeFromParent();
@@ -647,7 +663,9 @@
     for (const tile of tiles) {
       const imagePart = ancestor(tile, maxZoom);
       const imageKey = url(...imagePart.tile);
-      const elevationKey = elevation ? elevation(...ancestor(tile, elevationMaxZoom).tile) : null;
+      const elevationKey = elevation
+        ? elevation(...ancestor(tile, elevationZoom(tile)).tile)
+        : null;
       wanted.set(`${tile.join('/')} ${imageKey} ${elevationKey}`, {
         tile,
         imageKey,
@@ -660,7 +678,9 @@
     for (const tile of rootTiles) {
       if (ownTiles.has(tile.join('/'))) continue;
       const imageKey = url(...ancestor(tile, maxZoom).tile);
-      const elevationKey = elevation ? elevation(...ancestor(tile, elevationMaxZoom).tile) : null;
+      const elevationKey = elevation
+        ? elevation(...ancestor(tile, elevationZoom(tile)).tile)
+        : null;
       wanted.set(`backdrop ${tile.join('/')} ${imageKey} ${elevationKey}`, {
         tile,
         imageKey,
@@ -680,7 +700,7 @@
       for (const [key, { tile, imageKey, elevationKey, backdrop }] of wanted) {
         if (entries.has(key)) continue;
         const imagePart = ancestor(tile, maxZoom);
-        const part = ancestor(tile, elevationMaxZoom);
+        const part = ancestor(tile, elevationZoom(tile));
         const entry = blank(tile, imageKey, imagePart);
         entry.backdrop = backdrop;
         entries.set(key, entry);
@@ -689,8 +709,15 @@
         // Behind any sharper tiles left behind over it (see `fit`)
         const early = standIn(tile, !!elevationKey);
         if (early) {
+          // From its own image and elevation, loaded before (ex. turning back to it), it's drawn
+          // as it'll stay, rather than fading in as if it had just arrived
+          const own =
+            early.imageKey === imageKey &&
+            (early.elevation
+              ? elevation!(...early.elevation.part.tile) === elevationKey
+              : !elevationKey);
           Object.assign(entry, early);
-          draw(entry);
+          draw(entry, !own);
         }
         Promise.all([
           loadImage(tile),
@@ -820,7 +847,7 @@
     const image = found(maxZoom, (part) => peekTileImage(url(...part.tile)));
     if (!image) return null;
     const terrain = withElevation
-      ? found(elevationMaxZoom, (part) =>
+      ? found(elevationZoom(tile), (part) =>
           peekElevationTile(elevation!(...part.tile), elevationEncoding)
         )
       : null;
@@ -882,7 +909,8 @@
     let more = false;
     for (const entry of entries.values()) {
       if (entry.fading == null || !entry.mesh) continue;
-      const t = Math.min(1, (now - entry.fading) / fadeDuration);
+      // (A frame can be timed a little before the fade began)
+      const t = MathUtils.clamp((now - entry.fading) / fadeDuration, 0, 1);
       entry.mesh.material.opacity = opacity * t;
       if (t < 1) more = true;
       else {
