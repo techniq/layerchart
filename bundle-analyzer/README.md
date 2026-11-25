@@ -82,7 +82,7 @@ pnpm bundle:compare -- report-new.json report-old.json
 Two GitHub Actions workflows automate bundle tracking:
 
 - **`bundle-analysis.yml`** - Runs on PRs that touch `packages/layerchart/` or `bundle-analyzer/`. Posts a comment comparing bundle sizes against the baseline.
-- **`update-bundle-baseline.yml`** - Runs on pushes to `next`. If sizes changed, opens a PR to update `bundle-reports/latest.json`.
+- **`update-generated.yml`** - Runs on pushes to `main`. If sizes changed, its PR (shared with the other generated files) updates `bundle-reports/latest.json`.
 
 ## Adding scenarios
 

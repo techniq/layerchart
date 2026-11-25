@@ -1,6 +1,21 @@
 name: Package PR
 
-on: [push, pull_request]
+on:
+  push:
+    # Generated files the bot PR from `update-generated.yml` changes.  Nothing here builds,
+    # tests or packages them, so a PR (or merge) touching only these has nothing to check — and
+    # skipping it means that PR doesn't wait on approval to run this
+    paths-ignore:
+      - docs/src/examples/catalog/**
+      - docs/static/screenshots/**
+      - docs/snapshots/**
+      - bundle-analyzer/bundle-reports/**
+  pull_request:
+    paths-ignore:
+      - docs/src/examples/catalog/**
+      - docs/static/screenshots/**
+      - docs/snapshots/**
+      - bundle-analyzer/bundle-reports/**
 
 jobs:
   build:

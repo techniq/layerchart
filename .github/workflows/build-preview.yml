@@ -8,6 +8,14 @@ concurrency:
 on:
   pull_request:
     types: [opened, synchronize]
+    # Generated files the bot PR from `update-generated.yml` changes.  Nothing here builds,
+    # tests or packages them, so a PR touching only these has nothing to check — and
+    # skipping it means that PR doesn't wait on approval to run this
+    paths-ignore:
+      - docs/src/examples/catalog/**
+      - docs/static/screenshots/**
+      - docs/snapshots/**
+      - bundle-analyzer/bundle-reports/**
 
 jobs:
   build-preview:

@@ -5,6 +5,8 @@ on:
     paths:
       - packages/layerchart/**
       - bundle-analyzer/**
+      # The baseline the bot PR from `update-generated.yml` updates
+      - '!bundle-analyzer/bundle-reports/**'
     types: [opened, synchronize, reopened]
 
 concurrency:
