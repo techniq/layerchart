@@ -77,8 +77,14 @@
    */
   const clipRings = $derived.by<[number, number][][] | null>(() => {
     if (clip == null || view) return null;
-    if (Array.isArray(clip)) return [clip as [number, number][]];
-    return geo.projection ? screenPolygons(geo.projection, clip).map((p) => p[0]) : null;
+    const rings = Array.isArray(clip)
+      ? [clip as [number, number][]]
+      : geo.projection
+        ? screenPolygons(geo.projection, clip).map((p) => p[0])
+        : null;
+    // None when `clip` has no area on screen (ex. a feature the projection drops, or a point),
+    // leaving every cell empty
+    return rings?.filter((ring) => ring.length > 2) ?? null;
   });
 
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
@@ -141,6 +147,7 @@
   // Compute once and share between cell rendering and the `children` cell payload
   const voronoi = $derived.by(() => {
     if (clipRings) {
+      if (!clipRings.length) return null;
       // Within `clip`'s bounds, with points sharing a location (ex. two teams' stadium) spread
       // apart to share its cell rather than one of them getting none
       const [x0, x1] = extent(clipRings.flat(), (p) => p[0]) as [number, number];
@@ -157,9 +164,9 @@
 
   /** With `clip`, each cell cut to it (its pieces, ex. a state's islands) */
   const clippedCells = $derived(
-    clipRings && voronoi
+    clipRings
       ? points.map((_: any, i: number) => {
-          const cell = voronoi.cellPolygon(i) as [number, number][] | null;
+          const cell = voronoi?.cellPolygon(i) as [number, number][] | null | undefined;
           // Without the zero-width slivers left where the cell's edge runs along `clip`'s
           return cell
             ? clipRings

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { geoEquirectangular } from 'd3-geo';
+import { geoAlbersUsa, geoEquirectangular } from 'd3-geo';
 
 import VoronoiChart from './__fixtures__/VoronoiChart.svelte';
 import type { VoronoiCell } from './Voronoi.shared.svelte.js';
@@ -79,6 +79,63 @@ describe('Voronoi `clip`', () => {
     });
     expect(cells[0].area).toBeCloseTo(cells[1].area, -2);
     expect(cells[0].area + cells[1].area).toBeCloseTo(100 * 200, -1);
+  });
+
+  it('leaves every cell empty when `clip` has no area', async () => {
+    const data = [
+      { x: 25, y: 50 },
+      { x: 75, y: 50 },
+    ];
+    for (const clip of [
+      [],
+      [
+        [0, 0],
+        [100, 0],
+      ],
+    ]) {
+      const { cells, container } = await renderCells({ data, clip });
+      expect(cells.map((c) => [c.path, c.area, c.polygons.length])).toEqual([
+        [null, 0, 0],
+        [null, 0, 0],
+      ]);
+      expect(container.querySelectorAll('path.lc-voronoi-path')).toHaveLength(0);
+    }
+  });
+
+  it('leaves every cell empty when the projection drops `clip`', async () => {
+    // A square off `geoAlbersUsa`'s lower 48 and insets (in the Atlantic), around a point in Kansas
+    const atlantic = {
+      type: 'Polygon' as const,
+      coordinates: [
+        [
+          [-40, 30],
+          [-40, 40],
+          [-30, 40],
+          [-30, 30],
+          [-40, 30],
+        ],
+      ],
+    };
+    const kansas = {
+      type: 'Polygon' as const,
+      coordinates: [
+        [
+          [-102, 37],
+          [-102, 40],
+          [-94.6, 40],
+          [-94.6, 37],
+          [-102, 37],
+        ],
+      ],
+    };
+    const { cells } = await renderCells({
+      projection: geoAlbersUsa,
+      fitGeojson: kansas,
+      clip: atlantic,
+      data: [{ x: -98, y: 38.5 }],
+    });
+    expect(cells[0].path).toBeNull();
+    expect(cells[0].area).toBe(0);
   });
 
   it('cuts cells to a GeoJSON feature in a geo chart, measured on screen', async () => {
