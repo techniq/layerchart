@@ -399,12 +399,7 @@ export class AreaState {
         if (val && val[1] <= 0) return this.y0Accessor;
       }
     }
-    return props.y1 ||
-      this.stackAccessors ||
-      Array.isArray(this.seriesAccessor) ||
-      this.seriesAccessor
-      ? this.y1Accessor
-      : undefined;
+    return props.y1 || this.stackAccessors || this.seriesAccessor ? this.y1Accessor : undefined;
   });
 
   pathOpacity = $derived.by(() => {

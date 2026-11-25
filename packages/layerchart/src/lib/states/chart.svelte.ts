@@ -904,30 +904,23 @@ export class ChartState<
   } {
     const { seriesKey, ownData } = options;
     const stack = this.stackAccessorsFor({ seriesKey, ownData, stacksImplicitly: true });
+    if (stack) return { y0: stack.y0, y1: stack.y1 };
+
     const series =
       seriesKey == null ? undefined : this.series.series.find((s) => s.key === seriesKey);
     const value: Accessor | Accessor[] | undefined =
       series?.value ?? (series?.data ? undefined : series?.key);
-    // `y={[0, 1]}`: each row's bottom and top by index
-    const indexed = (i: 0 | 1) => Array.isArray(this.config.y) && this.config.y[i] === i;
+    if (Array.isArray(value)) return { y0: accessor(value[0]), y1: accessor(value[1]) };
 
-    const y0 =
-      stack?.y0 ??
-      (Array.isArray(value)
-        ? accessor(value[0])
-        : indexed(0)
+    // `y={[0, 1]}`: each row's bottom and top by index
+    const [bottom, top] = Array.isArray(this.config.y) ? this.config.y : [];
+    return {
+      y0:
+        bottom === 0
           ? (d: any) => this.y(d)[0]
-          : () => this.props.yBaseline ?? min(this.yScale.domain() as number[]));
-    const y1 =
-      stack?.y1 ??
-      (Array.isArray(value)
-        ? accessor(value[1])
-        : value
-          ? accessor(value)
-          : indexed(1)
-            ? (d: any) => this.y(d)[1]
-            : this.y);
-    return { y0, y1 };
+          : () => this.props.yBaseline ?? min(this.yScale.domain() as number[]),
+      y1: value ? accessor(value) : top === 1 ? (d: any) => this.y(d)[1] : this.y,
+    };
   }
 
   /**
