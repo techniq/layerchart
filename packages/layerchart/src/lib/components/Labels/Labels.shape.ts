@@ -35,7 +35,10 @@ export type ShapeLabelsOptions = {
   value?: Accessor;
   format?: FormatType | FormatConfig;
   fill?: string | Accessor;
+  /** Without a `style`, the size the labels measure at (in the page's font) */
   fontSize: number;
+  /** The font the labels render in (see `getTextStyle()`), to measure them in */
+  style?: Partial<CSSStyleDeclaration>;
   /**
    * Each label's last position (by its shape's key), relative to its shape's bounds, to keep it
    * there while it's about as good (updated with the new positions).  Only for the same text, as
@@ -69,7 +72,7 @@ export function getShapeLabels(options: ShapeLabelsOptions): LabelsShapeItem[] {
 
     // Nearest the visual center with room for a box shaped like the text (a stretched circle), staying
     // where it was while that's about as good, so it doesn't jump between equally good spots
-    const { width, height } = getTextRect(value, 0, 0, { fontSize });
+    const { width, height } = getTextRect(value, 0, 0, { fontSize, style: options.style });
     const bounds = polygonBounds(polygons);
     const last = options.previous?.get(key);
     const kept = last?.value === value ? last : undefined;

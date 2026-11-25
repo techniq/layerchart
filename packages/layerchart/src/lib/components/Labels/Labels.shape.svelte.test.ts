@@ -66,6 +66,26 @@ describe('Labels layout="shape" on areas', () => {
     expect(labels.band.y).toBeCloseTo(yAt(20), 0);
   });
 
+  it('measures labels in the font their class renders them in', async () => {
+    const style = document.createElement('style');
+    style.textContent = '.huge-label { font-size: 80px; }';
+    document.head.append(style);
+    try {
+      const props = { data: wide, series: [{ key: 'a' }, { key: 'b' }, { key: 'c' }] };
+      const stack = { ...props, seriesLayout: 'stack' };
+      // At 12px every name fits its band
+      expect(Object.keys(await labelsOf(stack, { occlude: true }))).toEqual(['a', 'b', 'c']);
+      // At 80px "a" no longer fits its 50px tall band, though "b" and "c" still fit theirs
+      const huge = await labelsOf(stack, { occlude: true, class: 'huge-label' });
+      expect(Object.keys(huge)).toEqual(['b', 'c']);
+      // As at the `fontSize` prop (which the labels' class reads through a CSS variable)
+      const big = await labelsOf(stack, { occlude: true, fontSize: 80 });
+      expect(Object.keys(big)).toEqual(['b', 'c']);
+    } finally {
+      style.remove();
+    }
+  });
+
   it("labels each overlapping category's area, from the baseline", async () => {
     const labels = await labelsOf({ data: long, y: 'value', c: 'key', seriesLayout: 'overlap' });
     // Each area reaches down to 0 (so the labels center in 0–10, 0–20 and 0–30)

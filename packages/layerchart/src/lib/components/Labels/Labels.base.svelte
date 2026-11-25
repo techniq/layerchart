@@ -18,6 +18,8 @@
   import { getMarkData } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { fontsLoaded } from '$lib/utils/fonts.svelte.js';
+  import { getTextStyle } from '$lib/utils/string.js';
   import { LabelsState } from './Labels.shared.svelte.js';
   import { getPixelValue } from '../Text/Text.shared.svelte.js';
   import type { Point } from '../Points/Points.shared.svelte.js';
@@ -87,6 +89,23 @@
       ? `--labels-font-size: ${getPixelValue(restProps.fontSize)}px`
       : undefined
   );
+
+  /**
+   * `layout="shape"`: the font the labels render in (their class, ex. `font-semibold`, the
+   * `fontSize` prop, and what they inherit), to measure whether each fits its shape.  Read again
+   * only when the class or size, the chart's width (a responsive class) or web fonts change.
+   */
+  const shapeTextStyle = $derived.by(() => {
+    if (layout !== 'shape') return undefined;
+    fontsLoaded();
+    c.ctx.containerWidth;
+    return getTextStyle(
+      c.ctx.containerRef,
+      clsx('lc-text', 'lc-labels-text', typeof className === 'string' ? className : undefined),
+      undefined,
+      fontSizeVar
+    );
+  });
 </script>
 
 <Group class="lc-labels-g" opacity={c.derivedOpacity as number} style={fontSizeVar}>
@@ -103,6 +122,7 @@
         format,
         fill,
         fontSize: getPixelValue(restProps.fontSize ?? 12),
+        style: shapeTextStyle,
         previous: shapeLabelPositions,
       })}
       {#each shapeLabels as label, i (key(label.data, i))}
