@@ -1,5 +1,27 @@
 # LayerChart
 
+## 2.13.0
+
+### Minor Changes
+
+- feat(Labels): Add `layout="shape"` to label each GeoJSON feature or series area where it has the most room ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
+- feat: Add `shapeLabel()` util to find where to label a shape (the point inside it farthest from its edges), with `aspect`, `fit` (the largest circle, or square or rectangle), `centroidWeight`, `minDistance` and `prefer` options ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
+- feat(Voronoi): Add `clip` to cut cells to a shape (ex. a GeoJSON feature) ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
+### Patch Changes
+
+- fix(Area): Fade the other areas while a legend item for a `c` category is hovered, as lines, points and bars do ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
+- fix(GeoTile): Draw part of a loaded ancestor's image in a tile's place while its own loads, rather than leaving it empty. ([#1024](https://github.com/techniq/layerchart/pull/1024))
+
+- fix(Labels): Type `data` as an array of the items its `value` and `fill` accessors receive ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
+- fix: Top each `stackExpand` stack at exactly 100%, so the axis no longer rounds up to 110% ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
+- fix(TransformContext): `zoomTo(center, rect)` fits the whole rect in view, rather than only its height in a wide chart (or width in a tall one) ([#1023](https://github.com/techniq/layerchart/pull/1023))
+
 ## 2.12.0
 
 ### Minor Changes
