@@ -356,10 +356,11 @@ const refs = [
 			const content = readFileSync(filePath, "utf-8");
 			totalContent += content;
 
-			// Match top-of-file static imports: `import ... from "./XXX.js"`
+			// Match top-of-file static imports: `import ... from "./XXX.js"`, including chunks
+			// named with a dot (ex. `./Text.html-D-Q1d0o6.js`, `./key.svelte-DGsz7Qfx.js`)
 			// (Dynamic `import("./XXX.js")` calls have a paren — different pattern.)
 			const staticImportRegex =
-				/(?:^|[\n;])\s*import\s+(?:[\s\S]*?\s+from\s+)?["']\.\/([\w-]+\.js)["']/g;
+				/(?:^|[\n;])\s*import\s+(?:[\s\S]*?\s+from\s+)?["']\.\/([\w.-]+\.js)["']/g;
 			for (const match of content.matchAll(staticImportRegex)) {
 				stack.push(match[1]!);
 			}
