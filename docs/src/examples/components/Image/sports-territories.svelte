@@ -5,6 +5,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import { feature, merge } from 'topojson-client';
 	import LucideFocus from '~icons/lucide/focus';
+	import LucideSquareScissors from '~icons/lucide/square-scissors';
 
 	import {
 		Chart,
@@ -19,15 +20,7 @@
 		type ChartState
 	} from 'layerchart';
 	import { GeoPath } from 'layerchart/geo';
-	import {
-		Button,
-		Field,
-		SelectField,
-		Switch,
-		ToggleGroup,
-		ToggleOption,
-		getSettings
-	} from 'svelte-ux';
+	import { Button, Field, SelectField, ToggleGroup, ToggleOption, getSettings } from 'svelte-ux';
 	import {
 		getAdmin1Topology,
 		getSportsTeams,
@@ -232,7 +225,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr_auto_auto] gap-3 mb-2">
+<div class="grid grid-cols-[auto_1fr_auto] gap-3 mb-2">
 	<SelectField
 		label="Sport"
 		options={leagueOptions}
@@ -258,6 +251,7 @@
 		<div slot="append" onclick={(e) => e.stopPropagation()} role="none">
 			<Button
 				icon={LucideFocus}
+				class="leading-none"
 				on:click={() => {
 					focused = !focused;
 					if (!focused) chart?.transform.reset();
@@ -275,9 +269,21 @@
 			<ToggleOption value="us">US</ToggleOption>
 			<ToggleOption value="us-canada">US + Canada</ToggleOption>
 		</ToggleGroup>
-	</Field>
-	<Field label="Clip to states" dense let:id>
-		<Switch bind:checked={clipToStates} {id} />
+		<div slot="append" class="pl-2.5" onclick={(e) => e.stopPropagation()} role="none">
+			<!-- Each state divided between its own teams, or the whole map between all of them -->
+			<Button
+				icon={LucideSquareScissors}
+				class="leading-none"
+				on:click={() => (clipToStates = !clipToStates)}
+				size="sm"
+				variant={clipToStates ? 'fill-light' : 'default'}
+				color={clipToStates ? 'primary' : 'default'}
+				title={clipToStates
+					? 'Divide the whole map between all teams'
+					: 'Divide each state between its own teams'}
+				aria-pressed={clipToStates}
+			/>
+		</div>
 	</Field>
 </div>
 
