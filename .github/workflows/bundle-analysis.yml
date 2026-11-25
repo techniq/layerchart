@@ -7,6 +7,11 @@ on:
       - bundle-analyzer/**
       # The baseline the bot PR from `update-generated.yml` updates
       - '!bundle-analyzer/bundle-reports/**'
+      - pnpm-lock.yaml
+      # What the Version Packages PR from `release.yml` changes.  Dependency changes still run this
+      # through `pnpm-lock.yaml`
+      - '!packages/*/CHANGELOG.md'
+      - '!packages/*/package.json'
     types: [opened, synchronize, reopened]
 
 concurrency:

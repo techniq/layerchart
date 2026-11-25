@@ -16,6 +16,11 @@ on:
       - docs/static/screenshots/**
       - docs/snapshots/**
       - bundle-analyzer/bundle-reports/**
+      # What the Version Packages PR from `release.yml` changes.  A dependency change in
+      # `package.json` comes with `pnpm-lock.yaml`, which still runs this
+      - .changeset/**
+      - packages/*/CHANGELOG.md
+      - packages/*/package.json
 
 jobs:
   build-preview:

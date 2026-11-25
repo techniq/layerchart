@@ -20,6 +20,7 @@ on:
       - docs/src/examples/**
       - docs/scripts/visual-snapshot.mjs
       - bundle-analyzer/**
+      - pnpm-lock.yaml
       - .github/workflows/update-generated.yml
       # What the PR this opens changes, so merging it shouldn't run this again
       - '!docs/src/examples/catalog/**'
@@ -68,17 +69,22 @@ jobs:
             --json headSha --jq '.[0].headSha // empty')
           if [ -z "$base" ] || ! git fetch -q --depth=1 origin "$base"; then set_all 'no earlier successful run'; exit 0; fi
 
-          # Leave out what this workflow generates
+          # Leave out what this workflow generates, and what a release changes (changesets,
+          # changelogs and `package.json` versions)
           changed=$(git diff --name-only "$base" HEAD |
-            grep -Ev '^(docs/src/examples/catalog|bundle-analyzer/bundle-reports)/' || true)
+            grep -Ev '^(docs/src/examples/catalog/|bundle-analyzer/bundle-reports/|\.changeset/|packages/[^/]+/CHANGELOG\.md$)' || true)
+          for f in $(grep -E '^packages/[^/]+/package\.json$' <<< "$changed"); do
+            other=$(git diff "$base" HEAD -- "$f" | grep -E '^[-+]' | grep -Ev '^(\+\+\+|---) ' | grep -v '"version":' || true)
+            if [ -z "$other" ]; then changed=$(grep -vxF "$f" <<< "$changed" || true); fi
+          done
           echo "Changed since $base:"; echo "$changed"
           if grep -qFx '.github/workflows/update-generated.yml' <<< "$changed"; then set_all 'workflow changed'; exit 0; fi
 
           has() { grep -Eq "$1" <<< "$changed" && echo true || echo false; }
           {
             echo "catalog=$(has '^(docs/src/examples/|packages/[^/]+/src/lib/components/)')"
-            echo "bundle=$(has '^(packages/layerchart/|bundle-analyzer/)')"
-            echo "visual=$(has '^(packages/|docs/src/examples/|docs/scripts/visual-snapshot\.mjs$)')"
+            echo "bundle=$(has '^(packages/layerchart/|bundle-analyzer/|pnpm-lock\.yaml$)')"
+            echo "visual=$(has '^(packages/|docs/src/examples/|docs/scripts/visual-snapshot\.mjs$|pnpm-lock\.yaml$)')"
           } | tee -a "$GITHUB_OUTPUT"
 
   catalog-and-screenshots:
