@@ -86,6 +86,28 @@ describe('Labels layout="shape" on areas', () => {
     }
   });
 
+  it("fades the other series' labels while one is highlighted (ex. by the legend)", async () => {
+    let ctx: any;
+    const { container } = render(MarkHarness, {
+      chartProps: { ...chart, data: long, y: 'value', c: 'key', seriesLayout: 'stack' },
+      component: Labels,
+      componentProps: { layout: 'shape' },
+      oncontext: (c: any) => (ctx = c),
+    });
+    const opacities = () =>
+      Object.fromEntries(
+        [...container.querySelectorAll('[data-layout=shape]')].map((text) => [
+          text.textContent,
+          (text as SVGElement).style.opacity || text.getAttribute('opacity') || '1',
+        ])
+      );
+    await vi.waitFor(() => expect(Object.keys(opacities())).toEqual(['a', 'b', 'c']));
+    expect(opacities()).toEqual({ a: '1', b: '1', c: '1' });
+
+    ctx.series.highlightKey = 'b';
+    await vi.waitFor(() => expect(opacities()).toEqual({ a: '0.1', b: '1', c: '0.1' }));
+  });
+
   it("labels each overlapping category's area, from the baseline", async () => {
     const labels = await labelsOf({ data: long, y: 'value', c: 'key', seriesLayout: 'overlap' });
     // Each area reaches down to 0 (so the labels center in 0–10, 0–20 and 0–30)

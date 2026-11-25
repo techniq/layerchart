@@ -135,6 +135,11 @@
             y: label.y,
             textAnchor: 'middle' as const,
             verticalAnchor: 'middle' as const,
+            // Faded while the legend highlights another series, as its area is
+            opacity:
+              label.seriesKey != null && !c.ctx.series.isHighlighted(label.seriesKey, true)
+                ? 0.1
+                : undefined,
           }}
           {@const textProps = extractLayerProps(baseProps, 'lc-labels-text')}
           {#if childrenProp}

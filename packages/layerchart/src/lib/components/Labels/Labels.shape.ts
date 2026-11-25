@@ -22,6 +22,11 @@ export type LabelsShapeItem = {
   fill: string | undefined;
   /** Whether the label fits within its shape */
   fits: boolean;
+  /**
+   * The series (or `c` category) the shape is, to fade its label while the legend highlights
+   * another, as its area fades.  `undefined` for a GeoJSON feature or a chart without series.
+   */
+  seriesKey?: string;
 };
 
 export type ShapeLabelsOptions = {
@@ -59,13 +64,14 @@ export function getShapeLabels(options: ShapeLabelsOptions): LabelsShapeItem[] {
     projection && data.length && data.every(isGeoJson)
       ? data.map((d, i) => ({
           key: d.id ?? i,
+          seriesKey: undefined,
           data: d,
           defaultValue: d.properties?.name ?? d.id ?? '',
           polygons: geoPolygons(projection, d),
         }))
       : seriesShapes(options);
 
-  return shapes.map(({ key, data: d, defaultValue, polygons }) => {
+  return shapes.map(({ key, seriesKey, data: d, defaultValue, polygons }) => {
     const raw = options.value ? accessor(options.value)(d) : defaultValue;
     const value = String(options.format ? formatValue(raw, options.format as FormatType) : raw);
     const fill = typeof options.fill === 'function' ? accessor(options.fill)(d) : options.fill;
@@ -101,7 +107,7 @@ export function getShapeLabels(options: ShapeLabelsOptions): LabelsShapeItem[] {
         value,
       });
     }
-    return { data: d, x: pole.x, y: pole.y, value, fill, fits };
+    return { data: d, x: pole.x, y: pole.y, value, fill, fits, seriesKey };
   });
 }
 
@@ -129,6 +135,7 @@ function seriesShapes({ ctx, markData, data, seriesKey }: ShapeLabelsOptions) {
     const { y0, y1 } = ctx.areaAccessorsFor({ ownData: data != null });
     return [...group(markData(data), ctx.c)].map(([category, rows]) => ({
       key: category,
+      seriesKey: category,
       // Like a series, ex. for a `fill={(d) => d.color}`
       data: { key: category, label: String(category), color: ctx.cScale?.(category) },
       defaultValue: String(category),
@@ -143,6 +150,7 @@ function seriesShapes({ ctx, markData, data, seriesKey }: ShapeLabelsOptions) {
     return [
       {
         key: 'default',
+        seriesKey: undefined,
         data: ctx.series.series[0] ?? { key: 'default' },
         defaultValue: '',
         polygons: areaPolygons(ctx, markData(data), y0, y1),
@@ -159,6 +167,7 @@ function seriesShapes({ ctx, markData, data, seriesKey }: ShapeLabelsOptions) {
 
     return {
       key: s.key,
+      seriesKey: s.key,
       data: s,
       defaultValue: s.label ?? s.key,
       polygons: areaPolygons(ctx, markData(data, s.data), y0, y1),
