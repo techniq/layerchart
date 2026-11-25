@@ -6,7 +6,20 @@ name: CI
 on:
   push:
     branches: ['main']
+    # Generated assets the bot PRs from the `update-*` workflows change.  Nothing here builds,
+    # tests or packages them, so a PR (or merge) touching only these has nothing to check — and
+    # skipping it means those PRs don't wait on approval to run this
+    paths-ignore:
+      - docs/src/examples/catalog/**
+      - docs/static/screenshots/**
+      - docs/snapshots/**
+      - bundle-analyzer/bundle-reports/**
   pull_request:
+    paths-ignore:
+      - docs/src/examples/catalog/**
+      - docs/static/screenshots/**
+      - docs/snapshots/**
+      - bundle-analyzer/bundle-reports/**
 
 env:
   NODE_VERSION: 24.x

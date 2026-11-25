@@ -7,6 +7,8 @@ on:
     paths:
       - packages/layerchart/**
       - bundle-analyzer/**
+      # The PR this opens only changes the baseline, so merging it shouldn't run this again
+      - '!bundle-analyzer/bundle-reports/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

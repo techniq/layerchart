@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - docs/**
+      # The visual regression baseline isn't part of the site
+      - '!docs/snapshots/**'
   # Started by `release.yml` once a release is published, so the docs pick up its notes, and
   # available for redeploying by hand
   workflow_dispatch:
