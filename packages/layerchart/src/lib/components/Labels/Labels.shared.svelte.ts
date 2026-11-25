@@ -25,7 +25,7 @@ export type LabelsPropsWithoutHTML<T = any> = {
   z?: DataProp;
 
   /** Override data instead of using context */
-  data?: T;
+  data?: T[];
   /** Override display value accessor. By default, uses `y` unless yScale is band scale */
   value?: Accessor<T>;
   /** The fill color of the label, string or accessor */
