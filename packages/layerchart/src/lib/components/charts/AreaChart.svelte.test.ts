@@ -230,3 +230,49 @@ describe(`AreaChart`, () => {
     });
   });
 });
+
+describe('legend `c` category hover', () => {
+  // `c` names the legend's items when no `series` do, and a single implicit series draws every
+  // area — so the fade has to tell the areas apart by their `c` value
+  const longData = [
+    { date: 0, fruit: 'apples', value: 10 },
+    { date: 1, fruit: 'apples', value: 30 },
+    { date: 0, fruit: 'bananas', value: 20 },
+    { date: 1, fruit: 'bananas', value: 50 },
+  ];
+
+  it('should fade the other areas while a legend item is hovered', async () => {
+    const { container } = render(AreaChart, {
+      data: longData,
+      x: 'date',
+      y: 'value',
+      c: 'fruit',
+      cRange: ['red', 'yellow'],
+      legend: true,
+      width: 400,
+      height: 300,
+    } as any);
+
+    // `Legend` is lazy-loaded inside `ChartChildren`
+    let buttons: NodeListOf<Element> = container.querySelectorAll('.lc-legend-swatch-button');
+    await vi.waitFor(() => {
+      buttons = container.querySelectorAll('.lc-legend-swatch-button');
+      expect(buttons.length).toBe(2);
+    });
+    const areas = () =>
+      Array.from(container.querySelectorAll('.lc-area-path')).map((el) => ({
+        fill: el.getAttribute('fill'),
+        opacity: (el as SVGElement).style.opacity || el.getAttribute('opacity') || '1',
+      }));
+    await vi.waitFor(() => expect(areas().length).toBe(2));
+
+    buttons[0].dispatchEvent(new PointerEvent('pointerenter', { bubbles: false }));
+
+    await vi.waitFor(() => {
+      expect(areas()).toEqual([
+        { fill: 'red', opacity: '1' },
+        { fill: 'yellow', opacity: '0.1' },
+      ]);
+    });
+  });
+});

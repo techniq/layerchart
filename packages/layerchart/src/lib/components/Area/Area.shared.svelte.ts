@@ -278,14 +278,44 @@ export class AreaState {
     }));
   });
 
-  /** `#areaTargets` with each group's path swapped for its in-flight tween */
+  /**
+   * `#areaTargets` with each group's path swapped for its in-flight tween, and faded while the
+   * legend highlights another group (kept out of the targets, so hovering doesn't rebuild paths)
+   */
   areas = $derived.by(() => {
     const targets = this.#areaTargets;
+    if (!targets) return targets;
     const tweens = this.#areaTweens;
-    if (!targets || !tweens) return targets;
 
-    return targets.map((area) => ({ ...area, d: tweens.get(area.key) ?? area.d }));
+    return targets.map((area) => ({
+      ...area,
+      d: tweens?.get(area.key) ?? area.d,
+      opacity: area.opacity ?? this.#areaOpacity(area.data),
+    }));
   });
+
+  /**
+   * Fade for one area when the legend names `c` categories, or `undefined` when it names series
+   * (`pathOpacity` fades those, but one series draws every area here, so they'd fade as one).  As
+   * `Spline`'s lines do.
+   */
+  #areaOpacity(data: any[]) {
+    const key = this.#groupKey(data[0]);
+    if (key == null) return undefined;
+    return this.ctx.series.isHighlighted(key, true) ? 1 : 0.1;
+  }
+
+  /**
+   * What the legend calls this area, or `null` when nothing names it: the chart's `c`, or the
+   * mark's own grouping where a series is declared per group
+   */
+  #groupKey(d: any): any {
+    const category = this.ctx.cKey(d);
+    if (category != null) return category;
+    if (!this.gAccessor || d == null) return null;
+    const key = this.gAccessor(d);
+    return key != null && this.ctx.series.series.some((s) => s.key === key) ? key : null;
+  }
 
   /** `fill` / `stroke` / `class` for the ungrouped case, resolved the same way */
   resolvedFill = $derived(
