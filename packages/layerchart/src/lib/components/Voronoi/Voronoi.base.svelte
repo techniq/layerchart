@@ -35,7 +35,6 @@
     ringsToPath,
     spreadApart,
   } from '$lib/utils/polygon.js';
-  import { shapeLabel } from '$lib/utils/shapeLabel.js';
   import { clipToCircle, type VoronoiCell } from './Voronoi.shared.svelte.js';
 
   let {
@@ -191,7 +190,7 @@
 
   const geoPolygons = $derived(geo.projection && !clipRings ? geoVoronoi().polygons(points) : null);
 
-  /** A cell from its pieces on screen, its `center` only computed when read */
+  /** A cell from its pieces on screen */
   function planarCell(
     data: any,
     index: number,
@@ -199,20 +198,15 @@
     pieces: [number, number][][]
   ): VoronoiCell {
     const largest = greatest(pieces, (piece) => Math.abs(polygonArea(piece))) ?? null;
-    const polygons = pieces.map((piece) => [piece]);
-    let center: VoronoiCell['center'] | undefined;
     return {
       data,
       index,
       point,
       polygon: largest,
-      polygons,
+      polygons: pieces.map((piece) => [piece]),
       path: pieces.length ? ringsToPath(pieces) : null,
       centroid: largest ? polygonCentroid(largest) : null,
       area: sum(pieces, (piece) => Math.abs(polygonArea(piece))),
-      get center() {
-        return (center ??= pieces.length ? shapeLabel(polygons, { centroidWeight: 0.01 }) : null);
-      },
     };
   }
 
@@ -238,7 +232,6 @@
         // Use spherical centroid/area (projected) rather than the projected ring, which
         // tears across the antimeridian and yields a garbage centroid for large cells.
         const projectedCentroid = geo.projection?.(geoCentroid(feature)) ?? null;
-        let center: VoronoiCell['center'] | undefined;
         return {
           data: feature.properties.site?.data,
           index,
@@ -252,9 +245,6 @@
               : null,
           // Spherical area (steradians) — see `VoronoiCell.area`
           area: geoArea(feature),
-          get center() {
-            return (center ??= polygon ? shapeLabel([polygon], { centroidWeight: 0.01 }) : null);
-          },
         };
       });
     }

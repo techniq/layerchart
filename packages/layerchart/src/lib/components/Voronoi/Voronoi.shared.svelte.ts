@@ -22,8 +22,9 @@ export type VoronoiCell = {
   polygon: [number, number][] | null;
   /**
    * The cell's pieces on screen (several when `clip` splits it, ex. by a coastline's islands), each
-   * a polygon of rings as `shapeLabel()` takes them.  Empty for degenerate cells.  Ex. for where an
-   * image's square fits: `shapeLabel(cell.polygons, { fit: 'rect' })`.
+   * a polygon of rings as `shapeLabel()` takes them.  Empty for degenerate cells.  Ex. for its
+   * visual center, which is always inside even when the cell is concave (cut to a state's border):
+   * `shapeLabel(cell.polygons)`, or where an image's square fits: `{ fit: 'rect' }`.
    */
   polygons: [number, number][][][];
   /**
@@ -42,13 +43,6 @@ export type VoronoiCell = {
    * cartesian charts; spherical area in steradians (`geoArea`) for geo charts.
    */
   area: number;
-  /**
-   * The cell's visual center (the point inside it farthest from its edges) and its `distance` to
-   * them (the room there, ex. to size an image by), or `null` for degenerate cells.  Unlike the
-   * centroid, always inside, even for a concave cell (ex. cut to a state's border).  Only computed
-   * when read (see `shapeLabel()`, with `polygons` for other options).
-   */
-  center: { x: number; y: number; distance: number } | null;
 };
 
 export type VoronoiPropsWithoutHTML = {

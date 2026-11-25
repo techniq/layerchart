@@ -54,16 +54,13 @@ describe('Voronoi `clip`', () => {
     expect(bounds.x1).toBeLessThanOrEqual(100.001);
   });
 
-  it("gives each cell's visual center, and the room there", async () => {
-    const { cells } = await renderCells({ data: [{ x: 25, y: 50 }], clip: leftHalf });
-    // The left half (100 × 200) has the most room along its middle, 50 from its sides
-    expect(cells[0].center!.x).toBeCloseTo(50, 0);
-    expect(cells[0].center!.distance).toBeCloseTo(50, 0);
-  });
-
   it("gives each cell's pieces, for `shapeLabel()` with other options", async () => {
     const { cells } = await renderCells({ data: [{ x: 25, y: 50 }], clip: leftHalf });
     expect(cells[0].polygons).toHaveLength(1);
+    // Its visual center: the left half (100 × 200) has the most room along its middle
+    const center = shapeLabel(cells[0].polygons);
+    expect(center.x).toBeCloseTo(50, 0);
+    expect(center.distance).toBeCloseTo(50, 0);
     // The left half (100 × 200) fits a 100 × 100 square, and a 1:2 rectangle as big as itself
     expect(shapeLabel(cells[0].polygons, { fit: 'rect' }).distance).toBeCloseTo(50, 0);
     expect(shapeLabel(cells[0].polygons, { fit: 'rect', aspect: 0.5 }).distance).toBeCloseTo(50, 0);
