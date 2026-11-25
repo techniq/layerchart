@@ -7,6 +7,8 @@ import {
   Matrix4,
   Quaternion,
   Ray,
+  Raycaster,
+  Vector2,
   Vector3,
   type InstancedMesh,
   type Object3D,
@@ -1812,6 +1814,175 @@ describe('view and transform', () => {
     await expect.poll(() => direction.angleTo(ray().direction)).toBeGreaterThan(0.2);
     // Turned about what's been panned to: it stays where it was on screen
     expect(onScreen(pannedTo).distanceTo(before)).toBeLessThan(0.005);
+  });
+
+  it('zooms a perspective view towards what is under the pointer, never through it', async () => {
+    await renderMarks({
+      mark: 'surface',
+      chart: {
+        xDomain: [0, 1],
+        yDomain: [0, 1],
+        zDomain: [0, 10],
+        zRange: [0, 100],
+        view: perspective,
+        transform: { mode: 'canvas' },
+      },
+      surface: { value: (x: number, y: number) => 10 * x * y, pixelSize: 20 },
+    });
+    const scene = await withTransform();
+    await settled(() => reach(scene));
+    const camera = () => {
+      scene.camera!.updateMatrixWorld();
+      return scene.camera!;
+    };
+    // A point of the plot area off its middle, as the pointer might be, from -1 to 1 on screen
+    const q = { x: chart!.box.width * 0.3, y: chart!.box.height * 0.65 };
+    const ndc = new Vector2(
+      ((q.x + chart!.padding.left) / scene.width) * 2 - 1,
+      -((q.y + chart!.padding.top) / scene.height) * 2 + 1
+    );
+    const raycaster = new Raycaster();
+    raycaster.setFromCamera(ndc, camera());
+    const [hit] = raycaster
+      .intersectObject(scene.root, true)
+      .filter((h) => (h.object as any).isMesh);
+    expect(hit).toBeDefined();
+    const before = camera().position.distanceTo(hit.point);
+
+    chart!.transform.scaleTo(
+      4,
+      { x: q.x + chart!.padding.left, y: q.y + chart!.padding.top },
+      { instant: true }
+    );
+    // A quarter of the way as far from it, along the way to it
+    await expect.poll(() => camera().position.distanceTo(hit.point)).toBeCloseTo(before / 4, 0);
+    // And it's still under the pointer
+    const on = hit.point.clone().project(camera());
+    expect(on.x).toBeCloseTo(ndc.x, 3);
+    expect(on.y).toBeCloseTo(ndc.y, 3);
+  });
+
+  it('turns zoomed in about where it last zoomed towards, however it got there', async () => {
+    await renderMarks({
+      mark: 'surface',
+      chart: {
+        xDomain: [0, 1],
+        yDomain: [0, 1],
+        zDomain: [0, 10],
+        zRange: [0, 100],
+        view: perspective({ rotate: -20, tilt: 70 }),
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+      surface: { value: (x: number, y: number) => 10 * x * y, pixelSize: 20 },
+    });
+    const scene = await withTransform();
+    await settled(() => reach(scene));
+    const camera = () => {
+      scene.camera!.updateMatrixWorld();
+      return scene.camera!;
+    };
+    const raycaster = new Raycaster();
+    /** What's drawn at a share of the plot area across and down */
+    const surface = (u: number, v: number) => {
+      raycaster.setFromCamera(
+        new Vector2(
+          ((u * chart!.box.width + chart!.padding.left) / scene.width) * 2 - 1,
+          -((v * chart!.box.height + chart!.padding.top) / scene.height) * 2 + 1
+        ),
+        camera()
+      );
+      return raycaster.intersectObject(scene.root, true).find((h) => (h.object as any).isMesh)
+        ?.point;
+    };
+    const zoom = async (u: number, v: number) => {
+      const scale = chart!.transform.scale;
+      chart!.transform.scaleTo(
+        6,
+        {
+          x: u * chart!.box.width + chart!.padding.left,
+          y: v * chart!.box.height + chart!.padding.top,
+        },
+        { instant: true }
+      );
+      await expect.poll(() => chart!.transform.scale).toBeCloseTo(scale * 6);
+    };
+    // Zoomed in towards one place, then on towards another off to the side of it
+    await zoom(0.3, 0.6);
+    await zoom(0.8, 0.4);
+
+    // Turned, it orbits what it zoomed towards last: that stays where it is on screen, as far away
+    const middle = surface(0.8, 0.4)!;
+    expect(middle).toBeDefined();
+    const before = middle.clone().project(camera());
+    const away = camera().position.distanceTo(middle);
+    const direction = camera().getWorldDirection(new Vector3());
+    const { x, y } = chart!.transform.rotation!;
+    chart!.transform.setRotation({ x: x + 25, y: y - 10 }, { instant: true });
+    await expect
+      .poll(() => direction.angleTo(camera().getWorldDirection(new Vector3())))
+      .toBeGreaterThan(0.1);
+    await new Promise((r) => setTimeout(r, 100));
+    const after = middle.clone().project(camera());
+    expect(Math.hypot(after.x - before.x, after.y - before.y)).toBeLessThan(0.01);
+    expect(camera().position.distanceTo(middle)).toBeCloseTo(away, 1);
+  });
+
+  it('drags the ground under the pointer, zoomed in, keeping the camera as high', async () => {
+    await renderMarks({
+      mark: 'surface',
+      chart: {
+        xDomain: [0, 1],
+        yDomain: [0, 1],
+        zDomain: [0, 10],
+        zRange: [0, 100],
+        view: perspective({ rotate: -20, tilt: 70 }),
+        transform: { mode: 'canvas', drag: 'rotate' },
+      },
+      surface: { value: (x: number, y: number) => 10 * x * y, pixelSize: 20 },
+    });
+    const scene = await withTransform();
+    await settled(() => reach(scene));
+    const camera = () => {
+      scene.camera!.updateMatrixWorld();
+      return scene.camera!;
+    };
+    const { padding, box } = chart!;
+    /** A point of the chart's container, from -1 to 1 on screen */
+    const ndc = (x: number, y: number) =>
+      new Vector2((x / scene.width) * 2 - 1, -(y / scene.height) * 2 + 1);
+    const transform = chart!.transform;
+    // Zoomed in towards somewhere near the middle
+    transform.scaleTo(
+      4,
+      { x: padding.left + box.width * 0.45, y: padding.top + box.height * 0.55 },
+      { instant: true }
+    );
+    await expect.poll(() => transform.scale).toBeCloseTo(4);
+
+    // Grabbing the ground off towards the far side, as a drag does
+    const start = { x: padding.left + box.width * 0.6, y: padding.top + box.height * 0.4 };
+    const raycaster = new Raycaster();
+    raycaster.setFromCamera(ndc(start.x, start.y), camera());
+    const [hit] = raycaster
+      .intersectObject(scene.root, true)
+      .filter((h) => (h.object as any).isMesh);
+    expect(hit).toBeDefined();
+    const height = camera().position.y;
+    const from = { ...transform.translate };
+    transform.startPoint = start;
+    transform.startTranslate = from;
+    transform.dragging = true;
+    const moved = { x: -40, y: 25 };
+    transform.setTranslate({ x: from.x + moved.x, y: from.y + moved.y }, { instant: true });
+    await expect.poll(() => transform.translate.x).toBeCloseTo(from.x + moved.x);
+    transform.dragging = false;
+
+    // What was grabbed is under the pointer where it's moved to
+    const on = hit.point.clone().project(camera());
+    const to = ndc(start.x + moved.x, start.y + moved.y);
+    expect(on.x).toBeCloseTo(to.x, 2);
+    expect(on.y).toBeCloseTo(to.y, 2);
+    expect(camera().position.y).toBeCloseTo(height, 1);
   });
 
   it('keeps a zoom when the plot box changes', async () => {
