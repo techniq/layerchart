@@ -40,7 +40,7 @@ Pass an array of polygons (ex. a state and its islands) to find the best spot ac
 
 Each state's name is placed where `shapeLabel()` finds the most room, with that room drawn beneath it. A wider `aspect` favors the wide parts of a shape (ex. Florida's panhandle over its peninsula), `fit: 'rect'` measures a box rather than an ellipse, and `centroidWeight` pulls each label towards its state's centroid (the dots).
 
-:example{name="playground" showCode}
+:example{name="playground"}
 
 :::note
 [`Labels`](/docs/components/Labels) with `layout="shape"` uses `shapeLabel()` to label map regions and stacked areas, and a [`Voronoi`](/docs/components/Voronoi) cell's `polygons` can be passed to it directly.

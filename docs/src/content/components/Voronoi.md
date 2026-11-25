@@ -18,4 +18,4 @@ location share their cell. The `children` snippet's `cells` give each cell's `pa
 
 Here, each state is divided between the teams in it, with a team's logo filling its territory.
 
-:example{ component="Image" name="sports-territories" showCode }
+:example{ component="Image" name="sports-territories" }

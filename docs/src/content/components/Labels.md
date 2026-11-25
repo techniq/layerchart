@@ -77,18 +77,18 @@ areas: each series' area, or each `c` category's (as here, with `c="name"`), is 
 name. Add `occlude` to hide the labels that don't fit within their shape, such as a band too thin
 for its name.
 
-:example{ name="shape-area" showCode }
+:example{ name="shape-area" }
 
 A simplified chart takes the same props through `labels` (here with the other languages summed
 into "Other", and stacked to 100% with `seriesLayout="stackExpand"`).
 
-:example{ name="shape-area-chart" showCode }
+:example{ name="shape-area-chart" }
 
 In a geo `<Chart>`, pass GeoJSON features as `data` to label each region by its `properties.name`,
 or by a `value` accessor (here, each state's abbreviation or name). The label goes where the region
 has room for it, such as the middle of Florida's peninsula rather than its panhandle.
 
-:example{ name="shape-geo" showCode }
+:example{ name="shape-geo" }
 
 ### Simplified charts
 
