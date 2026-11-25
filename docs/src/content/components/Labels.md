@@ -65,6 +65,31 @@ the projection, so the same props place airport labels in open space with leader
 
 :example{ name="voronoi-geo" }
 
+### Areas and regions
+
+Use `layout="shape"` to label each shape once, rather than each data point. A label goes as near
+its shape's visual center as its text fits (where it has the most room otherwise), so a wide label
+moves into the widest stretch of a band, and it keeps its place as the chart resizes rather than
+jumping between equally roomy spots.
+
+For a stacked (or overlapping) area chart, add a single `<Labels layout="shape" />` beside the
+areas: each series' area, or each `c` category's (as here, with `c="name"`), is labeled with its
+name. Add `occlude` to hide the labels that don't fit within their shape, such as a band too thin
+for its name.
+
+:example{ name="shape-area" showCode }
+
+A simplified chart takes the same props through `labels` (here with the other languages summed
+into "Other", and stacked to 100% with `seriesLayout="stackExpand"`).
+
+:example{ name="shape-area-chart" showCode }
+
+In a geo `<Chart>`, pass GeoJSON features as `data` to label each region by its `properties.name`,
+or by a `value` accessor (here, each state's abbreviation or name). The label goes where the region
+has room for it, such as the middle of Florida's peninsula rather than its panhandle.
+
+:example{ name="shape-geo" showCode }
+
 ### Simplified charts
 
 Labels are also integrated in simplified charts via the `labels` prop
