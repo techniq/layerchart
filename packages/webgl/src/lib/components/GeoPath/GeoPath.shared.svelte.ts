@@ -24,14 +24,15 @@ export type GeoPathProps = {
   z?: DataProp<Feature>;
   /**
    * A CSS color, or a function of the feature returning one (or a value for the chart's color
-   * scale).  Lines have no fill.
-   *
-   * @default 'color-mix(in oklab, var(--color-surface-content) 15%, var(--color-surface-100))'
+   * scale).  Lines have no fill.  None by default, as the core `GeoPath` (`null` for none where
+   * a `class` sets one).
    */
   fill?: ColorProp<Feature> | null;
   /**
    * The outlines' color: a CSS color, or a data key / function of the feature run through the
-   * chart's color scale.  No outlines without one.
+   * chart's color scale (`null` for none).
+   *
+   * @default 'var(--color-surface-content)'
    */
   stroke?: ColorProp<Feature> | null;
   /**

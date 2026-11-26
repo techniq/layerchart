@@ -87,7 +87,7 @@
         ...footprint(d),
         z: base,
         height: top - base,
-        color: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
+        color: rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)', look?.fill),
       };
     })
   );

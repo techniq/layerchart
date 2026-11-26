@@ -27,6 +27,7 @@
     fill,
     class: className,
     opacity = 1,
+    fillOpacity = 1,
     line = false,
     strokeWidth: strokeWidthProp,
     tooltip = false,
@@ -36,7 +37,13 @@
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className));
-  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 2);
+  /** The line's own props, when `line` gives them (as the core `Area` takes a `Spline`'s) */
+  const lineProps = $derived(typeof line === 'object' ? line : null);
+  /** What the line's `class` sets */
+  const lineLook = $derived(scene.style(lineProps?.class));
+  const strokeWidth = $derived(
+    lineProps?.strokeWidth ?? lineLook?.strokeWidth ?? strokeWidthProp ?? look?.strokeWidth ?? 2
+  );
 
   ctx.registerComponent({
     name: 'Area',
@@ -133,6 +140,12 @@
     }));
   }
 
+  /** The line's color: its own `stroke` (or its class's), else the area's */
+  function lineColor(d: any, areaColor: string) {
+    if (lineProps?.stroke != null) return rowColor(ctx, lineProps.stroke, d, areaColor);
+    return lineLook?.stroke ?? areaColor;
+  }
+
   createMerged({
     tooltip: () => tooltip,
     items: () =>
@@ -180,11 +193,11 @@
               geometry: positions.length ? geometry : null,
               fill: color,
               lines: line ? [columns.flatMap((c) => edges(c)[1])] : [],
-              stroke: line ? color : null,
+              stroke: line ? lineColor(areaRows[0], color) : null,
             };
           });
       }),
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
   });
 </script>

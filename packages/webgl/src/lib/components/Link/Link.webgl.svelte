@@ -4,6 +4,7 @@
 
 <script lang="ts">
   import { getChartContext, isDataProp } from 'layerchart';
+  import { getSceneContext } from '../../contexts/scene.svelte.js';
 
   import { getSphere, type ScenePoint } from '../../utils/globe.js';
   import { markRows, placeOf, rowColor } from '../../utils/marks.js';
@@ -23,11 +24,18 @@
     x = (node) => node.x,
     y = (node) => node.y,
     arc = 0,
-    stroke = 'var(--color-surface-content, currentColor)',
-    strokeWidth = 1,
+    stroke,
+    strokeWidth: strokeWidthProp,
+    class: className,
   }: LinkProps = $props();
 
   const ctx = getChartContext();
+  const scene = getSceneContext();
+  /** What its `class` sets */
+  const look = $derived(scene.style(className));
+  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
+  /** Its rows: `data` as given, or one link (as the core `Link` takes it) */
+  const rows = $derived(Array.isArray(data) ? data : data != null ? [data] : undefined);
   const sphere = $derived(getSphere(ctx));
 
   /** Ends placed by `x1` / `y1` (as the core `Link`), rather than by `source` / `target` nodes */
@@ -50,11 +58,11 @@
 
   createMerged({
     items: () =>
-      (placed && !data && ![x1, y1, x2, y2].some(isDataProp)
+      (placed && !rows && ![x1, y1, x2, y2].some(isDataProp)
         ? [undefined]
         : placed
-          ? markRows(ctx, data, x1, y1, x2, y2)
-          : (data ?? [])
+          ? markRows(ctx, rows, x1, y1, x2, y2)
+          : (rows ?? [])
       ).map((d) => {
         const [[sx, sz, sy], [tx, tz, ty]] = ends(d);
         const lift = valueOf(arc, d);
@@ -71,10 +79,16 @@
           geometry: null,
           fill: null,
           lines: [line],
-          stroke: rowColor(ctx, stroke, d, 'var(--color-surface-content, currentColor)'),
+          stroke: rowColor(
+            ctx,
+            stroke,
+            d,
+            'var(--color-surface-content, currentColor)',
+            look?.stroke
+          ),
         };
       }),
-    opacity: () => 1,
+    opacity: () => look?.opacity ?? 1,
     strokeWidth: () => strokeWidth,
   });
 </script>

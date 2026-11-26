@@ -49,6 +49,7 @@
 		<GeoPath
 			tooltip
 			geojson={buildings}
+			stroke={null}
 			z={height}
 			fill="color-mix(in oklab, var(--color-surface-content) 12%, var(--color-surface-100))"
 		/>

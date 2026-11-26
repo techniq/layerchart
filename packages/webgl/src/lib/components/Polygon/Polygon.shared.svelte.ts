@@ -54,7 +54,7 @@ export type PolygonProps = {
   /**
    * A CSS color, or a key / function of the row run through the chart's color scale.
    *
-   * @default 'var(--color-primary)'
+   * @default 'var(--color-surface-content)'
    */
   fill?: ColorProp;
   /** The outline: a CSS color, or a key / function of the row run through the color scale */

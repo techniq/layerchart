@@ -164,6 +164,19 @@ describe('Spline and Area, as LayerChart draws them', () => {
     expect(Math.max(...downs)).toBeCloseTo(chart!.yScale(0), 0);
     expect(Math.min(...downs)).toBeCloseTo(chart!.yScale(7), 0);
   });
+
+  it('draws an `Area`’s `line` with its own `stroke` and `strokeWidth`, as the core `Area` takes it', async () => {
+    const scene = await renderMarks({
+      mark: 'area',
+      chart: { ...chartProps, data: series.filter((d) => d.y != null) },
+      area: { line: { stroke: 'rgb(255, 0, 0)', strokeWidth: 3 } },
+    });
+    const lines = () => layered(scene).find((o) => (o as any).isLineSegments2) as any;
+    await expect.poll(() => lines()?.visible).toBe(true);
+    expect(lines().material.linewidth).toBe(3);
+    const [r, g, b] = lines().geometry.attributes.instanceColorStart.array;
+    expect([r, g, b]).toEqual([1, 0, 0]);
+  });
 });
 
 describe('Polygon, as LayerChart draws it', () => {
@@ -876,7 +889,7 @@ describe('GeoPath', () => {
     const scene = await renderMarks({
       mark: 'geopath',
       chart: { geo: { projection: geoIdentity } },
-      geopath: { geojson: square, z: 20 },
+      geopath: { geojson: square, z: 20, fill: 'gray' },
     });
     const mesh = layered(scene).find((o: any) => o.isMesh) as any;
     await expect.poll(() => mesh.geometry.getAttribute('position')?.count ?? 0).toBeGreaterThan(0);
@@ -1259,6 +1272,56 @@ describe('placed as LayerChart places its namesakes', () => {
     const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
     expect(ends.slice(0, 6)).toEqual([10, 0, 20, 30, 0, 40]);
   });
+
+  it('links one link given as `data`, in its `class`’s stroke, as the core `Link` takes it', async () => {
+    const style = document.createElement('style');
+    style.textContent = '.test-link { stroke: rgb(255, 0, 0) }';
+    document.head.append(style);
+    try {
+      const scene = await renderMarks({
+        mark: 'link',
+        chart: chartProps,
+        link: {
+          data: { source: { x: 10, y: 20 }, target: { x: 30, y: 40 } },
+          class: 'test-link',
+        },
+      });
+      const segments = () => layered(scene).find((o) => (o as any).isLineSegments2) as any;
+      await expect.poll(() => segments()?.geometry.attributes.instanceStart?.count ?? 0).toBe(1);
+      const [r, g, b] = segments().geometry.attributes.instanceColorStart.array;
+      expect([r, g, b]).toEqual([1, 0, 0]);
+    } finally {
+      style.remove();
+    }
+  });
+
+  it('draws a `Circle` at `cx` / `cy` pixels, and through the scales with rows', async () => {
+    const center = (scene: SceneState, i = 0) => {
+      const matrix = new Matrix4();
+      (children(scene, 'isInstancedMesh')[0] as InstancedMesh).getMatrixAt(i, matrix);
+      const position = new Vector3();
+      const size = new Vector3();
+      matrix.decompose(position, new Quaternion(), size);
+      return { x: position.x, y: position.z, r: size.x };
+    };
+    const pixels = await renderMarks({
+      mark: 'circle',
+      chart: chartProps,
+      circle: { cx: 40, cy: 30, r: 6 },
+    });
+    expect(center(pixels)).toEqual({ x: 40, y: 30, r: 6 });
+
+    const scene = await renderMarks({
+      mark: 'circle',
+      chart: chartProps,
+      circle: { data: rows, cx: 'x', cy: 'y', r: 4 },
+    });
+    await expect
+      .poll(() => (children(scene, 'isInstancedMesh')[0] as InstancedMesh)?.count)
+      .toBe(rows.length);
+    expect(center(scene).x).toBeCloseTo(chart!.xScale(rows[0].x));
+    expect(center(scene).y).toBeCloseTo(chart!.yScale(rows[0].y));
+  });
 });
 
 describe('Axis', () => {
@@ -1281,6 +1344,53 @@ describe('Axis', () => {
     });
     return found;
   };
+
+  /** The axis' rule and tick marks (and not a `Grid`'s lines), as `[x, height, y]` pairs */
+  const ruleSegments = (scene: SceneState) => {
+    const lines = layered(scene).find((o) => (o as any).isLineSegments) as any;
+    const positions = Array.from(
+      (lines?.geometry.getAttribute('position')?.array as Float32Array) ?? []
+    );
+    return Array.from({ length: positions.length / 6 }, (_, i) =>
+      positions.slice(i * 6, i * 6 + 6).map((v) => Math.round(v))
+    );
+  };
+  const flat = { ...chartProps, view: undefined, z: undefined, transform: undefined };
+
+  it('draws a `top` / `right` axis along the edges across from `bottom` / `left`', async () => {
+    const top = await renderMarks({
+      mark: 'axis',
+      chart: flat,
+      axis: { placement: 'top', ticks: [], rule: true },
+    });
+    await expect.poll(() => ruleSegments(top)).toEqual([[0, 0, 0, Math.round(chart!.width), 0, 0]]);
+
+    const right = await renderMarks({
+      mark: 'axis',
+      chart: flat,
+      axis: { placement: 'right', ticks: [], rule: true },
+    });
+    const w = Math.round(chart!.width);
+    await expect
+      .poll(() => ruleSegments(right))
+      .toEqual([[w, 0, 0, w, 0, Math.round(chart!.height)]]);
+  });
+
+  it('draws a `grid` across the plot at its ticks, as the core `Axis`', async () => {
+    const lineSets = (scene: SceneState) =>
+      layered(scene).filter((o) => (o as any).isLineSegments || (o as any).isLineSegments2).length;
+    const plain = await renderMarks({
+      mark: 'axis',
+      chart: flat,
+      axis: { placement: 'left', ticks: [0, 5, 10] },
+    });
+    const gridded = await renderMarks({
+      mark: 'axis',
+      chart: flat,
+      axis: { placement: 'left', ticks: [0, 5, 10], grid: true },
+    });
+    await expect.poll(() => lineSets(gridded)).toBeGreaterThan(lineSets(plain));
+  });
 
   it('lays the floor’s tick labels on it, as an `isometric` chart’s', async () => {
     const scene = await renderMarks({
@@ -2133,7 +2243,12 @@ describe('GeoPath motion', () => {
     const { rerender } = render(Marks, {
       mark: 'geopath',
       chart: { geo: { projection: geoIdentity as any } },
-      geopath: { geojson: square(10), z: 10, motion: { type: 'tween', duration: 400 } },
+      geopath: {
+        geojson: square(10),
+        z: 10,
+        fill: 'gray',
+        motion: { type: 'tween', duration: 400 },
+      },
       onScene: (s: SceneState) => (scene = s),
     });
     await expect.poll(() => scene?.root.children.length ?? 0).toBeGreaterThan(0);
@@ -2145,7 +2260,12 @@ describe('GeoPath motion', () => {
     await expect.poll(top).toBeCloseTo(10);
 
     await rerender({
-      geopath: { geojson: square(40), z: 40, motion: { type: 'tween', duration: 400 } },
+      geopath: {
+        geojson: square(40),
+        z: 40,
+        fill: 'gray',
+        motion: { type: 'tween', duration: 400 },
+      },
     });
     // Partway there, then all the way
     await expect.poll(top).toBeGreaterThan(11);
@@ -2184,6 +2304,42 @@ describe('strokes, as LayerChart’s marks take them', () => {
     });
     await expect.poll(() => segments(scene)).toBe(16);
     expect((instanced(scene)[0].material as any).polygonOffset).toBe(true);
+  });
+
+  const columns = {
+    data: [
+      { x: 'a', y: 4 },
+      { x: 'b', y: 8 },
+    ],
+    x: 'x',
+    xScale: scaleBand().padding(0.2),
+    xDomain: ['a', 'b'],
+    y: 'y',
+    yDomain: [0, 10],
+  };
+
+  it('draws `Bars` without a `z` as LayerChart’s 2D bars, flat on the floor', async () => {
+    const scene = await renderMarks({ mark: 'bars', chart: columns, bars: { insets: { x: 2 } } });
+    await expect.poll(() => instanced(scene)[0]?.count ?? 0).toBe(2);
+    const matrix = new Matrix4();
+    instanced(scene)[0].getMatrixAt(1, matrix);
+    const position = new Vector3();
+    const size = new Vector3();
+    matrix.decompose(position, new Quaternion(), size);
+    // Across its band (less its insets), and from the baseline up to its value
+    expect(position.x).toBeCloseTo((chart!.xScale as any)('b') + 2);
+    expect(size.x).toBeCloseTo((chart!.xScale as any).bandwidth() - 4);
+    expect(position.z).toBeCloseTo(chart!.yScale(8));
+    expect(size.z).toBeCloseTo(chart!.yScale(0) - chart!.yScale(8));
+    expect(size.y).toBeLessThan(1);
+  });
+
+  it('outlines `Bars` with a `strokeWidth` alone, as LayerChart’s bars', async () => {
+    const plain = await renderMarks({ mark: 'bars', chart: columns });
+    expect(segments(plain)).toBe(0);
+    const scene = await renderMarks({ mark: 'bars', chart: columns, bars: { strokeWidth: 1 } });
+    // Flat, only around each bar's top: its four sides
+    await expect.poll(() => segments(scene)).toBe(8);
   });
 
   it('outlines `Bin` cells around their tops and up their corners', async () => {

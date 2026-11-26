@@ -14,6 +14,12 @@ export { default as WebGL, default as Layer } from './components/layers/WebGL.sv
 export type { WebGLProps, WebGLPropsWithoutHTML } from './components/layers/WebGL.svelte';
 export { default as Axis } from './components/Axis/Axis.webgl.svelte';
 export type { AxisProps, AxisLabelProps } from './components/Axis/Axis.svelte';
+export { default as Bar } from './components/Bar/Bar.webgl.svelte';
+export type { BarProps } from './components/Bar/Bar.svelte';
+export { default as Circle } from './components/Circle/Circle.webgl.svelte';
+export type { CircleProps } from './components/Circle/Circle.svelte';
+export { default as Graticule } from './components/Graticule/Graticule.webgl.svelte';
+export type { GraticuleProps } from './components/Graticule/Graticule.svelte';
 export { default as Bars } from './components/Bars/Bars.webgl.svelte';
 export { default as Bin } from './components/Bin/Bin.webgl.svelte';
 export type { BinProps } from './components/Bin/Bin.svelte';

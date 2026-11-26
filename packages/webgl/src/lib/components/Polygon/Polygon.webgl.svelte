@@ -109,7 +109,7 @@
         return {
           d,
           geometry: (fill ?? look?.fill) === 'none' ? null : extrude(context, z0, z1),
-          fill: rowColor(ctx, fill, d, 'var(--color-primary, currentColor)', look?.fill),
+          fill: rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)', look?.fill),
           lines: context.lines.map((line) => line.flatMap(([x, y]) => [x, outline, y])),
           stroke:
             stroke == null && !look?.stroke

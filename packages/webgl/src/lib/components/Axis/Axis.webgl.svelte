@@ -18,9 +18,11 @@
   } from 'three';
   import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
   import Text from '../Text/Text.webgl.svelte';
+  import Grid from '../Grid/Grid.webgl.svelte';
 
   let {
     placement,
+    grid = false,
     label,
     ticks,
     tickSpacing: tickSpacingProp,
@@ -43,36 +45,51 @@
   // Its labels lie beside the plot box, so aren't clipped to it
   setUnclipped();
 
-  const scale = $derived(
-    placement === 'bottom' ? ctx.xScale : placement === 'left' ? ctx.yScale : ctx.zScale
+  /** Along `x` (`bottom` / `top`), or `y` (`left` / `right`), else the height `z` (`back`) */
+  const along = $derived(
+    placement === 'bottom' || placement === 'top'
+      ? 'x'
+      : placement === 'left' || placement === 'right'
+        ? 'y'
+        : 'z'
   );
-  const length = $derived(
-    placement === 'bottom' ? ctx.width : placement === 'left' ? ctx.height : ctx.zDepth
-  );
+  const scale = $derived(along === 'x' ? ctx.xScale : along === 'y' ? ctx.yScale : ctx.zScale);
+  const length = $derived(along === 'x' ? ctx.width : along === 'y' ? ctx.height : ctx.zDepth);
   // Spaced as the core `Axis` spaces them
   const spacing = $derived(
-    tickSpacingProp !== undefined
-      ? tickSpacingProp
-      : tickSpacing(ctx, placement === 'bottom' ? 'x' : placement === 'left' ? 'y' : 'z')
+    tickSpacingProp !== undefined ? tickSpacingProp : tickSpacing(ctx, along)
   );
   const count = $derived(spacing ? tickCount(length, spacing) : undefined);
   const values = $derived(autoTickVals(scale, ticks, count));
   const formatTick = $derived(tickFormat({ scale, ticks, count, formatType: format }));
 
-  /** The floor's edges nearest the camera, which way is out from the plot box, and the corner `z` stands up */
+  /**
+   * The floor's edges the axis lies along (the ones nearest the camera, else across from them),
+   * which way is out from the plot box, and the corner `z` stands up
+   */
   const edges = $derived.by(() => {
     const w = ctx.width;
     const h = ctx.height;
     const nearX = scene.far.x === 'min' ? w : 0;
     const nearY = scene.far.y === 'min' ? h : 0;
     // `z` stands up the corner where the wall behind on `x` meets the front
+    const outX = nearX === w ? 1 : -1;
+    const outY = nearY === h ? 1 : -1;
     return {
-      nearX,
+      // The edge a `right` / `top` axis is on: the other side, facing out the other way
+      edgeX: placement === 'right' ? w - nearX : nearX,
+      edgeY: placement === 'top' ? h - nearY : nearY,
+      outX: placement === 'right' ? -outX : outX,
+      outY: placement === 'top' ? -outY : outY,
       nearY,
-      outX: nearX === w ? 1 : -1,
-      outY: nearY === h ? 1 : -1,
       farX: w - nearX,
     };
+  });
+
+  /** The grid's stroke: its own, or the one its `class` sets (else `Grid`'s) */
+  const gridStroke = $derived.by(() => {
+    if (typeof grid !== 'object') return undefined;
+    return grid.stroke ?? scene.style(grid.class)?.stroke ?? undefined;
   });
 
   /** Pixels of the plot that read as one on screen, so marks and gaps keep their size in 3D */
@@ -81,18 +98,18 @@
   const labels = $derived.by((): SceneLabel[] => {
     const w = ctx.width;
     const h = ctx.height;
-    const { nearX, nearY, outX, outY, farX } = edges;
+    const { edgeX, edgeY, nearY, outX, outY, farX } = edges;
     // On the floor, labels across are placed by their middle (half a label further out), and the
     // left axis' by their end.  Facing the viewer, they're at the edge, anchored by their side
     // nearest it a gap of pixels away on screen, so the gap is the same however the view turns.
-    const half = (placement === 'left' ? 0 : 6) * unit;
+    const half = (along === 'y' ? 0 : 6) * unit;
     const tickOut = tickViewport ? 0 : tickLabelOffset * unit + half;
-    const outward = placement === 'left' ? { x: outX, y: 0, z: 0 } : { x: 0, y: outY, z: 0 };
+    const outward = along === 'y' ? { x: outX, y: 0, z: 0 } : { x: 0, y: outY, z: 0 };
 
     const at = (value: unknown): [number, number, number] => {
       const p = scaled(scale, value);
-      if (placement === 'bottom') return [p, nearY + outY * tickOut, 0];
-      if (placement === 'left') return [nearX + outX * tickOut, p, 0];
+      if (along === 'x') return [p, edgeY + outY * tickOut, 0];
+      if (along === 'y') return [edgeX + outX * tickOut, p, 0];
       return [farX, nearY + outY * tickOut, p];
     };
 
@@ -111,15 +128,13 @@
 
     if (label) {
       // Beyond the tick labels (facing the viewer, past as far as they reach out from the edge)
-      const titleOffset = labelViewport
-        ? 0
-        : (tickLabelOffset + (placement === 'bottom' ? 26 : 34)) * unit;
+      const titleOffset = labelViewport ? 0 : (tickLabelOffset + (along === 'x' ? 26 : 34)) * unit;
       const [x, y, z] =
-        placement === 'bottom'
-          ? [w / 2, nearY + outY * titleOffset, 0]
-          : placement === 'left'
-            ? [nearX + outX * titleOffset, h / 2, 0]
-            : [farX, nearY + outY * titleOffset, ctx.zDepth / 2];
+        along === 'x'
+          ? [w / 2, edgeY + outY * titleOffset, 0]
+          : along === 'y'
+            ? [edgeX + outX * titleOffset, h / 2, 0]
+            : [farX, nearY + edges.outY * titleOffset, ctx.zDepth / 2];
       result.push({
         key: `${placement}-label`,
         x,
@@ -160,22 +175,22 @@
     const w = ctx.width;
     const h = ctx.height;
     const d = ctx.zDepth;
-    const { nearX, nearY, outX, outY, farX } = edges;
+    const { edgeX, edgeY, nearY, outX, outY, farX } = edges;
     const reach = tickLength * unit;
     const segments: number[] = [];
-    if (placement === 'bottom') {
-      if (rule) segments.push(0, 0, nearY, w, 0, nearY);
+    if (along === 'x') {
+      if (rule) segments.push(0, 0, edgeY, w, 0, edgeY);
       if (tickMarks)
         for (const v of values) {
           const p = scaled(scale, v);
-          segments.push(p, 0, nearY, p, 0, nearY + outY * reach);
+          segments.push(p, 0, edgeY, p, 0, edgeY + outY * reach);
         }
-    } else if (placement === 'left') {
-      if (rule) segments.push(nearX, 0, 0, nearX, 0, h);
+    } else if (along === 'y') {
+      if (rule) segments.push(edgeX, 0, 0, edgeX, 0, h);
       if (tickMarks)
         for (const v of values) {
           const p = scaled(scale, v);
-          segments.push(nearX, 0, p, nearX + outX * reach, 0, p);
+          segments.push(edgeX, 0, p, edgeX + outX * reach, 0, p);
         }
     } else if (d > 0) {
       if (rule) segments.push(farX, 0, nearY, farX, d, nearY);
@@ -253,14 +268,26 @@
   });
 
   /**
-   * A label lying on the floor: the left axis' end at it (away from the plot, on whichever side
-   * it's on), the others centered
+   * A label lying on the floor: a `left` / `right` axis' end at it (away from the plot, on
+   * whichever side it's on), the others centered
    */
   function anchorOf(l: SceneLabel): 'start' | 'middle' | 'end' {
-    if (placement !== 'left') return 'middle';
+    if (along !== 'y') return 'middle';
     return l.x < ctx.width / 2 ? 'end' : 'start';
   }
 </script>
+
+{#if grid && along !== 'z'}
+  <Grid
+    x={along === 'x'}
+    y={along === 'y'}
+    z={false}
+    walls={false}
+    xTicks={ticks}
+    yTicks={ticks}
+    stroke={gridStroke}
+  />
+{/if}
 
 {#if placement !== 'back'}
   {#each floorLabels as l (l.key)}

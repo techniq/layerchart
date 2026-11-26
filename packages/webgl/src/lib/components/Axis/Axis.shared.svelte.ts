@@ -25,11 +25,18 @@ export type AxisLabelProps = {
 
 export type AxisProps = {
   /**
-   * Which axis: `bottom` labels `x` along the floor's front edge, `left` labels `y` along its
-   * side, and `back` labels `z` up a corner.  Same as an `isometric` chart's.  The edges turn
-   * to stay in front as the camera orbits.
+   * Which axis: `bottom` labels `x` along the floor's front edge (`top` along its back), `left`
+   * labels `y` along its side (`right` along the other), and `back` labels `z` up a corner.  Same
+   * as an `isometric` chart's.  The edges turn to stay in front as the camera orbits.
    */
-  placement: 'bottom' | 'left' | 'back';
+  placement: 'bottom' | 'top' | 'left' | 'right' | 'back';
+  /**
+   * Lines across the plot at its ticks, as the core `Axis` draws them: in their CSS `stroke`, or
+   * the one a `class` sets
+   *
+   * @default false
+   */
+  grid?: boolean | { stroke?: string; class?: string };
   /** Title drawn beyond the tick labels */
   label?: string;
   /** A count, values, or an interval */

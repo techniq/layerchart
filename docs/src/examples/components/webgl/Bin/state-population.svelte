@@ -142,7 +142,7 @@
 				z={0.1}
 				fill="var(--color-surface-200)"
 			/>
-			<GeoPath geojson={outline} fill="var(--color-surface-100)" />
+			<GeoPath geojson={outline} stroke={null} fill="var(--color-surface-100)" />
 
 			<!-- Colored from 10 people a square mile (wilderness) up, on a log scale -->
 			<Bin

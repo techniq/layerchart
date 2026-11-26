@@ -7,6 +7,7 @@
     Axis,
     Bars,
     Bin,
+    Circle,
     Chart,
     Contour,
     GeoPath,
@@ -36,6 +37,7 @@
     surface,
     geopath,
     bin,
+    circle,
     light,
     text,
     rect,
@@ -60,6 +62,7 @@
       | 'geopath'
       | 'light'
       | 'bin'
+      | 'circle'
       | 'text'
       | 'rect'
       | 'link'
@@ -80,6 +83,7 @@
     surface?: ComponentProps<typeof Surface>;
     geopath?: ComponentProps<typeof GeoPath>;
     bin?: ComponentProps<typeof Bin>;
+    circle?: ComponentProps<typeof Circle>;
     light?: ComponentProps<typeof Light>;
     text?: ComponentProps<typeof Text>;
     rect?: ComponentProps<typeof Rect>;
@@ -113,6 +117,8 @@
         <GeoPath {...geopath!} />
       {:else if mark === 'bin'}
         <Bin {...bin} />
+      {:else if mark === 'circle'}
+        <Circle {...circle} />
       {:else if mark === 'text'}
         <Text {...text!} />
       {:else if mark === 'rect'}

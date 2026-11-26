@@ -53,13 +53,17 @@ export type AreaProps = {
    * @default 1
    */
   opacity?: number;
+  /** Opacity of its fill, with `opacity` (as the core `Area`'s `fillOpacity`) */
+  fillOpacity?: number;
   /**
-   * Draw a line along the top, in the fill's color.
+   * Draw a line along the top: in the fill's color, or as the core `Area`'s `line` takes it, with
+   * its own `stroke` (a CSS color, or a key / function of the area's first row run through the
+   * color scale), `strokeWidth`, and `class` (ex. `{ class: 'stroke-2 stroke-primary' }`).
    *
    * @default false
    */
-  line?: boolean;
-  /** @default 2 */
+  line?: boolean | { stroke?: ColorProp; strokeWidth?: number; class?: string };
+  /** The line's width, in pixels. @default 2 */
   strokeWidth?: number;
   /**
    * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).

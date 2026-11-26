@@ -2,8 +2,11 @@ import type { ColorProp, DataProp } from 'layerchart';
 import type { ValueProp } from '../../utils/values.js';
 
 export type LinkProps = {
-  /** Rows to draw a link each for.  Falls back to the chart's data when `x1` / `y1` read rows. */
-  data?: any[];
+  /**
+   * Rows to draw a link each for, or one link (as the core `Link` takes it).  Falls back to the
+   * chart's data when `x1` / `y1` read rows.
+   */
+  data?: any[] | any;
   /**
    * Where each link starts across the plot: a data property name or function of the row
    * through the chart's `x` scale (longitude on a map), or pixels
@@ -52,4 +55,9 @@ export type LinkProps = {
   stroke?: ColorProp;
   /** @default 1 */
   strokeWidth?: number;
+  /**
+   * CSS classes to style it by, as the core marks take them (ex. `stroke-surface-content/20`):
+   * the stroke, stroke width, and opacity they set, where its props don't say
+   */
+  class?: string;
 };

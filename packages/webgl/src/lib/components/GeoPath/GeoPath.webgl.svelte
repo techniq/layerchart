@@ -36,10 +36,18 @@
   const scene = getSceneContext();
   /** What its `class` sets, where its props don't say */
   const look = $derived(scene.style(className));
+  // As the core `GeoPath`: no fill and a `surface-content` outline, unless its props or `class`
+  // say otherwise (`null` for none)
   const fill = $derived(
-    fillProp !== undefined ? fillProp : look?.fill === 'none' ? null : (look?.fill ?? defaultFill)
+    fillProp !== undefined ? fillProp : look?.fill === 'none' ? null : (look?.fill ?? null)
   );
-  const stroke = $derived(strokeProp ?? look?.stroke);
+  const stroke = $derived(
+    strokeProp !== undefined
+      ? strokeProp
+      : look?.stroke === 'none'
+        ? null
+        : (look?.stroke ?? 'var(--color-surface-content, currentColor)')
+  );
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** On a `globe`, features draw over it as lines */
   const sphere = $derived(getSphere(ctx));
