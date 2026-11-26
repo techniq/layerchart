@@ -21,7 +21,9 @@
     stroke,
     strokeWidth: strokeWidthProp,
     class: className,
+    style,
     opacity = 1,
+    fillOpacity = 1,
     tooltip = false,
     motion,
     key = (_d: any, i: number) => i,
@@ -30,7 +32,7 @@
   const ctx = getChartContext();
   const scene = getSceneContext();
   /** What its `class` sets */
-  const look = $derived(scene.style(className));
+  const look = $derived(scene.style(className, style ? { style } : undefined));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** No disc for a `none` fill (ex. `class="fill-none"`), only its ring */
   const filled = $derived(
@@ -46,8 +48,9 @@
 
   /** Each row's circle as asked: its center, radius, and height */
   const targets = $derived(
+    // Through the scales as the core `Circle` (a band's start, ex. `Cell` centers it in a `Group`)
     (dataMode ? markRows(ctx, data, cx, cy, r) : [undefined]).flatMap((d, i) => {
-      const [x, y] = positionOf(ctx, cx, cy, d);
+      const [x, y] = positionOf(ctx, cx, cy, d, { bandStart: true });
       const radius = resolveDataProp(r, d, ctx.rScale, 1);
       if (![x, y, radius].every(Number.isFinite) || radius <= 0) return [];
       return [{ d, key: key(d, i), x, y, z: z == null ? 0 : ctx.heightOf(d, z)[1], radius }];
@@ -99,11 +102,12 @@
             fill ?? undefined,
             c.d,
             'var(--color-surface-content, currentColor)',
-            look?.fill
+            look?.fill,
+            look?.fillSet
           ),
         };
       }),
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
   });
 
@@ -122,7 +126,7 @@
             width: c.radius,
             depth: c.radius,
             height: c.radius,
-            color: rowColor(ctx, stroke, c.d, 'currentColor', look?.stroke),
+            color: rowColor(ctx, stroke, c.d, 'currentColor', look?.stroke, look?.strokeSet),
           }))
         : [],
     opacity: () => opacity * (look?.opacity ?? 1),

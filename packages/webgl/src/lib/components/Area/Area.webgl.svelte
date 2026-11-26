@@ -4,6 +4,7 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { group } from 'd3-array';
   import { BufferGeometry, Float32BufferAttribute } from 'three';
   import { accessor, colorPropGroupKey, getChartContext, resolveDataProp } from 'layerchart';
@@ -11,6 +12,7 @@
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { curvePoints } from '../../utils/curve.js';
   import { createMerged } from '../../utils/merged.svelte.js';
+  import { createPathMotion } from '../../utils/rowMotion.svelte.js';
   import { defined, position, resolveAccessor, rowColor, scaled } from '../../utils/marks.js';
 
   let {
@@ -31,6 +33,7 @@
     line = false,
     strokeWidth: strokeWidthProp,
     tooltip = false,
+    motion,
   }: AreaProps = $props();
 
   const ctx = getChartContext();
@@ -42,7 +45,7 @@
   /** What the line's `class` sets */
   const lineLook = $derived(scene.style(lineProps?.class));
   const strokeWidth = $derived(
-    lineProps?.strokeWidth ?? lineLook?.strokeWidth ?? strokeWidthProp ?? look?.strokeWidth ?? 2
+    lineProps?.strokeWidth ?? lineLook?.strokeWidth ?? strokeWidthProp ?? look?.strokeWidth ?? 1
   );
 
   ctx.registerComponent({
@@ -56,6 +59,12 @@
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
   const y0Accessor = $derived(y0 == null ? null : accessor(y0));
   const y1Accessor = $derived(y1 == null ? null : accessor(y1));
+
+  /**
+   * The chart's area bottoms and tops (as the core `Area`'s): a stack's (areas stack by nature,
+   * as the chart's `seriesLayout` says), else its values over the baseline
+   */
+  const chartEdges = $derived(ctx.areaAccessorsFor({ ownData: dataProp != null }));
 
   /** Standing up as a curtain, rather than lying on the floor as the core `Area` fills the plot */
   const curtain = $derived(y0 == null && y1 == null && (z != null || ctx.config.z != null));
@@ -92,8 +101,16 @@
     // Lying on the floor between `y0` and `y1`, as the core `Area` (a stacked row's value is
     // its `[base, top]`)
     const stacked = Array.isArray(yValue) ? yValue : null;
-    const top = y1Accessor ? y1Accessor(d) : stacked ? stacked[1] : yValue;
-    const base = y0Accessor ? y0Accessor(d) : stacked ? stacked[0] : null;
+    // Its own `y` as given, else the chart's (stacked as the core `Area` stacks)
+    const own = y != null;
+    const top = y1Accessor
+      ? y1Accessor(d)
+      : !own
+        ? chartEdges.y1(d)
+        : stacked
+          ? stacked[1]
+          : yValue;
+    const base = y0Accessor ? y0Accessor(d) : !own ? chartEdges.y0(d) : stacked ? stacked[0] : null;
     if (!defined(xValue) || !defined(top)) return null;
     const px = scaled(ctx.xScale, xValue);
     const pTop = scaled(ctx.yScale, top);
@@ -145,69 +162,117 @@
 
   /** The line's color: its own `stroke` (or its class's), else the area's */
   function lineColor(d: any, areaColor: string) {
+    // A class's own stroke wins, as CSS does in core's layers
+    if (lineLook?.strokeSet && lineLook.stroke) return lineLook.stroke;
     if (lineProps?.stroke != null) return rowColor(ctx, lineProps.stroke, d, areaColor);
     return lineLook?.stroke ?? areaColor;
+  }
+
+  /** Each area's runs of columns as asked (broken where a row isn't drawn), with its colors */
+  const runs = $derived(
+    (gAccessor ? [...group(rows, gAccessor).values()] : [rows]).flatMap((areaRows, area) => {
+      const pieces: Column[][] = [[]];
+      areaRows.forEach((d, i) => {
+        const column = definedProp?.(d, i, areaRows) === false ? null : columnOf(d);
+        if (column) pieces[pieces.length - 1].push(column);
+        else if (pieces[pieces.length - 1].length) pieces.push([]);
+      });
+      const color = rowColor(
+        ctx,
+        fill,
+        areaRows[0],
+        'var(--color-primary, currentColor)',
+        look?.fill,
+        look?.fillSet
+      );
+      const stroke = line ? lineColor(areaRows[0], color) : null;
+      return pieces
+        .filter((piece) => piece.length >= 2)
+        .map((piece, k) => ({ key: `${area}:${k}`, color, stroke, columns: curved(piece) }));
+    })
+  );
+
+  // Tweening to where they're asked to be, as core's areas (a spring leaves them, as core's), a
+  // new one up from the baseline: each column as `[x, y, a, b]`
+  const pathMotion = createPathMotion(
+    untrack(() => motion),
+    4
+  );
+  const flat = (columns: Column[]) => columns.flatMap((c) => [c.x, c.y, c.a, c.b]);
+  if (pathMotion) {
+    $effect(() => {
+      const active = new Set<unknown>();
+      for (const run of runs) {
+        active.add(run.key);
+        untrack(() => pathMotion.update(run.key, flat(run.columns), flat(collapsed(run.columns))));
+      }
+      untrack(() => pathMotion.cleanup(active));
+    });
+  }
+
+  /** Columns with no height: a floor area's edges on the baseline, a curtain's top at its base */
+  function collapsed(columns: Column[]): Column[] {
+    if (curtain) return columns.map((c) => ({ ...c, b: c.a }));
+    const zero = Number(ctx.yScale(0));
+    const baseline = Math.min(Number.isFinite(zero) ? zero : ctx.yRange[0], ctx.yRange[0]);
+    return columns.map((c) => ({ ...c, y: baseline, a: baseline, b: baseline }));
+  }
+
+  /** Each run's columns where they are now */
+  function columnsNow(run: { key: string; columns: Column[] }): Column[] {
+    if (!pathMotion) return run.columns;
+    const now = pathMotion.get(run.key);
+    if (!now) return collapsed(run.columns);
+    return run.columns.map((c, i) => ({
+      ...c,
+      x: now[i * 4],
+      y: now[i * 4 + 1],
+      a: now[i * 4 + 2],
+      b: now[i * 4 + 3],
+    }));
   }
 
   createMerged({
     tooltip: () => tooltip,
     items: () =>
-      (gAccessor ? [...group(rows, gAccessor).values()] : [rows]).flatMap((areaRows) => {
-        // Runs of rows, broken where one isn't drawn
-        const runs: Column[][] = [[]];
-        areaRows.forEach((d, i) => {
-          const column = definedProp?.(d, i, areaRows) === false ? null : columnOf(d);
-          if (column) runs[runs.length - 1].push(column);
-          else if (runs[runs.length - 1].length) runs.push([]);
-        });
-        const color = rowColor(
-          ctx,
-          fill,
-          areaRows[0],
-          'var(--color-primary, currentColor)',
-          look?.fill
-        );
-        return runs
-          .filter((run) => run.length >= 2)
-          .map((run) => {
-            const columns = curved(run);
-            const positions: number[] = [];
-            // In the scene's axes (chart x, height, chart y): each column's two edges
-            const edges = (c: Column): [number[], number[]] =>
-              curtain
-                ? [
-                    [c.x, c.a, c.y],
-                    [c.x, c.b, c.y],
-                  ]
-                : [
-                    [c.x, 0.1, c.a],
-                    [c.x, 0.1, c.b],
-                  ];
-            for (let k = 0; k < columns.length - 1; k++) {
-              const [a0, a1] = edges(columns[k]);
-              const [b0, b1] = edges(columns[k + 1]);
-              positions.push(...a0, ...b0, ...a1, ...a1, ...b0, ...b1);
-            }
-            const geometry = new BufferGeometry();
-            geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-            geometry.computeVertexNormals();
-            return {
-              d: run[0].d,
-              geometry: positions.length ? geometry : null,
-              fill: color,
-              // On the floor, a little above the fill, so all its width draws over it (a depth
-              // offset alone isn't enough on every GPU for lines in the fill's own plane)
-              lines: line
-                ? [
-                    columns.flatMap((c) => {
-                      const [x, up, y] = edges(c)[1];
-                      return [x, curtain ? up : up + LINE_LIFT, y];
-                    }),
-                  ]
-                : [],
-              stroke: line ? lineColor(areaRows[0], color) : null,
-            };
-          });
+      runs.map((run) => {
+        const columns = columnsNow(run);
+        const positions: number[] = [];
+        // In the scene's axes (chart x, height, chart y): each column's two edges
+        const edges = (c: Column): [number[], number[]] =>
+          curtain
+            ? [
+                [c.x, c.a, c.y],
+                [c.x, c.b, c.y],
+              ]
+            : [
+                [c.x, 0.1, c.a],
+                [c.x, 0.1, c.b],
+              ];
+        for (let k = 0; k < columns.length - 1; k++) {
+          const [a0, a1] = edges(columns[k]);
+          const [b0, b1] = edges(columns[k + 1]);
+          positions.push(...a0, ...b0, ...a1, ...a1, ...b0, ...b1);
+        }
+        const geometry = new BufferGeometry();
+        geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+        geometry.computeVertexNormals();
+        return {
+          d: columns[0].d,
+          geometry: positions.length ? geometry : null,
+          fill: run.color,
+          // On the floor, a little above the fill, so all its width draws over it (a depth
+          // offset alone isn't enough on every GPU for lines in the fill's own plane)
+          lines: line
+            ? [
+                columns.flatMap((c) => {
+                  const [x, up, y] = edges(c)[1];
+                  return [x, curtain ? up : up + LINE_LIFT, y];
+                }),
+              ]
+            : [],
+          stroke: run.stroke,
+        };
       }),
     opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,

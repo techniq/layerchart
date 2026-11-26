@@ -13,6 +13,7 @@ import {
   type InstancedMesh,
   type Object3D,
   type PerspectiveCamera,
+  Color,
 } from 'three';
 
 import { geoIdentity, geoMercator } from 'd3-geo';
@@ -104,6 +105,66 @@ describe('Spline', () => {
       spline: { stroke: 'key' },
     });
     await expect.poll(() => children(scene, 'isLine2').length).toBe(3);
+  });
+
+  it('tweens a line up from the baseline with `motion`, as LayerChart’s', async () => {
+    const scene = await renderMarks({
+      mark: 'spline',
+      chart: {
+        data: [
+          { x: 0, y: 8 },
+          { x: 10, y: 8 },
+        ],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+      },
+      spline: { motion: { type: 'tween', duration: 400 } },
+    });
+    /** Where the line's first point is down the plot */
+    const first = () => {
+      const [line] = children(scene, 'isLine2') as any[];
+      return line?.geometry.attributes.instanceStart?.getZ(0) ?? NaN;
+    };
+    const baseline = chart!.yScale(0);
+    const target = chart!.yScale(8);
+    // On its way up...
+    await expect.poll(() => first() < baseline - 1 && first() > target + 1).toBe(true);
+    // ...and there
+    await expect.poll(first).toBeCloseTo(target);
+  });
+
+  it('tweens an area up from the baseline with `motion`, as LayerChart’s', async () => {
+    const scene = await renderMarks({
+      mark: 'area',
+      chart: {
+        data: [
+          { x: 0, y: 8 },
+          { x: 10, y: 8 },
+        ],
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 10],
+        yDomain: [0, 10],
+      },
+      area: { motion: { type: 'tween', duration: 400 } },
+    });
+    /** How far up the plot the fill's top reaches */
+    const top = () => {
+      const mesh = layered(scene).find((o: any) => o.isMesh && !o.isLineSegments2) as any;
+      const position = mesh?.geometry.getAttribute('position');
+      if (!position?.count) return NaN;
+      let min = Infinity;
+      for (let i = 0; i < position.count; i++) min = Math.min(min, position.getZ(i));
+      return min;
+    };
+    const baseline = chart!.yScale(0);
+    const target = chart!.yScale(8);
+    // On its way up...
+    await expect.poll(() => top() < baseline - 1 && top() > target + 1).toBe(true);
+    // ...and there
+    await expect.poll(top).toBeCloseTo(target);
   });
 
   it('colors along one line by a numeric data key `stroke` names, rather than splitting it', async () => {
@@ -1303,6 +1364,37 @@ describe('placed as LayerChart places its namesakes', () => {
     expect(ends.length / 6).toBeGreaterThan(1);
   });
 
+  it('tweens a `Link` to where its nodes move with `motion`, as the core `Link`', async () => {
+    let scene: SceneState | undefined;
+    const props = (targetX: number) => ({
+      mark: 'link' as const,
+      chart: chartProps,
+      link: {
+        data: [{ source: { x: 10, y: 20 }, target: { x: targetX, y: 40 } }],
+        type: 'straight' as const,
+        motion: { type: 'tween' as const, duration: 400 },
+      },
+      onScene: (s: SceneState) => (scene = s),
+    });
+    const { rerender } = render(Marks, props(30));
+    /** Where the link ends across the plot */
+    const end = () => {
+      const segments = scene && (layered(scene).find((o) => (o as any).isLineSegments2) as any);
+      const ends = segments?.geometry.attributes.instanceStart?.data.array as
+        | Float32Array
+        | undefined;
+      return ends?.length ? ends[ends.length - 3] : NaN;
+    };
+    // Where it's first asked to be, at once
+    await expect.poll(end).toBeCloseTo(30);
+
+    await rerender(props(130));
+    // On its way...
+    await expect.poll(() => end() > 35 && end() < 125).toBe(true);
+    // ...and there
+    await expect.poll(end).toBeCloseTo(130);
+  });
+
   it('draws a `Link` `type="straight"` as one segment', async () => {
     const scene = await renderMarks({
       mark: 'link',
@@ -1364,6 +1456,21 @@ describe('placed as LayerChart places its namesakes', () => {
       .toBe(rows.length);
     expect(center(scene).x).toBeCloseTo(chart!.xScale(rows[0].x));
     expect(center(scene).y).toBeCloseTo(chart!.yScale(rows[0].y));
+  });
+
+  it('colors a `Circle` by the `--fill-color` its `style` sets, at its `fillOpacity`', async () => {
+    const scene = await renderMarks({
+      mark: 'circle',
+      chart: chartProps,
+      circle: { cx: 40, cy: 30, r: 6, style: '--fill-color: rgb(255, 0, 0)', fillOpacity: 0.25 },
+    });
+    const mesh = () => children(scene, 'isInstancedMesh')[0] as InstancedMesh | undefined;
+    await expect.poll(() => mesh()?.count).toBe(1);
+    const color = new Color();
+    mesh()!.getColorAt(0, color);
+    expect(color.r).toBeCloseTo(1);
+    expect(color.g).toBeCloseTo(0);
+    expect((mesh()!.material as any).opacity).toBeCloseTo(0.25);
   });
 });
 
@@ -2413,6 +2520,62 @@ describe('strokes, as LayerChart’s marks take them', () => {
     expect(size.y).toBeLessThan(1);
   });
 
+  it('grows `Bars` up from the baseline with `motion`, as LayerChart’s bars mount', async () => {
+    const scene = await renderMarks({
+      mark: 'bars',
+      chart: columns,
+      bars: { motion: { type: 'tween', duration: 400 } },
+    });
+    /** The second bar's top and length along `y` */
+    const bar = () => {
+      const [mesh] = instanced(scene);
+      if (!mesh?.count) return null;
+      const matrix = new Matrix4();
+      mesh.getMatrixAt(1, matrix);
+      const position = new Vector3();
+      const size = new Vector3();
+      matrix.decompose(position, new Quaternion(), size);
+      return { top: position.z, length: size.z };
+    };
+    const full = chart!.yScale(0) - chart!.yScale(8);
+    // On its way up from the baseline...
+    await expect
+      .poll(() => (bar()?.length ?? 0) > 1 && (bar()?.length ?? full) < full - 1)
+      .toBe(true);
+    // ...and there
+    await expect.poll(() => bar()?.length).toBeCloseTo(full);
+    expect(bar()?.top).toBeCloseTo(chart!.yScale(8));
+  });
+
+  it('rounds flat `Bars` with a `radius`, each a shape rather than a box', async () => {
+    const scene = await renderMarks({ mark: 'bars', chart: columns, bars: { radius: 4 } });
+    const shapes = () => {
+      // The mesh with the most vertices: the bars' shapes, merged
+      let found: any;
+      scene.root.traverse((o: any) => {
+        const count =
+          o.isMesh && !o.isInstancedMesh ? o.geometry.getAttribute('position')?.count : 0;
+        if (count > (found?.geometry.getAttribute('position').count ?? 0)) found = o;
+      });
+      return found;
+    };
+    await expect
+      .poll(() => shapes()?.geometry.getAttribute('position').count ?? 0)
+      .toBeGreaterThan(12);
+    expect(instanced(scene).every((mesh) => mesh.count === 0)).toBe(true);
+    // Its corners cut in: the second bar's top-left corner isn't in its shape
+    const position = shapes().geometry.getAttribute('position');
+    const left = (chart!.xScale as any)('b');
+    const top = chart!.yScale(8);
+    let corner = false;
+    for (let i = 0; i < position.count; i++) {
+      if (Math.abs(position.getX(i) - left) < 0.01 && Math.abs(position.getZ(i) - top) < 0.01) {
+        corner = true;
+      }
+    }
+    expect(corner).toBe(false);
+  });
+
   it('outlines `Bars` with a `strokeWidth` alone, as LayerChart’s bars', async () => {
     const plain = await renderMarks({ mark: 'bars', chart: columns });
     expect(segments(plain)).toBe(0);
@@ -2442,15 +2605,27 @@ describe('strokes, as LayerChart’s marks take them', () => {
     await expect.poll(() => segments(scene)).toBe(2 * 12);
   });
 
-  it('draws `Contour` lines `strokeWidth` pixels wide', async () => {
-    const scene = await renderMarks({
-      mark: 'contour',
-      chart: { xDomain: [0, 1], yDomain: [0, 1] },
-      contour: { value: (x: number, y: number) => x + y, strokeWidth: 3 },
-    });
-    await expect.poll(() => segments(scene)).toBeGreaterThan(0);
-    const lines = layered(scene).find((o) => (o as any).isLineSegments2) as any;
-    expect(lines.material.linewidth).toBe(3);
+  it('draws `Contour` lines `strokeWidth` pixels wide, raised or flat (with a `stroke`, as core)', async () => {
+    for (const contour of [
+      { value: (x: number, y: number) => x + y, strokeWidth: 3, z: 2 },
+      // Flat, LayerChart's own (filled bands), outlined only with a `stroke`
+      { value: (x: number, y: number) => x + y, strokeWidth: 3, stroke: 'black' },
+    ]) {
+      const scene = await renderMarks({
+        mark: 'contour',
+        chart: { xDomain: [0, 1], yDomain: [0, 1] },
+        contour,
+      });
+      // Anywhere in the scene (flat, in the `Group` LayerChart's `Contour` draws in)
+      const lines = () => {
+        let found: any;
+        scene.root.traverse((o: any) => {
+          if (o.isLineSegments2 && o.visible && o.geometry.attributes.instanceStart) found ??= o;
+        });
+        return found;
+      };
+      await expect.poll(() => lines()?.material.linewidth).toBe(3);
+    }
   });
 
   it('draws a halo around `Text` lying on the surface, behind its letters', async () => {

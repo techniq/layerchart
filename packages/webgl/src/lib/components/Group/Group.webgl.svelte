@@ -17,12 +17,12 @@
   <!-- `seriesKey` names a series the legend has hidden -->
 {:else if c.dataMode}
   {#each c.resolvedItems as item (item.key)}
-    <GroupBase x={item.x} y={item.y}>
+    <GroupBase x={item.x} y={item.y} opacity={c.opacity}>
       {@render props.children?.()}
     </GroupBase>
   {/each}
 {:else}
-  <GroupBase x={c.motionX ?? 0} y={c.motionY ?? 0}>
+  <GroupBase x={c.motionX ?? 0} y={c.motionY ?? 0} opacity={c.opacity}>
     {@render props.children?.()}
   </GroupBase>
 {/if}

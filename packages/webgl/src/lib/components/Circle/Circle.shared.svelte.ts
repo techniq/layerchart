@@ -58,6 +58,13 @@ export type CircleProps = {
    * `{ type: 'tween', duration: 300 }`)
    */
   motion?: MotionOptions;
+  /** The fill's opacity, as the core `Circle`'s (its ring's is `opacity`). @default 1 */
+  fillOpacity?: number;
+  /**
+   * Inline CSS, as on the core marks' elements (ex. `--fill-color: var(--color-primary)`): the
+   * colors it sets, as LayerChart's styles read them
+   */
+  style?: string;
   /** Which circle each row is as rows change, for `motion`. @default (d, i) => i */
   key?: (d: any, index: number) => unknown;
 };

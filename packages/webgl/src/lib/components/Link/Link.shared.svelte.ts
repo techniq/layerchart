@@ -1,3 +1,4 @@
+import type { MotionNoneOption, MotionTweenOption } from 'layerchart/utils/motion.svelte';
 import type { CurveFactory } from 'd3-shape';
 import type { ColorProp, DataProp } from 'layerchart';
 import type { LinkSweep, LinkType } from 'layerchart/utils/linkUtils';
@@ -89,4 +90,9 @@ export type LinkProps = {
    * the stroke, stroke width, and opacity they set, where its props don't say
    */
   class?: string;
+  /**
+   * Tween each link to where it's asked to be, as the core `Link` (ex. `'tween'`, or `{ type:
+   * 'tween', duration: 300 }`)
+   */
+  motion?: MotionTweenOption | MotionNoneOption;
 };

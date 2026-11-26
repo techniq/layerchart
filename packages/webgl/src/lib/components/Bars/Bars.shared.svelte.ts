@@ -1,3 +1,5 @@
+import type { Rounded } from '../../utils/rounded.js';
+import type { MotionProp } from 'layerchart/utils/motion.svelte';
 import type { Snippet } from 'svelte';
 import type { Accessor, ColorProp, DataProp } from 'layerchart';
 import type { Insets } from 'layerchart/utils/rect.svelte';
@@ -54,6 +56,28 @@ export type BarsProps = {
    * @default false
    */
   tooltip?: boolean;
+  /**
+   * Ease each bar to where it's asked to be, as the core `Bars`: one config for all (ex.
+   * `'spring'`, `{ type: 'tween', duration: 300 }`), or one per prop (ex. `{ y: { type: 'tween',
+   * delay: 300 } }`, of `x`, `y`, `z`, `width`, `depth`, and `height`).  A new bar grows from the
+   * baseline.
+   */
+  motion?: MotionProp<'x' | 'y' | 'z' | 'width' | 'depth' | 'height'>;
+  /**
+   * Corner radius in pixels, for flat bars (as the core `Bars`).
+   *
+   * @default 0
+   */
+  radius?: number;
+  /**
+   * Which corners `radius` rounds, as the core `Bars`: `'all'`, `'edge'` (the value's end), a
+   * side (`'top'`), or a corner (`'top-left'`), or per row (a function).
+   *
+   * @default 'all'
+   */
+  rounded?: Rounded | ((d: any) => Rounded);
+  /** Which bar each row is as rows change, for `motion`. @default (d, i) => i */
+  key?: (d: any, index: number) => unknown;
   /** Drawn in place of its bars (ex. a `Bar` per row, styled each its own way), as the core `Bars` */
   children?: Snippet;
 };

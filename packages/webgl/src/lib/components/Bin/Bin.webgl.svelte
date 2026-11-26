@@ -29,6 +29,7 @@
     strokeWidth = 1,
     opacity = 1,
     tooltip = false,
+    r,
   }: BinProps = $props();
 
   const ctx = getChartContext();
@@ -102,6 +103,22 @@
     return extrude(context, 0, 1, 1)!;
   });
 
+  /**
+   * How much of its cell each cell fills, by `r` as the core `Bin`: a value's area in proportion
+   * (the largest filling its cell), or a pixel radius; all of it without one
+   */
+  const rMax = $derived.by(() => {
+    if (r == null || typeof r === 'number') return 0;
+    const values = cells.map((cell) => Number(cellValue(r, cell))).filter(Number.isFinite);
+    return values.length ? Math.max(...values) : 0;
+  });
+  function fillOf(cell: BinCell) {
+    if (r == null) return 1;
+    if (typeof r === 'number') return r / binGrid(shape, size).circumradius;
+    const value = Number(cellValue(r, cell));
+    return rMax > 0 && Number.isFinite(value) ? Math.sqrt(Math.max(0, value) / rMax) : 0;
+  }
+
   // A triangle pointing down is one pointing up, turned half round
   const turned = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI);
   const highlight = new Color(0xffffff);
@@ -117,8 +134,8 @@
         x: cell.x,
         y: cell.y,
         z: Math.min(z0, z1),
-        width: 1,
-        depth: 1,
+        width: fillOf(cell),
+        depth: fillOf(cell),
         // A pixel at least, above anything lying on the floor beneath (ex. a map)
         height: Math.max(Math.abs(z1 - z0), 1),
         color: resolveColorProp(fill, cell, fillScale) ?? 'var(--color-primary, currentColor)',

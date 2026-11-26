@@ -5,7 +5,9 @@
 <script lang="ts">
   import { arc as d3Arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
+  import { untrack } from 'svelte';
   import { getChartContext } from 'layerchart';
+  import { ArcState } from 'layerchart/base';
   import { createMotion } from 'layerchart/utils/motion.svelte';
 
   import { getParent, getSceneContext } from '../../contexts/scene.svelte.js';
@@ -43,7 +45,38 @@
     opacity = 1,
     motion,
     tooltip = false,
+    children,
   }: ArcProps = $props();
+
+  /**
+   * With `children`, what the core `Arc` gives them (ex. `getArcTextProps` to place a label at its
+   * centroid), from the core `Arc`'s own state
+   */
+  const state = untrack(() => children)
+    ? new ArcState(
+        () =>
+          ({
+            motion,
+            value,
+            initialValue,
+            domain,
+            range,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            cornerRadius,
+            padAngle,
+            trackStartAngle,
+            trackEndAngle,
+            trackInnerRadius,
+            trackOuterRadius,
+            trackCornerRadius,
+            trackPadAngle,
+            offset,
+          }) as any
+      )
+    : null;
 
   const ctx = getChartContext();
   /**
@@ -143,11 +176,18 @@
           fill:
             (fill ?? look?.fill) === 'none'
               ? null
-              : rowColor(ctx, fill, data, 'var(--color-primary, currentColor)', look?.fill),
+              : rowColor(
+                  ctx,
+                  fill,
+                  data,
+                  'var(--color-primary, currentColor)',
+                  look?.fill,
+                  look?.fillSet
+                ),
           stroke:
             stroke == null && !look?.stroke
               ? null
-              : rowColor(ctx, stroke, data, 'currentColor', look?.stroke),
+              : rowColor(ctx, stroke, data, 'currentColor', look?.stroke, look?.strokeSet),
         }
       ),
     ],
@@ -188,3 +228,17 @@
     strokeWidth: () => strokeWidth,
   });
 </script>
+
+{#if children && state}
+  {@render children({
+    centroid: state.trackArcCentroid,
+    boundingBox: state.boundingBox,
+    value: state.motionEndAngleValue,
+    startAngle: state.startAngle,
+    endAngle: state.arcEndAngle,
+    innerRadius: state.innerRadius,
+    outerRadius: state.outerRadius,
+    getTrackTextProps: state.getTrackTextProps,
+    getArcTextProps: state.getArcTextProps,
+  })}
+{/if}

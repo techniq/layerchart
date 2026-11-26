@@ -1,4 +1,4 @@
-import type { ColorProp, DataProp } from 'layerchart';
+import type { ArcProps as CoreArcProps, ColorProp, DataProp } from 'layerchart';
 import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 
 /** How the track behind an arc is drawn */
@@ -100,4 +100,9 @@ export type ArcProps = {
    * @default false
    */
   tooltip?: boolean;
+  /**
+   * Drawn with the arc, given what the core `Arc` gives its children (ex. `getArcTextProps` to
+   * place a `Text` at its centroid)
+   */
+  children?: CoreArcProps['children'];
 };

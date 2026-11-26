@@ -37,6 +37,12 @@ export type BinProps<T = any> = {
    */
   z?: DataProp<BinCell<T>>;
   /**
+   * Size each cell by a value rather than filling the grid, as the core `Bin` (ex. `r="count"`):
+   * a cell property or function, its area in proportion (the largest filling its cell), or a
+   * number, a circumradius in pixels
+   */
+  r?: DataProp<BinCell<T>>;
+  /**
    * Each cell's color: a cell property (ex. `'count'`) or a function of the cell, numbers
    * colored as the core `Bin` colors them (the chart's continuous `cScale`, else
    * yellow-green-blue), or a CSS color.

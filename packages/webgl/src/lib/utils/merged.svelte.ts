@@ -4,6 +4,7 @@ import {
   Color,
   DoubleSide,
   Float32BufferAttribute,
+  LessDepth,
   Mesh,
   MeshLambertMaterial,
 } from 'three';
@@ -12,7 +13,7 @@ import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { getChartContext } from 'layerchart';
 
-import { getSceneContext } from '../contexts/scene.svelte.js';
+import { getSceneContext, groupOpacity } from '../contexts/scene.svelte.js';
 
 /** One shape of a mark drawn as a single merged mesh: its geometry, outlines, and colors */
 export type MergedItem = {
@@ -37,6 +38,11 @@ type MergedOptions = {
   strokeWidth: () => number;
   /** Lose to other shapes in the same place (ex. an arc's track, beneath the arc) */
   behind?: boolean;
+  /**
+   * Fill each pixel once, however many of its shapes overlap there, as SVG fills one path (ex. a
+   * trail's overlapping pieces, translucent): for a mark whose shapes are one path's
+   */
+  once?: boolean;
 };
 
 const highlight = new Color(0xffffff);
@@ -58,9 +64,12 @@ export function createMerged({
   strokeWidth,
   tooltip,
   behind,
+  once,
 }: MergedOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** The `Group`s it's in dim it, as an SVG `<g>`'s opacity does */
+  const inGroup = groupOpacity();
   /** Its objects, stacked with other marks' in the order they're declared */
   const layer = scene.layer();
 
@@ -68,6 +77,8 @@ export function createMerged({
     vertexColors: true,
     side: DoubleSide,
     ...(behind && { polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 }),
+    // Coplanar overlaps fail the depth test after the first, so they blend once
+    ...(once && { depthFunc: LessDepth }),
   });
   const mesh = new Mesh(new BufferGeometry(), material);
   mesh.castShadow = mesh.receiveShadow = true;
@@ -158,7 +169,7 @@ export function createMerged({
     lines.geometry.dispose();
     lines.geometry = lineGeometry;
     lines.visible = linePositions.length > 0;
-    lineMaterial.opacity = (strokeAlpha ?? 1) * (lineOpacity?.() ?? 1);
+    lineMaterial.opacity = (strokeAlpha ?? 1) * (lineOpacity?.() ?? 1) * inGroup();
 
     // Rebuilt without emphasis, so put back whatever's hovered
     emphasized = -1;
@@ -169,7 +180,7 @@ export function createMerged({
       emphasized = hoveredIndex;
     }
 
-    const o = opacity();
+    const o = opacity() * inGroup();
     material.opacity = o;
     if (material.transparent !== (translucent || o < 1)) {
       material.transparent = translucent || o < 1;

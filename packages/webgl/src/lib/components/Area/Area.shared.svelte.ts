@@ -1,3 +1,4 @@
+import type { MotionProp } from 'layerchart/utils/motion.svelte';
 import type { Accessor, ColorProp, DataProp } from 'layerchart';
 import type { CurveFactory } from 'd3-shape';
 
@@ -63,7 +64,7 @@ export type AreaProps = {
    * @default false
    */
   line?: boolean | { stroke?: ColorProp; strokeWidth?: number; class?: string };
-  /** The line's width, in pixels. @default 2 */
+  /** The line's width, in pixels. @default 1 */
   strokeWidth?: number;
   /**
    * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).
@@ -71,4 +72,9 @@ export type AreaProps = {
    * @default false
    */
   tooltip?: boolean;
+  /**
+   * Tween each area to where it's asked to be, as the core `Area` (ex. `'tween'`, or `{ type:
+   * 'tween', duration: 300 }`), a new one up from the baseline.  A spring leaves it, as core's.
+   */
+  motion?: MotionProp;
 };

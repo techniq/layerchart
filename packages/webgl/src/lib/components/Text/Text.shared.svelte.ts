@@ -80,6 +80,16 @@ export type TextProps = {
    */
   rotate?: ValueProp<number>;
   /**
+   * SVG path data to place it along, as the core `Text` sets it on a path (ex. from `Arc`'s
+   * `getArcTextProps('outer')`): at `startOffset`, turned the way the path runs there (straight,
+   * rather than bent along it)
+   */
+  path?: string;
+  /** How far along `path`: pixels, or a percentage of its length (ex. `'50%'`). @default 0 */
+  startOffset?: string | number;
+  /** Where its baseline sits on `path` (`'hanging'`, `'middle'`, else on it) */
+  dominantBaseline?: string;
+  /**
    * The labels' color: a CSS color, or a data key / function run through the chart's color
    * scale.  `viewport` labels without one take their color from `class`.
    *

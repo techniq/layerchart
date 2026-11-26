@@ -7,8 +7,9 @@
   import { CalendarBase } from 'layerchart/base';
   import Rect from '../Rect/Rect.webgl.svelte';
   import Text from '../Text/Text.webgl.svelte';
+  import MonthPath from './MonthPath.webgl.svelte';
 
   let props: CalendarProps = $props();
 </script>
 
-<CalendarBase {...props} {Rect} {Text} />
+<CalendarBase {...props} {Rect} {Text} {MonthPath} />

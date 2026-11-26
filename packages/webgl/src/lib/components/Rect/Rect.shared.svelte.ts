@@ -1,3 +1,4 @@
+import type { Corners } from 'layerchart/utils/rect.svelte';
 import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 import type { ColorProp, DataProp } from 'layerchart';
 
@@ -54,6 +55,20 @@ export type RectProps = {
   class?: string;
   /** @default 1 */
   opacity?: number;
+  /** Corner radius in pixels, rounding a flat rect, as the core `Rect`'s. @default 0 */
+  rx?: number;
+  /**
+   * Per-corner radii, rounding a flat rect, as the core `Rect`'s: a number, a `[tl, tr, br, bl]`
+   * tuple, or `{ topLeft, topRight, bottomRight, bottomLeft }`.  Wins over `rx`.
+   */
+  corners?: Corners;
+  /** The fill's opacity, as the core `Rect`'s (its outline's is `opacity`). @default 1 */
+  fillOpacity?: number;
+  /**
+   * Inline CSS, as on the core marks' elements (ex. `--fill-color: var(--color-primary)`): the
+   * colors it sets, as LayerChart's styles read them
+   */
+  style?: string;
   /**
    * Show the tooltip for the row the pointer is over (with the chart's `tooltipContext`).
    *

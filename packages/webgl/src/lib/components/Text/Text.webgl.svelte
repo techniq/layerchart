@@ -25,16 +25,17 @@
   import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
   import { markRows, placeOf, rowColor } from '../../utils/marks.js';
   import { valueOf } from '../../utils/values.js';
+  import { pointAlong } from '../../utils/path.js';
 
   let {
     data,
     value,
-    x,
-    y,
+    x: xGiven,
+    y: yGiven,
     z,
     viewport = false,
     textAnchor = 'middle',
-    verticalAnchor = 'end',
+    verticalAnchor: verticalAnchorProp = 'end',
     dx = 0,
     dy = 0,
     format,
@@ -44,15 +45,46 @@
     scaleToFit = false,
     fontSize: fontSizeProp,
     fontWeight: fontWeightProp,
-    rotate = 0,
+    rotate: rotateProp = 0,
+    path,
+    startOffset,
+    dominantBaseline,
     fill: fillProp,
     stroke: strokeProp,
     strokeWidth: strokeWidthProp,
     class: className,
-  }: TextProps = $props();
+    ...rest
+  }: TextProps & Record<`data-${string}`, unknown> = $props();
 
-  /** Labels lying on the surface: as asked, else the text color */
-  const fill = $derived(fillProp ?? 'var(--color-surface-content, currentColor)');
+  /** Its `data-*` attributes, which LayerChart's styles read (ex. `Labels`' `data-placement`) */
+  const dataAttributes = $derived.by(() => {
+    const entries = Object.entries(rest).filter(
+      ([name, value]) => name.startsWith('data-') && value != null
+    );
+    return entries.length
+      ? Object.fromEntries(entries.map(([name, value]) => [name, String(value)]))
+      : undefined;
+  });
+
+  /**
+   * Along a `path` (ex. an arc's edge, from `Arc`'s `getArcTextProps('outer')`): at its
+   * `startOffset`, turned the way the path runs there, as an SVG `textPath` places text (straight,
+   * rather than bent along it)
+   */
+  const along = $derived(path ? pointAlong(path, startOffset) : null);
+  const x = $derived(along ? along.x : xGiven);
+  const y = $derived(along ? along.y : yGiven);
+  const rotate = $derived(along ? along.angle : rotateProp);
+  /** Its baseline on the path, as `dominantBaseline` says, else as `verticalAnchor` does */
+  const verticalAnchor = $derived(
+    along && dominantBaseline
+      ? dominantBaseline === 'hanging' || dominantBaseline === 'text-before-edge'
+        ? 'start'
+        : dominantBaseline === 'middle' || dominantBaseline === 'central'
+          ? 'middle'
+          : 'end'
+      : verticalAnchorProp
+  );
   const ctx = getChartContext();
   const scene = getSceneContext();
   /** A font's cap height in its size, as the core `Text` takes it (`0.71em`) */
@@ -66,8 +98,11 @@
    * Its halo: its own `stroke`, or the one its `class` sets (ex. `stroke-surface-100
    * [stroke-width:3px]`), as an SVG label's stroke
    */
-  const look = $derived(scene.style(className));
-  const stroke = $derived(strokeProp ?? look?.stroke ?? undefined);
+  const look = $derived(scene.style(className, dataAttributes));
+  // A class's own stroke wins over the prop, as CSS does in core's layers
+  const stroke = $derived(
+    (look?.strokeSet ? look.stroke : null) ?? strokeProp ?? look?.stroke ?? undefined
+  );
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** Its objects, stacked with other marks' in the order they're declared */
   const layer = scene.layer();
@@ -128,8 +163,14 @@
             z,
             text,
             class: className,
-            // Only as asked, so a `class` coloring them (ex. `text-red-500`) still does
-            color: fillProp == null ? undefined : rowColor(ctx, fillProp, d, 'currentColor'),
+            // Its class's own fill (ex. `fill-black`, as an SVG label's), else only as asked, so
+            // a `class` coloring them (ex. `text-red-500`) still does
+            color:
+              look?.fillSet && look.fill
+                ? look.fill
+                : fillProp == null
+                  ? undefined
+                  : rowColor(ctx, fillProp, d, 'currentColor'),
             stroke: stroke == null ? undefined : rowColor(ctx, stroke, d, 'currentColor'),
             strokeWidth: stroke == null ? undefined : strokeWidth,
             clip: true,
@@ -180,8 +221,16 @@
           if (natural && natural > width) size *= width / natural;
         }
         const wrapAt = width && !truncate && !scaleToFit ? width : undefined;
+        // Its class's fill (ex. `fill-black`, or a `--fill-color`), as an SVG label's
         const color = scene.color(
-          rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)')
+          rowColor(
+            ctx,
+            fillProp,
+            d,
+            'var(--color-surface-content, currentColor)',
+            look?.fill,
+            look?.fillSet
+          )
         );
         const halo = stroke == null ? null : scene.color(rowColor(ctx, stroke, d, 'currentColor'));
         const key = [

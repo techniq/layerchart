@@ -11,7 +11,9 @@
 
   import { getSphere, type ScenePoint } from '../../utils/globe.js';
   import { markRows, placeOf, rowColor } from '../../utils/marks.js';
+  import { untrack } from 'svelte';
   import { createMerged } from '../../utils/merged.svelte.js';
+  import { createPathMotion } from '../../utils/rowMotion.svelte.js';
   import { valueOf } from '../../utils/values.js';
 
   let {
@@ -37,6 +39,7 @@
     strokeWidth: strokeWidthProp,
     class: className,
     opacity = 1,
+    motion,
   }: LinkProps = $props();
 
   const ctx = getChartContext();
@@ -95,46 +98,70 @@
     ];
   }
 
+  /** Each link as asked: its row, points, and color */
+  const links = $derived(
+    (placed && !rows && ![x1, y1, x2, y2].some(isDataProp)
+      ? [undefined]
+      : placed
+        ? markRows(ctx, rows, x1, y1, x2, y2)
+        : (rows ?? [])
+    ).map((d) => {
+      const [[sx, sz, sy], [tx, tz, ty]] = ends(d);
+      const lift = valueOf(arc, d);
+      // Across the floor as the core `Link` (straight around a globe, and under an `arc`)
+      const steps = lift ? 24 : 1;
+      const floor: [number, number][] =
+        sphere || lift
+          ? Array.from({ length: steps + 1 }, (_, i): [number, number] => [
+              sx + ((tx - sx) * i) / steps,
+              sy + ((ty - sy) * i) / steps,
+            ])
+          : pathBetween([sx, sy], [tx, ty]);
+      const line: number[] = [];
+      floor.forEach(([px, py], i) => {
+        const t = i / (floor.length - 1);
+        // Its height eased from end to end, and a parabola `lift` above its middle
+        const up = 4 * lift * t * (1 - t);
+        line.push(px, sz + (tz - sz) * t + up, py);
+      });
+      return {
+        d,
+        line,
+        stroke: rowColor(
+          ctx,
+          stroke,
+          d,
+          'var(--color-surface-content, currentColor)',
+          look?.stroke,
+          look?.strokeSet
+        ),
+      };
+    })
+  );
+
+  // Tweening to where they're asked to be, as core's links (ex. a tree's as it opens), each by
+  // its place in the rows
+  const pathMotion = createPathMotion(untrack(() => motion));
+  if (pathMotion) {
+    $effect(() => {
+      const active = new Set<unknown>();
+      links.forEach((link, i) => {
+        active.add(i);
+        untrack(() => pathMotion.update(i, link.line));
+      });
+      untrack(() => pathMotion.cleanup(active));
+    });
+  }
+
   createMerged({
     items: () =>
-      (placed && !rows && ![x1, y1, x2, y2].some(isDataProp)
-        ? [undefined]
-        : placed
-          ? markRows(ctx, rows, x1, y1, x2, y2)
-          : (rows ?? [])
-      ).map((d) => {
-        const [[sx, sz, sy], [tx, tz, ty]] = ends(d);
-        const lift = valueOf(arc, d);
-        // Across the floor as the core `Link` (straight around a globe, and under an `arc`)
-        const steps = lift ? 24 : 1;
-        const floor: [number, number][] =
-          sphere || lift
-            ? Array.from({ length: steps + 1 }, (_, i): [number, number] => [
-                sx + ((tx - sx) * i) / steps,
-                sy + ((ty - sy) * i) / steps,
-              ])
-            : pathBetween([sx, sy], [tx, ty]);
-        const line: number[] = [];
-        floor.forEach(([px, py], i) => {
-          const t = i / (floor.length - 1);
-          // Its height eased from end to end, and a parabola `lift` above its middle
-          const up = 4 * lift * t * (1 - t);
-          line.push(px, sz + (tz - sz) * t + up, py);
-        });
-        return {
-          d,
-          geometry: null,
-          fill: null,
-          lines: [line],
-          stroke: rowColor(
-            ctx,
-            stroke,
-            d,
-            'var(--color-surface-content, currentColor)',
-            look?.stroke
-          ),
-        };
-      }),
+      links.map((link, i) => ({
+        d: link.d,
+        geometry: null,
+        fill: null,
+        lines: [pathMotion?.get(i) ?? link.line],
+        stroke: link.stroke,
+      })),
     opacity: () => 1,
     lineOpacity: () => opacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,

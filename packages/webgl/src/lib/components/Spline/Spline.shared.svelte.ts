@@ -1,3 +1,4 @@
+import type { MotionProp } from 'layerchart/utils/motion.svelte';
 import type { Accessor, ColorProp, DataProp } from 'layerchart';
 import type { CurveFactory } from 'd3-shape';
 
@@ -28,7 +29,7 @@ export type SplineProps = {
   /**
    * Line width in pixels, the same at any depth.
    *
-   * @default 2
+   * @default 1
    */
   strokeWidth?: number;
   /**
@@ -52,4 +53,16 @@ export type SplineProps = {
    * @default false
    */
   tooltip?: boolean;
+  /**
+   * Tween each line to where it's asked to be, as the core `Spline` (ex. `'tween'`, or `{ type:
+   * 'tween', duration: 300 }`), a new one up from the baseline.  A spring leaves it, as core's.
+   */
+  motion?: MotionProp;
+  /**
+   * A CSS color to fill the shape each line closes around, as an SVG path fills an open line (ex.
+   * a `Hull`'s).  None without one (here or in `class`).
+   */
+  fill?: string | null;
+  /** @default 1 */
+  fillOpacity?: number;
 };

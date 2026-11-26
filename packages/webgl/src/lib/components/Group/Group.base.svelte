@@ -4,7 +4,12 @@
   import { getParent, getSceneContext, setParent } from '../../contexts/scene.svelte.js';
 
   /** One placed `Group`: the marks inside move with it, as an SVG `<g>`'s contents do */
-  let { x = 0, y = 0, children }: { x?: number; y?: number; children?: Snippet } = $props();
+  let {
+    x = 0,
+    y = 0,
+    opacity,
+    children,
+  }: { x?: number; y?: number; opacity?: number; children?: Snippet } = $props();
 
   const scene = getSceneContext();
   const outer = getParent();
@@ -28,6 +33,9 @@
     },
     get y() {
       return (outer?.y ?? 0) + y;
+    },
+    get opacity() {
+      return (outer?.opacity ?? 1) * (opacity ?? 1);
     },
   });
 </script>

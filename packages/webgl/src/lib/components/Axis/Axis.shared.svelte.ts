@@ -21,6 +21,12 @@ export type AxisLabelProps = {
   fontWeight?: number | string;
   /** CSS color, for labels on the plot box */
   fill?: string;
+  /** Degrees to turn tick labels on the plot box, as the core `Axis`' (ex. `315` up and across) */
+  rotate?: number;
+  /** Tick labels' horizontal anchor, as the core `Axis`' (ex. `'end'` with `rotate`) */
+  textAnchor?: 'start' | 'middle' | 'end';
+  /** Tick labels' vertical anchor, as the core `Axis`' */
+  verticalAnchor?: 'start' | 'middle' | 'end';
 };
 
 export type AxisProps = {

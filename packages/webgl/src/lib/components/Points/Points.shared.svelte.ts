@@ -1,47 +1,67 @@
+import type { Snippet } from 'svelte';
+import type { Point } from 'layerchart/base';
 import type { Accessor, ColorProp, DataProp } from 'layerchart';
 import type { ImageSource } from '../../utils/texture.js';
+import type { Offset } from '../../utils/marks.js';
 import type { ValueProp } from '../../utils/values.js';
 
+/**
+ * The core `Points`' props (in its order, as it describes them), then those of a `WebGL` layer's
+ * own (`z`, `glow`, `image`, ...)
+ */
 export type PointsProps = {
-  /** Override the chart's `data` */
+  /** Override data instead of using context */
   data?: any[];
-  /** Override the chart's `x` accessor */
+  /** Override `x` accessor from Chart context */
   x?: Accessor;
-  /** Override the chart's `y` accessor */
+  /** Override `y` accessor from Chart context */
   y?: Accessor;
+  /** Series key to use for accessor. */
+  seriesKey?: string;
+  /**
+   * Override `r` accessor from Chart context: a radius in pixels, or per row (a data key or
+   * function, in pixels).  Defaults to the chart's `r` scale when it has one.
+   *
+   * @default 5
+   */
+  r?: ValueProp<number>;
+  /** The offset of the point in the x direction */
+  offsetX?: Offset;
+  /** The offset of the point in the y direction */
+  offsetY?: Offset;
+  /** Draws in place of the points, given each row's point (ex. `Labels`' text at each) */
+  children?: Snippet<[{ points: Point[] }]>;
+  /**
+   * Fill color: a CSS color, or a data key / function run through the chart's color scale.
+   * Defaults to the chart's `c`, else `var(--color-primary)`.
+   */
+  fill?: ColorProp;
+  /** Fill opacity (0-1) */
+  fillOpacity?: number;
+  /**
+   * Stroke color: a CSS color, or a data key / function run through the chart's color scale.
+   * Drawn flat (2D), where points are discs; a 3D view's lit spheres have none.
+   */
+  stroke?: ColorProp;
+  /** Stroke width in pixels @default 1 */
+  strokeWidth?: number;
+  /** Stroke opacity (0-1) */
+  strokeOpacity?: number;
+  /** Overall opacity (0-1) @default 1 */
+  opacity?: number;
+
   /**
    * Height off the floor: a data key or function (through the chart's `z` scale), or a number
    * of pixels.  Defaults to the chart's `z`.
    */
   z?: DataProp;
   /**
-   * Radius in pixels, or per row (a data key or function, in pixels).  Defaults to the chart's
-   * `r` scale when it has one, else `5`.
-   */
-  r?: ValueProp<number>;
-  /**
-   * A CSS color, or a data key / function run through the chart's color scale.  Defaults to the
-   * chart's `c`, else `var(--color-primary, currentColor)`.
-   */
-  fill?: ColorProp;
-  /**
-   * A ring around each point, straddling its edge as the core `Points` strokes its circles:
-   * a CSS color, or a data key / function run through the chart's color scale.  None without
-   * one (here or in `class`).  Drawn in the flat (2D) mode, where points are discs; a 3D view's
-   * lit spheres have none.
-   */
-  stroke?: ColorProp;
-  /** The ring's width in pixels. @default 1 */
-  strokeWidth?: number;
-  /**
    * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
-   * the fill, stroke, stroke width, and opacity they set, where its props don't say.  A
-   * `mix-blend-mode` of `plus-lighter` or `screen` (ex. `mix-blend-plus-lighter`) adds the
-   * points' light together where they overlap.
+   * the fill, stroke, stroke width, and opacity they set.  A `mix-blend-mode` of `plus-lighter`
+   * or `screen` (ex. `mix-blend-plus-lighter`) adds the points' light together where they
+   * overlap.
    */
   class?: string;
-  /** @default 1 */
-  opacity?: number;
   /**
    * Scale of the hovered point.
    *

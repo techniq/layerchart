@@ -11,6 +11,8 @@
 
   import { createInstances } from '../../utils/instances.svelte.js';
   import { createOutlines } from '../../utils/outlines.js';
+  import BarsRounded from '../Bars/Bars.rounded.svelte';
+  import { resolveCorners } from 'layerchart/utils/rect.svelte';
   import { markRows, positionOf, rowColor } from '../../utils/marks.js';
 
   let {
@@ -28,16 +30,20 @@
     stroke,
     strokeWidth: strokeWidthProp,
     class: className,
+    style,
     opacity = 1,
+    fillOpacity = 1,
     tooltip = false,
     motion,
     key = (_d: any, i: number) => i,
+    rx = 0,
+    corners,
   }: RectProps = $props();
 
   const ctx = getChartContext();
   const scene = getSceneContext();
   /** What its `class` sets */
-  const look = $derived(scene.style(className));
+  const look = $derived(scene.style(className, style ? { style } : undefined));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   const highlight = new Color(0xffffff);
 
@@ -84,23 +90,26 @@
 
   /** Each row's box as asked: its corner, size, and color */
   const targets = $derived(
-    (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map((d, i) => {
-      const [base, top] = heights(d);
-      return {
-        d,
-        key: key(d, i),
-        ...footprint(d),
-        z: base,
-        height: top - base,
-        color: rowColor(
-          ctx,
-          fill ?? undefined,
+    (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map(
+      (d, i) => {
+        const [base, top] = heights(d);
+        return {
           d,
-          'var(--color-surface-content, currentColor)',
-          look?.fill
-        ),
-      };
-    })
+          key: key(d, i),
+          ...footprint(d),
+          z: base,
+          height: top - base,
+          color: rowColor(
+            ctx,
+            fill ?? undefined,
+            d,
+            'var(--color-surface-content, currentColor)',
+            look?.fill,
+            look?.fillSet
+          ),
+        };
+      }
+    )
   );
 
   // Easing to where they're asked to be, as the core `Rect` (ex. a highlight's band springing
@@ -134,20 +143,36 @@
     })
   );
 
+  /** Flat with rounded corners (`rx`): each a shape, as the core `Rect`'s, not a box */
+  const roundedRects = $derived(
+    (rx > 0 || (corners != null && resolveCorners(corners, 1e9, 1e9).some((r) => r > 0))) &&
+      !ctx.view &&
+      z == null &&
+      !(dataMode && ctx.config.z != null)
+  );
+  /** A rect's corner radii: `corners` (as the core `Rect`), else `rx` at each */
+  function radiiOf(box: { width: number; depth: number }): [number, number, number, number] {
+    return corners != null
+      ? (resolveCorners(corners, box.width, box.depth) as [number, number, number, number])
+      : [rx, rx, rx, rx];
+  }
+
   /** No box for a `none` fill (ex. `class="fill-none"`), only its outline */
   const filled = $derived(
     fill !== null && fill !== 'none' && !(fill == null && look?.fill === 'none')
   );
 
   /** Outlined only when asked, so boxes without one cost nothing more */
-  const outlined = $derived(stroke != null || !!look?.stroke);
+  const outlined = $derived(
+    stroke != null ? stroke !== 'none' : !!look?.stroke && look.stroke !== 'none'
+  );
 
   // A unit cube standing on its corner at the origin, so each box scales out from `(x, y)` up
   createInstances({
     tooltip: () => tooltip,
     geometry: new BoxGeometry(1, 1, 1).translate(0.5, 0.5, 0.5),
-    instances: () => (filled ? boxes : []),
-    opacity: () => opacity * (look?.opacity ?? 1),
+    instances: () => (filled && !roundedRects ? boxes : []),
+    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
     // Giving way to its outline in depth, so the outline sits on its edges
     behind: () => outlined,
@@ -155,9 +180,24 @@
 
   // Around each box's top and up its corners, as the core isometric boxes are outlined
   createOutlines({
-    instances: () => (outlined ? boxes : []),
-    stroke: (d) => rowColor(ctx, stroke, d, 'currentColor', look?.stroke),
+    instances: () => (outlined && !roundedRects ? boxes : []),
+    stroke: (d) => rowColor(ctx, stroke, d, 'currentColor', look?.stroke, look?.strokeSet),
     strokeWidth: () => strokeWidth,
     opacity: () => opacity * (look?.opacity ?? 1),
   });
 </script>
+
+{#if roundedRects}
+  <BarsRounded
+    bars={boxes}
+    corners={radiiOf}
+    height={0.1}
+    {filled}
+    stroke={(d) =>
+      outlined ? rowColor(ctx, stroke, d, 'currentColor', look?.stroke, look?.strokeSet) : null}
+    {strokeWidth}
+    opacity={opacity * fillOpacity * (look?.opacity ?? 1)}
+    lineOpacity={opacity * (look?.opacity ?? 1)}
+    {tooltip}
+  />
+{/if}

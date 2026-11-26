@@ -235,3 +235,5 @@ export type {
 // A `Group`'s placement (pixel or data mode, `center`, motion, a series' visibility), for a
 // layer's own `Group`
 export { GroupState } from './components/Group/Group.shared.svelte.js';
+export { PointsState, type Point } from './components/Points/Points.shared.svelte.js';
+export { ArcState } from './components/Arc/Arc.shared.svelte.js';

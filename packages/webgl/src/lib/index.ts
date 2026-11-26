@@ -59,6 +59,8 @@ export { default as Area } from './components/Area/Area.svelte';
 export type { AreaProps } from './components/Area/Area.svelte';
 export { default as Line } from './components/Line/Line.svelte';
 export type { LineProps } from './components/Line/Line.svelte';
+export { default as Path } from './components/Path/Path.svelte';
+export type { PathProps } from './components/Path/Path.svelte';
 export { default as Link } from './components/Link/Link.svelte';
 export type { LinkProps } from './components/Link/Link.svelte';
 export { default as Highlight } from './components/Highlight/Highlight.svelte';
@@ -107,3 +109,13 @@ export { default as Month } from './components/Month/Month.svelte';
 export type { MonthProps } from './components/Month/Month.svelte';
 export { default as Pie } from './components/Pie/Pie.svelte';
 export type { PieProps } from './components/Pie/Pie.svelte';
+
+// LayerChart's marks drawn with `Path`
+export { default as Violin } from './components/Violin/Violin.svelte';
+export type { ViolinProps } from './components/Violin/Violin.svelte';
+export { default as Trail } from './components/Trail/Trail.svelte';
+export type { TrailProps } from './components/Trail/Trail.svelte';
+export { default as Density } from './components/Density/Density.svelte';
+export type { DensityProps } from './components/Density/Density.svelte';
+export { default as Ribbon } from './components/Ribbon/Ribbon.svelte';
+export type { RibbonProps } from './components/Ribbon/Ribbon.svelte';

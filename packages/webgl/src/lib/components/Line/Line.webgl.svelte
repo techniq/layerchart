@@ -21,12 +21,13 @@
     strokeWidth: strokeWidthProp,
     opacity = 1,
     class: className,
+    style,
   }: LineProps = $props();
 
   const ctx = getChartContext();
   const scene = getSceneContext();
   /** What its `class` sets */
-  const look = $derived(scene.style(className));
+  const look = $derived(scene.style(className, style ? { style } : undefined));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** With rows (`data`, or ends reading the chart's), as the core `Line` */
   const dataMode = $derived(data != null || [x1, y1, x2, y2].some((p) => isDataProp(p)));
@@ -51,7 +52,8 @@
             stroke,
             d,
             'var(--color-surface-content, currentColor)',
-            look?.stroke
+            look?.stroke,
+            look?.strokeSet
           ),
         };
       }),

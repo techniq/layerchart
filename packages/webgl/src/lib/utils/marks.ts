@@ -49,10 +49,15 @@ export function place(
  * `place`, with the chart's globe, projection, or scales read once: for placing many rows, as
  * reading them (reactive state) for every row adds up
  */
+/** Pixels to shift a point along an axis, as the core `Points`' `offsetX` / `offsetY` */
+export type Offset = number | ((value: number, context: any) => number) | undefined;
+
 export function placer(
   ctx: ChartState<any>,
   sphere: Sphere | null,
-  scales?: { x: any; y: any }
+  scales?: { x: any; y: any },
+  /** In place of a band's middle (as the core `Points`' `offsetX` / `offsetY`) */
+  offsets?: { x?: Offset; y?: Offset }
 ): (xValue: unknown, yValue: unknown, height: number) => ScenePoint {
   if (sphere) return (x, y, height) => sphere.toScene(Number(x), Number(y), height);
   const projection = ctx.geo.projection;
@@ -66,6 +71,14 @@ export function placer(
   const yScale = scales?.y ?? (ctx.yScale as any);
   const xBand = isScaleBand(xScale) ? xScale.bandwidth() / 2 : 0;
   const yBand = isScaleBand(yScale) ? yScale.bandwidth() / 2 : 0;
+  const shift = (offset: Offset, band: number, at: number) =>
+    offset == null ? band : typeof offset === 'function' ? offset(at, ctx) : offset;
+  if (offsets?.x != null || offsets?.y != null) {
+    return (x, y, height) => {
+      const [px, py] = [Number(xScale(x)), Number(yScale(y))];
+      return [px + shift(offsets.x, xBand, px), height, py + shift(offsets.y, yBand, py)];
+    };
+  }
   return (x, y, height) => [Number(xScale(x)) + xBand, height, Number(yScale(y)) + yBand];
 }
 
@@ -188,8 +201,11 @@ export function rowColor(
   value: ColorProp<any> | undefined,
   d: any,
   fallback: string,
-  classed?: string | null
+  classed?: string | null,
+  /** Whether the class sets `classed` itself, winning over `value` as CSS wins in core's layers */
+  classSet?: boolean
 ): string {
+  if (classSet && classed) return classed;
   if (value != null) return resolveColorProp(value, d, ctx.cScale) ?? fallback;
   if (classed) return classed;
   // A row's color through the chart's `c` (not for a mark drawn without one, ex. a band)

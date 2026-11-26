@@ -70,6 +70,8 @@ export function createOutlines({
       }));
     },
     opacity,
+    // Outlines are lines: the merged mark's `opacity` is its fills'
+    lineOpacity: opacity,
     strokeWidth,
   });
 }

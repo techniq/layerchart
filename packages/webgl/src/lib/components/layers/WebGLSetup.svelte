@@ -245,7 +245,8 @@
       // Flat: straight down on the floor, each chart pixel on a pixel of the layer, where a flat
       // layer would draw it (so `Svg` / `Html` layers line up over it)
       const { left, top } = ctx.padding;
-      const distance = Math.max(box.width, box.height, box.depth, 1) * 2;
+      // Above every mark's layer, however many are stacked
+      const distance = Math.max(box.width, box.height, box.depth, 1) * 2 + sceneState.stackHeight;
       fitTarget.set(0, 0, 0);
       Object.assign(cam, {
         left: -(left + ctx.width / 2),

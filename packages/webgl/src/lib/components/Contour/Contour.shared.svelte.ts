@@ -15,7 +15,9 @@ export type ContourProps = GridDataProps & {
   thresholds?: number | number[];
   /**
    * Height off the floor: `'value'` raises each line to its threshold's height (through the
-   * chart's `z` scale), and a number of pixels lays them all flat at that height.
+   * chart's `z` scale), and a number of pixels lays them all flat at that height.  At `0` on a
+   * flat chart, it's LayerChart's own `Contour`: bands filled through the color scale (taking its
+   * `fill`, `fillOpacity`, and `class`), outlined only with a `stroke`.
    *
    * @default 0
    */

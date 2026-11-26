@@ -109,12 +109,19 @@
         return {
           d,
           geometry: (fill ?? look?.fill) === 'none' ? null : extrude(context, z0, z1),
-          fill: rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)', look?.fill),
+          fill: rowColor(
+            ctx,
+            fill,
+            d,
+            'var(--color-surface-content, currentColor)',
+            look?.fill,
+            look?.fillSet
+          ),
           lines: context.lines.map((line) => line.flatMap(([x, y]) => [x, outline, y])),
           stroke:
             stroke == null && !look?.stroke
               ? null
-              : rowColor(ctx, stroke, d, 'currentColor', look?.stroke),
+              : rowColor(ctx, stroke, d, 'currentColor', look?.stroke, look?.strokeSet),
         };
       }),
     opacity: () => opacity * (look?.opacity ?? 1),

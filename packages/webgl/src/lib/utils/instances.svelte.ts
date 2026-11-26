@@ -17,7 +17,7 @@ import {
 } from 'three';
 import { getChartContext } from 'layerchart';
 
-import { getSceneContext } from '../contexts/scene.svelte.js';
+import { getSceneContext, groupOpacity } from '../contexts/scene.svelte.js';
 
 /**
  * One shape of an instanced mark, in chart pixels: where it stands (`x` across, `y` down the
@@ -182,6 +182,8 @@ export function createInstances({
 }: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** The `Group`s it's in dim it, as an SVG `<g>`'s opacity does */
+  const inGroup = groupOpacity();
   /** Its objects, stacked with other marks' in the order they're declared */
   const layer = scene.layer();
   const litMaterial = createMaterial(true, !!ring);
@@ -324,7 +326,7 @@ export function createInstances({
     };
     instanced.computeBoundingSphere();
 
-    const o = opacity();
+    const o = opacity() * inGroup();
     material.opacity = o;
     if (ring) material.userData.ringHalf.value = ring();
     // A depth offset needs no new program, so it can follow along

@@ -30,4 +30,9 @@ export type LineProps = {
    * stroke width, and opacity they set, where its props don't say
    */
   class?: string;
+  /**
+   * Inline CSS, as on the core marks' elements (ex. `--fill-color: var(--color-primary)`): the
+   * colors it sets, as LayerChart's styles read them
+   */
+  style?: string;
 };

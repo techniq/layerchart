@@ -293,8 +293,9 @@
       y={l.y}
       z={l.z}
       value={l.text}
-      textAnchor={anchorOf(l)}
-      verticalAnchor="middle"
+      textAnchor={isTitle(l) ? anchorOf(l) : (tickLabelProps?.textAnchor ?? anchorOf(l))}
+      verticalAnchor={isTitle(l) ? 'middle' : (tickLabelProps?.verticalAnchor ?? 'middle')}
+      rotate={isTitle(l) ? 0 : (tickLabelProps?.rotate ?? 0)}
       fontSize={sizeOf(l)}
       fontWeight={weightOf(l)}
       fill={fillOf(l)}

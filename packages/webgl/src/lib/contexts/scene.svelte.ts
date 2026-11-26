@@ -123,8 +123,15 @@ export class SceneState {
 
   #place() {
     this.#layers.forEach((group, i) => group.position.setY(this.#stacked ? i * LAYER_STEP : 0));
+    this.stackHeight = this.#stacked ? this.#layers.length * LAYER_STEP : 0;
     this.invalidate();
   }
+
+  /**
+   * How high the flat mode's stacked layers reach, for the camera to look down from above them
+   * all (ex. a `Calendar`'s `Rect` per day is hundreds of layers)
+   */
+  stackHeight = $state(0);
 
   colors: ColorResolver | null = null;
   camera: Camera | null = null;
@@ -224,10 +231,14 @@ export class SceneState {
    * What a mark's CSS `class` sets (its fill, stroke, and opacity, as the core `Canvas` layer
    * reads them), re-read when the theme changes.  `null` without one, or before the layer mounts.
    */
-  style(classes: string | null | undefined): ClassStyle | null {
+  style(
+    classes: string | null | undefined,
+    /** Attributes LayerChart's styles read (ex. a label's `data-placement`) */
+    attributes?: Record<string, string>
+  ): ClassStyle | null {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.themeVersion;
-    return classes ? (this.colors?.style(classes) ?? null) : null;
+    return classes || attributes ? (this.colors?.style(classes ?? '', attributes) ?? null) : null;
   }
 
   /**
@@ -289,7 +300,19 @@ const PARENT = Symbol('LayerChartWebGLParent');
  * pixels across and down, with every `Group` it's in): for what's placed outside the scene
  * (labels over it) to move with it
  */
-export type SceneParent = { object: Object3D; readonly x: number; readonly y: number };
+export type SceneParent = {
+  object: Object3D;
+  readonly x: number;
+  readonly y: number;
+  /** How opaque what's inside is drawn, its `Group`s' opacities multiplied (ex. `opacity={0.2}`) */
+  readonly opacity?: number;
+};
+
+/** The opacity the `Group`s a mark is in draw it at (1 outside any) */
+export function groupOpacity(): () => number {
+  const parent = getParent();
+  return () => parent?.opacity ?? 1;
+}
 
 /** Put the marks inside under `parent` (see `SceneParent`) */
 export function setParent(parent: SceneParent) {

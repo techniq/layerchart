@@ -5,6 +5,8 @@
   export type CalendarBaseLayerComponents = {
     Rect: Component<any>;
     Text: Component<any>;
+    /** Outlines each month for `monthPath` (LayerChart's `MonthPath` by default) */
+    MonthPath?: Component<any>;
   };
 
   export type CalendarBaseProps = CalendarPropsWithoutHTML & CalendarBaseLayerComponents;
@@ -15,8 +17,8 @@
   import { index } from 'd3-array';
   import { endOfInterval, format } from '@layerstack/utils';
 
-  // MonthPath isn't split — only used here when `monthPath` is set.
-  import MonthPath from '../MonthPath.svelte';
+  // MonthPath isn't split — only used here when `monthPath` is set (unless a layer brings its own).
+  import CoreMonthPath from '../MonthPath.svelte';
   import {} from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getMarkData } from '$lib/contexts/facet.js';
@@ -26,6 +28,7 @@
   let {
     Rect,
     Text,
+    MonthPath = CoreMonthPath,
     end,
     start,
     cellSize: cellSizeProp,

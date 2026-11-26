@@ -114,11 +114,11 @@
         return {
           d,
           geometry,
-          fill: filled ? rowColor(ctx, fill, d, color, look?.fill) : null,
+          fill: filled ? rowColor(ctx, fill, d, color, look?.fill, look?.fillSet) : null,
           lines: outlined
             ? lines.map((line) => line.flatMap(([px, py]) => [px, height + 0.2, py]))
             : [],
-          stroke: outlined ? rowColor(ctx, stroke, d, color, look?.stroke) : null,
+          stroke: outlined ? rowColor(ctx, stroke, d, color, look?.stroke, look?.strokeSet) : null,
         };
       }),
     opacity: () => opacity * (look?.opacity ?? 1),
@@ -175,8 +175,8 @@
             depth: w,
             height: len,
             color: filled
-              ? rowColor(ctx, fill, d, color, look?.fill)
-              : rowColor(ctx, stroke, d, color, look?.stroke),
+              ? rowColor(ctx, fill, d, color, look?.fill, look?.fillSet)
+              : rowColor(ctx, stroke, d, color, look?.stroke, look?.strokeSet),
             rotation: new Quaternion().setFromUnitVectors(up, toward),
           },
         ];
