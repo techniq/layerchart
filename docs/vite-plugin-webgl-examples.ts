@@ -116,7 +116,8 @@ export function isNativeWebGL(source: string) {
 	return /from '@layerchart\/webgl(\/webgl)?'/.test(source);
 }
 
-const IMPORT = /^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo|layerchart\/graph)';?$/gm;
+const IMPORT =
+	/^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo|layerchart\/graph)';?$/gm;
 
 /**
  * An example's source with its components imported from `@layerchart/webgl`, or `null` if it

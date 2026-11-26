@@ -73,7 +73,7 @@ export const graphics = [
 		},
 		webgl: {
 			support: true,
-			note: 'Path data lies on the floor, filled and outlined (ex. Trail, Violin, Density, Ribbon); no markers'
+			note: 'Path data lies on the floor, filled and outlined (ex. Trail, Violin, Density, Ribbon), with markers'
 		}
 	},
 	{
@@ -154,7 +154,8 @@ export const styles = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: true,
+			note: "LayerChart's marker shapes (arrow, triangle, circle, dot, square, ...), lying on the floor; not custom snippets"
 		}
 	},
 	{
@@ -217,7 +218,7 @@ export const styles = [
 		},
 		webgl: {
 			support: true,
-			note: 'Outlines of bars, rects, circles, and shapes, and lines a CSS pixel wide; no dashes (stroke-dasharray)'
+			note: 'Outlines of bars, rects, circles, and shapes, and lines a CSS pixel wide, dashed with dashArray'
 		}
 	},
 	{

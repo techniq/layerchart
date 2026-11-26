@@ -38,7 +38,7 @@
 		"@iconify-json/vscode-icons": "^1.2.53",
 		"@jsquash/webp": "^1.5.0",
 		"@layerchart/webgl": "workspace:*",
-		"@layerstack/docs": "1.0.0-next.9",
+		"@layerstack/docs": "1.0.0-next.10",
 		"@layerstack/svelte-actions": "1.0.1-next.20",
 		"@layerstack/svelte-state": "0.1.0-next.25",
 		"@layerstack/svelte-table": "1.0.1-next.20",
