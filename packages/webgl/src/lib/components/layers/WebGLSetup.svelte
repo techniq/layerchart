@@ -20,7 +20,7 @@
   import { getChartContext } from 'layerchart';
   import { createControlledMotion } from 'layerchart/utils/motion.svelte';
 
-  import { getSceneContext } from '../../contexts/scene.svelte.js';
+  import { getSceneContext, type Pickable } from '../../contexts/scene.svelte.js';
   import { frameOrthographic, framePerspective, viewDirection } from '../../utils/camera.js';
   import { geoPath } from 'd3-geo';
   import { getSphere } from '../../utils/globe.js';
@@ -736,14 +736,8 @@
 
   $effect(() => {
     const element = renderer.domElement;
-    const onPointerMove = (e: PointerEvent) => {
-      // Nothing here shows a tooltip, so leave it to the chart's (ex. a `quadtree` over the rows)
-      if (!sceneState.pickables.size) return;
-      // A drag turns or pans the view
-      if (e.buttons || ctx.transform.dragging) {
-        ctx.tooltip.hide(e);
-        return;
-      }
+    /** What's under the pointer: the pickable mark it hits first, and that hit's row */
+    const pick = (e: MouseEvent) => {
       const rect = element.getBoundingClientRect();
       pointer.set(
         ((e.clientX - rect.left) / rect.width) * 2 - 1,
@@ -760,18 +754,77 @@
         .find(
           ({ point }) => !sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0)
         );
-      const datum = hit ? pickables.find((p) => p.object === hit.object)?.datum(hit) : undefined;
-      if (datum != null) ctx.tooltip.show(e, datum);
-      else ctx.tooltip.hide(e);
+      const pickable = hit ? pickables.find((p) => p.object === hit.object) : undefined;
+      return pickable && hit ? { pickable, datum: pickable.datum(hit) } : null;
+    };
+
+    /** The mark and row the pointer was last over, for its enter / leave handlers */
+    let over: { pickable: Pickable; datum: unknown } | null = null;
+    const leave = (e: PointerEvent) => {
+      if (!over) return;
+      const events = over.pickable.events?.();
+      events?.onpointerleave?.(e, { data: over.datum });
+      events?.onpointerout?.(e, { data: over.datum });
+      over = null;
+      element.style.cursor = '';
+    };
+    const enter = (e: PointerEvent, next: { pickable: Pickable; datum: unknown }) => {
+      over = next;
+      const events = next.pickable.events?.();
+      events?.onpointerenter?.(e, { data: next.datum });
+      events?.onpointerover?.(e, { data: next.datum });
+      // Clickable, as the core marks with an `onclick` show
+      if (events?.onclick || events?.ondblclick) element.style.cursor = 'pointer';
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      // Nothing here shows a tooltip or takes the pointer, so leave it to the chart's (ex. a
+      // `quadtree` over the rows)
+      if (!sceneState.pickables.size) return;
+      // A drag turns or pans the view
+      if (e.buttons || ctx.transform.dragging) {
+        ctx.tooltip.hide(e);
+        leave(e);
+        return;
+      }
+      const picked = pick(e);
+      const datum = picked?.datum;
+      if (picked?.pickable !== over?.pickable || datum !== over?.datum) {
+        leave(e);
+        if (picked && datum != null) enter(e, picked);
+      }
+      if (picked && datum != null) picked.pickable.events?.()?.onpointermove?.(e, { data: datum });
+      // The tooltip from the marks that show it, and only them
+      if (picked && datum != null && (picked.pickable.tooltip?.() ?? true))
+        ctx.tooltip.show(e, datum);
+      else if ([...sceneState.pickables].some((p) => p.tooltip?.() ?? true)) ctx.tooltip.hide(e);
     };
     const onPointerLeave = (e: PointerEvent) => {
-      if (sceneState.pickables.size) ctx.tooltip.hide(e);
+      // Onto a marker over the scene (ex. a `Highlight`'s point taking clicks), which passes its
+      // moves on here, and its leaving
+      if ((e.relatedTarget as Element | null)?.closest?.('.lc-webgl-markers')) return;
+      leave(e);
+      if ([...sceneState.pickables].some((p) => p.tooltip?.() ?? true)) ctx.tooltip.hide(e);
     };
+    /** A click on a mark that takes one, with its row */
+    const onClick = (type: 'onclick' | 'ondblclick') => (e: MouseEvent) => {
+      if (!sceneState.pickables.size) return;
+      const picked = pick(e);
+      if (picked && picked.datum != null) {
+        picked.pickable.events?.()?.[type]?.(e, { data: picked.datum });
+      }
+    };
+    const onclick = onClick('onclick');
+    const ondblclick = onClick('ondblclick');
     element.addEventListener('pointermove', onPointerMove);
     element.addEventListener('pointerleave', onPointerLeave);
+    element.addEventListener('click', onclick);
+    element.addEventListener('dblclick', ondblclick);
     return () => {
       element.removeEventListener('pointermove', onPointerMove);
       element.removeEventListener('pointerleave', onPointerLeave);
+      element.removeEventListener('click', onclick);
+      element.removeEventListener('dblclick', ondblclick);
     };
   });
 </script>

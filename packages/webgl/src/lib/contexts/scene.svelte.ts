@@ -32,6 +32,11 @@ export type SceneLabel = {
   /** A halo around the letters, behind them (a CSS color), and its width in pixels */
   stroke?: string;
   strokeWidth?: number;
+  /** How opaque its letters and its halo are (0 to 1), as SVG text's fill and stroke opacity */
+  fillOpacity?: number;
+  strokeOpacity?: number;
+  /** How opaque it is as a whole (0 to 1), letters and halo together */
+  opacity?: number;
   /**
    * The way it sits out from its point, in the chart's axes (ex. out from an axis): it's anchored
    * by its side nearest the point, whichever way the view turns that on screen, so it keeps the
@@ -58,12 +63,39 @@ export type SceneMarker = {
   strokeWidth?: number;
   opacity?: number;
   class?: string;
+  /**
+   * Pointer handlers, as on the core marks' elements (ex. a `Highlight`'s `onPointClick`).  Only a
+   * marker with one takes the pointer; the rest let it through to the scene beneath.
+   */
+  onclick?: (e: MouseEvent) => void;
+  onpointerenter?: (e: PointerEvent) => void;
+  onpointerleave?: (e: PointerEvent) => void;
 };
+
+/** Pointer handlers a mark takes, as the core marks' (called with the row under the pointer) */
+export type MarkEvents = {
+  onclick?: ((e: MouseEvent, detail: { data: any }) => void) | null;
+  ondblclick?: ((e: MouseEvent, detail: { data: any }) => void) | null;
+  onpointerenter?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointerover?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointermove?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointerleave?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointerout?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+};
+
+/** Whether any of `events` is set */
+export function hasEvents(events: MarkEvents | undefined) {
+  return !!events && Object.values(events).some((handler) => typeof handler === 'function');
+}
 
 /** A mark's object the pointer can hit, and the data row each hit is on */
 export type Pickable = {
   object: Object3D;
   datum: (hit: Intersection) => unknown;
+  /** Whether hovering it shows the tooltip (else it's picked only for `events`) @default true */
+  tooltip?: () => boolean;
+  /** Its pointer handlers, called with the row under the pointer */
+  events?: () => MarkEvents | undefined;
 };
 
 const KEY = Symbol('LayerChart3DScene');
@@ -101,6 +133,8 @@ export class SceneState {
   layer() {
     const group = new Group();
     group.userData.layer = true;
+    // Past the plot box's sides where asked (ex. a line's markers at its edge, as SVG's overflow)
+    if (isUnclipped()) group.userData.unclipped = true;
     this.#layers.push(group);
     // Inside a `Group`, under its own (moved by it, as an SVG `<g>` moves what's in it)
     const parent = getParent()?.object ?? this.root;

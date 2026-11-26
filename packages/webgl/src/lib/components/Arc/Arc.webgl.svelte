@@ -39,8 +39,10 @@
     z,
     data,
     fill,
+    fillOpacity = 1,
     stroke,
     strokeWidth: strokeWidthProp,
+    strokeOpacity = 1,
     class: className,
     opacity = 1,
     motion,
@@ -191,7 +193,9 @@
         }
       ),
     ],
-    opacity: () => opacity * (look?.opacity ?? 1),
+    // Its fill and its outline each at their own opacity, under `opacity`, as an SVG path's
+    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
+    lineOpacity: () => opacity * strokeOpacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
   });
 

@@ -14,6 +14,10 @@
   import { createMerged } from '../../utils/merged.svelte.js';
   import { createPathMotion } from '../../utils/rowMotion.svelte.js';
   import { defined, position, resolveAccessor, rowColor, scaled } from '../../utils/marks.js';
+  import { curveVertices } from '../Line/markers.js';
+  import PathWebGL from '../Path/Path.webgl.svelte';
+  import { lengthOf } from '../Path/draw.svelte.js';
+  import AreaOutline, { type AreaOutline as Outline } from './Area.outline.svelte';
 
   let {
     data: dataProp,
@@ -24,9 +28,12 @@
     z,
     z0 = 0,
     g,
+    seriesKey,
+    pathData,
     curve,
     defined: definedProp,
     fill,
+    stroke,
     class: className,
     opacity = 1,
     fillOpacity = 1,
@@ -34,6 +41,14 @@
     strokeWidth: strokeWidthProp,
     tooltip = false,
     motion,
+    draw,
+    marker,
+    markerMid,
+    markerStart,
+    markerEnd,
+    startContent,
+    endContent,
+    strokeOpacity = 1,
   }: AreaProps = $props();
 
   const ctx = getChartContext();
@@ -51,10 +66,32 @@
   ctx.registerComponent({
     name: 'Area',
     kind: 'mark',
-    markInfo: () => ({ data: dataProp, x, y, color: typeof fill === 'string' ? fill : undefined }),
+    markInfo: () => ({
+      data: dataProp,
+      x,
+      y,
+      seriesKey,
+      color: typeof fill === 'string' ? fill : undefined,
+    }),
   });
 
-  const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  /**
+   * The series it draws, as the core `Area`: its rows, edges, and color.  Looked up only with a
+   * `seriesKey`, so areas without one don't read the series state.
+   */
+  const series = $derived(
+    seriesKey == null ? undefined : ctx.series.series.find((s) => s.key === seriesKey)
+  );
+  /** Faded while another series is highlighted, as the core `Area` */
+  const seriesOpacity = $derived(
+    series == null ||
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
+      ? 1
+      : 0.1
+  );
+
+  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
   const y0Accessor = $derived(y0 == null ? null : accessor(y0));
@@ -64,7 +101,7 @@
    * The chart's area bottoms and tops (as the core `Area`'s): a stack's (areas stack by nature,
    * as the chart's `seriesLayout` says), else its values over the baseline
    */
-  const chartEdges = $derived(ctx.areaAccessorsFor({ ownData: dataProp != null }));
+  const chartEdges = $derived(ctx.areaAccessorsFor({ seriesKey, ownData: dataProp != null }));
 
   /** Standing up as a curtain, rather than lying on the floor as the core `Area` fills the plot */
   const curtain = $derived(y0 == null && y1 == null && (z != null || ctx.config.z != null));
@@ -74,9 +111,9 @@
     const gProp = g ?? (ctx.props as { g?: Accessor }).g;
     if (gProp != null) return accessor(gProp);
     const first = rows[0];
-    const implied = colorPropGroupKey(fill, first);
+    const implied = colorPropGroupKey(fill, first) ?? colorPropGroupKey(stroke, first);
     if (implied != null) return accessor(implied);
-    if (dataProp != null) return null;
+    if (dataProp != null || series?.data != null) return null;
     return first != null && ctx.cKey(first) != null ? ctx.cKey : null;
   });
 
@@ -168,6 +205,27 @@
     return lineLook?.stroke ?? areaColor;
   }
 
+  /** An area's fill: its own `fill`, else its class's, else the chart's `c`, else its series' */
+  function fillColor(d: any) {
+    return rowColor(
+      ctx,
+      fill,
+      d,
+      series?.color ?? 'var(--color-primary, currentColor)',
+      look?.fill,
+      look?.fillSet
+    );
+  }
+
+  /**
+   * An area's outline, as the core `Area`'s path strokes it: its own `stroke`, or one its `class`
+   * sets (ex. `stroke-primary`), else none
+   */
+  function outlineColor(d: any) {
+    if (stroke === 'none' || (stroke == null && !look?.strokeSet)) return null;
+    return rowColor(ctx, stroke, d, 'currentColor', look?.stroke, look?.strokeSet);
+  }
+
   /** Each area's runs of columns as asked (broken where a row isn't drawn), with its colors */
   const runs = $derived(
     (gAccessor ? [...group(rows, gAccessor).values()] : [rows]).flatMap((areaRows, area) => {
@@ -177,18 +235,21 @@
         if (column) pieces[pieces.length - 1].push(column);
         else if (pieces[pieces.length - 1].length) pieces.push([]);
       });
-      const color = rowColor(
-        ctx,
-        fill,
-        areaRows[0],
-        'var(--color-primary, currentColor)',
-        look?.fill,
-        look?.fillSet
-      );
-      const stroke = line ? lineColor(areaRows[0], color) : null;
+      const color = fillColor(areaRows[0]);
+      const lineStroke = line ? lineColor(areaRows[0], color) : null;
+      const outline = outlineColor(areaRows[0]);
       return pieces
         .filter((piece) => piece.length >= 2)
-        .map((piece, k) => ({ key: `${area}:${k}`, color, stroke, columns: curved(piece) }));
+        .map((piece, k) => ({
+          key: `${area}:${k}`,
+          area,
+          color,
+          stroke: lineStroke,
+          outline,
+          /** Its rows' columns, before `curve` */
+          rows: piece,
+          columns: curved(piece),
+        }));
     })
   );
 
@@ -232,49 +293,150 @@
     }));
   }
 
+  /** A column's two edges, in the scene's axes (chart x, height, chart y): its base, and its top */
+  function edges(c: Column): [number[], number[]] {
+    return curtain
+      ? [
+          [c.x, c.a, c.y],
+          [c.x, c.b, c.y],
+        ]
+      : [
+          [c.x, 0.1, c.a],
+          [c.x, 0.1, c.b],
+        ];
+  }
+
+  /** A point of an edge, a floor area's lifted over its fill */
+  function lifted([x, up, y]: number[]) {
+    return [x, curtain ? up : up + LINE_LIFT, y];
+  }
+
+  /** A run's outline: along its top, back along its base, and closed, as an SVG path's stroke */
+  function outlineOf(columns: Column[]) {
+    return [
+      ...columns.flatMap((c) => lifted(edges(c)[1])),
+      ...columns
+        .slice()
+        .reverse()
+        .flatMap((c) => lifted(edges(c)[0])),
+      ...lifted(edges(columns[0])[1]),
+    ];
+  }
+
+  /**
+   * Where a run's outline's commands end, as indices into its points: each column, or along a
+   * `curve`, its top's and its base's commands' (and where it closes)
+   */
+  function outlineVertices(run: { rows: Column[]; columns: Column[] }) {
+    const count = run.columns.length;
+    if (!curve || run.rows.length < 2) return Array.from({ length: 2 * count + 1 }, (_, i) => i);
+    const along = (edge: (c: Column) => number) =>
+      curveVertices(
+        run.rows.map((c) => [c.x, edge(c)]),
+        curve,
+        run.columns.flatMap((c) => [c.x, 0, edge(c)])
+      );
+    return [
+      ...along((c) => c.b),
+      ...along((c) => c.a)
+        .reverse()
+        .map((k) => 2 * count - 1 - k),
+      2 * count,
+    ];
+  }
+
+  /** Each area's runs, as indices into `runs` */
+  const areas = $derived.by(() => {
+    const out: number[][] = [];
+    runs.forEach((run, i) => (out[run.area] ??= []).push(i));
+    return out.filter(Boolean);
+  });
+
   createMerged({
     tooltip: () => tooltip,
     items: () =>
-      runs.map((run) => {
+      runs.flatMap((run) => {
         const columns = columnsNow(run);
         const positions: number[] = [];
-        // In the scene's axes (chart x, height, chart y): each column's two edges
-        const edges = (c: Column): [number[], number[]] =>
-          curtain
-            ? [
-                [c.x, c.a, c.y],
-                [c.x, c.b, c.y],
-              ]
-            : [
-                [c.x, 0.1, c.a],
-                [c.x, 0.1, c.b],
-              ];
         for (let k = 0; k < columns.length - 1; k++) {
           const [a0, a1] = edges(columns[k]);
           const [b0, b1] = edges(columns[k + 1]);
           positions.push(...a0, ...b0, ...a1, ...a1, ...b0, ...b1);
         }
-        const geometry = new BufferGeometry();
-        geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-        geometry.computeVertexNormals();
+        // Explicit `pathData` fills in its place (its line, as asked, still from the rows)
+        let geometry: BufferGeometry | null = null;
+        if (!pathData && positions.length) {
+          geometry = new BufferGeometry();
+          geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+          geometry.computeVertexNormals();
+        }
         return {
           d: columns[0].d,
-          geometry: positions.length ? geometry : null,
+          geometry,
           fill: run.color,
           // On the floor, a little above the fill, so all its width draws over it (a depth
           // offset alone isn't enough on every GPU for lines in the fill's own plane)
-          lines: line
-            ? [
-                columns.flatMap((c) => {
-                  const [x, up, y] = edges(c)[1];
-                  return [x, curtain ? up : up + LINE_LIFT, y];
-                }),
-              ]
-            : [],
+          lines: line ? [columns.flatMap((c) => lifted(edges(c)[1]))] : [],
           stroke: run.stroke,
         };
       }),
-    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
+    opacity: () => opacity * fillOpacity * seriesOpacity * (look?.opacity ?? 1),
+    lineOpacity: () => seriesOpacity,
     strokeWidth: () => strokeWidth,
   });
 </script>
+
+<!-- Explicit path data, filled (and outlined) as the core `Area`'s path draws it -->
+{#if pathData}
+  <PathWebGL
+    {pathData}
+    {draw}
+    {marker}
+    {markerMid}
+    {markerStart}
+    {markerEnd}
+    {startContent}
+    {endContent}
+    fill={fillColor(rows[0])}
+    stroke={outlineColor(rows[0])}
+    {strokeWidth}
+    {strokeOpacity}
+    class={className}
+    opacity={opacity * seriesOpacity}
+    {fillOpacity}
+    {motion}
+  />
+{:else if startContent || endContent || runs.some((run) => run.outline)}
+  <!-- Its outline (with a `stroke`), and what goes on it -->
+  <AreaOutline
+    outlines={() =>
+      areas.map((members): Outline => {
+        const pieces = members.map((i) => runs[i]);
+        return {
+          subpaths: pieces.map((run) => outlineOf(columnsNow(run))),
+          color: pieces[0].outline,
+          vertices: () => {
+            let offset = 0;
+            return pieces.flatMap((run) => {
+              const own = outlineVertices(run).map((k) => offset + k);
+              offset += 2 * run.columns.length + 1;
+              return own;
+            });
+          },
+        };
+      })}
+    lengths={() =>
+      areas.map((members) =>
+        members.reduce((sum, i) => sum + lengthOf(outlineOf(runs[i].columns)), 0)
+      )}
+    {draw}
+    {marker}
+    {markerMid}
+    {markerStart}
+    {markerEnd}
+    {startContent}
+    {endContent}
+    {strokeWidth}
+    opacity={opacity * strokeOpacity * seriesOpacity * (look?.opacity ?? 1)}
+  />
+{/if}

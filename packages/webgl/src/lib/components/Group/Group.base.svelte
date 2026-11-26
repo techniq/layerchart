@@ -7,9 +7,17 @@
   let {
     x = 0,
     y = 0,
+    z = 0,
     opacity,
     children,
-  }: { x?: number; y?: number; opacity?: number; children?: Snippet } = $props();
+  }: {
+    x?: number;
+    y?: number;
+    /** Its height off the floor, in pixels (ex. a raised line's end, for its `endContent`) */
+    z?: number;
+    opacity?: number;
+    children?: Snippet;
+  } = $props();
 
   const scene = getSceneContext();
   const outer = getParent();
@@ -17,8 +25,8 @@
   (outer?.object ?? scene.root).add(object);
 
   $effect(() => {
-    // Across and down the floor (the scene's `x` and `z`)
-    object.position.set(x, 0, y);
+    // Across and down the floor (the scene's `x` and `z`), and up off it
+    object.position.set(x, z, y);
     scene.invalidate();
   });
   $effect(() => () => {

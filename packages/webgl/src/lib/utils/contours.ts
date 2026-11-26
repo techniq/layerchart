@@ -19,13 +19,19 @@ export function contourSegments(
   grid: Grid,
   extent: [number, number],
   thresholds: number | number[],
-  height: (value: number) => number
+  height: (value: number) => number,
+  {
+    smooth = true,
+  }: {
+    /** Interpolate where lines cross each cell, else run them along the cells' corners */
+    smooth?: boolean;
+  } = {}
 ): number[] {
   const { values, columns, rows } = grid;
   const levels = Array.isArray(thresholds) ? thresholds : ticks(extent[0], extent[1], thresholds);
   // Holes close around themselves rather than leaving lines open
   const field = Array.from(values, (v) => (Number.isFinite(v) ? v : -Infinity));
-  const generator = d3Contours().size([columns, rows]).thresholds(levels);
+  const generator = d3Contours().size([columns, rows]).thresholds(levels).smooth(smooth);
   const onEdge = (x: number, y: number) => x <= 0 || y <= 0 || x >= columns || y >= rows;
 
   const segments: number[] = [];

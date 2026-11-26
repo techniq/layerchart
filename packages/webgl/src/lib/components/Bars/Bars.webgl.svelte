@@ -16,6 +16,7 @@
       data: props.data,
       x: props.x,
       y: props.y,
+      seriesKey: props.seriesKey,
       color: typeof props.fill === 'string' ? props.fill : undefined,
       stacks: props.z == null,
     }),

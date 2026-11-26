@@ -46,7 +46,7 @@
   import { NoToneMapping, PCFShadowMap, WebGLRenderer } from 'three';
   import { getChartContext } from 'layerchart';
 
-  import { SceneState, setSceneContext } from '../../contexts/scene.svelte.js';
+  import { SceneState, setSceneContext, type SceneMarker } from '../../contexts/scene.svelte.js';
   import { ColorResolver } from '../../utils/color.js';
   import WebGLSetup from './WebGLSetup.svelte';
 
@@ -74,6 +74,40 @@
   }: WebGLProps = $props();
 
   const sceneState = setSceneContext(new SceneState());
+
+  /** `color` at `opacity` (a label's letters or halo), as it is without one */
+  function alpha(color: string, opacity: number | undefined) {
+    return opacity == null ? color : `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`;
+  }
+
+  /** Whether a marker takes the pointer: only one with handlers does, while the scene takes it */
+  const takesPointer = (marker: SceneMarker) =>
+    pointerEvents !== false && !!(marker.onclick || marker.onpointerenter || marker.onpointerleave);
+
+  /**
+   * Pass a pointer's move over a marker on to the scene beneath, so what's under it is still
+   * hovered (ex. a tooltip from the marks), and its leaving when it leaves for outside the scene
+   * rather than for the scene itself (which the scene sees for itself)
+   */
+  function toScene(e: PointerEvent) {
+    const canvas = element?.querySelector('canvas');
+    const to = e.relatedTarget as Element | null;
+    if (
+      !canvas ||
+      (e.type === 'pointerleave' && (to === canvas || to?.closest?.('.lc-webgl-markers')))
+    )
+      return;
+    canvas.dispatchEvent(
+      new PointerEvent(e.type, {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        buttons: e.buttons,
+        pointerId: e.pointerId,
+        pointerType: e.pointerType,
+        relatedTarget: to,
+      })
+    );
+  }
   const ctx = getChartContext();
   $effect.pre(() => {
     sceneState.clip = clip ?? ctx.props.transform?.mode === 'domain';
@@ -162,6 +196,9 @@
       {#each markers as marker (marker.key)}
         {@const point = sceneState.project(marker.x, marker.y, marker.z)}
         {#if point}
+          <!-- As the core marks' elements, which take handlers but no focus -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
           <circle
             cx={point.x}
             cy={point.y}
@@ -171,6 +208,18 @@
             stroke-width={marker.strokeWidth}
             opacity={marker.opacity}
             class={marker.class}
+            style:pointer-events={takesPointer(marker) ? 'auto' : undefined}
+            style:cursor={marker.onclick ? 'pointer' : undefined}
+            onclick={marker.onclick}
+            onpointerdown={marker.onclick && ((e: PointerEvent) => e.stopPropagation())}
+            onpointerenter={marker.onpointerenter}
+            onpointermove={takesPointer(marker) ? (e: PointerEvent) => toScene(e) : undefined}
+            onpointerleave={takesPointer(marker)
+              ? (e: PointerEvent) => {
+                  marker.onpointerleave?.(e);
+                  toScene(e);
+                }
+              : undefined}
           />
         {/if}
       {/each}
@@ -197,8 +246,12 @@
             style:max-width={label.width ? `${label.width}px` : undefined}
             style:color={label.color}
             style:-webkit-text-stroke={label.stroke
-              ? `${label.strokeWidth ?? 1}px ${label.stroke}`
+              ? `${label.strokeWidth ?? 1}px ${alpha(label.stroke, label.strokeOpacity)}`
               : undefined}
+            style:-webkit-text-fill-color={label.fillOpacity == null
+              ? undefined
+              : alpha('currentColor', label.fillOpacity)}
+            style:opacity={label.opacity}
             style:paint-order={label.stroke ? 'stroke fill' : undefined}
             style:white-space={label.width ? 'normal' : undefined}
           >

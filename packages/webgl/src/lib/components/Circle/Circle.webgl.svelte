@@ -5,17 +5,21 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { CircleGeometry, Color, SphereGeometry } from 'three';
-  import { createDataMotionMap } from 'layerchart/utils/motion.svelte';
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
-  import { createInstances, ringGeometry } from '../../utils/instances.svelte.js';
+  import { createInstances, ringGeometry, scaledDash } from '../../utils/instances.svelte.js';
+  import { dashPattern } from '../../utils/merged.svelte.js';
   import { markRows, positionOf, rowColor } from '../../utils/marks.js';
+  import { createRowMotion } from '../../utils/rowMotion.svelte.js';
 
   let {
     data,
     cx = 0,
+    initialCx,
     cy = 0,
+    initialCy,
     r = 1,
+    initialR,
     z,
     fill,
     stroke,
@@ -24,6 +28,8 @@
     style,
     opacity = 1,
     fillOpacity = 1,
+    strokeOpacity = 1,
+    dashArray,
     tooltip = false,
     motion,
     key = (_d: any, i: number) => i,
@@ -58,25 +64,48 @@
   );
 
   // Easing to where they're asked to be, as the core `Circle` (ex. a highlight springing from
-  // row to row), each by its `key`
-  const motionMap = createDataMotionMap(untrack(() => motion));
+  // row to row), each by its `key`, and each of `cx`, `cy`, and `r` by its own config
+  const motionMap = createRowMotion(
+    untrack(() => motion),
+    ['cx', 'cy', 'r'] as const
+  );
+
+  /**
+   * Where a new circle eases in from: its `initialCx`, `initialCy`, and `initialR`, as the core
+   * `Circle` (in pixel mode only), else where it's asked to be
+   */
+  function initialOf(): { cx?: number; cy?: number; r?: number } | undefined {
+    if (dataMode) return undefined;
+    return { cx: initialCx, cy: initialCy, r: initialR };
+  }
+
   if (motionMap) {
     $effect(() => {
       const active = new Set<unknown>();
+      const initial = initialOf();
       for (const t of targets) {
         active.add(t.key);
-        untrack(() => motionMap.update(t.key, { x: t.x, y: t.y, r: t.radius }));
+        const values = { cx: t.x, cy: t.y, r: t.radius };
+        untrack(() => motionMap.update(t.key, values, initial));
       }
       untrack(() => motionMap.cleanup(active));
     });
   }
 
-  /** Each row's circle where it is now */
+  /** Each row's circle where it is now (a new one where it eases in from, until it starts) */
   const circles = $derived(
-    targets.map((t) => {
-      const now = motionMap?.get(t.key);
-      return now ? { ...t, x: now.x, y: now.y, radius: now.r } : t;
-    })
+    motionMap
+      ? targets.map((t) => {
+          const now = motionMap.get(t.key);
+          const from = now ?? initialOf();
+          return {
+            ...t,
+            x: from?.cx ?? t.x,
+            y: from?.cy ?? t.y,
+            radius: from?.r ?? t.radius,
+          };
+        })
+      : targets
   );
 
   // Flat (no `view`, seen from directly above) a disc facing up; in a 3D view, a sphere
@@ -115,6 +144,7 @@
   createInstances({
     geometry: ringGeometry(),
     ring: () => (strokeWidth / 2) * scene.unit,
+    dash: () => scaledDash(dashPattern(dashArray), scene.unit),
     instances: () =>
       ringed
         ? circles.map((c) => ({
@@ -129,7 +159,7 @@
             color: rowColor(ctx, stroke, c.d, 'currentColor', look?.stroke, look?.strokeSet),
           }))
         : [],
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => opacity * strokeOpacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
   });
 </script>

@@ -28,11 +28,15 @@
     interpolate = 'bilinear',
     pixelated = false,
     crossOrigin = 'anonymous',
+    resolution = 1,
     elevation,
-    pixelSize = 4,
+    pixelSize: pixelSizeProp = 4,
     opacity = 1,
     tooltip = false,
   }: GeoRasterProps = $props();
+
+  /** Pixels between the points the image is laid over, `resolution` times as many */
+  const pixelSize = $derived(pixelSizeProp / (resolution > 0 ? resolution : 1));
 
   /** The image's size once loaded, for `sourceProjection` to map into */
   let imageSize = $state<{ width: number; height: number } | null>(null);

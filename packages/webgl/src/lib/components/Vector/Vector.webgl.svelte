@@ -4,6 +4,7 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import {
     extractRawDataValue,
     getChartContext,
@@ -22,24 +23,32 @@
   import { createInstances } from '../../utils/instances.svelte.js';
   import { createMerged } from '../../utils/merged.svelte.js';
   import { markRows, positionOf, rowColor } from '../../utils/marks.js';
+  import { createRowMotion } from '../../utils/rowMotion.svelte.js';
   import { extrude, ShapeContext } from '../../utils/shapes.js';
 
   let {
-    data,
     x = 0,
+    initialX,
     y = 0,
+    initialY,
     length = 12,
+    initialLength,
     rotate = 0,
-    tilt = 0,
     shape = 'arrow',
     anchor,
     width,
-    z,
+    data,
+    key = (_, i) => i,
+    motion,
     fill,
     stroke,
+    fillOpacity = 1,
+    strokeOpacity = 1,
     strokeWidth: strokeWidthProp,
-    class: className,
     opacity = 1,
+    class: className,
+    tilt = 0,
+    z,
     tooltip = false,
   }: VectorProps = $props();
 
@@ -63,10 +72,52 @@
   const lengthOf = (d: any) =>
     resolveDataProp(length, d, ctx.rScale, typeof length === 'number' ? length : 12);
 
+  /** Each row's anchor and length, in pixels, by its `key` */
+  const targets = $derived(
+    rows.map((d, i) => {
+      const [px, py] = positionOf(ctx, x, y, d);
+      return { d, key: dataMode ? key(d, i) : 0, x: px, y: py, length: lengthOf(d) };
+    })
+  );
+
+  /** Where a vector placed by pixels starts, as the core `Vector`'s `initialX` ... */
+  const initial = $derived(
+    dataMode
+      ? undefined
+      : Object.fromEntries(
+          Object.entries({ x: initialX, y: initialY, length: initialLength }).filter(
+            ([, value]) => value != null
+          )
+        )
+  );
+
+  // Easing each anchor and length to where they're asked to be, as the core `Vector`: a row at a
+  // time by its `key`, and a vector placed by pixels from its `initial` ones
+  const PROPS = ['x', 'y', 'length'] as const;
+  const motionMap = createRowMotion(
+    untrack(() => motion),
+    PROPS
+  );
+  if (motionMap) {
+    $effect(() => {
+      const active = new Set<unknown>();
+      for (const t of targets) {
+        active.add(t.key);
+        untrack(() => motionMap.update(t.key, t, initial));
+      }
+      untrack(() => motionMap.cleanup(active));
+    });
+  }
+
+  /** Each vector's anchor and length where they are now */
+  const vectors = $derived(
+    motionMap ? targets.map((t) => ({ ...t, ...(motionMap.get(t.key) ?? initial) })) : targets
+  );
+
+  type Placed = (typeof targets)[number];
+
   /** A row's vector as the core `Vector` draws it: a path of moves and lines, in pixels */
-  function pathOf(d: any) {
-    const [px, py] = positionOf(ctx, x, y, d);
-    const len = lengthOf(d);
+  function pathOf({ d, x: px, y: py, length: len }: Placed) {
     const turn = valueOf(rotate, d);
     const options = {
       length: len,
@@ -97,8 +148,9 @@
   createMerged({
     tooltip: () => tooltip,
     items: () =>
-      (ctx.view ? [] : rows).map((d) => {
-        const lines = subpaths(pathOf(d));
+      (ctx.view ? [] : vectors).map((vector) => {
+        const d = vector.d;
+        const lines = subpaths(pathOf(vector));
         const color = 'var(--color-surface-content, currentColor)';
         const height = heightOf(d) + (filled ? 0.3 : 0.5);
         let geometry = null;
@@ -121,7 +173,8 @@
           stroke: outlined ? rowColor(ctx, stroke, d, color, look?.stroke, look?.strokeSet) : null,
         };
       }),
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
+    lineOpacity: () => opacity * strokeOpacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
   });
 
@@ -149,9 +202,7 @@
     instances: () => {
       if (!ctx.view) return [];
       const color = 'var(--color-surface-content, currentColor)';
-      return rows.flatMap((d) => {
-        const [px, py] = positionOf(ctx, x, y, d);
-        const len = lengthOf(d);
+      return vectors.flatMap(({ d, x: px, y: py, length: len }) => {
         if (!Number.isFinite(px) || !Number.isFinite(py) || !(len > 0)) return [];
         const w = width ?? len * 0.25;
         // Clockwise from up the plot (towards its far edge, the scene's -z), and up off the floor
@@ -182,7 +233,8 @@
         ];
       });
     },
-    opacity: () => opacity * (look?.opacity ?? 1),
+    // A filled shape's fill, an arrow's stroke
+    opacity: () => opacity * (filled ? fillOpacity : strokeOpacity) * (look?.opacity ?? 1),
     emphasize: (color) => color.offsetHSL(0, 0, 0.15),
   });
 </script>

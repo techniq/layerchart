@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { BarsProps } from './Bars.shared.svelte.js';
+  import type { BarEvents } from '../Bar/Bar.shared.svelte.js';
 </script>
 
 <!-- The bars of `Bars` (which registers them with the chart) and `Bar` (a row's, which doesn't) -->
@@ -8,7 +9,7 @@
   import { BoxGeometry, Color, Quaternion, Vector3 } from 'three';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getChartContext, isScaleBand } from 'layerchart';
-  import { createDimensionGetter } from 'layerchart/utils/rect.svelte';
+  import { createDimensionGetter, type Insets } from 'layerchart/utils/rect.svelte';
 
   import { untrack } from 'svelte';
   import { getSphere } from '../../utils/globe.js';
@@ -23,20 +24,40 @@
     data: dataProp,
     x,
     y,
+    x1,
+    y1,
     z,
+    seriesKey,
+    stackPadding = 0,
     fill,
+    fillOpacity = 1,
     stroke,
     strokeWidth: strokeWidthProp,
+    strokeOpacity = 1,
     class: className,
     opacity = 1,
-    insets = 0,
+    insets: insetsProp,
     size: sizeProp = 10,
+    width: widthProp,
+    height: heightProp,
+    initialX,
+    initialY,
+    initialWidth,
+    initialHeight,
     tooltip = false,
     motion,
     key = (_d: any, i: number) => i,
     radius = 0,
     rounded = 'all',
-  }: Omit<BarsProps, 'children'> = $props();
+    onBarClick,
+    onclick,
+    ondblclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    onpointerover,
+    onpointerout,
+  }: Omit<BarsProps, 'children'> & BarEvents = $props();
 
   const ctx = getChartContext();
   const scene = getSceneContext();
@@ -49,32 +70,112 @@
    */
   const outlined = $derived(stroke != null || !!look?.stroke || (strokeWidthProp ?? 0) > 0);
 
-  const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  /** Its series, as the core `Bars`: its rows, values, and color */
+  const series = $derived(
+    seriesKey ? ctx.series.series.find((s) => s.key === seriesKey) : undefined
+  );
+  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
   const sphere = $derived(getSphere(ctx));
-  const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
-  const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
+  const stack = $derived(ctx.stackAccessorsFor({ seriesKey, stacksImplicitly: true }));
+  const seriesAccessor = $derived(ctx.series.valueAccessor(seriesKey));
+  /** Its values along the value axis: its stack's, else its series', as the core `Bar` reads them */
+  const xProp = $derived(
+    x ?? (ctx.valueAxis === 'x' ? (stack?.value ?? seriesAccessor) : undefined)
+  );
+  const yProp = $derived(
+    y ?? (ctx.valueAxis === 'y' ? (stack?.value ?? seriesAccessor) : undefined)
+  );
+  const xAccessor = $derived(resolveAccessor(xProp, ctx.config.x));
+  const yAccessor = $derived(resolveAccessor(yProp, ctx.config.y));
+
+  /**
+   * `stackPadding` between a stack's bars, as the core `Bar`: half on each side of a bar, but the
+   * stack's ends, along the value axis (where `insets` don't say)
+   */
+  const stackInsets = $derived.by((): Insets | undefined => {
+    const index = seriesKey
+      ? ctx.series.visibleSeries.findIndex((s) => s.key === seriesKey)
+      : undefined;
+    if (ctx.series.stackLayout == null || stackPadding === 0 || index === undefined) return;
+    const first = index === 0;
+    const last = index === ctx.series.visibleSeries.length - 1;
+    const half = stackPadding / 2;
+    return ctx.valueAxis === 'y'
+      ? { bottom: first ? undefined : half, top: last ? undefined : half }
+      : { left: first ? undefined : half, right: last ? undefined : half };
+  });
+  const insets = $derived(
+    insetsProp == null
+      ? stackInsets
+      : typeof insetsProp === 'number'
+        ? { all: insetsProp }
+        : insetsProp
+  );
   /** A 3D bar's insets, the same on every side */
-  const inset = $derived(typeof insets === 'number' ? insets : (insets.all ?? 0));
+  const inset = $derived(insets?.all ?? 0);
 
   /**
    * Without a height (`z`, here or the chart's), LayerChart's 2D bars, flat on the floor: across
-   * the band scale's bands, and along the value axis from its baseline (or between a stack's
-   * values)
+   * the band scale's bands (or a sub-band's, with `x1` / `y1`), and along the value axis from its
+   * baseline (or between a stack's values)
    */
   const flat = $derived(!sphere && z == null && ctx.config.z == null);
-  const stack = $derived(ctx.stackAccessorsFor({ stacksImplicitly: true }));
   const dimensions = createDimensionGetter(ctx, () => ({
-    x: x ?? (ctx.valueAxis === 'x' ? stack?.value : undefined),
-    y: y ?? (ctx.valueAxis === 'y' ? stack?.value : undefined),
-    insets: typeof insets === 'number' ? { all: insets } : insets,
+    x: xProp,
+    y: yProp,
+    x1,
+    y1,
+    insets,
   }));
 
-  /** Where a bar starts along an axis and how far it reaches */
-  function extent(scale: any, value: unknown): [number, number] {
+  /**
+   * Where a bar starts along an axis and how far it reaches: across its band (or its `sub`
+   * band, ex. a grouped bar's), else `size` about its value
+   */
+  function extent(
+    scale: any,
+    value: unknown,
+    sub?: { scale: any; value: unknown } | null
+  ): [number, number] {
     if (isScaleBand(scale)) {
-      return [Number(scale(value)) + inset, Math.max(0, scale.bandwidth() - inset * 2)];
+      const start = Number(scale(value)) + (sub ? Number(sub.scale(sub.value)) || 0 : 0);
+      const band = sub ? (sub.scale.bandwidth?.() ?? 0) : scale.bandwidth();
+      return [start + inset, Math.max(0, band - inset * 2)];
     }
     return [Number(scale(value)) - sizeProp / 2, sizeProp];
+  }
+
+  /** A bar's sub-band along an axis, by `x1` / `y1` (here or the chart's) through its scale */
+  function subBand(d: any, prop: unknown, fallback: unknown, scale: any) {
+    const sub = prop ?? fallback;
+    return sub != null && scale
+      ? { scale, value: resolveAccessor(sub as any, undefined)(d) }
+      : null;
+  }
+
+  /** A bar's `width` and `height` (down `y`) when fixed, centered where it would have been */
+  function fixed<T extends { x: number; y: number; width: number; depth: number }>(bar: T): T {
+    if (widthProp != null) {
+      bar.x += (bar.width - widthProp) / 2;
+      bar.width = widthProp;
+    }
+    if (heightProp != null) {
+      bar.y += (bar.depth - heightProp) / 2;
+      bar.depth = heightProp;
+    }
+    return bar;
+  }
+
+  /** A row's fill: `fill`, else its series', else the chart's `c` (or its `class`'s) */
+  function colorOf(d: any) {
+    return rowColor(
+      ctx,
+      fill ?? series?.color,
+      d,
+      'var(--color-surface-content, currentColor)',
+      look?.fill,
+      look?.fillSet
+    );
   }
 
   const highlight = new Color(0xffffff);
@@ -100,18 +201,27 @@
       for (const t of targets) {
         active.add(t.key);
         const values = { x: t.x, y: t.y, z: t.z, width: t.width, depth: t.depth, height: t.height };
-        untrack(() => motionMap.update(t.key, values, grown(t)));
+        untrack(() => motionMap.update(t.key, values, initialOf(t)));
       }
       untrack(() => motionMap.cleanup(active));
     });
   }
 
-  /** Where a new bar grows from: its baseline, flat along the value axis (or a 3D bar's floor) */
-  function grown(t: Instance) {
-    if (!flat) return { height: 0 };
-    return ctx.valueAxis === 'x'
-      ? { x: Math.min(...ctx.xRange), width: 0 }
-      : { y: Math.max(...ctx.yRange), depth: 0 };
+  /**
+   * Where a new bar eases in from: `initialX` / `initialY` / `initialWidth` / `initialHeight`
+   * where they're given, else its baseline, flat along the value axis (or a 3D bar's floor)
+   */
+  function initialOf(_t: Instance) {
+    const grown: Partial<Record<(typeof PROPS)[number], number>> = !flat
+      ? { height: 0 }
+      : ctx.valueAxis === 'x'
+        ? { x: Math.min(...ctx.xRange), width: 0 }
+        : { y: Math.max(...ctx.yRange), depth: 0 };
+    if (initialX != null) grown.x = initialX;
+    if (initialY != null) grown.y = initialY;
+    if (initialWidth != null) grown.width = initialWidth;
+    if (initialHeight != null) grown.depth = initialHeight;
+    return grown;
   }
 
   /** Each row's bar where it is now */
@@ -120,7 +230,7 @@
       ? targets.map((t) => {
           const now = motionMap.get(t.key);
           // A new one from the baseline, until its easing starts
-          return { ...t, ...(now ?? grown(t)) };
+          return { ...t, ...(now ?? initialOf(t)) };
         })
       : targets
   );
@@ -129,26 +239,18 @@
   function bar(d: any): Instance[] {
     if (flat) {
       const rect = dimensions(d);
-      if (!rect || !(rect.width > 0) || !(rect.height > 0)) return [];
-      return [
-        {
-          d,
-          x: rect.x,
-          y: rect.y,
-          z: 0,
-          width: rect.width,
-          depth: rect.height,
-          height: FLAT_HEIGHT,
-          color: rowColor(
-            ctx,
-            fill,
-            d,
-            'var(--color-surface-content, currentColor)',
-            look?.fill,
-            look?.fillSet
-          ),
-        },
-      ];
+      if (!rect) return [];
+      const placed = fixed({
+        d,
+        x: rect.x,
+        y: rect.y,
+        z: 0,
+        width: rect.width,
+        depth: rect.height,
+        height: FLAT_HEIGHT,
+        color: colorOf(d),
+      });
+      return placed.width > 0 && placed.depth > 0 ? [placed] : [];
     }
     const xValue = xAccessor(d);
     const yValue = yAccessor(d);
@@ -163,35 +265,28 @@
         .normalize();
       const rotation = new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), outward);
       // The box's corner, half its footprint back from the center
-      const corner = new Vector3(-sizeProp / 2, 0, -sizeProp / 2)
-        .applyQuaternion(rotation)
-        .add(base);
+      const across = widthProp ?? sizeProp;
+      const down = heightProp ?? sizeProp;
+      const corner = new Vector3(-across / 2, 0, -down / 2).applyQuaternion(rotation).add(base);
       return [
         {
           d,
           x: corner.x,
           y: corner.z,
           z: corner.y,
-          width: sizeProp,
-          depth: sizeProp,
+          width: across,
+          depth: down,
           height: Math.abs(z1 - z0),
           rotation,
-          color: rowColor(
-            ctx,
-            fill,
-            d,
-            'var(--color-surface-content, currentColor)',
-            look?.fill,
-            look?.fillSet
-          ),
+          color: colorOf(d),
         },
       ];
     }
-    const [x0, width] = extent(ctx.xScale, xValue);
-    const [y0, depth] = extent(ctx.yScale, yValue);
+    const [x0, width] = extent(ctx.xScale, xValue, subBand(d, x1, ctx.config.x1, ctx.x1Scale));
+    const [y0, depth] = extent(ctx.yScale, yValue, subBand(d, y1, ctx.config.y1, ctx.y1Scale));
     const [z0, z1] = ctx.heightOf(d, z);
     return [
-      {
+      fixed({
         d,
         x: x0,
         y: y0,
@@ -199,15 +294,8 @@
         width,
         depth,
         height: Math.abs(z1 - z0),
-        color: rowColor(
-          ctx,
-          fill,
-          d,
-          'var(--color-surface-content, currentColor)',
-          look?.fill,
-          look?.fillSet
-        ),
-      },
+        color: colorOf(d),
+      }),
     ];
   }
 
@@ -242,11 +330,26 @@
       : rowColor(ctx, stroke, d, 'black', look?.stroke, look?.strokeSet);
   }
 
+  /** Its pointer handlers, called with the bar's row (`onBarClick` is its `onclick`) */
+  const events = () => ({
+    onclick: onclick ?? onBarClick,
+    ondblclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    onpointerover,
+    onpointerout,
+  });
+
+  const fillAlpha = $derived(opacity * fillOpacity * (look?.opacity ?? 1));
+  const strokeAlpha = $derived(opacity * strokeOpacity * (look?.opacity ?? 1));
+
   createInstances({
     tooltip: () => tooltip,
+    events,
     geometry: new BoxGeometry(1, 1, 1).translate(0.5, 0.5, 0.5),
     instances: () => (roundedBars ? [] : bars),
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => fillAlpha,
     emphasize: (color) => color.lerp(highlight, 0.25),
     // Giving way to its outline in depth, so the outline sits on its edges
     behind: () => outlined,
@@ -257,7 +360,7 @@
     instances: () => (outlined && !roundedBars ? bars : []),
     stroke: outlineOf,
     strokeWidth: () => strokeWidth,
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => strokeAlpha,
   });
 </script>
 
@@ -268,7 +371,9 @@
     height={FLAT_HEIGHT}
     stroke={(d) => (outlined ? outlineOf(d) : null)}
     {strokeWidth}
-    opacity={opacity * (look?.opacity ?? 1)}
+    opacity={fillAlpha}
+    lineOpacity={strokeAlpha}
     {tooltip}
+    {events}
   />
 {/if}

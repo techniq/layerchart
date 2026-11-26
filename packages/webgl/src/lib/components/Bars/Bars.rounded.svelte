@@ -1,6 +1,8 @@
 <!-- Bars or rects with rounded corners, flat on the floor: each a shape, as the core `Bar`'s and `Rect`'s rounded paths -->
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { ShapeGeometry } from 'three';
+  import type { MarkEvents } from '../../contexts/scene.svelte.js';
   import type { Instance } from '../../utils/instances.svelte.js';
   import { createMerged } from '../../utils/merged.svelte.js';
   import { roundedRect } from '../../utils/rounded.js';
@@ -15,6 +17,8 @@
     tooltip,
     filled = true,
     lineOpacity,
+    events,
+    dashArray,
   }: {
     /** The bars where they are now (their `y` and `depth` down the plot) */
     bars: Instance[];
@@ -31,6 +35,10 @@
     filled?: boolean;
     /** The outlines' opacity, when not `opacity` (ex. a rect's `fillOpacity` is the fill's) */
     lineOpacity?: number;
+    /** Pointer handlers, called with the row under the pointer */
+    events?: () => MarkEvents | undefined;
+    /** Dash the outlines, as the core marks' `dashArray` */
+    dashArray?: number | number[] | string;
   } = $props();
 
   /** A little above its fill, so its outline draws over it, as `Area`'s */
@@ -38,6 +46,9 @@
 
   createMerged({
     tooltip: () => tooltip,
+    events: () => events?.(),
+    // Only for outlines dashed as it mounts, so solid ones cost nothing more
+    dash: untrack(() => dashArray) != null ? () => dashArray : undefined,
     items: () =>
       bars.map((bar) => {
         const shape = roundedRect(bar.x, bar.y, bar.width, bar.depth, corners(bar));

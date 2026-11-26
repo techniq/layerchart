@@ -9,15 +9,16 @@
   import Path from '../Path/Path.webgl.svelte';
   import ContourLines from './Contour.lines.svelte';
 
-  let props: ContourProps & Record<string, any> = $props();
+  let props: ContourProps = $props();
 
   const ctx = getChartContext();
   /**
-   * Raised (`z="value"`, or a height) or in a 3D view, lines of its own; flat, LayerChart's
-   * `Contour` (filled bands through the color scale, and their outlines), drawn with WebGL marks
+   * Raised (`z="value"`, a function of the band, or a height) or in a 3D view, lines of its own;
+   * flat, LayerChart's `Contour` (filled bands through the color scale, and their outlines), drawn
+   * with WebGL marks
    */
   const raised = $derived(
-    props.z === 'value' || (typeof props.z === 'number' && props.z > 0) || !!ctx.view
+    (typeof props.z === 'number' ? props.z > 0 : props.z != null) || !!ctx.view
   );
 </script>
 

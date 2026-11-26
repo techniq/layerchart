@@ -10,17 +10,29 @@
   import { createMerged } from '../../utils/merged.svelte.js';
   import { parsePath, type Subpath } from '../../utils/path.js';
   import { createPathMotion } from '../../utils/rowMotion.svelte.js';
+  import LineMarkers from '../Line/Line.markers.svelte';
+  import { pathVertices } from '../Line/markers.js';
+  import PathEnds from './Path.ends.svelte';
+  import { createDraw, drawnSubpaths, lengthOf, pathEnds } from './draw.svelte.js';
 
   let {
     pathData,
+    draw,
+    marker,
+    markerMid,
+    markerStart,
+    markerEnd,
+    startContent,
+    endContent,
+    motion,
+    z = 0,
     fill,
     fillOpacity = 1,
     stroke,
     strokeWidth: strokeWidthProp,
-    class: className,
+    strokeOpacity = 1,
     opacity = 1,
-    z = 0,
-    motion,
+    class: className,
   }: PathProps = $props();
 
   const scene = getSceneContext();
@@ -74,6 +86,26 @@
   /** A little above its fill, so its outline draws over it, as `Area`'s */
   const LINE_LIFT = 0.3;
 
+  /** Its subpaths' outlines where they are now, in the scene's axes (across, up, down the plot) */
+  const outlines = $derived(
+    drawn.map(({ points }) => points.flatMap(([px, py]) => [px, height + 0.1 + LINE_LIFT, py]))
+  );
+
+  // Drawing the outline from its start, as the core `Path`'s `draw` (an SVG `draw` transition):
+  // again whenever the path data changes
+  const drawing = untrack(() => draw)
+    ? createDraw(
+        () => draw,
+        () => [
+          subpaths.reduce((sum, s) => sum + lengthOf(s.points.flatMap(([x, y]) => [x, 0, y])), 0),
+        ]
+      )
+    : null;
+  /** How much of it is drawn so far (all of it without `draw`) */
+  const progress = $derived(
+    drawing ? drawing.progress(outlines.reduce((sum, s) => sum + lengthOf(s), 0)) : 1
+  );
+
   createMerged({
     items: () => {
       if (!drawn.length) return [];
@@ -95,18 +127,45 @@
           d: undefined,
           geometry,
           fill: filled ? fillColor : null,
-          lines: outlined
-            ? drawn.map(({ points }) =>
-                points.flatMap(([px, py]) => [px, height + 0.1 + LINE_LIFT, py])
-              )
-            : [],
+          // Each subpath from its own start, as SVG dashes it
+          lines: outlined ? drawnSubpaths(outlines, progress) : [],
           stroke: outlined ? strokeColor : null,
         },
       ];
     },
     opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
-    lineOpacity: () => opacity * (look?.opacity ?? 1),
+    lineOpacity: () => opacity * strokeOpacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
     once: true,
   });
+
+  /** Where `marker-mid` goes: each command's end between its first and last (read only for it) */
+  const vertices = $derived(d ? pathVertices(d) : []);
+
+  /** Where `startContent` / `endContent` go, as the core `Path` places them (following `draw`) */
+  const ends = $derived(startContent || endContent ? pathEnds(outlines, progress) : null);
 </script>
+
+{#if outlined && (marker || markerStart || markerMid || markerEnd)}
+  <LineMarkers
+    {marker}
+    {markerStart}
+    {markerMid}
+    {markerEnd}
+    lines={() => [
+      {
+        points: outlines.flat(),
+        color: strokeColor!,
+        get mids() {
+          return vertices;
+        },
+      },
+    ]}
+    {strokeWidth}
+    opacity={opacity * (look?.opacity ?? 1)}
+  />
+{/if}
+
+{#if ends}
+  <PathEnds start={ends.start} end={ends.end} {startContent} {endContent} />
+{/if}

@@ -17,19 +17,22 @@
     type Texture,
   } from 'three';
   import { untrack } from 'svelte';
-  import { getChartContext, isScaleLinear } from 'layerchart';
+  import { accessor, getChartContext, isScaleLinear } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
-  import { createInstances, ringGeometry } from '../../utils/instances.svelte.js';
+  import { createInstances, ringGeometry, scaledDash } from '../../utils/instances.svelte.js';
+  import { dashPattern } from '../../utils/merged.svelte.js';
   import { loadTexture } from '../../utils/texture.js';
   import { fieldOrValueOf, isUrl, valueOf } from '../../utils/values.js';
   import { getSphere } from '../../utils/globe.js';
   import { colorer, defined, linearShift, placer, resolveAccessor } from '../../utils/marks.js';
+  import { createRowMotion } from '../../utils/rowMotion.svelte.js';
 
   let {
     data: dataProp,
     x,
     y,
+    seriesKey,
     z,
     r,
     fill,
@@ -47,6 +50,12 @@
     offsetY,
     fillOpacity = 1,
     strokeOpacity = 1,
+    dashArray,
+    initialCx,
+    initialCy,
+    initialR,
+    key = (_d: any, i: number) => i,
+    motion,
   }: PointsProps = $props();
 
   const ctx = getChartContext();
@@ -62,13 +71,58 @@
   ctx.registerComponent({
     name: 'Points',
     kind: 'mark',
-    markInfo: () => ({ data: dataProp, x, y, color: typeof fill === 'string' ? fill : undefined }),
+    markInfo: () => ({
+      data: dataProp,
+      x,
+      y,
+      seriesKey,
+      color: typeof fill === 'string' ? fill : undefined,
+    }),
   });
 
-  const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  /**
+   * The series it draws, as the core `Points`: its rows, value, and color.  Looked up only with a
+   * `seriesKey`, so points without one don't read the series state.
+   */
+  const series = $derived(
+    seriesKey == null ? undefined : ctx.series.series.find((s) => s.key === seriesKey)
+  );
+  const seriesAccessor = $derived(
+    seriesKey == null ? undefined : ctx.series.valueAccessor(seriesKey)
+  );
+  /** Faded while another series is highlighted, as that series' other marks are */
+  const seriesOpacity = $derived(
+    series == null ||
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
+      ? 1
+      : 0.1
+  );
+  /** At the top of its stack, as the core `Points`, when the chart stacks its series */
+  const stack = $derived(ctx.stackAccessorsFor({ seriesKey, ownData: dataProp != null }));
+
+  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
   const sphere = $derived(getSphere(ctx));
-  const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
-  const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
+  const xAccessor = $derived(
+    resolveAccessor(x ?? (ctx.valueAxis === 'x' ? seriesAccessor : undefined), ctx.config.x)
+  );
+  const yAccessor = $derived.by(() => {
+    if (y != null) return accessor(y);
+    if (stack) return stack.y1;
+    // A series' `[start, end]` value, at its end
+    if (Array.isArray(seriesAccessor) && ctx.valueAxis === 'y') return accessor(seriesAccessor[1]);
+    return resolveAccessor(ctx.valueAxis === 'y' ? seriesAccessor : undefined, ctx.config.y);
+  });
+  /** Its fill without one of its own: its class's, else its series' (as core's), else `c`'s */
+  const fillValue = $derived(fill ?? (look?.fill ? undefined : series?.color));
+
+  // Easing to where they're asked to be, as core's points (a `Circle` each), each by its `key`, a
+  // new one from `initialCx` / `initialCy` / `initialR` where they're given
+  const motionMap = createRowMotion(
+    untrack(() => motion),
+    ['cx', 'cy', 'r'] as const
+  );
+  const initial = $derived({ cx: initialCx, cy: initialCy, r: initialR });
 
   /**
    * Panning and zooming a linear `domain` moves every row's pixels by one scale and offset an
@@ -76,7 +130,9 @@
    * picking the right one): a great many rows pan and zoom as fast as a few
    */
   const shiftable = $derived(
-    ctx.transform.mode === 'domain' &&
+    // Easing points are placed afresh as they move
+    !motionMap &&
+      ctx.transform.mode === 'domain' &&
       !sphere &&
       !ctx.geo.projection &&
       image == null &&
@@ -109,11 +165,48 @@
     return kx === 1 && tx === 0 && ky === 1 && ty === 0 ? null : shift;
   });
 
+  if (motionMap) {
+    $effect(() => {
+      const pointOf = placed();
+      const from = initial;
+      const active = new Set<unknown>();
+      rows.forEach((d, i) => {
+        const point = pointOf(d);
+        if (!point) return;
+        const k = key(d, i);
+        active.add(k);
+        const values = { cx: point.x, cy: point.y, r: point.radius };
+        untrack(() => motionMap.update(k, values, from));
+      });
+      untrack(() => motionMap.cleanup(active));
+    });
+  }
+
   /**
-   * Where each row's sphere is in the scene and how large (`null` off the chart), with what it
-   * reads of the chart read once: there can be a great many rows
+   * Where each row's sphere is now (`null` off the chart): where it's asked to be, or with
+   * `motion`, on its way there (a new one where it eases in from, until it starts)
    */
-  function pointer() {
+  function pointer(): (d: any, i: number) => ReturnType<ReturnType<typeof placed>> {
+    const pointOf = placed();
+    if (!motionMap) return pointOf;
+    return (d, i) => {
+      const point = pointOf(d);
+      if (!point) return null;
+      const now = motionMap.get(key(d, i)) ?? initial;
+      return {
+        ...point,
+        x: now.cx ?? point.x,
+        y: now.cy ?? point.y,
+        radius: now.r ?? point.radius,
+      };
+    };
+  }
+
+  /**
+   * Where each row's sphere is asked to be in the scene and how large (`null` off the chart),
+   * with what it reads of the chart read once: there can be a great many rows
+   */
+  function placed() {
     const [xOf, yOf] = [xAccessor, yAccessor];
     const at = placer(ctx, sphere, placedScales ?? undefined, { x: offsetX, y: offsetY });
     const raised = ctx.config.z != null || z != null;
@@ -144,10 +237,10 @@
     geometry: () => (ctx.view ? (glow ? star : ball) : disc),
     instances: () => {
       const pointOf = pointer();
-      const colorOf = colorer(ctx, fill, 'var(--color-primary, currentColor)', look?.fill);
-      return rows.flatMap((d: any) => {
+      const colorOf = colorer(ctx, fillValue, 'var(--color-primary, currentColor)', look?.fill);
+      return rows.flatMap((d: any, i: number) => {
         if (image != null && imageOf(d)) return [];
-        const point = pointOf(d);
+        const point = pointOf(d, i);
         if (!point) return [];
         // Inside its ring, so the two don't overlap (and darken where they're translucent)
         const radius = ringed ? Math.max(0, point.radius - strokeWidth / 2) : point.radius;
@@ -165,7 +258,7 @@
         ];
       });
     },
-    opacity: () => opacity * fillOpacity * (look?.opacity ?? 1),
+    opacity: () => opacity * fillOpacity * seriesOpacity * (look?.opacity ?? 1),
     shift: () => shift,
     emphasize: (_color, size) => size.multiplyScalar(hoverScale),
   });
@@ -174,13 +267,14 @@
   createInstances({
     geometry: ringGeometry(),
     ring: () => (strokeWidth / 2) * scene.unit,
+    dash: () => scaledDash(dashPattern(dashArray), scene.unit),
     instances: () => {
       if (!ringed) return [];
       const pointOf = pointer();
       const colorOf = colorer(ctx, stroke, 'currentColor', look?.stroke);
-      return rows.flatMap((d: any) => {
+      return rows.flatMap((d: any, i: number) => {
         if (image != null && imageOf(d)) return [];
-        const point = pointOf(d);
+        const point = pointOf(d, i);
         if (!point) return [];
         return [
           {
@@ -197,7 +291,7 @@
         ];
       });
     },
-    opacity: () => opacity * strokeOpacity * (look?.opacity ?? 1),
+    opacity: () => opacity * strokeOpacity * seriesOpacity * (look?.opacity ?? 1),
     shift: () => shift,
     emphasize: (_color, size) => size.multiplyScalar(hoverScale),
   });
@@ -206,9 +300,9 @@
   const textured = $derived.by(() => {
     if (image == null) return [];
     const pointOf = pointer();
-    return rows.flatMap((d) => {
+    return rows.flatMap((d, i) => {
       const source = imageOf(d);
-      const point = source ? pointOf(d) : null;
+      const point = source ? pointOf(d, i) : null;
       return point ? [{ ...point, source: source! }] : [];
     });
   });
@@ -255,7 +349,7 @@
         );
       }
       const material = materialFor(point.source, !glow);
-      material.opacity = opacity * fillOpacity * (look?.opacity ?? 1);
+      material.opacity = opacity * fillOpacity * seriesOpacity * (look?.opacity ?? 1);
       material.transparent = material.opacity < 1;
       mesh.material = material;
       mesh.castShadow = mesh.receiveShadow = !glow;

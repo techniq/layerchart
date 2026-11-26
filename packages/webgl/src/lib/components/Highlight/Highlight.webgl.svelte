@@ -5,6 +5,7 @@
 <script lang="ts">
   import { HighlightBase } from 'layerchart/base';
   import Arc from '../Arc/Arc.webgl.svelte';
+  import Bar from '../Bar/Bar.webgl.svelte';
   import Circle from '../Circle/Circle.webgl.svelte';
   import Line from '../Line/Line.webgl.svelte';
   import Rect from '../Rect/Rect.webgl.svelte';
@@ -38,8 +39,14 @@
     lines = false,
     shadows = false,
     area = false,
+    bar = false,
     opacity = 1,
     motion: motionProp,
+    onAreaClick,
+    onBarClick,
+    onPointClick,
+    onPointEnter,
+    onPointLeave,
   }: HighlightProps = $props();
 
   const ctx = getChartContext();
@@ -225,6 +232,19 @@
           ? Number(ctx.rScale(accessor(r)(row)))
           : undefined;
     const radius = pointLook.r ?? scaledR;
+    const fill =
+      pointLook.fill ?? rowColor(ctx, undefined, row, 'var(--color-primary, currentColor)');
+    /** The point as the core `Highlight`'s handlers are given it, with the highlighted row */
+    const detail = () => ({
+      point: {
+        x: p.x,
+        y: p.y,
+        r: radius,
+        fill,
+        data: { x: accessor(x ?? ctx.x)(row), y: accessor(y ?? ctx.y)(row) },
+      },
+      data: row,
+    });
     return [
       {
         key: 'highlight',
@@ -232,11 +252,15 @@
         y: p.y,
         z: p.z,
         r: radius ?? 4,
-        fill: pointLook.fill ?? rowColor(ctx, undefined, row, 'var(--color-primary, currentColor)'),
+        fill,
         stroke: pointLook.stroke ?? 'white',
         strokeWidth: pointLook.strokeWidth ?? (radius ? 2 : 6),
         opacity: (pointLook.opacity ?? 1) * opacity,
         class: ['lc-highlight-point', pointLook.class].filter(Boolean).join(' '),
+        // Taking the pointer only with a handler, else letting it through to the scene beneath
+        ...(onPointClick && { onclick: (e: MouseEvent) => onPointClick(e, detail()) }),
+        ...(onPointEnter && { onpointerenter: (e: PointerEvent) => onPointEnter(e, detail()) }),
+        ...(onPointLeave && { onpointerleave: (e: PointerEvent) => onPointLeave(e, detail()) }),
       },
     ];
   });
@@ -250,14 +274,33 @@
     {x}
     {y}
     axis={axisProp}
-    {area}
+    area={area as any}
     points={false}
     lines={false}
     {opacity}
     motion={motionProp}
+    {onAreaClick}
     {Circle}
     {Line}
     {Rect}
     {Arc}
   />
+{/if}
+
+<!-- The row's bar over its own, as the core `Highlight` draws its `bar` -->
+{#if bar && row != null}
+  {#if typeof bar === 'function'}
+    {@render bar()}
+  {:else}
+    {@const own = typeof bar === 'object' ? bar : {}}
+    <Bar
+      data={row}
+      motion={(motionProp ?? 'spring') === 'spring' ? 'spring' : undefined}
+      fill="var(--color-primary, currentColor)"
+      {opacity}
+      {...own}
+      class={['lc-highlight-bar', own.class].filter(Boolean).join(' ')}
+      onclick={onBarClick && ((e: MouseEvent) => onBarClick(e, { data: row }))}
+    />
+  {/if}
 {/if}

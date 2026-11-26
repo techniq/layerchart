@@ -11,13 +11,19 @@ import {
   MeshLambertMaterial,
   NormalBlending,
   Quaternion,
+  Vector2,
   Vector3,
   Vector4,
   type BufferAttribute,
 } from 'three';
 import { getChartContext } from 'layerchart';
 
-import { getSceneContext, groupOpacity } from '../contexts/scene.svelte.js';
+import {
+  getSceneContext,
+  groupOpacity,
+  hasEvents,
+  type MarkEvents,
+} from '../contexts/scene.svelte.js';
 
 /**
  * One shape of an instanced mark, in chart pixels: where it stands (`x` across, `y` down the
@@ -49,6 +55,8 @@ type InstancesOptions = {
   emphasize: (color: Color, size: Vector3) => void;
   /** Whether hovering shows the tooltip */
   tooltip?: () => boolean;
+  /** Pointer handlers, called with the row under the pointer (as the core marks' `onclick`, ...) */
+  events?: () => MarkEvents | undefined;
   /** Draw each instance in its own color, unlit (ex. a star) */
   glow?: () => boolean;
   /**
@@ -73,6 +81,11 @@ type InstancesOptions = {
    * a circle's edge
    */
   ring?: () => number;
+  /**
+   * Dash `ring`'s rings, `[dash, gap]` in scene units along each ring (from its rightmost point,
+   * clockwise as the plot is seen, as an SVG circle's dashes run), or `null` for none
+   */
+  dash?: () => [dash: number, gap: number] | null;
 };
 
 /**
@@ -105,6 +118,14 @@ export function ringGeometry(segments = 32) {
   return geometry;
 }
 
+/** A `dashPattern` in pixels on screen as scene units (`scale` of them a pixel), for `dash` */
+export function scaledDash(
+  pattern: [number, number] | null,
+  scale: number
+): [number, number] | null {
+  return pattern && [pattern[0] * scale, pattern[1] * scale];
+}
+
 /** The `shift` a material draws with, shared by its compiled program */
 const shifts = new WeakMap<MeshLambertMaterial | MeshBasicMaterial, { value: Vector4 }>();
 
@@ -120,14 +141,18 @@ function createMaterial(lit: boolean, ring = false) {
   material.userData.shift = shift.value;
   const ringHalf = { value: 0 };
   material.userData.ringHalf = ringHalf;
+  // Dashes are only compiled in while a ring has them (`LC_RING_DASH`)
+  const ringDash = { value: new Vector2() };
+  material.userData.ringDash = ringDash;
   if (ring) material.defines = { LC_RING: '' };
   material.onBeforeCompile = (shader) => {
     shader.uniforms.uShift = shift;
     shader.uniforms.uRingHalf = ringHalf;
+    shader.uniforms.uRingDash = ringDash;
     shader.vertexShader = shader.vertexShader
       .replace(
         '#include <common>',
-        '#include <common>\nattribute float instanceOpacity;\nvarying float vInstanceOpacity;\nuniform vec4 uShift;\n#ifdef LC_RING\nattribute float ringSide;\nuniform float uRingHalf;\n#endif'
+        '#include <common>\nattribute float instanceOpacity;\nvarying float vInstanceOpacity;\nuniform vec4 uShift;\n#ifdef LC_RING\nattribute float ringSide;\nuniform float uRingHalf;\n#endif\n#ifdef LC_RING_DASH\nvarying vec2 vRingPoint;\nvarying float vRingRadius;\n#endif'
       )
       .replace(
         '#include <begin_vertex>',
@@ -136,6 +161,10 @@ function createMaterial(lit: boolean, ring = false) {
 vInstanceOpacity = instanceOpacity;
 #if defined( LC_RING ) && defined( USE_INSTANCING )
 	transformed.xz *= 1.0 + ringSide * uRingHalf / max( length( instanceMatrix[0].xyz ), 1e-6 );
+#endif
+#if defined( LC_RING_DASH ) && defined( USE_INSTANCING )
+	vRingPoint = position.xz;
+	vRingRadius = length( instanceMatrix[0].xyz );
 #endif`
       )
       // Each instance's center moved by `shift` (chart `x` is the scene's `x`, chart `y` its `z`)
@@ -151,7 +180,20 @@ mvPosition = modelViewMatrix * mvPosition;
 gl_Position = projectionMatrix * mvPosition;`
       );
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying float vInstanceOpacity;')
+      .replace(
+        '#include <common>',
+        '#include <common>\nvarying float vInstanceOpacity;\n#ifdef LC_RING_DASH\nuniform vec2 uRingDash;\nvarying vec2 vRingPoint;\nvarying float vRingRadius;\n#endif'
+      )
+      // A dashed ring's gaps: how far round the ring each pixel is, from its rightmost point
+      // (chart `y`, down the plot, is the scene's `z`), against the dash and gap repeating
+      .replace(
+        'void main() {',
+        `void main() {
+#ifdef LC_RING_DASH
+	float lcAround = mod( atan( vRingPoint.y, vRingPoint.x ), 6.28318530718 ) * vRingRadius;
+	if ( mod( lcAround, uRingDash.x + uRingDash.y ) > uRingDash.x ) discard;
+#endif`
+      )
       .replace(
         '#include <opaque_fragment>',
         '#include <opaque_fragment>\ngl_FragColor.a *= vInstanceOpacity;'
@@ -159,7 +201,7 @@ gl_Position = projectionMatrix * mvPosition;`
   };
   // Keep the patched program apart from plain Lambert materials' in three's cache
   material.customProgramCacheKey = () =>
-    `lc-instance-opacity-${lit ? 'lit' : 'unlit'}${ring ? '-ring' : ''}`;
+    `lc-instance-opacity-${lit ? 'lit' : 'unlit'}${ring ? '-ring' : ''}${material.defines?.LC_RING_DASH != null ? '-dash' : ''}`;
   return material;
 }
 
@@ -174,11 +216,13 @@ export function createInstances({
   opacity,
   emphasize,
   tooltip,
+  events,
   glow,
   additive,
   shift,
   behind,
   ring,
+  dash,
 }: InstancesOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
@@ -259,10 +303,13 @@ export function createInstances({
 
   $effect(() => {
     const instanced = mesh;
-    if (!instanced || !tooltip?.()) return;
+    const shows = !!tooltip?.();
+    if (!instanced || (!shows && !hasEvents(events?.()))) return;
     return scene.addPickable({
       object: instanced,
       datum: (hit) => (hit.instanceId != null ? list[hit.instanceId]?.d : undefined),
+      tooltip: () => shows,
+      events,
     });
   });
 
@@ -329,6 +376,16 @@ export function createInstances({
     const o = opacity() * inGroup();
     material.opacity = o;
     if (ring) material.userData.ringHalf.value = ring();
+    if (dash) {
+      const pattern = ring ? dash() : null;
+      // Compiled in (or out) only as it starts or stops being dashed
+      if ((material.defines?.LC_RING_DASH != null) !== !!pattern) {
+        if (pattern) material.defines = { ...material.defines, LC_RING_DASH: '' };
+        else delete material.defines!.LC_RING_DASH;
+        material.needsUpdate = true;
+      }
+      if (pattern) material.userData.ringDash.value.set(pattern[0], pattern[1]);
+    }
     // A depth offset needs no new program, so it can follow along
     const back = behind?.() ?? false;
     material.polygonOffset = back;

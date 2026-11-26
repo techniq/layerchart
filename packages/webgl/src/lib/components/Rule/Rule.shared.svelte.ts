@@ -1,5 +1,9 @@
 import type { Accessor } from 'layerchart';
 
+/**
+ * The core `Rule`'s props (in its order, as it describes them), then those of a `WebGL` layer's
+ * own (`z`, and its line's look)
+ */
 export type RuleProps = {
   /** Override the data from the context */
   data?: any[];
@@ -27,6 +31,12 @@ export type RuleProps = {
   y?: number | Date | boolean | '$top' | '$bottom' | Accessor;
   /** Pixel offset to apply to `y` coordinate. @default 0 */
   yOffset?: number;
+  /**
+   * Series key to follow, fading the rule while another series is highlighted and removing it
+   * while the series is hidden. Only applicable if `<Chart>` uses `series`.
+   */
+  seriesKey?: string;
+
   /** Pixels up off the floor to draw at. @default 0 */
   z?: number;
   /**

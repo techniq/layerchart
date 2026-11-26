@@ -1,5 +1,10 @@
-import type { Accessor } from 'layerchart';
+import type { Snippet } from 'svelte';
+import type { Accessor, HighlightPoint } from 'layerchart';
+import type { BarProps } from '../Bar/Bar.shared.svelte.js';
 import type { MotionProp } from 'layerchart/utils/motion.svelte';
+
+/** The band (or slice) under the highlighted row, in pixels, as an `area` snippet is given it */
+export type HighlightArea = { x: number; y: number; width: number; height: number };
 
 /** How a `Highlight`'s point is drawn, as the core `Circle` props */
 export type HighlightPointProps = {
@@ -37,15 +42,12 @@ export type HighlightShadowProps = {
   class?: string;
 };
 
+/**
+ * The core `Highlight`'s props (in its order, as it describes them).  Its points are drawn over
+ * the scene facing the viewer, and its lines and shadows in it.
+ */
 export type HighlightProps = {
-  /**
-   * The band (or slice) under the highlighted row, as the core `Highlight`'s `area`: `true`, or a
-   * `Rect`'s props (ex. `{ class: 'fill-primary/10' }`)
-   *
-   * @default false
-   */
-  area?: boolean | Record<string, any>;
-  /** The row to highlight.  Defaults to the tooltip's. */
+  /** Highlight specific data (annotate).  Defaults to the tooltip's row. */
   data?: any;
   /** Override `x` from context */
   x?: Accessor;
@@ -82,12 +84,36 @@ export type HighlightProps = {
    * @default false
    */
   shadows?: boolean | HighlightShadowProps;
-  /** The opacity of all of it (0 to 1) */
-  opacity?: number;
+  /**
+   * Show area and pass props to Rect: the band (or slice) under the highlighted row (ex.
+   * `{ class: 'fill-primary/10' }`), or a snippet drawing it from the `area`
+   *
+   * @default false
+   */
+  area?: boolean | Record<string, any> | Snippet<[{ area: HighlightArea }]>;
+  /**
+   * Show bar and pass props to Bar: the highlighted row's bar, over its own (ex. `{ class:
+   * 'fill-primary' }`), or a snippet drawing it
+   *
+   * @default false
+   */
+  bar?: boolean | Partial<BarProps> | Snippet;
   /**
    * `'spring'` to glide from one highlighted row to the next (as the core `Highlight`), or
    * `'none'`.  It follows each step of a pan or zoom at once, rather than chasing it.
    * @default 'spring'
    */
   motion?: MotionProp;
+  /** The opacity of the element. (0 to 1) */
+  opacity?: number;
+  /** Called with the highlighted row as its `area` is clicked */
+  onAreaClick?: (e: MouseEvent, detail: { data: any }) => void;
+  /** Called with the highlighted row as its `bar` is clicked */
+  onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
+  /** Called with its point (in the chart's pixels) and the highlighted row as the point is clicked */
+  onPointClick?: (e: MouseEvent, detail: { point: HighlightPoint; data: any }) => void;
+  /** Called with its point and the highlighted row as the pointer moves onto the point */
+  onPointEnter?: (e: MouseEvent, detail: { point: HighlightPoint; data: any }) => void;
+  /** Called with its point and the highlighted row as the pointer moves off the point */
+  onPointLeave?: (e: MouseEvent, detail: { point: HighlightPoint; data: any }) => void;
 };

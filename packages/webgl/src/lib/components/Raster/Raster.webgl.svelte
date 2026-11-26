@@ -15,7 +15,7 @@
     NearestFilter,
     SRGBColorSpace,
   } from 'three';
-  import { getChartContext } from 'layerchart';
+  import { blurGridIgnoringNaN, getChartContext } from 'layerchart';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getSphere } from '../../utils/globe.js';
@@ -30,6 +30,7 @@
 
   let {
     pixelSize = 1,
+    blur = 0,
     z = 0,
     opacity = 1,
     imageRendering = 'auto',
@@ -44,12 +45,28 @@
 
   /** On a `globe`, the colors wrapped around it */
   const sphere = $derived(getSphere(ctx));
-  const sphereSamples = $derived(
-    sphere
-      ? sphereValues(sphere, gridProps, sphereSegments(sphere.radius, Math.max(pixelSize, 2)))
-      : null
-  );
-  const grid = $derived(sphere ? null : sampleGrid(ctx, gridProps, pixelSize));
+  /** `values` blurred over `blur` cells of a `columns` by `rows` grid, as the core `Raster` blurs */
+  function blurred<T extends { values: Float64Array }>(
+    samples: T | null,
+    columns: number,
+    rows: number
+  ): T | null {
+    if (!samples || !(blur > 0)) return samples;
+    return { ...samples, values: blurGridIgnoringNaN(samples.values, columns, rows, blur) };
+  }
+  const sphereSamples = $derived.by(() => {
+    if (!sphere) return null;
+    const samples = sphereValues(
+      sphere,
+      gridProps,
+      sphereSegments(sphere.radius, Math.max(pixelSize, 2))
+    );
+    return blurred(samples, samples.grid.columns, samples.grid.rows);
+  });
+  const grid = $derived.by(() => {
+    const sampled = sphere ? null : sampleGrid(ctx, gridProps, pixelSize);
+    return sampled ? blurred(sampled, sampled.columns, sampled.rows) : null;
+  });
 
   // An image of the grid's colors, unlit so they read true
   const material = new MeshBasicMaterial({ transparent: true, side: DoubleSide });
@@ -93,7 +110,7 @@
       texture = new DataTexture(pixels, g.columns, g.rows);
       texture.colorSpace = SRGBColorSpace;
       texture.magFilter = texture.minFilter =
-        imageRendering === 'pixelated' ? NearestFilter : LinearFilter;
+        imageRendering !== 'auto' ? NearestFilter : LinearFilter;
       texture.needsUpdate = true;
 
       // The grid's first row is at its top (`top`), which is texture row 0 (`v = 0`)

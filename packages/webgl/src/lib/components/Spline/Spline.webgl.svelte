@@ -17,6 +17,11 @@
   import { curvePoints } from '../../utils/curve.js';
   import { defined, position, resolveAccessor, rowColor } from '../../utils/marks.js';
   import { createPathMotion } from '../../utils/rowMotion.svelte.js';
+  import LineMarkers from '../Line/Line.markers.svelte';
+  import { curveVertices } from '../Line/markers.js';
+  import PathEnds from '../Path/Path.ends.svelte';
+  import PathWebGL from '../Path/Path.webgl.svelte';
+  import { createDraw, drawnSubpaths, lengthOf, pathEnds } from '../Path/draw.svelte.js';
   import SplineFill from './Spline.fill.svelte';
 
   let {
@@ -25,6 +30,7 @@
     y,
     z,
     g,
+    seriesKey,
     stroke,
     strokeWidth: strokeWidthProp,
     class: className,
@@ -34,7 +40,16 @@
     tooltip = false,
     motion,
     fill: fillProp,
+    pathData,
+    draw,
+    marker,
+    markerMid,
+    markerStart,
+    markerEnd,
+    startContent,
+    endContent,
     fillOpacity = 1,
+    strokeOpacity = 1,
   }: SplineProps = $props();
 
   const ctx = getChartContext();
@@ -53,21 +68,45 @@
       data: dataProp,
       x,
       y,
+      seriesKey,
       color: typeof stroke === 'string' ? stroke : undefined,
     }),
   });
 
+  /**
+   * The series it draws, as the core `Spline`: its rows, value, and color.  Looked up only with a
+   * `seriesKey`, so lines without one don't read the series state.
+   */
+  const series = $derived(
+    seriesKey == null ? undefined : ctx.series.series.find((s) => s.key === seriesKey)
+  );
+  const seriesAccessor = $derived(
+    seriesKey == null ? undefined : ctx.series.valueAccessor(seriesKey)
+  );
+  /** Faded while another series is highlighted, as the core `Spline` */
+  const seriesOpacity = $derived(
+    series == null ||
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
+      ? 1
+      : 0.1
+  );
+
   const sphere = $derived(getSphere(ctx));
-  const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
+  const xAccessor = $derived(
+    resolveAccessor(x ?? (ctx.valueAxis === 'x' ? seriesAccessor : undefined), ctx.config.x)
+  );
   /**
    * A line in a stack follows its top, as the core `Spline` (ex. over a stacked `Area`), when the
    * chart stacks (`seriesLayout`) and the line reads its rows
    */
-  const stack = $derived(ctx.stackAccessorsFor({ ownData: dataProp != null }));
+  const stack = $derived(ctx.stackAccessorsFor({ seriesKey, ownData: dataProp != null }));
   const yAccessor = $derived(
-    y == null && ctx.valueAxis === 'y' && stack ? stack.y1 : resolveAccessor(y, ctx.config.y)
+    y == null && ctx.valueAxis === 'y' && stack
+      ? stack.y1
+      : resolveAccessor(y ?? (ctx.valueAxis === 'y' ? seriesAccessor : undefined), ctx.config.y)
   );
-  const rows = $derived((dataProp ?? ctx.data ?? []) as any[]);
+  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
 
   /**
    * What splits the rows into lines: this mark's `g`, the chart's `g`, the categorical data key
@@ -80,20 +119,32 @@
     const first = rows[0];
     const implied = colorPropGroupKey(stroke, first);
     if (implied != null) return accessor(implied);
-    if (dataProp != null) return null;
+    if (dataProp != null || series?.data != null) return null;
     return first != null && ctx.cKey(first) != null ? ctx.cKey : null;
   });
 
+  type Segment = {
+    positions: number[];
+    colors: string[];
+    data: any[];
+    /** Which of its rows' lines it's a piece of (a gap breaks one into pieces) */
+    group: number;
+    /** On a globe, which of its points are its rows' (the rest arc between them) */
+    rowPoints?: number[];
+    /** Along a `curve`, the points it was drawn through, on the floor */
+    floor?: [number, number][];
+  };
+
+  /** Its lines, broken into pieces where a row isn't drawn (none with its own `pathData`) */
   const lines = $derived(
-    (gAccessor ? [...group(rows, gAccessor).values()] : [rows])
-      .flatMap((lineRows) => {
-        type Line = { positions: number[]; colors: string[]; data: any[] };
-        const segments: Line[] = [];
-        let line: Line = { positions: [], colors: [], data: [] };
+    (pathData != null ? [] : gAccessor ? [...group(rows, gAccessor).values()] : [rows])
+      .flatMap((lineRows, groupIndex) => {
+        const segments: Segment[] = [];
+        let line: Segment = { positions: [], colors: [], data: [], group: groupIndex };
         /** A gap: the line so far is one segment, and the next row starts another */
         const breakLine = () => {
           if (line.data.length) segments.push(line);
-          line = { positions: [], colors: [], data: [] };
+          line = { positions: [], colors: [], data: [], group: groupIndex };
           previous = null;
           previousRow = null;
         };
@@ -112,7 +163,7 @@
             ctx,
             stroke,
             d,
-            'var(--color-primary, currentColor)',
+            series?.color ?? 'var(--color-primary, currentColor)',
             look?.stroke,
             look?.strokeSet
           );
@@ -120,6 +171,9 @@
             // Over the globe, along the great circle from the last row
             const here: [number, number, number] = [Number(xValue), Number(yValue), height];
             const arc = previous ? sphereArc(sphere, previous, here) : sphere.toScene(...here);
+            (line.rowPoints ??= []).push(
+              line.positions.length / 3 + (previous ? arc.length / 3 - 2 : 0)
+            );
             for (let k = previous ? 3 : 0; k < arc.length; k += 3) {
               line.positions.push(arc[k], arc[k + 1], arc[k + 2]);
               line.colors.push(color);
@@ -148,7 +202,7 @@
   );
 
   /** A line's points taken along `curve`, each sampled point's height, color, and row from between its own */
-  function curved(line: { positions: number[]; colors: string[]; data: any[] }) {
+  function curved(line: Segment): Segment {
     const count = line.data.length;
     if (count < 2 || !curve) return line;
     const floor: [number, number][] = [];
@@ -157,7 +211,7 @@
       floor.push([line.positions[i * 3], line.positions[i * 3 + 2]]);
       heights.push(line.positions[i * 3 + 1]);
     }
-    const out = { positions: [] as number[], colors: [] as string[], data: [] as any[] };
+    const out: Segment = { positions: [], colors: [], data: [], group: line.group, floor };
     for (const { x, y, at } of curvePoints(floor, curve)) {
       const k = Math.min(Math.floor(at), count - 1);
       const t = at - k;
@@ -206,13 +260,62 @@
     )
   );
 
+  /** Each line's segments (its pieces between gaps), as indices into `lines` */
+  const groups = $derived.by(() => {
+    const out: number[][] = [];
+    lines.forEach((line, i) => (out[line.group] ??= []).push(i));
+    return out.filter(Boolean);
+  });
+
+  // Drawing each line from its start, as the core `Spline`'s `draw` (its path's): again whenever
+  // the lines change
+  const drawing = untrack(() => draw)
+    ? createDraw(
+        () => draw,
+        () =>
+          groups.map((members) => members.reduce((sum, i) => sum + lengthOf(lines[i].positions), 0))
+      )
+    : null;
+  /** How much of each line is drawn so far, by its group (all of it without `draw`) */
+  const progress = $derived(
+    groups.map((members) =>
+      drawing ? drawing.progress(members.reduce((sum, i) => sum + lengthOf(drawn[i]), 0)) : 1
+    )
+  );
+  /** Each segment as far as it's drawn: from its own start, as SVG dashes each piece of a path */
+  const shown = $derived.by(() => {
+    if (!drawing || drawing.done) return drawn;
+    const out = drawn.slice();
+    groups.forEach((members, g) => {
+      const cut = drawnSubpaths(
+        members.map((i) => drawn[i]),
+        progress[g]
+      );
+      members.forEach((i, k) => (out[i] = cut[k]));
+    });
+    return out;
+  });
+
+  /** Set a line's points (fewer as `draw` draws it), and its colors to match */
+  function place(line: Line2, points: number[]) {
+    const count = Math.floor(points.length / 3);
+    // A single point would still draw its round cap
+    line.visible = count >= 2;
+    if (count < 2) return;
+    line.geometry.setPositions(points);
+    if (line.userData.count !== count) {
+      line.geometry.setColors((line.userData.rgb as number[]).slice(0, count * 3));
+      line.userData.count = count;
+    }
+  }
+
   /** The lines' objects, whose points `drawn` moves */
   let objects = $state.raw<{ line: Line2; removePickable: (() => void) | null }[]>([]);
 
   $effect(() => {
     const created = lines.map(({ positions, colors, data }, index) => {
       const geometry = new LineGeometry();
-      geometry.setPositions(untrack(() => drawn[index] ?? positions));
+      geometry.setPositions(positions);
       // A color per point, blended between them; a line's alpha is its first point's
       const rgb: number[] = [];
       let alpha = 1;
@@ -222,13 +325,24 @@
         if (i === 0) alpha = resolved?.opacity ?? 1;
       });
       geometry.setColors(rgb);
+      const lineOpacity = opacity * strokeOpacity * (look?.opacity ?? 1) * alpha;
+      const faded = lineOpacity * untrack(() => seriesOpacity);
       const material = new LineMaterial({
         vertexColors: true,
         linewidth: strokeWidth,
-        transparent: opacity * (look?.opacity ?? 1) * alpha < 1,
-        opacity: opacity * (look?.opacity ?? 1) * alpha,
+        transparent: faded < 1,
+        opacity: faded,
       });
       const line = new Line2(geometry, material);
+      line.userData.opacity = lineOpacity;
+      line.userData.rgb = rgb;
+      line.userData.count = positions.length / 3;
+      // As far as it's drawn, or where it tweens from
+      if (pathMotion || drawing)
+        place(
+          line,
+          untrack(() => shown[index] ?? positions)
+        );
       layer.add(line);
       // Each segment's row is the one at its nearer end
       const removePickable = tooltip
@@ -261,22 +375,118 @@
     };
   });
 
-  // Moving the lines' points as they tween, without making them again
+  // Fading with its series as the legend highlights another, without making the lines again
+  if (untrack(() => seriesKey) != null) {
+    $effect(() => {
+      const fade = seriesOpacity;
+      for (const { line } of untrack(() => objects)) {
+        const material = line.material;
+        material.opacity = line.userData.opacity * fade;
+        if (material.transparent !== material.opacity < 1) {
+          material.transparent = material.opacity < 1;
+          material.needsUpdate = true;
+        }
+      }
+      scene.invalidate();
+    });
+  }
+
+  // Moving the lines' points as they tween (or `draw` draws them), without making them again
   $effect(() => {
-    if (!pathMotion) return;
-    const points = drawn;
+    if (!pathMotion && !drawing) return;
+    const points = shown;
     untrack(() => objects).forEach(({ line }, i) => {
-      if (points[i]) line.geometry.setPositions(points[i]);
+      if (points[i]) place(line, points[i]);
     });
     scene.invalidate();
   });
+
+  /**
+   * Where a line's path's commands end, as indices into its segments' points end to end: each
+   * row's point, or along a `curve`, each of its commands' (read only for `markerMid`)
+   */
+  function vertices(members: number[]) {
+    const out: number[] = [];
+    let offset = 0;
+    for (const i of members) {
+      const line = lines[i];
+      const own = line.floor
+        ? curveVertices(line.floor, curve!, line.positions)
+        : (line.rowPoints ?? line.data.map((_, k) => k));
+      for (const k of own) out.push(offset + k);
+      offset += line.positions.length / 3;
+    }
+    return out;
+  }
 </script>
+
+<!-- Explicit path data, drawn in its place, as the core `Spline` hands it to its path -->
+{#if pathData != null}
+  <PathWebGL
+    {pathData}
+    {draw}
+    {marker}
+    {markerMid}
+    {markerStart}
+    {markerEnd}
+    {startContent}
+    {endContent}
+    {motion}
+    fill={fillColor}
+    {fillOpacity}
+    stroke={rowColor(
+      ctx,
+      stroke,
+      rows[0],
+      series?.color ?? 'var(--color-primary, currentColor)',
+      look?.stroke,
+      look?.strokeSet
+    )}
+    {strokeWidth}
+    {strokeOpacity}
+    opacity={opacity * seriesOpacity}
+    class={className}
+  />
+{/if}
+
+{#if pathData == null && (marker || markerStart || markerMid || markerEnd)}
+  <LineMarkers
+    {marker}
+    {markerStart}
+    {markerMid}
+    {markerEnd}
+    lines={() =>
+      groups.map((members) => ({
+        // One path through its segments, as the core `Spline`'s
+        points: members.flatMap((i) => drawn[i] ?? lines[i].positions),
+        color: lines[members[0]].colors[0],
+        // Each vertex between its ends (a gap's ends too, as an SVG path's subpaths')
+        get mids() {
+          return vertices(members).slice(1, -1);
+        },
+      }))}
+    {strokeWidth}
+    opacity={opacity * seriesOpacity * (look?.opacity ?? 1)}
+  />
+{/if}
+
+{#if pathData == null && (startContent || endContent)}
+  {#each groups as members, g (g)}
+    {@const ends = pathEnds(
+      members.map((i) => drawn[i] ?? lines[i].positions),
+      progress[g]
+    )}
+    {#if ends}
+      <PathEnds start={ends.start} end={ends.end} {startContent} {endContent} />
+    {/if}
+  {/each}
+{/if}
 
 <!-- Filled only with a `fill` (here or in `class`), as the core `Spline`: the shape its line closes around -->
 {#if fillColor}
   <SplineFill
     lines={lines.map((line, i) => ({ positions: drawn[i] ?? line.positions, data: line.data }))}
     fill={fillColor}
-    opacity={opacity * fillOpacity * (look?.opacity ?? 1)}
+    opacity={opacity * fillOpacity * seriesOpacity * (look?.opacity ?? 1)}
   />
 {/if}

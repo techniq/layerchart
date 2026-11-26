@@ -13,7 +13,12 @@ import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { getChartContext } from 'layerchart';
 
-import { getSceneContext, groupOpacity } from '../contexts/scene.svelte.js';
+import {
+  getSceneContext,
+  groupOpacity,
+  hasEvents,
+  type MarkEvents,
+} from '../contexts/scene.svelte.js';
 
 /** One shape of a mark drawn as a single merged mesh: its geometry, outlines, and colors */
 export type MergedItem = {
@@ -32,12 +37,19 @@ type MergedOptions = {
   items: () => MergedItem[];
   /** Whether hovering shows the tooltip (only marks that ask are picked) */
   tooltip?: () => boolean;
+  /** Pointer handlers, called with the row under the pointer (as the core marks' `onclick`, ...) */
+  events?: () => MarkEvents | undefined;
   opacity: () => number;
   /** Multiplies the outlines' alpha (the fills' is `opacity`) */
   lineOpacity?: () => number;
   strokeWidth: () => number;
   /** Lose to other shapes in the same place (ex. an arc's track, beneath the arc) */
   behind?: boolean;
+  /**
+   * Dash the outlines, as the core marks' `dashArray` (a dash length, `[dash, gap]`, or an SVG
+   * `stroke-dasharray` string), in pixels
+   */
+  dash?: () => number | number[] | string | undefined;
   /**
    * Fill each pixel once, however many of its shapes overlap there, as SVG fills one path (ex. a
    * trail's overlapping pieces, translucent): for a mark whose shapes are one path's
@@ -63,7 +75,9 @@ export function createMerged({
   lineOpacity,
   strokeWidth,
   tooltip,
+  events,
   behind,
+  dash,
   once,
 }: MergedOptions) {
   const ctx = getChartContext();
@@ -169,6 +183,8 @@ export function createMerged({
     lines.geometry.dispose();
     lines.geometry = lineGeometry;
     lines.visible = linePositions.length > 0;
+    // Along each outline, for its dashes
+    if (lineMaterial.dashed && linePositions.length) lines.computeLineDistances();
     lineMaterial.opacity = (strokeAlpha ?? 1) * (lineOpacity?.() ?? 1) * inGroup();
 
     // Rebuilt without emphasis, so put back whatever's hovered
@@ -194,6 +210,24 @@ export function createMerged({
     scene.invalidate();
   });
 
+  // Dashes, as an SVG `stroke-dasharray` (the first dash and gap), the same on screen at any depth
+  if (dash) {
+    $effect(() => {
+      const pattern = dashPattern(dash());
+      const dashed = pattern != null;
+      if (lineMaterial.dashed !== dashed) {
+        lineMaterial.dashed = dashed;
+        lineMaterial.needsUpdate = true;
+        if (dashed && lines.visible) lines.computeLineDistances();
+      }
+      if (pattern) {
+        lineMaterial.dashSize = pattern[0] * scene.unit;
+        lineMaterial.gapSize = pattern[1] * scene.unit;
+      }
+      scene.invalidate();
+    });
+  }
+
   $effect(() => {
     const hovered = ctx.tooltip.data;
     untrack(() => {
@@ -210,8 +244,11 @@ export function createMerged({
   });
 
   $effect(() => {
-    if (!tooltip?.()) return;
+    const shows = !!tooltip?.();
+    if (!shows && !hasEvents(events?.())) return;
     return scene.addPickable({
+      tooltip: () => shows,
+      events,
       object: mesh,
       datum: (hit) => {
         const vertex = hit.face?.a;
@@ -241,4 +278,22 @@ export function createMerged({
       scene.invalidate();
     };
   });
+}
+
+/**
+ * A `dashArray` (as the core marks take it: a length, a `[dash, gap, ...]` array, or an SVG
+ * `stroke-dasharray` string) as a dash and gap, or `null` for a solid line
+ */
+export function dashPattern(
+  dashArray: number | number[] | string | undefined | null
+): [number, number] | null {
+  if (dashArray == null || dashArray === '' || dashArray === 'none') return null;
+  const values =
+    typeof dashArray === 'number'
+      ? [dashArray]
+      : typeof dashArray === 'string'
+        ? dashArray.split(/[\s,]+/).map(Number)
+        : dashArray;
+  const [first, second = first] = values.filter((v) => Number.isFinite(v) && v >= 0);
+  return first > 0 ? [first, second] : null;
 }

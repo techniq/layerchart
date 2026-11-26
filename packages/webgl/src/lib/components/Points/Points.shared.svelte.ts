@@ -4,10 +4,11 @@ import type { Accessor, ColorProp, DataProp } from 'layerchart';
 import type { ImageSource } from '../../utils/texture.js';
 import type { Offset } from '../../utils/marks.js';
 import type { ValueProp } from '../../utils/values.js';
+import type { MotionProp } from 'layerchart/utils/motion.svelte';
 
 /**
- * The core `Points`' props (in its order, as it describes them), then those of a `WebGL` layer's
- * own (`z`, `glow`, `image`, ...)
+ * The core `Points`' props (in its order, as it describes them, then those it takes from
+ * `Circle`), then those of a `WebGL` layer's own (`glow`, `image`, ...)
  */
 export type PointsProps = {
   /** Override data instead of using context */
@@ -49,12 +50,6 @@ export type PointsProps = {
   strokeOpacity?: number;
   /** Overall opacity (0-1) @default 1 */
   opacity?: number;
-
-  /**
-   * Height off the floor: a data key or function (through the chart's `z` scale), or a number
-   * of pixels.  Defaults to the chart's `z`.
-   */
-  z?: DataProp;
   /**
    * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
    * the fill, stroke, stroke width, and opacity they set.  A `mix-blend-mode` of `plus-lighter`
@@ -62,6 +57,58 @@ export type PointsProps = {
    * overlap.
    */
   class?: string;
+  /**
+   * Height off the floor: a data key or function (through the chart's `z` scale), or a number
+   * of pixels.  Defaults to the chart's `z`.
+   */
+  z?: DataProp;
+  /**
+   * The initial center x position of each new point, in pixels, to ease from with `motion`.
+   *
+   * @default its own
+   */
+  initialCx?: number;
+  /**
+   * The initial center y position of each new point, in pixels, to ease from with `motion` (ex.
+   * the plot's bottom, to rise in).
+   *
+   * @default its own
+   */
+  initialCy?: number;
+  /**
+   * Keep the points facing the viewer (round), as the core `Points` on an `isometric` chart.
+   * Always so here: a flat chart's points are discs seen from above, and a 3D view's are
+   * spheres, round from any side.
+   *
+   * @default false
+   */
+  viewport?: boolean;
+  /**
+   * The initial radius of each new point, to ease from with `motion` (ex. `0` to grow in).
+   *
+   * @default its own
+   */
+  initialR?: number;
+  /**
+   * Which point each row is as rows change, for `motion` (a new key eases in from
+   * `initialCx` / `initialCy` / `initialR`).
+   *
+   * @default (d, i) => i
+   */
+  key?: (d: any, index: number) => unknown;
+  /**
+   * Ease each point to where it's asked to be, as the core `Points` (a `Circle` each) do (ex.
+   * `'spring'`, or `{ type: 'tween', duration: 300 }`), or each of `cx`, `cy`, and `r` by its
+   * own (ex. `{ r: 'spring' }`).  None without it, at no cost.
+   */
+  motion?: MotionProp<'cx' | 'cy' | 'r'>;
+  /**
+   * Dashed-border pattern. Accepts a number (single dash length), a
+   * `[dash, gap, ...]` array, or a string (same syntax as SVG
+   * `stroke-dasharray`), in pixels: its ring's (drawn flat), its first dash and gap repeating.
+   */
+  dashArray?: number | number[] | string;
+
   /**
    * Scale of the hovered point.
    *

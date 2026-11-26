@@ -14,7 +14,8 @@
 </script>
 
 {#if !lines && !outline}
-  <GeoPath {...props} geojson={graticule()} />
+  <!-- Its own `geojson` in place of the graticule's, as the core `Graticule` takes it -->
+  <GeoPath geojson={graticule()} {...props} />
 {/if}
 
 {#if lines}

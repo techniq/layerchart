@@ -1,14 +1,16 @@
 import type { GeoPathProps } from '../GeoPath/GeoPath.shared.svelte.js';
 
-type LineProps = Partial<Omit<GeoPathProps, 'geojson'>>;
-
+/**
+ * The core `Graticule`'s props (in its order), then the `GeoPath` props it draws its lines with,
+ * as the core `Graticule` takes them
+ */
 export type GraticuleProps = {
   /** Each meridian and parallel as its own line, styled by these (or the graticule's) props */
-  lines?: LineProps | boolean;
+  lines?: Partial<Omit<GeoPathProps, 'geojson'>> | boolean;
   /** The graticule's outline, styled by these (or the graticule's) props */
-  outline?: LineProps | boolean;
+  outline?: Partial<Omit<GeoPathProps, 'geojson'>> | boolean;
   /** Degrees between meridians. @default 10 */
   stepX?: number;
   /** Degrees between parallels. @default 10 */
   stepY?: number;
-} & LineProps;
+} & Partial<GeoPathProps>;

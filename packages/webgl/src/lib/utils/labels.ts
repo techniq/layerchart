@@ -101,15 +101,31 @@ export function labelPlane(
     paint.lineJoin = 'round';
     lines.forEach((line, i) => paint.strokeText(line, x, first + step * i));
   }
-  paint.fillStyle = css(color?.color);
-  paint.globalAlpha = color?.opacity ?? 1;
-  lines.forEach((line, i) => paint.fillText(line, x, first + step * i));
+  // Translucent letters are painted opaque on a canvas of their own, then laid over at their
+  // alpha, so where their hairline (below) covers their fill they don't come out more opaque
+  const alpha = color?.opacity ?? 1;
+  const letters = alpha < 1 ? document.createElement('canvas') : label;
+  if (letters !== label) {
+    letters.width = width;
+    letters.height = height;
+  }
+  const ink = letters === label ? paint : letters.getContext('2d')!;
+  ink.font = font;
+  ink.textAlign = paint.textAlign;
+  ink.textBaseline = paint.textBaseline;
+  ink.fillStyle = css(color?.color);
+  ink.globalAlpha = 1;
+  lines.forEach((line, i) => ink.fillText(line, x, first + step * i));
   // Shrunk to size by the GPU and blended in linear light, glyphs come out thinner than the
   // browser draws them: a hairline of their own color brings back their weight
-  paint.strokeStyle = paint.fillStyle;
-  paint.lineWidth = WEIGHT_STROKE * RESOLUTION;
-  paint.lineJoin = 'round';
-  lines.forEach((line, i) => paint.strokeText(line, x, first + step * i));
+  ink.strokeStyle = ink.fillStyle;
+  ink.lineWidth = WEIGHT_STROKE * RESOLUTION;
+  ink.lineJoin = 'round';
+  lines.forEach((line, i) => ink.strokeText(line, x, first + step * i));
+  if (letters !== label) {
+    paint.globalAlpha = alpha;
+    paint.drawImage(letters, 0, 0);
+  }
 
   const texture = new CanvasTexture(label);
   texture.colorSpace = LinearSRGBColorSpace;

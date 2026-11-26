@@ -4,16 +4,19 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { Color, Quaternion, Vector3 } from 'three';
   import { extent } from 'd3-array';
   import { scaleSequential } from 'd3-scale';
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { binCells, binGrid, getChartContext, isScaleOrdinal, resolveColorProp } from 'layerchart';
 
+  import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createInstances, type Instance } from '../../utils/instances.svelte.js';
   import { createOutlines } from '../../utils/outlines.js';
   import { position, resolveAccessor } from '../../utils/marks.js';
   import { extrude, ShapeContext } from '../../utils/shapes.js';
+  import BinGrid from './Bin.grid.svelte';
 
   let {
     data: dataProp,
@@ -23,16 +26,31 @@
     shape = 'hexagon',
     size = 20,
     gap = 0,
+    grid = false,
     z,
     fill = 'count',
     stroke,
-    strokeWidth = 1,
+    fillOpacity = 1,
+    strokeOpacity = 1,
+    strokeWidth: strokeWidthProp,
     opacity = 1,
+    class: className,
     tooltip = false,
     r,
+    children,
+    onclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
   }: BinProps = $props();
 
   const ctx = getChartContext();
+  const scene = getSceneContext();
+  /** What its `class` sets */
+  const look = $derived(scene.style(className));
+  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
+  /** The grid's lines beneath its cells, when drawn as it mounts (none costs nothing) */
+  const gridLayer = untrack(() => grid) ? scene.layer() : null;
 
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
@@ -138,20 +156,39 @@
         depth: fillOf(cell),
         // A pixel at least, above anything lying on the floor beneath (ex. a map)
         height: Math.max(Math.abs(z1 - z0), 1),
-        color: resolveColorProp(fill, cell, fillScale) ?? 'var(--color-primary, currentColor)',
+        // A class's own fill wins, as CSS wins over an SVG attribute in core's layers
+        color:
+          (look?.fillSet && look.fill) ||
+          (resolveColorProp(fill, cell, fillScale) ?? 'var(--color-primary, currentColor)'),
         rotation: down ? turned : undefined,
       };
     })
   );
 
-  /** Outlined only when asked, so cells without one cost nothing more */
-  const outlined = $derived(stroke != null);
+  /** Outlined only when asked (here or in `class`), so cells without one cost nothing more */
+  const outlined = $derived(
+    stroke != null || (!!look?.strokeSet && !!look.stroke && look.stroke !== 'none')
+  );
+
+  /** Its pointer handlers, called with the cell under the pointer, as the core `Bin`'s */
+  const events = () => ({
+    onclick: onclick && ((e: MouseEvent, { data }: { data: any }) => onclick(e, data)),
+    onpointerenter:
+      onpointerenter && ((e: PointerEvent, { data }: { data: any }) => onpointerenter(e, data)),
+    onpointermove:
+      onpointermove && ((e: PointerEvent, { data }: { data: any }) => onpointermove(e, data)),
+    onpointerleave:
+      onpointerleave && ((e: PointerEvent, { data }: { data: any }) => onpointerleave(e, data)),
+  });
+  const alpha = $derived(opacity * (look?.opacity ?? 1));
 
   createInstances({
-    tooltip: () => tooltip,
+    tooltip: () => tooltip && !children,
+    events: () => (children ? undefined : events()),
     geometry: () => prism,
-    instances: () => prisms,
-    opacity: () => opacity,
+    // `children` draw the cells in their place
+    instances: () => (children ? [] : prisms),
+    opacity: () => alpha * fillOpacity,
     emphasize: (color) => color.lerp(highlight, 0.25),
     // Giving way to its outline in depth, so the outline sits on its edges
     behind: () => outlined,
@@ -159,10 +196,19 @@
 
   // Around each cell's top and up its corners, as the core `Bin` outlines its cells
   createOutlines({
-    instances: () => (outlined ? prisms : []),
-    stroke: (cell) => resolveColorProp(stroke, cell, ctx.cScale) ?? 'currentColor',
+    instances: () => (outlined && !children ? prisms : []),
+    stroke: (cell) =>
+      (look?.strokeSet && look.stroke) ||
+      (resolveColorProp(stroke, cell, ctx.cScale) ?? 'currentColor'),
     strokeWidth: () => strokeWidth,
-    opacity: () => opacity,
+    opacity: () => alpha * strokeOpacity,
     footprint: () => corners,
   });
 </script>
+
+{#if grid}
+  <BinGrid {shape} {size} {grid} layer={gridLayer} />
+{/if}
+{#if children}
+  {@render children({ cells })}
+{/if}

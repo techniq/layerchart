@@ -1,3 +1,5 @@
+import type { Snippet } from 'svelte';
+import type { GroupProps } from 'layerchart';
 import type { ElevationEncoding, Tile } from '../../utils/tiles.js';
 
 /**
@@ -18,6 +20,10 @@ export type GeoTileElevation = {
   maxZoom?: number;
 };
 
+/**
+ * The core `GeoTile`'s props (in its order, as it describes them), then those of a `WebGL`
+ * layer's own (`maxZoom`, `elevation`, `segments`, ...)
+ */
 export type GeoTileProps = {
   /** A tile's image URL, from its column, row, and zoom (an XYZ tile service, as the core `GeoTile` takes) */
   url: (x: number, y: number, z: number) => string;
@@ -35,6 +41,29 @@ export type GeoTileProps = {
    */
   tileSize?: number;
   /**
+   * Load each image anew rather than from those loaded before.
+   *
+   * @default false
+   */
+  disableCache?: boolean;
+  /**
+   * Props for the `Group` the tiles are drawn in (ex. `{ opacity: 0.5 }`, or `x` / `y` to move
+   * them)
+   */
+  group?: Partial<GroupProps>;
+  /**
+   * Outline each tile, labeled with its zoom / column / row.
+   *
+   * @default false
+   */
+  debug?: boolean;
+  /**
+   * Draw in place of the tiles, given those covering the view (each `[x, y, z]`): none of their
+   * images load
+   */
+  children?: Snippet<[{ tiles: Tile[] }]>;
+
+  /**
    * The deepest zoom the image tiles go to: deeper tiles show part of their ancestor's image,
    * enlarged (ex. imagery that stops at zoom 12 under terrain that doesn't)
    */
@@ -50,20 +79,8 @@ export type GeoTileProps = {
    * @default 64 with `elevation`, else 16
    */
   segments?: number;
-  /**
-   * Load each image anew rather than from those loaded before.
-   *
-   * @default false
-   */
-  disableCache?: boolean;
-  /** @default 1 */
+  /** The opacity of the tiles. (0 to 1) @default 1 */
   opacity?: number;
-  /**
-   * Outline each tile, labeled with its zoom / column / row.
-   *
-   * @default false
-   */
-  debug?: boolean;
   /**
    * Show the tooltip for the longitude / latitude the pointer is over (with the chart's
    * `tooltipContext`), and its elevation.

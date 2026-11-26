@@ -48,12 +48,15 @@ export function createOutlines({
   strokeWidth,
   opacity,
   footprint,
+  dash,
 }: {
   instances: () => Instance[];
   stroke: (d: any) => string;
   strokeWidth: () => number;
   opacity: () => number;
   footprint?: () => [number, number][];
+  /** Dash the outlines (see `createMerged`'s `dash`) */
+  dash?: () => number | number[] | string | undefined;
 }) {
   const ctx = getChartContext();
   createMerged({
@@ -73,5 +76,6 @@ export function createOutlines({
     // Outlines are lines: the merged mark's `opacity` is its fills'
     lineOpacity: opacity,
     strokeWidth,
+    dash,
   });
 }

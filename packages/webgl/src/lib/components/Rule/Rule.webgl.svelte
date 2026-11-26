@@ -16,6 +16,7 @@
     xOffset = 0,
     y = false,
     yOffset = 0,
+    seriesKey,
     z = 0,
     stroke,
     strokeWidth: strokeWidthProp,
@@ -30,6 +31,24 @@
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
 
   ctx.registerComponent({ name: 'Rule', kind: 'composite-mark' });
+
+  /**
+   * The series it follows (as the core `Rule`'s `Group`), looked up only with a `seriesKey`, so
+   * rules without one don't read the series state
+   */
+  const series = $derived(
+    seriesKey == null ? undefined : ctx.series.series.find((s) => s.key === seriesKey)
+  );
+  /** Not drawn while the legend hides its series */
+  const hidden = $derived(series != null && !ctx.series.isVisible(series.key));
+  /** Faded while another series is highlighted, as that series' marks are */
+  const seriesOpacity = $derived(
+    series == null ||
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
+      ? 1
+      : 0.1
+  );
 
   /** A single line across or down the plot, rather than one per row */
   function single(value: unknown, scale: any, domain: unknown[], ends: string[]) {
@@ -105,14 +124,15 @@
 
   createMerged({
     items: () =>
-      lines.map((line) => ({
+      (hidden ? [] : lines).map((line) => ({
         d: undefined,
         geometry: null,
         fill: null,
         lines: [[line.x1, z + 0.5, line.y1, line.x2, z + 0.5, line.y2]],
         stroke: line.stroke,
       })),
-    opacity: () => opacity * (look?.opacity ?? 1),
+    opacity: () => opacity * seriesOpacity * (look?.opacity ?? 1),
+    lineOpacity: () => opacity * seriesOpacity * (look?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
   });
 </script>

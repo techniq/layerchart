@@ -1,4 +1,6 @@
-import type { autoTickFormat, TicksConfig } from 'layerchart';
+import type { Snippet } from 'svelte';
+import type { autoTickFormat, DataProp, TicksConfig } from 'layerchart';
+import type { MotionProp } from 'layerchart/utils/motion.svelte';
 
 /** How an axis draws its labels, as `Text` draws them */
 export type AxisLabelProps = {
@@ -10,7 +12,7 @@ export type AxisLabelProps = {
    * @default false
    */
   viewport?: boolean;
-  /** Class added to each `viewport` label */
+  /** Class added to each `viewport` label, and the fill (and opacity) it sets, for the others */
   class?: string;
   /**
    * Font size in pixels of the plot, for labels on the plot box.  Defaults to read about as
@@ -29,6 +31,38 @@ export type AxisLabelProps = {
   verticalAnchor?: 'start' | 'middle' | 'end';
 };
 
+/** How an axis' rule or grid lines are drawn */
+export type AxisLineProps = {
+  /** CSS classes to style them by (their stroke, width, and opacity) */
+  class?: string;
+  stroke?: string;
+  /** Width in pixels, the same at any depth. @default 1 */
+  strokeWidth?: number;
+  opacity?: number;
+  /** Dashed-line pattern (grid lines): a dash length, `[dash, gap]`, or an SVG `stroke-dasharray` */
+  dashArray?: number | number[] | string;
+};
+
+/** What a `label` or `tickLabel` snippet is given to spread on a `Text` */
+export type AxisTextProps = {
+  x: number;
+  y: number;
+  z: number;
+  value: string;
+  textAnchor: 'start' | 'middle' | 'end';
+  verticalAnchor: 'start' | 'middle' | 'end';
+  rotate: number;
+  fontSize: number;
+  fontWeight: number | string;
+  fill: string;
+  class?: string;
+  viewport?: boolean;
+};
+
+/**
+ * The core `Axis`' props (in its order, as it describes them), then those of a `WebGL` layer's
+ * own (`tickLabelOffset`)
+ */
 export type AxisProps = {
   /**
    * Which axis: `bottom` labels `x` along the floor's front edge (`top` along its back), `left`
@@ -37,51 +71,134 @@ export type AxisProps = {
    */
   placement: 'bottom' | 'top' | 'left' | 'right' | 'back';
   /**
-   * Lines across the plot at its ticks, as the core `Axis` draws them: in their CSS `stroke`, or
-   * the one a `class` sets
+   * The label for the axis, drawn beyond the tick labels.
    *
+   * Can either be a string or a snippet to render custom content.  The snippet receives
+   * spreadable props to apply to a `Text`.
+   */
+  label?: string | Snippet<[{ props: AxisTextProps }]>;
+  /**
+   * Location of axis label along the axis
+   * @default 'middle'
+   */
+  labelPlacement?: 'start' | 'middle' | 'end';
+  /** Props applied to label Text */
+  labelProps?: AxisLabelProps;
+  /**
+   * Draw a rule line along the axis' edge of the plot box, and how
    * @default false
    */
-  grid?: boolean | { stroke?: string; class?: string };
-  /** Title drawn beyond the tick labels */
-  label?: string;
-  /** A count, values, or an interval */
+  rule?: boolean | AxisLineProps;
+  /**
+   * Draw grid lines across the plot at its ticks, as the core `Axis` draws them. Pass props
+   * (class, stroke, strokeWidth, opacity, dashArray) to forward onto the grid lines.
+   * @default false
+   */
+  grid?: boolean | AxisLineProps;
+  /** Control the number of ticks: a count, values, or an interval */
   ticks?: TicksConfig;
   /**
-   * Pixels between ticks, picking how many there are as the axis' length changes (as the core
-   * `Axis`).  `null` leaves the count to the scale.
+   * Width or height of each tick in pixels (enabling responsive count).  `null` leaves the count
+   * to the scale.
    *
    * @default 50 in a 3D view (80 across a flat one)
    */
   tickSpacing?: number | null;
-  /** How to format tick values */
-  format?: Parameters<typeof autoTickFormat>[0]['formatType'];
   /**
-   * Draw a line along the axis' edge of the plot box.
+   * Drop ticks whose labels would overlap one already kept, measuring each label at the size
+   * it actually renders.  Across a flat chart; a 3D view keeps every tick (its labels turn with
+   * the view, so what overlaps changes as it does).
+   *
+   * `tickSpacing` only picks a tick *count* — it cannot know how wide a formatted label turns
+   * out to be, so a long format (`'Wednesday'`, `'$1,234,567'`) still collides at any count
+   * that fits the axis.  This measures instead.
+   *
+   * - `priority`: which ticks win when labels compete. `'end'` (default) keeps the last tick and
+   *   walks backwards (the newest value on a time axis); `'start'` keeps the first; `'start-end'`
+   *   anchors both ends of the axis and thins what is between them.
+   * - `padding`: minimum gap, in pixels, required between two kept labels.
    *
    * @default false
    */
-  rule?: boolean;
+  tickOcclusion?: boolean | { padding?: number; priority?: 'start' | 'end' | 'start-end' };
   /**
-   * Draw a mark out from the edge at each tick.
+   * Whether to render tick labels on multiple lines for additional context
+   *
+   * @default false
+   */
+  tickMultiline?: boolean;
+  /**
+   * Length of the tick line
+   * @default 4
+   */
+  tickLength?: number;
+  /**
+   * Whether to render tick marks.
    *
    * @default true
    */
   tickMarks?: boolean;
+  /** Format tick labels */
+  format?: Parameters<typeof autoTickFormat>[0]['formatType'];
+  /** Props to apply to each tick label */
+  tickLabelProps?: AxisLabelProps;
+  /** A snippet to render your own custom tick label, given props to spread on a `Text` */
+  tickLabel?: Snippet<[{ props: AxisTextProps; index: number }]>;
+  /** Override scale for the axis */
+  scale?: any;
   /**
-   * How far tick marks reach out from the edge, in pixels.
-   *
-   * @default 4
+   * Domain for the axis, on a copy of `scale` (or the chart's scale for this placement) that keeps
+   * its range and type.  Useful for a secondary axis, e.g. `domain={[0, 100]}` on the right.
    */
-  tickLength?: number;
+  domain?: any[];
+  /** Stroke color for axis rule, grid lines, and tick marks. */
+  stroke?: string;
+  /** Fill color for tick labels and axis label. */
+  fill?: string;
+  /**
+   * Classes for styling various parts of the axis (the stroke, width, and opacity they set on
+   * its lines, and the fill on its labels)
+   * @default {}
+   */
+  classes?: {
+    root?: string;
+    label?: string;
+    rule?: string;
+    tick?: string;
+    tickLabel?: string;
+  };
+  /** Ease each tick (its mark, label, and grid line) to where it moves, ex. `'tween'` */
+  motion?: MotionProp;
+  /**
+   * Translate x position of the axis, in pixels (or per row, through the `x` scale, as `Group`)
+   */
+  x?: DataProp;
+  /** Initial translate x (pixel mode only). @default x */
+  initialX?: number;
+  /**
+   * Translate y position of the axis, in pixels (or per row, through the `y` scale, as `Group`)
+   */
+  y?: DataProp;
+  /** Initial translate y (pixel mode only). @default y */
+  initialY?: number;
+  /** Data array to iterate over in data mode (an axis per row, as `Group`) */
+  data?: any[];
+  /** Key function for each row's axis in data mode. @default (d, i) => i */
+  key?: (d: any, index: number) => any;
+  /**
+   * Series key to follow, fading the axis while another series is highlighted and removing it
+   * while the series is hidden. Only applicable if `<Chart>` uses `series`.
+   */
+  seriesKey?: string;
+  /** Center within chart. @default false */
+  center?: boolean | 'x' | 'y';
+  /** The opacity of the element. (0 to 1) */
+  opacity?: number;
+
   /**
    * Pixels between the plot box's edge and the tick labels, as the core `Axis` spaces them.
    *
    * @default tickLength beside the plot (`left` / `right`), tickLength + 2 above or below it
    */
   tickLabelOffset?: number;
-  /** How the tick labels are drawn */
-  tickLabelProps?: AxisLabelProps;
-  /** How `label` is drawn */
-  labelProps?: AxisLabelProps;
 };
