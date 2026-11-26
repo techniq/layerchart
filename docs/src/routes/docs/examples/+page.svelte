@@ -330,6 +330,9 @@
 							component={example.component}
 							example={example.name}
 							title={example.label}
+							href={params.layer
+								? `/docs/components/${example.component}/${example.name}?layer=${params.layer}`
+								: undefined}
 						/>
 					{/each}
 				</div>

@@ -62,6 +62,7 @@
 				/>
 				<Text
 					verticalAnchor="middle"
+					textAnchor="middle"
 					x={context.width / 2 + Math.sin(angle) * outer * 1.18}
 					y={context.height / 2 - Math.cos(angle) * outer * 1.18}
 					z={40}

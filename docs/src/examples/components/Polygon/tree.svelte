@@ -53,6 +53,7 @@
 				<Polygon cx={node.x} cy={node.y} {r} {points} {rotate} {z} {fill} cornerRadius={2} />
 				<Text
 					verticalAnchor="middle"
+					textAnchor="middle"
 					x={node.x}
 					y={node.y}
 					z={z + 14}

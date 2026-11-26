@@ -28,6 +28,7 @@
 			height={volcano.height}
 			thresholds={14}
 			z="value"
+			fill="none"
 			stroke="var(--color-surface-content)"
 		/>
 	</WebGL>

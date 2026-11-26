@@ -98,6 +98,7 @@
 			<!-- Lying on the leaves' tops, so nearer boxes cover them as the view turns -->
 			<Text
 				verticalAnchor="middle"
+				textAnchor="middle"
 				data={nodes.filter((d) => !d.children && label(d).fontSize >= 2)}
 				x={(d) => (d.x0 + d.x1) / 2}
 				y={(d) => (d.y0 + d.y1) / 2}

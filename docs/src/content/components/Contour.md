@@ -62,6 +62,6 @@ Adjust thresholds and blur on a sampled function.
 
 In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), its lines lie flat or rise to their heights. See the [WebGL guide](/docs/guides/webgl) to get started.
 
-Flat, it's LayerChart's own `Contour` (filled bands through the color scale, outlined with a `stroke`), drawn with WebGL marks. Contour lines on their own lie at `z` pixels (ex. over a `Raster`), or each rises to its threshold's height with `z="value"`. It takes values the same ways as [Surface](/docs/components/Surface).
+Filled, it's LayerChart's own `Contour` (bands through the color scale, outlined with a `stroke`, and stacked into terraces when raised), drawn with WebGL marks. Unfilled (`fill="none"`), its lines lie at `z` pixels (ex. over a `Raster`), or each rises to its threshold's height with `z="value"`, in the bands' colors unless given a `stroke`. It takes values the same ways as [Surface](/docs/components/Surface).
 
 :example{ name="basic" }

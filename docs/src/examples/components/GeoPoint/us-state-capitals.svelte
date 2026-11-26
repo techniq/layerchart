@@ -34,7 +34,7 @@
 		<g class="points pointer-events-none">
 			{#each data.us.capitals as capital}
 				<!-- TODO: Improve GeoPoint to standardize svg/canvas -->
-				{#if settings.layer === 'svg'}
+				{#if settings.layer === 'svg' || settings.layer === 'webgl'}
 					<GeoPoint lat={capital.latitude} long={capital.longitude}>
 						<Circle r={2} class="fill-white stroke-danger" />
 						<Text

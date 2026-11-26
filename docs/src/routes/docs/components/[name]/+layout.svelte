@@ -5,6 +5,8 @@
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { nativeWebGLExamples, webglExamples } from 'virtual:webgl-examples';
 	import { page } from '$app/state';
+	import { untrack } from 'svelte';
+	import { getSettings, type SettingsOptions } from 'layerchart';
 
 	import LucideBlocks from '~icons/lucide/blocks';
 
@@ -90,6 +92,18 @@
 					])
 				]
 	);
+
+	// A link's `?layer=` (ex. from the examples page filtered to WebGL) opens the page in that layer,
+	// when it has it.  Once per visit, so the layer toggle changes it from there.
+	const settings = getSettings();
+	$effect(() => {
+		const requested = page.url.searchParams.get('layer');
+		untrack(() => {
+			if (requested && layers.includes(requested)) {
+				settings.layer = requested as NonNullable<SettingsOptions['layer']>;
+			}
+		});
+	});
 
 	// Component names as-is (ex. `ArcChart`), example names in sentence case (ex. `Axis labels inside`)
 	const exampleTitle = $derived(page.params.example?.replaceAll('-', ' '));
