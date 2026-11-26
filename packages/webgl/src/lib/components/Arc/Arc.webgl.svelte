@@ -202,6 +202,7 @@
   // The track, a mesh of its own (for its own opacity), losing to the arc where they meet
   const trackLook = $derived(track ? (track === true ? {} : track) : null);
   const trackClassed = $derived(scene.style(trackLook?.class));
+  const noneAsNull = (color: string | null) => (color === 'none' ? null : color);
   createMerged({
     behind: true,
     items: () =>
@@ -219,10 +220,12 @@
                 padAngle: trackPadAngle ?? padAngle,
               },
               {
-                fill:
+                // `fill-none` (ex. a track drawn only as its outline): no fill at all
+                fill: noneAsNull(
                   trackLook.fill ??
-                  trackClassed?.fill ??
-                  'color-mix(in oklab, var(--color-surface-content) 10%, transparent)',
+                    trackClassed?.fill ??
+                    'color-mix(in oklab, var(--color-surface-content) 10%, transparent)'
+                ),
                 stroke: trackLook.stroke ?? trackClassed?.stroke ?? null,
               }
             ),

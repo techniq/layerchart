@@ -47,7 +47,7 @@ export type CircleProps = {
   r?: DataProp;
   /**
    * Its height off the floor: a number of pixels, or a data key / function through the chart's
-   * `z` scale.  Flat on the floor without one.
+   * `z` scale.  Without one, the chart's `z` in data mode, else flat on the floor.
    */
   z?: DataProp;
   /**

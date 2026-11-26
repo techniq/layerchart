@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { draw as drawTransition } from 'svelte/transition';
 import type { MotionProp } from 'layerchart/utils/motion.svelte';
-import type { Accessor, ColorProp, DataProp } from 'layerchart';
+import type { Accessor, ColorProp, DataProp, StyleProp } from 'layerchart';
 import type { CurveFactory } from 'd3-shape';
 import type { MarkerOptions } from '../Line/markers.js';
 
@@ -50,13 +50,18 @@ export type SplineProps = {
    * a `Hull`'s).  None without one (here or in `class`).
    */
   fill?: string | null;
-  /** @default 1 */
-  opacity?: number;
+  /**
+   * Opacity, or a function returning it per row: a line splits into a piece per run of rows
+   * it gives the same, as the core `Spline`'s.  @default 1
+   */
+  opacity?: StyleProp<number | undefined>;
   /**
    * CSS classes to style it by, as the core marks take them (ex. `fill-red-500 opacity-50`):
-   * the fill, stroke, stroke width, and opacity they set, where its props don't say
+   * the fill, stroke, stroke width, dashes, and opacity they set, where its props don't say.  Or a
+   * function returning them per row, splitting a line into a piece per run of rows it gives the
+   * same (ex. dashed across missing data), as the core `Spline`'s.
    */
-  class?: string;
+  class?: StyleProp<string | undefined>;
   /**
    * Tween each line to where it's asked to be, as the core `Spline` (ex. `'tween'`, or `{ type:
    * 'tween', duration: 300 }`), a new one up from the baseline.  A spring leaves it, as core's.

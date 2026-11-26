@@ -1,6 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { autoTickFormat, DataProp, TicksConfig } from 'layerchart';
 import type { MotionProp } from 'layerchart/utils/motion.svelte';
+import type { MarkerOptions } from '../Line/markers.js';
 
 /** How an axis draws its labels, as `Text` draws them */
 export type AxisLabelProps = {
@@ -29,6 +30,16 @@ export type AxisLabelProps = {
   textAnchor?: 'start' | 'middle' | 'end';
   /** Tick labels' vertical anchor, as the core `Axis`' */
   verticalAnchor?: 'start' | 'middle' | 'end';
+  /**
+   * Pixels across from where it's placed, for labels on the plot box (in place of the core
+   * `Axis`' default offset from its tick, as there)
+   */
+  dx?: number;
+  /**
+   * Pixels down from where it's placed, for labels on the plot box (in place of the core `Axis`'
+   * default offset from its tick, as there)
+   */
+  dy?: number;
 };
 
 /** How an axis' rule or grid lines are drawn */
@@ -43,6 +54,17 @@ export type AxisLineProps = {
   dashArray?: number | number[] | string;
 };
 
+/** How an axis' rule is drawn: as its other lines, with markers at its ends, as a `Rule`'s */
+export type AxisRuleProps = AxisLineProps & {
+  /** A marker at its start and end: a type (ex. `'arrow'`) or the core `Marker`'s props */
+  marker?: MarkerOptions;
+  /** A marker at its start (where the core `Rule` starts it: its left, or a side's bottom) */
+  markerStart?: MarkerOptions;
+  markerMid?: MarkerOptions;
+  /** A marker at its end (its right, or a side's top) */
+  markerEnd?: MarkerOptions;
+};
+
 /** What a `label` or `tickLabel` snippet is given to spread on a `Text` */
 export type AxisTextProps = {
   x: number;
@@ -51,9 +73,15 @@ export type AxisTextProps = {
   value: string;
   textAnchor: 'start' | 'middle' | 'end';
   verticalAnchor: 'start' | 'middle' | 'end';
+  dx: number;
+  dy: number;
   rotate: number;
   fontSize: number;
   fontWeight: number | string;
+  /** Pixels from a line's top to its baseline, as the core `Axis`' labels */
+  capHeight: number;
+  /** Between lines, in multiples of `fontSize` */
+  lineHeight: number;
   fill: string;
   class?: string;
   viewport?: boolean;
@@ -67,9 +95,10 @@ export type AxisProps = {
   /**
    * Which axis: `bottom` labels `x` along the floor's front edge (`top` along its back), `left`
    * labels `y` along its side (`right` along the other), and `back` labels `z` up a corner.  Same
-   * as an `isometric` chart's.  The edges turn to stay in front as the camera orbits.
+   * as an `isometric` chart's.  The edges turn to stay in front as the camera orbits.  In a
+   * `radial` chart, `angle` labels `x` around its rim and `radius` labels `y` out from its center.
    */
-  placement: 'bottom' | 'top' | 'left' | 'right' | 'back';
+  placement: 'bottom' | 'top' | 'left' | 'right' | 'back' | 'angle' | 'radius';
   /**
    * The label for the axis, drawn beyond the tick labels.
    *
@@ -88,7 +117,7 @@ export type AxisProps = {
    * Draw a rule line along the axis' edge of the plot box, and how
    * @default false
    */
-  rule?: boolean | AxisLineProps;
+  rule?: boolean | AxisRuleProps;
   /**
    * Draw grid lines across the plot at its ticks, as the core `Axis` draws them. Pass props
    * (class, stroke, strokeWidth, opacity, dashArray) to forward onto the grid lines.

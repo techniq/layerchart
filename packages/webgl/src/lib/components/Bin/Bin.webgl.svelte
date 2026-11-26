@@ -56,7 +56,11 @@
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
   const weightAccessor = $derived(weight == null ? undefined : resolveAccessor(weight, undefined));
 
-  /** The rows grouped into cells of the grid, by where they land on the plot (or map) */
+  /**
+   * The rows grouped into cells of the grid, by where they land on the plot (or map).  As the core
+   * `Bin`, `size` is measured against an isometric floor laid flat (`floorScale`): the floor is
+   * refitted as the view turns, and the cells turn with it, holding the same rows
+   */
   const cells = $derived(
     binCells(
       (dataProp ?? ctx.data ?? []) as any[],
@@ -64,6 +68,7 @@
       {
         shape,
         size,
+        scale: ctx.floorScale,
         weight: weightAccessor as ((d: any) => number) | undefined,
       }
     )
@@ -107,7 +112,7 @@
    */
   /** One cell's corners about its center, in pixels, shrunk by `gap` */
   const corners = $derived.by((): [number, number][] => {
-    const grid = binGrid(shape, size);
+    const grid = binGrid(shape, size, ctx.floorScale);
     const shrink = Math.max(0, grid.circumradius - gap / 2) / grid.circumradius;
     return grid.polygon(0, 0, true).map(([px, py]) => [px * shrink, py * shrink]);
   });
@@ -132,7 +137,7 @@
   });
   function fillOf(cell: BinCell) {
     if (r == null) return 1;
-    if (typeof r === 'number') return r / binGrid(shape, size).circumradius;
+    if (typeof r === 'number') return r / binGrid(shape, size, ctx.floorScale).circumradius;
     const value = Number(cellValue(r, cell));
     return rMax > 0 && Number.isFinite(value) ? Math.sqrt(Math.max(0, value) / rMax) : 0;
   }

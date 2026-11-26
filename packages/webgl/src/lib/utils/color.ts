@@ -17,6 +17,8 @@ export type ClassStyle = {
    */
   fillSet: boolean;
   strokeSet: boolean;
+  /** Whether its classes take its stroke away (`stroke-none`) */
+  strokeNone?: boolean;
   strokeWidth: number | null;
   opacity: number;
   /** Its `mix-blend-mode`, when not `normal` (ex. `plus-lighter`) */
@@ -25,6 +27,10 @@ export type ClassStyle = {
   fontSize: number;
   /** Its font weight: its class's (ex. `font-semibold`), else what it inherits there */
   fontWeight: string;
+  /** The `stroke-dasharray` its classes set, in pixels (ex. `4, 4`), else `null` */
+  strokeDasharray?: string | null;
+  /** The text color its classes set (ex. `text-primary`), which a label's fill follows */
+  color?: string | null;
 };
 
 /**
@@ -94,6 +100,9 @@ export class ColorResolver {
       svg.style.stroke = 'rgb(3, 2, 1)';
       // Not 1px, SVG's own, which `stroke-1` sets
       svg.style.strokeWidth = '1.0625px';
+      // A text color of its own, not the probe's (which `resolve` sets), so a class's (ex.
+      // `text-primary`) is told from none
+      svg.style.color = 'rgb(1, 2, 4)';
       this.#classed = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       this.#plain = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       svg.append(this.#classed, this.#plain);
@@ -108,8 +117,15 @@ export class ColorResolver {
     }
     const style = getComputedStyle(this.#classed);
     const plain = getComputedStyle(this.#plain);
-    const set = (key: 'fill' | 'stroke' | 'strokeWidth') =>
-      style[key] !== plain[key] ? style[key] : null;
+    /** The text color its classes set, else `null` (the probe's own, see above) */
+    const color = style.color !== plain.color ? style.color : null;
+    const set = (key: 'fill' | 'stroke' | 'strokeWidth') => {
+      if (style[key] === plain[key]) return null;
+      // `fill-current` with no text color of its own: the color it inherits where it's drawn
+      return key !== 'strokeWidth' && color == null && style[key] === style.color
+        ? 'currentColor'
+        : style[key];
+    };
     /**
      * A color the classes set as LayerChart's do for their marks (ex. `.lc-highlight-area`'s
      * `--fill-color`), which its SVG primitives read
@@ -127,11 +143,17 @@ export class ColorResolver {
       stroke: stroke ?? variable('--stroke-color'),
       fillSet: fill != null,
       strokeSet: stroke != null,
+      strokeNone: set('stroke') === 'none',
       strokeWidth: strokeWidth == null ? null : parseFloat(strokeWidth),
       opacity: Number(style.opacity) * Number(style.fillOpacity || 1),
       blend: style.mixBlendMode && style.mixBlendMode !== 'normal' ? style.mixBlendMode : null,
       fontSize: parseFloat(style.fontSize),
       fontWeight: style.fontWeight,
+      strokeDasharray:
+        style.strokeDasharray !== plain.strokeDasharray && style.strokeDasharray !== 'none'
+          ? style.strokeDasharray.replace(/px/g, '')
+          : null,
+      color,
     };
   }
 

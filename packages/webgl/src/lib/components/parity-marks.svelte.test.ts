@@ -364,6 +364,7 @@ describe('Text, with the core `Text`’s props', () => {
         y: 50,
         segments: [{ value: 'Hello ' }, { value: 'world' }],
         fontSize: 12,
+        textAnchor: 'middle',
       },
     });
     await expect.poll(() => planes(scene).length).toBe(2);

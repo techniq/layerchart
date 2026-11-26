@@ -1,4 +1,4 @@
-import type { ColorProp, DataProp } from 'layerchart';
+import type { ColorProp, DataProp, StyleProp } from 'layerchart';
 import type { MotionProp } from 'layerchart/utils/motion.svelte';
 
 /**
@@ -84,9 +84,10 @@ export type VectorProps = {
   opacity?: number;
   /**
    * CSS classes to style it by, as the core marks take them (ex. `stroke-red-500`): the
-   * fill, stroke, stroke width, and opacity they set, where its props don't say
+   * fill, stroke, stroke width, and opacity they set, where its props don't say.  A string, or a
+   * function of the row returning one.
    */
-  class?: string;
+  class?: StyleProp<string | undefined>;
 
   /**
    * In a 3D view, how far it points up out of the floor, in degrees: `0` along the floor, `90`

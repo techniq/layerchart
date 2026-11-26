@@ -129,18 +129,26 @@ export function labelPlane(
 
   const texture = new CanvasTexture(label);
   texture.colorSpace = LinearSRGBColorSpace;
-  // Blended by coverage at the glyphs' edges, rather than against transparent black
+  // Premultiplied as it's sampled, so a glyph's edge blends by coverage rather than with the
+  // transparent black around it; the material takes the alpha back out once sampled (below)
   texture.premultiplyAlpha = true;
   texture.anisotropy = 8;
-  const mesh = new Mesh(
-    new PlaneGeometry(width / RESOLUTION, height / RESOLUTION),
-    new MeshLambertMaterial({
-      map: texture,
-      transparent: true,
-      premultipliedAlpha: true,
-      depthWrite: false,
-    })
-  );
+  const material = new MeshLambertMaterial({
+    map: texture,
+    transparent: true,
+    depthWrite: false,
+  });
+  // Its color back to as painted (the alpha taken out), then lit, faded by `opacity`, encoded,
+  // and blended as any other's.  Left premultiplied, three.js multiplies by the alpha again, and
+  // the letters' and halo's edges come out dark: a grey ring around a white halo.
+  material.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <map_fragment>',
+      '#include <map_fragment>\n#ifdef USE_MAP\n\tdiffuseColor.rgb /= max( sampledDiffuseColor.a, 0.0001 );\n#endif'
+    );
+  };
+  material.customProgramCacheKey = () => 'lc-label-unpremultiplied';
+  const mesh = new Mesh(new PlaneGeometry(width / RESOLUTION, height / RESOLUTION), material);
   return {
     mesh,
     width: width / RESOLUTION,
@@ -182,4 +190,64 @@ export function disposeLabel(mesh: Mesh) {
   const material = mesh.material as Material & { map?: { dispose(): void } | null };
   material.map?.dispose();
   material.dispose();
+}
+
+/** A label painted once, shared by every plane showing it */
+type SharedLabel = {
+  mesh: Mesh;
+  width: number;
+  height: number;
+  baseline: number;
+  lines: number;
+  /** How many planes show it */
+  refs: number;
+};
+
+/** Painted labels by how they're painted (see `acquireLabel`) */
+const shared = new Map<string, SharedLabel>();
+
+/** A label's plane, showing a painting shared with others painted the same */
+export type AcquiredLabel = Omit<SharedLabel, 'refs'> & { key: string };
+
+/**
+ * A plane showing the label `key` names, painting it (`paint`) only when no plane shows it already:
+ * labels that pass between marks (ex. a treemap's, its rows drawn in a new order as the view
+ * turns) keep their paintings rather than measuring and painting their text again.  `key` must
+ * name everything the painting depends on.  `release` it when it's no longer shown.
+ */
+export function acquireLabel(
+  key: string,
+  paint: () => Omit<SharedLabel, 'refs'> | null
+): AcquiredLabel | null {
+  let label = shared.get(key);
+  if (!label) {
+    const made = paint();
+    if (!made) return null;
+    label = { ...made, refs: 0 };
+    shared.set(key, label);
+  }
+  label.refs++;
+  // Its own plane (a mesh has one parent), drawing the shared geometry and painting
+  const mesh = new Mesh(label.mesh.geometry, label.mesh.material);
+  return { ...label, mesh, key };
+}
+
+/**
+ * Stop showing an acquired label's plane.  Its painting is freed a frame after the last plane
+ * showing it goes, so a label passed to another mark in the same update is kept.
+ */
+export function releaseLabel(label: AcquiredLabel) {
+  const entry = shared.get(label.key);
+  if (!entry) return;
+  entry.refs--;
+  if (entry.refs > 0) return;
+  const later =
+    typeof requestAnimationFrame === 'function'
+      ? requestAnimationFrame
+      : (fn: () => void) => setTimeout(fn, 16);
+  later(() => {
+    if (entry.refs > 0 || shared.get(label.key) !== entry) return;
+    shared.delete(label.key);
+    disposeLabel(entry.mesh);
+  });
 }

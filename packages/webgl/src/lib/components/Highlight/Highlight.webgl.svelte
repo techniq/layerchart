@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { HighlightBase } from 'layerchart/base';
+  import { HighlightBase, HighlightState, type HighlightPoint } from 'layerchart/base';
   import Arc from '../Arc/Arc.webgl.svelte';
   import Bar from '../Bar/Bar.webgl.svelte';
   import Circle from '../Circle/Circle.webgl.svelte';
@@ -63,13 +63,24 @@
 
   const row = $derived(data ?? ctx.tooltip.data);
 
+  /**
+   * What the core `Highlight` marks for the row: a point for each series at its position (ex. each
+   * band of a stack, `y={[0, 1]}`), each in its series' color
+   */
+  const state = new HighlightState(
+    () => ({ data, x, y, z, r, axis: axisProp, points, lines, opacity }) as any
+  );
+
   /** Which positions the lines trace, as the core `Highlight` picks by default */
   const axis = $derived(axisProp ?? (isScaleBand(ctx.yScale) || ctx.valueAxis === 'x' ? 'y' : 'x'));
 
   /** The row in the chart's pixels: across, down, and up off the floor */
   const target = $derived.by(() => {
     if (row == null) return null;
-    const [px, py] = position(ctx, accessor(x ?? ctx.x)(row), accessor(y ?? ctx.y)(row));
+    // A row spanning values (ex. a stack's band, `y={[0, 1]}`) is traced at their middle, as core's
+    const [px, py] = ctx.geo.projection
+      ? position(ctx, accessor(x ?? ctx.x)(row), accessor(y ?? ctx.y)(row))
+      : [Number(state.xCoordScalar) + state.xOffset, Number(state.yCoordScalar) + state.yOffset];
     if (!Number.isFinite(px) || !Number.isFinite(py)) return null;
     const height =
       z != null
@@ -219,10 +230,10 @@
     scene.invalidate();
   });
 
-  // The point, drawn over the scene facing the viewer, as the core `Highlight` draws it
+  // The points, drawn over the scene facing the viewer, as the core `Highlight` draws them
   const markers = $derived.by((): SceneMarker[] => {
     const p = at;
-    if (!points || !p) return [];
+    if (!points || !p || !target) return [];
     const scaledR =
       r === true
         ? ctx.config.r
@@ -231,38 +242,48 @@
         : r
           ? Number(ctx.rScale(accessor(r)(row)))
           : undefined;
-    const radius = pointLook.r ?? scaledR;
-    const fill =
-      pointLook.fill ?? rowColor(ctx, undefined, row, 'var(--color-primary, currentColor)');
-    /** The point as the core `Highlight`'s handlers are given it, with the highlighted row */
-    const detail = () => ({
-      point: {
-        x: p.x,
-        y: p.y,
-        r: radius,
-        fill,
-        data: { x: accessor(x ?? ctx.x)(row), y: accessor(y ?? ctx.y)(row) },
-      },
-      data: row,
-    });
-    return [
-      {
-        key: 'highlight',
-        x: p.x,
-        y: p.y,
+    const own: HighlightPoint = {
+      x: target.x,
+      y: target.y,
+      fill: '',
+      data: { x: accessor(x ?? ctx.x)(row), y: accessor(y ?? ctx.y)(row) },
+    };
+    // A projection places the row itself; otherwise each series' point at the row, as core's
+    const list = ctx.geo.projection ? [own] : state.points;
+    // Each moved by how far the glide still is from the row, so they glide along with it
+    const dx = p.x - target.x;
+    const dy = p.y - target.y;
+    return list.map((point, i) => {
+      const radius = pointLook.r ?? point.r ?? scaledR;
+      const fill =
+        pointLook.fill ||
+        point.fill ||
+        rowColor(ctx, undefined, row, 'var(--color-primary, currentColor)');
+      // The other series' points faded while one is highlighted (ex. from the legend)
+      const seriesOpacity = point.seriesKey
+        ? ctx.series.isHighlighted(point.seriesKey, true)
+          ? 1
+          : 0.1
+        : 1;
+      /** The point as the core `Highlight`'s handlers are given it, with the highlighted row */
+      const detail = () => ({ point: { ...point, r: radius, fill }, data: row });
+      return {
+        key: `highlight-${i}`,
+        x: point.x + dx,
+        y: point.y + dy,
         z: p.z,
         r: radius ?? 4,
         fill,
         stroke: pointLook.stroke ?? 'white',
         strokeWidth: pointLook.strokeWidth ?? (radius ? 2 : 6),
-        opacity: (pointLook.opacity ?? 1) * opacity,
+        opacity: (pointLook.opacity ?? 1) * opacity * seriesOpacity,
         class: ['lc-highlight-point', pointLook.class].filter(Boolean).join(' '),
         // Taking the pointer only with a handler, else letting it through to the scene beneath
         ...(onPointClick && { onclick: (e: MouseEvent) => onPointClick(e, detail()) }),
         ...(onPointEnter && { onpointerenter: (e: PointerEvent) => onPointEnter(e, detail()) }),
         ...(onPointLeave && { onpointerleave: (e: PointerEvent) => onPointLeave(e, detail()) }),
-      },
-    ];
+      } satisfies SceneMarker;
+    });
   });
   $effect(() => scene.addMarkers(markers));
 </script>

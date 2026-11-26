@@ -74,7 +74,8 @@
     const h = ctx.height;
     const segments: number[] = [];
     if (w > 0 && h > 0 && size > 0) {
-      const cells = binGrid(shape, size);
+      // Measured against an isometric floor laid flat, as the cells are
+      const cells = binGrid(shape, size, ctx.floorScale);
       // Each edge once, where two cells share it, so a translucent stroke doesn't darken there
       const seen = new Set<string>();
       const round = (v: number) => Math.round(v * 100);

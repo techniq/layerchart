@@ -13,12 +13,14 @@
 
   const ctx = getChartContext();
   /**
-   * Raised (`z="value"`, a function of the band, or a height) or in a 3D view, lines of its own;
-   * flat, LayerChart's `Contour` (filled bands through the color scale, and their outlines), drawn
-   * with WebGL marks
+   * Unfilled (`fill="none"`) and raised (`z="value"`, a function of the band, or a height) or in a
+   * 3D view, lines of its own at their heights; else LayerChart's `Contour` (bands through the
+   * color scale, each standing on the one below when raised, and their outlines), drawn with
+   * WebGL marks
    */
   const raised = $derived(
-    (typeof props.z === 'number' ? props.z > 0 : props.z != null) || !!ctx.view
+    props.fill === 'none' &&
+      ((typeof props.z === 'number' ? props.z > 0 : props.z != null) || !!ctx.view)
   );
 </script>
 

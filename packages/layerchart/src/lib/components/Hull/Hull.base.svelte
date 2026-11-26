@@ -5,6 +5,8 @@
   export type HullBaseLayerComponents = {
     Group: Component<any>;
     Spline: Component<any>;
+    /** Its outline on a map (by default LayerChart's own, drawn in the chart's layer) */
+    GeoPath?: Component<any>;
   };
 
   export type HullBaseProps = HullProps & HullBaseLayerComponents;
@@ -19,7 +21,7 @@
   import { clsx } from 'clsx';
 
   // GeoPath agnostic; only loaded when used inside a geo chart.
-  import GeoPath from '../geo/GeoPath/GeoPath.svelte';
+  import CoreGeoPath from '../geo/GeoPath/GeoPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getFacetPanel } from '$lib/contexts/facet.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
@@ -34,6 +36,7 @@
   let {
     Group,
     Spline,
+    GeoPath = CoreGeoPath,
     data,
     curve = curveLinearClosed,
     classes = {},

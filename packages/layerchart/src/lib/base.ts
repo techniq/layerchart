@@ -84,6 +84,10 @@ export type {
 export { default as GridBase } from './components/Grid/Grid.base.svelte';
 export type { GridBaseLayerComponents, GridBaseProps } from './components/Grid/Grid.base.svelte';
 export { default as HighlightBase } from './components/Highlight/Highlight.base.svelte';
+// What `Highlight` marks for the hovered row (its points, lines, area), for drawing them in a layer
+// of one's own
+export { HighlightState } from './components/Highlight/Highlight.shared.svelte.js';
+export type { HighlightPoint } from './components/Highlight/Highlight.shared.svelte.js';
 export type {
   HighlightBaseLayerComponents,
   HighlightBaseProps,

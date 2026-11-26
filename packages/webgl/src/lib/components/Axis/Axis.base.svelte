@@ -18,7 +18,10 @@
   import {
     autoTickFormat as tickFormat,
     autoTickVals,
+    filterTicksByFormat,
     getChartContext,
+    isScaleBand,
+    isScaleUtc,
     getTextRect,
     occlude,
   } from 'layerchart';
@@ -35,6 +38,7 @@
   import { createSegments } from '../../utils/lines.js';
   import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
   import { createRowMotion } from '../../utils/rowMotion.svelte.js';
+  import { circleSegments, pointRadial } from '../../utils/radial.js';
   import Text from '../Text/Text.webgl.svelte';
   import Grid from '../Grid/Grid.webgl.svelte';
 
@@ -80,14 +84,27 @@
   // Its labels lie beside the plot box, so aren't clipped to it
   setUnclipped();
 
-  /** Along `x` (`bottom` / `top`), or `y` (`left` / `right`), else the height `z` (`back`) */
+  /**
+   * Around a `radial` chart's center: its angles (`angle`, the `x` scale's) or out from it
+   * (`radius`, the `y` scale's), as the core `Axis` draws them
+   */
+  const radial = $derived(placement === 'angle' || placement === 'radius');
+  /**
+   * Along `x` (`bottom` / `top`, or `angle`), or `y` (`left` / `right`, or `radius`), else the
+   * height `z` (`back`)
+   */
   const along = $derived(
-    placement === 'bottom' || placement === 'top'
+    placement === 'bottom' || placement === 'top' || placement === 'angle'
       ? 'x'
-      : placement === 'left' || placement === 'right'
+      : placement === 'left' || placement === 'right' || placement === 'radius'
         ? 'y'
         : 'z'
   );
+  /** A `radial` chart's inner and outer radius */
+  const radii = $derived.by(() => {
+    const [r0, r1] = (ctx.yRange as number[]).map(Number);
+    return [Math.min(r0, r1), Math.max(r0, r1)];
+  });
 
   /**
    * Pixels from the axis to its tick labels, as the core `Axis`: a tick's length to a side
@@ -101,15 +118,57 @@
     const own = scaleProp ?? (along === 'x' ? ctx.xScale : along === 'y' ? ctx.yScale : ctx.zScale);
     return domain && own ? own.copy().domain(domain) : own;
   });
-  const length = $derived(along === 'x' ? ctx.width : along === 'y' ? ctx.height : ctx.zDepth);
-  // Spaced as the core `Axis` spaces them
+  const length = $derived.by(() => {
+    // Around its arc (as the core `Axis` spaces them, so they don't change with the chart's
+    // width), or out to its edge
+    if (placement === 'angle') {
+      const [a0, a1] = (ctx.xRange as number[]).map(Number);
+      return Math.abs(a1 - a0) * radii[1];
+    }
+    if (placement === 'radius') return ctx.height / 2;
+    return along === 'x' ? ctx.width : along === 'y' ? ctx.height : ctx.zDepth;
+  });
+  /** Its bars' interval (ex. a bar chart's days), which centers its ticks in theirs */
+  const interval = $derived(along === 'x' ? ctx.xInterval : along === 'y' ? ctx.yInterval : null);
+  // Spaced as the core `Axis` spaces them: a band scale's every band, unless in an interval
   const spacing = $derived(
-    tickSpacingProp !== undefined ? tickSpacingProp : tickSpacing(ctx, along)
+    tickSpacingProp !== undefined
+      ? tickSpacingProp
+      : isScaleBand(scale) && interval == null
+        ? null
+        : tickSpacing(ctx, along)
   );
-  const count = $derived(spacing ? tickCount(length, spacing) : undefined);
-  const values = $derived(autoTickVals(scale, ticks, count));
+  // A count asked for, as the core `Axis` takes it, else one per `spacing`
+  const count = $derived(
+    typeof ticks === 'number' ? ticks : spacing ? tickCount(length, spacing) : undefined
+  );
+  /**
+   * The count its format is picked for, as the core `Axis` picks it: by the default spacing, so a
+   * band scale's every-band ticks still read as dates (ex. `'day'`) rather than in full
+   */
+  const formatCount = $derived(
+    typeof ticks === 'number' ? ticks : tickCount(length, tickSpacing(ctx, along))
+  );
+  const values = $derived.by(() => {
+    let values = autoTickVals(scale, ticks, count);
+    // Centered in an interval (ex. a bar chart's), one on the domain's end would label a bar past
+    // the last, so it's dropped, as the core `Axis` drops it
+    if (interval != null && values.length) {
+      const last = values[values.length - 1];
+      if (+last >= +scale.domain()[1]) values = values.slice(0, -1);
+    }
+    // Only those on the boundary its format implies (ex. whole numbers for `'integer'`)
+    return filterTicksByFormat(values, format, { utc: isScaleUtc(scale) });
+  });
   const formatTick = $derived(
-    tickFormat({ scale, ticks, count, formatType: format, multiline: tickMultiline, placement })
+    tickFormat({
+      scale,
+      ticks,
+      count: formatCount,
+      formatType: format,
+      multiline: tickMultiline,
+      placement,
+    })
   );
 
   /** Each tick's value and where it's drawn along the axis */
@@ -139,25 +198,29 @@
    * labels turn with it, so which overlap changes as it does.
    */
   const kept = $derived.by(() => {
-    if (!tickOcclusion || ctx.view || along === 'z' || tickPositions.length <= 1) return null;
+    if (!tickOcclusion || ctx.view || along === 'z' || radial || tickPositions.length <= 1)
+      return null;
     const { padding = 4, priority = 'end' } = tickOcclusion === true ? {} : tickOcclusion;
-    const size = tickLabelProps?.fontSize ?? 10;
+    const size = tickFontSize;
     const style = {
       fontSize: `${size}px`,
-      fontWeight: String(tickLabelProps?.fontWeight ?? 300),
+      fontWeight: String(tickFontWeight),
       fontFamily: fontFamily(),
     };
     // In pixels on screen, from where they're headed (not where `motion` has them on the way)
     const items = tickPositions.map(({ value, p }, i) => {
       const lines = String(formatTick(value, i)).split('\n');
       const across = along === 'x';
+      const anchors = tickAnchors(p);
       const rect = getTextRect(lines, across ? p / scene.unit : 0, across ? 0 : p / scene.unit, {
         style,
         fontSize: size,
         lineHeight: 11,
-        textAnchor: tickLabelProps?.textAnchor ?? (across ? 'middle' : 'end'),
-        verticalAnchor: tickLabelProps?.verticalAnchor ?? 'middle',
-        rotate: tickLabelProps?.rotate ?? 0,
+        textAnchor: anchors.textAnchor,
+        verticalAnchor: anchors.verticalAnchor,
+        dx: anchors.dx,
+        dy: anchors.dy,
+        rotate: anchors.rotate,
       });
       return { i, rect };
     });
@@ -180,8 +243,10 @@
    * which way is out from the plot box, and the corner `z` stands up
    */
   const edges = $derived.by(() => {
-    const w = ctx.width;
-    const h = ctx.height;
+    // A plot squeezed past nothing (its padding more than its size) puts its axes at its
+    // range's ends, as the core `Axis` (ex. a bottom axis at the top, `0`, rather than above it)
+    const w = Math.max(ctx.width, 0);
+    const h = Math.max(ctx.height, 0);
     const nearX = scene.far.x === 'min' ? w : 0;
     const nearY = scene.far.y === 'min' ? h : 0;
     // `z` stands up the corner where the wall behind on `x` meets the front
@@ -217,33 +282,223 @@
     joined('lc-webgl-axis-label', classes.root, classes.label, labelProps?.class)
   );
   /** What the labels' classes set (their fill, and opacity) */
-  const tickLabelLook = $derived(scene.style(joined(classes.root, classes.tickLabel)));
-  const titleLook = $derived(scene.style(joined(classes.root, classes.label)));
+  const tickLabelLook = $derived(
+    scene.style(joined(classes.root, classes.tickLabel, tickLabelProps?.class))
+  );
+  const titleLook = $derived(scene.style(joined(classes.root, classes.label, labelProps?.class)));
 
-  /** A multi-line tick label lies past its edge by its near side, rather than its middle */
-  const multiline = $derived(tickMultiline && along === 'x' && !tickViewport);
+  /** The font its class sets (ex. `text-sm font-semibold`), where it sets one of its own */
+  const plainFont = $derived(scene.font(null));
+  function classFont(className: string | undefined) {
+    const own = className ? scene.font(className) : null;
+    return {
+      size: own && plainFont && own.size !== plainFont.size ? own.size : null,
+      weight: own && plainFont && own.weight !== plainFont.weight ? own.weight : null,
+    };
+  }
+  const tickClassFont = $derived(classFont(joined(classes.tickLabel, tickLabelProps?.class)));
+  const titleClassFont = $derived(classFont(joined(classes.label, labelProps?.class)));
+  // As the core `Axis` draws its labels (10px and light), else as asked or their classes set
+  const tickFontSize = $derived(tickLabelProps?.fontSize ?? tickClassFont.size ?? 10);
+  const tickFontWeight = $derived(tickLabelProps?.fontWeight ?? tickClassFont.weight ?? 300);
+  const titleFontSize = $derived(labelProps?.fontSize ?? titleClassFont.size ?? 10);
+  const titleFontWeight = $derived(labelProps?.fontWeight ?? titleClassFont.weight ?? 300);
 
-  const labels = $derived.by((): SceneLabel[] => {
+  type Anchors = {
+    textAnchor: 'start' | 'middle' | 'end';
+    verticalAnchor: 'start' | 'middle' | 'end';
+    /** Pixels across and down from its point (unturned) */
+    dx: number;
+    dy: number;
+    /** Degrees it turns about its point */
+    rotate: number;
+  };
+
+  /**
+   * A tick label's anchors and offset from its tick, as the core `Axis` places them (by which
+   * side of the plot box it's out from, or around a `radial` chart), then `tickLabelProps`' own
+   */
+  function tickAnchors(p: number): Anchors {
+    const { outX, outY } = edges;
+    const own = tickLabelProps ?? {};
+    let base: Omit<Anchors, 'rotate'>;
+    if (placement === 'angle') {
+      const ends = p === 0 || Math.abs(p - Math.PI) < 0.01 || Math.abs(p - Math.PI * 2) < 0.01;
+      base = {
+        textAnchor: ends ? 'middle' : p > Math.PI ? 'end' : 'start',
+        verticalAnchor: 'middle',
+        dx: Math.sin(p) * tickLength,
+        dy: -Math.cos(p) * (tickLength + 4),
+      };
+    } else if (placement === 'radius') {
+      base = { textAnchor: 'middle', verticalAnchor: 'middle', dx: 2, dy: 0 };
+    } else if (along === 'x') {
+      // By its cap height's top below the axis (bottom up above it), as the core `Axis`
+      base = {
+        textAnchor: 'middle',
+        verticalAnchor: outY > 0 ? 'start' : 'end',
+        dx: 0,
+        dy: outY * tickLabelOffset,
+      };
+    } else {
+      base = {
+        textAnchor: outX < 0 ? 'end' : 'start',
+        verticalAnchor: 'middle',
+        dx: outX * tickLabelOffset,
+        dy: 0,
+      };
+    }
+    return {
+      textAnchor: own.textAnchor ?? base.textAnchor,
+      verticalAnchor: own.verticalAnchor ?? base.verticalAnchor,
+      dx: own.dx ?? base.dx,
+      dy: own.dy ?? base.dy,
+      rotate: own.rotate ?? 0,
+    };
+  }
+
+  /**
+   * The title's place and anchors across a flat chart, as the core `Axis` sets them: against the
+   * padding's outer edge on its side (or its start or end), turned to read up a side's middle,
+   * then `labelProps`' own
+   */
+  function titlePlace(): Anchors & { x: number; y: number } {
+    const w = ctx.width;
+    const h = ctx.height;
+    const pad = ctx.padding;
+    const across = along === 'x' && !radial;
+    const upright = along === 'y' && !radial;
+    const at = labelPlacement;
+    const own = labelProps ?? {};
+    const x =
+      placement === 'left' || (across && at === 'start')
+        ? -pad.left
+        : placement === 'right' || (across && at === 'end')
+          ? w + pad.right
+          : w / 2;
+    const y =
+      placement === 'top' || (upright && at === 'start')
+        ? -pad.top
+        : upright && at === 'middle'
+          ? h / 2
+          : placement === 'bottom' || at === 'end'
+            ? h + pad.bottom
+            : 0;
+    const textAnchor =
+      at === 'middle'
+        ? 'middle'
+        : placement === 'right' || (across && at === 'end')
+          ? 'end'
+          : 'start';
+    const verticalAnchor =
+      placement === 'top' ||
+      (upright && at === 'start') ||
+      (placement === 'left' && at === 'middle')
+        ? 'start'
+        : 'end';
+    return {
+      x,
+      y,
+      textAnchor: own.textAnchor ?? textAnchor,
+      verticalAnchor: own.verticalAnchor ?? verticalAnchor,
+      dx: own.dx ?? 0,
+      dy: own.dy ?? 0,
+      rotate: own.rotate ?? (upright && at === 'middle' ? -90 : 0),
+    };
+  }
+
+  /**
+   * How far its labels (and a title pinned to an edge) reach past each side of the plot, for a
+   * chart with an `'auto'` padding side to fit, as the core `Axis` reports it.  `null` otherwise,
+   * so a chart without one doesn't measure.
+   */
+  const autoPadding = $derived.by(() => {
+    if (!ctx.autoPaddingSides.length || ctx.view || radial || along === 'z') return null;
+    const w = ctx.width;
+    const h = ctx.height;
+    const overflow = { top: 0, right: 0, bottom: 0, left: 0 };
+    const { edgeX, edgeY } = edges;
+    const style = {
+      fontSize: `${tickFontSize}px`,
+      fontWeight: String(tickFontWeight),
+      fontFamily: fontFamily(),
+    };
+    tickPositions.forEach(({ value, p }, i) => {
+      if (kept && !kept.has(i)) return;
+      const lines = String(formatTick(value, i)).split('\n');
+      const [x, y] = along === 'x' ? [p, edgeY] : [edgeX, p];
+      const rect = getTextRect(lines, x, y, {
+        style,
+        fontSize: tickFontSize,
+        lineHeight: 11,
+        ...tickAnchors(p),
+      });
+      overflow.left = Math.max(overflow.left, -rect.x);
+      overflow.top = Math.max(overflow.top, -rect.y);
+      overflow.right = Math.max(overflow.right, rect.x + rect.width - w);
+      overflow.bottom = Math.max(overflow.bottom, rect.y + rect.height - h);
+    });
+    // The title sits against the padding's outer edge, so it needs its thickness on top
+    if (typeof label === 'string' && label) {
+      const rect = getTextRect(label, 0, 0, {
+        style: {
+          fontSize: `${titleFontSize}px`,
+          fontWeight: String(titleFontWeight),
+          fontFamily: fontFamily(),
+        },
+        fontSize: titleFontSize,
+        rotate: titlePlace().rotate,
+      });
+      const gap = 4;
+      if (along === 'y' && labelPlacement !== 'middle') {
+        overflow[labelPlacement === 'start' ? 'top' : 'bottom'] += rect.height + gap;
+      } else {
+        const side = placement as 'top' | 'right' | 'bottom' | 'left';
+        overflow[side] += (along === 'y' ? rect.width : rect.height) + gap;
+      }
+    }
+    const fit = (value: number) => (value > 0 ? Math.ceil(value + 2) : 0);
+    return {
+      top: fit(overflow.top),
+      right: fit(overflow.right),
+      bottom: fit(overflow.bottom),
+      left: fit(overflow.left),
+    };
+  });
+  // Reported rather than read: the labels depend on the plot size the padding decides
+  const paddingKey = Symbol('Axis');
+  $effect.pre(() => {
+    ctx._reportAutoPadding(paddingKey, autoPadding);
+  });
+  $effect.pre(() => () => ctx._reportAutoPadding(paddingKey, null));
+
+  type AxisLabel = SceneLabel & { rotate?: number };
+
+  const labels = $derived.by((): AxisLabel[] => {
     const w = ctx.width;
     const h = ctx.height;
     const { edgeX, edgeY, nearY, outX, outY, farX } = edges;
-    // On the floor, labels across are placed by their middle (half a label further out), and the
-    // left axis' by their end.  Facing the viewer, they're at the edge, anchored by their side
-    // nearest it a gap of pixels away on screen, so the gap is the same however the view turns.
-    // Half a cap height (as the core `Axis` anchors labels above and below by theirs)
-    const half = along === 'y' || multiline ? 0 : (tickLabelProps?.fontSize ?? 10) * 0.36 * unit;
-    const tickOut = tickViewport ? 0 : tickLabelOffset * unit + half;
+    // Facing the viewer, they're at the edge, anchored by their side nearest it a gap of pixels
+    // away on screen, so the gap is the same however the view turns.  On the floor, they're at
+    // their tick, offset as the core `Axis` offsets them (see `tickAnchors`).
     const outward = along === 'y' ? { x: outX, y: 0, z: 0 } : { x: 0, y: outY, z: 0 };
+    const tickOut = placement === 'back' ? tickLabelOffset * unit : 0;
 
     const at = (p: number): [number, number, number] => {
-      if (along === 'x') return [p, edgeY + outY * tickOut, 0];
-      if (along === 'y') return [edgeX + outX * tickOut, p, 0];
+      if (placement === 'angle') {
+        const [x, y] = pointRadial(p, radii[1]);
+        return [x, y, 0];
+      }
+      if (placement === 'radius') return [0, p, 0];
+      if (along === 'x') return [p, edgeY, 0];
+      if (along === 'y') return [edgeX, p, 0];
       return [farX, nearY + outY * tickOut, p];
     };
 
-    const result: SceneLabel[] = placed.flatMap(({ value, p }, i) => {
+    const result: AxisLabel[] = placed.flatMap(({ value, p }, i) => {
       if (kept && !kept.has(i)) return [];
       const [x, y, z] = at(p);
+      const anchors = tickViewport ? null : tickAnchors(p);
       return [
         {
           key: `${placement}-${i}`,
@@ -253,30 +508,40 @@
           text: String(formatTick(value, i)),
           class: tickLabelClass,
           ...(tickViewport && { outward, gap: tickLabelOffset }),
+          ...anchors,
         },
       ];
     });
 
     if (label) {
-      // Beyond the tick labels (facing the viewer, past as far as they reach out from the edge)
-      const titleOffset = labelViewport ? 0 : (tickLabelOffset + (along === 'x' ? 26 : 34)) * unit;
-      // Along the axis, at its start, middle, or end
-      const along01 = labelPlacement === 'start' ? 0 : labelPlacement === 'end' ? 1 : 0.5;
-      const [x, y, z] =
-        along === 'x'
-          ? [w * along01, edgeY + outY * titleOffset, 0]
-          : along === 'y'
-            ? [edgeX + outX * titleOffset, h * along01, 0]
-            : [farX, nearY + edges.outY * titleOffset, ctx.zDepth * (1 - along01)];
-      result.push({
-        key: `${placement}-label`,
-        x,
-        y,
-        z,
-        text: typeof label === 'string' ? label : '',
-        class: titleClass,
-        ...(labelViewport && { outward, gap: tickLabelOffset + 22 }),
-      });
+      const text = typeof label === 'string' ? label : '';
+      if (!ctx.view && !labelViewport) {
+        // Across a flat chart, where the core `Axis` puts it
+        const { x, y, ...anchors } = titlePlace();
+        result.push({ key: `${placement}-label`, x, y, z: 0, text, class: titleClass, ...anchors });
+      } else {
+        // Beyond the tick labels (facing the viewer, past as far as they reach out from the edge)
+        const titleOffset = labelViewport
+          ? 0
+          : (tickLabelOffset + (along === 'x' ? 26 : 34)) * unit;
+        // Along the axis, at its start, middle, or end
+        const along01 = labelPlacement === 'start' ? 0 : labelPlacement === 'end' ? 1 : 0.5;
+        const [x, y, z] =
+          along === 'x'
+            ? [w * along01, edgeY + outY * titleOffset, 0]
+            : along === 'y'
+              ? [edgeX + outX * titleOffset, h * along01, 0]
+              : [farX, nearY + edges.outY * titleOffset, ctx.zDepth * (1 - along01)];
+        result.push({
+          key: `${placement}-label`,
+          x,
+          y,
+          z,
+          text,
+          class: titleClass,
+          ...(labelViewport && { outward, gap: tickLabelOffset + 22 }),
+        });
+      }
     }
     return result;
   });
@@ -291,11 +556,8 @@
     labels.filter((l) => !snipped(l) && !(isTitle(l) ? labelViewport : tickViewport))
   );
 
-  const sizeOf = (l: SceneLabel) =>
-    ((isTitle(l) ? labelProps : tickLabelProps)?.fontSize ?? (isTitle(l) ? 12 : 10)) * scene.unit;
-  // Tick labels as the core `Axis` draws them: light, in the text color
-  const weightOf = (l: SceneLabel) =>
-    (isTitle(l) ? labelProps : tickLabelProps)?.fontWeight ?? (isTitle(l) ? 600 : 300);
+  const sizeOf = (l: SceneLabel) => (isTitle(l) ? titleFontSize : tickFontSize) * scene.unit;
+  const weightOf = (l: SceneLabel) => (isTitle(l) ? titleFontWeight : tickFontWeight);
   /** Its letters' color, faded with the axis */
   const fillOf = (l: SceneLabel) => {
     const look = isTitle(l) ? titleLook : tickLabelLook;
@@ -310,7 +572,7 @@
   // Over the scene, moved with the `Group` it's in, as the floor's are
   $effect(() =>
     scene.addLabels(
-      viewportLabels.map((l) => ({
+      viewportLabels.map(({ rotate: _rotate, ...l }) => ({
         ...l,
         x: l.x + (parent?.x ?? 0),
         y: l.y + (parent?.y ?? 0),
@@ -320,8 +582,8 @@
   );
 
   /**
-   * A label lying on the floor: a `left` / `right` axis' end at it (away from the plot, on
-   * whichever side it's on), the others centered
+   * A label lying on the floor in a 3D view: a `left` / `right` axis' end at it (away from the
+   * plot, on whichever side it's on), the others centered
    */
   function anchorOf(l: SceneLabel): 'start' | 'middle' | 'end' {
     if (along !== 'y') {
@@ -332,22 +594,24 @@
   }
 
   /** A label's props for a `Text`, as drawn on the floor (or given a snippet) */
-  function textProps(l: SceneLabel): AxisTextProps {
+  function textProps(l: AxisLabel): AxisTextProps {
     const title = isTitle(l);
     const viewport = title ? labelViewport : tickViewport;
-    const { outY } = edges;
     return {
       x: l.x,
       y: l.y,
       z: l.z,
       value: l.text,
-      textAnchor: title ? anchorOf(l) : (tickLabelProps?.textAnchor ?? anchorOf(l)),
-      verticalAnchor: title
-        ? 'middle'
-        : (tickLabelProps?.verticalAnchor ?? (multiline ? (outY > 0 ? 'start' : 'end') : 'middle')),
-      rotate: title ? 0 : (tickLabelProps?.rotate ?? 0),
+      textAnchor: l.textAnchor ?? anchorOf(l),
+      verticalAnchor: l.verticalAnchor ?? 'middle',
+      dx: (l.dx ?? 0) * unit,
+      dy: (l.dy ?? 0) * unit,
+      rotate: l.rotate ?? 0,
       fontSize: sizeOf(l),
       fontWeight: weightOf(l),
+      // As the core `Axis`' (`7px` and `11px`), so lines stack as they do there
+      capHeight: 7 * unit,
+      lineHeight: 11 / (title ? titleFontSize : tickFontSize),
       fill: fillOf(l),
       class: title ? joined(classes.root, classes.label, labelProps?.class) : tickLabelClass,
       ...((viewport || placement === 'back') && { viewport: true }),
@@ -386,7 +650,25 @@
     const marks: number[] = [];
     // Only the ticks whose labels are kept, as the core `Axis` drops the rest
     const ticked = kept ? placed.filter((_, i) => kept.has(i)) : placed;
-    if (along === 'x') {
+    if (placement === 'angle') {
+      // A spoke at the first angle, and a mark out from the rim at each tick
+      const [r0, r1] = radii;
+      const start = Math.min(...(ctx.xRange as number[]).map(Number));
+      if (rule) {
+        const [x1, y1] = pointRadial(start, r0);
+        const [x2, y2] = pointRadial(start, r1);
+        ruled.push(x1, 0, y1, x2, 0, y2);
+      }
+      if (tickMarks)
+        for (const { p } of ticked) {
+          const [x1, y1] = pointRadial(p, r1);
+          const [x2, y2] = pointRadial(p, r1 + reach);
+          marks.push(x1, 0, y1, x2, 0, y2);
+        }
+    } else if (placement === 'radius') {
+      // Its rim (the core `Axis` draws no tick marks out from the center)
+      if (rule) ruled.push(...circleSegments(radii[1]));
+    } else if (along === 'x') {
       if (rule) ruled.push(0, 0, edgeY, w, 0, edgeY);
       if (tickMarks)
         for (const { p } of ticked) marks.push(p, 0, edgeY, p, 0, edgeY + outY * reach);
@@ -410,6 +692,44 @@
     tickLines.style(marks.color, marks.width);
     scene.invalidate();
   });
+  /** The rule's markers (ex. `rule={{ markerEnd: 'arrow' }}`), as the core `Rule` draws them */
+  const ruleMarkers = $derived.by(() => {
+    if (typeof rule !== 'object') return null;
+    const { marker, markerStart, markerMid, markerEnd } = rule;
+    if (!marker && !markerStart && !markerMid && !markerEnd) return null;
+    const look = scene.style(joined(classes.root, classes.rule, rule.class));
+    return {
+      marker,
+      markerStart,
+      markerMid,
+      markerEnd,
+      strokeWidth: rule.strokeWidth ?? look?.strokeWidth ?? 1,
+      opacity: (rule.opacity ?? look?.opacity ?? 1) * inGroup(),
+    };
+  });
+  /**
+   * The rule as the core `Rule` draws it, for its markers: across from the left (or round from
+   * 12 o'clock's spoke), and up a side from the bottom
+   */
+  const ruleMarked = $derived.by(() => {
+    const own = typeof rule === 'object' ? rule : {};
+    const color =
+      own.stroke ??
+      stroke ??
+      scene.style(joined(classes.root, classes.rule, own.class))?.stroke ??
+      defaultStroke;
+    const { edgeX, edgeY } = edges;
+    if (placement === 'angle') {
+      const start = Math.min(...(ctx.xRange as number[]).map(Number));
+      const [x1, y1] = pointRadial(start, radii[0]);
+      const [x2, y2] = pointRadial(start, radii[1]);
+      return [{ points: [x1, 0, y1, x2, 0, y2], color }];
+    }
+    if (along === 'x' && !radial) return [{ points: [0, 0, edgeY, ctx.width, 0, edgeY], color }];
+    if (along === 'y' && !radial) return [{ points: [edgeX, 0, ctx.height, edgeX, 0, 0], color }];
+    return [];
+  });
+
   $effect(() => () => {
     layer.remove(ruleLines.object, tickLines.object);
     ruleLines.dispose();
@@ -473,6 +793,12 @@
     yTicks={gridTicks}
     {motion}
   />
+{/if}
+
+{#if ruleMarkers}
+  {#await import('../Line/Line.markers.svelte') then { default: LineMarkers }}
+    <LineMarkers {...ruleMarkers} lines={() => ruleMarked} />
+  {/await}
 {/if}
 
 {#if placement !== 'back'}

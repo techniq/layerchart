@@ -14,6 +14,7 @@
   import { createMerged } from '../../utils/merged.svelte.js';
   import { createPathMotion } from '../../utils/rowMotion.svelte.js';
   import { defined, position, resolveAccessor, rowColor, scaled } from '../../utils/marks.js';
+  import { atRadius, pointRadial } from '../../utils/radial.js';
   import { curveVertices } from '../Line/markers.js';
   import PathWebGL from '../Path/Path.webgl.svelte';
   import { lengthOf } from '../Path/draw.svelte.js';
@@ -65,13 +66,15 @@
 
   ctx.registerComponent({
     name: 'Area',
-    kind: 'mark',
+    kind: 'composite-mark',
+    // As the core `Area`'s: its top's values, and whether it stacks (with no edge given)
     markInfo: () => ({
       data: dataProp,
       x,
-      y,
+      y: y1 ?? y0 ?? y,
       seriesKey,
       color: typeof fill === 'string' ? fill : undefined,
+      stacks: y1 == null && y0 == null && y == null,
     }),
   });
 
@@ -121,7 +124,18 @@
    * Each row's column: where it stands on the floor (`x`, `y`), and its two edges, `a` and `b` —
    * heights for a curtain, else positions down the plot
    */
-  type Column = { d: any; x: number; y: number; a: number; b: number };
+  type Column = {
+    d: any;
+    x: number;
+    y: number;
+    a: number;
+    b: number;
+    /** On a `radial` chart, its base's own position across (its top's is `x`) */
+    xa?: number;
+  };
+
+  /** On a `radial` chart, its rows lie about the center, as the core `Area`'s `areaRadial` */
+  const radial = $derived(!!ctx.radial);
 
   function columnOf(d: any): Column | null {
     const xValue = xAccessor(d);
@@ -149,6 +163,17 @@
           : yValue;
     const base = y0Accessor ? y0Accessor(d) : !own ? chartEdges.y0(d) : stacked ? stacked[0] : null;
     if (!defined(xValue) || !defined(top)) return null;
+    if (radial) {
+      // `x` an angle, and its edges radii: each edge's point about the center
+      const angle = Number(ctx.xScale(xValue));
+      const rTop = scaled(ctx.yScale, top);
+      const rBase = base == null ? Math.min(...(ctx.yRange as number[])) : scaled(ctx.yScale, base);
+      const [tx, ty] = pointRadial(angle, rTop);
+      const [bx, by] = pointRadial(angle, rBase);
+      return [tx, ty, bx, by].every(Number.isFinite)
+        ? { d, x: tx, y: ty, a: by, b: ty, xa: bx }
+        : null;
+    }
     const px = scaled(ctx.xScale, xValue);
     const pTop = scaled(ctx.yScale, top);
     const pBase = base == null ? Math.max(...(ctx.yRange as number[])) : scaled(ctx.yScale, base);
@@ -160,9 +185,9 @@
   /** A run of columns taken along `curve`: each edge curved through its own */
   function curved(columns: Column[]): Column[] {
     if (!curve || columns.length < 2) return columns;
-    const along = (edge: (c: Column) => number) =>
+    const along = (edge: (c: Column) => number, across = (c: Column) => c.x) =>
       curvePoints(
-        columns.map((c) => [c.x, edge(c)]),
+        columns.map((c) => [across(c), edge(c)]),
         curve
       );
     const near = (at: number) => columns[Math.min(Math.round(at), columns.length - 1)];
@@ -184,14 +209,22 @@
       });
     }
     const tops = along((c) => c.b);
-    const bases = along((c) => c.a);
-    return tops.map((top, i) => ({
-      d: near(top.at).d,
-      x: top.x,
-      y: top.y,
-      a: bases[Math.min(i, bases.length - 1)].y,
-      b: top.y,
-    }));
+    // Each edge curved through its own points (on a `radial` chart, about the center)
+    const bases = along(
+      (c) => c.a,
+      (c) => c.xa ?? c.x
+    );
+    return tops.map((top, i) => {
+      const base = bases[Math.min(i, bases.length - 1)];
+      return {
+        d: near(top.at).d,
+        x: top.x,
+        y: top.y,
+        a: base.y,
+        b: top.y,
+        ...(radial ? { xa: base.x } : null),
+      };
+    });
   }
 
   /** How far a floor area's line stands above its fill, well under the next mark's layer */
@@ -254,12 +287,12 @@
   );
 
   // Tweening to where they're asked to be, as core's areas (a spring leaves them, as core's), a
-  // new one up from the baseline: each column as `[x, y, a, b]`
+  // new one up from the baseline: each column as `[x, y, a, b, xa]`
   const pathMotion = createPathMotion(
     untrack(() => motion),
-    4
+    5
   );
-  const flat = (columns: Column[]) => columns.flatMap((c) => [c.x, c.y, c.a, c.b]);
+  const flat = (columns: Column[]) => columns.flatMap((c) => [c.x, c.y, c.a, c.b, c.xa ?? c.x]);
   if (pathMotion) {
     $effect(() => {
       const active = new Set<unknown>();
@@ -276,6 +309,14 @@
     if (curtain) return columns.map((c) => ({ ...c, b: c.a }));
     const zero = Number(ctx.yScale(0));
     const baseline = Math.min(Number.isFinite(zero) ? zero : ctx.yRange[0], ctx.yRange[0]);
+    if (radial) {
+      // Both edges along their angle at the baseline's radius
+      return columns.map((c) => {
+        const [x, y] = atRadius(c.x, c.b, baseline);
+        const [xa, a] = atRadius(c.xa ?? c.x, c.a, baseline);
+        return { ...c, x, y, a, b: y, xa };
+      });
+    }
     return columns.map((c) => ({ ...c, y: baseline, a: baseline, b: baseline }));
   }
 
@@ -286,10 +327,11 @@
     if (!now) return collapsed(run.columns);
     return run.columns.map((c, i) => ({
       ...c,
-      x: now[i * 4],
-      y: now[i * 4 + 1],
-      a: now[i * 4 + 2],
-      b: now[i * 4 + 3],
+      x: now[i * 5],
+      y: now[i * 5 + 1],
+      a: now[i * 5 + 2],
+      b: now[i * 5 + 3],
+      ...(c.xa != null ? { xa: now[i * 5 + 4] } : null),
     }));
   }
 
@@ -301,7 +343,7 @@
           [c.x, c.b, c.y],
         ]
       : [
-          [c.x, 0.1, c.a],
+          [c.xa ?? c.x, 0.1, c.a],
           [c.x, 0.1, c.b],
         ];
   }

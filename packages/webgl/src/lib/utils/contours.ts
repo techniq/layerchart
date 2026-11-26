@@ -20,30 +20,55 @@ export function contourSegments(
   extent: [number, number],
   thresholds: number | number[],
   height: (value: number) => number,
-  {
-    smooth = true,
-  }: {
-    /** Interpolate where lines cross each cell, else run them along the cells' corners */
-    smooth?: boolean;
-  } = {}
+  options: ContourLevelOptions = {}
 ): number[] {
+  return contourLevels(grid, extent, thresholds, height, options).flatMap(
+    (level) => level.segments
+  );
+}
+
+export type ContourLevelOptions = {
+  /** Interpolate where lines cross each cell, else run them along the cells' corners */
+  smooth?: boolean;
+  /**
+   * Keep where the rings close along the grid's edges, and count `thresholds` from the values'
+   * nice extent, as the core `Contour` draws its bands' outlines
+   */
+  edges?: boolean;
+};
+
+/**
+ * Each threshold's contour lines through a grid (see `contourSegments`), with its value: ex. to
+ * color each level's lines by it
+ */
+export function contourLevels(
+  grid: Grid,
+  extent: [number, number],
+  thresholds: number | number[],
+  height: (value: number) => number,
+  { smooth = true, edges = false }: ContourLevelOptions = {}
+): { value: number; segments: number[] }[] {
   const { values, columns, rows } = grid;
-  const levels = Array.isArray(thresholds) ? thresholds : ticks(extent[0], extent[1], thresholds);
+  // A count as the core `Contour`'s (d3's, from a nice extent), else evenly spaced over `extent`
+  const levels =
+    Array.isArray(thresholds) || edges ? thresholds : ticks(extent[0], extent[1], thresholds);
   // Holes close around themselves rather than leaving lines open
   const field = Array.from(values, (v) => (Number.isFinite(v) ? v : -Infinity));
-  const generator = d3Contours().size([columns, rows]).thresholds(levels).smooth(smooth);
+  const generator = d3Contours().size([columns, rows]).smooth(smooth);
+  if (typeof levels === 'number') generator.thresholds(levels);
+  else generator.thresholds(levels);
   const onEdge = (x: number, y: number) => x <= 0 || y <= 0 || x >= columns || y >= rows;
 
-  const segments: number[] = [];
-  for (const contour of generator(field)) {
+  return generator(field).map((contour) => {
     const z = height(contour.value);
+    const segments: number[] = [];
     for (const polygon of contour.coordinates) {
       for (const ring of polygon) {
         for (let k = 0; k < ring.length - 1; k++) {
           const [x0, y0] = ring[k];
           const [x1, y1] = ring[k + 1];
           // The rings close along the grid's edges, which aren't contour lines
-          if (onEdge(x0, y0) && onEdge(x1, y1)) continue;
+          if (!edges && onEdge(x0, y0) && onEdge(x1, y1)) continue;
           // A contour's `(x, y)` is in cells, value `(i, j)` sitting at `(i + 0.5, j + 0.5)`
           const [ax, ay] = cellCenter(grid, x0 - 0.5, y0 - 0.5);
           const [bx, by] = cellCenter(grid, x1 - 0.5, y1 - 0.5);
@@ -51,6 +76,6 @@ export function contourSegments(
         }
       }
     }
-  }
-  return segments;
+    return { value: contour.value, segments };
+  });
 }

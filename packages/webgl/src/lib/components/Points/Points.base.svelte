@@ -171,52 +171,64 @@
       const from = initial;
       const active = new Set<unknown>();
       rows.forEach((d, i) => {
-        const point = pointOf(d);
-        if (!point) return;
-        const k = key(d, i);
-        active.add(k);
-        const values = { cx: point.x, cy: point.y, r: point.radius };
-        untrack(() => motionMap.update(k, values, from));
+        const points = pointOf(d);
+        points.forEach((point, j) => {
+          const k = keyOf(key(d, i), j, points.length);
+          active.add(k);
+          const values = { cx: point.x, cy: point.y, r: point.radius };
+          untrack(() => motionMap.update(k, values, from));
+        });
       });
       untrack(() => motionMap.cleanup(active));
     });
   }
 
+  /** A row's point's motion key: the row's own, or with one per value, the row's and which */
+  const keyOf = (k: unknown, j: number, count: number) => (count > 1 ? `${String(k)}:${j}` : k);
+
   /**
-   * Where each row's sphere is now (`null` off the chart): where it's asked to be, or with
-   * `motion`, on its way there (a new one where it eases in from, until it starts)
+   * Where each row's spheres are now (none off the chart): where they're asked to be, or with
+   * `motion`, on their way there (a new one where it eases in from, until it starts)
    */
   function pointer(): (d: any, i: number) => ReturnType<ReturnType<typeof placed>> {
     const pointOf = placed();
     if (!motionMap) return pointOf;
     return (d, i) => {
-      const point = pointOf(d);
-      if (!point) return null;
-      const now = motionMap.get(key(d, i)) ?? initial;
-      return {
-        ...point,
-        x: now.cx ?? point.x,
-        y: now.cy ?? point.y,
-        radius: now.r ?? point.radius,
-      };
+      const points = pointOf(d);
+      return points.map((point, j) => {
+        const now = motionMap.get(keyOf(key(d, i), j, points.length)) ?? initial;
+        return {
+          ...point,
+          x: now.cx ?? point.x,
+          y: now.cy ?? point.y,
+          radius: now.r ?? point.radius,
+        };
+      });
     };
   }
 
   /**
-   * Where each row's sphere is asked to be in the scene and how large (`null` off the chart),
-   * with what it reads of the chart read once: there can be a great many rows
+   * Where each row's spheres are asked to be in the scene and how large (none off the chart): one,
+   * or as the core `Points`, one per value of an `x` or `y` of several (ex. a duration's start and
+   * end).  With what it reads of the chart read once: there can be a great many rows.
    */
   function placed() {
     const [xOf, yOf] = [xAccessor, yAccessor];
     const at = placer(ctx, sphere, placedScales ?? undefined, { x: offsetX, y: offsetY });
     const raised = ctx.config.z != null || z != null;
     const sized = r != null ? (d: any) => valueOf(r, d) : ctx.config.r ? ctx.rGet : () => 5;
-    return (d: any) => {
+    type Point = { d: any; x: number; y: number; z: number; radius: number };
+    const one = (d: any, xValue: any, yValue: any): Point[] => {
+      if (!defined(xValue) || !defined(yValue)) return [];
+      const [px, up, py] = at(xValue, yValue, raised ? ctx.heightOf(d, z)[1] : 0);
+      return [{ d, x: px, y: py, z: up, radius: sized(d) as number }];
+    };
+    return (d: any): Point[] => {
       const xValue = xOf(d);
       const yValue = yOf(d);
-      if (!defined(xValue) || !defined(yValue)) return null;
-      const [px, up, py] = at(xValue, yValue, raised ? ctx.heightOf(d, z)[1] : 0);
-      return { d, x: px, y: py, z: up, radius: sized(d) as number };
+      if (Array.isArray(xValue)) return xValue.filter(Boolean).flatMap((v) => one(d, v, yValue));
+      if (Array.isArray(yValue)) return yValue.filter(Boolean).flatMap((v) => one(d, xValue, v));
+      return one(d, xValue, yValue);
     };
   }
 
@@ -240,12 +252,10 @@
       const colorOf = colorer(ctx, fillValue, 'var(--color-primary, currentColor)', look?.fill);
       return rows.flatMap((d: any, i: number) => {
         if (image != null && imageOf(d)) return [];
-        const point = pointOf(d, i);
-        if (!point) return [];
-        // Inside its ring, so the two don't overlap (and darken where they're translucent)
-        const radius = ringed ? Math.max(0, point.radius - strokeWidth / 2) : point.radius;
-        return [
-          {
+        return pointOf(d, i).map((point) => {
+          // Inside its ring, so the two don't overlap (and darken where they're translucent)
+          const radius = ringed ? Math.max(0, point.radius - strokeWidth / 2) : point.radius;
+          return {
             d,
             x: point.x,
             y: point.y,
@@ -254,8 +264,8 @@
             depth: radius,
             height: radius,
             color: colorOf(d),
-          },
-        ];
+          };
+        });
       });
     },
     opacity: () => opacity * fillOpacity * seriesOpacity * (look?.opacity ?? 1),
@@ -274,21 +284,17 @@
       const colorOf = colorer(ctx, stroke, 'currentColor', look?.stroke);
       return rows.flatMap((d: any, i: number) => {
         if (image != null && imageOf(d)) return [];
-        const point = pointOf(d, i);
-        if (!point) return [];
-        return [
-          {
-            d,
-            x: point.x,
-            y: point.y,
-            // Over its point, flat
-            z: point.z + 0.01,
-            width: point.radius,
-            depth: point.radius,
-            height: point.radius,
-            color: colorOf(d),
-          },
-        ];
+        return pointOf(d, i).map((point) => ({
+          d,
+          x: point.x,
+          y: point.y,
+          // Over its point, flat
+          z: point.z + 0.01,
+          width: point.radius,
+          depth: point.radius,
+          height: point.radius,
+          color: colorOf(d),
+        }));
       });
     },
     opacity: () => opacity * strokeOpacity * seriesOpacity * (look?.opacity ?? 1),
@@ -302,8 +308,7 @@
     const pointOf = pointer();
     return rows.flatMap((d, i) => {
       const source = imageOf(d);
-      const point = source ? pointOf(d, i) : null;
-      return point ? [{ ...point, source: source! }] : [];
+      return source ? pointOf(d, i).map((point) => ({ ...point, source })) : [];
     });
   });
   const detailed = new SphereGeometry(1, 64, 32);

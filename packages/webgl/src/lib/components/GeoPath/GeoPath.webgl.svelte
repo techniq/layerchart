@@ -120,7 +120,7 @@
   const stroke = $derived(
     strokeProp !== undefined
       ? strokeProp
-      : look?.stroke === 'none'
+      : look?.strokeNone || look?.stroke === 'none'
         ? null
         : (look?.stroke ?? 'var(--color-surface-content, currentColor)')
   );

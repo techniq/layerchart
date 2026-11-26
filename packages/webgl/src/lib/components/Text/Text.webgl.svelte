@@ -25,7 +25,13 @@
   } from '../../contexts/scene.svelte.js';
   import type { ClassStyle, ResolvedColor } from '../../utils/color.js';
   import { getSphere } from '../../utils/globe.js';
-  import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
+  import {
+    acquireLabel,
+    fontFamily,
+    labelPlane,
+    releaseLabel,
+    type AcquiredLabel,
+  } from '../../utils/labels.js';
   import { markRows, placeOf, rowColor } from '../../utils/marks.js';
   import { valueOf } from '../../utils/values.js';
   import { pointAlong } from '../../utils/path.js';
@@ -41,7 +47,7 @@
     initialY,
     z,
     viewport = false,
-    textAnchor = 'middle',
+    textAnchor = 'start',
     verticalAnchor: verticalAnchorProp = 'end',
     dx = 0,
     dy = 0,
@@ -112,9 +118,12 @@
    * [stroke-width:3px]`), as an SVG label's stroke
    */
   const look = $derived(scene.style(className, dataAttributes));
-  // A class's own stroke wins over the prop, as CSS does in core's layers
+  // A class's own stroke wins over the prop, as CSS does in core's layers: `stroke-none` too,
+  // leaving no halo
   const stroke = $derived(
-    (look?.strokeSet ? look.stroke : null) ?? strokeProp ?? look?.stroke ?? undefined
+    look?.strokeNone
+      ? undefined
+      : ((look?.strokeSet ? look.stroke : null) ?? strokeProp ?? look?.stroke ?? undefined)
   );
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** An opacity prop for row `d`, unset when it isn't given (or gives none for the row) */
@@ -379,17 +388,11 @@
    * moves (ex. an axis' tick labels as the chart pans) keeps its plane rather than painting a new
    * canvas and texture
    */
-  let painted = new Map<
-    string,
-    { mesh: Mesh; width: number; height: number; baseline: number; lines: number }[]
-  >();
+  let painted = new Map<string, AcquiredLabel[]>();
 
   $effect(() => {
     const previous = painted;
-    const next = new Map<
-      string,
-      { mesh: Mesh; width: number; height: number; baseline: number; lines: number }[]
-    >();
+    const next = new Map<string, AcquiredLabel[]>();
     turns.clear();
     if (!viewport) {
       const family = fontFamily();
@@ -422,7 +425,11 @@
           if (!part.text.trim()) return;
           const wrapAt = single && width && !truncate && !scaleToFit ? width : undefined;
           const align = single ? textAnchor : 'start';
-          // Its class's fill (ex. `fill-black`, or a `--fill-color`), as an SVG label's
+          // Its class's fill (ex. `fill-black`), else its text color (ex. `text-primary`, which an
+          // SVG label's `currentColor` fill follows), else a `--fill-color`, as an SVG label's
+          const classFill = part.look?.fillSet
+            ? part.look.fill
+            : (part.look?.color ?? part.look?.fill);
           const color = faded(
             scene.color(
               rowColor(
@@ -430,7 +437,7 @@
                 fillProp,
                 d,
                 'var(--color-surface-content, currentColor)',
-                part.look?.fill,
+                classFill,
                 part.look?.fillSet
               )
             ),
@@ -443,41 +450,63 @@
                   scene.color(rowColor(ctx, stroke, d, 'currentColor')),
                   opacityOf(strokeOpacity, d)
                 );
+          const labelOpacity = opacityOf(opacity, d) ?? 1;
+          // Painted at a size a little over its own, one of a few steps apart (about a fifth),
+          // and shrunk to its own: a size that keeps changing a little (ex. fitted to a box on a
+          // floor refitted as the view turns) keeps its painting rather than painting each anew.
+          // Wrapped text keeps its own size, as where its lines break depends on it.
+          const paintSize = wrapAt ? part.size : 2 ** (Math.ceil(Math.log2(part.size) * 4) / 4);
+          const shrink = part.size / paintSize;
+          // Its halo as wide as asked once shrunk, to the half pixel
+          const paintStroke = halo ? Math.round((strokeWidth / shrink) * 2) / 2 : 0;
           const cacheKey = [
             part.text,
-            part.size,
+            family,
+            labelOpacity,
+            paintSize,
             part.weight,
             color?.color.getHexString(),
             color?.opacity,
             halo?.color.getHexString(),
             halo?.opacity,
-            halo ? strokeWidth : 0,
+            paintStroke,
             wrapAt,
             lineSpacing,
             align,
           ].join('\u0000');
+          // Its own plane from before, else one showing a painting another label already has
+          // (ex. a row passed to it from another `Text`), else painted anew
           let label = previous.get(cacheKey)?.shift();
           if (!label) {
-            const made = labelPlane(part.text, {
-              fontSize: part.size,
-              fontWeight: part.weight,
-              color,
-              stroke: halo,
-              strokeWidth,
-              family,
-              maxWidth: wrapAt,
-              lineHeight: lineSpacing,
-              align,
+            const acquired = acquireLabel(cacheKey, () => {
+              const made = labelPlane(part.text, {
+                fontSize: paintSize,
+                fontWeight: part.weight,
+                color,
+                stroke: halo,
+                strokeWidth: paintStroke,
+                family,
+                maxWidth: wrapAt,
+                lineHeight: lineSpacing,
+                align,
+              });
+              if (!made) return null;
+              // Lying face up, reading along `x` with its top towards the plot's far side
+              made.mesh.geometry.rotateX(-Math.PI / 2);
+              // The whole label faded, its halo and letters together (as an SVG label's
+              // `opacity`): part of how it's painted, as its planes share their material
+              (made.mesh.material as MeshLambertMaterial).opacity = labelOpacity;
+              return made;
             });
-            if (!made) return;
-            // Lying face up, reading along `x` with its top towards the plot's far side
-            made.mesh.geometry.rotateX(-Math.PI / 2);
-            group.add(made.mesh);
-            label = made;
+            if (!acquired) return;
+            group.add(acquired.mesh);
+            label = acquired;
           }
-          const { mesh: plane, width: across, height: tall, baseline, lines } = label;
-          // The whole label faded, its halo and letters together (as an SVG label's `opacity`)
-          (plane.material as MeshLambertMaterial).opacity = opacityOf(opacity, d) ?? 1;
+          const { mesh: plane, lines } = label;
+          plane.scale.setScalar(shrink);
+          const across = label.width * shrink;
+          const tall = label.height * shrink;
+          const baseline = label.baseline * shrink;
           // Lifted a little off what it lies on, and by its anchors along its baseline and its up
           // (towards the plot's far side, unturned): kept on the same side of its point when it
           // turns half round to read the right way.  A segment's plane is centered on its run of
@@ -510,9 +539,9 @@
     }
     // Labels no longer drawn
     for (const labels of previous.values()) {
-      for (const { mesh } of labels) {
-        group.remove(mesh);
-        disposeLabel(mesh);
+      for (const label of labels) {
+        group.remove(label.mesh);
+        releaseLabel(label);
       }
     }
     painted = next;
@@ -540,7 +569,7 @@
 
   $effect(() => {
     return () => {
-      for (const labels of painted.values()) for (const { mesh } of labels) disposeLabel(mesh);
+      for (const labels of painted.values()) for (const label of labels) releaseLabel(label);
       layer.remove(group);
       scene.invalidate();
     };

@@ -44,13 +44,18 @@
   const filled = $derived(
     fill !== null && fill !== 'none' && !(fill == null && look?.fill === 'none')
   );
-  /** A ring only when asked, and flat (as `Points` draws theirs) */
-  const ringed = $derived(!ctx.view && (stroke != null || !!look?.stroke) && strokeWidth > 0);
+  /** A ring only when asked (not `none`), and flat (as `Points` draws theirs) */
+  const ringed = $derived(
+    !ctx.view && stroke !== 'none' && (stroke != null || !!look?.stroke) && strokeWidth > 0
+  );
 
   const highlight = new Color(0xffffff);
 
   /** With rows (`data`, or props reading the chart's), as the core `Circle` */
   const dataMode = $derived(data != null || [cx, cy, r].some((p) => isDataProp(p)));
+
+  /** Raised by its `z`, or in data mode as the core `Circle`, by the chart's */
+  const raised = $derived(z != null || (dataMode && ctx.config.z != null));
 
   /** Each row's circle as asked: its center, radius, and height */
   const targets = $derived(
@@ -59,7 +64,7 @@
       const [x, y] = positionOf(ctx, cx, cy, d, { bandStart: true });
       const radius = resolveDataProp(r, d, ctx.rScale, 1);
       if (![x, y, radius].every(Number.isFinite) || radius <= 0) return [];
-      return [{ d, key: key(d, i), x, y, z: z == null ? 0 : ctx.heightOf(d, z)[1], radius }];
+      return [{ d, key: key(d, i), x, y, z: raised ? ctx.heightOf(d, z)[1] : 0, radius }];
     })
   );
 

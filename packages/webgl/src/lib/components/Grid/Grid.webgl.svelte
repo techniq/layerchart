@@ -19,15 +19,17 @@
   import { createSegments } from '../../utils/lines.js';
   import { dashPattern } from '../../utils/merged.svelte.js';
   import { createRowMotion } from '../../utils/rowMotion.svelte.js';
+  import { circleSegments, pointRadial, polygonSegments } from '../../utils/radial.js';
 
   let {
-    x = true,
-    y = true,
-    z = true,
+    x: xProp,
+    y: yProp,
+    z: zProp,
     xTicks,
     yTicks,
     zTicks,
     bandAlign = 'center',
+    radialY = 'circle',
     // As core's `Grid` draws its lines
     stroke = 'color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent)',
     classes = {},
@@ -45,6 +47,15 @@
   const walls = $derived(wallsProp ?? !!ctx.view);
 
   /**
+   * Which lines it draws: those turned on, as the core `Grid` (ex. `<Grid x />` only `x`'s), else
+   * all those not turned off (a bare `<Grid />`, as a scene's grid is)
+   */
+  const all = $derived(!xProp && !yProp && !zProp);
+  const x = $derived(xProp ?? all);
+  const y = $derived(yProp ?? all);
+  const z = $derived(zProp ?? all);
+
+  /**
    * Where a band scale's line goes from its band's start, as the core `Grid` aligns them: through
    * the band's middle, or half the padding before it (`between`)
    */
@@ -59,7 +70,10 @@
    * Between bands, there's one past the last band too, as the core `Grid` draws.
    */
   function ticks(scale: any, config: TicksConfig | undefined, length: number, spacing: number) {
-    const values = autoTickVals(scale, config, tickCount(length, spacing));
+    // A count asked for, else one per `spacing` (as `Axis` spaces them)
+    const count =
+      typeof config === 'number' ? config : spacing ? tickCount(length, spacing) : undefined;
+    const values = autoTickVals(scale, config, count);
     const offset = bandOffset(scale);
     const lines = values.map((v) => ({ key: String(v), p: Number(scale(v)) + offset }));
     if (isScaleBand(scale) && bandAlign === 'between' && values.length) {
@@ -96,7 +110,45 @@
   for (const set of Object.values(sets)) set.object.renderOrder = -1;
   layer.add(planes, ...Object.values(sets).map((set) => set.object));
 
+  // Around the center (in a `Layer center`), as the core `Grid` draws a `radial` chart's: spokes at
+  // the `x` ticks (angles), and a circle (or a polygon through the spokes) at each `y` tick
   $effect(() => {
+    if (!ctx.radial) return;
+    const [r0, r1] = ctx.yRange as [number, number];
+    // At the ticks the core `Grid` draws, rather than spaced as an axis' (it has none here)
+    const xLines = x ? ticks(ctx.xScale, xTicks, 0, 0) : [];
+    const yLines = y
+      ? ticks(ctx.yScale, yTicks ?? (isScaleBand(ctx.yScale) ? undefined : 4), 0, 0)
+      : [];
+    const active = new Set<string>();
+    const xs: number[] = [];
+    for (const a of placed('x', xLines, active)) {
+      const [x1, y1] = pointRadial(a, r0);
+      const [x2, y2] = pointRadial(a, r1);
+      xs.push(x1, 0, y1, x2, 0, y2);
+    }
+    const ys: number[] = [];
+    // Through every `x` tick, drawn or not, as the core `Grid`'s
+    const angles = radialY === 'linear' ? ticks(ctx.xScale, xTicks, 0, 0).map((l) => l.p) : [];
+    for (const r of placed('y', yLines, active)) {
+      ys.push(...(radialY === 'linear' ? polygonSegments(angles, r) : circleSegments(r)));
+    }
+    if (eased) untrack(() => eased.cleanup(active));
+    for (const [set, segments] of [
+      [sets.x, xs],
+      [sets.y, ys],
+      [sets.z, []],
+    ] as const) {
+      set.set(segments);
+      if (set.object.material.dashed && segments.length) set.object.computeLineDistances();
+    }
+    planes.geometry.dispose();
+    planes.geometry = new BufferGeometry();
+    scene.invalidate();
+  });
+
+  $effect(() => {
+    if (ctx.radial) return;
     const w = ctx.width;
     const h = ctx.height;
     const d = ctx.zDepth;

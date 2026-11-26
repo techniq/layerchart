@@ -9,6 +9,7 @@ import {
   type DataProp,
 } from 'layerchart';
 import type { ColorProp } from 'layerchart';
+import { pointRadial } from 'd3-shape';
 
 import type { ScenePoint, Sphere } from './globe.js';
 
@@ -69,6 +70,13 @@ export function placer(
   }
   const xScale = scales?.x ?? (ctx.xScale as any);
   const yScale = scales?.y ?? (ctx.yScale as any);
+  // About the center on a `radial` chart, `x` an angle and `y` a radius, as the core `Points`
+  if (ctx.radial) {
+    return (x, y, height) => {
+      const [px, py] = pointRadial(Number(xScale(x)), Number(yScale(y)));
+      return [px, height, py];
+    };
+  }
   const xBand = isScaleBand(xScale) ? xScale.bandwidth() / 2 : 0;
   const yBand = isScaleBand(yScale) ? yScale.bandwidth() / 2 : 0;
   const shift = (offset: Offset, band: number, at: number) =>

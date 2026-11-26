@@ -80,7 +80,7 @@ export type TextProps = {
    * Which end of a label is at its point: its `start`, `middle`, or `end` as it reads.  Lying on
    * the surface, it stays on that side of the point as the view turns.
    *
-   * @default 'middle'
+   * @default 'start'
    */
   textAnchor?: 'start' | 'middle' | 'end';
   /**

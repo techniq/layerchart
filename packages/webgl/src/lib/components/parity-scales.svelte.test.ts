@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { createRawSnippet } from 'svelte';
 import { scaleBand } from 'd3-scale';
-import { curveCatmullRomClosed } from 'd3-shape';
+import { curveCatmullRomClosed, stack } from 'd3-shape';
 import { geoIdentity, geoMercator } from 'd3-geo';
 import { Color, type Object3D } from 'three';
-import type { ChartState } from 'layerchart';
+import { isometric, type BinCell, type ChartState } from 'layerchart';
 
 import type { SceneState } from '../contexts/scene.svelte.js';
 import Marks from './__fixtures__/Marks.svelte';
@@ -87,6 +87,7 @@ describe('Contour', () => {
           value: (x: number, _y: number) => (Math.abs(x - 0.5) < 0.05 ? 1 : 0),
           thresholds: [0.5],
           z: 2,
+          fill: 'none',
           stroke: 'black',
           strokeOpacity: 0.5,
           opacity: 0.5,
@@ -111,6 +112,7 @@ describe('Contour', () => {
         value: (x: number, _y: number) => x,
         thresholds: [0.5],
         z: (band: { value: number }) => band.value * 10,
+        fill: 'none',
         stroke: 'black',
       },
     });
@@ -289,6 +291,79 @@ describe('Highlight', () => {
     const [pickable] = [...scene.pickables].filter((p) => p.events?.()?.onclick);
     pickable.events!()!.onclick!(new MouseEvent('click'), { data: data[1] });
     expect(calls).toEqual([data[1]]);
+  });
+});
+
+describe('Highlight points', () => {
+  it('points each band of a stack (`y={[0, 1]}`) at its top, in its series’ color', async () => {
+    const keys = ['apples', 'bananas', 'oranges'];
+    const rows = [
+      { x: 1, apples: 2, bananas: 3, oranges: 4 },
+      { x: 2, apples: 1, bananas: 2, oranges: 3 },
+    ];
+    const series = stack<any>().keys(keys)(rows);
+    const scene = await renderMarks({
+      mark: 'highlight',
+      chart: {
+        data: series,
+        flatData: series.flat(),
+        x: (d: any) => d.data.x,
+        y: [0, 1],
+        c: 'key',
+        cDomain: keys,
+        cRange: ['red', 'green', 'blue'],
+        xDomain: [0, 3],
+        yDomain: [0, 10],
+      },
+      highlight: { data: series[0][1], points: true },
+    });
+    await expect.poll(() => scene.markerSets.flat().length).toBe(3);
+    const markers = scene.markerSets.flat();
+    // Each band's top (1, then 1 + 2, then 1 + 2 + 3) at the hovered row's x
+    expect(markers.map((m) => Math.round(chart!.yScale.invert!(m.y)))).toEqual([1, 3, 6]);
+    expect(new Set(markers.map((m) => Math.round(m.x)))).toEqual(
+      new Set([Math.round(chart!.xScale(2))])
+    );
+    expect(markers.map((m) => m.fill)).toEqual(['red', 'green', 'blue']);
+  });
+});
+
+describe('Bin on an isometric floor', () => {
+  // A grid of rows, many on cells' edges
+  const data = Array.from({ length: 400 }, (_, i) => ({
+    x: (i % 20) * 5,
+    y: Math.floor(i / 20) * 5,
+  }));
+
+  /** The cells' counts, with the view turned to `rotate` */
+  async function countsAt(rotate: number) {
+    let cells: BinCell[] = [];
+    const children = createRawSnippet((args: () => { cells: BinCell[] }) => {
+      cells = args().cells;
+      return { render: () => '<span></span>' };
+    });
+    await renderMarks({
+      mark: 'bin',
+      chart: {
+        data,
+        x: 'x',
+        y: 'y',
+        xDomain: [0, 100],
+        yDomain: [0, 100],
+        view: isometric({ rotate }),
+      },
+      bin: { size: 24, children } as any,
+    });
+    await expect.poll(() => cells.length).toBeGreaterThan(0);
+    return { counts: cells.map((cell) => cell.count).sort((a, b) => a - b), width: chart!.width };
+  }
+
+  it('holds the same cells as the view turns and the floor is refitted, as the core `Bin`', async () => {
+    const square = await countsAt(0);
+    const turned = await countsAt(45);
+    // The floor's refitted smaller turned, but measured against it laid flat, the cells are the same
+    expect(turned.width).not.toBeCloseTo(square.width, 0);
+    expect(turned.counts).toEqual(square.counts);
   });
 });
 

@@ -1187,7 +1187,7 @@ describe('placed as LayerChart places its namesakes', () => {
     const props = (x: number) => ({
       mark: 'text' as const,
       chart: chartProps,
-      text: { x, y: 20, value: 'moving' },
+      text: { x, y: 20, value: 'moving', textAnchor: 'middle' },
       onScene: (s: SceneState, c: ChartState<any>) => {
         latest = s;
         chart = c;
@@ -1213,7 +1213,7 @@ describe('placed as LayerChart places its namesakes', () => {
     const scene = await renderMarks({
       mark: 'text',
       chart: chartProps,
-      text: { x: 'x', y: 'y', value: 'name' },
+      text: { x: 'x', y: 'y', value: 'name', textAnchor: 'middle' },
     });
     await expect
       .poll(() => {
@@ -2607,7 +2607,7 @@ describe('strokes, as LayerChart’s marks take them', () => {
 
   it('draws `Contour` lines `strokeWidth` pixels wide, raised or flat (with a `stroke`, as core)', async () => {
     for (const contour of [
-      { value: (x: number, y: number) => x + y, strokeWidth: 3, z: 2 },
+      { value: (x: number, y: number) => x + y, strokeWidth: 3, z: 2, fill: 'none' },
       // Flat, LayerChart's own (filled bands), outlined only with a `stroke`
       { value: (x: number, y: number) => x + y, strokeWidth: 3, stroke: 'black' },
     ]) {
@@ -2647,9 +2647,10 @@ describe('strokes, as LayerChart’s marks take them', () => {
       });
     const plain = await label();
     const haloed = await label('white');
-    // Room for the halo's outer half on every side: 4px wide at 4 canvas pixels a pixel
-    expect(haloed.width - plain.width).toBe(16);
-    expect(haloed.height - plain.height).toBe(16);
+    // Room for the halo's outer half on every side: 4px wide at 4 canvas pixels a pixel, painted
+    // a little wider (4.5px) as the label is painted a step larger (12px at ~13.5px) and shrunk
+    expect(haloed.width - plain.width).toBe(18);
+    expect(haloed.height - plain.height).toBe(18);
   });
 
   it('draws a halo around `viewport` labels, behind their letters', async () => {

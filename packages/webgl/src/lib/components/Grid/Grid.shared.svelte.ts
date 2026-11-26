@@ -19,23 +19,23 @@ export type GridLineProps = {
  */
 export type GridProps = {
   /**
-   * Draw a x-axis lines, across the floor and up the wall behind. Pass props (class, stroke,
-   * strokeWidth, opacity, dashArray) to style them.
+   * Draw a x-axis lines, across the floor and up the wall behind (spokes at its ticks in a
+   * `radial` chart). Pass props (class, stroke, strokeWidth, opacity, dashArray) to style them.
    *
-   * @default true
+   * @default false, as the core `Grid`, unless none of `x`, `y`, and `z` is turned on (then true)
    */
   x?: boolean | GridLineProps;
   /**
-   * Draw a y-axis lines, across the floor and up the wall behind. Pass props (class, stroke,
-   * strokeWidth, opacity, dashArray) to style them.
+   * Draw a y-axis lines, across the floor and up the wall behind (circles at its ticks in a
+   * `radial` chart). Pass props (class, stroke, strokeWidth, opacity, dashArray) to style them.
    *
-   * @default true
+   * @default false, as the core `Grid`, unless none of `x`, `y`, and `z` is turned on (then true)
    */
   y?: boolean | GridLineProps;
   /**
    * Draw lines at the `z` scale's ticks, around both walls, and pass props to style them.
    *
-   * @default true
+   * @default false, unless none of `x`, `y`, and `z` is turned on (then true)
    */
   z?: boolean | GridLineProps;
   /** Control the number of x-axis ticks: a count, values, or an interval, as for `Axis` */
@@ -51,6 +51,12 @@ export type GridProps = {
    * @default 'center'
    */
   bandAlign?: 'center' | 'between';
+  /**
+   * Render `y` lines with circles or linear splines
+   *
+   * @default 'circle'
+   */
+  radialY?: 'circle' | 'linear';
   /**
    * Stroke color for grid lines.
    *

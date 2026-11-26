@@ -10,6 +10,7 @@
     getChartContext,
     hasAnyDataProp,
     resolveDataProp,
+    resolveStyleProp,
     transformVectorPath,
     vectorArrowFilledPath,
     vectorArrowPath,
@@ -54,8 +55,10 @@
 
   const ctx = getChartContext();
   const scene = getSceneContext();
-  /** What its `class` sets, where its props don't say */
-  const look = $derived(scene.style(className));
+  /** What its `class` sets, where its props don't say (a row's own, for a function of the row) */
+  const look = $derived(typeof className === 'function' ? null : scene.style(className));
+  const lookOf = (d: any, i: number) =>
+    typeof className === 'function' ? scene.style(resolveStyleProp(className, d, i, rows)) : look;
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
 
   const filled = $derived(shape !== 'arrow');
@@ -148,8 +151,9 @@
   createMerged({
     tooltip: () => tooltip,
     items: () =>
-      (ctx.view ? [] : vectors).map((vector) => {
+      (ctx.view ? [] : vectors).map((vector, i) => {
         const d = vector.d;
+        const look = lookOf(d, i);
         const lines = subpaths(pathOf(vector));
         const color = 'var(--color-surface-content, currentColor)';
         const height = heightOf(d) + (filled ? 0.3 : 0.5);
@@ -202,8 +206,9 @@
     instances: () => {
       if (!ctx.view) return [];
       const color = 'var(--color-surface-content, currentColor)';
-      return vectors.flatMap(({ d, x: px, y: py, length: len }) => {
+      return vectors.flatMap(({ d, x: px, y: py, length: len }, i) => {
         if (!Number.isFinite(px) || !Number.isFinite(py) || !(len > 0)) return [];
+        const look = lookOf(d, i);
         const w = width ?? len * 0.25;
         // Clockwise from up the plot (towards its far edge, the scene's -z), and up off the floor
         const turn = (valueOf(rotate, d) * Math.PI) / 180;
