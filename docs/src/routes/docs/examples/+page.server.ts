@@ -1,5 +1,8 @@
 import { allComponents } from 'content-collections';
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
+import { nativeWebGLExamples, webglExamples } from 'virtual:webgl-examples';
+
+import { componentLayers, intersectExampleLayers } from '$lib/utils/layers.js';
 
 import { metadata } from './metadata';
 
@@ -15,6 +18,8 @@ interface ExampleInfo {
 		path: string;
 		/** The commit that first added the example's file (absent until it's committed) */
 		createdAt?: string;
+		/** The layers it draws in (ex. `['svg', 'canvas', 'webgl']`), as its page's layer toggle offers */
+		layers: string[];
 	}>;
 }
 
@@ -59,7 +64,8 @@ export async function load() {
 					name: example.name,
 					title: example.title,
 					path: `/docs/components/${slug}/${example.name}`,
-					createdAt: example.createdAt
+					createdAt: example.createdAt,
+					layers: exampleLayers(slug, catalog.component, example)
 				}))
 			};
 		})
@@ -69,4 +75,20 @@ export async function load() {
 		components,
 		metadata
 	};
+}
+
+/**
+ * The layers an example draws in, as its page's layer toggle offers them: those every component
+ * it uses can draw in, and `webgl` when it has a WebGL version.  One written with
+ * `@layerchart/webgl` draws in a `WebGL` layer only.
+ */
+function exampleLayers(
+	slug: string,
+	component: string,
+	example: ComponentCatalog['examples'][number]
+): string[] {
+	const key = `${slug}/${example.name}`;
+	if (nativeWebGLExamples.has(key)) return ['webgl'];
+	const layers = intersectExampleLayers(example.components ?? [], componentLayers[component] ?? []);
+	return key in webglExamples ? [...layers, 'webgl'] : layers;
 }
