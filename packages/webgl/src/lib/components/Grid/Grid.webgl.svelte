@@ -8,8 +8,6 @@
     BufferGeometry,
     DoubleSide,
     Float32BufferAttribute,
-    LineBasicMaterial,
-    LineSegments,
     Mesh,
     MeshBasicMaterial,
   } from 'three';
@@ -17,6 +15,7 @@
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { scaled, tickCount, tickSpacing } from '../../utils/marks.js';
+  import { createSegments } from '../../utils/lines.js';
 
   let {
     x = true,
@@ -42,8 +41,8 @@
     return autoTickVals(scale, config, tickCount(length, spacing)).map((v) => scaled(scale, v));
   }
 
-  const lineMaterial = new LineBasicMaterial({ transparent: true, depthWrite: false });
-  const lines = new LineSegments(new BufferGeometry(), lineMaterial);
+  // A pixel wide on screen (not a device pixel), as the core `Grid`'s lines
+  const lines = createSegments();
   const planeMaterial = new MeshBasicMaterial({
     transparent: true,
     depthWrite: false,
@@ -51,8 +50,8 @@
   });
   const planes = new Mesh(new BufferGeometry(), planeMaterial);
   // Under the marks wherever they meet
-  lines.renderOrder = planes.renderOrder = -1;
-  layer.add(planes, lines);
+  lines.object.renderOrder = planes.renderOrder = -1;
+  layer.add(planes, lines.object);
 
   $effect(() => {
     const w = ctx.width;
@@ -94,9 +93,7 @@
       }
     }
 
-    lines.geometry.dispose();
-    lines.geometry = new BufferGeometry();
-    lines.geometry.setAttribute('position', new Float32BufferAttribute(segments, 3));
+    lines.set(segments);
     planes.geometry.dispose();
     planes.geometry = new BufferGeometry();
     planes.geometry.setAttribute('position', new Float32BufferAttribute(quads, 3));
@@ -106,10 +103,7 @@
   $effect(() => {
     const line = scene.color(stroke);
     const plane = scene.color(fill);
-    if (line) {
-      lineMaterial.color.copy(line.color);
-      lineMaterial.opacity = line.opacity;
-    }
+    lines.style(line, 1);
     if (plane) {
       planeMaterial.color.copy(plane.color);
       planeMaterial.opacity = plane.opacity;
@@ -119,10 +113,9 @@
 
   $effect(() => {
     return () => {
-      layer.remove(planes, lines);
-      lines.geometry.dispose();
+      layer.remove(planes, lines.object);
+      lines.dispose();
       planes.geometry.dispose();
-      lineMaterial.dispose();
       planeMaterial.dispose();
       scene.invalidate();
     };

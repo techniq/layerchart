@@ -228,6 +228,17 @@ export class SceneState {
     return classes ? (this.colors?.style(classes) ?? null) : null;
   }
 
+  /**
+   * The font size (pixels) and weight text has here: its `class`'s (ex. `text-xs font-semibold`),
+   * else the chart's, as an SVG or Canvas label inherits them.  `null` before the layer mounts.
+   */
+  font(classes: string | null | undefined): { size: number; weight: string } | null {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    this.themeVersion;
+    const style = this.colors?.style(classes ?? '');
+    return style && style.fontSize > 0 ? { size: style.fontSize, weight: style.fontWeight } : null;
+  }
+
   /** A point in the scene (ex. where the pointer hit a mark) in chart coordinates */
   toChart(point: Vector3): { x: number; y: number; z: number } {
     return {

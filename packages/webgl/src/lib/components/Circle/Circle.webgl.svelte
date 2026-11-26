@@ -28,6 +28,10 @@
   /** What its `class` sets */
   const look = $derived(scene.style(className));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
+  /** No disc for a `none` fill (ex. `class="fill-none"`), only its ring */
+  const filled = $derived(
+    fill !== null && fill !== 'none' && !(fill == null && look?.fill === 'none')
+  );
   /** A ring only when asked, and flat (as `Points` draws theirs) */
   const ringed = $derived(!ctx.view && (stroke != null || !!look?.stroke) && strokeWidth > 0);
 
@@ -53,7 +57,7 @@
     tooltip: () => tooltip,
     geometry: () => (ctx.view ? ball : disc),
     instances: () =>
-      circles.map((c) => {
+      (filled ? circles : []).map((c) => {
         // Inside its ring, so the two don't overlap (and darken where they're translucent)
         const radius = ringed ? Math.max(0, c.radius - strokeWidth / 2) : c.radius;
         return {
@@ -64,7 +68,13 @@
           width: radius,
           depth: radius,
           height: radius,
-          color: rowColor(ctx, fill, c.d, 'var(--color-surface-content, currentColor)', look?.fill),
+          color: rowColor(
+            ctx,
+            fill ?? undefined,
+            c.d,
+            'var(--color-surface-content, currentColor)',
+            look?.fill
+          ),
         };
       }),
     opacity: () => opacity * (look?.opacity ?? 1),

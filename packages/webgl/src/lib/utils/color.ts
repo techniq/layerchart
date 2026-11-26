@@ -13,6 +13,10 @@ export type ClassStyle = {
   opacity: number;
   /** Its `mix-blend-mode`, when not `normal` (ex. `plus-lighter`) */
   blend: string | null;
+  /** Its font size in pixels: its class's (ex. `text-xs`), else what it inherits there */
+  fontSize: number;
+  /** Its font weight: its class's (ex. `font-semibold`), else what it inherits there */
+  fontWeight: string;
 };
 
 /**
@@ -85,6 +89,8 @@ export class ColorResolver {
       strokeWidth: strokeWidth == null ? null : parseFloat(strokeWidth),
       opacity: Number(style.opacity) * Number(style.fillOpacity || 1),
       blend: style.mixBlendMode && style.mixBlendMode !== 'normal' ? style.mixBlendMode : null,
+      fontSize: parseFloat(style.fontSize),
+      fontWeight: style.fontWeight,
     };
   }
 

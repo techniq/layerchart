@@ -32,6 +32,8 @@ type MergedOptions = {
   /** Whether hovering shows the tooltip (only marks that ask are picked) */
   tooltip?: () => boolean;
   opacity: () => number;
+  /** Multiplies the outlines' alpha (the fills' is `opacity`) */
+  lineOpacity?: () => number;
   strokeWidth: () => number;
   /** Lose to other shapes in the same place (ex. an arc's track, beneath the arc) */
   behind?: boolean;
@@ -49,7 +51,14 @@ function append(target: number[], source: ArrayLike<number>) {
  * of lines, so thousands of shapes cost a draw call or two.  Picks rows for the tooltip from the
  * face hit, and lightens the hovered shape.  Call during component setup.
  */
-export function createMerged({ items, opacity, strokeWidth, tooltip, behind }: MergedOptions) {
+export function createMerged({
+  items,
+  opacity,
+  lineOpacity,
+  strokeWidth,
+  tooltip,
+  behind,
+}: MergedOptions) {
   const ctx = getChartContext();
   const scene = getSceneContext();
   /** Its objects, stacked with other marks' in the order they're declared */
@@ -149,7 +158,7 @@ export function createMerged({ items, opacity, strokeWidth, tooltip, behind }: M
     lines.geometry.dispose();
     lines.geometry = lineGeometry;
     lines.visible = linePositions.length > 0;
-    lineMaterial.opacity = strokeAlpha ?? 1;
+    lineMaterial.opacity = (strokeAlpha ?? 1) * (lineOpacity?.() ?? 1);
 
     // Rebuilt without emphasis, so put back whatever's hovered
     emphasized = -1;

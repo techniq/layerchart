@@ -11,6 +11,8 @@ import type { ResolvedColor } from './color.js';
 
 /** Canvas pixels per pixel of the plot, so text stays sharp up close */
 const RESOLUTION = 4;
+/** Pixels of the plot each glyph is traced with in its own color, to keep its weight */
+const WEIGHT_STROKE = 0.35;
 
 let measure: CanvasRenderingContext2D | null = null;
 
@@ -89,6 +91,12 @@ export function labelPlane(
   paint.fillStyle = css(color?.color);
   paint.globalAlpha = color?.opacity ?? 1;
   lines.forEach((line, i) => paint.fillText(line, x, first + step * i));
+  // Shrunk to size by the GPU and blended in linear light, glyphs come out thinner than the
+  // browser draws them: a hairline of their own color brings back their weight
+  paint.strokeStyle = paint.fillStyle;
+  paint.lineWidth = WEIGHT_STROKE * RESOLUTION;
+  paint.lineJoin = 'round';
+  lines.forEach((line, i) => paint.strokeText(line, x, first + step * i));
 
   const texture = new CanvasTexture(label);
   texture.colorSpace = LinearSRGBColorSpace;

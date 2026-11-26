@@ -1270,7 +1270,21 @@ describe('placed as LayerChart places its namesakes', () => {
     });
     const segments = layered(scene).find((o) => (o as any).isLineSegments2) as any;
     const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
-    expect(ends.slice(0, 6)).toEqual([10, 0, 20, 30, 0, 40]);
+    // From its source to its target, along the core `Link`'s bump curve (in pieces)
+    expect(ends.slice(0, 3)).toEqual([10, 0, 20]);
+    expect(ends.slice(-3)).toEqual([30, 0, 40]);
+    expect(ends.length / 6).toBeGreaterThan(1);
+  });
+
+  it('draws a `Link` `type="straight"` as one segment', async () => {
+    const scene = await renderMarks({
+      mark: 'link',
+      chart: chartProps,
+      link: { data: [{ source: { x: 10, y: 20 }, target: { x: 30, y: 40 } }], type: 'straight' },
+    });
+    const segments = layered(scene).find((o) => (o as any).isLineSegments2) as any;
+    const ends = Array.from(segments.geometry.attributes.instanceStart.data.array as Float32Array);
+    expect(ends).toEqual([10, 0, 20, 30, 0, 40]);
   });
 
   it('links one link given as `data`, in its `class`’s stroke, as the core `Link` takes it', async () => {
@@ -1287,7 +1301,9 @@ describe('placed as LayerChart places its namesakes', () => {
         },
       });
       const segments = () => layered(scene).find((o) => (o as any).isLineSegments2) as any;
-      await expect.poll(() => segments()?.geometry.attributes.instanceStart?.count ?? 0).toBe(1);
+      await expect
+        .poll(() => segments()?.geometry.attributes.instanceStart?.count ?? 0)
+        .toBeGreaterThan(0);
       const [r, g, b] = segments().geometry.attributes.instanceColorStart.array;
       expect([r, g, b]).toEqual([1, 0, 0]);
     } finally {
@@ -1347,10 +1363,9 @@ describe('Axis', () => {
 
   /** The axis' rule and tick marks (and not a `Grid`'s lines), as `[x, height, y]` pairs */
   const ruleSegments = (scene: SceneState) => {
-    const lines = layered(scene).find((o) => (o as any).isLineSegments) as any;
-    const positions = Array.from(
-      (lines?.geometry.getAttribute('position')?.array as Float32Array) ?? []
-    );
+    const lines = layered(scene).find((o) => (o as any).isLineSegments2) as any;
+    const start = lines?.visible ? lines.geometry.attributes.instanceStart : null;
+    const positions = Array.from((start?.data.array as Float32Array) ?? []);
     return Array.from({ length: positions.length / 6 }, (_, i) =>
       positions.slice(i * 6, i * 6 + 6).map((v) => Math.round(v))
     );

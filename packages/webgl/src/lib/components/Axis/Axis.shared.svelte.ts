@@ -69,9 +69,9 @@ export type AxisProps = {
    */
   tickLength?: number;
   /**
-   * Pixels between the plot box's edge and the tick labels.
+   * Pixels between the plot box's edge and the tick labels, as the core `Axis` spaces them.
    *
-   * @default tickLength + 2
+   * @default tickLength beside the plot (`left` / `right`), tickLength + 2 above or below it
    */
   tickLabelOffset?: number;
   /** How the tick labels are drawn */

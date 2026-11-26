@@ -1,4 +1,6 @@
+import type { CurveFactory } from 'd3-shape';
 import type { ColorProp, DataProp } from 'layerchart';
+import type { LinkSweep, LinkType } from 'layerchart/utils/linkUtils';
 import type { ValueProp } from '../../utils/values.js';
 
 export type LinkProps = {
@@ -36,10 +38,35 @@ export type LinkProps = {
   source?: (d: any) => any;
   /** The node each link ends at, as `source`.  @default (d) => d.target */
   target?: (d: any) => any;
-  /** A node's pixels across the plot, for `source` / `target`.  @default (node) => node.x */
+  /**
+   * A node's pixels across the plot, for `source` / `target`.
+   *
+   * @default (node) => node.x (`node.y` with a horizontal `orientation`)
+   */
   x?: (node: any) => number;
-  /** A node's pixels down the plot, for `source` / `target`.  @default (node) => node.y */
+  /**
+   * A node's pixels down the plot, for `source` / `target`.
+   *
+   * @default (node) => node.y (`node.x` with a horizontal `orientation`)
+   */
   y?: (node: any) => number;
+  /**
+   * The path's shape across the floor, as the core `Link`: a d3 `curve` (`d3`), or a preset
+   * (`straight`, `square`, `beveled`, `rounded`, `swoop`).  Straight around a `globe`.
+   *
+   * @default 'd3'
+   */
+  type?: LinkType;
+  /** The d3 curve for `type="d3"`. @default curveBumpY (curveBumpX with a horizontal `orientation`) */
+  curve?: CurveFactory;
+  /** Which way the tree it links grows. @default 'vertical' */
+  orientation?: 'vertical' | 'horizontal';
+  /** Which way a preset path turns first, as the core `Link` */
+  sweep?: LinkSweep;
+  /** A `rounded` path's corner radius. @default 20 */
+  radius?: number;
+  /** A `swoop` path's bend, in degrees. @default 22.5 */
+  bend?: number;
   /**
    * How high each link arches above the straight line between its ends, in pixels (ex. flight
    * paths over a map), or per row (a data key or function).
@@ -55,6 +82,8 @@ export type LinkProps = {
   stroke?: ColorProp;
   /** @default 1 */
   strokeWidth?: number;
+  /** @default 1 */
+  opacity?: number;
   /**
    * CSS classes to style it by, as the core marks take them (ex. `stroke-surface-content/20`):
    * the stroke, stroke width, and opacity they set, where its props don't say

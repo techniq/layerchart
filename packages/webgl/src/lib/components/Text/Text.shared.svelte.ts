@@ -62,13 +62,13 @@ export type TextProps = {
    * Font size in pixels of the plot, for labels lying on the surface, or per row (a data key or
    * function).
    *
-   * @default 12
+   * @default the chart's (or its `class`'s) font size, as a core label
    */
   fontSize?: ValueProp<number>;
   /**
    * Font weight, for labels lying on the surface.
    *
-   * @default 600
+   * @default the chart's (or its `class`'s) font weight, as a core label
    */
   fontWeight?: number | string;
   /**

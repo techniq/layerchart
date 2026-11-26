@@ -8,14 +8,8 @@
 
   import { getSceneContext, setUnclipped, type SceneLabel } from '../../contexts/scene.svelte.js';
   import { scaled, tickCount, tickSpacing } from '../../utils/marks.js';
-  import {
-    BufferGeometry,
-    Float32BufferAttribute,
-    Group,
-    LineBasicMaterial,
-    LineSegments,
-    Mesh,
-  } from 'three';
+  import { Group, Mesh } from 'three';
+  import { createSegments } from '../../utils/lines.js';
   import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
   import Text from '../Text/Text.webgl.svelte';
   import Grid from '../Grid/Grid.webgl.svelte';
@@ -30,7 +24,7 @@
     rule = false,
     tickMarks = true,
     tickLength = 4,
-    tickLabelOffset = tickLength + 2,
+    tickLabelOffset: tickLabelOffsetProp,
     tickLabelProps,
     labelProps,
   }: AxisProps = $props();
@@ -52,6 +46,14 @@
       : placement === 'left' || placement === 'right'
         ? 'y'
         : 'z'
+  );
+
+  /**
+   * Pixels from the axis to its tick labels, as the core `Axis`: a tick's length to a side
+   * label's end, and two more to a label above or below's cap height (`half` adds the rest)
+   */
+  const tickLabelOffset = $derived(
+    tickLabelOffsetProp ?? (along === 'y' ? tickLength : tickLength + 2)
   );
   const scale = $derived(along === 'x' ? ctx.xScale : along === 'y' ? ctx.yScale : ctx.zScale);
   const length = $derived(along === 'x' ? ctx.width : along === 'y' ? ctx.height : ctx.zDepth);
@@ -102,7 +104,8 @@
     // On the floor, labels across are placed by their middle (half a label further out), and the
     // left axis' by their end.  Facing the viewer, they're at the edge, anchored by their side
     // nearest it a gap of pixels away on screen, so the gap is the same however the view turns.
-    const half = (along === 'y' ? 0 : 6) * unit;
+    // Half a cap height (as the core `Axis` anchors labels above and below by theirs)
+    const half = along === 'y' ? 0 : (tickLabelProps?.fontSize ?? 10) * 0.36 * unit;
     const tickOut = tickViewport ? 0 : tickLabelOffset * unit + half;
     const outward = along === 'y' ? { x: outX, y: 0, z: 0 } : { x: 0, y: outY, z: 0 };
 
@@ -167,10 +170,10 @@
 
   // The rule along the edge and the marks out from it at each tick, as the core `Axis` draws
   // them (in the scene's axes: chart x, then height, then chart y)
-  const lineMaterial = new LineBasicMaterial({ transparent: true, depthWrite: false });
-  const lines = new LineSegments(new BufferGeometry(), lineMaterial);
-  lines.userData.unclipped = true;
-  layer.add(lines);
+  // A pixel wide on screen (not a device pixel), as the core `Axis`' rule and ticks
+  const lines = createSegments();
+  lines.object.userData.unclipped = true;
+  layer.add(lines.object);
   $effect(() => {
     const w = ctx.width;
     const h = ctx.height;
@@ -200,25 +203,19 @@
           segments.push(farX, p, nearY, farX, p, nearY + outY * reach);
         }
     }
-    lines.geometry.dispose();
-    lines.geometry = new BufferGeometry();
-    lines.geometry.setAttribute('position', new Float32BufferAttribute(segments, 3));
+    lines.set(segments);
     scene.invalidate();
   });
   $effect(() => {
     const color = scene.color(
       'color-mix(in oklab, var(--color-surface-content, currentColor) 50%, transparent)'
     );
-    if (color) {
-      lineMaterial.color.copy(color.color);
-      lineMaterial.opacity = color.opacity;
-    }
+    lines.style(color, 1);
     scene.invalidate();
   });
   $effect(() => () => {
-    layer.remove(lines);
-    lines.geometry.dispose();
-    lineMaterial.dispose();
+    layer.remove(lines.object);
+    lines.dispose();
   });
 
   // The height axis' labels stand on the back wall its edge is on, reading along it from the

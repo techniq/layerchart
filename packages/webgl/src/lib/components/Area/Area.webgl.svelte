@@ -140,6 +140,9 @@
     }));
   }
 
+  /** How far a floor area's line stands above its fill, well under the next mark's layer */
+  const LINE_LIFT = 0.3;
+
   /** The line's color: its own `stroke` (or its class's), else the area's */
   function lineColor(d: any, areaColor: string) {
     if (lineProps?.stroke != null) return rowColor(ctx, lineProps.stroke, d, areaColor);
@@ -192,7 +195,16 @@
               d: run[0].d,
               geometry: positions.length ? geometry : null,
               fill: color,
-              lines: line ? [columns.flatMap((c) => edges(c)[1])] : [],
+              // On the floor, a little above the fill, so all its width draws over it (a depth
+              // offset alone isn't enough on every GPU for lines in the fill's own plane)
+              lines: line
+                ? [
+                    columns.flatMap((c) => {
+                      const [x, up, y] = edges(c)[1];
+                      return [x, curtain ? up : up + LINE_LIFT, y];
+                    }),
+                  ]
+                : [],
               stroke: line ? lineColor(areaRows[0], color) : null,
             };
           });

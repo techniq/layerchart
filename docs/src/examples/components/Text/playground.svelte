@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Chart, Layer, Text, Circle } from 'layerchart';
+	// `@layerchart/webgl`'s `Layer` draws any of the four, and its marks in each
+	import { Chart, Layer, Text, Circle } from '@layerchart/webgl';
 	import type { ComponentProps } from 'svelte';
 	import TextPlaygroundControls from '$lib/components/controls/TextPlaygroundControls.svelte';
 	import { toTitleCase } from '@layerstack/utils';
@@ -32,10 +33,10 @@
 
 <TextPlaygroundControls bind:config />
 
-<div class="grid grid-cols-3">
-	{#each ['svg', 'canvas', 'html'] as const as type}
+<div class="grid grid-cols-2">
+	{#each ['svg', 'canvas', 'html', 'webgl'] as const as type}
 		<div>
-			<h2 class="text-center">{toTitleCase(type)}</h2>
+			<h2 class="text-center">{type === 'webgl' ? 'WebGL' : toTitleCase(type)}</h2>
 			<div class="flex items-center justify-center bg-surface-100 p-4">
 				<div
 					class="h-56 border border-surface-content/10"

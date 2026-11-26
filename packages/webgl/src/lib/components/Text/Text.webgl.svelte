@@ -37,12 +37,12 @@
     lineHeight,
     truncate = false,
     scaleToFit = false,
-    fontSize = 12,
-    fontWeight = 600,
+    fontSize: fontSizeProp,
+    fontWeight: fontWeightProp,
     rotate = 0,
     fill: fillProp,
-    stroke,
-    strokeWidth = 1,
+    stroke: strokeProp,
+    strokeWidth: strokeWidthProp,
     class: className,
   }: TextProps = $props();
 
@@ -50,6 +50,17 @@
   const fill = $derived(fillProp ?? 'var(--color-surface-content, currentColor)');
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** As asked, else as its `class` (or the chart) sets them, as an SVG or Canvas label */
+  const font = $derived(scene.font(className));
+  const fontSize = $derived(fontSizeProp ?? font?.size ?? 12);
+  const fontWeight = $derived(fontWeightProp ?? font?.weight ?? 400);
+  /**
+   * Its halo: its own `stroke`, or the one its `class` sets (ex. `stroke-surface-100
+   * [stroke-width:3px]`), as an SVG label's stroke
+   */
+  const look = $derived(scene.style(className));
+  const stroke = $derived(strokeProp ?? look?.stroke ?? undefined);
+  const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** Its objects, stacked with other marks' in the order they're declared */
   const layer = scene.layer();
   const sphere = $derived(getSphere(ctx));

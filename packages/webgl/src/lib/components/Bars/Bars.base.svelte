@@ -156,7 +156,10 @@
   // Around each bar's top and up its corners, as the core isometric bars are outlined
   createOutlines({
     instances: () => (outlined ? bars : []),
-    stroke: (d) => rowColor(ctx, stroke, d, 'black', look?.stroke),
+    // Black without a `stroke` (or `class`), as LayerChart's bars: not the chart's color scale,
+    // which would outline each bar in its own fill
+    stroke: (d) =>
+      stroke == null && !look?.stroke ? 'black' : rowColor(ctx, stroke, d, 'black', look?.stroke),
     strokeWidth: () => strokeWidth,
     opacity: () => opacity * (look?.opacity ?? 1),
   });

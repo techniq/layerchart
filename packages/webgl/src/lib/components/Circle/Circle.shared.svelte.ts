@@ -29,11 +29,12 @@ export type CircleProps = {
    */
   z?: DataProp;
   /**
-   * A CSS color, or a data key / function run through the chart's color scale.
+   * A CSS color, or a data key / function run through the chart's color scale (`none` or `null`
+   * for only its ring).
    *
    * @default 'var(--color-surface-content)'
    */
-  fill?: ColorProp;
+  fill?: ColorProp | null;
   /** A ring around it, in a CSS color or a data key / function run through the color scale */
   stroke?: ColorProp;
   /** The ring's width, in pixels. @default 1 */

@@ -113,7 +113,7 @@ const IMPORT = /^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo)';
 export function toWebGL(source: string, webglNames: Set<string>): string | null {
 	// Drawn in the chart's layer: a `<Layer>` with no `type`, and no layer of its own
 	if (!/<Layer[\s>]/.test(source)) return null;
-	if (/<Layer\b[^>]*\btype=/.test(source)) return null;
+	if (/<Layer\b[^>]*(\btype=|\{type\})/.test(source)) return null;
 	if (/<(Svg|Canvas|Html|WebGL)[\s>]/.test(source)) return null;
 	// Per-layer imports draw in their layer only
 	if (/from 'layerchart\/(svg|canvas|html)'/.test(source)) return null;

@@ -212,7 +212,6 @@ export const checkedWebGLExamples = [
 	'Spline/with-tooltip-and-highlight',
 	'Text/color-via-ordinal-scale',
 	'Text/data-mode',
-	'Text/playground',
 	'Tooltip/anchor-location',
 	'Tooltip/area',
 	'Tooltip/basic',
