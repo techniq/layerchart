@@ -4,6 +4,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { webglCategories } from '$lib/webglCategories.js';
+	import { webglExamples } from 'virtual:webgl-examples';
 	import { page } from '$app/state';
 
 	import LucideBlocks from '~icons/lucide/blocks';
@@ -67,11 +68,21 @@
 			? intersectExampleLayers(exampleInfo.components, metadata.layers ?? [])
 			: null;
 	});
+	// Whether this page has examples drawn with WebGL (see `vite-plugin-webgl-examples.ts`): the
+	// example's own, or any of the component's
+	const hasWebGLExamples = $derived(
+		page.params.example
+			? `${data.componentName}/${page.params.example}` in webglExamples
+			: Object.keys(webglExamples).some((key) => key.startsWith(`${data.componentName}/`))
+	);
 	// `@layerchart/webgl`'s pages draw in a `WebGL` layer only, shown (selected) on its own
 	let layers = $derived(
 		data.componentName.startsWith('webgl/')
 			? ['webgl']
-			: (pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? [])
+			: [
+					...(pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []),
+					...(hasWebGLExamples ? ['webgl'] : [])
+				]
 	);
 
 	// Component names as-is (ex. `ArcChart`), example names in sentence case (ex. `Axis labels inside`)

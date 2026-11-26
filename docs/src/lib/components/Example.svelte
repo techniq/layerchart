@@ -46,6 +46,8 @@
 
 	const settings = getSettings();
 	import { movable } from '$lib/actions/movable';
+	import { webglExamples } from 'virtual:webgl-examples';
+	import LayerSetting from '$lib/components/LayerSetting.svelte';
 
 	let {
 		// The page's component: its folder under `src/examples/components` (ex. `webgl/Points`)
@@ -77,7 +79,7 @@
 	const examplesCtx = examples.get();
 
 	// Use $state + $effect to break potential infinite reactivity loops during HMR
-	let example = $state<{ component: any; source: string } | undefined>(undefined);
+	let loadedExample = $state<{ component: any; source: string } | undefined>(undefined);
 
 	$effect(() => {
 		const current = examplesCtx?.current;
@@ -99,11 +101,38 @@
 		// Only assign if the reference actually changed to avoid unnecessary downstream reactivity
 		// Untrack both the read and write to prevent this effect from depending on its own output
 		untrack(() => {
-			if (example !== next) {
-				example = next;
+			if (loadedExample !== next) {
+				loadedExample = next;
 			}
 		});
 	});
+
+	/**
+	 * With the layer toggle on `WebGL`, this example's WebGL version (its components imported from
+	 * `@layerchart/webgl`), if it has one.  Examples without one draw with Canvas, as LayerChart's
+	 * `Layer` would.
+	 */
+	const loadWebGL = $derived(
+		settings.layer === 'webgl' && component && name && !path
+			? webglExamples[`${component}/${name}`]
+			: undefined
+	);
+	let webglExample = $state<{ component: any; source: string } | undefined>(undefined);
+	$effect(() => {
+		const load = loadWebGL;
+		webglExample = undefined;
+		if (!load) return;
+		let current = true;
+		load().then((loaded) => {
+			if (current) webglExample = loaded;
+		});
+		return () => {
+			current = false;
+		};
+	});
+	const example = $derived(webglExample ?? loadedExample);
+	/** Drawn with Canvas while the layer is `webgl`: no WebGL version (or not loaded yet) */
+	const canvasInstead = $derived(settings.layer === 'webgl' && !webglExample);
 
 	/**
 	 * Code beside the preview rather than below it. Only offered with room for both, and
@@ -322,7 +351,13 @@
 								></div>
 							{/if}
 							{#if !sandbox.showing && example}
-								<example.component bind:this={ref} />
+								{#if canvasInstead}
+									<LayerSetting layer="canvas">
+										<example.component bind:this={ref} />
+									</LayerSetting>
+								{:else}
+									<example.component bind:this={ref} />
+								{/if}
 							{/if}
 							{#snippet failed(error, reset)}
 								<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
@@ -378,7 +413,12 @@
 				bind:lineNumbers
 				{highlight}
 				onopenstackblitz={component && name
-					? () => openInStackBlitz(component, name, sandbox.dirty ? sandbox.source : undefined)
+					? () =>
+							openInStackBlitz(
+								component,
+								name,
+								sandbox.dirty ? sandbox.source : webglExample?.source
+							)
 					: undefined}
 				{split}
 				onsplitchange={wide.current ? setSplit : undefined}
@@ -467,7 +507,7 @@
 							<MenuItem icon={LucideImageDown} on:click={() => openPngDialog('export')}>
 								Export as PNG
 							</MenuItem>
-							{#if settings.layer !== 'canvas'}
+							{#if settings.layer !== 'canvas' && settings.layer !== 'webgl'}
 								<MenuItem icon={LucideCopy} on:click={handleSvgCopy}>Copy as SVG</MenuItem>
 								<MenuItem icon={LucideImageDown} on:click={handleSvgDownload}>
 									Export as SVG
@@ -476,6 +516,12 @@
 						</Menu>
 					</Button>
 				</Toggle>
+
+				{#if settings.layer === 'webgl' && !loadWebGL}
+					<span class="text-xs text-surface-content/50 ml-2"
+						>No WebGL version: drawn with Canvas</span
+					>
+				{/if}
 			</div>
 		{/if}
 	{:else}

@@ -15,6 +15,7 @@
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideSettings from '~icons/lucide/settings';
 	import LucideArrowUpToLine from '~icons/lucide/arrow-up-to-line';
+	import LucideBox from '~icons/lucide/box';
 
 	type Crumb = { label: string; href?: string };
 	type TocItem = { id: string; text: string; level: number };
@@ -32,7 +33,7 @@
 		title: string;
 		breadcrumbs?: Crumb[];
 		description?: string;
-		/** Layers offered by the page-wide Svg/Canvas/Html toggle (hidden when empty; a single layer is shown selected) */
+		/** Layers offered by the page-wide Svg/Canvas/Html/WebGL toggle (hidden when empty; a single layer is shown selected) */
 		layers?: string[];
 		/** Passed to `OpenWithButton` */
 		metadata?: Record<string, any>;
@@ -60,11 +61,19 @@
 			return layers.length === 1 ? layers[0] : settings.layer;
 		},
 		set current(value) {
-			// `webgl` is a page, not a setting
-			if (value !== 'webgl') settings.layer = value;
+			// A layer of this page's is a setting (`webgl` included, for its examples drawn with
+			// WebGL), and the counterpart's another page
+			if (value !== 'webgl' || layers.includes(value))
+				settings.layer = value as typeof settings.layer;
 			if (counterpart && !layers.includes(value)) goto(counterpart.href);
 		}
 	};
+	// With WebGL a setting here, the toggle stays on the page: the counterpart's is a link beside it
+	const counterpartLink = $derived(
+		counterpart && layers.includes('webgl') && counterpart.layers.includes('webgl')
+			? counterpart.href
+			: undefined
+	);
 	const origin = $derived(dev ? 'https://layerchart.com' : page.url.origin);
 	const url = $derived(`${origin}${page.url.pathname}`);
 	const toc = $derived<TocItem[]>(page.data.metadata?.toc ?? []);
@@ -290,6 +299,19 @@
 						</Menu>
 					</div>
 				</Toggle>
+
+				{#if counterpartLink}
+					<Tooltip title="{title} in @layerchart/webgl" offset={6}>
+						<Button
+							iconOnly
+							icon={LucideBox}
+							href={counterpartLink}
+							size="sm"
+							class="text-surface-content/70"
+							aria-label="{title} in @layerchart/webgl"
+						/>
+					</Tooltip>
+				{/if}
 			{/if}
 			<Toggle let:on={open} let:toggle let:toggleOff>
 				<Tooltip title="Settings">
