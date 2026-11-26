@@ -1171,7 +1171,8 @@ describe('placed as LayerChart places its namesakes', () => {
     });
     const [a] = planes;
     expect(a.position.x).toBeCloseTo(chart!.xScale(2));
-    expect(a.position.z).toBeCloseTo(chart!.yScale(8));
+    // On its baseline (as the core `Text`), so its middle is within a line of its row's place
+    expect(Math.abs(a.position.z - chart!.yScale(8))).toBeLessThan(12);
     expect(a.position.y).toBeLessThan(1);
   });
 
@@ -1201,6 +1202,32 @@ describe('placed as LayerChart places its namesakes', () => {
     // Floats from 2 to 3 of the `z` domain's 10
     expect(position.y).toBeCloseTo(20);
     expect(size.y).toBeCloseTo(10);
+  });
+
+  it('eases a `Rect` to where it moves with `motion`, rather than jumping', async () => {
+    let scene: SceneState | undefined;
+    const props = (x: number) => ({
+      mark: 'rect' as const,
+      chart: chartProps,
+      rect: { x, y: 10, width: 20, height: 20, motion: { type: 'tween' as const, duration: 400 } },
+      onScene: (s: SceneState) => (scene = s),
+    });
+    const { rerender } = render(Marks, props(10));
+    const left = () => {
+      const [mesh] = scene ? (children(scene, 'isInstancedMesh') as InstancedMesh[]) : [];
+      if (!mesh) return NaN;
+      const matrix = new Matrix4();
+      mesh.getMatrixAt(0, matrix);
+      return new Vector3().setFromMatrixPosition(matrix).x;
+    };
+    // Where it's first asked to be, at once
+    await expect.poll(left).toBeCloseTo(10);
+
+    await rerender(props(110));
+    // On its way...
+    await expect.poll(() => left() > 15 && left() < 105).toBe(true);
+    // ...and there
+    await expect.poll(left).toBeCloseTo(110);
   });
 
   it('outlines a `Rect` with a `stroke`, around its top and up its corners, and not without', async () => {
@@ -2286,6 +2313,43 @@ describe('GeoPath motion', () => {
     await expect.poll(top).toBeGreaterThan(11);
     expect(top()).toBeLessThan(39);
     await expect.poll(top).toBeCloseTo(40);
+  });
+});
+
+describe('Circle motion', () => {
+  it('eases to a new place rather than jumping, as the core `Circle`', async () => {
+    let scene: SceneState | undefined;
+    const props = (cx: number) => ({
+      data: [{}],
+      cx: () => cx,
+      cy: () => 5,
+      r: 4,
+      motion: { type: 'tween' as const, duration: 400 },
+    });
+    const { rerender } = render(Marks, {
+      mark: 'circle',
+      chart: { xDomain: [0, 10], yDomain: [0, 10] },
+      circle: props(2),
+      onScene: (s: SceneState, c: ChartState<any>) => {
+        scene = s;
+        chart = c;
+      },
+    });
+    await expect.poll(() => scene?.root.children.length ?? 0).toBeGreaterThan(0);
+    const across = () => {
+      const mesh = layered(scene!).find((o: any) => o.isInstancedMesh) as InstancedMesh;
+      const matrix = new Matrix4();
+      mesh.getMatrixAt(0, matrix);
+      return new Vector3().setFromMatrixPosition(matrix).x;
+    };
+    const at = (value: number) => chart!.xScale(value);
+    await expect.poll(across).toBeCloseTo(at(2));
+
+    await rerender({ circle: props(8) });
+    // Partway there, then all the way
+    await expect.poll(across).toBeGreaterThan(at(2) + 1);
+    expect(across()).toBeLessThan(at(8) - 1);
+    await expect.poll(across).toBeCloseTo(at(8));
   });
 });
 

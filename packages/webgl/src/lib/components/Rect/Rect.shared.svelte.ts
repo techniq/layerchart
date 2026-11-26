@@ -1,3 +1,4 @@
+import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 import type { ColorProp, DataProp } from 'layerchart';
 
 export type RectProps = {
@@ -33,6 +34,7 @@ export type RectProps = {
   z?: DataProp | [start: number, end: number];
   /**
    * A CSS color, or a key / function of the row run through the chart's color scale.
+   * `none` draws only its outline.
    *
    * @default 'var(--color-surface-content)'
    */
@@ -58,4 +60,11 @@ export type RectProps = {
    * @default false
    */
   tooltip?: boolean;
+  /**
+   * Ease each box to where it's asked to be, as the core `Rect` (ex. `'spring'`, or
+   * `{ type: 'tween', duration: 300 }`)
+   */
+  motion?: MotionOptions;
+  /** Which box each row is as rows change, for `motion`. @default (d, i) => i */
+  key?: (d: any, index: number) => unknown;
 };

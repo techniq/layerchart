@@ -3,6 +3,11 @@
 </script>
 
 <script lang="ts">
+  import { HighlightBase } from 'layerchart/base';
+  import Arc from '../Arc/Arc.webgl.svelte';
+  import Circle from '../Circle/Circle.webgl.svelte';
+  import Line from '../Line/Line.webgl.svelte';
+  import Rect from '../Rect/Rect.webgl.svelte';
   import {
     CircleGeometry,
     Color,
@@ -32,6 +37,7 @@
     points = false,
     lines = false,
     shadows = false,
+    area = false,
     opacity = 1,
     motion: motionProp,
   }: HighlightProps = $props();
@@ -236,3 +242,22 @@
   });
   $effect(() => scene.addMarkers(markers));
 </script>
+
+<!-- The band or slice under the row, as the core `Highlight` draws its `area` -->
+{#if area}
+  <HighlightBase
+    {data}
+    {x}
+    {y}
+    axis={axisProp}
+    {area}
+    points={false}
+    lines={false}
+    {opacity}
+    motion={motionProp}
+    {Circle}
+    {Line}
+    {Rect}
+    {Arc}
+  />
+{/if}

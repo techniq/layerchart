@@ -38,6 +38,13 @@ export type HighlightShadowProps = {
 };
 
 export type HighlightProps = {
+  /**
+   * The band (or slice) under the highlighted row, as the core `Highlight`'s `area`: `true`, or a
+   * `Rect`'s props (ex. `{ class: 'fill-primary/10' }`)
+   *
+   * @default false
+   */
+  area?: boolean | Record<string, any>;
   /** The row to highlight.  Defaults to the tooltip's. */
   data?: any;
   /** Override `x` from context */

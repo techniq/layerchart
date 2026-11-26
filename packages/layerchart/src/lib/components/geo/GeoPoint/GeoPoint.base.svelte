@@ -65,9 +65,8 @@
       {...extractLayerProps(restProps, 'lc-geo-point')}
     />
   {/if}
-{/if}
-
-{#if layerCtx === 'canvas'}
+{:else}
+  <!-- Canvas (and other layers'): children placed by the `x` / `y` they're given -->
   {#if children}
     {@render children({ x, y })}
   {:else}

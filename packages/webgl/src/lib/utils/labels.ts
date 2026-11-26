@@ -50,7 +50,15 @@ export function labelPlane(
     /** How wrapped lines line up with each other */
     align?: 'start' | 'middle' | 'end';
   }
-): { mesh: Mesh; width: number; height: number } | null {
+): {
+  mesh: Mesh;
+  width: number;
+  height: number;
+  /** Pixels of the plot from its top down to its first line's baseline */
+  baseline: number;
+  /** How many lines it wrapped to */
+  lines: number;
+} | null {
   if (typeof document === 'undefined' || !(fontSize > 0)) return null;
   const font = `${fontWeight} ${fontSize * RESOLUTION}px ${family}`;
   measure ??= document.createElement('canvas').getContext('2d');
@@ -62,7 +70,11 @@ export function labelPlane(
   const width =
     Math.ceil(Math.max(...lines.map((line) => measure!.measureText(line).width))) + 2 + pad * 2;
   const step = fontSize * RESOLUTION * lineHeight;
-  const height = Math.ceil(fontSize * RESOLUTION * 1.3 + step * (lines.length - 1)) + pad * 2;
+  // Room above the first baseline and below the last, as the font measures it
+  const metrics = measure.measureText('Hg');
+  const ascent = metrics.fontBoundingBoxAscent || fontSize * RESOLUTION * 0.95;
+  const descent = metrics.fontBoundingBoxDescent || fontSize * RESOLUTION * 0.3;
+  const height = Math.ceil(ascent + descent + step * (lines.length - 1)) + pad * 2;
 
   const label = document.createElement('canvas');
   label.width = width;
@@ -70,7 +82,8 @@ export function labelPlane(
   const paint = label.getContext('2d')!;
   paint.font = font;
   paint.textAlign = align === 'start' ? 'left' : align === 'end' ? 'right' : 'center';
-  paint.textBaseline = 'middle';
+  // On their baselines, so a label can be placed by its cap height as the core `Text` places it
+  paint.textBaseline = 'alphabetic';
   // Painted in the color's linear values, read by the shader as they are (a linear texture), and
   // encoded for the screen with the rest of the scene.  An sRGB texture of sRGB values should do
   // the same, but came out decoded twice over: the text color washed out to grey.
@@ -79,7 +92,7 @@ export function labelPlane(
       ? `rgb(${Math.round(value.r * 255)} ${Math.round(value.g * 255)} ${Math.round(value.b * 255)})`
       : 'black';
   const x = align === 'start' ? 1 + pad : align === 'end' ? width - 1 - pad : width / 2;
-  const first = (fontSize * RESOLUTION * 1.3) / 2 + pad;
+  const first = ascent + pad;
   if (pad) {
     // The halo first, so the letters cover its inner half
     paint.strokeStyle = css(stroke!.color);
@@ -112,7 +125,13 @@ export function labelPlane(
       depthWrite: false,
     })
   );
-  return { mesh, width: width / RESOLUTION, height: height / RESOLUTION };
+  return {
+    mesh,
+    width: width / RESOLUTION,
+    height: height / RESOLUTION,
+    baseline: first / RESOLUTION,
+    lines: lines.length,
+  };
 }
 
 /** `text`'s words wrapped onto lines `maxWidth` wide (as measured by `context`), as SVG text wraps */

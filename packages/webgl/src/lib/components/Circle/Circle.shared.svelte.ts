@@ -1,4 +1,5 @@
 import type { ColorProp, DataProp } from 'layerchart';
+import type { MotionOptions } from 'layerchart/utils/motion.svelte';
 
 export type CircleProps = {
   /** Rows to draw a circle each for (else the chart's, when a position reads them) */
@@ -52,4 +53,11 @@ export type CircleProps = {
    * @default false
    */
   tooltip?: boolean;
+  /**
+   * Ease each circle to where it's asked to be, as the core `Circle` (ex. `'spring'`, or
+   * `{ type: 'tween', duration: 300 }`)
+   */
+  motion?: MotionOptions;
+  /** Which circle each row is as rows change, for `motion`. @default (d, i) => i */
+  key?: (d: any, index: number) => unknown;
 };

@@ -3,7 +3,9 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { BoxGeometry, Color } from 'three';
+  import { createDataMotionMap } from 'layerchart/utils/motion.svelte';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
 
@@ -28,6 +30,8 @@
     class: className,
     opacity = 1,
     tooltip = false,
+    motion,
+    key = (_d: any, i: number) => i,
   }: RectProps = $props();
 
   const ctx = getChartContext();
@@ -78,18 +82,61 @@
     return [Math.min(a, b), Math.max(a, b)];
   }
 
-  /** Each row's box: its corner, size, and color */
-  const boxes = $derived(
-    (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map((d) => {
+  /** Each row's box as asked: its corner, size, and color */
+  const targets = $derived(
+    (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map((d, i) => {
       const [base, top] = heights(d);
       return {
         d,
+        key: key(d, i),
         ...footprint(d),
         z: base,
         height: top - base,
-        color: rowColor(ctx, fill, d, 'var(--color-surface-content, currentColor)', look?.fill),
+        color: rowColor(
+          ctx,
+          fill ?? undefined,
+          d,
+          'var(--color-surface-content, currentColor)',
+          look?.fill
+        ),
       };
     })
+  );
+
+  // Easing to where they're asked to be, as the core `Rect` (ex. a highlight's band springing
+  // from row to row), each by its `key`
+  const motionMap = createDataMotionMap(untrack(() => motion));
+  if (motionMap) {
+    $effect(() => {
+      const active = new Set<unknown>();
+      for (const t of targets) {
+        active.add(t.key);
+        untrack(() =>
+          motionMap.update(t.key, {
+            x: t.x,
+            y: t.y,
+            width: t.width,
+            depth: t.depth,
+            z: t.z,
+            height: t.height,
+          })
+        );
+      }
+      untrack(() => motionMap.cleanup(active));
+    });
+  }
+
+  /** Each row's box where it is now */
+  const boxes = $derived(
+    targets.map((t) => {
+      const now = motionMap?.get(t.key);
+      return now ? { ...t, ...now } : t;
+    })
+  );
+
+  /** No box for a `none` fill (ex. `class="fill-none"`), only its outline */
+  const filled = $derived(
+    fill !== null && fill !== 'none' && !(fill == null && look?.fill === 'none')
   );
 
   /** Outlined only when asked, so boxes without one cost nothing more */
@@ -99,7 +146,7 @@
   createInstances({
     tooltip: () => tooltip,
     geometry: new BoxGeometry(1, 1, 1).translate(0.5, 0.5, 0.5),
-    instances: () => boxes,
+    instances: () => (filled ? boxes : []),
     opacity: () => opacity * (look?.opacity ?? 1),
     emphasize: (color) => color.lerp(highlight, 0.25),
     // Giving way to its outline in depth, so the outline sits on its edges

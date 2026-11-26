@@ -102,11 +102,13 @@ export class SceneState {
     const group = new Group();
     group.userData.layer = true;
     this.#layers.push(group);
-    this.root.add(group);
+    // Inside a `Group`, under its own (moved by it, as an SVG `<g>` moves what's in it)
+    const parent = getParent()?.object ?? this.root;
+    parent.add(group);
     this.#place();
     $effect(() => () => {
       this.#layers.splice(this.#layers.indexOf(group), 1);
-      this.root.remove(group);
+      parent.remove(group);
       this.#place();
     });
     return group;
@@ -278,6 +280,25 @@ export class SceneState {
     if (v.z > 1) return null;
     return { x: ((v.x + 1) / 2) * this.width, y: ((1 - v.y) / 2) * this.height };
   }
+}
+
+const PARENT = Symbol('LayerChartWebGLParent');
+
+/**
+ * A `Group`'s object, which the marks inside add theirs to, and where it is on the plot (its
+ * pixels across and down, with every `Group` it's in): for what's placed outside the scene
+ * (labels over it) to move with it
+ */
+export type SceneParent = { object: Object3D; readonly x: number; readonly y: number };
+
+/** Put the marks inside under `parent` (see `SceneParent`) */
+export function setParent(parent: SceneParent) {
+  setContext(PARENT, parent);
+}
+
+/** The `Group` marks here are in, if any (see `SceneParent`) */
+export function getParent(): SceneParent | undefined {
+  return getContext<SceneParent | undefined>(PARENT);
 }
 
 const UNCLIPPED = Symbol('LayerChartWebGLUnclipped');

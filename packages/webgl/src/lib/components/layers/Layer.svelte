@@ -12,6 +12,7 @@
 <script lang="ts">
   import { getSettings, Layer as CoreLayer } from 'layerchart';
   import WebGL from './WebGL.svelte';
+  import Group from '../Group/Group.webgl.svelte';
 
   let props: LayerProps = $props();
 
@@ -20,8 +21,20 @@
 </script>
 
 {#if layer === 'webgl'}
-  {@const { type: _, ...rest } = props as { type?: 'webgl' } & WebGLProps}
-  <WebGL {...rest} />
+  {@const {
+    type: _,
+    center,
+    children,
+    ...rest
+  } = props as { type?: 'webgl'; center?: boolean | 'x' | 'y' } & WebGLProps}
+  <!-- `center`, as the core layers take it: what's inside placed about the plot's center -->
+  <WebGL {...rest}>
+    {#if center}
+      <Group {center}>{@render children?.()}</Group>
+    {:else}
+      {@render children?.()}
+    {/if}
+  </WebGL>
 {:else}
   <CoreLayer {...{ ...props, type: layer } as CoreLayerProps} />
 {/if}

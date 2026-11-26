@@ -38,10 +38,10 @@ export type TextProps = {
    */
   textAnchor?: 'start' | 'middle' | 'end';
   /**
-   * Which edge of a label is at its point: its top (`start`), `middle`, or bottom (`end`) as it
-   * reads.
+   * Which part of a label is at its point, as the core `Text`: its cap height's top (`start`),
+   * its middle (`middle`), or its baseline (`end`).
    *
-   * @default 'middle'
+   * @default 'end'
    */
   verticalAnchor?: 'start' | 'middle' | 'end';
   /** Pixels to move each label across: on screen with `viewport`, else across the plot */

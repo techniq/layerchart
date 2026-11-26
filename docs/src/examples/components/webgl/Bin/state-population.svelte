@@ -163,6 +163,7 @@
 				stroke="color-mix(in oklab, var(--color-surface-content) 60%, transparent)"
 			/>
 			<Text
+				verticalAnchor="middle"
 				data={population.cities}
 				x={(city: City) => city[1]}
 				y={(city: City) => city[2]}

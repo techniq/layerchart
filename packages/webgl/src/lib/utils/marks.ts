@@ -192,7 +192,8 @@ export function rowColor(
 ): string {
   if (value != null) return resolveColorProp(value, d, ctx.cScale) ?? fallback;
   if (classed) return classed;
-  if (ctx.config.c != null && ctx.cScale) return String(ctx.cGet(d) ?? fallback);
+  // A row's color through the chart's `c` (not for a mark drawn without one, ex. a band)
+  if (d !== undefined && ctx.config.c != null && ctx.cScale) return String(ctx.cGet(d) ?? fallback);
   return fallback;
 }
 

@@ -15,7 +15,12 @@
   } from 'layerchart';
   import { format as formatValue } from '@layerstack/utils';
 
-  import { getSceneContext, isUnclipped, type SceneLabel } from '../../contexts/scene.svelte.js';
+  import {
+    getParent,
+    getSceneContext,
+    isUnclipped,
+    type SceneLabel,
+  } from '../../contexts/scene.svelte.js';
   import { getSphere } from '../../utils/globe.js';
   import { disposeLabel, fontFamily, labelPlane } from '../../utils/labels.js';
   import { markRows, placeOf, rowColor } from '../../utils/marks.js';
@@ -29,7 +34,7 @@
     z,
     viewport = false,
     textAnchor = 'middle',
-    verticalAnchor = 'middle',
+    verticalAnchor = 'end',
     dx = 0,
     dy = 0,
     format,
@@ -50,6 +55,9 @@
   const fill = $derived(fillProp ?? 'var(--color-surface-content, currentColor)');
   const ctx = getChartContext();
   const scene = getSceneContext();
+  /** A font's cap height in its size, as the core `Text` takes it (`0.71em`) */
+  const CAP_HEIGHT = 0.71;
+  const parent = getParent();
   /** As asked, else as its `class` (or the chart) sets them, as an SVG or Canvas label */
   const font = $derived(scene.font(className));
   const fontSize = $derived(fontSizeProp ?? font?.size ?? 12);
@@ -114,8 +122,9 @@
       ? rows.map(
           ({ d, text, x, y, z }, i): SceneLabel => ({
             key: String(i),
-            x,
-            y,
+            // Moved with the `Group` it's in, which moves what's in the scene
+            x: x + (parent?.x ?? 0),
+            y: y + (parent?.y ?? 0),
             z,
             text,
             class: className,
@@ -147,11 +156,17 @@
    * moves (ex. an axis' tick labels as the chart pans) keeps its plane rather than painting a new
    * canvas and texture
    */
-  let painted = new Map<string, { mesh: Mesh; width: number; height: number }[]>();
+  let painted = new Map<
+    string,
+    { mesh: Mesh; width: number; height: number; baseline: number; lines: number }[]
+  >();
 
   $effect(() => {
     const previous = painted;
-    const next = new Map<string, { mesh: Mesh; width: number; height: number }[]>();
+    const next = new Map<
+      string,
+      { mesh: Mesh; width: number; height: number; baseline: number; lines: number }[]
+    >();
     turns.clear();
     if (!viewport) {
       const family = fontFamily();
@@ -201,14 +216,26 @@
           group.add(made.mesh);
           label = made;
         }
-        const { mesh: plane, width: across, height: tall } = label;
+        const { mesh: plane, width: across, height: tall, baseline, lines } = label;
         // Lifted a little off what it lies on, and by its anchors along its baseline and its up
         // (towards the plot's far side, unturned): kept on the same side of its point when it turns
         // half round to read the right way
         const turn = (-valueOf(rotate, d) * Math.PI) / 180;
         const along = ((textAnchor === 'start' ? 1 : textAnchor === 'end' ? -1 : 0) * across) / 2;
-        const rise =
-          ((verticalAnchor === 'start' ? -1 : verticalAnchor === 'end' ? 1 : 0) * tall) / 2;
+        // Its first baseline below its point, as the core `Text` places it: its cap height's top
+        // (`start`), middle (`middle`, across all its lines), or its last baseline (`end`)
+        // Resolved as the core `Text` resolves its `0.71em`: by a `fontSize` given it, else by
+        // 16px (not a `class`'s size), so a label lines up where it does in an SVG layer
+        const cap = CAP_HEIGHT * (fontSizeProp != null ? valueOf(fontSizeProp, d) : 16);
+        const leading = size * lineSpacing;
+        const firstBaseline =
+          verticalAnchor === 'start'
+            ? cap
+            : verticalAnchor === 'middle'
+              ? (-(lines - 1) / 2) * leading + cap / 2
+              : -(lines - 1) * leading;
+        // How far its plane's middle stands up from its point (negative: below it)
+        const rise = -(firstBaseline - baseline + tall / 2);
         plane.position.set(
           px + dx + Math.cos(turn) * along - Math.sin(turn) * rise,
           up + 0.3,

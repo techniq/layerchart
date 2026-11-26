@@ -56,7 +56,8 @@ export const graphics = [
 			support: true
 		},
 		webgl: {
-			support: true
+			support: false,
+			note: 'No Ellipse mark yet'
 		}
 	},
 	{
@@ -71,7 +72,8 @@ export const graphics = [
 			support: true
 		},
 		webgl: {
-			support: true
+			support: false,
+			note: "No Path primitive yet: Arc, Area, Spline, and GeoPath draw their own shapes, and marks built on Path (ex. Trail, Violin, Ribbon, Sankey links) aren't drawn"
 		}
 	},
 	{
@@ -101,7 +103,8 @@ export const graphics = [
 			support: true
 		},
 		webgl: {
-			support: true
+			support: true,
+			note: 'As Points image (no Image mark yet)'
 		}
 	}
 ];
@@ -117,7 +120,7 @@ export const styles = [
 		},
 		canvas: {
 			support: false,
-			note: 'LayerChart provides pointer events via a "hit canvas", but no `hover:` styling is provided out of the box'
+			note: 'LayerChart provides pointer events via a "hit canvas", but no hover: styling is provided out of the box'
 		},
 		webgl: {
 			support: false
@@ -172,8 +175,8 @@ export const styles = [
 			link: 'https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip'
 		},
 		webgl: {
-			support: false,
-			note: 'Requires custom shader implementation'
+			support: true,
+			note: 'To the plot box (clip); not to ClipPath shapes'
 		}
 	},
 	{
@@ -183,12 +186,12 @@ export const styles = [
 		},
 		svg: {
 			support: false,
-			note: 'Workaround via `<clipPath>` and 2x stroke',
+			note: 'Workaround via <clipPath> and 2x stroke',
 			link: 'https://svelte.dev/playground/00fdbf89041340fe9e57c4e83b87ff2a?version=5.25.8'
 		},
 		canvas: {
 			support: false,
-			note: 'Workaround via `ctx.clip()` and 2x stroke',
+			note: 'Workaround via ctx.clip() and 2x stroke',
 			link: 'https://stackoverflow.com/questions/36615592/canvas-inner-stroke'
 		},
 		webgl: {
@@ -213,7 +216,8 @@ export const styles = [
 			note: 'stroke: along (1/2 in/out)'
 		},
 		webgl: {
-			support: false
+			support: true,
+			note: 'Outlines of bars, rects, circles, and shapes, and lines a CSS pixel wide; no dashes (stroke-dasharray)'
 		}
 	},
 	{
@@ -228,7 +232,8 @@ export const styles = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: false,
+			note: 'motion (tweens and springs) works'
 		}
 	}
 ] as const;
@@ -246,7 +251,8 @@ export const text = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: true,
+			note: 'Labels lying on the surface wrap to width'
 		}
 	},
 	{
@@ -261,7 +267,7 @@ export const text = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: true
 		}
 	},
 	{
@@ -301,7 +307,7 @@ export const text = [
 		},
 		svg: {
 			support: false,
-			note: 'Hacky way with `<filter>` but no padding, gradient, etc',
+			note: 'Hacky way with <filter> but no padding, gradient, etc',
 			link: 'https://svelte.dev/playground/6713b04bc8274b6dbf6b7487fdd80404?version=5.28.2'
 		},
 		canvas: {
@@ -380,7 +386,8 @@ export const other = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: false,
+			note: "Drawn within its canvas: tick labels at the plot's edge can be clipped"
 		}
 	},
 	{
@@ -437,11 +444,11 @@ export const other = [
 		},
 		svg: {
 			support: false,
-			note: 'Faux 3D with `isometric`'
+			note: 'Faux 3D with isometric'
 		},
 		canvas: {
 			support: false,
-			note: 'Faux 3D with `isometric`'
+			note: 'Faux 3D with isometric'
 		},
 		webgl: {
 			support: true
@@ -460,7 +467,8 @@ export const other = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: true,
+			note: 'Inside a Group'
 		}
 	}
 ];

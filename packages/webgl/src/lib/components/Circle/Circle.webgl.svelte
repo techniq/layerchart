@@ -3,7 +3,9 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { CircleGeometry, Color, SphereGeometry } from 'three';
+  import { createDataMotionMap } from 'layerchart/utils/motion.svelte';
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createInstances, ringGeometry } from '../../utils/instances.svelte.js';
@@ -21,6 +23,8 @@
     class: className,
     opacity = 1,
     tooltip = false,
+    motion,
+    key = (_d: any, i: number) => i,
   }: CircleProps = $props();
 
   const ctx = getChartContext();
@@ -40,13 +44,35 @@
   /** With rows (`data`, or props reading the chart's), as the core `Circle` */
   const dataMode = $derived(data != null || [cx, cy, r].some((p) => isDataProp(p)));
 
-  /** Each row's circle: its center, radius, and height */
-  const circles = $derived(
-    (dataMode ? markRows(ctx, data, cx, cy, r) : [undefined]).flatMap((d) => {
+  /** Each row's circle as asked: its center, radius, and height */
+  const targets = $derived(
+    (dataMode ? markRows(ctx, data, cx, cy, r) : [undefined]).flatMap((d, i) => {
       const [x, y] = positionOf(ctx, cx, cy, d);
       const radius = resolveDataProp(r, d, ctx.rScale, 1);
       if (![x, y, radius].every(Number.isFinite) || radius <= 0) return [];
-      return [{ d, x, y, z: z == null ? 0 : ctx.heightOf(d, z)[1], radius }];
+      return [{ d, key: key(d, i), x, y, z: z == null ? 0 : ctx.heightOf(d, z)[1], radius }];
+    })
+  );
+
+  // Easing to where they're asked to be, as the core `Circle` (ex. a highlight springing from
+  // row to row), each by its `key`
+  const motionMap = createDataMotionMap(untrack(() => motion));
+  if (motionMap) {
+    $effect(() => {
+      const active = new Set<unknown>();
+      for (const t of targets) {
+        active.add(t.key);
+        untrack(() => motionMap.update(t.key, { x: t.x, y: t.y, r: t.radius }));
+      }
+      untrack(() => motionMap.cleanup(active));
+    });
+  }
+
+  /** Each row's circle where it is now */
+  const circles = $derived(
+    targets.map((t) => {
+      const now = motionMap?.get(t.key);
+      return now ? { ...t, x: now.x, y: now.y, radius: now.r } : t;
     })
   );
 

@@ -59,9 +59,12 @@ export type ArcProps = {
   trackCornerRadius?: number;
   /** @default padAngle */
   trackPadAngle?: number;
-  /** The center across, in pixels.  Defaults to the plot's center. */
+  /**
+   * The center across, in pixels.  Defaults to the plot's center, or inside a `Group` (or a
+   * centered layer) to its origin, as the core `Arc`.
+   */
   x?: number;
-  /** The center down, in pixels.  Defaults to the plot's center. */
+  /** The center down, in pixels.  Defaults as `x`. */
   y?: number;
   /**
    * How tall it stands, as the core `Arc` on an `isometric` chart: pixels, or a

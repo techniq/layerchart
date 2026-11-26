@@ -52,6 +52,7 @@
 				{@const { points, rotate, r, z, fill } = shapeOf(node)}
 				<Polygon cx={node.x} cy={node.y} {r} {points} {rotate} {z} {fill} cornerRadius={2} />
 				<Text
+					verticalAnchor="middle"
 					x={node.x}
 					y={node.y}
 					z={z + 14}

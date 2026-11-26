@@ -82,10 +82,18 @@ export class ColorResolver {
     const plain = getComputedStyle(this.#plain);
     const set = (key: 'fill' | 'stroke' | 'strokeWidth') =>
       style[key] !== plain[key] ? style[key] : null;
+    /**
+     * A color the classes set as LayerChart's do for their marks (ex. `.lc-highlight-area`'s
+     * `--fill-color`), which its SVG primitives read
+     */
+    const variable = (name: '--fill-color' | '--stroke-color') => {
+      const value = style.getPropertyValue(name).trim();
+      return value && value !== plain.getPropertyValue(name).trim() ? value : null;
+    };
     const strokeWidth = set('strokeWidth');
     return {
-      fill: set('fill'),
-      stroke: set('stroke'),
+      fill: set('fill') ?? variable('--fill-color'),
+      stroke: set('stroke') ?? variable('--stroke-color'),
       strokeWidth: strokeWidth == null ? null : parseFloat(strokeWidth),
       opacity: Number(style.opacity) * Number(style.fillOpacity || 1),
       blend: style.mixBlendMode && style.mixBlendMode !== 'normal' ? style.mixBlendMode : null,

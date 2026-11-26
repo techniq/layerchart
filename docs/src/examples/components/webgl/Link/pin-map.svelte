@@ -74,6 +74,7 @@
 			/>
 			<Points data={pins} x="x" y="y" z="population" r={5} fill="var(--color-primary)" tooltip />
 			<Text
+				verticalAnchor="middle"
 				x={at(largest)[0]}
 				y={at(largest)[1]}
 				z={context.zScale(largest.population) + 24}

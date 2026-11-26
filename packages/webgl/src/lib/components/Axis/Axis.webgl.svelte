@@ -294,6 +294,7 @@
       z={l.z}
       value={l.text}
       textAnchor={anchorOf(l)}
+      verticalAnchor="middle"
       fontSize={sizeOf(l)}
       fontWeight={weightOf(l)}
       fill={fillOf(l)}

@@ -130,6 +130,11 @@
       "svelte": "./dist/graph.js",
       "default": "./dist/graph.js"
     },
+    "./base": {
+      "types": "./dist/base.d.ts",
+      "svelte": "./dist/base.js",
+      "default": "./dist/base.js"
+    },
     "./svg": {
       "types": "./dist/svg.d.ts",
       "svelte": "./dist/svg.js",

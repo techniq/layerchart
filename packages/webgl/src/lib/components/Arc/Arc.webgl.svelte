@@ -8,7 +8,7 @@
   import { getChartContext } from 'layerchart';
   import { createMotion } from 'layerchart/utils/motion.svelte';
 
-  import { getSceneContext } from '../../contexts/scene.svelte.js';
+  import { getParent, getSceneContext } from '../../contexts/scene.svelte.js';
   import { createMerged, type MergedItem } from '../../utils/merged.svelte.js';
   import { rowColor } from '../../utils/marks.js';
   import { extrude, ShapeContext } from '../../utils/shapes.js';
@@ -46,6 +46,12 @@
   }: ArcProps = $props();
 
   const ctx = getChartContext();
+  /**
+   * Where an arc without `x` / `y` is centered: inside a `Group` (or a centered layer), its
+   * origin, as the core `Arc`'s; else the plot's center
+   */
+  const inGroup = getParent() != null;
+  const origin = $derived(inGroup ? { x: 0, y: 0 } : { x: ctx.width / 2, y: ctx.height / 2 });
   const scene = getSceneContext();
   /** What its `class` sets, where its props don't say */
   const look = $derived(scene.style(className));
@@ -90,8 +96,8 @@
     colors: { fill: string | null; stroke: string | null }
   ): MergedItem {
     const middle = (start + (endAngle ?? radians(range[1]))) / 2;
-    const cx = (x ?? ctx.width / 2) + Math.sin(middle) * offset;
-    const cy = (y ?? ctx.height / 2) - Math.cos(middle) * offset;
+    const cx = (x ?? origin.x) + Math.sin(middle) * offset;
+    const cy = (y ?? origin.y) - Math.cos(middle) * offset;
     const context = new ShapeContext();
     // `d3.arc` measures clockwise from 12 o'clock, around `(0, 0)`
     d3Arc<any>()

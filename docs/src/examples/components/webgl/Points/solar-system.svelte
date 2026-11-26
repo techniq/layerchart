@@ -281,6 +281,7 @@
 				<!-- Each name a little above its planet, however large it's drawn -->
 				{#each planets.filter((p) => named.has(p.name)) as planet (planet.name)}
 					<Text
+						verticalAnchor="middle"
 						x={context.xScale(planet.x)}
 						y={context.yScale(planet.y)}
 						z={Number(context.zScale(planet.z)) + radiusOf(planet) + 10}
