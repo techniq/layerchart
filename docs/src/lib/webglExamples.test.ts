@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { toWebGL } from '../../vite-plugin-webgl-examples';
+import { isNativeWebGL, toWebGL } from '../../vite-plugin-webgl-examples';
 
 const webgl = new Set(['Axis', 'Chart', 'Layer', 'Points', 'GeoPath', 'Tooltip']);
 
@@ -54,5 +54,19 @@ describe('toWebGL', () => {
 			"\timport { Chart, Layer, Points } from 'layerchart';\n\timport Marks from './Marks.svelte';"
 		);
 		expect(toWebGL(source, webgl)).toBeNull();
+	});
+});
+
+describe('isNativeWebGL', () => {
+	it('is an example written with `@layerchart/webgl`, which draws with WebGL whatever the layer', () => {
+		expect(
+			isNativeWebGL(example("\timport { Chart, WebGL, Points } from '@layerchart/webgl';"))
+		).toBe(true);
+		expect(isNativeWebGL(example("\timport { Points } from '@layerchart/webgl/webgl';"))).toBe(
+			true
+		);
+		expect(isNativeWebGL(example("\timport { Chart, Layer, Points } from 'layerchart';"))).toBe(
+			false
+		);
 	});
 });

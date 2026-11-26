@@ -1,7 +1,8 @@
 ---
 description: 'Mark raising a grid of values into a lit surface in a WebGL chart, with optional wireframe and contour lines.'
-category: WebGL surfaces
+category: marks
 related: [Raster, Contour, guides/webgl]
+layers: [webgl]
 components:
   - { name: webgl/Surface, label: Surface }
 ---

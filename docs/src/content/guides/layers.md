@@ -58,10 +58,10 @@ WebGL layers are drawn by the separate `@layerchart/webgl` package, whose `WebGL
 
 Its marks share their core namesakes' props, and its `Layer` adds `type="webgl"`, so a chart imported from `@layerchart/webgl` moves between all four layers (see [Switching layers](/docs/guides/webgl#switching-layers)). Compound marks (`Pie`, `Labels`, `Calendar`, `BoxPlot`, ...) are LayerChart's own, drawn with its WebGL marks. Examples on these pages draw with WebGL from the layer toggle where they look the same; the rest draw with Canvas, as they use something WebGL doesn't draw yet:
 
-- `Path`, and the marks built on it (`Trail`, `Violin`, `Ribbon`, Sankey and Dagre links), `Ellipse`, and `Image`
-- rounded corners (`radius`, `rounded`), dashed strokes, and path markers
+- `Ellipse`, `Image`, and Sankey and Dagre links
+- rounded corners on a 3D chart (flat `Bars` and `Rect` round theirs), dashed strokes, and path markers
 - radial charts' `Spline`, `Grid`, and `Axis`
-- some `Axis` tick-label options (rotated, multiline, occlusion) and labels past the plot's edge
+- some `Axis` tick-label options (multiline, occlusion) and labels past the plot's edge
 
 > Most browsers limit the number of concurrent WebGL contexts by page/domain (references: [Chromium](https://issues.chromium.org/issues/40543269), [Rive](https://rive.app/docs/runtimes/web/canvas-vs-webgl)) and is why some libraries such as [μPlot](https://github.com/leeoniya/uPlot) do not leverage it. A `WebGL` layer gives up its context when it's scrolled well off screen, so a page can have more of them than the limit, just not all on screen at once.
 

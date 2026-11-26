@@ -450,7 +450,7 @@ On a chart with a [`view`](/docs/guides/isometric#dragging-the-view) to turn, `r
 />
 ```
 
-Without them, a drag tips the view from `0` (seen from directly above) to edge on. An `isometric` floor can't go further, but a 3D view (`@layerchart/webgl`) can: `tiltExtent: [0, 180]` turns it on round to look from beneath, ex. a [globe](/docs/components/webgl/GeoRaster)'s south pole. The view's own `rotate` and `tilt` aren't limited, only where a drag takes them.
+Without them, a drag tips the view from `0` (seen from directly above) to edge on. An `isometric` floor can't go further, but a 3D view (`@layerchart/webgl`) can: `tiltExtent: [0, 180]` turns it on round to look from beneath, ex. a [globe](/docs/components/GeoRaster#webgl)'s south pole. The view's own `rotate` and `tilt` aren't limited, only where a drag takes them.
 
 On a globe projection (`mode: 'projection'`), they bound its yaw and pitch instead: `tiltExtent: [-90, 90]` stops it at the poles (see [Globe rotation constraints](#globe-rotation-constraints)).
 

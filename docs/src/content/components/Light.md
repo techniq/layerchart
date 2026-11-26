@@ -1,7 +1,8 @@
 ---
 description: 'Light for a WebGL layer: directional (like the sun), a point (like a star), or ambient, with optional shadows.'
-category: WebGL
+category: other
 related: [guides/webgl]
+layers: [webgl]
 components:
   - { name: webgl/Light, label: Light }
 ---
@@ -32,8 +33,8 @@ A `point` light shines every way from a place in the plot (`x`, `y`, and `z`, in
 <Light type="point" x={sun[0]} y={sun[1]} z={0} />
 ```
 
-:example{ component="webgl/Points" name="solar-system" }
+:example{ component="Points" name="solar-system" }
 
 ## Shadows on a map
 
-:example{ component="webgl/Bin" name="state-population" }
+:example{ component="Bin" name="state-population" }

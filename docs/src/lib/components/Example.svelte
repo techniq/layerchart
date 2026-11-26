@@ -46,11 +46,11 @@
 
 	const settings = getSettings();
 	import { movable } from '$lib/actions/movable';
-	import { webglExamples } from 'virtual:webgl-examples';
+	import { nativeWebGLExamples, webglExamples } from 'virtual:webgl-examples';
 	import LayerSetting from '$lib/components/LayerSetting.svelte';
 
 	let {
-		// The page's component: its folder under `src/examples/components` (ex. `webgl/Points`)
+		// The page's component: its folder under `src/examples/components` (ex. `Points`)
 		component = (page.data.componentName as string | undefined) ?? page.params.name!,
 		name,
 		path,
@@ -131,8 +131,12 @@
 		};
 	});
 	const example = $derived(webglExample ?? loadedExample);
+	/** Written with `@layerchart/webgl`, so drawn with WebGL whatever the layer */
+	const nativeWebGL = $derived(
+		!!component && !!name && !path && nativeWebGLExamples.has(`${component}/${name}`)
+	);
 	/** Drawn with Canvas while the layer is `webgl`: no WebGL version (or not loaded yet) */
-	const canvasInstead = $derived(settings.layer === 'webgl' && !webglExample);
+	const canvasInstead = $derived(settings.layer === 'webgl' && !webglExample && !nativeWebGL);
 
 	/**
 	 * Code beside the preview rather than below it. Only offered with room for both, and
@@ -507,7 +511,7 @@
 							<MenuItem icon={LucideImageDown} on:click={() => openPngDialog('export')}>
 								Export as PNG
 							</MenuItem>
-							{#if settings.layer !== 'canvas' && settings.layer !== 'webgl'}
+							{#if settings.layer !== 'canvas' && settings.layer !== 'webgl' && !nativeWebGL}
 								<MenuItem icon={LucideCopy} on:click={handleSvgCopy}>Copy as SVG</MenuItem>
 								<MenuItem icon={LucideImageDown} on:click={handleSvgDownload}>
 									Export as SVG
@@ -517,7 +521,7 @@
 					</Button>
 				</Toggle>
 
-				{#if settings.layer === 'webgl' && !loadWebGL}
+				{#if settings.layer === 'webgl' && !loadWebGL && !nativeWebGL}
 					<span class="text-xs text-surface-content/50 ml-2"
 						>No WebGL version: drawn with Canvas</span
 					>

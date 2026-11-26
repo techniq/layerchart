@@ -3,6 +3,9 @@ description: Primitive component which renders a multi-sided shape on a chart to
 category: primitives
 layers: [svg, canvas]
 related: []
+components:
+  - { name: Polygon }
+  - { name: webgl/Polygon, label: Polygon (WebGL) }
 ---
 
 ## Usage
@@ -34,3 +37,11 @@ Use a threshold scale to color items based on value ranges.
 ## Isometric
 
 On an [isometric](/docs/guides/isometric) chart, `z` stands a polygon up into a prism. See the [isometric tree](/docs/components/Tree#isometric).
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), it stands up by its z. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+A polygon per row, with the core [Polygon](/docs/components/Polygon) props: a regular polygon (or star, with `inset`) of `points` corners about `cx` / `cy` with radius `r`, or explicit `points` in pixels, `rotate`d, stretched, skewed, and rounded by `cornerRadius`. `z` stands it up, as on an `isometric` chart; without one it lies flat.
+
+:example{ name="tree" }

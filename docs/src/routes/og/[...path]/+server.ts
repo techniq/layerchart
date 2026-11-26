@@ -64,9 +64,13 @@ function sentence(text: string) {
 	return words[0].toUpperCase() + words.slice(1);
 }
 
+/** LayerChart's catalog of `slug`, else `@layerchart/webgl`'s (for its own, ex. `Surface`) */
 async function catalogOf(slug: string) {
-	const path = `/src/examples/catalog/${slug}.json`;
-	return path in catalogs ? await catalogs[path]() : null;
+	const path = [
+		`/src/examples/catalog/${slug}.json`,
+		`/src/examples/catalog/webgl/${slug}.json`
+	].find((path) => path in catalogs);
+	return path ? await catalogs[path]() : null;
 }
 
 /**
@@ -114,10 +118,8 @@ async function draw(path: string, load: Load): Promise<CardContent | null> {
 		example ? await screenshot(example.component, example.name, load) : null;
 
 	if (section === 'components') {
-		// `webgl/Points` is `@layerchart/webgl`'s, whose names repeat LayerChart's
-		const webgl = rest[0] === 'webgl';
-		const [name, example] = webgl ? rest.slice(1) : rest;
-		const slug = webgl ? `webgl/${name}` : name;
+		const [name, example] = rest;
+		const slug = name;
 		const component = allComponents.find((c) => c.slug === slug);
 		if (!component) return null;
 
@@ -127,14 +129,14 @@ async function draw(path: string, load: Load): Promise<CardContent | null> {
 		if (example && example !== 'examples') {
 			if (!catalog?.examples.some((e) => e.name === example)) return null;
 			return {
-				eyebrow: `${webgl ? 'WebGL ' : ''}${title} example`,
+				eyebrow: `${title} example`,
 				title: sentence(example),
 				shot: await screenshot(slug, example, load)
 			};
 		}
 
 		const category = sentence(component.category ?? 'Component');
-		const label = webgl ? `WebGL · ${category}` : category;
+		const label = category;
 		const lead =
 			firstExample(component.content, slug) ??
 			(catalog?.examples[0] ? { component: slug, name: catalog.examples[0].name } : null);

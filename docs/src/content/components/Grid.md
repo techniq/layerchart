@@ -3,6 +3,9 @@ description: Commonly used component which draws horizontal and vertical lines r
 category: common
 layers: [svg, canvas, html]
 related: [Axis, Rule]
+components:
+  - { name: Grid }
+  - { name: webgl/Grid, label: Grid (WebGL) }
 ---
 
 ## Usage
@@ -68,3 +71,22 @@ Respects padding
 ### Remove default tick count
 
 :example{ name="tick-count-null" } -->
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), it lines the plot box's floor and back walls. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+The floor and the two walls behind the plot, with lines at the scales' ticks. The walls move to the far sides as the view turns.
+
+```svelte
+<WebGL>
+	<Grid />
+	<Points />
+</WebGL>
+```
+
+:example{ component="Points" name="scatter-3d" }
+
+Set `x`, `y`, or `z` to `false` to leave out a direction's lines (ex. `<Grid z={false} />`).
+
+:example{ component="Bin" name="hexbin" }

@@ -7,4 +7,7 @@ declare module 'virtual:webgl-examples' {
 		string,
 		() => Promise<{ component: Component; source: string }>
 	>;
+
+	/** `<component>/<name>` of the examples written with `@layerchart/webgl` (ex. `Points/galaxy`) */
+	export const nativeWebGLExamples: Set<string>;
 }

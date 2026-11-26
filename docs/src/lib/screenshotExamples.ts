@@ -3,14 +3,14 @@ import type { Examples } from '@layerstack/docs/examples';
 // Use glob-based imports for screenshot generation (needs to iterate all examples)
 import { componentExamples, componentSources } from '@layerstack/docs/examples-glob';
 
-/** Every example of `componentName` (ex. `Area`, or `webgl/Points` a folder down) */
+/** Every example of `componentName` (ex. `Area`) */
 export async function loadScreenshotExamples(componentName: string) {
 	// Load all examples for this component directly from the glob imports
 	const examples: Examples = {};
 
 	for (const path in componentExamples) {
 		// Match paths like /src/examples/components/Area/basic.svelte
-		const match = path.match(/\/src\/examples\/components\/(.+)\/([^/]+)\.svelte$/);
+		const match = path.match(/\/src\/examples\/components\/([^/]+)\/([^/]+)\.svelte$/);
 		if (match && match[1] === componentName) {
 			const [, comp, exampleName] = match;
 

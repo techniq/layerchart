@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 	import type { Component } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { getSettings, isometric } from 'layerchart';
@@ -15,7 +14,6 @@
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideSettings from '~icons/lucide/settings';
 	import LucideArrowUpToLine from '~icons/lucide/arrow-up-to-line';
-	import LucideBox from '~icons/lucide/box';
 
 	type Crumb = { label: string; href?: string };
 	type TocItem = { id: string; text: string; level: number };
@@ -27,7 +25,6 @@
 		layers = [],
 		metadata = {},
 		showOpenWith = true,
-		counterpart,
 		icon
 	}: {
 		title: string;
@@ -38,8 +35,6 @@
 		/** Passed to `OpenWithButton` */
 		metadata?: Record<string, any>;
 		showOpenWith?: boolean;
-		/** The same component drawn the other way (LayerChart's, or `@layerchart/webgl`'s), whose layers join the toggle and switch to it */
-		counterpart?: { href: string; layers: string[] } | null;
 		/** Docs section icon (matching the sidebar), shown on links to parent pages */
 		icon?: Component<{ class?: string }>;
 	} = $props();
@@ -49,11 +44,9 @@
 	const layerOrder = ['svg', 'canvas', 'html', 'webgl'];
 	const layerLabels: Record<string, string> = { webgl: 'WebGL' };
 	const layerLabel = (layer: string) => layerLabels[layer] ?? toTitleCase(layer);
-	// This page's layers, then the counterpart's (switching to its page), in a fixed order
+	// This page's layers, in a fixed order
 	const toggleLayers = $derived(
-		[...layers, ...(counterpart?.layers.filter((layer) => !layers.includes(layer)) ?? [])].sort(
-			(a, b) => layerOrder.indexOf(a) - layerOrder.indexOf(b)
-		)
+		[...layers].sort((a, b) => layerOrder.indexOf(a) - layerOrder.indexOf(b))
 	);
 	// A single layer of this page's has nothing to toggle: show it selected
 	const selectedLayer = {
@@ -61,19 +54,9 @@
 			return layers.length === 1 ? layers[0] : settings.layer;
 		},
 		set current(value) {
-			// A layer of this page's is a setting (`webgl` included, for its examples drawn with
-			// WebGL), and the counterpart's another page
-			if (value !== 'webgl' || layers.includes(value))
-				settings.layer = value as typeof settings.layer;
-			if (counterpart && !layers.includes(value)) goto(counterpart.href);
+			settings.layer = value as typeof settings.layer;
 		}
 	};
-	// With WebGL a setting here, the toggle stays on the page: the counterpart's is a link beside it
-	const counterpartLink = $derived(
-		counterpart && layers.includes('webgl') && counterpart.layers.includes('webgl')
-			? counterpart.href
-			: undefined
-	);
 	const origin = $derived(dev ? 'https://layerchart.com' : page.url.origin);
 	const url = $derived(`${origin}${page.url.pathname}`);
 	const toc = $derived<TocItem[]>(page.data.metadata?.toc ?? []);
@@ -241,7 +224,7 @@
 					}}
 				>
 					{#each toggleLayers as layer, i}
-						<!-- WebGL is a separate package (and page), set apart from the core layers -->
+						<!-- WebGL is a separate package, set apart from the core layers -->
 						{#if layer === 'webgl' && i > 0}
 							<span
 								aria-hidden="true"
@@ -299,19 +282,6 @@
 						</Menu>
 					</div>
 				</Toggle>
-
-				{#if counterpartLink}
-					<Tooltip title="{title} in @layerchart/webgl" offset={6}>
-						<Button
-							iconOnly
-							icon={LucideBox}
-							href={counterpartLink}
-							size="sm"
-							class="text-surface-content/70"
-							aria-label="{title} in @layerchart/webgl"
-						/>
-					</Tooltip>
-				{/if}
 			{/if}
 			<Toggle let:on={open} let:toggle let:toggleOff>
 				<Tooltip title="Settings">

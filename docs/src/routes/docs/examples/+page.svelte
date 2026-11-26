@@ -14,7 +14,6 @@
 	import { cls } from '@layerstack/tailwind';
 
 	import { browser } from '$app/environment';
-	import { webglCategories } from '$lib/webglCategories.js';
 
 	let { data } = $props();
 
@@ -167,8 +166,7 @@
 					'fill',
 					'clipping',
 					'layers',
-					'other',
-					...Object.keys(webglCategories)
+					'other'
 				].indexOf(value)
 			)
 		);

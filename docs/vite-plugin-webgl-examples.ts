@@ -6,13 +6,14 @@ import type { Plugin } from 'vite';
  * LayerChart's examples drawn with WebGL, for the layer toggle's `WebGL`.
  *
  * An example in `include` can be when it draws in a `<Layer>` with no `type` (so in the chart's
- * `settings.layer`) and every component it imports from `layerchart` (or `layerchart/geo`) is
+ * `settings.layer`) and every component it imports from `layerchart` (or `layerchart/geo`, `layerchart/graph`) is
  * one `@layerchart/webgl` exports too.  Its WebGL version (`<example>.svelte?webgl`) imports those
  * from `@layerchart/webgl` instead, whose `Layer` draws a `<WebGL>` scene for `settings.layer`
  * `webgl`, and whose marks draw their WebGL versions in it.
  *
  * `virtual:webgl-examples` lists them, as `<component>/<name>` (ex. `Points/basic`) to a loader
- * of the version's component and source.
+ * of the version's component and source, and `nativeWebGLExamples` those written with
+ * `@layerchart/webgl` (ex. `Points/galaxy`), which draw with WebGL whatever the layer toggle.
  */
 export function webglExamples({
 	examplesDir = 'src/examples/components',
@@ -47,16 +48,19 @@ export function webglExamples({
 			if (id === RESOLVED) {
 				const dir = path.resolve(root, examplesDir);
 				const entries: string[] = [];
+				const native: string[] = [];
 				for (const component of fs.readdirSync(dir).sort()) {
-					// `@layerchart/webgl`'s own examples
-					if (component === 'webgl') continue;
 					const componentDir = path.join(dir, component);
 					if (!fs.statSync(componentDir).isDirectory()) continue;
 					for (const file of fs.readdirSync(componentDir).sort()) {
 						if (!file.endsWith('.svelte')) continue;
 						const key = `${component}/${file.slice(0, -'.svelte'.length)}`;
-						if (include && !include.includes(key)) continue;
 						const source = fs.readFileSync(path.join(componentDir, file), 'utf-8');
+						if (isNativeWebGL(source)) {
+							native.push(key);
+							continue;
+						}
+						if (include && !include.includes(key)) continue;
 						if (!toWebGL(source, webglNames)) continue;
 						const url = `/${examplesDir}/${component}/${file}`;
 						entries.push(
@@ -64,7 +68,10 @@ export function webglExamples({
 						);
 					}
 				}
-				return `export const webglExamples = {\n${entries.join(',\n')}\n};\n`;
+				return (
+					`export const webglExamples = {\n${entries.join(',\n')}\n};\n` +
+					`export const nativeWebGLExamples = new Set(${JSON.stringify(native)});\n`
+				);
 			}
 
 			const [file, query] = id.split('?');
@@ -104,7 +111,12 @@ function webglExports(index: string) {
 	return names;
 }
 
-const IMPORT = /^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo)';?$/gm;
+/** Written with `@layerchart/webgl` (ex. a 3D chart in a `<WebGL>` layer) */
+export function isNativeWebGL(source: string) {
+	return /from '@layerchart\/webgl(\/webgl)?'/.test(source);
+}
+
+const IMPORT = /^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo|layerchart\/graph)';?$/gm;
 
 /**
  * An example's source with its components imported from `@layerchart/webgl`, or `null` if it

@@ -55,6 +55,6 @@
 		<Axis placement="bottom" />
 		<Axis placement="left" />
 		<Axis placement="back" />
-		<Area opacity={0.75} line />
+		<Area opacity={0.75} line={{ strokeWidth: 2 }} />
 	</WebGL>
 </Chart>

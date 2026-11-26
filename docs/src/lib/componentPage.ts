@@ -1,12 +1,10 @@
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
 import type { Examples } from '@layerstack/docs/examples';
-import { allComponents } from 'content-collections';
 import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/content.js';
 
 /**
  * A component page's data, for the component named `componentName`: its slug, and the folder its
- * examples are in under `src/examples/components` (ex. `Points`, or `webgl/Points` for
- * `@layerchart/webgl`'s, whose names repeat LayerChart's)
+ * examples are in under `src/examples/components` (ex. `Points`)
  */
 export async function loadComponentPage(
 	componentName: string,
@@ -24,11 +22,15 @@ export async function loadComponentPage(
 
 	const { PageComponent, metadata } = await getMarkdownComponent(componentName);
 
-	// Load the catalog file for the current component
-	const catalogPath = `/src/examples/catalog/${componentName}.json`;
-	const loaded: ComponentCatalog | null =
-		catalogPath in allCatalogs ? ((await allCatalogs[catalogPath]()) as ComponentCatalog) : null;
-	const catalog = loaded && componentName.startsWith('webgl/') ? webglCatalog(loaded) : loaded;
+	// Load the catalog file for the current component: LayerChart's, else `@layerchart/webgl`'s (for
+	// its own, ex. `Surface`)
+	const catalogPath = [
+		`/src/examples/catalog/${componentName}.json`,
+		`/src/examples/catalog/webgl/${componentName}.json`
+	].find((path) => path in allCatalogs);
+	const catalog: ComponentCatalog | null = catalogPath
+		? ((await allCatalogs[catalogPath]()) as ComponentCatalog)
+		: null;
 
 	// Eagerly load examples referenced in the markdown content
 	// Only examples explicitly in the markdown are included (not the full catalog)
@@ -59,67 +61,6 @@ export async function loadComponentPage(
 		PageComponent,
 		metadata,
 		catalog,
-		examples,
-		counterpart: counterpartOf(componentName)
+		examples
 	};
-}
-
-/**
- * Counterparts not named alike: `Chart` and `Layer` draw in WebGL through its `WebGL` layer, whose
- * page leads back to `Layer`
- */
-const counterpartAliases: Record<string, string> = {
-	Chart: 'webgl/WebGL',
-	Layer: 'webgl/WebGL',
-	'webgl/WebGL': 'Layer'
-};
-
-/**
- * The same-named component (or an alias's) on the other side, to switch to: `@layerchart/webgl`'s for one of
- * LayerChart's (ex. `Points` ↔ `webgl/Points`), and LayerChart's for one of its, with its layers
- */
-function counterpartOf(componentName: string): { href: string; layers: string[] } | null {
-	const webgl = componentName.startsWith('webgl/');
-	const name =
-		counterpartAliases[componentName] ??
-		(webgl ? componentName.slice(6) : `webgl/${componentName}`);
-	const other = allComponents.find((c) => c.slug === name);
-	if (!other) return null;
-	return {
-		href: `/docs/components/${name}`,
-		layers: webgl ? ((other as { layers?: string[] }).layers ?? []) : ['webgl']
-	};
-}
-
-/**
- * A `@layerchart/webgl` catalog (generated from its own components and examples) with its
- * components named as their pages are, `webgl/<name>`, so its examples load from their folder and
- * its links go to the WebGL pages rather than LayerChart's same-named ones
- */
-function webglCatalog(catalog: ComponentCatalog): ComponentCatalog {
-	const pages = new Set(
-		allComponents.filter((c) => c.slug.startsWith('webgl/')).map((c) => c.slug.slice(6))
-	);
-	const rename = (name: string) => (pages.has(name) ? `webgl/${name}` : name);
-	const repath = (path: string) =>
-		path.replace(/^\/docs\/components\/([^/]+)\//, (whole, name) =>
-			pages.has(name) ? `/docs/components/webgl/${name}/` : whole
-		);
-	return {
-		...catalog,
-		component: rename(catalog.component),
-		examples: catalog.examples.map((example) => ({
-			...example,
-			path: example.path && repath(example.path),
-			components: example.components?.map((usage) => ({
-				...usage,
-				component: rename(usage.component)
-			}))
-		})),
-		usage: catalog.usage?.map((usage) => ({
-			...usage,
-			component: rename(usage.component),
-			path: usage.path && repath(usage.path)
-		}))
-	} as ComponentCatalog;
 }

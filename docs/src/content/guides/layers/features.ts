@@ -72,8 +72,8 @@ export const graphics = [
 			support: true
 		},
 		webgl: {
-			support: false,
-			note: "No Path primitive yet: Arc, Area, Spline, and GeoPath draw their own shapes, and marks built on Path (ex. Trail, Violin, Ribbon, Sankey links) aren't drawn"
+			support: true,
+			note: 'Path data lies on the floor, filled and outlined (ex. Trail, Violin, Density, Ribbon); no markers'
 		}
 	},
 	{
@@ -282,7 +282,8 @@ export const text = [
 			support: false
 		},
 		webgl: {
-			support: false
+			support: false,
+			note: 'Placed at its offset along the path and turned its way, not bent along it'
 		}
 	},
 	{

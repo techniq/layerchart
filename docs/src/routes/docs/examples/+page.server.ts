@@ -4,9 +4,9 @@ import type { ComponentCatalog } from '@layerstack/docs/catalog';
 import { metadata } from './metadata';
 
 interface ExampleInfo {
-	/** The component's slug, as its route and screenshots use it (ex. `Area`, `webgl/Area`) */
+	/** The component's slug, as its route and screenshots use it (ex. `Area`) */
 	component: string;
-	/** What to call the component (ex. `Area`, `Area (WebGL)`) */
+	/** What to call the component (ex. `Area`) */
 	label: string;
 	category?: string;
 	examples: Array<{
@@ -19,7 +19,8 @@ interface ExampleInfo {
 }
 
 export async function load() {
-	// `@layerchart/webgl`'s catalogs sit in `webgl/`, as their names repeat LayerChart's (ex. `Area`)
+	// `@layerchart/webgl`'s catalogs sit in `webgl/`, used for its own components (ex. `Surface`):
+	// LayerChart's catalogs list every example of theirs, whichever package draws it
 	const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/**/*.json', {
 		eager: true,
 		import: 'default'
@@ -34,17 +35,25 @@ export async function load() {
 	}
 
 	// Build components list from catalog data
+	const slugOf = (path: string) => path.replace(/^.*\//, '').replace(/\.json$/, '');
+	const core = new Set(
+		Object.keys(catalogModules)
+			.filter((path) => !path.includes('/catalog/webgl/'))
+			.map(slugOf)
+	);
 	const components: ExampleInfo[] = Object.entries(catalogModules)
-		.filter(([, catalog]) => catalog.examples.length > 0)
+		.filter(([path, catalog]) => {
+			if (!catalog.examples.length) return false;
+			// `@layerchart/webgl`'s own only, with a page of their own
+			if (!path.includes('/catalog/webgl/')) return true;
+			const slug = slugOf(path);
+			return !core.has(slug) && componentCategoryMap.has(slug);
+		})
 		.map(([path, catalog]) => {
-			const slug = path.replace('/src/examples/catalog/', '').replace(/\.json$/, '');
-			const isWebGL = slug.startsWith('webgl/');
+			const slug = slugOf(path);
 			return {
 				component: slug,
-				label:
-					isWebGL && catalog.component !== 'WebGL'
-						? `${catalog.component} (WebGL)`
-						: catalog.component,
+				label: catalog.component,
 				category: componentCategoryMap.get(slug),
 				examples: catalog.examples.map((example) => ({
 					name: example.name,
@@ -54,7 +63,6 @@ export async function load() {
 				}))
 			};
 		})
-		// Each WebGL component right after its LayerChart namesake
 		.sort((a, b) => a.label.localeCompare(b.label));
 
 	return {

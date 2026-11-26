@@ -2,6 +2,7 @@
 description: "Layer drawing its marks with WebGL (three.js), through the chart's perspective or orthographic view in 3D, or flat for many marks in 2D."
 category: layers
 related: [Layer, Canvas, guides/webgl, guides/isometric]
+layers: [webgl]
 components:
   - { name: webgl/WebGL, label: WebGL }
 ---
@@ -36,11 +37,11 @@ A `WebGL` layer draws the `@layerchart/webgl` marks inside it. The chart's `view
 
 Without a `view`, the layer is seen from directly above and drawn unshaded, each chart pixel where an `Svg` or `Canvas` layer would draw it, for charts with more marks than those keep up with.
 
-:example{ component="webgl/Points" name="scatter" }
+:example{ component="Points" name="scatter" }
 
 Only the marks need to be drawn by it. Here `Svg` layers draw the grid, axes, and highlight as on any chart, with the chart's tooltip finding the nearest point, and the `WebGL` layer the 100,000 points between them.
 
-:example{ component="webgl/Points" name="scatter-with-svg" }
+:example{ component="Points" name="scatter-with-svg" }
 
 ## Limits
 
