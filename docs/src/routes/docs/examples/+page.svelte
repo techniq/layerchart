@@ -1,6 +1,5 @@
 <script lang="ts">
 	import {
-		Button,
 		ScrollingValue,
 		SelectField,
 		TextField,
@@ -42,6 +41,21 @@
 	let params = useSearchParams(schema);
 
 	let columnCount = $state(typeof window !== 'undefined' && window.innerWidth > 800 ? 3 : 2);
+	/** Zooming in shows fewer, larger examples a row; out, more */
+	const zoomButtons = $derived([
+		{
+			label: 'Zoom in',
+			icon: LucideZoomIn,
+			disabled: columnCount <= 1,
+			onclick: () => (columnCount = Math.max(1, columnCount - 1))
+		},
+		{
+			label: 'Zoom out',
+			icon: LucideZoomOut,
+			disabled: columnCount >= 5,
+			onclick: () => (columnCount = Math.min(5, columnCount + 1))
+		}
+	]);
 
 	let visibleExamples = $derived.by(() => {
 		let filtered = data.components;
@@ -292,21 +306,21 @@
 			{/each}
 		</ToggleGroup>
 
-		<div class="flex gap-2">
-			<Button
-				icon={LucideZoomIn}
-				on:click={() => (columnCount = Math.max(1, columnCount - 1))}
-				variant="fill-outline"
-				class="size-9 border-surface-content/30 pt-1"
-				disabled={columnCount <= 1}
-			/>
-			<Button
-				icon={LucideZoomOut}
-				on:click={() => (columnCount = Math.min(5, columnCount + 1))}
-				variant="fill-outline"
-				class="size-9 border-surface-content/30 pt-1"
-				disabled={columnCount >= 5}
-			/>
+		<!-- A button group, matching the sort toggle beside it -->
+		<div class="grid grid-flow-col h-9 p-[2px] border border-surface-content/30 rounded-sm">
+			{#each zoomButtons as button (button.label)}
+				<Tooltip title={button.label} offset={6}>
+					<button
+						type="button"
+						class="grid place-items-center h-full w-8 rounded-sm text-surface-content/60 hover:text-primary hover:bg-primary/10 disabled:opacity-40 disabled:pointer-events-none"
+						disabled={button.disabled}
+						onclick={button.onclick}
+					>
+						<button.icon class="size-4" />
+						<span class="sr-only">{button.label}</span>
+					</button>
+				</Tooltip>
+			{/each}
 		</div>
 	</div>
 </div>

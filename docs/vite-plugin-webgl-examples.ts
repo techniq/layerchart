@@ -117,17 +117,30 @@ export function isNativeWebGL(source: string) {
 }
 
 const IMPORT =
-	/^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo|layerchart\/graph)';?$/gm;
+	/^([ \t]*)import \{([^}]*)\} from '(layerchart|layerchart\/geo|layerchart\/graph|layerchart\/hierarchy|layerchart\/force)';?$/gm;
+
+/** Layers, which draw in their own way whatever the toggle (ex. an `Html` layer of labels) */
+const LAYERS = new Set(['Svg', 'Canvas', 'Html']);
 
 /**
  * An example's source with its components imported from `@layerchart/webgl`, or `null` if it
  * can't draw with WebGL
  */
 export function toWebGL(source: string, webglNames: Set<string>): string | null {
-	// Drawn in the chart's layer: a `<Layer>` with no `type`, and no layer of its own
-	if (!/<Layer[\s>]/.test(source)) return null;
-	if (/<Layer\b[^>]*(\btype=|\{type\})/.test(source)) return null;
-	if (/<(Svg|Canvas|Html|WebGL)[\s>]/.test(source)) return null;
+	// Something drawn in the chart's layer (`settings.layer`): a `<Layer>` with no `type`, a
+	// simplified chart, or a `Chart` drawing its `marks` in its own.  Layers of a given type (ex.
+	// `<Layer type="html">` labels) draw as they do whatever the toggle, so they're kept.
+	const simplified = /<(ArcChart|AreaChart|BarChart|LineChart|PieChart|ScatterChart)[\s>/]/.test(
+		source
+	);
+	const layers = [...source.matchAll(/<Layer\b([^>]*)>/g)].map((m) => m[1]);
+	const untyped = layers.some((attrs) => !/\btype\s*=|\{type\}/.test(attrs));
+	// A type decided as it runs (ex. `type={layer}`) can't be told apart
+	if (layers.some((attrs) => /\btype=\{|\{type\}/.test(attrs))) return null;
+	const explicit = /<(Svg|Canvas|Html)[\s>]/.test(source);
+	const chartOnly = /<Chart[\s>]/.test(source) && !layers.length && !explicit;
+	if (/<WebGL[\s>]/.test(source)) return null;
+	if (!simplified && !untyped && !chartOnly) return null;
 	// Per-layer imports draw in their layer only
 	if (/from 'layerchart\/(svg|canvas|html)'/.test(source)) return null;
 	// Its own components could draw LayerChart's marks, which a WebGL scene doesn't
@@ -148,7 +161,12 @@ export function toWebGL(source: string, webglNames: Set<string>): string | null 
 				// A component `@layerchart/webgl` doesn't have would draw nothing in its scene (other
 				// names, ex. `ChartState` as a type, are fine)
 				const alias = specifier.split(/\s+as\s+/).pop()!;
-				if (!isType && /^[A-Z]/.test(name) && new RegExp(`<${alias}[\\s.>/]`).test(source))
+				if (
+					!isType &&
+					!LAYERS.has(name) &&
+					/^[A-Z]/.test(name) &&
+					new RegExp(`<${alias}[\\s.>/]`).test(source)
+				)
 					qualifies = false;
 				kept.push(specifier);
 			}
