@@ -110,6 +110,11 @@ describe('resolveDataProp', () => {
 });
 
 describe('resolveColorProp', () => {
+  it('passes a paint a Canvas layer resolved (a CanvasGradient or CanvasPattern) through', () => {
+    const gradient = { addColorStop() {} };
+    expect(resolveColorProp(gradient as any, { value: 1 }, null)).toBe(gradient);
+  });
+
   const data = { category: 'A', value: 42, color: '#ff0000' };
   const mockCScale = vi.fn((v: any) => (v === 'A' ? 'steelblue' : v === 'B' ? 'coral' : 'gray'));
 
