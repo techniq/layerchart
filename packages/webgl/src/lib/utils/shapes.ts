@@ -11,8 +11,20 @@ export class ShapeContext {
   readonly lines: [number, number][][] = [];
   #line: [number, number][] | null = null;
   #start: [number, number] | null = null;
+  /**
+   * Past a point that isn't finite (ex. a pole through a projection without a clip extent): the
+   * rest is left out, as an SVG path stops drawing at a value it can't read
+   */
+  #broken = false;
+
+  /** Whether drawing stops here, at values that aren't all finite */
+  #stops(...values: number[]) {
+    if (!this.#broken && !values.every(Number.isFinite)) this.#broken = true;
+    return this.#broken;
+  }
 
   moveTo(x: number, y: number) {
+    if (this.#stops(x, y)) return;
     this.path.moveTo(x, -y);
     this.#line = [[x, y]];
     this.lines.push(this.#line);
@@ -20,37 +32,45 @@ export class ShapeContext {
   }
 
   lineTo(x: number, y: number) {
+    if (this.#stops(x, y)) return;
     if (!this.#line) return this.moveTo(x, y);
     this.path.lineTo(x, -y);
     this.#line.push([x, y]);
   }
 
   closePath() {
+    if (this.#broken) return;
     (this.path.currentPath as Path | null)?.closePath();
     if (this.#line && this.#start) this.#line.push([...this.#start]);
   }
 
   quadraticCurveTo(cx: number, cy: number, x: number, y: number) {
+    if (this.#stops(cx, cy, x, y)) return;
     this.path.quadraticCurveTo(cx, -cy, x, -y);
     this.#line?.push([x, y]);
   }
 
   bezierCurveTo(c1x: number, c1y: number, c2x: number, c2y: number, x: number, y: number) {
+    if (this.#stops(c1x, c1y, c2x, c2y, x, y)) return;
     this.path.bezierCurveTo(c1x, -c1y, c2x, -c2y, x, -y);
     this.#line?.push([x, y]);
   }
 
   arc(x: number, y: number, r: number, a0: number, a1: number, ccw = false) {
+    if (this.#stops(x, y, r, a0, a1)) return;
     // Flipping `y` mirrors angles, and with them which way round the arc goes
     const start: [number, number] = [x + r * Math.cos(a0), y + r * Math.sin(a0)];
     if (!this.#line) this.moveTo(...start);
     else this.lineTo(...start);
     (this.path.currentPath as Path).absarc(x, -y, r, -a0, -a1, !ccw);
-    // Outlines follow the arc in steps
-    const sweep = ccw ? a0 - a1 : a1 - a0;
-    const steps = Math.max(2, Math.ceil((Math.abs(sweep) / Math.PI) * 16));
+    // Outlines follow the arc in steps, the way round a canvas' `arc` goes (ex. a corner's arc
+    // from just under π to just over -π is short, not most of a turn)
+    const tau = Math.PI * 2;
+    const turn = ccw ? a0 - a1 : a1 - a0;
+    const sweep = Math.abs(a1 - a0) >= tau ? tau : ((turn % tau) + tau) % tau;
+    const steps = Math.max(2, Math.ceil((sweep / Math.PI) * 16));
     for (let i = 1; i <= steps; i++) {
-      const a = a0 + ((ccw ? -1 : 1) * Math.abs(sweep) * i) / steps;
+      const a = a0 + ((ccw ? -1 : 1) * sweep * i) / steps;
       this.#line!.push([x + r * Math.cos(a), y + r * Math.sin(a)]);
     }
   }

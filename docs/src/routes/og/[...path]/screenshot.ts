@@ -37,8 +37,7 @@ async function loadDecoder() {
 }
 
 /**
- * The dark theme screenshot of `component`'s `example` (ex. `AreaChart`, `basic`, or
- * `webgl/Points`, `basic`), or `null` when it has none.  `load` fetches a static file by its path,
+ * The dark theme screenshot of `component`'s `example` (ex. `AreaChart`, `basic`), or `null` when it has none.  `load` fetches a static file by its path,
  * and `size` picks one of the widths `generate:screenshots` writes.
  */
 export async function screenshot(

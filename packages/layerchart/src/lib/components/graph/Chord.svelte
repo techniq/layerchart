@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
-  import type { ChordGroup, Chord } from 'd3-chord';
+  import type { ChordGroup, Chord as D3Chord } from 'd3-chord';
 
   export type ChordProps = {
     /**
@@ -52,7 +52,7 @@
       [
         {
           groups: ChordGroup[];
-          chords: Chord[];
+          chords: D3Chord[];
           innerRadius: number;
           outerRadius: number;
         },

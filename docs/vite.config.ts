@@ -6,6 +6,8 @@ import contentCollections from '@content-collections/vite';
 import Icons from 'unplugin-icons/vite';
 import { sandboxRegistry } from './src/lib/sandbox/registry-plugin';
 import { workerWasm } from './vite-plugin-worker-wasm';
+import { webglExamples } from './vite-plugin-webgl-examples';
+import { checkedWebGLExamples } from './webgl-examples';
 // import devtoolsJson from 'vite-plugin-devtools-json';
 
 const isTest = process.env.VITEST === 'true';
@@ -43,6 +45,11 @@ export default defineConfig({
 		tailwindcss(),
 		sveltekit(),
 		sandboxRegistry(),
+		// LayerChart's examples drawn with WebGL, for the layer toggle (`WEBGL_EXAMPLES=all` for every
+		// one that qualifies, to check them)
+		webglExamples({
+			include: process.env.WEBGL_EXAMPLES === 'all' ? undefined : checkedWebGLExamples
+		}),
 		// The share cards' renderers (`routes/og`), which load WebAssembly
 		workerWasm({ packages: ['@cf-wasm/satori', '@cf-wasm/resvg', '@jsquash/webp'] }),
 		!isTest && contentCollections(),

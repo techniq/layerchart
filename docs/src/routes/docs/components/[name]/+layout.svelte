@@ -3,8 +3,10 @@
 	import { examples } from '@layerstack/docs/context';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
-	import { webglCategories } from '$lib/webglCategories.js';
+	import { nativeWebGLExamples, webglExamples } from 'virtual:webgl-examples';
 	import { page } from '$app/state';
+	import { untrack } from 'svelte';
+	import { getSettings, type SettingsOptions } from 'layerchart';
 
 	import LucideBlocks from '~icons/lucide/blocks';
 
@@ -67,12 +69,41 @@
 			? intersectExampleLayers(exampleInfo.components, metadata.layers ?? [])
 			: null;
 	});
-	// `@layerchart/webgl`'s pages draw in a `WebGL` layer only, shown (selected) on its own
-	let layers = $derived(
-		data.componentName.startsWith('webgl/')
-			? ['webgl']
-			: (pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? [])
+	// Whether this page has examples drawn with WebGL (see `vite-plugin-webgl-examples.ts`): the
+	// example's own, or any of the component's, either a WebGL version of one of LayerChart's or one
+	// written with `@layerchart/webgl`
+	const withWebGL = (key: string) => key in webglExamples || nativeWebGLExamples.has(key);
+	const hasWebGLExamples = $derived(
+		page.params.example
+			? withWebGL(`${data.componentName}/${page.params.example}`)
+			: [...Object.keys(webglExamples), ...nativeWebGLExamples].some((key) =>
+					key.startsWith(`${data.componentName}/`)
+				)
 	);
+	// An example written with `@layerchart/webgl` draws in a `WebGL` layer only, shown (selected) on
+	// its own
+	let layers = $derived(
+		page.params.example && nativeWebGLExamples.has(`${data.componentName}/${page.params.example}`)
+			? ['webgl']
+			: [
+					...new Set([
+						...(pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []),
+						...(hasWebGLExamples ? ['webgl'] : [])
+					])
+				]
+	);
+
+	// A link's `?layer=` (ex. from the examples page filtered to WebGL) opens the page in that layer,
+	// when it has it.  Once per visit, so the layer toggle changes it from there.
+	const settings = getSettings();
+	$effect(() => {
+		const requested = page.url.searchParams.get('layer');
+		untrack(() => {
+			if (requested && layers.includes(requested)) {
+				settings.layer = requested as NonNullable<SettingsOptions['layer']>;
+			}
+		});
+	});
 
 	// Component names as-is (ex. `ArcChart`), example names in sentence case (ex. `Axis labels inside`)
 	const exampleTitle = $derived(page.params.example?.replaceAll('-', ' '));
@@ -81,16 +112,8 @@
 			(exampleTitle ? exampleTitle[0].toUpperCase() + exampleTitle.slice(1) : metadata.name)
 	);
 
-	// `@layerchart/webgl`'s pages sit under WebGL, in their group there (as in the menu)
-	const webglCategory = $derived(
-		data.componentName.startsWith('webgl/')
-			? webglCategories[metadata.category?.toLowerCase() ?? '']
-			: undefined
-	);
 	const breadcrumbs = $derived([
-		...(webglCategory
-			? [{ label: 'WebGL', href: '/docs/guides/webgl' }, { label: webglCategory }]
-			: [{ label: metadata.category }]),
+		{ label: metadata.category },
 		...(page.params.example
 			? [{ label: metadata.name, href: `/docs/components/${data.componentName}` }]
 			: [])
@@ -103,7 +126,6 @@
 	{breadcrumbs}
 	{layers}
 	{metadata}
-	counterpart={data.counterpart}
 	description={pageExample?.module?.description ??
 		(page.params.example == null ? metadata.description : undefined)}
 />

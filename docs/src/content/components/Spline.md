@@ -3,6 +3,9 @@ description: Marking component which applies data points connected by smooth, cu
 category: marks
 layers: [svg, canvas]
 related: [Path, Trail, LineChart]
+components:
+  - { name: Spline }
+  - { name: webgl/Spline, label: Spline (WebGL) }
 ---
 
 ::tip
@@ -147,3 +150,23 @@ A line crosses every dimension, so the dimensions can't be panels — but `fy` g
 :example{ name="end-slot-with-draw-with-value" }
 
 - Because the draw transition and tweened store use different timers, there is no guarantee they will start at the same time -->
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), lines run through 3D, colored per point. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+A line through the rows, one per `g` (or `stroke` key, or `c`) value, at each row's `x`, `y`, and `z`. `stroke` colors it per point, so a line can change color along its length.
+
+```svelte
+<Chart {data} x="t" y="key" yScale={scaleBand()} z="value" c="key" view={perspective}>
+	<WebGL>
+		<Spline strokeWidth={3} tooltip />
+	</WebGL>
+</Chart>
+```
+
+:example{ name="series" }
+
+:example{ name="line3d" }
+
+:example{ name="temperatures" }

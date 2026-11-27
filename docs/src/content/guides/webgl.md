@@ -45,7 +45,7 @@ category: state
 
 ## Quick start
 
-Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are core's own, re-exported. The chart's `view` says how it's seen (`perspective`, as `isometric` does for flat layers), and the marks inside a [`WebGL`](/docs/components/webgl/WebGL) layer are drawn through it. A `transform` turns, pans, and zooms it.
+Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are core's own, re-exported. The chart's `view` says how it's seen (`perspective`, as `isometric` does for flat layers), and the marks inside a [`WebGL`](/docs/components/WebGL) layer are drawn through it. A `transform` turns, pans, and zooms it.
 
 ```svelte
 <script>
@@ -63,7 +63,7 @@ Everything comes from `@layerchart/webgl`. `Chart`, `Tooltip`, and `Legend` are 
 </Chart>
 ```
 
-:example{ component="webgl/Points" name="scatter-3d" }
+:example{ component="Points" name="scatter-3d" }
 
 Drag to turn the view, and shift-drag to pan. Hold shift and scroll to zoom, flying the camera towards (or back from) what's under the pointer.
 
@@ -75,6 +75,28 @@ The chart lays out exactly as a flat one would: `x` across the plot's width, `y`
 - **Color, series, stacking, and domains** work as on any chart: marks register with the chart, and `fill` / `stroke` take a CSS color, or a data key or function run through the color scale (`c`, `cRange`, ...). CSS variables like `var(--color-primary)` resolve against the page, and follow theme changes.
 - **Tooltips** show the row under the pointer, from the nearest mark with `tooltip` set (it's off by default, as for flat marks). Add `tooltipContext` to the chart and a `Tooltip.Root`.
 - **Positions on a mark** (`x`, `y`, `z`, and the like) take a data key or function through the chart's scales, or a number of pixels, as the core primitives do. Marks take their core namesakes' props, so a chart moves between `Canvas` and `WebGL` with few changes.
+
+## Switching layers
+
+The marks from `@layerchart/webgl` are layer-agnostic, as core's are: each draws its WebGL version inside a `WebGL` layer, and its core namesake in an `Svg`, `Canvas`, or `Html` one. Its `Layer` adds `type="webgl"` to core's, so one chart can move between all four, or follow `settings.layer` with no `type` set.
+
+```svelte
+<script>
+	import { Axis, Chart, Layer, Points } from '@layerchart/webgl';
+</script>
+
+<Chart {data} x="date" y="value">
+	<Layer type="webgl">
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Points />
+	</Layer>
+</Chart>
+```
+
+`Light` and `Surface` have no core namesake, so they're drawn only in a `WebGL` layer. Core's own `Layer` draws `settings.layer="webgl"` as `canvas`, and warns once.
+
+For a chart that's only ever WebGL, import from `@layerchart/webgl/webgl` instead, as `layerchart/svg` is for SVG. Its marks draw only in a `WebGL` layer (and `Layer` is `WebGL`), so the chart doesn't bundle core's versions of them: a few KB gz per chart.
 
 ## The view
 
@@ -106,7 +128,7 @@ A chart's `transform` moves a 3D view as it does an [isometric](/docs/guides/iso
 >
 ```
 
-`onTransform` reports the angles a drag turns to as `rotation` (`x` is `rotate`, `y` is `tilt`). Hand them back to the view's options to keep controls in step with a drag. The transform's `zoomIn()`, `zoomOut()`, and `reset()` work as on any chart, so `TransformContextControls` works too; the [terrain](/docs/components/webgl/Surface#terrain) examples have them.
+`onTransform` reports the angles a drag turns to as `rotation` (`x` is `rotate`, `y` is `tilt`). Hand them back to the view's options to keep controls in step with a drag. The transform's `zoomIn()`, `zoomOut()`, and `reset()` work as on any chart, so `TransformContextControls` works too; the [terrain](/docs/components/Surface#terrain) examples have them.
 
 ```svelte
 <script>
@@ -128,7 +150,7 @@ A chart's `transform` moves a 3D view as it does an [isometric](/docs/guides/iso
 
 In the playground below, the controls and dragging set the same view.
 
-:example{ component="webgl/WebGL" name="playground" }
+:example{ component="WebGL" name="playground" }
 
 There are two ways to zoom. `mode: 'domain'` zooms the chart's `x` / `y` domains, as on a flat chart: the camera stays, so the axes keep their place and re-tick, and marks are clipped to the plot box (the `WebGL` layer's `clip`). `mode: 'canvas'` dollies the camera in and out instead, moving up to what's drawn (ex. a globe or a terrain). On a `globe`, zooming in brings the camera down towards the surface (its height above it divided by the zoom), so it comes close to the ground without ever passing inside. The transform's [constraints](/docs/guides/transform#constraints) limit how far the view goes: ex. `scaleExtent: [0.5, 3]` stops short of where an image starts to blur. A drag tips the view no further than edge on unless `tiltExtent` lets it: `tiltExtent: [0, 180]` turns on round to look from beneath (ex. a globe's south pole).
 
@@ -146,15 +168,15 @@ Without a `view`, a `WebGL` layer is seen from directly above and drawn unshaded
 </Chart>
 ```
 
-:example{ component="webgl/Points" name="scatter" }
+:example{ component="Points" name="scatter" }
 
 Only the marks need a `WebGL` layer: the grid, axes, tooltip highlight, and legend can be core's own, in `Svg` layers above and below it.
 
-:example{ component="webgl/Points" name="scatter-with-svg" }
+:example{ component="Points" name="scatter-with-svg" }
 
 ## Lights and shadows
 
-A `WebGL` layer lights itself until it has a [`Light`](/docs/components/webgl/Light) of its own: `directional` (like the sun on a map, with `shadow`), `point` (like a star among its planets), or `ambient`.
+A `WebGL` layer lights itself until it has a [`Light`](/docs/components/Light) of its own: `directional` (like the sun on a map, with `shadow`), `point` (like a star among its planets), or `ambient`.
 
 ```svelte
 <WebGL>
@@ -164,13 +186,13 @@ A `WebGL` layer lights itself until it has a [`Light`](/docs/components/webgl/Li
 </WebGL>
 ```
 
-:example{ component="webgl/Light" name="buildings" }
+:example{ component="Light" name="buildings" }
 
 ## Maps and globes
 
-Set a projection on the chart as for a flat map (see the [Geo guide](/docs/guides/geo)), and marks lay out through it: [`Points`](/docs/components/webgl/Points), [`Bars`](/docs/components/webgl/Bars), [`Bin`](/docs/components/webgl/Bin), [`Spline`](/docs/components/webgl/Spline), and [`Area`](/docs/components/webgl/Area) place rows at their longitude (`x`) and latitude (`y`), [`GeoPath`](/docs/components/webgl/GeoPath) extrudes features, [`GeoRaster`](/docs/components/webgl/GeoRaster) lays an image over the map, and a [`Surface`](/docs/components/webgl/Surface) of longitude and latitude is terrain.
+Set a projection on the chart as for a flat map (see the [Geo guide](/docs/guides/geo)), and marks lay out through it: [`Points`](/docs/components/Points#webgl), [`Bars`](/docs/components/Bars#webgl), [`Bin`](/docs/components/Bin#webgl), [`Spline`](/docs/components/Spline#webgl), and [`Area`](/docs/components/Area#webgl) place rows at their longitude (`x`) and latitude (`y`), [`GeoPath`](/docs/components/GeoPath#webgl) extrudes features, [`GeoRaster`](/docs/components/GeoRaster#webgl) lays an image over the map, and a [`Surface`](/docs/components/Surface) of longitude and latitude is terrain.
 
-:example{ component="webgl/Bin" name="state-population" }
+:example{ component="Bin" name="state-population" }
 
 The `globe` projection lays the map on a real sphere you can orbit, and the same marks draw on it.
 
@@ -183,13 +205,13 @@ The `globe` projection lays the map on a real sphere you can orbit, and the same
 </Chart>
 ```
 
-:example{ component="webgl/GeoRaster" name="globe" }
+:example{ component="GeoRaster" name="globe-3d" }
 
 ## Surfaces
 
-Grids of values (a `data` grid, a function of `x` and `y`, or scattered rows) raised into a [`Surface`](/docs/components/webgl/Surface), laid on the floor as a [`Raster`](/docs/components/webgl/Raster), or traced by [`Contour`](/docs/components/webgl/Contour) lines, colored through the chart's continuous `cScale`.
+Grids of values (a `data` grid, a function of `x` and `y`, or scattered rows) raised into a [`Surface`](/docs/components/Surface), laid on the floor as a [`Raster`](/docs/components/Raster#webgl), or traced by [`Contour`](/docs/components/Contour#webgl) lines, colored through the chart's continuous `cScale`.
 
-:example{ component="webgl/Surface" name="volcano" }
+:example{ component="Surface" name="volcano" }
 
 ## Limits
 

@@ -3,6 +3,9 @@ description: Composite mark grouping two-dimensional points into a grid of hexag
 category: marks
 layers: [svg, canvas]
 related: [GeoBin, Density, Contour, Cell, Points]
+components:
+  - { name: Bin }
+  - { name: webgl/Bin, label: Bin (WebGL) }
 ---
 
 ::tip
@@ -88,3 +91,25 @@ To bin on the sphere instead — for a globe, or gridded data such as population
 Pointer events receive the cell under the pointer.
 
 :example{ name="tooltip" }
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), each cell stands as tall as its z. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+Rows grouped into hexagons (or squares, or triangles) of the plot, or of the map as projected, as the core [Bin](/docs/components/Bin) groups them. Each cell stands up `z` tall (ex. its `count`), colored by its count unless given a `fill`. Every cell is the same shape, so thousands draw as one.
+
+```svelte
+<WebGL>
+	<Bin size={20} z="count" tooltip />
+</WebGL>
+```
+
+:example{ name="hexbin" }
+
+### On a map
+
+:example{ name="walmart-3d" }
+
+`weight` counts each row by a value (ex. the people in a cell of gridded population), and `gap` stands the cells apart.
+
+:example{ name="state-population" }

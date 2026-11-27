@@ -2,7 +2,8 @@ import { allComponents, allGuides, allUtils } from 'content-collections';
 import type { ComponentCatalog } from '@layerstack/docs/catalog';
 import { buildSearchEntries, type SearchEntry } from '@layerstack/docs/search';
 
-// Load all catalog JSON files (`webgl/` holds `@layerchart/webgl`'s)
+// Load all catalog JSON files (`webgl/` holds `@layerchart/webgl`'s, used for its own components,
+// ex. `Surface`: LayerChart's list every example of theirs, whichever package draws it)
 const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/**/*.json', {
 	eager: true,
 	import: 'default'
@@ -11,17 +12,26 @@ const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog
 // Convert catalog entries to search entries
 function catalogToEntries(): SearchEntry[] {
 	const entries: SearchEntry[] = [];
+	const core = new Set(
+		Object.entries(catalogModules)
+			.filter(([file]) => !file.includes('/catalog/webgl/'))
+			.map(([, catalog]) => catalog.component)
+	);
+	const pages = new Set(allComponents.map((c) => c.slug));
 
 	for (const [file, catalog] of Object.entries(catalogModules)) {
-		// `@layerchart/webgl`'s examples are on its pages, `webgl/<name>`
-		const webgl = file.includes('/catalog/webgl/');
-		const component = webgl ? `webgl/${catalog.component}` : catalog.component;
+		const component = catalog.component;
+		if (file.includes('/catalog/webgl/') && (core.has(component) || !pages.has(component))) {
+			continue;
+		}
 		for (const example of catalog.examples) {
+			// Drawn in a `WebGL` layer, found searching for it
+			const webgl = example.components?.some((usage) => usage.component === 'WebGL');
 			entries.push({
 				title: example.title,
-				slug: webgl ? `docs/components/${component}/${example.name}` : example.path.slice(1), // Remove leading slash
+				slug: `docs/components/${component}/${example.name}`,
 				content: [
-					catalog.component,
+					component,
 					webgl ? 'WebGL' : '',
 					example.name.replaceAll('-', ' '),
 					...(example.tags ?? [])
@@ -35,19 +45,6 @@ function catalogToEntries(): SearchEntry[] {
 	}
 
 	return entries;
-}
-
-const WEBGL_PAGES = 'docs/components/webgl/';
-
-/**
- * `@layerchart/webgl`'s pages repeat LayerChart's names (ex. `Arc`), so their results (and their
- * sections' and examples') say they're WebGL's
- */
-function markWebGL(entry: SearchEntry): SearchEntry {
-	const slug = entry.type === 'heading' ? entry.parentSlug : entry.slug;
-	if (!slug?.startsWith(WEBGL_PAGES)) return entry;
-	if (entry.type === 'heading') return { ...entry, parent: `${entry.parent} (WebGL)` };
-	return { ...entry, title: `${entry.title} (WebGL)` };
 }
 
 // Top-level documentation pages
@@ -91,4 +88,4 @@ export const searchContent: SearchEntry[] = [
 	...catalogToEntries(),
 	...buildSearchEntries(allGuides, { type: 'guide', slugPrefix: 'docs/guides' }),
 	...buildSearchEntries(allUtils, { type: 'util', slugPrefix: 'docs/utils' })
-].map(markWebGL);
+];

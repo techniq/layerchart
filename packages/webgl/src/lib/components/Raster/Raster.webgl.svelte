@@ -1,0 +1,164 @@
+<script lang="ts" module>
+  import type { RasterProps } from './Raster.shared.svelte.js';
+</script>
+
+<script lang="ts">
+  import {
+    BufferGeometry,
+    DataTexture,
+    DoubleSide,
+    Float32BufferAttribute,
+    LinearFilter,
+    Mesh,
+    MeshBasicMaterial,
+    MeshLambertMaterial,
+    NearestFilter,
+    SRGBColorSpace,
+  } from 'three';
+  import { blurGridIgnoringNaN, getChartContext } from 'layerchart';
+
+  import { getSceneContext } from '../../contexts/scene.svelte.js';
+  import { getSphere } from '../../utils/globe.js';
+  import { gridDatum, gridExtent, sampleGrid } from '../../utils/grid.js';
+  import {
+    sphereMesh,
+    sphereSegments,
+    sphereValueAt,
+    sphereValues,
+  } from '../../utils/sphere-surface.js';
+  import { ColorRamp } from '../../utils/ramp.js';
+
+  let {
+    pixelSize = 1,
+    blur = 0,
+    z = 0,
+    opacity = 1,
+    imageRendering = 'auto',
+    tooltip = false,
+    ...gridProps
+  }: RasterProps = $props();
+
+  const ctx = getChartContext();
+  const scene = getSceneContext();
+  /** Its objects, stacked with other marks' in the order they're declared */
+  const layer = scene.layer();
+
+  /** On a `globe`, the colors wrapped around it */
+  const sphere = $derived(getSphere(ctx));
+  /** `values` blurred over `blur` cells of a `columns` by `rows` grid, as the core `Raster` blurs */
+  function blurred<T extends { values: Float64Array }>(
+    samples: T | null,
+    columns: number,
+    rows: number
+  ): T | null {
+    if (!samples || !(blur > 0)) return samples;
+    return { ...samples, values: blurGridIgnoringNaN(samples.values, columns, rows, blur) };
+  }
+  const sphereSamples = $derived.by(() => {
+    if (!sphere) return null;
+    const samples = sphereValues(
+      sphere,
+      gridProps,
+      sphereSegments(sphere.radius, Math.max(pixelSize, 2))
+    );
+    return blurred(samples, samples.grid.columns, samples.grid.rows);
+  });
+  const grid = $derived.by(() => {
+    const sampled = sphere ? null : sampleGrid(ctx, gridProps, pixelSize);
+    return sampled ? blurred(sampled, sampled.columns, sampled.rows) : null;
+  });
+
+  // An image of the grid's colors, unlit so they read true
+  const material = new MeshBasicMaterial({ transparent: true, side: DoubleSide });
+  /** On a globe, colored by vertex and lit, so it reads as round */
+  const sphereMaterial = new MeshLambertMaterial({ vertexColors: true, transparent: true });
+  const mesh = new Mesh<BufferGeometry, MeshBasicMaterial | MeshLambertMaterial>(
+    new BufferGeometry(),
+    material
+  );
+  mesh.receiveShadow = true;
+  layer.add(mesh);
+
+  $effect(() => {
+    const g = grid;
+    const extent = g ? gridExtent(g.values) : null;
+    let texture: DataTexture | null = null;
+    let geometry = new BufferGeometry();
+    const sphereExtent = sphereSamples ? gridExtent(sphereSamples.values) : null;
+    if (sphere && sphereSamples && sphereExtent) {
+      const ramp = new ColorRamp(ctx, scene, sphereExtent);
+      const colors = new Float32Array(sphereSamples.values.length * 4);
+      sphereSamples.values.forEach((v, k) => {
+        const o = ramp.offset(v);
+        colors.set(ramp.table.subarray(o, o + 4), k * 4);
+      });
+      const values = sphereSamples.values;
+      geometry = sphereMesh(
+        sphere,
+        sphereSamples.grid,
+        (k) => (Number.isFinite(values[k]) ? z : NaN),
+        colors
+      );
+    } else if (g && extent) {
+      const ramp = new ColorRamp(ctx, scene, extent);
+      const pixels = new Uint8Array(g.columns * g.rows * 4);
+      g.values.forEach((v, k) => {
+        if (!Number.isFinite(v)) return;
+        const o = ramp.offset(v);
+        pixels.set(ramp.bytes.subarray(o, o + 4), k * 4);
+      });
+      texture = new DataTexture(pixels, g.columns, g.rows);
+      texture.colorSpace = SRGBColorSpace;
+      texture.magFilter = texture.minFilter =
+        imageRendering !== 'auto' ? NearestFilter : LinearFilter;
+      texture.needsUpdate = true;
+
+      // The grid's first row is at its top (`top`), which is texture row 0 (`v = 0`)
+      const { left, top, right, bottom } = g;
+      geometry.setAttribute(
+        'position',
+        new Float32BufferAttribute(
+          [left, z, top, right, z, top, left, z, bottom, right, z, bottom],
+          3
+        )
+      );
+      geometry.setAttribute('uv', new Float32BufferAttribute([0, 0, 1, 0, 0, 1, 1, 1], 2));
+      geometry.setIndex([0, 2, 1, 1, 2, 3]);
+    }
+    material.map?.dispose();
+    material.map = texture;
+    material.opacity = sphereMaterial.opacity = opacity;
+    material.needsUpdate = true;
+    mesh.material = sphere ? sphereMaterial : material;
+    mesh.geometry.dispose();
+    mesh.geometry = geometry;
+    scene.invalidate();
+  });
+
+  $effect(() => {
+    if (!tooltip) return;
+    return scene.addPickable({
+      object: mesh,
+      datum: (hit) => {
+        const point = scene.toChart(hit.point);
+        if (sphere && sphereSamples) {
+          const [x, y] = sphere.fromScene([point.x, point.z, point.y]);
+          const value = sphereValueAt(sphereSamples.grid, sphereSamples.values, x, y);
+          return Number.isFinite(value) ? { x, y, value } : undefined;
+        }
+        return grid ? gridDatum(ctx, grid, point.x, point.y) : undefined;
+      },
+    });
+  });
+
+  $effect(() => {
+    return () => {
+      layer.remove(mesh);
+      mesh.geometry.dispose();
+      material.map?.dispose();
+      material.dispose();
+      sphereMaterial.dispose();
+      scene.invalidate();
+    };
+  });
+</script>

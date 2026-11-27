@@ -129,6 +129,8 @@ Note that it's a flat cost per instance rather than a fixed percentage. The same
 
 So the saving matters when you render **many instances** — a scatter plot of thousands of `<Circle>`s, a heatmap of `<Rect>`s. For a chart with a handful of marks it won't be measurable.
 
+`@layerchart/webgl` follows the same pattern: its marks are layer-agnostic, drawing core's versions outside a `WebGL` layer, and `@layerchart/webgl/webgl` is WebGL only. See [Switching layers](/docs/guides/webgl#switching-layers).
+
 The `layerchart/svg`, `layerchart/canvas`, and `layerchart/html` sub-paths re-export every layer-agnostic helper too (layouts, scales, tooltip primitives, etc.), so a single per-layer import path can cover a typical chart end-to-end.
 
 ### When per-layer is worth it

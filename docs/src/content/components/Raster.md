@@ -3,6 +3,9 @@ description: Composite mark rendering a pixel-based heatmap where each pixel is 
 category: marks
 layers: [svg, canvas, html]
 related: [Contour, Density]
+components:
+  - { name: Raster }
+  - { name: webgl/Raster, label: Raster (WebGL) }
 ---
 
 ::tip
@@ -46,3 +49,11 @@ The classic fractal rendered pixel-by-pixel via a `value` function. Uses `pixelS
 Explore various mathematical functions mapped to color scales, demonstrating how different equations produce distinct visual patterns.
 
 :example{ name="math-functions" showCode }
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), it lies on the floor as an image. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+The values as an image on the floor (or `z` pixels above it), sampled as finely as the image allows rather than at a surface's vertices. It takes values the same ways as [Surface](/docs/components/Surface), and `imageRendering="pixelated"` shows each cell with hard edges.
+
+:example{ name="basic" }

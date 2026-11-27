@@ -32,6 +32,11 @@ export type SceneLabel = {
   /** A halo around the letters, behind them (a CSS color), and its width in pixels */
   stroke?: string;
   strokeWidth?: number;
+  /** How opaque its letters and its halo are (0 to 1), as SVG text's fill and stroke opacity */
+  fillOpacity?: number;
+  strokeOpacity?: number;
+  /** How opaque it is as a whole (0 to 1), letters and halo together */
+  opacity?: number;
   /**
    * The way it sits out from its point, in the chart's axes (ex. out from an axis): it's anchored
    * by its side nearest the point, whichever way the view turns that on screen, so it keeps the
@@ -58,12 +63,39 @@ export type SceneMarker = {
   strokeWidth?: number;
   opacity?: number;
   class?: string;
+  /**
+   * Pointer handlers, as on the core marks' elements (ex. a `Highlight`'s `onPointClick`).  Only a
+   * marker with one takes the pointer; the rest let it through to the scene beneath.
+   */
+  onclick?: (e: MouseEvent) => void;
+  onpointerenter?: (e: PointerEvent) => void;
+  onpointerleave?: (e: PointerEvent) => void;
 };
+
+/** Pointer handlers a mark takes, as the core marks' (called with the row under the pointer) */
+export type MarkEvents = {
+  onclick?: ((e: MouseEvent, detail: { data: any }) => void) | null;
+  ondblclick?: ((e: MouseEvent, detail: { data: any }) => void) | null;
+  onpointerenter?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointerover?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointermove?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointerleave?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+  onpointerout?: ((e: PointerEvent, detail: { data: any }) => void) | null;
+};
+
+/** Whether any of `events` is set */
+export function hasEvents(events: MarkEvents | undefined) {
+  return !!events && Object.values(events).some((handler) => typeof handler === 'function');
+}
 
 /** A mark's object the pointer can hit, and the data row each hit is on */
 export type Pickable = {
   object: Object3D;
   datum: (hit: Intersection) => unknown;
+  /** Whether hovering it shows the tooltip (else it's picked only for `events`) @default true */
+  tooltip?: () => boolean;
+  /** Its pointer handlers, called with the row under the pointer */
+  events?: () => MarkEvents | undefined;
 };
 
 const KEY = Symbol('LayerChart3DScene');
@@ -101,12 +133,16 @@ export class SceneState {
   layer() {
     const group = new Group();
     group.userData.layer = true;
+    // Past the plot box's sides where asked (ex. a line's markers at its edge, as SVG's overflow)
+    if (isUnclipped()) group.userData.unclipped = true;
     this.#layers.push(group);
-    this.root.add(group);
+    // Inside a `Group`, under its own (moved by it, as an SVG `<g>` moves what's in it)
+    const parent = getParent()?.object ?? this.root;
+    parent.add(group);
     this.#place();
     $effect(() => () => {
       this.#layers.splice(this.#layers.indexOf(group), 1);
-      this.root.remove(group);
+      parent.remove(group);
       this.#place();
     });
     return group;
@@ -121,8 +157,15 @@ export class SceneState {
 
   #place() {
     this.#layers.forEach((group, i) => group.position.setY(this.#stacked ? i * LAYER_STEP : 0));
+    this.stackHeight = this.#stacked ? this.#layers.length * LAYER_STEP : 0;
     this.invalidate();
   }
+
+  /**
+   * How high the flat mode's stacked layers reach, for the camera to look down from above them
+   * all (ex. a `Calendar`'s `Rect` per day is hundreds of layers)
+   */
+  stackHeight = $state(0);
 
   colors: ColorResolver | null = null;
   camera: Camera | null = null;
@@ -222,10 +265,25 @@ export class SceneState {
    * What a mark's CSS `class` sets (its fill, stroke, and opacity, as the core `Canvas` layer
    * reads them), re-read when the theme changes.  `null` without one, or before the layer mounts.
    */
-  style(classes: string | null | undefined): ClassStyle | null {
+  style(
+    classes: string | null | undefined,
+    /** Attributes LayerChart's styles read (ex. a label's `data-placement`) */
+    attributes?: Record<string, string>
+  ): ClassStyle | null {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.themeVersion;
-    return classes ? (this.colors?.style(classes) ?? null) : null;
+    return classes || attributes ? (this.colors?.style(classes ?? '', attributes) ?? null) : null;
+  }
+
+  /**
+   * The font size (pixels) and weight text has here: its `class`'s (ex. `text-xs font-semibold`),
+   * else the chart's, as an SVG or Canvas label inherits them.  `null` before the layer mounts.
+   */
+  font(classes: string | null | undefined): { size: number; weight: string } | null {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    this.themeVersion;
+    const style = this.colors?.style(classes ?? '');
+    return style && style.fontSize > 0 ? { size: style.fontSize, weight: style.fontWeight } : null;
   }
 
   /** A point in the scene (ex. where the pointer hit a mark) in chart coordinates */
@@ -269,6 +327,37 @@ export class SceneState {
   }
 }
 
+const PARENT = Symbol('LayerChartWebGLParent');
+
+/**
+ * A `Group`'s object, which the marks inside add theirs to, and where it is on the plot (its
+ * pixels across and down, with every `Group` it's in): for what's placed outside the scene
+ * (labels over it) to move with it
+ */
+export type SceneParent = {
+  object: Object3D;
+  readonly x: number;
+  readonly y: number;
+  /** How opaque what's inside is drawn, its `Group`s' opacities multiplied (ex. `opacity={0.2}`) */
+  readonly opacity?: number;
+};
+
+/** The opacity the `Group`s a mark is in draw it at (1 outside any) */
+export function groupOpacity(): () => number {
+  const parent = getParent();
+  return () => parent?.opacity ?? 1;
+}
+
+/** Put the marks inside under `parent` (see `SceneParent`) */
+export function setParent(parent: SceneParent) {
+  setContext(PARENT, parent);
+}
+
+/** The `Group` marks here are in, if any (see `SceneParent`) */
+export function getParent(): SceneParent | undefined {
+  return getContext<SceneParent | undefined>(PARENT);
+}
+
 const UNCLIPPED = Symbol('LayerChartWebGLUnclipped');
 
 /** Keep what marks inside draw from being clipped to the plot box (ex. an axis' labels beside it) */
@@ -283,6 +372,11 @@ export function isUnclipped() {
 
 export function setSceneContext(state: SceneState) {
   return setContext(KEY, state);
+}
+
+/** Whether this is inside a `<WebGL>` scene (a layer-agnostic mark draws its WebGL version there) */
+export function hasSceneContext(): boolean {
+  return getContext<SceneState | undefined>(KEY) !== undefined;
 }
 
 export function getSceneContext(): SceneState {

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 	import type { Component } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { getSettings, isometric } from 'layerchart';
@@ -26,19 +25,16 @@
 		layers = [],
 		metadata = {},
 		showOpenWith = true,
-		counterpart,
 		icon
 	}: {
 		title: string;
 		breadcrumbs?: Crumb[];
 		description?: string;
-		/** Layers offered by the page-wide Svg/Canvas/Html toggle (hidden when empty; a single layer is shown selected) */
+		/** Layers offered by the page-wide Svg/Canvas/Html/WebGL toggle (hidden when empty; a single layer is shown selected) */
 		layers?: string[];
 		/** Passed to `OpenWithButton` */
 		metadata?: Record<string, any>;
 		showOpenWith?: boolean;
-		/** The same component drawn the other way (LayerChart's, or `@layerchart/webgl`'s), whose layers join the toggle and switch to it */
-		counterpart?: { href: string; layers: string[] } | null;
 		/** Docs section icon (matching the sidebar), shown on links to parent pages */
 		icon?: Component<{ class?: string }>;
 	} = $props();
@@ -48,11 +44,9 @@
 	const layerOrder = ['svg', 'canvas', 'html', 'webgl'];
 	const layerLabels: Record<string, string> = { webgl: 'WebGL' };
 	const layerLabel = (layer: string) => layerLabels[layer] ?? toTitleCase(layer);
-	// This page's layers, then the counterpart's (switching to its page), in a fixed order
+	// This page's layers, in a fixed order
 	const toggleLayers = $derived(
-		[...layers, ...(counterpart?.layers.filter((layer) => !layers.includes(layer)) ?? [])].sort(
-			(a, b) => layerOrder.indexOf(a) - layerOrder.indexOf(b)
-		)
+		[...layers].sort((a, b) => layerOrder.indexOf(a) - layerOrder.indexOf(b))
 	);
 	// A single layer of this page's has nothing to toggle: show it selected
 	const selectedLayer = {
@@ -60,9 +54,7 @@
 			return layers.length === 1 ? layers[0] : settings.layer;
 		},
 		set current(value) {
-			// `webgl` is a page, not a setting
-			if (value !== 'webgl') settings.layer = value;
-			if (counterpart && !layers.includes(value)) goto(counterpart.href);
+			settings.layer = value as typeof settings.layer;
 		}
 	};
 	const origin = $derived(dev ? 'https://layerchart.com' : page.url.origin);
@@ -232,7 +224,7 @@
 					}}
 				>
 					{#each toggleLayers as layer, i}
-						<!-- WebGL is a separate package (and page), set apart from the core layers -->
+						<!-- WebGL is a separate package, set apart from the core layers -->
 						{#if layer === 'webgl' && i > 0}
 							<span
 								aria-hidden="true"

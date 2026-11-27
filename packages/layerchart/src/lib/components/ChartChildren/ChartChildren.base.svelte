@@ -18,6 +18,14 @@
     Rule: Component<any>;
     Highlight: Component<any>;
     ChartClipPath: Component<any>;
+    /** The `points` drawn per series; LayerChart's own (loaded when first used) without it */
+    Points?: Component<any>;
+    /** The `labels` drawn per series; LayerChart's own (loaded when first used) without it */
+    Labels?: Component<any>;
+    /** The `annotations` drawn; LayerChart's own (loaded when first used) without it */
+    ChartAnnotations?: Component<any>;
+    /** The facet grid's headers; LayerChart's own without it */
+    FacetAxis?: Component<any>;
   };
 
   export type ChartChildrenBaseProps<
@@ -34,7 +42,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getSettings } from '$lib/contexts/settings.js';
   import type { Facet } from '$lib/states/facet.svelte.js';
-  import FacetAxis from '../FacetAxis.svelte';
+  import FacetAxisCore from '../FacetAxis.svelte';
   import { asAny } from '$lib/utils/types.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
 
@@ -48,6 +56,10 @@
     Rule,
     Highlight,
     ChartClipPath,
+    Points: PointsProp,
+    Labels: LabelsProp,
+    ChartAnnotations: ChartAnnotationsProp,
+    FacetAxis = FacetAxisCore,
     props = {},
     children: childrenProp,
     belowContext,
@@ -69,6 +81,8 @@
 
   let snippetProps = $derived({ context });
   let layer = $derived(settings.layer);
+  // `Layer` draws `webgl` as `canvas` (`@layerchart/webgl`'s draws it with WebGL)
+  let layerTypeProps = $derived(layer === 'canvas' || layer === 'webgl' ? props.canvas : props.svg);
 </script>
 
 {#if childrenProp}
@@ -76,12 +90,7 @@
 {:else}
   {@render belowContext?.(snippetProps)}
 
-  <Layer
-    type={layer}
-    center={context.radial}
-    {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
-    debug={settings.debug}
-  >
+  <Layer type={layer} center={context.radial} {...asAny(layerTypeProps)} debug={settings.debug}>
     <!--
       The panel comes from the layer, which renders its children once per facet — so a snippet can
       draw in one panel only (an annotation), or vary by which panel it's in.  Unfaceted charts get
@@ -103,7 +112,7 @@
 
       <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'}>
         {#if annotations.length > 0}
-          {#await import('../charts/ChartAnnotations.svelte') then { default: ChartAnnotations }}
+          {#await ChartAnnotationsProp ?? import('../charts/ChartAnnotations.svelte').then((m) => m.default) then ChartAnnotations}
             <ChartAnnotations {annotations} layer="below" />
           {/await}
         {/if}
@@ -165,7 +174,7 @@
         {#if typeof points === 'function'}
           {@render points(layerProps)}
         {:else if points}
-          {#await import('../Points/Points.svelte') then { default: Points }}
+          {#await PointsProp ?? import('../Points/Points.svelte').then((m) => m.default) then Points}
             {#each context.series.visibleSeries as s, i (s.key)}
               <Points
                 seriesKey={s.key}
@@ -180,7 +189,7 @@
         {#if typeof labels === 'function'}
           {@render labels(layerProps)}
         {:else if labels}
-          {#await import('../Labels/Labels.svelte') then { default: Labels }}
+          {#await LabelsProp ?? import('../Labels/Labels.svelte').then((m) => m.default) then Labels}
             {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
             {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
               <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
@@ -195,7 +204,7 @@
         {/if}
 
         {#if annotations.length > 0}
-          {#await import('../charts/ChartAnnotations.svelte') then { default: ChartAnnotations }}
+          {#await ChartAnnotationsProp ?? import('../charts/ChartAnnotations.svelte').then((m) => m.default) then ChartAnnotations}
             <ChartAnnotations {annotations} layer="above" />
           {/await}
         {/if}

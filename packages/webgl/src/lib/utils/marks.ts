@@ -9,11 +9,15 @@ import {
   type DataProp,
 } from 'layerchart';
 import type { ColorProp } from 'layerchart';
+import { pointRadial } from 'd3-shape';
 
 import type { ScenePoint, Sphere } from './globe.js';
 
 /** A chart scale's pixel position for `value`, at the middle of its band on a band scale */
 export function scaled(scale: any, value: unknown): number {
+  // A scale with no domain (ex. a chart laid out in pixels by \`Dagre\`) takes values as they are,
+  // as the core \`Spline\` does
+  if (!scale.domain().length) return Number(value);
   const position = Number(scale(value));
   return isScaleBand(scale) ? position + scale.bandwidth() / 2 : position;
 }
@@ -49,10 +53,15 @@ export function place(
  * `place`, with the chart's globe, projection, or scales read once: for placing many rows, as
  * reading them (reactive state) for every row adds up
  */
+/** Pixels to shift a point along an axis, as the core `Points`' `offsetX` / `offsetY` */
+export type Offset = number | ((value: number, context: any) => number) | undefined;
+
 export function placer(
   ctx: ChartState<any>,
   sphere: Sphere | null,
-  scales?: { x: any; y: any }
+  scales?: { x: any; y: any },
+  /** In place of a band's middle (as the core `Points`' `offsetX` / `offsetY`) */
+  offsets?: { x?: Offset; y?: Offset }
 ): (xValue: unknown, yValue: unknown, height: number) => ScenePoint {
   if (sphere) return (x, y, height) => sphere.toScene(Number(x), Number(y), height);
   const projection = ctx.geo.projection;
@@ -64,8 +73,23 @@ export function placer(
   }
   const xScale = scales?.x ?? (ctx.xScale as any);
   const yScale = scales?.y ?? (ctx.yScale as any);
+  // About the center on a `radial` chart, `x` an angle and `y` a radius, as the core `Points`
+  if (ctx.radial) {
+    return (x, y, height) => {
+      const [px, py] = pointRadial(Number(xScale(x)), Number(yScale(y)));
+      return [px, height, py];
+    };
+  }
   const xBand = isScaleBand(xScale) ? xScale.bandwidth() / 2 : 0;
   const yBand = isScaleBand(yScale) ? yScale.bandwidth() / 2 : 0;
+  const shift = (offset: Offset, band: number, at: number) =>
+    offset == null ? band : typeof offset === 'function' ? offset(at, ctx) : offset;
+  if (offsets?.x != null || offsets?.y != null) {
+    return (x, y, height) => {
+      const [px, py] = [Number(xScale(x)), Number(yScale(y))];
+      return [px + shift(offsets.x, xBand, px), height, py + shift(offsets.y, yBand, py)];
+    };
+  }
   return (x, y, height) => [Number(xScale(x)) + xBand, height, Number(yScale(y)) + yBand];
 }
 
@@ -149,9 +173,15 @@ export function placeOf(
  * The rows a mark draws: its `data`, else the chart's when its props read rows (as the core
  * primitives do), else one, for a mark placed by numbers alone
  */
-export function markRows(ctx: ChartState<any>, data: any[] | undefined, ...props: unknown[]) {
+export function markRows(
+  rows: ChartState<any> | ((own?: any) => any[]),
+  data: any[] | undefined,
+  ...props: unknown[]
+) {
   if (data) return data;
-  return props.some(isDataProp) ? ((ctx.data ?? []) as any[]) : [undefined];
+  if (!props.some(isDataProp)) return [undefined];
+  // A mark's `getMarkData` (its facet panel's rows), else the chart's
+  return typeof rows === 'function' ? rows() : ((rows.data ?? []) as any[]);
 }
 
 /**
@@ -188,11 +218,15 @@ export function rowColor(
   value: ColorProp<any> | undefined,
   d: any,
   fallback: string,
-  classed?: string | null
+  classed?: string | null,
+  /** Whether the class sets `classed` itself, winning over `value` as CSS wins in core's layers */
+  classSet?: boolean
 ): string {
+  if (classSet && classed) return classed;
   if (value != null) return resolveColorProp(value, d, ctx.cScale) ?? fallback;
   if (classed) return classed;
-  if (ctx.config.c != null && ctx.cScale) return String(ctx.cGet(d) ?? fallback);
+  // A row's color through the chart's `c` (not for a mark drawn without one, ex. a band)
+  if (d !== undefined && ctx.config.c != null && ctx.cScale) return String(ctx.cGet(d) ?? fallback);
   return fallback;
 }
 

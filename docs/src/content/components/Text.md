@@ -3,6 +3,9 @@ description: Primitive component which adds custom text for labeling, annotation
 category: primitives
 layers: [svg, canvas, html]
 related: []
+components:
+  - { name: Text }
+  - { name: webgl/Text, label: Text (WebGL) }
 ---
 
 ## Usage
@@ -76,3 +79,21 @@ The text will smartly orientate based on the direction (clockwise / counter-cloc
 :::note
 Only supported in `Svg` layers.
 :::
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), text lies on the surface beneath it, or faces the viewer. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+A label per row, placed as the core [`Text`](/docs/components/Text) places it: `x`, `y`, and `z` are data properties or functions of the row, through the chart's scales (longitude and latitude on a map), or numbers in pixels. `value` is a property, a function, or the text itself.
+
+By default a label lies on the surface at its height (ex. the tops of boxes), turning and tipping with the view, in `fontSize` and `fill`. With `viewport` it faces the viewer instead, drawn over the scene upright and crisp however the view turns, styled with `class`.
+
+```svelte
+<Text data={nodes} x="x" y="y" z={40} value="name" viewport class="text-xs font-semibold" />
+```
+
+For a layout already in pixels (ex. a tree), place a label per node by numbers.
+
+:example{ component="Polygon" name="tree" }
+
+:example{ component="Rect" name="treemap" }

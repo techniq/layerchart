@@ -7,12 +7,30 @@ export type ResolvedColor = { color: Color; opacity: number };
  * reads them: `null` for what they leave alone
  */
 export type ClassStyle = {
+  /** The fill its classes set, or the `--fill-color` LayerChart's styles give its marks */
   fill: string | null;
   stroke: string | null;
+  /**
+   * Whether its classes set the fill itself (ex. `fill-primary/20`), which wins over a mark's
+   * `fill` prop as CSS wins over an SVG attribute in core's layers, rather than a
+   * `--fill-color` default, which doesn't
+   */
+  fillSet: boolean;
+  strokeSet: boolean;
+  /** Whether its classes take its stroke away (`stroke-none`) */
+  strokeNone?: boolean;
   strokeWidth: number | null;
   opacity: number;
   /** Its `mix-blend-mode`, when not `normal` (ex. `plus-lighter`) */
   blend: string | null;
+  /** Its font size in pixels: its class's (ex. `text-xs`), else what it inherits there */
+  fontSize: number;
+  /** Its font weight: its class's (ex. `font-semibold`), else what it inherits there */
+  fontWeight: string;
+  /** The `stroke-dasharray` its classes set, in pixels (ex. `4, 4`), else `null` */
+  strokeDasharray?: string | null;
+  /** The text color its classes set (ex. `text-primary`), which a label's fill follows */
+  color?: string | null;
 };
 
 /**
@@ -24,7 +42,11 @@ export class ColorResolver {
   #probe: HTMLElement;
   #context: CanvasRenderingContext2D | null = null;
   #cache = new Map<string, ResolvedColor>();
-  #styles = new Map<string, ClassStyle>();
+  /** Each class and attribute set read, by its key, with what it read */
+  #styles = new Map<
+    string,
+    { classes: string; attributes?: Record<string, string>; style: ClassStyle }
+  >();
   /** An SVG path to give classes to and read back, and one without, to tell what they set */
   #classed: SVGPathElement | null = null;
   #plain: SVGPathElement | null = null;
@@ -45,46 +67,93 @@ export class ColorResolver {
       this.#cache.set(value, next);
       changed = true;
     }
-    for (const [classes, previous] of this.#styles) {
-      const next = this.#read(classes);
-      if (JSON.stringify(next) === JSON.stringify(previous)) continue;
-      this.#styles.set(classes, next);
+    for (const entry of this.#styles.values()) {
+      const next = this.#read(entry.classes, entry.attributes);
+      if (JSON.stringify(next) === JSON.stringify(entry.style)) continue;
+      entry.style = next;
       changed = true;
     }
     return changed;
   }
 
-  /** What `classes` set on an SVG shape here (see `ClassStyle`) */
-  style(classes: string): ClassStyle {
-    let style = this.#styles.get(classes);
-    if (!style) {
-      style = this.#read(classes);
-      this.#styles.set(classes, style);
+  /**
+   * What `classes` set on an SVG shape here (see `ClassStyle`), with its `attributes` (ex. a
+   * label's `data-placement`, which LayerChart's styles read)
+   */
+  style(classes: string, attributes?: Record<string, string>): ClassStyle {
+    const key = attributes ? `${classes}\u0000${JSON.stringify(attributes)}` : classes;
+    let entry = this.#styles.get(key);
+    if (!entry) {
+      entry = { classes, attributes, style: this.#read(classes, attributes) };
+      this.#styles.set(key, entry);
     }
-    return style;
+    return entry.style;
   }
 
-  #read(classes: string): ClassStyle {
+  #read(classes: string, attributes?: Record<string, string>): ClassStyle {
     if (!this.#classed || !this.#plain) {
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.style.display = 'none';
+      // Defaults no class sets (ex. not black, SVG's own fill, which `fill-black` sets), so a
+      // class setting one is told from none
+      svg.style.fill = 'rgb(1, 2, 3)';
+      svg.style.stroke = 'rgb(3, 2, 1)';
+      // Not 1px, SVG's own, which `stroke-1` sets
+      svg.style.strokeWidth = '1.0625px';
+      // A text color of its own, not the probe's (which `resolve` sets), so a class's (ex.
+      // `text-primary`) is told from none
+      svg.style.color = 'rgb(1, 2, 4)';
       this.#classed = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       this.#plain = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       svg.append(this.#classed, this.#plain);
       this.#probe.append(svg);
     }
     this.#classed.setAttribute('class', classes);
+    for (const name of [...this.#classed.getAttributeNames()]) {
+      if (name !== 'class') this.#classed.removeAttribute(name);
+    }
+    for (const [name, value] of Object.entries(attributes ?? {})) {
+      this.#classed.setAttribute(name, value);
+    }
     const style = getComputedStyle(this.#classed);
     const plain = getComputedStyle(this.#plain);
-    const set = (key: 'fill' | 'stroke' | 'strokeWidth') =>
-      style[key] !== plain[key] ? style[key] : null;
+    /** The text color its classes set, else `null` (the probe's own, see above) */
+    const color = style.color !== plain.color ? style.color : null;
+    const set = (key: 'fill' | 'stroke' | 'strokeWidth') => {
+      if (style[key] === plain[key]) return null;
+      // `fill-current` with no text color of its own: the color it inherits where it's drawn
+      return key !== 'strokeWidth' && color == null && style[key] === style.color
+        ? 'currentColor'
+        : style[key];
+    };
+    /**
+     * A color the classes set as LayerChart's do for their marks (ex. `.lc-highlight-area`'s
+     * `--fill-color`), which its SVG primitives read
+     */
+    const variable = (name: '--fill-color' | '--stroke-color') => {
+      const value = style.getPropertyValue(name).trim();
+      return value && value !== plain.getPropertyValue(name).trim() ? value : null;
+    };
     const strokeWidth = set('strokeWidth');
+    const fill = set('fill');
+    // `stroke-none` as no stroke at all, as before the probe had one to tell it from
+    const stroke = set('stroke') === 'none' ? null : set('stroke');
     return {
-      fill: set('fill'),
-      stroke: set('stroke'),
+      fill: fill ?? variable('--fill-color'),
+      stroke: stroke ?? variable('--stroke-color'),
+      fillSet: fill != null,
+      strokeSet: stroke != null,
+      strokeNone: set('stroke') === 'none',
       strokeWidth: strokeWidth == null ? null : parseFloat(strokeWidth),
       opacity: Number(style.opacity) * Number(style.fillOpacity || 1),
       blend: style.mixBlendMode && style.mixBlendMode !== 'normal' ? style.mixBlendMode : null,
+      fontSize: parseFloat(style.fontSize),
+      fontWeight: style.fontWeight,
+      strokeDasharray:
+        style.strokeDasharray !== plain.strokeDasharray && style.strokeDasharray !== 'none'
+          ? style.strokeDasharray.replace(/px/g, '')
+          : null,
+      color,
     };
   }
 

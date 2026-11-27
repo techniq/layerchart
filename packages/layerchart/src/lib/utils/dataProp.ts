@@ -248,6 +248,10 @@ export function resolveColorProp<T>(
     return value;
   }
 
+  // A paint a Canvas layer resolved itself (a `LinearGradient`'s `CanvasGradient`, a `Pattern`'s
+  // `CanvasPattern`), passed to the canvas as it is
+  if (typeof value === 'object') return value as unknown as string;
+
   return undefined;
 }
 

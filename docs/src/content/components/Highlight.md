@@ -3,6 +3,9 @@ description: Interaction component manages and displays tooltips allowing dynami
 category: interactions
 layers: [svg, canvas, html]
 related: [Tooltip, TooltipContext]
+components:
+  - { name: Highlight }
+  - { name: webgl/Highlight, label: Highlight (WebGL) }
 ---
 
 ## Usage
@@ -86,3 +89,21 @@ By default, Highlight uses `TooltipContext` data. Pass explicit `data` to highli
 ```svelte
 <Highlight data={specificItem} points lines />
 ```
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), it marks the hovered row with a point facing the viewer, traced on the floor and back walls. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+The tooltip's row (or `data`), marked as the core [Highlight](/docs/components/Highlight) marks it on an `isometric` chart, with the same props: `points` rings it with a circle facing the viewer, `lines` trace its position across the floor and, with a `z`, across and up each back wall (`axis` picks which), and `shadows` put a spot beneath it on the floor and level with it on each wall. Pass props to style each, ex. `points={{ r: 8, fill: 'none' }}`.
+
+```svelte
+<WebGL>
+	<Highlight lines shadows axis="both" />
+	<Points tooltip />
+	<Highlight points />
+</WebGL>
+```
+
+On a flat `WebGL` chart, core's own `Highlight` in an `Svg` layer over it works as well (ex. [scatter](/docs/components/Points/scatter)).
+
+:example{ component="Points" name="scatter-3d" }

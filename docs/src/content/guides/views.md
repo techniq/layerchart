@@ -39,7 +39,7 @@ The same data drawn both ways: `isometric` in an `Svg` layer, and `perspective` 
 
 :example{ component="Chart" name="isometric-scatter-3d" }
 
-:example{ component="webgl/Points" name="scatter-3d" }
+:example{ component="Points" name="scatter-3d" }
 
 ## What they share
 
@@ -62,7 +62,7 @@ All three views take the same options, so moving a chart between them is mostly 
 
 A [geo projection](/docs/guides/geo) and a view do different jobs, and they combine. The projection maps longitude and latitude to the plot area, in place of the `x` / `y` scales: it decides where places are on the flat map. The view then decides how that plot area is seen: straight on without one, or as a floor seen at an angle with one.
 
-So any projection can be the floor of any view, with `z` raising features, points, or bins off the map: ex. [an election map](/docs/components/GeoPath/election-isometric) or [pins](/docs/components/Chart/isometric-pin-map) on an `isometric` floor (see [Paths and maps](/docs/guides/isometric#paths-and-maps)), or [population bins](/docs/components/webgl/Bin/state-population) under a `perspective` camera.
+So any projection can be the floor of any view, with `z` raising features, points, or bins off the map: ex. [an election map](/docs/components/GeoPath/election-isometric) or [pins](/docs/components/Chart/isometric-pin-map) on an `isometric` floor (see [Paths and maps](/docs/guides/isometric#paths-and-maps)), or [population bins](/docs/components/Bin/state-population) under a `perspective` camera.
 
 Two things look alike but aren't:
 

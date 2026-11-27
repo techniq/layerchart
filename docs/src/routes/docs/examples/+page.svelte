@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { Button, MenuField, ScrollingValue, TextField } from 'svelte-ux';
+	import {
+		ScrollingValue,
+		SelectField,
+		TextField,
+		ToggleGroup,
+		ToggleOption,
+		Tooltip
+	} from 'svelte-ux';
 	import { group, sum } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
 	import { useSearchParams } from 'runed/kit';
@@ -8,13 +15,14 @@
 	import { ExampleLink } from '@layerstack/docs/components';
 	import { H1, H2 } from '@layerstack/docs/markdown/components';
 
+	import LucideCalendarArrowDown from '~icons/lucide/calendar-arrow-down';
 	import LucideSearch from '~icons/lucide/search';
+	import LucideShapes from '~icons/lucide/shapes';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 	import { cls } from '@layerstack/tailwind';
 
 	import { browser } from '$app/environment';
-	import { webglCategories } from '$lib/webglCategories.js';
 
 	let { data } = $props();
 
@@ -25,15 +33,43 @@
 	const schema = z.object({
 		filter: stringParam,
 		category: stringParam,
+		/** A layer the examples draw in (ex. `webgl`) */
+		layer: stringParam,
 		/** `null` groups by component; `newest` groups by the month each example was added */
 		sort: stringParam
 	});
 	let params = useSearchParams(schema);
 
 	let columnCount = $state(typeof window !== 'undefined' && window.innerWidth > 800 ? 3 : 2);
+	/** Zooming in shows fewer, larger examples a row; out, more */
+	const zoomButtons = $derived([
+		{
+			label: 'Zoom in',
+			icon: LucideZoomIn,
+			disabled: columnCount <= 1,
+			onclick: () => (columnCount = Math.max(1, columnCount - 1))
+		},
+		{
+			label: 'Zoom out',
+			icon: LucideZoomOut,
+			disabled: columnCount >= 5,
+			onclick: () => (columnCount = Math.min(5, columnCount + 1))
+		}
+	]);
 
 	let visibleExamples = $derived.by(() => {
 		let filtered = data.components;
+
+		// Filter by the layer they draw in (ex. those drawn with WebGL)
+		if (params.layer) {
+			const layer = params.layer;
+			filtered = filtered
+				.map((component) => ({
+					...component,
+					examples: component.examples.filter((example) => example.layers.includes(layer))
+				}))
+				.filter(({ examples }) => examples.length > 0);
+		}
 
 		// Filter by selected category (component or category)
 		if (params.category) {
@@ -88,8 +124,8 @@
 	});
 
 	const sortOptions = [
-		{ label: 'By component', value: null },
-		{ label: 'Newest', value: 'newest' }
+		{ label: 'By component', value: null, icon: LucideShapes },
+		{ label: 'Newest', value: 'newest', icon: LucideCalendarArrowDown }
 	];
 
 	const monthFormat = new Intl.DateTimeFormat('en-US', {
@@ -167,15 +203,27 @@
 					'fill',
 					'clipping',
 					'layers',
-					'other',
-					...Object.keys(webglCategories)
+					'other'
 				].indexOf(value)
 			)
 		);
 	});
 
+	const layerOptions = [
+		{ label: 'Svg', value: 'svg' },
+		{ label: 'Canvas', value: 'canvas' },
+		{ label: 'Html', value: 'html' },
+		{ label: 'WebGL', value: 'webgl' }
+	];
+	/** A layer's value in the menu, apart from the categories' and components' (ex. `Svg`'s) */
+	const LAYER = 'layer:';
+
 	let categoryOptions = $derived.by(() => [
-		{ label: 'All', value: null },
+		...layerOptions.map(({ label, value }) => ({
+			label,
+			value: `${LAYER}${value}`,
+			group: 'Layers'
+		})),
 		...componentCategories.map(({ value, label }) => ({
 			label: label.charAt(0).toUpperCase() + label.slice(1),
 			value,
@@ -209,7 +257,7 @@
 
 <div
 	class={cls(
-		'sticky top-16 grid grid-cols-1 sm:grid-cols-[1fr_200px_180px_auto] items-center gap-3 py-2 z-1',
+		'sticky top-16 grid grid-cols-1 sm:grid-cols-[1fr_200px_auto_auto] items-center gap-3 py-2 z-1',
 		// dot background
 		'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}
@@ -221,24 +269,58 @@
 	</TextField>
 
 	<div class="flex gap-3 sm:contents">
-		<MenuField options={categoryOptions} bind:value={params.category} class="flex-1" />
-		<MenuField options={sortOptions} bind:value={params.sort} class="flex-1" />
+		<!-- One-way, as the sort toggle: a layer and a category are each their own param -->
+		<SelectField
+			options={categoryOptions}
+			value={params.layer ? `${LAYER}${params.layer}` : params.category}
+			on:change={(e) => {
+				const value = e.detail.value ?? null;
+				params.update(
+					value?.startsWith(LAYER)
+						? { layer: value.slice(LAYER.length), category: null }
+						: { layer: null, category: value }
+				);
+			}}
+			placeholder="All"
+			clearable
+			class="flex-1"
+		/>
+		<!-- One-way: ToggleGroup writes `value` back on every update, and each write to `params` navigates -->
+		<ToggleGroup
+			value={params.sort}
+			on:change={(e) => (params.sort = e.detail.value)}
+			variant="outline"
+			inset
+			classes={{
+				options: 'h-9 border-surface-content/30',
+				option: 'px-2 grid place-items-center'
+			}}
+		>
+			{#each sortOptions as option (option.value)}
+				<Tooltip title={option.label} offset={6}>
+					<ToggleOption value={option.value}>
+						<option.icon class="size-4" />
+						<span class="sr-only">{option.label}</span>
+					</ToggleOption>
+				</Tooltip>
+			{/each}
+		</ToggleGroup>
 
-		<div class="flex gap-2">
-			<Button
-				icon={LucideZoomIn}
-				on:click={() => (columnCount = Math.max(1, columnCount - 1))}
-				variant="fill-outline"
-				class="size-9 border-surface-content/30 pt-1"
-				disabled={columnCount <= 1}
-			/>
-			<Button
-				icon={LucideZoomOut}
-				on:click={() => (columnCount = Math.min(5, columnCount + 1))}
-				variant="fill-outline"
-				class="size-9 border-surface-content/30 pt-1"
-				disabled={columnCount >= 5}
-			/>
+		<!-- A button group, matching the sort toggle beside it -->
+		<div class="grid grid-flow-col h-9 p-[2px] border border-surface-content/30 rounded-sm">
+			{#each zoomButtons as button (button.label)}
+				<Tooltip title={button.label} offset={6}>
+					<button
+						type="button"
+						class="grid place-items-center h-full w-8 rounded-sm text-surface-content/60 hover:text-primary hover:bg-primary/10 disabled:opacity-40 disabled:pointer-events-none"
+						disabled={button.disabled}
+						onclick={button.onclick}
+					>
+						<button.icon class="size-4" />
+						<span class="sr-only">{button.label}</span>
+					</button>
+				</Tooltip>
+			{/each}
 		</div>
 	</div>
 </div>
@@ -262,6 +344,9 @@
 							component={example.component}
 							example={example.name}
 							title={example.label}
+							href={params.layer
+								? `/docs/components/${example.component}/${example.name}?layer=${params.layer}`
+								: undefined}
 						/>
 					{/each}
 				</div>

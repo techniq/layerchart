@@ -3,6 +3,9 @@ description: Composite mark drawing isolines to delineate regions above and belo
 category: marks
 layers: [svg, canvas]
 related: [Density, Hull, Raster, GeoPath]
+components:
+  - { name: Contour }
+  - { name: webgl/Contour, label: Contour (WebGL) }
 ---
 
 ::tip
@@ -54,3 +57,11 @@ When no data is provided, the contour mark evaluates a continuous function _f_(_
 Adjust thresholds and blur on a sampled function.
 
 :example{ name="sampled-interactive" showCode }
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), its lines lie flat or rise to their heights. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+Filled, it's LayerChart's own `Contour` (bands through the color scale, outlined with a `stroke`, and stacked into terraces when raised), drawn with WebGL marks. Unfilled (`fill="none"`), its lines lie at `z` pixels (ex. over a `Raster`), or each rises to its threshold's height with `z="value"`, in the bands' colors unless given a `stroke`. It takes values the same ways as [Surface](/docs/components/Surface).
+
+:example{ name="basic" }

@@ -3,6 +3,9 @@ description: Marking component which shades the space under a line on a chart to
 category: marks
 layers: [svg, canvas]
 related: []
+components:
+  - { name: Area }
+  - { name: webgl/Area, label: Area (WebGL) }
 ---
 
 ::info
@@ -40,3 +43,13 @@ This replaces grouping the data yourself and rendering an `Area` per group — e
 On an [isometric](/docs/guides/isometric) chart, `z` gives each point a height, and an `Area` stands up as a curtain from the floor to those heights. One curtain per row of a band `y`, drawn back to front, makes a 3D ridgeline.
 
 :example{ name="oscilloscope-ridgeline-isometric" }
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), it lies on the floor, or rises as a curtain with a z. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+A curtain from the floor (or `z0`) up to `z` along the rows, one per group.
+
+:example{ name="areas" }
+
+:example{ name="ridgeline-3d" }

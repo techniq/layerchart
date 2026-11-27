@@ -135,8 +135,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/webgl
       '@layerstack/docs':
-        specifier: 1.0.0-next.7
-        version: 1.0.0-next.7(@sveltejs/kit@2.70.4(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.57.1(@typescript-eslint/types@8.60.1))
+        specifier: 1.0.0-next.10
+        version: 1.0.0-next.10(@sveltejs/kit@2.70.4(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.57.1(@typescript-eslint/types@8.60.1))
       '@layerstack/svelte-actions':
         specifier: 1.0.1-next.20
         version: 1.0.1-next.20(svelte@5.57.1(@typescript-eslint/types@8.60.1))
@@ -322,7 +322,7 @@ importers:
         version: 5.57.1(@typescript-eslint/types@8.60.1)
       svelte-check:
         specifier: ^4.5.0
-        version: 4.5.0(picomatch@4.0.4)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+        version: 4.5.0(picomatch@4.0.5)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
       svelte-ux:
         specifier: 2.0.0-next.22
         version: 2.0.0-next.22(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.57.1(@typescript-eslint/types@8.60.1))
@@ -2028,8 +2028,8 @@ packages:
   '@jsquash/webp@1.5.0':
     resolution: {integrity: sha512-KggLoj2MnRSfIqTeKe1EmbljTX2vuV7mh79k89PCL1pyqiDULcPM1L47twxXt0hkb68F70bXiL31MxsuoZtKFw==}
 
-  '@layerstack/docs@1.0.0-next.7':
-    resolution: {integrity: sha512-7ze/2OskPuZRF/LsEfmTeSSILXalaWrCEV+AnLQy+E4FIbb9fv/BsegX+4Z8Z0bW6BsdMvfPvWR7moMP1fCOzg==}
+  '@layerstack/docs@1.0.0-next.10':
+    resolution: {integrity: sha512-aTlYwGvzedePwetc1oP8OJUSu+mGSzaYS1W1NWWDfssUz+GAnTrDNeVPf2Oq6epRx3HD3LtMFWzBvSgkQ2Bx4g==}
     hasBin: true
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
@@ -7144,7 +7144,7 @@ snapshots:
     dependencies:
       wasm-feature-detect: 1.10.1
 
-  '@layerstack/docs@1.0.0-next.7(@sveltejs/kit@2.70.4(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.57.1(@typescript-eslint/types@8.60.1))':
+  '@layerstack/docs@1.0.0-next.10(@sveltejs/kit@2.70.4(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.57.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)))(postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.15)(tsx@4.22.4)(yaml@2.9.0))(postcss@8.5.15)(svelte@5.57.1(@typescript-eslint/types@8.60.1))':
     dependencies:
       '@content-collections/core': 0.14.3(typescript@5.9.3)
       '@content-collections/markdown': 0.1.4(@content-collections/core@0.14.3(typescript@6.0.3))
@@ -11702,18 +11702,6 @@ snapshots:
       - sass
       - stylus
       - sugarss
-
-  svelte-check@4.5.0(picomatch@4.0.4)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.31
-      chokidar: 4.0.3
-      fdir: 6.5.0(picomatch@4.0.4)
-      picocolors: 1.1.1
-      sade: 1.8.1
-      svelte: 5.57.1(@typescript-eslint/types@8.60.1)
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - picomatch
 
   svelte-check@4.5.0(picomatch@4.0.5)(svelte@5.57.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3):
     dependencies:

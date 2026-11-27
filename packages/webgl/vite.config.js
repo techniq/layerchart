@@ -16,6 +16,9 @@ export default defineConfig({
     }),
   ],
   test: {
+    // One test file at a time: run side by side, the browser starves some of animation frames, and
+    // the tests that watch a mark ease (from mount, or to new rows) miss it on its way
+    fileParallelism: false,
     projects: [
       {
         extends: true,

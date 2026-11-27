@@ -3,6 +3,9 @@ description: Commonly used component acting as a visual guideline on a chart tha
 category: common
 layers: [svg, canvas, html]
 related: [Axis, Line, AnnotationLine]
+components:
+  - { name: Rule }
+  - { name: webgl/Rule, label: Rule (WebGL) }
 ---
 
 ## Usage
@@ -78,3 +81,11 @@ using `<Chart data>` and either:
 ### Data driven (y range)
 
 :example{ name="data-y-range" } -->
+
+## WebGL
+
+In a [`WebGL`](/docs/components/WebGL) layer, from [`@layerchart/webgl`](/docs/guides/webgl), rules lie on the floor. See the [WebGL guide](/docs/guides/webgl) to get started.
+
+Reference lines with the core [Rule](/docs/components/Rule) props, on the floor (or `z` pixels above it): `x` / `y` at a value, at the plot's edges (`true`, `'$left'`, `'$top'`, ...), or as an accessor for a line per row, from zero (or the band) to its value. `class` styles them as on any core mark.
+
+:example{ name="lollipop-webgl" }
