@@ -83,6 +83,10 @@
 	{/each}
 
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<!-- Raster fallbacks for services that don't read SVG icons (e.g. DuckDuckGo's icon service) -->
+	<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+	<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
 	{#if page.url.origin.includes('https')}
 		<script
