@@ -15,6 +15,9 @@ import type { ScenePoint, Sphere } from './globe.js';
 
 /** A chart scale's pixel position for `value`, at the middle of its band on a band scale */
 export function scaled(scale: any, value: unknown): number {
+  // A scale with no domain (ex. a chart laid out in pixels by \`Dagre\`) takes values as they are,
+  // as the core \`Spline\` does
+  if (!scale.domain().length) return Number(value);
   const position = Number(scale(value));
   return isScaleBand(scale) ? position + scale.bandwidth() / 2 : position;
 }
@@ -170,9 +173,15 @@ export function placeOf(
  * The rows a mark draws: its `data`, else the chart's when its props read rows (as the core
  * primitives do), else one, for a mark placed by numbers alone
  */
-export function markRows(ctx: ChartState<any>, data: any[] | undefined, ...props: unknown[]) {
+export function markRows(
+  rows: ChartState<any> | ((own?: any) => any[]),
+  data: any[] | undefined,
+  ...props: unknown[]
+) {
   if (data) return data;
-  return props.some(isDataProp) ? ((ctx.data ?? []) as any[]) : [undefined];
+  if (!props.some(isDataProp)) return [undefined];
+  // A mark's `getMarkData` (its facet panel's rows), else the chart's
+  return typeof rows === 'function' ? rows() : ((rows.data ?? []) as any[]);
 }
 
 /**

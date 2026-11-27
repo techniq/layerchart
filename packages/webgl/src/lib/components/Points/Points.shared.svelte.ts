@@ -76,9 +76,9 @@ export type PointsProps = {
    */
   initialCy?: number;
   /**
-   * Keep the points facing the viewer (round), as the core `Points` on an `isometric` chart.
-   * Always so here: a flat chart's points are discs seen from above, and a 3D view's are
-   * spheres, round from any side.
+   * Keep the points facing the viewer (round) on an `isometric` chart, as the core `Points`:
+   * without it they lie on the floor as it does.  A 3D view's are always spheres, round from any
+   * side.
    *
    * @default false
    */

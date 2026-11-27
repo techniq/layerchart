@@ -5,6 +5,7 @@
 <script lang="ts">
   import { getChartContext } from 'layerchart';
   import BarsBase from './Bars.base.svelte';
+  import BarsRadial from './Bars.radial.svelte';
 
   let { children, ...props }: BarsProps = $props();
 
@@ -25,6 +26,8 @@
 
 {#if children}
   {@render children()}
+{:else if ctx.radial}
+  <BarsRadial {...props} />
 {:else}
   <BarsBase {...props} />
 {/if}

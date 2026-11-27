@@ -5,7 +5,40 @@
 // `settings.layer`), and LayerChart's `Svg`, `Canvas`, or `Html` layer otherwise, and each mark
 // draws its WebGL version in a scene and LayerChart's elsewhere.  For WebGL only, without bundling
 // LayerChart's versions of the marks, import from `@layerchart/webgl/webgl`.
-export { Chart, Legend, Tooltip, orthographic, perspective } from 'layerchart';
+export { Legend, Tooltip, orthographic, perspective } from 'layerchart';
+// LayerChart's contexts and layouts, which draw nothing themselves but hand their children data
+// (for the marks here to draw), and its legends drawn beside the layer
+export { Bounds, ChartGroup, CircleLegend, Dodge, Point } from 'layerchart';
+export type {
+  BoundsProps,
+  ChartGroupProps,
+  CircleLegendProps,
+  DodgeProps,
+  PointProps,
+} from 'layerchart';
+export { Chord, Dagre, Sankey } from 'layerchart/graph';
+export type { ChordProps, DagreProps, SankeyProps } from 'layerchart/graph';
+export { Pack, Partition, Tree, Treemap } from 'layerchart/hierarchy';
+export type { PackProps, PartitionProps, TreeProps, TreemapProps } from 'layerchart/hierarchy';
+export { GeoLegend, GeoProjection, GeoVisible } from 'layerchart/geo';
+export type { GeoLegendProps, GeoProjectionProps, GeoVisibleProps } from 'layerchart/geo';
+export { ForceSimulation } from 'layerchart/force';
+export type { ForceSimulationProps } from 'layerchart/force';
+// LayerChart's `Chart`, its axes, grid, and highlight (`axis`, `grid`, ...) drawn with the marks here
+export { default as Chart } from './components/Chart/Chart.svelte';
+export type { ChartProps } from './components/Chart/Chart.svelte';
+export { default as ChartClipPath } from './components/ChartClipPath/ChartClipPath.svelte';
+export type { ChartClipPathProps } from './components/ChartClipPath/ChartClipPath.svelte';
+// The facet grid's headers, drawn with the `Axis` here
+export { default as FacetAxis } from './components/FacetAxis/FacetAxis.svelte';
+export { default as ClipPath } from './components/ClipPath/ClipPath.svelte';
+export type { ClipPathProps } from './components/ClipPath/ClipPath.svelte';
+export { default as RectClipPath } from './components/RectClipPath/RectClipPath.svelte';
+export type { RectClipPathProps } from './components/RectClipPath/RectClipPath.svelte';
+export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.svelte';
+export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.svelte';
+export { default as GeoClipPath } from './components/GeoClipPath/GeoClipPath.svelte';
+export type { GeoClipPathProps } from './components/GeoClipPath/GeoClipPath.svelte';
 export type {
   OrthographicOptions,
   OrthographicView,
@@ -55,6 +88,10 @@ export { default as Rect } from './components/Rect/Rect.svelte';
 export type { RectProps } from './components/Rect/Rect.svelte';
 export { default as Text } from './components/Text/Text.svelte';
 export type { TextProps } from './components/Text/Text.svelte';
+export { default as Image } from './components/Image/Image.svelte';
+export type { ImageProps } from './components/Image/Image.svelte';
+export { default as Ellipse } from './components/Ellipse/Ellipse.svelte';
+export type { EllipseProps } from './components/Ellipse/Ellipse.svelte';
 export { default as Area } from './components/Area/Area.svelte';
 export type { AreaProps } from './components/Area/Area.svelte';
 export { default as Line } from './components/Line/Line.svelte';
@@ -91,6 +128,8 @@ export { default as AnnotationLine } from './components/AnnotationLine/Annotatio
 export type { AnnotationLineProps } from './components/AnnotationLine/AnnotationLine.svelte';
 export { default as AnnotationPoint } from './components/AnnotationPoint/AnnotationPoint.svelte';
 export type { AnnotationPointProps } from './components/AnnotationPoint/AnnotationPoint.svelte';
+export { default as AnnotationRange } from './components/AnnotationRange/AnnotationRange.svelte';
+export type { AnnotationRangeProps } from './components/AnnotationRange/AnnotationRange.svelte';
 export { default as BoxPlot } from './components/BoxPlot/BoxPlot.svelte';
 export type { BoxPlotProps } from './components/BoxPlot/BoxPlot.svelte';
 export { default as Calendar } from './components/Calendar/Calendar.svelte';
@@ -105,10 +144,45 @@ export { default as Hull } from './components/Hull/Hull.svelte';
 export type { HullProps } from './components/Hull/Hull.svelte';
 export { default as Labels } from './components/Labels/Labels.svelte';
 export type { LabelsProps } from './components/Labels/Labels.svelte';
+export { default as LinearGradient } from './components/LinearGradient/LinearGradient.svelte';
+export type { LinearGradientProps } from './components/LinearGradient/LinearGradient.svelte';
+export { default as Pattern } from './components/Pattern/Pattern.svelte';
+export type { PatternProps } from './components/Pattern/Pattern.svelte';
 export { default as Month } from './components/Month/Month.svelte';
 export type { MonthProps } from './components/Month/Month.svelte';
 export { default as Pie } from './components/Pie/Pie.svelte';
 export type { PieProps } from './components/Pie/Pie.svelte';
+export { default as Waffle } from './components/Waffle/Waffle.svelte';
+export type { WaffleProps } from './components/Waffle/Waffle.svelte';
+export { default as Voronoi } from './components/Voronoi/Voronoi.svelte';
+export type { VoronoiProps } from './components/Voronoi/Voronoi.svelte';
+export { default as GeoBin } from './components/GeoBin/GeoBin.svelte';
+export type { GeoBinProps } from './components/GeoBin/GeoBin.svelte';
+export { default as GeoCircle } from './components/GeoCircle/GeoCircle.svelte';
+export type { GeoCircleProps } from './components/GeoCircle/GeoCircle.svelte';
+export { default as GeoSpline } from './components/GeoSpline/GeoSpline.svelte';
+export type { GeoSplineProps } from './components/GeoSpline/GeoSpline.svelte';
+export { default as GeoEdgeFade } from './components/GeoEdgeFade/GeoEdgeFade.svelte';
+export type { GeoEdgeFadeProps } from './components/GeoEdgeFade/GeoEdgeFade.svelte';
+export { default as Brush } from './components/Brush/Brush.svelte';
+export type { BrushProps } from './components/Brush/Brush.svelte';
+
+export { default as ArcLabel } from './components/ArcLabel/ArcLabel.svelte';
+export type { ArcLabelProps } from './components/ArcLabel/ArcLabel.svelte';
+
+// LayerChart's simplified charts, drawn with the marks here in whichever layer they're in
+export { default as ArcChart } from './components/charts/ArcChart.svelte';
+export type { ArcChartProps } from './components/charts/ArcChart.svelte';
+export { default as AreaChart } from './components/charts/AreaChart.svelte';
+export type { AreaChartProps } from './components/charts/AreaChart.svelte';
+export { default as BarChart } from './components/charts/BarChart.svelte';
+export type { BarChartProps } from './components/charts/BarChart.svelte';
+export { default as LineChart } from './components/charts/LineChart.svelte';
+export type { LineChartProps } from './components/charts/LineChart.svelte';
+export { default as PieChart } from './components/charts/PieChart.svelte';
+export type { PieChartProps } from './components/charts/PieChart.svelte';
+export { default as ScatterChart } from './components/charts/ScatterChart.svelte';
+export type { ScatterChartProps } from './components/charts/ScatterChart.svelte';
 
 // LayerChart's marks drawn with `Path`
 export { default as Violin } from './components/Violin/Violin.svelte';

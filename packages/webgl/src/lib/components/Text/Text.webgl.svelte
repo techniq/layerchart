@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { DataProp } from 'layerchart';
+  import { getMarkData, textMarkInfo } from 'layerchart/base';
   import type { TextProps } from './Text.shared.svelte.js';
 </script>
 
@@ -105,6 +106,8 @@
       : verticalAnchorProp
   );
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** A font's cap height in its size, as the core `Text` takes it (`0.71em`) */
   const CAP_HEIGHT = 0.71;
@@ -134,6 +137,12 @@
 
   /** With rows (`data`, or `x` / `y` reading the chart's), as the core `Text` */
   const dataMode = $derived(data != null || isDataProp(x) || isDataProp(y));
+  // Its data and channels, so the chart's domains include them, as the core `Text` registers
+  ctx.registerComponent({
+    name: 'Text',
+    kind: 'mark',
+    markInfo: () => textMarkInfo({ data, x, y, fill: fillProp } as any, dataMode),
+  });
   const xProp = $derived(x ?? (dataMode ? (ctx.config.x as DataProp) : undefined));
   const yProp = $derived(y ?? (dataMode ? (ctx.config.y as DataProp) : undefined));
   const zProp = $derived(z ?? (dataMode ? (ctx.config.z as DataProp) : undefined));
@@ -162,7 +171,7 @@
 
   /** Each row's label as asked: its text and place */
   const targets = $derived(
-    (dataMode ? markRows(ctx, data, xProp, yProp) : [undefined]).flatMap((d, i) => {
+    (dataMode ? markRows(markData, data, xProp, yProp) : [undefined]).flatMap((d, i) => {
       const text = pieces
         ? pieces.map((piece) => piece.text).join('')
         : typeof value === 'number' && tweensValue && !dataMode

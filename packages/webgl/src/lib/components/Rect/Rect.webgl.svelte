@@ -7,6 +7,7 @@
   import { BoxGeometry, Color } from 'three';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
+  import { getMarkData, rectMarkInfo } from 'layerchart/base';
 
   import { createInstances } from '../../utils/instances.svelte.js';
   import { createOutlines } from '../../utils/outlines.js';
@@ -14,6 +15,7 @@
   import BarsRounded from '../Bars/Bars.rounded.svelte';
   import { resolveCorners, resolveInsets } from 'layerchart/utils/rect.svelte';
   import { markRows, positionOf, rowColor } from '../../utils/marks.js';
+  import { paintOf } from '../../utils/paint.svelte.js';
 
   let {
     data,
@@ -56,6 +58,8 @@
   }: RectProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className, style ? { style } : undefined));
@@ -68,6 +72,12 @@
   const dataMode = $derived(
     data != null || [x, y, width, height, x0, x1, y0, y1].some((p) => isDataProp(p))
   );
+  // Its data and channels, so the chart's domains include them, as the core `Rect` registers
+  ctx.registerComponent({
+    name: 'Rect',
+    kind: 'mark',
+    markInfo: () => rectMarkInfo({ data, x, y, fill, stroke } as any, dataMode),
+  });
   const edges = $derived(x0 != null || x1 != null || y0 != null || y1 != null);
 
   /** The box's footprint on the floor, in pixels, shrunk by its `insets` */
@@ -110,7 +120,7 @@
 
   /** Each row's box as asked: its corner, size, and color */
   const targets = $derived(
-    (dataMode ? markRows(ctx, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map(
+    (dataMode ? markRows(markData, data, x, y, width, height, x0, x1, y0, y1) : [undefined]).map(
       (d, i) => {
         const [base, top] = heights(d);
         return {
@@ -171,9 +181,13 @@
     motionMap ? targets.map((t) => ({ ...t, ...(motionMap.get(t.key) ?? initialOf()) })) : targets
   );
 
-  /** Flat with rounded corners (`rx`): each a shape, as the core `Rect`'s, not a box */
+  /** Filled with a `LinearGradient` or `Pattern` (`url(#id)`), which paint across flat shapes */
+  const painted = $derived(paintOf(scene, fill) != null);
+  /** Flat with rounded corners (`rx`), or painted: each a shape, as the core `Rect`'s, not a box */
   const roundedRects = $derived(
-    (rx > 0 || (corners != null && resolveCorners(corners, 1e9, 1e9).some((r) => r > 0))) &&
+    (painted ||
+      rx > 0 ||
+      (corners != null && resolveCorners(corners, 1e9, 1e9).some((r) => r > 0))) &&
       !ctx.view &&
       z == null &&
       !(dataMode && ctx.config.z != null)

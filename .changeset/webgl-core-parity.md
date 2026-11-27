@@ -4,13 +4,20 @@
 
 feat: Layer-agnostic marks and `Layer` (`type="webgl"`), drawing core's versions in `Svg`, `Canvas`, and `Html` layers so one chart can switch between all four; import WebGL-only marks from `@layerchart/webgl/webgl`
 feat: `Bar`, `Circle`, `Graticule`, `Group`, `Line`, and `Path`, and LayerChart's compound marks built from them (`Pie`, `Labels`, `Calendar`, `Month`, `Cell`, `BoxPlot`, `Frame`, `Hull`, `GeoPoint`, `AnnotationPoint`, `AnnotationLine`, `Violin`, `Trail`, `Density`, `Ribbon`)
+feat: `BarChart`, `LineChart`, `AreaChart`, `ScatterChart`, `PieChart`, and `ArcChart`, with their axes, grid, highlight, and annotations, drawn in whichever layer they're in
+feat: `AnnotationRange`, `ArcLabel`, `Brush`, `Ellipse`, `FacetAxis`, `GeoBin`, `GeoCircle`, `GeoEdgeFade`, `GeoSpline`, `Image`, `Voronoi`, and `Waffle`
+feat: Re-export LayerChart's layouts, contexts, and legends (`ChartGroup`, `Dodge`, `Point`, `Bounds`, `ForceSimulation`, `Chord`, `Sankey`, `Dagre`, `Treemap`, `Partition`, `Tree`, `Pack`, `GeoProjection`, `GeoVisible`, `CircleLegend`, `GeoLegend`)
+feat: `LinearGradient` and `Pattern` paint WebGL marks' fills and strokes, blended as SVG blends them
+feat: `ClipPath`, `RectClipPath`, `CircleClipPath`, `GeoClipPath`, and `ChartClipPath` clip marks in a WebGL scene (to any path, a `clip` snippet's shapes, or their inverse)
+feat: Faceted charts (`fx` / `fy`), each panel's marks drawing its own rows, axes on the grid's outer edge (`facetAll` for every panel)
 feat: Marks take core's `motion`, `key`, and `initial*` props, easing in as core's do
 feat: Lines and paths take core's `draw`, `marker*`, `startContent` / `endContent`, and `dashArray`
 feat: Marks take core's `fillOpacity`, `strokeOpacity`, `seriesKey`, pointer handlers, and the `--fill-color` / `--stroke-color` their classes or `style` set
 feat(Area): Stack as core's, and take `line`, `stroke`, and `pathData`
 feat(Axis): `top` / `right` / `angle` / `radius` placements, `grid`, rule markers, `tickOcclusion`, `tickMultiline`, `labelPlacement`, `label` / `tickLabel` snippets, tick label `rotate` / anchors / `dx` / `dy`, and `padding="auto"`
-feat(Bars): Flat 2D bars without a `z`, with core's `insets`, `radius` / `rounded`, `stackPadding`, `x1` / `y1` sub-bands, fixed `width` / `height`, and `children`
+feat(Bars): Radial bars, and flat 2D bars without a `z`, with core's `insets`, `radius` / `rounded`, `stackPadding`, `x1` / `y1` sub-bands, fixed `width` / `height`, and `children`
 feat(Bin): `r`, `grid`, `class`, and `children`
+feat(Arc): Track `fillOpacity` and `strokeOpacity`
 feat(Contour): Flat filled bands as core's, raised bands as terraces or colored outlines, and `blur`, `smooth`, and a `z` function
 feat(GeoPath): `curve`, `geoTransform`, and `children`
 feat(Grid): Radial spokes and circles (`radialY`), per-axis line props, `bandAlign`, and `classes`
@@ -32,8 +39,19 @@ fix: `opacity` dims a mark's outlines and lines
 fix: `Bars`, `Polygon`, and `Rect` default to `var(--color-surface-content)`, as core's
 fix(Axis): Ticks, tick labels, and titles placed, sized, and counted as core's
 fix(Highlight): Point each series at the hovered row, as core's (ex. a stack's bands)
+fix(Bars): Take `opacity` as a function of the row, as core's
+fix(Axis): Format an expanded stack's values as percentages, as core's
+fix: `Spline` and `Points` take their series' `props`, as core's
+fix: `Area` and `Spline` fade the other `c` categories while the legend highlights one, as core's
 fix(Bin): Keep its cells as an isometric view turns
 fix(Spline): Follow a stack's top, break at a map's edge, and default to 1px
+fix(Area): Fill both sides of the baseline where its line crosses it
+fix(Link): Draw a wide link as an even ribbon rather than overlapping round-capped segments
+fix(Points): Lie flat on an isometric chart unless `viewport`, as core's
+fix: Data-mode `Circle`, `Rect`, `Text`, `Line`, and `Polygon` add their data to the chart's domains, as core's
+fix(Spline): Call a `stroke` function with the row's index and the line's rows, as core's
+fix(Arc): Outline rounded corners the short way round (ex. a `fill-none` track)
+fix: A scale with no domain (ex. `Dagre`'s pixel layout) places values as they are, as core's `Spline`
 fix(Text): Clean label halos, and take its class's fill and text color
 fix: Draw every mark of a flat chart with very many (ex. a `Calendar`'s day cells)
 perf(Text): Reuse label paintings as labels move between marks or change size slightly

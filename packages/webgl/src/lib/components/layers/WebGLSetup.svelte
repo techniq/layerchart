@@ -12,6 +12,7 @@
     Plane,
     Quaternion,
     Raycaster,
+    type Camera,
     type Mesh,
     type Object3D,
     Vector2,
@@ -24,6 +25,7 @@
   import { frameOrthographic, framePerspective, viewDirection } from '../../utils/camera.js';
   import { geoPath } from 'd3-geo';
   import { getSphere } from '../../utils/globe.js';
+  import { clipKeeps, clipMaterial, type ClipChain, type SceneClip } from '../../utils/clip.js';
 
   let { children }: { children?: Snippet } = $props();
 
@@ -64,16 +66,28 @@
     invalidate();
   });
   renderer.localClippingEnabled = true;
-  /** Clip `object`'s materials, and its children's, unless they're kept from it */
-  function clip(object: Object3D, planes: Plane[] | null) {
-    if (object.userData.unclipped) planes = null;
+  /**
+   * Clip `object`'s materials, and its children's, to the plot box unless they're kept from it,
+   * and to the `ClipPath`s they're in (`userData.clip`, see `SceneClip`)
+   */
+  let clipFrame = 0;
+  function clip(object: Object3D, plot: boolean, chain: ClipChain | null, camera: Camera) {
+    if (object.userData.unclipped) plot = false;
+    const region = object.userData.clip as SceneClip | undefined;
+    if (region) chain = region.chain(object, chain, clipPlanes, camera);
+    const planes = chain ? (plot ? chain.withPlot : chain.planes) : plot ? clipPlanes : null;
     const material = (object as Mesh).material;
-    if (material) {
-      for (const m of Array.isArray(material) ? material : [material]) m.clippingPlanes = planes;
+    if (Array.isArray(material)) {
+      for (const m of material) clipMaterial(null, m, planes, chain, clipFrame);
+    } else if (material) {
+      clipMaterial(object as Mesh, material, planes, chain, clipFrame);
     }
-    for (const child of object.children) clip(child, planes);
+    for (const child of object.children) clip(child, plot, chain, camera);
   }
-  scene.onBeforeRender = () => clip(sceneState.root, sceneState.clip ? clipPlanes : null);
+  scene.onBeforeRender = (_renderer, _scene, camera) => {
+    clipFrame++;
+    clip(sceneState.root, sceneState.clip, null, camera);
+  };
 
   // Even light all round, plus a key light from above and to the left of the camera (it moves
   // with it) so faces turned different ways read apart.  Lambert shading divides by π, so these
@@ -492,7 +506,8 @@
         ({ object, point }) =>
           (object as Mesh).isMesh &&
           shown(object) &&
-          (!sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0))
+          (!sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0)) &&
+          clipKeeps(object, point)
       );
     if (hit) return hit.point;
     // The floor only where the plot is: past it, towards the horizon, it goes on without end
@@ -752,7 +767,9 @@
           false
         )
         .find(
-          ({ point }) => !sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0)
+          ({ object, point }) =>
+            (!sceneState.clip || clipPlanes.every((p) => p.distanceToPoint(point) >= 0)) &&
+            clipKeeps(object, point)
         );
       const pickable = hit ? pickables.find((p) => p.object === hit.object) : undefined;
       return pickable && hit ? { pickable, datum: pickable.datum(hit) } : null;

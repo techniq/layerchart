@@ -10,6 +10,7 @@
   import { scaleSequential } from 'd3-scale';
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { binCells, binGrid, getChartContext, isScaleOrdinal, resolveColorProp } from 'layerchart';
+  import { getMarkData } from 'layerchart/base';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createInstances, type Instance } from '../../utils/instances.svelte.js';
@@ -52,6 +53,8 @@
   /** The grid's lines beneath its cells, when drawn as it mounts (none costs nothing) */
   const gridLayer = untrack(() => grid) ? scene.layer() : null;
 
+  /** Its rows: its own `data`, else the chart's, narrowed to its facet panel */
+  const markData = getMarkData();
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
   const weightAccessor = $derived(weight == null ? undefined : resolveAccessor(weight, undefined));
@@ -63,7 +66,7 @@
    */
   const cells = $derived(
     binCells(
-      (dataProp ?? ctx.data ?? []) as any[],
+      markData(dataProp) as any[],
       (d) => position(ctx, xAccessor(d), yAccessor(d)),
       {
         shape,

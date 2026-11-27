@@ -11,6 +11,10 @@ export type ArcTrackProps = {
   stroke?: string;
   /** @default 1 */
   opacity?: number;
+  /** The fill's opacity (0 to 1). @default 1 */
+  fillOpacity?: number;
+  /** The outline's opacity (0 to 1). @default 1 */
+  strokeOpacity?: number;
 };
 
 /**

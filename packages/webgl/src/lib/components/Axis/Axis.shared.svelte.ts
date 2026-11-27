@@ -100,6 +100,11 @@ export type AxisProps = {
    */
   placement: 'bottom' | 'top' | 'left' | 'right' | 'back' | 'angle' | 'radius';
   /**
+   * Draw in every panel of a faceted chart, rather than only on the grid's outer edge.
+   * @default false
+   */
+  facetAll?: boolean;
+  /**
    * The label for the axis, drawn beyond the tick labels.
    *
    * Can either be a string or a snippet to render custom content.  The snippet receives

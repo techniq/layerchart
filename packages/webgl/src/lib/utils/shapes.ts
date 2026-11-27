@@ -63,11 +63,14 @@ export class ShapeContext {
     if (!this.#line) this.moveTo(...start);
     else this.lineTo(...start);
     (this.path.currentPath as Path).absarc(x, -y, r, -a0, -a1, !ccw);
-    // Outlines follow the arc in steps
-    const sweep = ccw ? a0 - a1 : a1 - a0;
-    const steps = Math.max(2, Math.ceil((Math.abs(sweep) / Math.PI) * 16));
+    // Outlines follow the arc in steps, the way round a canvas' `arc` goes (ex. a corner's arc
+    // from just under π to just over -π is short, not most of a turn)
+    const tau = Math.PI * 2;
+    const turn = ccw ? a0 - a1 : a1 - a0;
+    const sweep = Math.abs(a1 - a0) >= tau ? tau : ((turn % tau) + tau) % tau;
+    const steps = Math.max(2, Math.ceil((sweep / Math.PI) * 16));
     for (let i = 1; i <= steps; i++) {
-      const a = a0 + ((ccw ? -1 : 1) * Math.abs(sweep) * i) / steps;
+      const a = a0 + ((ccw ? -1 : 1) * sweep * i) / steps;
       this.#line!.push([x + r * Math.cos(a), y + r * Math.sin(a)]);
     }
   }

@@ -6,6 +6,7 @@
 <!-- The bars of `Bars` (which registers them with the chart) and `Bar` (a row's, which doesn't) -->
 
 <script lang="ts">
+  import { getMarkData } from 'layerchart/base';
   import { BoxGeometry, Color, Quaternion, Vector3 } from 'three';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { getChartContext, isScaleBand } from 'layerchart';
@@ -19,6 +20,7 @@
   import { createInstances, type Instance } from '../../utils/instances.svelte.js';
   import { createOutlines } from '../../utils/outlines.js';
   import { defined, resolveAccessor, rowColor } from '../../utils/marks.js';
+  import { paintOf } from '../../utils/paint.svelte.js';
 
   let {
     data: dataProp,
@@ -74,7 +76,9 @@
   const series = $derived(
     seriesKey ? ctx.series.series.find((s) => s.key === seriesKey) : undefined
   );
-  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
+  /** Its rows: its own `data`, else its series' or the chart's, narrowed to its facet panel */
+  const markData = getMarkData();
+  const rows = $derived(markData(dataProp, series?.data) as any[]);
   const sphere = $derived(getSphere(ctx));
   const stack = $derived(ctx.stackAccessorsFor({ seriesKey, stacksImplicitly: true }));
   const seriesAccessor = $derived(ctx.series.valueAccessor(seriesKey));
@@ -167,7 +171,21 @@
   }
 
   /** A row's fill: `fill`, else its series', else the chart's `c` (or its `class`'s) */
+  /** A row's own `opacity`, when it's a function of the row (ex. `BarChart`'s, fading series) */
+  const rowOpacity = (d: any) => (typeof opacity === 'function' ? Number(opacity(d)) : 1);
+  /** `color` faded by its row's `opacity` (a bar's color alpha, which `opacity` multiplies) */
+  function fadedBy(color: string, d: any) {
+    const alpha = rowOpacity(d);
+    return alpha >= 1 || !Number.isFinite(alpha)
+      ? color
+      : `color-mix(in srgb, ${color} ${Math.max(0, alpha) * 100}%, transparent)`;
+  }
+
   function colorOf(d: any) {
+    return fadedBy(colorOf_(d), d);
+  }
+
+  function colorOf_(d: any) {
     return rowColor(
       ctx,
       fill ?? series?.color,
@@ -300,8 +318,11 @@
   }
 
   // A unit cube standing on its corner at the origin, so a bar scales out from `(x, y)` up
-  /** Flat with rounded corners: each a shape (as the core `Bar`'s path), not a box */
-  const roundedBars = $derived(flat && radius > 0);
+  /**
+   * Flat with rounded corners, or filled with a `LinearGradient` or `Pattern` (`url(#id)`, which
+   * paint across flat shapes): each a shape (as the core `Bar`'s path), not a box
+   */
+  const roundedBars = $derived(flat && (radius > 0 || paintOf(scene, fill) != null));
 
   /** A bar's corner radii, for its `rounded` corners (its value's end for `'edge'`), as core's */
   function corners(bar: Instance): [number, number, number, number] {
@@ -325,9 +346,12 @@
   /** A bar's outline color: black without a `stroke` (or `class`), as LayerChart's bars */
   function outlineOf(d: any) {
     // Not the chart's color scale, which would outline each bar in its own fill
-    return stroke == null && !look?.stroke
-      ? 'black'
-      : rowColor(ctx, stroke, d, 'black', look?.stroke, look?.strokeSet);
+    return fadedBy(
+      stroke == null && !look?.stroke
+        ? 'black'
+        : rowColor(ctx, stroke, d, 'black', look?.stroke, look?.strokeSet),
+      d
+    );
   }
 
   /** Its pointer handlers, called with the bar's row (`onBarClick` is its `onclick`) */
@@ -341,8 +365,10 @@
     onpointerout,
   });
 
-  const fillAlpha = $derived(opacity * fillOpacity * (look?.opacity ?? 1));
-  const strokeAlpha = $derived(opacity * strokeOpacity * (look?.opacity ?? 1));
+  /** The whole mark's `opacity`: a number's, else each row's own (see `fadedBy`) */
+  const markOpacity = $derived(typeof opacity === 'number' ? opacity : 1);
+  const fillAlpha = $derived(markOpacity * fillOpacity * (look?.opacity ?? 1));
+  const strokeAlpha = $derived(markOpacity * strokeOpacity * (look?.opacity ?? 1));
 
   createInstances({
     tooltip: () => tooltip,

@@ -4,8 +4,9 @@
 
 <script lang="ts">
   import { curveBumpX, curveBumpY } from 'd3-shape';
-  import { ShapeGeometry, ShapePath } from 'three';
+  import { BufferGeometry, Float32BufferAttribute, ShapeGeometry, ShapePath } from 'three';
   import { getChartContext, isDataProp } from 'layerchart';
+  import { getMarkData } from 'layerchart/base';
   import {
     getLinkD3Path,
     getLinkPresetPath,
@@ -67,6 +68,8 @@
   }: LinkProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className));
@@ -165,7 +168,7 @@
     (placed && !rows && ![x1, y1, x2, y2].some(isDataProp)
       ? [undefined]
       : placed
-        ? markRows(ctx, rows, x1, y1, x2, y2)
+        ? markRows(markData, rows, x1, y1, x2, y2)
         : (rows ?? [])
     ).map((d) => {
       const [[sx, sz, sy], [tx, tz, ty]] = ends(d);
@@ -238,6 +241,60 @@
   /** How much of each link is drawn so far (all of it without `draw`) */
   const progress = $derived(drawing ? drawn.map((line) => drawing.progress(lengthOf(line))) : null);
 
+  /**
+   * A wide line as a ribbon `width` pixels across, filled, rather than drawn as a line: a line's
+   * segments each end round, overlapping their neighbors, so a translucent one (ex. a Sankey link
+   * at `stroke-surface-content/10`) comes out darker at every joint.  Butt-ended, as SVG's.
+   */
+  function ribbon(line: number[], width: number) {
+    const n = line.length / 3;
+    if (n < 2) return null;
+    const half = width / 2;
+    const left: number[] = [];
+    const right: number[] = [];
+    for (let k = 0; k < n; k++) {
+      const [px, ph, py] = [line[k * 3], line[k * 3 + 1], line[k * 3 + 2]];
+      // The normal of the segments either side, averaged at a joint (mitered, within reason)
+      const a = Math.max(0, k - 1);
+      const b = Math.min(n - 1, k + 1);
+      let dx = line[b * 3] - line[a * 3];
+      let dy = line[b * 3 + 2] - line[a * 3 + 2];
+      const length = Math.hypot(dx, dy) || 1;
+      dx /= length;
+      dy /= length;
+      let miter = 1;
+      if (k > 0 && k < n - 1) {
+        const sx = line[k * 3] - line[(k - 1) * 3];
+        const sy = line[k * 3 + 2] - line[(k - 1) * 3 + 2];
+        const s = Math.hypot(sx, sy) || 1;
+        const cos = Math.abs((sx / s) * dx + (sy / s) * dy);
+        miter = Math.min(1 / Math.max(cos, 0.25), 4);
+      }
+      const ox = -dy * half * miter;
+      const oy = dx * half * miter;
+      left.push(px + ox, ph, py + oy);
+      right.push(px - ox, ph, py - oy);
+    }
+    const positions: number[] = [];
+    for (let k = 0; k < n - 1; k++) {
+      const l0 = left.slice(k * 3, k * 3 + 3);
+      const l1 = left.slice(k * 3 + 3, k * 3 + 6);
+      const r0 = right.slice(k * 3, k * 3 + 3);
+      const r1 = right.slice(k * 3 + 3, k * 3 + 6);
+      positions.push(...l0, ...r0, ...l1, ...l1, ...r0, ...r1);
+    }
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    geometry.setAttribute(
+      'normal',
+      new Float32BufferAttribute(
+        positions.map((_, i) => (i % 3 === 1 ? 1 : 0)),
+        3
+      )
+    );
+    return geometry;
+  }
+
   createMerged({
     items: () =>
       links.map((link, i) => {
@@ -254,11 +311,28 @@
             .translate(0, line[1] - 0.2, 0);
         }
         const p = progress?.[i] ?? 1;
+        const shown = p < 1 ? truncate(line, p * lengthOf(line)) : line;
+        // Wider than a hairline and not filled, as a ribbon (see `ribbon`)
+        if (!filled && link.stroke && strokeWidth > 3) {
+          const band = ribbon(shown, strokeWidth);
+          if (band) {
+            return {
+              d: link.d,
+              geometry: band,
+              fill:
+                strokeOpacity < 1
+                  ? `color-mix(in srgb, ${link.stroke} ${strokeOpacity * 100}%, transparent)`
+                  : link.stroke,
+              lines: [],
+              stroke: null,
+            };
+          }
+        }
         return {
           d: link.d,
           geometry,
           fill: filled ? link.fill : null,
-          lines: [p < 1 ? truncate(line, p * lengthOf(line)) : line],
+          lines: [shown],
           stroke: link.stroke,
         };
       }),

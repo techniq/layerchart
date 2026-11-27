@@ -4,6 +4,7 @@
 </script>
 
 <script lang="ts">
+  import { getMarkData } from 'layerchart/base';
   import { untrack } from 'svelte';
   import { group } from 'd3-array';
   import { BufferGeometry, Float32BufferAttribute } from 'three';
@@ -94,7 +95,9 @@
       : 0.1
   );
 
-  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
+  /** Its rows: its own `data`, else its series' or the chart's, narrowed to its facet panel */
+  const markData = getMarkData();
+  const rows = $derived(markData(dataProp, series?.data) as any[]);
   const xAccessor = $derived(resolveAccessor(x, ctx.config.x));
   const yAccessor = $derived(resolveAccessor(y, ctx.config.y));
   const y0Accessor = $derived(y0 == null ? null : accessor(y0));
@@ -394,6 +397,17 @@
     return out.filter(Boolean);
   });
 
+  /**
+   * An area of one `c` category faded while the legend highlights another, as the core `Area`'s
+   * (a single series draws them all, so its own fade can't tell them apart): its fill's alpha
+   */
+  function groupFill(color: string | null, d: any) {
+    const key = color == null || d == null ? null : ctx.cKey(d);
+    return key == null || ctx.series.isHighlighted(key, true)
+      ? color
+      : `color-mix(in srgb, ${color} 10%, transparent)`;
+  }
+
   createMerged({
     tooltip: () => tooltip,
     items: () =>
@@ -403,7 +417,21 @@
         for (let k = 0; k < columns.length - 1; k++) {
           const [a0, a1] = edges(columns[k]);
           const [b0, b1] = edges(columns[k + 1]);
-          positions.push(...a0, ...b0, ...a1, ...a1, ...b0, ...b1);
+          // Its top crossing its base between columns (ex. values from positive to negative over
+          // a zero baseline): two triangles meeting where they cross, as SVG fills the path's
+          // two loops, rather than a quad folded over itself
+          const h0 = columns[k].b - columns[k].a;
+          const h1 = columns[k + 1].b - columns[k + 1].a;
+          if (h0 * h1 < 0) {
+            const t = h0 / (h0 - h1);
+            const at = (p: number[], q: number[]) => p.map((v, i) => v + (q[i] - v) * t);
+            const base = at(a0, b0);
+            const top = at(a1, b1);
+            const cross = base.map((v, i) => (v + top[i]) / 2);
+            positions.push(...a0, ...cross, ...a1, ...cross, ...b0, ...b1);
+          } else {
+            positions.push(...a0, ...b0, ...a1, ...a1, ...b0, ...b1);
+          }
         }
         // Explicit `pathData` fills in its place (its line, as asked, still from the rows)
         let geometry: BufferGeometry | null = null;
@@ -415,7 +443,7 @@
         return {
           d: columns[0].d,
           geometry,
-          fill: run.color,
+          fill: groupFill(run.color, columns[0].d),
           // On the floor, a little above the fill, so all its width draws over it (a depth
           // offset alone isn't enough on every GPU for lines in the fill's own plane)
           lines: line ? [columns.flatMap((c) => lifted(edges(c)[1]))] : [],

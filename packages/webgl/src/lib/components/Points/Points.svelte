@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
-  import { Points as PointsCore } from 'layerchart';
+  import { getChartContext, Points as PointsCore } from 'layerchart';
   import PointsWebGL from './Points.webgl.svelte';
   import { hasSceneContext } from '../../contexts/scene.svelte.js';
 
@@ -15,10 +15,17 @@
 
   // The WebGL mark inside a `<WebGL>` scene, LayerChart's in an `Svg`, `Canvas`, or `Html` layer
   const inScene = hasSceneContext();
+  const ctx = getChartContext();
+  /** Its series' own `props` (ex. `{ opacity: 0.1 }`), over its own, as the core mark spreads them */
+  const seriesProps = $derived(
+    inScene && props.seriesKey != null
+      ? ctx.series.series.find((s) => s.key === props.seriesKey)?.props
+      : undefined
+  );
 </script>
 
 {#if inScene}
-  <PointsWebGL {...props} />
+  <PointsWebGL {...props} {...seriesProps} />
 {:else}
   <PointsCore {...props as CoreProps} />
 {/if}

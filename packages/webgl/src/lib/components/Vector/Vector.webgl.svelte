@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { DataProp } from 'layerchart';
+  import { getMarkData } from 'layerchart/base';
   import type { VectorProps } from './Vector.shared.svelte.js';
 </script>
 
@@ -54,6 +55,8 @@
   }: VectorProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets, where its props don't say (a row's own, for a function of the row) */
   const look = $derived(typeof className === 'function' ? null : scene.style(className));
@@ -64,7 +67,7 @@
   const filled = $derived(shape !== 'arrow');
   const dataMode = $derived(hasAnyDataProp(x, y, length, rotate, tilt, z));
   const rows = $derived(
-    dataMode ? markRows(ctx, data, x, y, length, rotate, tilt, z) : [undefined]
+    dataMode ? markRows(markData, data, x, y, length, rotate, tilt, z) : [undefined]
   );
 
   /** A number prop, or a row's raw value for it (an angle, not through a scale) */

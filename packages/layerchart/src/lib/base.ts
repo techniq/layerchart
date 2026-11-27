@@ -241,3 +241,27 @@ export type {
 export { GroupState } from './components/Group/Group.shared.svelte.js';
 export { PointsState, type Point } from './components/Points/Points.shared.svelte.js';
 export { ArcState } from './components/Arc/Arc.shared.svelte.js';
+// A `Waffle`'s layout (each row's outline, cell size, and color), for a layer's own `Waffle`
+export { WaffleState, type WaffleItem } from './components/Waffle/Waffle.shared.svelte.js';
+// Where an `Image` or `Ellipse` is placed (pixel or data mode, motion), for a layer's own
+export { ImageState } from './components/Image/Image.shared.svelte.js';
+export { EllipseState } from './components/Ellipse/Ellipse.shared.svelte.js';
+// `GeoBin`'s cells over the sphere, for `<BinBase sphere={sphereBinning} />`
+export { sphereBinning } from './components/geo/GeoBin/GeoBin.sphere.js';
+export { default as FacetAxisBase } from './components/FacetAxis.base.svelte';
+export type { FacetAxisBaseProps } from './components/FacetAxis.base.svelte';
+export { default as FacetPanelBase } from './components/FacetPanel.base.svelte';
+export type { FacetPanelBaseProps } from './components/FacetPanel.base.svelte';
+// A `Pattern`'s lines, circles, and rects, as its tile draws them
+export { buildPatternShapes } from './components/Pattern/Pattern.shared.svelte.js';
+
+// The rows a mark draws: its own `data`, else its series' or the chart's, narrowed to the facet
+// panel it's drawn in
+export { getFacetPanel, getMarkData } from './contexts/facet.js';
+
+// What a data-mode mark tells the chart (its data and channels), so the chart's domains include it
+export { circleMarkInfo } from './components/Circle/Circle.shared.svelte.js';
+export { lineMarkInfo } from './components/Line/Line.shared.svelte.js';
+export { polygonMarkInfo } from './components/Polygon/Polygon.shared.svelte.js';
+export { rectMarkInfo } from './components/Rect/Rect.shared.svelte.js';
+export { textMarkInfo } from './components/Text/Text.shared.svelte.js';

@@ -83,8 +83,8 @@ export type BarProps = {
   strokeWidth?: number;
   /** The stroke opacity (0 to 1). @default 1 */
   strokeOpacity?: number;
-  /** The opacity (0 to 1). @default 1 */
-  opacity?: number;
+  /** The opacity (0 to 1), or a bar's by its row (ex. fading other series). @default 1 */
+  opacity?: number | ((d: any) => number);
   /** Click event handler, called with the bar's row (`{ data }`) */
   onclick?: MarkEvents['onclick'];
   /** Double click event handler, called with the bar's row (`{ data }`) */

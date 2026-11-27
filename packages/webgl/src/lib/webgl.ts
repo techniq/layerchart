@@ -114,3 +114,39 @@ export { default as Density } from './components/Density/Density.webgl.svelte';
 export type { DensityProps } from './components/Density/Density.svelte';
 export { default as Ribbon } from './components/Ribbon/Ribbon.webgl.svelte';
 export type { RibbonProps } from './components/Ribbon/Ribbon.svelte';
+
+// Clips for the marks inside
+export { default as ClipPath } from './components/ClipPath/ClipPath.webgl.svelte';
+export type { ClipPathProps } from './components/ClipPath/ClipPath.svelte';
+export { default as RectClipPath } from './components/RectClipPath/RectClipPath.webgl.svelte';
+export type { RectClipPathProps } from './components/RectClipPath/RectClipPath.svelte';
+export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.webgl.svelte';
+export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.svelte';
+export { default as GeoClipPath } from './components/GeoClipPath/GeoClipPath.webgl.svelte';
+export type { GeoClipPathProps } from './components/GeoClipPath/GeoClipPath.svelte';
+export { default as ChartClipPath } from './components/ChartClipPath/ChartClipPath.webgl.svelte';
+export type { ChartClipPathProps } from './components/ChartClipPath/ChartClipPath.svelte';
+
+// LayerChart's contexts and layouts (drawing nothing themselves), and its legends beside the scene
+export { Bounds, ChartGroup, CircleLegend, Dodge, Point } from 'layerchart';
+export { Chord, Dagre, Sankey } from 'layerchart/graph';
+export { Pack, Partition, Tree, Treemap } from 'layerchart/hierarchy';
+export { GeoLegend, GeoProjection, GeoVisible } from 'layerchart/geo';
+export { default as Image } from './components/Image/Image.webgl.svelte';
+export type { ImageProps } from './components/Image/Image.svelte';
+export { default as Ellipse } from './components/Ellipse/Ellipse.webgl.svelte';
+export type { EllipseProps } from './components/Ellipse/Ellipse.svelte';
+export { default as Waffle } from './components/Waffle/Waffle.webgl.svelte';
+export type { WaffleProps } from './components/Waffle/Waffle.svelte';
+export { default as Voronoi } from './components/Voronoi/Voronoi.webgl.svelte';
+export type { VoronoiProps } from './components/Voronoi/Voronoi.svelte';
+export { default as GeoBin } from './components/GeoBin/GeoBin.webgl.svelte';
+export type { GeoBinProps } from './components/GeoBin/GeoBin.svelte';
+export { default as GeoCircle } from './components/GeoCircle/GeoCircle.webgl.svelte';
+export type { GeoCircleProps } from './components/GeoCircle/GeoCircle.svelte';
+export { default as GeoSpline } from './components/GeoSpline/GeoSpline.webgl.svelte';
+export type { GeoSplineProps } from './components/GeoSpline/GeoSpline.svelte';
+export { default as GeoEdgeFade } from './components/GeoEdgeFade/GeoEdgeFade.webgl.svelte';
+export type { GeoEdgeFadeProps } from './components/GeoEdgeFade/GeoEdgeFade.svelte';
+export { default as Brush } from './components/Brush/Brush.webgl.svelte';
+export type { BrushProps } from './components/Brush/Brush.svelte';

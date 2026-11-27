@@ -33,8 +33,9 @@
 </script>
 
 <script lang="ts">
+  import { getMarkData } from 'layerchart/base';
   import { untrack } from 'svelte';
-  import { Vector3 } from 'three';
+  import { LessDepth, Vector3 } from 'three';
   import { Line2 } from 'three/addons/lines/Line2.js';
   import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
   import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
@@ -49,6 +50,16 @@
   import { curvePoints } from '../../utils/curve.js';
   import { defined, position, resolveAccessor, rowColor } from '../../utils/marks.js';
   import { createPathMotion } from '../../utils/rowMotion.svelte.js';
+  import {
+    boxOf,
+    gradientShader,
+    hasPaints,
+    paintOf,
+    segmentAlphas,
+    setLineAlphas,
+    shadePolyline,
+    useLineAlphas,
+  } from '../../utils/paint.svelte.js';
   import LineMarkers from '../Line/Line.markers.svelte';
   import { curveVertices } from '../Line/markers.js';
   import PathEnds from '../Path/Path.ends.svelte';
@@ -154,7 +165,9 @@
       ? stack.y1
       : resolveAccessor(y ?? (ctx.valueAxis === 'y' ? seriesAccessor : undefined), ctx.config.y)
   );
-  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
+  /** Its rows: its own `data`, else its series' or the chart's, narrowed to its facet panel */
+  const markData = getMarkData();
+  const rows = $derived(markData(dataProp, series?.data) as any[]);
 
   /**
    * What splits the rows into lines: this mark's `g`, the chart's `g`, the categorical data key
@@ -184,6 +197,11 @@
     /** What its run's `class` sets, and its run's `opacity` */
     look: ClassStyle | null;
     opacity: number;
+    /** Stroked with a `LinearGradient` (`url(#id)`): each point's linear RGB and alpha */
+    shaded?: { rgb: number[]; alphas: number[] };
+    /** Along a `curve`, the row each point is past (its stretch's start) and the rows' colors */
+    rowAt?: number[];
+    rowColors?: string[];
   };
 
   type Run = { rows: any[]; start: number; look: ClassStyle | null; opacity: number };
@@ -260,7 +278,8 @@
             const height = ctx.config.z != null || z != null ? ctx.heightOf(d, z)[1] : 0;
             const color = rowColor(
               ctx,
-              stroke,
+              // A function of the row, its index, and the line's rows, as the core \`Spline\` calls it
+              typeof stroke === 'function' ? (row: any) => (stroke as any)(row, i, lineRows) : stroke,
               d,
               series?.color ?? 'var(--color-primary, currentColor)',
               run.look?.stroke,
@@ -322,8 +341,60 @@
         }
         return curve && !sphere ? segments.map(curved) : segments;
       })
+      .map(shaded)
       .filter((line) => line.positions.length >= 6)
   );
+
+  /**
+   * A line stroked with a `LinearGradient` (`url(#id)`), its colors across its bounds (or the
+   * plot), as SVG strokes a path with one: more points where its color changes course.  With a
+   * `stroke` function naming one for some rows, each run of rows with the same stroke (from its
+   * first row to the next run's) is its own, as the core `Spline` draws a path a run.  Looked for
+   * only once the scene has a gradient, so lines in plain colors pay nothing.
+   */
+  function shaded(line: Segment): Segment {
+    if (!hasPaints(scene)) return line;
+    const rowColors = line.rowColors ?? line.colors;
+    if (!rowColors.some((color) => paintOf(scene, color)?.type === 'linear')) return line;
+    /** The row a point's stretch (to the next point) is from */
+    const rowOf = (k: number) => line.rowAt?.[k] ?? k;
+    const count = line.positions.length / 3;
+    const out: Segment = { ...line, positions: [], colors: [], data: [] };
+    const shaded = { rgb: [] as number[], alphas: [] as number[] };
+    for (let start = 0, end = 1; start < count - 1; start = end, end = start + 1) {
+      const color = rowColors[rowOf(start)];
+      while (end < count - 1 && rowColors[rowOf(end)] === color) end++;
+      // Its points, the last shared with the next run (twice, in each one's color)
+      const points = line.positions.slice(start * 3, end * 3 + 3);
+      const paint = paintOf(scene, color);
+      const shader = paint?.type === 'linear' ? gradientShader(scene, paint, boxOf(points)) : null;
+      if (shader) {
+        const run = shadePolyline(points, shader);
+        out.positions.push(...run.positions);
+        shaded.rgb.push(...run.colors);
+        shaded.alphas.push(...run.alphas);
+        for (const k of run.source) {
+          out.colors.push(color);
+          out.data.push(line.data[start + k]);
+        }
+        continue;
+      }
+      const resolved = paint ? null : scene.color(color);
+      for (let k = start; k <= end; k++) {
+        out.positions.push(...points.slice((k - start) * 3, (k - start) * 3 + 3));
+        shaded.rgb.push(
+          resolved?.color.r ?? 0.5,
+          resolved?.color.g ?? 0.5,
+          resolved?.color.b ?? 0.5
+        );
+        shaded.alphas.push(resolved?.opacity ?? 1);
+        out.colors.push(color);
+        out.data.push(line.data[k]);
+      }
+    }
+    out.shaded = shaded;
+    return out;
+  }
 
   /** A line's points taken along `curve`, each sampled point's height, color, and row from between its own */
   function curved(line: Segment): Segment {
@@ -335,7 +406,15 @@
       floor.push([line.positions[i * 3], line.positions[i * 3 + 2]]);
       heights.push(line.positions[i * 3 + 1]);
     }
-    const out: Segment = { ...line, positions: [], colors: [], data: [], floor };
+    const out: Segment = {
+      ...line,
+      positions: [],
+      colors: [],
+      data: [],
+      floor,
+      rowAt: [],
+      rowColors: line.colors,
+    };
     for (const { x, y, at } of curvePoints(floor, curve, { adaptive: true })) {
       const k = Math.min(Math.floor(at), count - 1);
       const t = at - k;
@@ -344,6 +423,7 @@
       out.positions.push(x, height, y);
       out.colors.push(line.colors[nearest]);
       out.data.push(line.data[nearest]);
+      out.rowAt!.push(k);
     }
     return out;
   }
@@ -444,6 +524,8 @@
     delete (line.geometry as { _maxInstanceCount?: number })._maxInstanceCount;
     if (line.userData.count !== count) {
       line.geometry.setColors((line.userData.rgb as number[]).slice(0, count * 3));
+      const alphas = line.userData.alphas as number[] | undefined;
+      if (alphas) setLineAlphas(line.geometry, segmentAlphas(alphas.slice(0, count)));
       line.userData.count = count;
     }
     if (line.material.dashed) line.computeLineDistances();
@@ -454,20 +536,22 @@
 
   $effect(() => {
     const created = lines.map(
-      ({ positions, colors, data, look: runLook, opacity: runOpacity }, index) => {
+      ({ positions, colors, data, look: runLook, opacity: runOpacity, shaded }, index) => {
         const geometry = new LineGeometry();
         geometry.setPositions(positions);
         // A color per point, blended between them; a line's alpha is its first point's
         const rgb: number[] = [];
         let alpha = 1;
-        colors.forEach((color, i) => {
-          const resolved = scene.color(color);
-          rgb.push(resolved?.color.r ?? 0.5, resolved?.color.g ?? 0.5, resolved?.color.b ?? 0.5);
-          if (i === 0) alpha = resolved?.opacity ?? 1;
-        });
+        if (shaded) rgb.push(...shaded.rgb);
+        else
+          colors.forEach((color, i) => {
+            const resolved = scene.color(color);
+            rgb.push(resolved?.color.r ?? 0.5, resolved?.color.g ?? 0.5, resolved?.color.b ?? 0.5);
+            if (i === 0) alpha = resolved?.opacity ?? 1;
+          });
         geometry.setColors(rgb);
         const lineOpacity = runOpacity * strokeOpacity * (runLook?.opacity ?? 1) * alpha;
-        const faded = lineOpacity * untrack(() => seriesOpacity);
+        const faded = lineOpacity * untrack(() => seriesOpacity * groupFade(data[0]));
         // Dashed as its class's `stroke-dasharray` (its first dash and gap), from its own start
         const dash = dashPattern(runLook?.strokeDasharray);
         const material = new LineMaterial({
@@ -488,6 +572,15 @@
         line.userData.opacity = lineOpacity;
         line.userData.rgb = rgb;
         line.userData.count = positions.length / 3;
+        // A gradient's alpha along it, point by point
+        if (shaded) {
+          useLineAlphas(material);
+          // Each pixel once where its segments' round ends overlap, as SVG strokes a path, so a
+          // translucent stretch isn't dotted darker at every joint
+          material.depthFunc = LessDepth;
+          setLineAlphas(geometry, segmentAlphas(shaded.alphas));
+          line.userData.alphas = shaded.alphas;
+        }
         // As far as it's drawn, or where it tweens from
         if (pathMotion || drawing)
           place(
@@ -529,18 +622,29 @@
     };
   });
 
-  // Fading with its series as the legend highlights another, without making the lines again
-  if (untrack(() => seriesKey) != null) {
+  /**
+   * Fade for a line of one `c` category while the legend highlights another, as the core
+   * `Spline`'s lines (a single series draws them all, so its own fade can't tell them apart)
+   */
+  function groupFade(d: any) {
+    const key = d == null ? null : ctx.cKey(d);
+    return key == null || ctx.series.isHighlighted(key, true) ? 1 : 0.1;
+  }
+
+  // Fading with its series, or each line with its category, as the legend highlights another,
+  // without making the lines again
+  if (untrack(() => seriesKey) != null || untrack(() => ctx.cGroups)) {
     $effect(() => {
       const fade = seriesOpacity;
-      for (const { line } of untrack(() => objects)) {
+      const all = untrack(() => objects);
+      all.forEach(({ line }, i) => {
         const material = line.material;
-        material.opacity = line.userData.opacity * fade;
+        material.opacity = line.userData.opacity * fade * groupFade(untrack(() => lines)[i]?.data[0]);
         if (material.transparent !== material.opacity < 1) {
           material.transparent = material.opacity < 1;
           material.needsUpdate = true;
         }
-      }
+      });
       scene.invalidate();
     });
   }

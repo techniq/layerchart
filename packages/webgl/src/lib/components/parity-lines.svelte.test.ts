@@ -253,6 +253,31 @@ describe('Link, as the core `Link`', () => {
     ]);
   });
 
+  it('draws a wide link as a ribbon of its width, not a line (so a translucent one is even)', async () => {
+    const data = { source: { x0: 0, x1: 10 }, target: { x0: 100, x1: 110 }, y0: 20, y1: 20 };
+    const filled = (scene: SceneState) => {
+      let count = 0;
+      scene.root.traverse((o: any) => {
+        if (o.isMesh && !o.isLineSegments2 && o.geometry?.getAttribute('position')?.count)
+          count += o.geometry.getAttribute('position').count;
+      });
+      return count;
+    };
+    const wide = await renderLines({
+      mark: 'link',
+      link: { sankey: true, type: 'straight', data, strokeWidth: 10, stroke: 'black' },
+    });
+    await expect.poll(() => filled(wide.scene)).toBeGreaterThan(0);
+    expect(segments(layers(wide.scene)[0])).toHaveLength(0);
+
+    const thin = await renderLines({
+      mark: 'link',
+      link: { sankey: true, type: 'straight', data, strokeWidth: 1, stroke: 'black' },
+    });
+    await expect.poll(() => segments(layers(thin.scene)[0]).length).toBe(1);
+    expect(filled(thin.scene)).toBe(0);
+  });
+
   it('lays a `radial` link out by angle and radius about the origin', async () => {
     const { scene } = await renderLines({
       mark: 'link',

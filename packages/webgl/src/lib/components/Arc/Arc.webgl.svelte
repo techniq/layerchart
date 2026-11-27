@@ -231,7 +231,12 @@
             ),
           ]
         : [],
-    opacity: () => (trackLook?.opacity ?? 1) * (trackClassed?.opacity ?? 1),
+    // Its fill and outline each at their own opacity (ex. `ArcChart`'s `fillOpacity: 0.1`), as the
+    // core `Arc`'s track
+    opacity: () =>
+      (trackLook?.opacity ?? 1) * (trackLook?.fillOpacity ?? 1) * (trackClassed?.opacity ?? 1),
+    lineOpacity: () =>
+      (trackLook?.opacity ?? 1) * (trackLook?.strokeOpacity ?? 1) * (trackClassed?.opacity ?? 1),
     strokeWidth: () => strokeWidth,
   });
 </script>

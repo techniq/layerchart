@@ -5,6 +5,7 @@
 
 <!-- The points of `Points`, drawn (as `children` aren't given) -->
 <script lang="ts">
+  import { getMarkData } from 'layerchart/base';
   import {
     CircleGeometry,
     IcosahedronGeometry,
@@ -56,6 +57,7 @@
     initialR,
     key = (_d: any, i: number) => i,
     motion,
+    viewport = false,
   }: PointsProps = $props();
 
   const ctx = getChartContext();
@@ -65,8 +67,14 @@
   /** What its `class` sets */
   const look = $derived(scene.style(className));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
-  /** Ringed only when asked, and flat: a 3D view's points are lit spheres */
-  const ringed = $derived(!ctx.view && (stroke != null || !!look?.stroke) && strokeWidth > 0);
+  /**
+   * Discs lying flat (each a circle on the floor, at its height): on a flat chart, and on an
+   * `isometric` one unless `viewport` turns them to the viewer, as the core `Points` lie there.
+   * Otherwise (a 3D view, or `viewport`) lit spheres, round from any side.
+   */
+  const flat = $derived(!ctx.view || (ctx.view.type === 'isometric' && !viewport));
+  /** Ringed only when asked, and flat */
+  const ringed = $derived(flat && (stroke != null || !!look?.stroke) && strokeWidth > 0);
 
   ctx.registerComponent({
     name: 'Points',
@@ -101,7 +109,9 @@
   /** At the top of its stack, as the core `Points`, when the chart stacks its series */
   const stack = $derived(ctx.stackAccessorsFor({ seriesKey, ownData: dataProp != null }));
 
-  const rows = $derived((dataProp ?? series?.data ?? ctx.data ?? []) as any[]);
+  /** Its rows: its own `data`, else its series' or the chart's, narrowed to its facet panel */
+  const markData = getMarkData();
+  const rows = $derived(markData(dataProp, series?.data) as any[]);
   const sphere = $derived(getSphere(ctx));
   const xAccessor = $derived(
     resolveAccessor(x ?? (ctx.valueAxis === 'x' ? seriesAccessor : undefined), ctx.config.x)
@@ -246,7 +256,7 @@
     glow: () => glow,
     // A class blending light in (ex. `mix-blend-plus-lighter`), as in an `Svg` layer
     additive: () => look?.blend === 'plus-lighter' || look?.blend === 'screen',
-    geometry: () => (ctx.view ? (glow ? star : ball) : disc),
+    geometry: () => (flat ? disc : glow ? star : ball),
     instances: () => {
       const pointOf = pointer();
       const colorOf = colorer(ctx, fillValue, 'var(--color-primary, currentColor)', look?.fill);

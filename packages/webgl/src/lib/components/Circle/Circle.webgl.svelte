@@ -6,6 +6,7 @@
   import { untrack } from 'svelte';
   import { CircleGeometry, Color, SphereGeometry } from 'three';
   import { getChartContext, isDataProp, resolveDataProp } from 'layerchart';
+  import { getMarkData, circleMarkInfo } from 'layerchart/base';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createInstances, ringGeometry, scaledDash } from '../../utils/instances.svelte.js';
   import { dashPattern } from '../../utils/merged.svelte.js';
@@ -36,6 +37,8 @@
   }: CircleProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className, style ? { style } : undefined));
@@ -53,6 +56,12 @@
 
   /** With rows (`data`, or props reading the chart's), as the core `Circle` */
   const dataMode = $derived(data != null || [cx, cy, r].some((p) => isDataProp(p)));
+  // Its data and channels, so the chart's domains include them, as the core `Circle` registers
+  ctx.registerComponent({
+    name: 'Circle',
+    kind: 'mark',
+    markInfo: () => circleMarkInfo({ data, cx, cy, fill } as any, dataMode),
+  });
 
   /** Raised by its `z`, or in data mode as the core `Circle`, by the chart's */
   const raised = $derived(z != null || (dataMode && ctx.config.z != null));
@@ -60,7 +69,7 @@
   /** Each row's circle as asked: its center, radius, and height */
   const targets = $derived(
     // Through the scales as the core `Circle` (a band's start, ex. `Cell` centers it in a `Group`)
-    (dataMode ? markRows(ctx, data, cx, cy, r) : [undefined]).flatMap((d, i) => {
+    (dataMode ? markRows(markData, data, cx, cy, r) : [undefined]).flatMap((d, i) => {
       const [x, y] = positionOf(ctx, cx, cy, d, { bandStart: true });
       const radius = resolveDataProp(r, d, ctx.rScale, 1);
       if (![x, y, radius].every(Number.isFinite) || radius <= 0) return [];

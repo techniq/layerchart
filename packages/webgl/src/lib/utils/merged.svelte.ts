@@ -19,6 +19,16 @@ import {
   hasEvents,
   type MarkEvents,
 } from '../contexts/scene.svelte.js';
+import {
+  boxOf,
+  createPatternFills,
+  gradientShader,
+  paintOf,
+  setLineAlphas,
+  shadeSegments,
+  shadeTriangles,
+  useLineAlphas,
+} from './paint.svelte.js';
 
 /** One shape of a mark drawn as a single merged mesh: its geometry, outlines, and colors */
 export type MergedItem = {
@@ -101,8 +111,16 @@ export function createMerged({
   layer.add(mesh, lines);
 
   /** Each item's row and the vertices it spans, to pick and to highlight */
-  let spans: { d: any; start: number; count: number; color: [number, number, number, number] }[] =
-    [];
+  let spans: {
+    d: any;
+    start: number;
+    count: number;
+    color: [number, number, number, number];
+    /** A gradient's colors across it, vertex by vertex (RGBA), in place of `color` */
+    shaded?: number[];
+  }[] = [];
+  /** Shapes filled with a `Pattern`, made once one is */
+  let patterned: ReturnType<typeof createPatternFills> | null = null;
   let shown: any[] = [];
   const index = new Map<any, number>();
   let emphasized = -1;
@@ -111,6 +129,15 @@ export function createMerged({
     const span = spans[i];
     const [r, g, b, a] = span.color;
     const c = new Color(r, g, b);
+    if (span.shaded) {
+      const shaded = span.shaded;
+      for (let v = 0; v < span.count; v++) {
+        c.setRGB(shaded[v * 4], shaded[v * 4 + 1], shaded[v * 4 + 2]);
+        if (hovered) c.lerp(highlight, 0.3);
+        colors.setXYZW(span.start + v, c.r, c.g, c.b, shaded[v * 4 + 3]);
+      }
+      return;
+    }
     if (hovered) c.lerp(highlight, 0.3);
     for (let v = span.start; v < span.start + span.count; v++) colors.setXYZW(v, c.r, c.g, c.b, a);
   }
@@ -128,13 +155,21 @@ export function createMerged({
     let translucent = false;
     /** Outlines share one material, so they take the first one's alpha */
     let strokeAlpha: number | null = null;
+    /**
+     * Where each item's outline segments start and their alpha (a gradient's, its own), only once
+     * one is painted with a gradient: the outlines' alphas are then each segment's own
+     */
+    let strokeRuns: { start: number; alpha: number | number[] }[] | null = null;
+    const runs: { start: number; alpha: number | number[] }[] = [];
 
     list.forEach((item, i) => {
       index.set(item.d, i);
       const start = positions.length / 3;
+      // A `LinearGradient`'s or `Pattern`'s `url(#id)` (looked up only for one)
+      const fillPaint = item.fillColor ? null : paintOf(scene, item.fill);
       const fill = item.fillColor
         ? { color: new Color(...item.fillColor.slice(0, 3)), opacity: item.fillColor[3] }
-        : item.fill
+        : item.fill && !fillPaint
           ? scene.color(item.fill)
           : null;
       const color: [number, number, number, number] = [
@@ -150,14 +185,33 @@ export function createMerged({
         append(normals, geometry.getAttribute('normal').array);
         if (geometry !== item.geometry) geometry.dispose();
       }
+      let shaded: number[] | undefined;
+      if (item.geometry && fillPaint) {
+        const geometry = item.geometry.index ? item.geometry.toNonIndexed() : item.geometry;
+        if (fillPaint.type === 'pattern') {
+          (patterned ??= createPatternFills(scene, layer)).add(fillPaint, geometry);
+        } else {
+          // Across its own bounds (or the plot), as SVG lays a gradient over a shape
+          const position = geometry.getAttribute('position').array;
+          const shader = gradientShader(scene, fillPaint, boxOf(position));
+          if (shader) {
+            const from = colors.length;
+            if (shadeTriangles(geometry, shader, positions, normals, colors)) translucent = true;
+            shaded = colors.slice(from);
+          }
+        }
+        if (geometry !== item.geometry) geometry.dispose();
+      }
       item.geometry?.dispose();
       const count = positions.length / 3 - start;
-      for (let v = 0; v < count; v++) colors.push(...color);
-      spans.push({ d: item.d, start, count, color });
+      if (!shaded) for (let v = 0; v < count; v++) colors.push(...color);
+      spans.push({ d: item.d, start, count, color, shaded });
 
-      const stroke = item.stroke ? scene.color(item.stroke) : null;
+      const strokePaint = item.lines?.length ? paintOf(scene, item.stroke) : null;
+      const stroke = item.stroke && !strokePaint ? scene.color(item.stroke) : null;
       if (stroke && item.lines) {
         strokeAlpha ??= stroke.opacity;
+        runs.push({ start: linePositions.length / 6, alpha: stroke.opacity });
         for (const line of item.lines) {
           const { r, g, b } = stroke.color;
           for (let k = 0; k + 5 < line.length; k += 3) {
@@ -165,8 +219,23 @@ export function createMerged({
             lineColors.push(r, g, b, r, g, b);
           }
         }
+      } else if (strokePaint?.type === 'linear' && item.lines) {
+        // Along its outlines' bounds (or the plot), each segment's ends in their own colors
+        const shader = gradientShader(scene, strokePaint, boxOf(item.lines.flat()));
+        if (shader) {
+          const alphas: number[] = [];
+          runs.push({ start: linePositions.length / 6, alpha: alphas });
+          for (const line of item.lines) {
+            const segments = shadeSegments(line, shader);
+            append(linePositions, segments.positions);
+            append(lineColors, segments.colors);
+            append(alphas, segments.alphas);
+          }
+          strokeRuns = runs;
+        }
       }
     });
+    patterned?.update(opacity() * inGroup());
 
     const geometry = new BufferGeometry();
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
@@ -179,6 +248,22 @@ export function createMerged({
     if (linePositions.length) {
       lineGeometry.setPositions(linePositions);
       lineGeometry.setColors(lineColors);
+    }
+    // With a gradient's outline, each segment's alpha its own (as the material's is then 1)
+    if (strokeRuns || lineMaterial.userData.alphas) {
+      lineMaterial.userData.alphas = true;
+      useLineAlphas(lineMaterial);
+      // Each pixel once where segments' round ends overlap, as SVG strokes a path, so a
+      // translucent stretch isn't dotted darker at every joint
+      lineMaterial.depthFunc = LessDepth;
+      strokeAlpha = 1;
+      const alphas = new Float32Array(linePositions.length / 3).fill(1);
+      runs.forEach((run, k) => {
+        if (typeof run.alpha !== 'number') return alphas.set(run.alpha, run.start * 2);
+        const end = runs[k + 1]?.start ?? linePositions.length / 6;
+        alphas.fill(run.alpha, run.start * 2, end * 2);
+      });
+      setLineAlphas(lineGeometry, alphas);
     }
     lines.geometry.dispose();
     lines.geometry = lineGeometry;
@@ -271,6 +356,7 @@ export function createMerged({
   $effect(() => {
     return () => {
       layer.remove(mesh, lines);
+      patterned?.dispose();
       mesh.geometry.dispose();
       lines.geometry.dispose();
       material.dispose();

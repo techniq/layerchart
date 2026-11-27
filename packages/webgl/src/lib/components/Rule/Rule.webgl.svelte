@@ -6,6 +6,7 @@
 <script lang="ts">
   import { extent } from 'd3-array';
   import { accessor, getChartContext, isScaleBand, isScaleNumeric } from 'layerchart';
+  import { getMarkData } from 'layerchart/base';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { createMerged } from '../../utils/merged.svelte.js';
@@ -25,6 +26,8 @@
   }: RuleProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows: its own `data`, else the chart's, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets, where its props don't say */
   const look = $derived(scene.style(className));
@@ -96,7 +99,7 @@
       // A row's line runs between its two values, or from zero (on a numeric scale) to its one
       const ends = (value: any, scale: any) =>
         Array.isArray(value) ? value : [isScaleNumeric(scale) ? 0 : value, value];
-      for (const d of data ?? ((ctx.data ?? []) as any[])) {
+      for (const d of markData(data) as any[]) {
         const [x1, x2] = ends(xGet(d), ctx.xScale);
         const [y1, y2] = ends(yGet(d), ctx.yScale);
         result.push({

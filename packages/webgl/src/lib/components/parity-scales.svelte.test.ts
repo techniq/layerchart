@@ -367,6 +367,56 @@ describe('Bin on an isometric floor', () => {
   });
 });
 
+describe('Area by category', () => {
+  it('fades the other categories while the legend highlights one, as core’s', async () => {
+    const data = [
+      { x: 0, y: 1, c: 'a' },
+      { x: 1, y: 2, c: 'a' },
+      { x: 0, y: 2, c: 'b' },
+      { x: 1, y: 3, c: 'b' },
+    ];
+    const scene = await renderMarks({
+      mark: 'area',
+      chart: { data, x: 'x', y: 'y', c: 'c', cDomain: ['a', 'b'], cRange: ['red', 'blue'] },
+      area: { fill: 'c' },
+    });
+    /** The alphas the areas' fills are drawn with, one per category */
+    const alphas = () => {
+      const found = new Set<number>();
+      scene.root.traverse((o: any) => {
+        const color = o.isMesh && o.geometry?.getAttribute('color');
+        if (color?.itemSize === 4)
+          for (let i = 0; i < color.count; i++) found.add(Math.round(color.getW(i) * 10) / 10);
+      });
+      return [...found].sort();
+    };
+    await expect.poll(alphas).toEqual([1]);
+    chart!.series.highlightKey = 'a';
+    await expect.poll(alphas).toEqual([0.1, 1]);
+    chart!.series.highlightKey = null;
+    await expect.poll(alphas).toEqual([1]);
+  });
+});
+
+describe('Points on an isometric floor', () => {
+  const shape = (scene: SceneState) => {
+    let type: string | undefined;
+    scene.root.traverse((o: any) => {
+      if (o.isInstancedMesh && o.count > 0) type ??= o.geometry.type;
+    });
+    return type;
+  };
+  const data = [{ x: 1, y: 1 }];
+  const chart = { data, x: 'x', y: 'y', xDomain: [0, 2], yDomain: [0, 2], view: isometric() };
+
+  it('lie flat on the floor, as core’s, unless `viewport` turns them to the viewer', async () => {
+    const flat = await renderMarks({ mark: 'points', chart, points: {} });
+    await expect.poll(() => shape(flat)).toBe('CircleGeometry');
+    const facing = await renderMarks({ mark: 'points', chart, points: { viewport: true } });
+    await expect.poll(() => shape(facing)).toBe('SphereGeometry');
+  });
+});
+
 describe('Highlight area', () => {
   const data = [
     { x: 'a', y: 3 },

@@ -55,7 +55,7 @@
     tickMultiline = false,
     tickLength = 4,
     tickMarks = true,
-    format,
+    format: formatProp,
     tickLabelProps,
     tickLabel,
     scale: scaleProp,
@@ -141,6 +141,14 @@
   // A count asked for, as the core `Axis` takes it, else one per `spacing`
   const count = $derived(
     typeof ticks === 'number' ? ticks : spacing ? tickCount(length, spacing) : undefined
+  );
+  /** Its `format`, else percentages along an expanded stack's values, as the core `Axis` */
+  const format = $derived(
+    formatProp !== undefined
+      ? formatProp
+      : ctx.series.stackLayout === 'stackExpand' && ctx.valueAxis === along
+        ? 'percentRound'
+        : undefined
   );
   /**
    * The count its format is picked for, as the core `Axis` picks it: by the default spacing, so a

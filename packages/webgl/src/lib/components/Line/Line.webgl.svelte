@@ -6,6 +6,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { getChartContext, isDataProp } from 'layerchart';
+  import { getMarkData, lineMarkInfo } from 'layerchart/base';
   import { getSceneContext } from '../../contexts/scene.svelte.js';
   import { markRows, positionOf, rowColor } from '../../utils/marks.js';
   import { createMerged } from '../../utils/merged.svelte.js';
@@ -40,19 +41,27 @@
   }: LineProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets */
   const look = $derived(scene.style(className, style ? { style } : undefined));
   const strokeWidth = $derived(strokeWidthProp ?? look?.strokeWidth ?? 1);
   /** With rows (`data`, or ends reading the chart's), as the core `Line` */
   const dataMode = $derived(data != null || [x1, y1, x2, y2].some((p) => isDataProp(p)));
+  // Its data and channels, so the chart's domains include them, as the core `Line` registers
+  ctx.registerComponent({
+    name: 'Line',
+    kind: 'mark',
+    markInfo: () => lineMarkInfo({ data, x1, y1, x2, y2, stroke } as any, dataMode),
+  });
 
   /** A pixel above the floor, so it draws over what lies there (ex. a box it marks) */
   const LIFT = 0.3;
 
   /** Each row's line where it's asked to be, by its `key` */
   const targets = $derived(
-    (dataMode ? markRows(ctx, data, x1, y1, x2, y2) : [undefined]).map((d, i) => {
+    (dataMode ? markRows(markData, data, x1, y1, x2, y2) : [undefined]).map((d, i) => {
       const [ax, ay] = positionOf(ctx, x1, y1, d);
       const [bx, by] = positionOf(ctx, x2, y2, d);
       return {

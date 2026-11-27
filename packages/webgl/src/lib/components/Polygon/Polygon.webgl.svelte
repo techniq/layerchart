@@ -5,6 +5,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { getChartContext, hasAnyDataProp, resolveDataProp } from 'layerchart';
+  import { getMarkData, polygonMarkInfo } from 'layerchart/base';
   import { polygon } from 'layerchart/utils/shape';
 
   import { getSceneContext } from '../../contexts/scene.svelte.js';
@@ -45,6 +46,8 @@
   }: PolygonProps = $props();
 
   const ctx = getChartContext();
+  /** Its rows in data mode, narrowed to the facet panel it's drawn in */
+  const markData = getMarkData();
   const scene = getSceneContext();
   /** What its `class` sets, where its props don't say */
   const look = $derived(scene.style(className));
@@ -52,10 +55,16 @@
 
   /** Whether the props read rows, as the core `Polygon` decides */
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
+  // Its data and channels, so the chart's domains include them, as the core `Polygon` registers
+  ctx.registerComponent({
+    name: 'Polygon',
+    kind: 'mark',
+    markInfo: () => polygonMarkInfo({ data, cx, cy, fill, stroke } as any, dataMode),
+  });
 
   /** Each row's center and radius, in pixels, by its `key` */
   const targets = $derived(
-    (dataMode ? markRows(ctx, data, cx, cy, r) : [undefined]).map((d, i) => {
+    (dataMode ? markRows(markData, data, cx, cy, r) : [undefined]).map((d, i) => {
       const [x, y] = positionOf(ctx, cx, cy, d);
       return {
         d,
